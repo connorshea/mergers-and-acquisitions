@@ -225,50 +225,55 @@ export default function CandidatesList() {
             <button type="button" className="btn-hunt" onClick={runHunt} disabled={hunt.running}>
               {hunt.running ? "Starting hunt…" : "Run hunt"}
             </button>
-            <details className="menu" ref={menuRef}>
-              <summary className="btn-secondary" aria-label="Maintenance actions">
-                Manage ▾
-              </summary>
-              <div className="menu-panel" role="menu" onClick={closeMenu}>
-                <button
-                  type="button"
-                  role="menuitem"
-                  onClick={syncProperties}
-                  disabled={syncing}
-                  title="Fetch human-readable property names from Wikidata"
-                >
-                  {syncing ? "Syncing property names…" : "Sync property names"}
-                </button>
-                <button
-                  type="button"
-                  role="menuitem"
-                  onClick={syncValueNames}
-                  disabled={syncingValues}
-                  title="Fetch human-readable labels for item values (genre, platform, …)"
-                >
-                  {syncingValues ? "Syncing value names…" : "Sync value names"}
-                </button>
-                <button
-                  type="button"
-                  role="menuitem"
-                  onClick={syncDescriptions}
-                  disabled={syncingDescs}
-                  title="Fetch English item descriptions from Wikidata"
-                >
-                  {syncingDescs ? "Syncing descriptions…" : "Sync descriptions"}
-                </button>
-                <button
-                  type="button"
-                  role="menuitem"
-                  className="menu-danger"
-                  onClick={resetCandidates}
-                  disabled={resetting}
-                  title="Delete all found candidates so the hunt can run from scratch"
-                >
-                  {resetting ? "Resetting…" : "Reset candidates"}
-                </button>
-              </div>
-            </details>
+            {/* Maintenance actions (sync/reset) are dev-only conveniences — the
+                endpoints still exist, but hide the controls outside `vp dev` so
+                they aren't exposed in the deployed app. */}
+            {import.meta.env.DEV && (
+              <details className="menu" ref={menuRef}>
+                <summary className="btn-secondary" aria-label="Maintenance actions">
+                  Manage ▾
+                </summary>
+                <div className="menu-panel" role="menu" onClick={closeMenu}>
+                  <button
+                    type="button"
+                    role="menuitem"
+                    onClick={syncProperties}
+                    disabled={syncing}
+                    title="Fetch human-readable property names from Wikidata"
+                  >
+                    {syncing ? "Syncing property names…" : "Sync property names"}
+                  </button>
+                  <button
+                    type="button"
+                    role="menuitem"
+                    onClick={syncValueNames}
+                    disabled={syncingValues}
+                    title="Fetch human-readable labels for item values (genre, platform, …)"
+                  >
+                    {syncingValues ? "Syncing value names…" : "Sync value names"}
+                  </button>
+                  <button
+                    type="button"
+                    role="menuitem"
+                    onClick={syncDescriptions}
+                    disabled={syncingDescs}
+                    title="Fetch English item descriptions from Wikidata"
+                  >
+                    {syncingDescs ? "Syncing descriptions…" : "Sync descriptions"}
+                  </button>
+                  <button
+                    type="button"
+                    role="menuitem"
+                    className="menu-danger"
+                    onClick={resetCandidates}
+                    disabled={resetting}
+                    title="Delete all found candidates so the hunt can run from scratch"
+                  >
+                    {resetting ? "Resetting…" : "Reset candidates"}
+                  </button>
+                </div>
+              </details>
+            )}
           </div>
         </div>
         <p className="list-sub">

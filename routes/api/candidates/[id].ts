@@ -89,7 +89,11 @@ export const GET = defineHandler(async (c) => {
     Promise.all(
       chunk(pids, idChunk).map((ids) =>
         db
-          .select({ pid: properties.pid, label: properties.label })
+          .select({
+            pid: properties.pid,
+            label: properties.label,
+            formatterUrl: properties.formatterUrl,
+          })
           .from(properties)
           .where(inArray(properties.pid, ids)),
       ),
@@ -109,7 +113,11 @@ export const GET = defineHandler(async (c) => {
   ]);
 
   const propertyLabels: Record<string, string> = {};
-  for (const r of propertyChunks.flat()) propertyLabels[r.pid] = r.label;
+  const propertyFormatters: Record<string, string> = {};
+  for (const r of propertyChunks.flat()) {
+    propertyLabels[r.pid] = r.label;
+    if (r.formatterUrl) propertyFormatters[r.pid] = r.formatterUrl;
+  }
   const valueLabels: Record<string, string> = {};
   for (const r of valueChunks.flat()) valueLabels[r.qid] = r.label;
 
@@ -127,6 +135,7 @@ export const GET = defineHandler(async (c) => {
     from,
     into,
     propertyLabels,
+    propertyFormatters,
     valueLabels,
     prevId: prevRows[0]?.id ?? null,
     nextId: nextRows[0]?.id ?? null,

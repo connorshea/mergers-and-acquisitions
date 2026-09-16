@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import type { AnnotatedValue, Item, RowStatus } from "./lib/compare";
-import { buildRows } from "./lib/compare";
+import { buildRows, formatIdUrl } from "./lib/compare";
 
 // ---------- UI ----------
 
@@ -18,14 +18,23 @@ function displayValue(v: AnnotatedValue): string {
   return v.value;
 }
 
-function ValueChip({ v }: { v: AnnotatedValue }) {
+function ValueChip({ v, formatter }: { v: AnnotatedValue; formatter?: string }) {
   const text = displayValue(v);
+  // An external identifier with a formatter URL (P1630) becomes a link to the
+  // source database, e.g. a Steam application ID → its store page.
+  const idUrl = v.type === "external-id" ? formatIdUrl(formatter, v.value) : null;
   return (
     <span
       className={`chip chip-${v.status}`}
       title={v.note ?? (v.type === "item" ? v.value : v.type === "time" ? v.value : undefined)}
     >
-      {text}
+      {idUrl ? (
+        <a className="chip-link" href={idUrl} target="_blank" rel="noreferrer">
+          {text}
+        </a>
+      ) : (
+        text
+      )}
       {v.type === "item" && (
         <a
           className="chip-id"
@@ -81,12 +90,15 @@ export default function MergeCandidates({
   from,
   into,
   propertyLabels,
+  propertyFormatters,
   valueLabels,
 }: {
   from: Item;
   into: Item;
   /** Pxxx → human label, from the DB-backed properties table. */
   propertyLabels?: Record<string, string>;
+  /** Pxxx → formatter URL (with "$1"), so external-id values can be linked. */
+  propertyFormatters?: Record<string, string>;
   /** Qxxx → human label, from the DB-backed entity_labels table. */
   valueLabels?: Record<string, string>;
 }) {
@@ -206,46 +218,52 @@ export default function MergeCandidates({
                     </tr>
                   </thead>
                   <tbody>
-                    {groupRows.map((r) => (
-                      <tr key={r.key} className={r.blocker ? "is-blocker" : undefined}>
-                        <td className="col-prop">
-                          <div className="prop-label">{r.label}</div>
-                          <div className="prop-key">
-                            {r.kind === "statement" ? (
-                              <a
-                                href={`https://www.wikidata.org/wiki/Property:${r.key}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                {r.key}
-                              </a>
-                            ) : (
-                              r.kind
-                            )}
-                          </div>
-                          {r.note && <div className="prop-note">{r.note}</div>}
-                          {!r.note && r.a.concat(r.b).find((v) => v.note) && (
-                            <div className="prop-note">
-                              {r.a.concat(r.b).find((v) => v.note)!.note}
+                    {groupRows.map((r) => {
+                      // External-id rows link their values via the property's
+                      // formatter URL; other kinds have none.
+                      const formatter =
+                        r.kind === "statement" ? propertyFormatters?.[r.key] : undefined;
+                      return (
+                        <tr key={r.key} className={r.blocker ? "is-blocker" : undefined}>
+                          <td className="col-prop">
+                            <div className="prop-label">{r.label}</div>
+                            <div className="prop-key">
+                              {r.kind === "statement" ? (
+                                <a
+                                  href={`https://www.wikidata.org/wiki/Property:${r.key}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  {r.key}
+                                </a>
+                              ) : (
+                                r.kind
+                              )}
                             </div>
-                          )}
-                        </td>
-                        <td className="col-a">
-                          {r.a.length === 0 ? (
-                            <span className="none">—</span>
-                          ) : (
-                            r.a.map((v, i) => <ValueChip key={i} v={v} />)
-                          )}
-                        </td>
-                        <td className="col-b">
-                          {r.b.length === 0 ? (
-                            <span className="none">—</span>
-                          ) : (
-                            r.b.map((v, i) => <ValueChip key={i} v={v} />)
-                          )}
-                        </td>
-                      </tr>
-                    ))}
+                            {r.note && <div className="prop-note">{r.note}</div>}
+                            {!r.note && r.a.concat(r.b).find((v) => v.note) && (
+                              <div className="prop-note">
+                                {r.a.concat(r.b).find((v) => v.note)!.note}
+                              </div>
+                            )}
+                          </td>
+                          <td className="col-a">
+                            {r.a.length === 0 ? (
+                              <span className="none">—</span>
+                            ) : (
+                              r.a.map((v, i) => <ValueChip key={i} v={v} formatter={formatter} />)
+                            )}
+                          </td>
+                          <td className="col-b">
+                            {r.b.length === 0 ? (
+                              <span className="none">—</span>
+                            ) : (
+                              r.b.map((v, i) => <ValueChip key={i} v={v} formatter={formatter} />)
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>

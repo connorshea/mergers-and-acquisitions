@@ -413,6 +413,15 @@ a.chip-id:hover {
   opacity: 1;
   text-decoration: underline;
 }
+.chip-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 2px;
+}
+.chip-link:hover {
+  text-decoration-style: solid;
+}
 
 @media (max-width: 640px) {
   .mc-head {

@@ -73,6 +73,10 @@ export const properties = sqliteTable("properties", {
   pid: text("pid").primaryKey(), // e.g. "P1733"
   label: text("label").notNull(), // English label, e.g. "Steam application ID"
   datatype: text("datatype"), // Wikidata property type, nullable
+  // Wikidata formatter URL (P1630) with "$1" as the value placeholder, e.g.
+  // "https://store.steampowered.com/app/$1/". Lets the UI turn an external-id
+  // value into a link. The preferred-rank value is used when several exist.
+  formatterUrl: text("formatter_url"), // nullable — most non-identifier props have none
   syncedAt: text("synced_at")
     .notNull()
     .default(sql`(datetime('now'))`),

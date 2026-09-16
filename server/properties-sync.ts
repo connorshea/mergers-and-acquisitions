@@ -7,13 +7,13 @@ import { properties } from "@schema";
 import type { PropertyRow } from "../src/lib/sparql";
 
 // D1 caps bound parameters at 100 per statement (lower than SQLite's own limit),
-// so with 3 columns per row an INSERT can carry at most ~33 rows. Stay under
+// so with 4 columns per row an INSERT can carry at most 25 rows. Stay under
 // that, then group the statements into db.batch() calls so the whole sync is a
 // handful of round-trips rather than hundreds of separate subrequests.
-const ROWS_PER_STMT = 30; // 30 × 3 cols = 90 bound params, under D1's 100 cap
+const ROWS_PER_STMT = 24; // 24 × 4 cols = 96 bound params, under D1's 100 cap
 const STMTS_PER_BATCH = 20;
 
-/** Upsert fetched property rows, refreshing label/datatype/syncedAt. */
+/** Upsert fetched property rows, refreshing label/datatype/formatterUrl/syncedAt. */
 export async function syncProperties(rows: PropertyRow[]): Promise<number> {
   const statements = [];
   for (let i = 0; i < rows.length; i += ROWS_PER_STMT) {
@@ -21,6 +21,7 @@ export async function syncProperties(rows: PropertyRow[]): Promise<number> {
       pid: r.pid,
       label: r.label,
       datatype: r.datatype,
+      formatterUrl: r.formatterUrl,
     }));
     if (chunk.length === 0) continue;
     statements.push(
@@ -32,6 +33,7 @@ export async function syncProperties(rows: PropertyRow[]): Promise<number> {
           set: {
             label: sql`excluded.label`,
             datatype: sql`excluded.datatype`,
+            formatterUrl: sql`excluded.formatter_url`,
             syncedAt: sql`(datetime('now'))`,
           },
         }),

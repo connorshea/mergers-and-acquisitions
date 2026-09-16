@@ -126,6 +126,18 @@ export function blockingLabelKey(label: string): string {
     .trim();
 }
 
+/**
+ * Build the external URL for an identifier value from a Wikidata formatter URL
+ * (P1630), substituting the value for the `$1` placeholder — e.g.
+ * ("https://store.steampowered.com/app/$1/", "268220") →
+ * "https://store.steampowered.com/app/268220/". Returns null when there is no
+ * template or it has no placeholder, so callers can fall back to plain text.
+ */
+export function formatIdUrl(template: string | undefined, value: string): string | null {
+  if (!template || !template.includes("$1")) return null;
+  return template.split("$1").join(value);
+}
+
 /** Returns [status, note] for a pair of values of the same property. */
 export function compareValues(x: Value, y: Value): [Status, string?] {
   if (x.type !== y.type) return ["distinct"];

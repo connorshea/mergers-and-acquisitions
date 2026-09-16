@@ -4,6 +4,7 @@ import {
   blockingLabelKey,
   buildRows,
   compareValues,
+  formatIdUrl,
   installment,
   type Item,
   isDeclaredDifferent,
@@ -162,6 +163,19 @@ describe("blockingLabelKey / punctuation-insensitive blocking", () => {
     // straight vs curly apostrophe, en/em dashes, trailing punctuation
     expect(blockingLabelKey("Assassin's Creed")).toBe(blockingLabelKey("Assassin’s Creed"));
     expect(blockingLabelKey("Half-Life")).toBe(blockingLabelKey("Half—Life"));
+  });
+
+  it("builds external-id URLs from a formatter template, and only when it applies", () => {
+    expect(formatIdUrl("https://store.steampowered.com/app/$1/", "268220")).toBe(
+      "https://store.steampowered.com/app/268220/",
+    );
+    // No template, or a template without the placeholder → no link.
+    expect(formatIdUrl(undefined, "268220")).toBeNull();
+    expect(formatIdUrl("https://example.com/no-placeholder", "268220")).toBeNull();
+    // A value that itself contains a slash substitutes literally.
+    expect(formatIdUrl("https://tvtropes.org/pmwiki/pmwiki.php/$1", "VideoGame/Portal")).toBe(
+      "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/Portal",
+    );
   });
 
   it("keeps accented letters and digits so distinct titles stay distinct", () => {

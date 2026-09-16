@@ -5,7 +5,31 @@ statements into identical / similar / distinct / one-sided, flagging anything
 that would block a merge. Currently runs on dummy data in
 `src/MergeCandidates.tsx` (`EXAMPLES`).
 
+## Toolchain
+
+Built with React 19 + TypeScript 7 on the [Vite+](https://viteplus.dev) unified
+toolchain (the `vp` CLI), managed with [pnpm](https://pnpm.io). Installing
+dependencies runs `vp config`, which wires up the git pre-commit hook.
+
+## Development
+
+```sh
+pnpm install   # install deps and set up git hooks
+pnpm dev       # start the dev server
 ```
-npm install
-npm run dev
+
+## Commands
+
+```sh
+pnpm build     # type-check and build for production (tsc -b && vp build)
+pnpm preview   # preview the production build locally
+pnpm fmt       # format with Oxfmt (alias: pnpm format)
+```
+
+The `vp` CLI is also available directly for the wider toolchain:
+
+```sh
+vp check       # format, lint, and type-check in one pass
+vp lint        # lint with Oxlint (react, unicorn, oxc, typescript plugins)
+vp test        # run tests with Vitest
 ```

@@ -4,14 +4,8 @@ import { db, eq, inArray } from "void/db";
 import { items, mergeCandidates } from "@schema";
 import { defineHandler } from "void";
 import type { Item } from "../../../src/lib/compare";
-import { type CandidateSummary, loadLabels, summaryColumns, toSummary } from "./index";
-
-export interface CandidateDetailResponse {
-  candidate: CandidateSummary;
-  /** Parsed items.data for fromQid / intoQid. */
-  from: Item;
-  into: Item;
-}
+import type { CandidateDetailResponse } from "../../../src/lib/api-types";
+import { loadLabels, summaryColumns, toSummary } from "./index";
 
 export const GET = defineHandler(async (c) => {
   const id = Number(c.req.param("id"));

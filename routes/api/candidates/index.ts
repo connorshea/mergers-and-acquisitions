@@ -4,31 +4,15 @@
 import { and, count, db, desc, eq, gte, inArray, sql } from "void/db";
 import { items, mergeCandidates } from "@schema";
 import { defineHandler } from "void";
+import {
+  CANDIDATE_SORTS,
+  CANDIDATE_STATUSES,
+  type CandidateListResponse,
+  type CandidateSummary,
+} from "../../../src/lib/api-types";
 
-/** One merge candidate, flattened for list/detail rendering. */
-export interface CandidateSummary {
-  id: number;
-  fromQid: string;
-  intoQid: string;
-  /** items.primaryLabel for the respective qid; null if the item row is absent. */
-  fromLabel: string | null;
-  intoLabel: string | null;
-  confidence: number;
-  status: string;
-  hasBlocker: boolean;
-  reasons: string[];
-  detectedAt: string;
-}
-
-export interface CandidateListResponse {
-  candidates: CandidateSummary[];
-  total: number;
-  page: number;
-  pageSize: number;
-}
-
-const STATUSES = ["open", "dismissed", "merged"] as const;
-const SORTS = ["confidence", "detectedAt"] as const;
+const STATUSES = CANDIDATE_STATUSES;
+const SORTS = CANDIDATE_SORTS;
 const DEFAULT_PAGE_SIZE = 25;
 const MAX_PAGE_SIZE = 100;
 

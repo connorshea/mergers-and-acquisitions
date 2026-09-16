@@ -3,11 +3,8 @@
 import { db, eq } from "void/db";
 import { mergeCandidates } from "@schema";
 import { defineHandler } from "void";
-import { type CandidateSummary, loadLabels, summaryColumns, toSummary } from "../index";
-
-export interface CandidateDismissResponse {
-  candidate: CandidateSummary;
-}
+import type { CandidateDismissResponse } from "../../../../src/lib/api-types";
+import { loadLabels, summaryColumns, toSummary } from "../index";
 
 export const POST = defineHandler(async (c) => {
   const id = Number(c.req.param("id"));

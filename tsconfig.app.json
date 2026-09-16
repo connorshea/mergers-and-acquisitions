@@ -1,4 +1,7 @@
 {
+  // Extends the Void-generated config so the client program knows the route
+  // registry (typed `fetch` from void/client) and the @schema / void/db aliases.
+  "extends": "./.void/tsconfig.json",
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,

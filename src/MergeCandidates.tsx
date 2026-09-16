@@ -4,12 +4,26 @@ import { buildRows } from "./lib/compare";
 
 // ---------- UI ----------
 
+/**
+ * Display text for a value. Wikidata day-precision dates come through as
+ * `YYYY-MM-DDT00:00:00Z`; drop the (meaningless) midnight time part and show
+ * just the calendar date. Non-midnight times are left intact.
+ */
+function displayValue(v: AnnotatedValue): string {
+  if (v.type === "item") return v.label ?? v.value;
+  if (v.type === "time") {
+    const m = /^([+-]?\d{4}-\d{2}-\d{2})T00:00:00Z$/.exec(v.value);
+    if (m) return m[1].replace(/^\+/, "");
+  }
+  return v.value;
+}
+
 function ValueChip({ v }: { v: AnnotatedValue }) {
-  const text = v.type === "item" ? (v.label ?? v.value) : v.value;
+  const text = displayValue(v);
   return (
     <span
       className={`chip chip-${v.status}`}
-      title={v.note ?? (v.type === "item" ? v.value : undefined)}
+      title={v.note ?? (v.type === "item" ? v.value : v.type === "time" ? v.value : undefined)}
     >
       {text}
       {v.type === "item" && <span className="chip-id">{v.value}</span>}
@@ -71,7 +85,13 @@ export default function MergeCandidates({
   });
 
   const rows = useMemo(
-    () => buildRows(from, into, propertyLabels, valueLabels),
+    // Descriptions are shown directly under each item's name (see ItemPlate), so
+    // drop them from the compared-properties groups rather than listing them
+    // again as identical/similar/distinct rows.
+    () =>
+      buildRows(from, into, propertyLabels, valueLabels).filter(
+        (r) => !r.key.startsWith("description:"),
+      ),
     [from, into, propertyLabels, valueLabels],
   );
   const blockers = rows.filter((r) => r.blocker);

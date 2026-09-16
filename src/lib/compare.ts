@@ -381,6 +381,27 @@ const LOW_ENTROPY_PROPS = new Set<string>([
   "P407", // language of work or name
 ]);
 
+/**
+ * Identifiers that third-party databases populate *from* Wikidata rather than
+ * independently (vglist, GamerProfiles mirror Wikidata's own item mapping). A
+ * shared value is therefore circular — not independent evidence the two items
+ * are the same — and a differing value only means one side hasn't been re-synced,
+ * not that the subjects are distinct. Ignore them as an identifier signal in
+ * both directions (neither a match nor a distinction).
+ */
+const MIRRORED_ID_PROPS = new Set<string>([
+  "P8351", // vglist video game ID
+  "P12001", // GamerProfiles game ID
+]);
+
+/**
+ * A publication-year gap at or beyond this is treated as near-conclusive that
+ * two items are different games/editions: no single game is first published a
+ * decade-plus apart, so even a shared external identifier (more likely stale or
+ * mis-entered data than a real match) is outweighed. See scoreCandidate.
+ */
+const LARGE_YEAR_GAP = 10;
+
 const ROMAN_RE = /^m{0,3}(cm|cd|d?c{0,3})(xc|xl|l?x{0,3})(ix|iv|v?i{0,3})$/i;
 
 /** Parse a Roman numeral (i–mmmm range); null if not a well-formed numeral. */
@@ -490,9 +511,11 @@ export interface CandidateScore {
  * aliases, so renames still match), and how much of the shared statements agree
  * — into a 0–1 score. Concrete disagreement subtracts too: a differing release
  * year, developer, or publisher (unless a shared strong per-title id vouches for
- * the pair). Two strong negatives can effectively disqualify a pair:
- * clearly-different names, and many external identifiers that are present on
- * both items yet all differ. Blockers (conflicting descriptions or same-wiki
+ * the pair — except a *large* publication-year gap, which overrides even that).
+ * Two strong negatives can effectively disqualify a pair: clearly-different
+ * names, and many external identifiers that are present on both items yet all
+ * differ. Identifiers that mirror Wikidata itself (vglist, GamerProfiles) are
+ * ignored as evidence in either direction. Blockers (conflicting descriptions or same-wiki
  * sitelinks) are surfaced via `hasBlocker` but do not by themselves sink the
  * score: real duplicates routinely have conflicting descriptions.
  */
@@ -525,6 +548,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
       r.kind === "statement" &&
       r.status === "identical" &&
       r.a.some((v) => v.type === "external-id") &&
+      !MIRRORED_ID_PROPS.has(r.key) &&
       (isId ? isId(r.key) : true),
   );
   const strongIds = sharedExtIds.filter((r) => !WEAK_ID_PROPS.has(r.key));
@@ -587,29 +611,41 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     reasons.push(`${agreeing.length} of ${stmtRows.length} shared statements agree`);
   }
 
-  // Disagreement penalties. A shared strong per-title identifier is near-
-  // conclusive, so when we have one we trust it and skip these (a data-entry
-  // date or renamed-studio mismatch shouldn't sink a genuine duplicate).
-  // Otherwise, concrete disagreement on discriminative facts — the release year,
-  // the developer, the publisher — is strong evidence of two different games
-  // that merely share a title.
+  // Publication-year disagreement. Take the closest pair of release years across
+  // the two items, so a re-release date listed on one side doesn't trip it.
+  const years = (item: Item): number[] =>
+    (item.statements.P577 ?? [])
+      .filter((v) => v.type === "time")
+      .map((v) => parseInt(v.value.slice(0, 4), 10))
+      .filter((n) => Number.isFinite(n));
+  const ya = years(a);
+  const yb = years(b);
+  let yearGap = Infinity;
+  if (ya.length > 0 && yb.length > 0) {
+    for (const x of ya) for (const y of yb) yearGap = Math.min(yearGap, Math.abs(x - y));
+  }
+
+  // A large gap is near-conclusive evidence of different games/editions and
+  // overrides even a shared identifier — a shared id across a decade-plus gap is
+  // far more likely stale/mis-entered data than a real match (e.g. two unrelated
+  // "Meltdown" games, 1986 vs. 2014, that happen to collide on a catalogue id).
+  // Cap below the persistence floor so the pair never surfaces.
+  if (Number.isFinite(yearGap) && yearGap >= LARGE_YEAR_GAP) {
+    reasons.unshift(`publication years differ by ${yearGap} — almost certainly different games`);
+    score = Math.min(score, 0.1);
+  }
+
+  // Lesser disagreement penalties. A shared strong per-title identifier is near-
+  // conclusive for these, so when we have one we trust it and skip them (a small
+  // release-date or renamed-studio mismatch shouldn't sink a genuine duplicate).
+  // Otherwise, concrete disagreement on discriminative facts — a modest release-
+  // year gap, the developer, the publisher — is strong evidence of two different
+  // games that merely share a title.
   if (strongIds.length === 0) {
-    const years = (item: Item): number[] =>
-      (item.statements.P577 ?? [])
-        .filter((v) => v.type === "time")
-        .map((v) => parseInt(v.value.slice(0, 4), 10))
-        .filter((n) => Number.isFinite(n));
-    const ya = years(a);
-    const yb = years(b);
-    if (ya.length > 0 && yb.length > 0) {
-      // Closest pair of years, so a re-release date on one side doesn't trip it.
-      let gap = Infinity;
-      for (const x of ya) for (const y of yb) gap = Math.min(gap, Math.abs(x - y));
-      if (gap >= 2) {
-        const penalty = Math.min(0.35, 0.25 + (gap - 2) / 30);
-        score -= penalty;
-        reasons.push(`publication years differ by ${gap}`);
-      }
+    if (yearGap >= 2 && yearGap < LARGE_YEAR_GAP) {
+      const penalty = Math.min(0.35, 0.25 + (yearGap - 2) / 30);
+      score -= penalty;
+      reasons.push(`publication years differ by ${yearGap}`);
     }
 
     const itemValues = (item: Item, pid: string): string[] =>
@@ -648,6 +684,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
       r.status === "distinct" &&
       r.a.some((v) => v.type === "external-id") &&
       r.b.some((v) => v.type === "external-id") &&
+      !MIRRORED_ID_PROPS.has(r.key) &&
       (isId ? isId(r.key) : true),
   );
   if (distinctExtIdRows.length > 6) {

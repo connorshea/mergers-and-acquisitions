@@ -176,7 +176,7 @@ describe("blockingLabelKey / punctuation-insensitive blocking", () => {
 describe("scoreCandidate — Go West regression (found as a candidate)", () => {
   // The two real items differ only by ':' vs '!' and share MobyGames ID
   // (P11688 = 44640). With the punctuation-insensitive blocking key they get
-  // scored; this asserts the score itself is comfortably above the 0.3
+  // scored; this asserts the score itself is comfortably above the 0.4
   // persistence floor, so the pair surfaces as a merge candidate.
   const base = { descriptions: {}, aliases: {}, sitelinks: {} };
   const a: Item = {
@@ -346,8 +346,8 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     const distinct = scoreCandidate(sharedName, other);
 
     expect(matching.confidence).toBeGreaterThan(distinct.confidence + 0.4);
-    // Different names alone drop an otherwise-similar pair below the 0.3 floor.
-    expect(distinct.confidence).toBeLessThan(0.3);
+    // Different names alone drop an otherwise-similar pair below the 0.4 floor.
+    expect(distinct.confidence).toBeLessThan(0.4);
     expect(distinct.reasons.some((r) => r.startsWith("different names"))).toBe(true);
   });
 
@@ -402,11 +402,11 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     const near = scoreCandidate(mk("Q1", "2007-01-01"), mk("Q2", "2007-06-01")); // same year
     const far = scoreCandidate(mk("Q3", "2002-01-01"), mk("Q4", "2020-01-01")); // 18y apart
     expect(far.confidence).toBeLessThan(near.confidence);
-    expect(far.confidence).toBeLessThan(0.3); // dropped below the persistence floor
+    expect(far.confidence).toBeLessThan(0.4); // dropped below the persistence floor
     expect(far.reasons.some((r) => r.startsWith("publication years differ"))).toBe(true);
   });
 
-  it("does not apply the year penalty when a strong shared id vouches for the pair", () => {
+  it("does not apply a small year penalty when a strong shared id vouches for the pair", () => {
     const mk = (id: string, year: string): Item => ({
       ...base,
       id,
@@ -416,11 +416,73 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
         P1733: [{ type: "external-id" as const, value: "999" }],
       }),
     });
-    const result = scoreCandidate(mk("Q5", "2002"), mk("Q6", "2020"), {
+    // A modest gap (< LARGE_YEAR_GAP, e.g. a regional-release difference) is
+    // forgiven when a strong per-title id vouches for the pair.
+    const result = scoreCandidate(mk("Q5", "2018"), mk("Q6", "2020"), {
       isIdentifierProp: (pid) => pid === "P1733",
     });
     expect(result.confidence).toBeGreaterThan(0.6);
     expect(result.reasons.some((r) => r.startsWith("publication years differ"))).toBe(false);
+  });
+
+  it("caps a large publication-year gap even when a strong id is shared (Meltdown)", () => {
+    // Two unrelated "Meltdown" games — 1986 and 2014 — that collide on a shared
+    // external id must not score as a match: a 28-year gap overrides the id.
+    const mk = (id: string, year: string): Item => ({
+      ...base,
+      id,
+      labels: { en: "Meltdown" },
+      statements: stmt({
+        P31: [{ type: "item" as const, value: "Q7889", label: "video game" }],
+        P577: [{ type: "time" as const, value: year }],
+        P8229: [{ type: "external-id" as const, value: "3235" }],
+      }),
+    });
+    const result = scoreCandidate(
+      mk("Q15036797", "1986-01-01T00:00:00Z"),
+      mk("Q122202962", "2014-06-05T00:00:00Z"),
+      {
+        isIdentifierProp: (pid) => pid === "P8229",
+      },
+    );
+    expect(result.confidence).toBeLessThanOrEqual(0.1);
+    expect(result.reasons.some((r) => r.includes("almost certainly different games"))).toBe(true);
+  });
+
+  it("ignores Wikidata-mirrored ids (vglist, GamerProfiles) as match or distinction evidence", () => {
+    // A shared vglist id is circular (vglist mirrors Wikidata), so it must not
+    // count as a strong shared identifier.
+    const mkShared = (id: string): Item => ({
+      ...base,
+      id,
+      labels: { en: "Echo" },
+      statements: stmt({ P8351: [{ type: "external-id" as const, value: "500" }] }),
+    });
+    const shared = scoreCandidate(mkShared("Q1"), mkShared("Q2"), {
+      isIdentifierProp: (pid) => pid === "P8351",
+    });
+    expect(shared.reasons.some((r) => r.startsWith("shares external identifier"))).toBe(false);
+
+    // And a differing mirror id must not count toward the >6 distinct-external-id
+    // disqualifier: five real differing ids plus two differing mirror ids is 7
+    // raw, but only the five real ones count, so the disqualifier must not fire.
+    const realIds = (prefix: string) =>
+      Object.fromEntries(
+        Array.from({ length: 5 }, (_, i) => [
+          `P700${i}`,
+          [{ type: "external-id" as const, value: `${prefix}${i}` }],
+        ]),
+      );
+    const stmts = (prefix: string) => ({
+      ...realIds(prefix),
+      P8351: [{ type: "external-id" as const, value: `${prefix}-vg` }],
+      P12001: [{ type: "external-id" as const, value: `${prefix}-gp` }],
+    });
+    const a: Item = { ...base, id: "Q3", labels: { en: "Echo" }, statements: stmt(stmts("a")) };
+    const b: Item = { ...base, id: "Q4", labels: { en: "Echo" }, statements: stmt(stmts("b")) };
+    const isId = (pid: string) => pid.startsWith("P700") || pid === "P8351" || pid === "P12001";
+    const distinct = scoreCandidate(a, b, { isIdentifierProp: isId });
+    expect(distinct.reasons.some((r) => r.includes("external identifiers differ"))).toBe(false);
   });
 
   it("penalises a disjoint developer for same-named games", () => {

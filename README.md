@@ -23,13 +23,13 @@ pnpm dev       # start the dev server
 ```sh
 pnpm build     # type-check and build for production (tsc -b && vp build)
 pnpm preview   # preview the production build locally
-pnpm fmt       # format with Oxfmt (alias: pnpm format)
 ```
 
-The `vp` CLI is also available directly for the wider toolchain:
+Formatting, linting, testing, and type-checking go through the `vp` CLI directly:
 
 ```sh
-vp check       # format, lint, and type-check in one pass
+vp fmt         # format with Oxfmt
 vp lint        # lint with Oxlint (react, unicorn, oxc, typescript plugins)
+vp check       # format, lint, and type-check in one pass
 vp test        # run tests with Vitest
 ```

@@ -1,10 +1,17 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import MergeCandidates from "./MergeCandidates";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import CandidateDetail from "./pages/CandidateDetail";
+import CandidatesList from "./pages/CandidatesList";
 import "./merge-candidates.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <MergeCandidates />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<CandidatesList />} />
+        <Route path="/candidates/:id" element={<CandidateDetail />} />
+      </Routes>
+    </BrowserRouter>
   </StrictMode>,
 );

@@ -7,13 +7,12 @@
     "dev": "vp dev",
     "build": "tsc -b && vp build",
     "preview": "vp preview",
-    "format": "vp fmt",
-    "fmt": "vp fmt",
     "prepare": "vp config"
   },
   "dependencies": {
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
+    "react-router-dom": "^7.18.3",
     "void": "^0.10.13"
   },
   "devDependencies": {

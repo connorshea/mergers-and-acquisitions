@@ -1,5 +1,6 @@
 import { defineConfig, lazyPlugins } from "vite-plus";
 import react from "@vitejs/plugin-react";
+import { voidPlugin } from "void";
 
 export default defineConfig({
   staged: {
@@ -14,5 +15,5 @@ export default defineConfig({
     rules: { "vite-plus/prefer-vite-plus-imports": "error" },
     options: { typeAware: true, typeCheck: true },
   },
-  plugins: lazyPlugins(() => [react()]),
+  plugins: [voidPlugin(), lazyPlugins(() => [react()])],
 });

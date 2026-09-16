@@ -1,5 +1,7 @@
 allowBuilds:
+  better-sqlite3: true
   esbuild: true
+  workerd: true
 catalog:
   vite: npm:@voidzero-dev/vite-plus-core@0.3.2
   vite-plus: 0.3.2

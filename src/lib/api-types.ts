@@ -39,6 +39,9 @@ export interface CandidateDetailResponse {
   into: Item;
   /** Pxxx → human label, for the property ids present on this pair. */
   propertyLabels: Record<string, string>;
+  /** Neighbour candidate ids for prev/next navigation (same status, confidence order). */
+  prevId: number | null;
+  nextId: number | null;
 }
 
 export interface CandidateDismissResponse {

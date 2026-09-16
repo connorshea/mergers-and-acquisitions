@@ -1,6 +1,6 @@
 // GET /api/candidates/:id — one candidate with both items' full data, ready to
 // feed straight into the comparison view.
-import { db, eq, inArray } from "void/db";
+import { and, asc, db, desc, eq, gt, inArray, lt, or } from "void/db";
 import { items, mergeCandidates, properties } from "@schema";
 import { defineHandler } from "void";
 import type { Item } from "../../../src/lib/compare";
@@ -21,12 +21,37 @@ export const GET = defineHandler(async (c) => {
     return c.json({ error: "Candidate not found" }, 404);
   }
 
-  const [labels, itemRows] = await Promise.all([
+  // Neighbours for prev/next navigation, within the same status and using the
+  // list's default order (confidence desc, then id asc as a stable tiebreak).
+  // "next" is the following pair in that order, "prev" the preceding one.
+  const sameStatus = eq(mergeCandidates.status, row.status);
+  const afterCurrent = or(
+    lt(mergeCandidates.confidence, row.confidence),
+    and(eq(mergeCandidates.confidence, row.confidence), gt(mergeCandidates.id, row.id)),
+  );
+  const beforeCurrent = or(
+    gt(mergeCandidates.confidence, row.confidence),
+    and(eq(mergeCandidates.confidence, row.confidence), lt(mergeCandidates.id, row.id)),
+  );
+
+  const [labels, itemRows, nextRows, prevRows] = await Promise.all([
     loadLabels([row.fromQid, row.intoQid]),
     db
       .select({ qid: items.qid, data: items.data })
       .from(items)
       .where(inArray(items.qid, [...new Set([row.fromQid, row.intoQid])])),
+    db
+      .select({ id: mergeCandidates.id })
+      .from(mergeCandidates)
+      .where(and(sameStatus, afterCurrent))
+      .orderBy(desc(mergeCandidates.confidence), asc(mergeCandidates.id))
+      .limit(1),
+    db
+      .select({ id: mergeCandidates.id })
+      .from(mergeCandidates)
+      .where(and(sameStatus, beforeCurrent))
+      .orderBy(asc(mergeCandidates.confidence), desc(mergeCandidates.id))
+      .limit(1),
   ]);
 
   const dataByQid = new Map(itemRows.map((r) => [r.qid, r.data as Item]));
@@ -59,6 +84,8 @@ export const GET = defineHandler(async (c) => {
     from,
     into,
     propertyLabels,
+    prevId: prevRows[0]?.id ?? null,
+    nextId: nextRows[0]?.id ?? null,
   };
   return payload;
 });

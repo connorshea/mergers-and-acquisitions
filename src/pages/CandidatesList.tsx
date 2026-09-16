@@ -7,6 +7,7 @@ import {
   type CandidateListResponse,
   type CandidateSort,
   type CandidateStatus,
+  type CandidateDismissResponse,
   type CandidateSummary,
   type HuntTriggerResponse,
   type PropertiesSyncResponse,
@@ -47,12 +48,15 @@ export default function CandidatesList() {
     note: null,
   });
   const [syncing, setSyncing] = useState(false);
+  // Candidates dismissed in-place this session, hidden without a full refetch.
+  const [dismissedIds, setDismissedIds] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     let cancelled = false;
     async function load() {
       setLoading(true);
       setError(null);
+      setDismissedIds(new Set());
       const query: Record<string, string> = {
         status,
         sort,
@@ -111,6 +115,16 @@ export default function CandidatesList() {
     }
   }
 
+  // Dismiss straight from the list; the row hides itself on success.
+  async function dismissCandidate(id: number): Promise<void> {
+    const res = await fetch("/api/candidates/:id/dismiss", {
+      method: "POST",
+      params: { id: String(id) },
+    });
+    void (res as CandidateDismissResponse);
+    setDismissedIds((prev) => new Set(prev).add(id));
+  }
+
   // Merge params; any filter change resets pagination unless page is set explicitly.
   function update(next: Record<string, string | undefined>) {
     const merged = new URLSearchParams(params);
@@ -122,6 +136,7 @@ export default function CandidatesList() {
     setParams(merged, { replace: true });
   }
 
+  const visible = (data?.candidates ?? []).filter((c) => !dismissedIds.has(c.id));
   const total = data?.total ?? 0;
   const lastPage = Math.max(1, Math.ceil(total / PAGE_SIZE));
   const firstRow = total === 0 ? 0 : (page - 1) * PAGE_SIZE + 1;
@@ -205,14 +220,14 @@ export default function CandidatesList() {
         </p>
       )}
       {loading && !data && <p className="list-msg">Loading…</p>}
-      {data && data.candidates.length === 0 && !loading && (
+      {data && visible.length === 0 && !loading && (
         <p className="list-msg">
           No {status} candidates{q ? ` matching “${q}”` : ""}. They appear here once the hunt job
           has scored some pairs.
         </p>
       )}
 
-      {data && data.candidates.length > 0 && (
+      {data && visible.length > 0 && (
         <>
           <div className="ledger-wrap">
             <table className="ledger candidates">
@@ -222,11 +237,12 @@ export default function CandidatesList() {
                   <th className="col-conf">Confidence</th>
                   <th className="col-flags">Flags</th>
                   <th className="col-when">Found</th>
+                  <th className="col-actions" />
                 </tr>
               </thead>
               <tbody>
-                {data.candidates.map((c) => (
-                  <CandidateRowView key={c.id} candidate={c} />
+                {visible.map((c) => (
+                  <CandidateRowView key={c.id} candidate={c} onDismiss={dismissCandidate} />
                 ))}
               </tbody>
             </table>
@@ -257,8 +273,28 @@ export default function CandidatesList() {
   );
 }
 
-function CandidateRowView({ candidate: c }: { candidate: CandidateSummary }) {
+function CandidateRowView({
+  candidate: c,
+  onDismiss,
+}: {
+  candidate: CandidateSummary;
+  onDismiss: (id: number) => Promise<void>;
+}) {
   const pct = Math.round(c.confidence * 100);
+  const [busy, setBusy] = useState(false);
+  const [failed, setFailed] = useState(false);
+
+  async function dismiss() {
+    setBusy(true);
+    setFailed(false);
+    try {
+      await onDismiss(c.id);
+    } catch {
+      setFailed(true);
+      setBusy(false);
+    }
+  }
+
   return (
     <tr>
       <td className="col-pair">
@@ -292,6 +328,19 @@ function CandidateRowView({ candidate: c }: { candidate: CandidateSummary }) {
         {c.status !== "open" && <span className="flag flag-status">{c.status}</span>}
       </td>
       <td className="col-when">{c.detectedAt.slice(0, 10)}</td>
+      <td className="col-actions">
+        {c.status === "open" && (
+          <button
+            type="button"
+            className="btn-row-dismiss"
+            onClick={dismiss}
+            disabled={busy}
+            title="Mark this pair as not a duplicate"
+          >
+            {busy ? "…" : failed ? "Retry" : "Dismiss"}
+          </button>
+        )}
+      </td>
     </tr>
   );
 }

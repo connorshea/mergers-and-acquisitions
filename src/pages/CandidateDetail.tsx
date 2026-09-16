@@ -65,9 +65,27 @@ export default function CandidateDetail() {
   return (
     <>
       <div className="detail-top">
-        <p className="detail-back">
-          <Link to="/">← Back to candidates</Link>
-        </p>
+        <nav className="detail-nav">
+          <Link className="detail-back" to="/">
+            ← Back to candidates
+          </Link>
+          <div className="detail-siblings">
+            {data?.prevId != null ? (
+              <Link className="sibling-link" to={`/candidates/${data.prevId}`} rel="prev">
+                ← Prev
+              </Link>
+            ) : (
+              <span className="sibling-link is-disabled">← Prev</span>
+            )}
+            {data?.nextId != null ? (
+              <Link className="sibling-link" to={`/candidates/${data.nextId}`} rel="next">
+                Next →
+              </Link>
+            ) : (
+              <span className="sibling-link is-disabled">Next →</span>
+            )}
+          </div>
+        </nav>
 
         {loading && <p className="list-msg">Loading…</p>}
         {error && !loading && (

@@ -1,5 +1,7 @@
 # M&A: A Wikidata Merge Assistant
 
+![M&A: A Wikidata Merge Assistant](screenshot.png)
+
 Compares two Wikidata items and groups their labels, aliases, sitelinks and
 statements into identical / similar / distinct / one-sided, flagging anything
 that would block a merge. Currently runs on dummy data in

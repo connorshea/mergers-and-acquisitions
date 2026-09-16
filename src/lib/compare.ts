@@ -409,20 +409,36 @@ export interface CandidateScore {
  * are surfaced via `hasBlocker` but do not by themselves sink the score: real
  * duplicates routinely have conflicting descriptions.
  */
-export function scoreCandidate(a: Item, b: Item): CandidateScore {
+export interface ScoreOptions {
+  /**
+   * Predicate for whether a property id is a genuine external *identifier*
+   * (Wikidata datatype = ExternalId). Value-shape classification can't tell a
+   * real id from a bare-literal non-id like `review score` (P444) or a rating,
+   * whose values ("71/100") collide across unrelated games. When supplied, only
+   * matching properties count toward the shared-identifier signal. When omitted
+   * (e.g. properties aren't synced yet), every external-id-shaped value counts,
+   * as before.
+   */
+  isIdentifierProp?: (pid: string) => boolean;
+}
+
+export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): CandidateScore {
   const rows = buildRows(a, b);
   const reasons: string[] = [];
   let score = 0;
 
   // Shared external identifiers are the strongest single signal — but only
-  // per-title ones. A shared account/franchise id (a developer's Facebook page,
-  // a series' Twitter handle) is what makes a game and its sequel look alike, so
-  // it counts for far less (see WEAK_ID_PROPS).
+  // genuine per-title identifiers. Restrict to real ExternalId properties when
+  // we can (opts.isIdentifierProp), which drops non-id lookalikes like review
+  // scores, then further split out account/franchise ids (WEAK_ID_PROPS) that a
+  // game shares with its whole series.
+  const isId = opts.isIdentifierProp;
   const sharedExtIds = rows.filter(
     (r) =>
       r.kind === "statement" &&
       r.status === "identical" &&
-      r.a.some((v) => v.type === "external-id"),
+      r.a.some((v) => v.type === "external-id") &&
+      (isId ? isId(r.key) : true),
   );
   const strongIds = sharedExtIds.filter((r) => !WEAK_ID_PROPS.has(r.key));
   const weakIds = sharedExtIds.filter((r) => WEAK_ID_PROPS.has(r.key));

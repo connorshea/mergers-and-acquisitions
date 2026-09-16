@@ -217,6 +217,29 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(weak.reasons.some((r) => r.startsWith("shares account/social identifier"))).toBe(true);
   });
 
+  it("ignores non-identifier shared values (e.g. review score) when a predicate is given", () => {
+    // Two unrelated games that happen to share a review score (P444, a String
+    // property, not an ExternalId) — the false positive we saw in production.
+    const a: Item = {
+      ...base,
+      id: "Q200",
+      labels: { en: "Warhammer 40,000: Mechanicus II" },
+      statements: stmt({ P444: [{ type: "external-id", value: "71/100" }] }),
+    };
+    const b: Item = {
+      ...base,
+      id: "Q201",
+      labels: { en: "Just Dance 2021" },
+      statements: stmt({ P444: [{ type: "external-id", value: "71/100" }] }),
+    };
+    // P444 is not an ExternalId property, so the predicate excludes it.
+    const withPredicate = scoreCandidate(a, b, { isIdentifierProp: (pid) => pid === "P1733" });
+    const legacy = scoreCandidate(a, b);
+    expect(withPredicate.reasons.some((r) => r.includes("external identifier"))).toBe(false);
+    expect(legacy.reasons.some((r) => r.includes("external identifier"))).toBe(true);
+    expect(withPredicate.confidence).toBeLessThan(legacy.confidence - 0.4);
+  });
+
   it('zeroes out a pair one item declares "different from" the other (P1889)', () => {
     // Identical label + P31 + shared per-title id would otherwise score ~1.0.
     const a: Item = {

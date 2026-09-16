@@ -9,6 +9,7 @@ import {
   type CandidateStatus,
   type CandidateDismissResponse,
   type CandidateSummary,
+  type DescriptionsSyncResponse,
   type EntityLabelsSyncResponse,
   type HuntTriggerResponse,
   type PropertiesSyncResponse,
@@ -51,6 +52,7 @@ export default function CandidatesList() {
   });
   const [syncing, setSyncing] = useState(false);
   const [syncingValues, setSyncingValues] = useState(false);
+  const [syncingDescs, setSyncingDescs] = useState(false);
   const [resetting, setResetting] = useState(false);
   // Candidates dismissed in-place this session, hidden without a full refetch.
   const [dismissedIds, setDismissedIds] = useState<Set<number>>(new Set());
@@ -140,6 +142,26 @@ export default function CandidatesList() {
     }
   }
 
+  async function syncDescriptions() {
+    setSyncingDescs(true);
+    setHunt({ running: false, note: null });
+    try {
+      const res = await fetch("/api/descriptions/sync", { method: "POST" });
+      const { synced } = res as DescriptionsSyncResponse;
+      setHunt({ running: false, note: `Synced ${synced.toLocaleString()} descriptions.` });
+    } catch (e: unknown) {
+      setHunt({
+        running: false,
+        note:
+          e instanceof FetchError
+            ? `Description sync failed (${e.status}).`
+            : "Description sync failed.",
+      });
+    } finally {
+      setSyncingDescs(false);
+    }
+  }
+
   async function resetCandidates() {
     const ok = window.confirm(
       "Delete ALL found merge candidates (including dismissed ones) so the hunt " +
@@ -225,6 +247,15 @@ export default function CandidatesList() {
                   title="Fetch human-readable labels for item values (genre, platform, …)"
                 >
                   {syncingValues ? "Syncing value names…" : "Sync value names"}
+                </button>
+                <button
+                  type="button"
+                  role="menuitem"
+                  onClick={syncDescriptions}
+                  disabled={syncingDescs}
+                  title="Fetch English item descriptions from Wikidata"
+                >
+                  {syncingDescs ? "Syncing descriptions…" : "Sync descriptions"}
                 </button>
                 <button
                   type="button"

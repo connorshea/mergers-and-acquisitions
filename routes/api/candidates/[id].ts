@@ -1,7 +1,7 @@
 // GET /api/candidates/:id — one candidate with both items' full data, ready to
 // feed straight into the comparison view.
 import { and, asc, db, desc, eq, gt, inArray, lt, or } from "void/db";
-import { entityLabels, items, mergeCandidates, properties } from "@schema";
+import { entityLabels, itemDescriptions, items, mergeCandidates, properties } from "@schema";
 import { defineHandler } from "void";
 import type { Item } from "../../../src/lib/compare";
 import { chunk, D1_MAX_BOUND_PARAMS } from "../../../src/lib/chunk";
@@ -85,7 +85,7 @@ export const GET = defineHandler(async (c) => {
   // Chunk both lookups under D1's 100-bound-parameter cap: a statement-rich pair
   // can reference more than 100 property ids or item-value qids.
   const idChunk = D1_MAX_BOUND_PARAMS - 10;
-  const [propertyChunks, valueChunks] = await Promise.all([
+  const [propertyChunks, valueChunks, descRows] = await Promise.all([
     Promise.all(
       chunk(pids, idChunk).map((ids) =>
         db
@@ -102,12 +102,25 @@ export const GET = defineHandler(async (c) => {
           .where(inArray(entityLabels.qid, ids)),
       ),
     ),
+    db
+      .select({ qid: itemDescriptions.qid, description: itemDescriptions.description })
+      .from(itemDescriptions)
+      .where(inArray(itemDescriptions.qid, [...new Set([row.fromQid, row.intoQid])])),
   ]);
 
   const propertyLabels: Record<string, string> = {};
   for (const r of propertyChunks.flat()) propertyLabels[r.pid] = r.label;
   const valueLabels: Record<string, string> = {};
   for (const r of valueChunks.flat()) valueLabels[r.qid] = r.label;
+
+  // The dump omits descriptions; backfill the synced English description onto
+  // each item so the comparison view shows it under the name and treats a
+  // conflicting description as a merge blocker. Never overwrite one already set.
+  const descByQid = new Map(descRows.map((r) => [r.qid, r.description]));
+  for (const item of [from, into]) {
+    const desc = descByQid.get(item.id);
+    if (desc && !item.descriptions.en) item.descriptions = { ...item.descriptions, en: desc };
+  }
 
   const payload: CandidateDetailResponse = {
     candidate: toSummary(row, labels),

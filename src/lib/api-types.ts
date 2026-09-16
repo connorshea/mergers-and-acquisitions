@@ -65,6 +65,11 @@ export interface EntityLabelsSyncResponse {
   synced: number;
 }
 
+export interface DescriptionsSyncResponse {
+  /** Number of game descriptions fetched and upserted. */
+  synced: number;
+}
+
 export interface ResetResponse {
   /** Number of merge candidates deleted. */
   deleted: number;

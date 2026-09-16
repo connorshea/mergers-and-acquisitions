@@ -135,3 +135,32 @@ export async function fetchEntityLabels(opts?: SparqlOptions): Promise<EntityLab
   }
   return rows;
 }
+
+export interface GameDescriptionRow {
+  qid: string; // "Q16571916"
+  description: string; // "2007 video game"
+}
+
+/**
+ * Fetch English descriptions for in-scope game items (P31 = video game /
+ * free-and-open-source video game). The dump omits descriptions, so this
+ * backfills them for the comparison view. Same scope/pattern as the sync
+ * driver, one row per game that has an English `schema:description`.
+ */
+export async function fetchGameDescriptions(opts?: SparqlOptions): Promise<GameDescriptionRow[]> {
+  const query = `SELECT ?game ?desc WHERE {
+  VALUES ?t { wd:Q7889 wd:Q21125433 }
+  ?game wdt:P31 ?t .
+  ?game schema:description ?desc .
+  FILTER(lang(?desc) = "en")
+}`;
+  const bindings = await sparqlSelect(query, opts);
+  const rows: GameDescriptionRow[] = [];
+  for (const b of bindings) {
+    if (!b.game || !b.desc) continue;
+    const qid = localName(b.game.value);
+    if (!/^Q\d+$/.test(qid)) continue;
+    rows.push({ qid, description: b.desc.value });
+  }
+  return rows;
+}

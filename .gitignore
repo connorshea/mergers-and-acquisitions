@@ -4,3 +4,6 @@ dist
 .void
 .wrangler
 .DS_Store
+
+# Local Wikidata dump(s) used to seed dev data — too large to commit (~250MB).
+seed-data/

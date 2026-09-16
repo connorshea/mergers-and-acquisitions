@@ -182,6 +182,28 @@ wikibase:directClaim ?propUrl.` — restricts to real `Pxxx` direct claims, drop
   user's stored OAuth token (fetch CSRF token first; honor `Row.blocker` → require explicit
   `ignoreconflicts` opt-in); on success set `status='merged'`, `resolution`, `resolvedAt`.
 
+## Phase 7 — LATER: reject a match by writing "different from" (needs OAuth)
+
+Dismissing a candidate today only sets `status='dismissed'` locally, so the same pair can be
+re-proposed elsewhere and by other editors. Add a stronger **"reject as not a duplicate"**
+action that, using the logged-in user's OAuth token (so it depends on Phase 6), writes a
+**`different from` (P1889)** statement on **both** items pointing at each other via
+`wbcreateclaim` (or `wbsetclaim`). That makes the distinction the source of truth on Wikidata
+itself, so the hunt job (which already reads P1889 in `scoreCandidate` → `isDeclaredDifferent`
+and zeroes such pairs) will never resurface them — for us or anyone else. On success set
+`status='rejected'` (or reuse `dismissed`) with `resolution` noting the P1889 edits. Honor
+Wikidata etiquette: skip if a P1889 link already exists; batch the two edits; surface API
+errors to the user.
+
+## Phase 8 — LATER: gate the sync/hunt triggers
+
+The list header's **"Run hunt"** and **"Sync property names"** buttons (and the
+`POST /api/hunt`, `POST /api/properties/sync` routes) currently have no access control — anyone
+hitting the deployed app could kick off background jobs. Once auth exists (Phase 6), make these
+**admin-only** (or at least **dev-mode-only**, e.g. hidden/return 403 unless a `DEV`/role check
+passes). The nightly/weekly crons remain the normal trigger in production; the buttons are a
+convenience for privileged users.
+
 ## Risks / open items
 
 - `void` CLI install path + how `void` local dev composes with `vp dev` — resolve in Phase 0.

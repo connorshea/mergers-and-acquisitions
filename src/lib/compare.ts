@@ -376,6 +376,21 @@ export function isSeriesSequelPair(a: Item, b: Item): boolean {
   return ia.num !== ib.num;
 }
 
+/** Wikidata "different from" — an explicit statement that two items are distinct. */
+export const DIFFERENT_FROM = "P1889";
+
+/**
+ * True when either item carries a `different from` (P1889) statement pointing at
+ * the other. Editors add this precisely to stop two look-alike items being
+ * confused or merged, so it is authoritative: a declared-different pair is never
+ * a duplicate, whatever the other signals say.
+ */
+export function isDeclaredDifferent(a: Item, b: Item): boolean {
+  const points = (from: Item, toId: string) =>
+    (from.statements[DIFFERENT_FROM] ?? []).some((v) => v.type === "item" && v.value === toId);
+  return points(a, b.id) || points(b, a.id);
+}
+
 export interface CandidateScore {
   /** 0–1 likelihood the two items are the same subject and should be merged. */
   confidence: number;
@@ -471,6 +486,14 @@ export function scoreCandidate(a: Item, b: Item): CandidateScore {
   if (isSeriesSequelPair(a, b)) {
     reasons.unshift("different entries in a series (sequel), not a duplicate");
     score = Math.min(score, 0.1);
+  }
+
+  // A "different from" (P1889) statement is an editor explicitly declaring the
+  // two items distinct — the source of truth. It overrides every other signal:
+  // force the score to zero so the pair can never surface as a candidate.
+  if (isDeclaredDifferent(a, b)) {
+    reasons.unshift('marked "different from" on Wikidata (P1889), not a duplicate');
+    score = 0;
   }
 
   const confidence = Math.max(0, Math.min(1, score));

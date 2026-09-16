@@ -4,6 +4,7 @@ import {
   compareValues,
   installment,
   type Item,
+  isDeclaredDifferent,
   isSeriesSequelPair,
   normalize,
   orderByAge,
@@ -214,5 +215,30 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(strong.confidence).toBeGreaterThan(weak.confidence + 0.3);
     expect(strong.reasons).toContain("shares external identifier: Steam application ID");
     expect(weak.reasons.some((r) => r.startsWith("shares account/social identifier"))).toBe(true);
+  });
+
+  it('zeroes out a pair one item declares "different from" the other (P1889)', () => {
+    // Identical label + P31 + shared per-title id would otherwise score ~1.0.
+    const a: Item = {
+      ...base,
+      id: "Q100",
+      labels: { en: "Look-Alike" },
+      statements: stmt({
+        P1733: [{ type: "external-id", value: "42" }],
+        P1889: [{ type: "item", value: "Q101" }],
+      }),
+    };
+    const b: Item = {
+      ...base,
+      id: "Q101",
+      labels: { en: "Look-Alike" },
+      statements: stmt({ P1733: [{ type: "external-id", value: "42" }] }),
+    };
+    expect(isDeclaredDifferent(a, b)).toBe(true);
+    const result = scoreCandidate(a, b);
+    expect(result.confidence).toBe(0);
+    expect(result.reasons[0]).toContain("different from");
+    // Symmetric: the declaration counts from whichever side holds it.
+    expect(scoreCandidate(b, a).confidence).toBe(0);
   });
 });

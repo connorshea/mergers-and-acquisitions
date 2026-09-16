@@ -392,6 +392,77 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(result.reasons[0]).toContain("external identifiers differ");
   });
 
+  it("penalises a differing release year for same-named games (no shared id)", () => {
+    const mk = (id: string, year: string): Item => ({
+      ...base,
+      id,
+      labels: { en: "Arena" },
+      statements: stmt({ P577: [{ type: "time" as const, value: year }] }),
+    });
+    const near = scoreCandidate(mk("Q1", "2007-01-01"), mk("Q2", "2007-06-01")); // same year
+    const far = scoreCandidate(mk("Q3", "2002-01-01"), mk("Q4", "2020-01-01")); // 18y apart
+    expect(far.confidence).toBeLessThan(near.confidence);
+    expect(far.confidence).toBeLessThan(0.3); // dropped below the persistence floor
+    expect(far.reasons.some((r) => r.startsWith("publication years differ"))).toBe(true);
+  });
+
+  it("does not apply the year penalty when a strong shared id vouches for the pair", () => {
+    const mk = (id: string, year: string): Item => ({
+      ...base,
+      id,
+      labels: { en: "Arena" },
+      statements: stmt({
+        P577: [{ type: "time" as const, value: year }],
+        P1733: [{ type: "external-id" as const, value: "999" }],
+      }),
+    });
+    const result = scoreCandidate(mk("Q5", "2002"), mk("Q6", "2020"), {
+      isIdentifierProp: (pid) => pid === "P1733",
+    });
+    expect(result.confidence).toBeGreaterThan(0.6);
+    expect(result.reasons.some((r) => r.startsWith("publication years differ"))).toBe(false);
+  });
+
+  it("penalises a disjoint developer for same-named games", () => {
+    const mk = (id: string, dev: string): Item => ({
+      ...base,
+      id,
+      labels: { en: "Labyrinth" },
+      statements: stmt({ P178: [{ type: "item" as const, value: dev }] }),
+    });
+    const same = scoreCandidate(mk("Q1", "Q100"), mk("Q2", "Q100"));
+    const diff = scoreCandidate(mk("Q3", "Q100"), mk("Q4", "Q200"));
+    expect(diff.confidence).toBeLessThan(same.confidence);
+    expect(diff.reasons).toContain("different developer");
+  });
+
+  it("scores a series-level id (TV Tropes) as weak, not a strong per-title id", () => {
+    const mk = (id: string, name: string): Item => ({
+      ...base,
+      id,
+      labels: { en: name },
+      statements: stmt({ P6839: [{ type: "external-id" as const, value: "VideoGame/Foo" }] }),
+    });
+    const result = scoreCandidate(mk("Q1", "Foo"), mk("Q2", "Foo"), {
+      isIdentifierProp: (pid) => pid === "P6839",
+    });
+    expect(result.reasons.some((r) => r.startsWith("shares account/social identifier"))).toBe(true);
+    expect(result.reasons.some((r) => r.startsWith("shares external identifier"))).toBe(false);
+  });
+
+  it("ignores agreement on low-entropy props (genre) for the statement term", () => {
+    // Two different games that happen to share only a genre must not get
+    // statement-agreement credit for it.
+    const mk = (id: string, name: string): Item => ({
+      ...base,
+      id,
+      labels: { en: name },
+      statements: stmt({ P136: [{ type: "item" as const, value: "Q744038", label: "RPG" }] }),
+    });
+    const result = scoreCandidate(mk("Q1", "Alpha"), mk("Q2", "Beta"));
+    expect(result.reasons.some((r) => r.includes("shared statements agree"))).toBe(false);
+  });
+
   it('zeroes out a pair one item declares "different from" the other (P1889)', () => {
     // Identical label + P31 + shared per-title id would otherwise score ~1.0.
     const a: Item = {

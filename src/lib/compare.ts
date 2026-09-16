@@ -359,6 +359,26 @@ const WEAK_ID_PROPS = new Set<string>([
   "P6634", // LinkedIn personal profile ID
   "P1581", // official blog URL
   "P3185", // VK username
+  // Series/franchise-level catalogue IDs — one page often covers a whole series,
+  // so a shared value doesn't mean two items are the same *title* (e.g. a game
+  // and its sequel share a TV Tropes or speedrun.com page).
+  "P6839", // TV Tropes ID
+  "P6783", // speedrun.com game ID
+]);
+
+/**
+ * Ubiquitous, low-information item-valued properties. Thousands of unrelated
+ * games share these exact values ("single-player", "action game", a country),
+ * so agreement on them is near-meaningless and must not inflate the
+ * statement-agreement signal — it's excluded from that term entirely. Genuinely
+ * discriminative properties (developer, publisher, series, per-title ids) keep
+ * full weight.
+ */
+const LOW_ENTROPY_PROPS = new Set<string>([
+  "P136", // genre
+  "P404", // game mode
+  "P495", // country of origin
+  "P407", // language of work or name
 ]);
 
 const ROMAN_RE = /^m{0,3}(cm|cd|d?c{0,3})(xc|xl|l?x{0,3})(ix|iv|v?i{0,3})$/i;
@@ -468,7 +488,9 @@ export interface CandidateScore {
  * buildRows. Combines a handful of signals — shared external identifiers, same
  * vs. different `instance of` (P31), name similarity/distinctness (labels and
  * aliases, so renames still match), and how much of the shared statements agree
- * — into a 0–1 score. Two strong negatives can effectively disqualify a pair:
+ * — into a 0–1 score. Concrete disagreement subtracts too: a differing release
+ * year, developer, or publisher (unless a shared strong per-title id vouches for
+ * the pair). Two strong negatives can effectively disqualify a pair:
  * clearly-different names, and many external identifiers that are present on
  * both items yet all differ. Blockers (conflicting descriptions or same-wiki
  * sitelinks) are surfaced via `hasBlocker` but do not by themselves sink the
@@ -553,12 +575,58 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     reasons.push(`different names (${namePct}%)`);
   }
 
-  // How much of the shared statement set agrees (excluding P31, counted above).
-  const stmtRows = rows.filter((r) => r.kind === "statement" && r.key !== "P31");
+  // How much of the shared statement set agrees, over *discriminative* properties
+  // only (P31 counted above; low-entropy props like genre/game mode/country
+  // excluded, since agreeing on "single-player" says nothing about sameness).
+  const stmtRows = rows.filter(
+    (r) => r.kind === "statement" && r.key !== "P31" && !LOW_ENTROPY_PROPS.has(r.key),
+  );
   const agreeing = stmtRows.filter((r) => r.status === "identical" || r.status === "similar");
   if (stmtRows.length > 0 && agreeing.length > 0) {
     score += 0.2 * (agreeing.length / stmtRows.length);
     reasons.push(`${agreeing.length} of ${stmtRows.length} shared statements agree`);
+  }
+
+  // Disagreement penalties. A shared strong per-title identifier is near-
+  // conclusive, so when we have one we trust it and skip these (a data-entry
+  // date or renamed-studio mismatch shouldn't sink a genuine duplicate).
+  // Otherwise, concrete disagreement on discriminative facts — the release year,
+  // the developer, the publisher — is strong evidence of two different games
+  // that merely share a title.
+  if (strongIds.length === 0) {
+    const years = (item: Item): number[] =>
+      (item.statements.P577 ?? [])
+        .filter((v) => v.type === "time")
+        .map((v) => parseInt(v.value.slice(0, 4), 10))
+        .filter((n) => Number.isFinite(n));
+    const ya = years(a);
+    const yb = years(b);
+    if (ya.length > 0 && yb.length > 0) {
+      // Closest pair of years, so a re-release date on one side doesn't trip it.
+      let gap = Infinity;
+      for (const x of ya) for (const y of yb) gap = Math.min(gap, Math.abs(x - y));
+      if (gap >= 2) {
+        const penalty = Math.min(0.35, 0.25 + (gap - 2) / 30);
+        score -= penalty;
+        reasons.push(`publication years differ by ${gap}`);
+      }
+    }
+
+    const itemValues = (item: Item, pid: string): string[] =>
+      (item.statements[pid] ?? []).filter((v) => v.type === "item").map((v) => v.value);
+    const disjoint = (pid: string): boolean => {
+      const va = itemValues(a, pid);
+      const vb = itemValues(b, pid);
+      return va.length > 0 && vb.length > 0 && !va.some((v) => vb.includes(v));
+    };
+    if (disjoint("P178")) {
+      score -= 0.25;
+      reasons.push("different developer");
+    }
+    if (disjoint("P123")) {
+      score -= 0.2;
+      reasons.push("different publisher");
+    }
   }
 
   const blockers = rows.filter((r) => r.blocker);

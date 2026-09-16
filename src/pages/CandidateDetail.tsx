@@ -117,7 +117,9 @@ export default function CandidateDetail() {
         )}
       </div>
 
-      {data && candidate && <MergeCandidates from={data.from} into={data.into} />}
+      {data && candidate && (
+        <MergeCandidates from={data.from} into={data.into} propertyLabels={data.propertyLabels} />
+      )}
     </>
   );
 }

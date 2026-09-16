@@ -13,5 +13,5 @@
     "strict": true,
     "types": ["void/env"]
   },
-  "include": ["routes", "middleware", "crons", "queues"]
+  "include": ["routes", "middleware", "crons", "queues", "server"]
 }

@@ -1,7 +1,7 @@
 // GET /api/candidates/:id — one candidate with both items' full data, ready to
 // feed straight into the comparison view.
 import { db, eq, inArray } from "void/db";
-import { items, mergeCandidates } from "@schema";
+import { items, mergeCandidates, properties } from "@schema";
 import { defineHandler } from "void";
 import type { Item } from "../../../src/lib/compare";
 import type { CandidateDetailResponse } from "../../../src/lib/api-types";
@@ -41,10 +41,24 @@ export const GET = defineHandler(async (c) => {
     return c.json({ error: `Item data missing for: ${missing}` }, 404);
   }
 
+  // Resolve human labels for just the property ids present on this pair, so the
+  // comparison view shows names instead of bare Pxxx. Missing rows (unsynced
+  // properties) simply fall back to the id client-side.
+  const pids = [...new Set([...Object.keys(from.statements), ...Object.keys(into.statements)])];
+  const propertyLabels: Record<string, string> = {};
+  if (pids.length > 0) {
+    const labelRows = await db
+      .select({ pid: properties.pid, label: properties.label })
+      .from(properties)
+      .where(inArray(properties.pid, pids));
+    for (const r of labelRows) propertyLabels[r.pid] = r.label;
+  }
+
   const payload: CandidateDetailResponse = {
     candidate: toSummary(row, labels),
     from,
     into,
+    propertyLabels,
   };
   return payload;
 });

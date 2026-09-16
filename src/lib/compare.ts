@@ -169,7 +169,12 @@ export function compareSets(
   return { status, a: aa, b: bb };
 }
 
-export function buildRows(a: Item, b: Item): Row[] {
+/**
+ * Build the field-by-field comparison rows for a pair. `propertyLabels` (Pxxx →
+ * human label) is an optional DB-backed override; it falls back to the built-in
+ * PROPERTY_LABELS map and finally to the bare property id.
+ */
+export function buildRows(a: Item, b: Item, propertyLabels: Record<string, string> = {}): Row[] {
   const rows: Row[] = [];
 
   /**
@@ -280,7 +285,7 @@ export function buildRows(a: Item, b: Item): Row[] {
     const oneSided = va.length === 0 || vb.length === 0;
     rows.push({
       key: pid,
-      label: PROPERTY_LABELS[pid] ?? pid,
+      label: propertyLabels[pid] ?? PROPERTY_LABELS[pid] ?? pid,
       kind: "statement",
       status: oneSided ? "one-sided" : cmp.status,
       blocker: false,

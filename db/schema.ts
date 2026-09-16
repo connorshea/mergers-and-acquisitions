@@ -65,6 +65,19 @@ export const mergeCandidates = sqliteTable(
   ],
 );
 
+// Human-readable labels for Wikidata properties, synced wholesale from Wikidata
+// (see crons/sync-properties.ts). Lets the UI show "Steam application ID"
+// instead of a bare "P1733" without hard-coding a map. `datatype` is Wikidata's
+// property type (e.g. "ExternalId", "WikibaseItem").
+export const properties = sqliteTable("properties", {
+  pid: text("pid").primaryKey(), // e.g. "P1733"
+  label: text("label").notNull(), // English label, e.g. "Steam application ID"
+  datatype: text("datatype"), // Wikidata property type, nullable
+  syncedAt: text("synced_at")
+    .notNull()
+    .default(sql`(datetime('now'))`),
+});
+
 // Cursor bookkeeping for the paged Wikidata sync. One row per scope (e.g. the
 // video-game population); `cursor` is the SPARQL OFFSET reached so far.
 export const syncState = sqliteTable("sync_state", {

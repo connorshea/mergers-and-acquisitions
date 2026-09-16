@@ -9,6 +9,7 @@ import {
   type CandidateStatus,
   type CandidateSummary,
   type HuntTriggerResponse,
+  type PropertiesSyncResponse,
 } from "../lib/api-types";
 
 const PAGE_SIZE = 25;
@@ -45,6 +46,7 @@ export default function CandidatesList() {
     running: false,
     note: null,
   });
+  const [syncing, setSyncing] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -91,6 +93,24 @@ export default function CandidatesList() {
     }
   }
 
+  async function syncProperties() {
+    setSyncing(true);
+    setHunt({ running: false, note: null });
+    try {
+      const res = await fetch("/api/properties/sync", { method: "POST" });
+      const { synced } = res as PropertiesSyncResponse;
+      setHunt({ running: false, note: `Synced ${synced.toLocaleString()} property names.` });
+    } catch (e: unknown) {
+      setHunt({
+        running: false,
+        note:
+          e instanceof FetchError ? `Property sync failed (${e.status}).` : "Property sync failed.",
+      });
+    } finally {
+      setSyncing(false);
+    }
+  }
+
   // Merge params; any filter change resets pagination unless page is set explicitly.
   function update(next: Record<string, string | undefined>) {
     const merged = new URLSearchParams(params);
@@ -112,9 +132,20 @@ export default function CandidatesList() {
       <header className="list-head">
         <div className="list-head-row">
           <h1>Merge candidates</h1>
-          <button type="button" className="btn-hunt" onClick={runHunt} disabled={hunt.running}>
-            {hunt.running ? "Starting hunt…" : "Run hunt"}
-          </button>
+          <div className="head-actions">
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={syncProperties}
+              disabled={syncing}
+              title="Fetch human-readable property names from Wikidata"
+            >
+              {syncing ? "Syncing names…" : "Sync property names"}
+            </button>
+            <button type="button" className="btn-hunt" onClick={runHunt} disabled={hunt.running}>
+              {hunt.running ? "Starting hunt…" : "Run hunt"}
+            </button>
+          </div>
         </div>
         <p className="list-sub">
           Ranked pairs of Wikidata video-game items that may be duplicates. Confidence is heuristic;

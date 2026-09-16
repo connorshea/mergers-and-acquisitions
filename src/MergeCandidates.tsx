@@ -50,7 +50,16 @@ const GROUPS: { status: RowStatus; title: string }[] = [
  * QID by Wikidata convention) and `into` the one that survives. Use
  * `orderByAge` from ./lib/compare to derive that ordering.
  */
-export default function MergeCandidates({ from, into }: { from: Item; into: Item }) {
+export default function MergeCandidates({
+  from,
+  into,
+  propertyLabels,
+}: {
+  from: Item;
+  into: Item;
+  /** Pxxx → human label, from the DB-backed properties table. */
+  propertyLabels?: Record<string, string>;
+}) {
   const [hidden, setHidden] = useState<Record<RowStatus, boolean>>({
     identical: false,
     similar: false,
@@ -58,7 +67,7 @@ export default function MergeCandidates({ from, into }: { from: Item; into: Item
     "one-sided": false,
   });
 
-  const rows = useMemo(() => buildRows(from, into), [from, into]);
+  const rows = useMemo(() => buildRows(from, into, propertyLabels), [from, into, propertyLabels]);
   const blockers = rows.filter((r) => r.blocker);
   const counts = rows.reduce((acc, r) => ({ ...acc, [r.status]: acc[r.status] + 1 }), {
     identical: 0,

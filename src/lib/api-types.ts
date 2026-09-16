@@ -37,6 +37,8 @@ export interface CandidateDetailResponse {
   /** Parsed items.data for fromQid / intoQid, ready for the comparison view. */
   from: Item;
   into: Item;
+  /** Pxxx → human label, for the property ids present on this pair. */
+  propertyLabels: Record<string, string>;
 }
 
 export interface CandidateDismissResponse {
@@ -46,4 +48,9 @@ export interface CandidateDismissResponse {
 export interface HuntTriggerResponse {
   enqueued: boolean;
   message: string;
+}
+
+export interface PropertiesSyncResponse {
+  /** Number of property labels fetched and upserted. */
+  synced: number;
 }

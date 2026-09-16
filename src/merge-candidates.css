@@ -547,10 +547,10 @@ body {
   opacity: 0.6;
   cursor: default;
 }
-.menu-danger {
+.menu-panel button.menu-danger {
   color: var(--distinct);
 }
-.menu-danger:hover:not(:disabled) {
+.menu-panel button.menu-danger:hover:not(:disabled) {
   background: var(--distinct);
   color: var(--surface);
 }

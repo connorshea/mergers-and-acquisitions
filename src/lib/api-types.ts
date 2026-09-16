@@ -42,3 +42,8 @@ export interface CandidateDetailResponse {
 export interface CandidateDismissResponse {
   candidate: CandidateSummary;
 }
+
+export interface HuntTriggerResponse {
+  enqueued: boolean;
+  message: string;
+}

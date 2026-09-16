@@ -8,6 +8,7 @@ import {
   type CandidateSort,
   type CandidateStatus,
   type CandidateSummary,
+  type HuntTriggerResponse,
 } from "../lib/api-types";
 
 const PAGE_SIZE = 25;
@@ -37,6 +38,13 @@ export default function CandidatesList() {
   const [data, setData] = useState<CandidateListResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  // Bumping this refetches the list without changing any URL param — used to
+  // pull in candidates the hunt job produced after it was triggered.
+  const [reloadKey, setReloadKey] = useState(0);
+  const [hunt, setHunt] = useState<{ running: boolean; note: string | null }>({
+    running: false,
+    note: null,
+  });
 
   useEffect(() => {
     let cancelled = false;
@@ -65,7 +73,23 @@ export default function CandidatesList() {
     return () => {
       cancelled = true;
     };
-  }, [q, status, sort, page]);
+  }, [q, status, sort, page, reloadKey]);
+
+  async function runHunt() {
+    setHunt({ running: true, note: null });
+    try {
+      const res = await fetch("/api/hunt", { method: "POST" });
+      setHunt({ running: false, note: (res as HuntTriggerResponse).message });
+      // The queue processes asynchronously; refetch shortly so freshly scored
+      // pairs show up without a manual reload.
+      setTimeout(() => setReloadKey((k) => k + 1), 2500);
+    } catch (e: unknown) {
+      setHunt({
+        running: false,
+        note: e instanceof FetchError ? `Hunt failed (${e.status}).` : "Hunt failed.",
+      });
+    }
+  }
 
   // Merge params; any filter change resets pagination unless page is set explicitly.
   function update(next: Record<string, string | undefined>) {
@@ -86,11 +110,17 @@ export default function CandidatesList() {
   return (
     <main className="mc">
       <header className="list-head">
-        <h1>Merge candidates</h1>
+        <div className="list-head-row">
+          <h1>Merge candidates</h1>
+          <button type="button" className="btn-hunt" onClick={runHunt} disabled={hunt.running}>
+            {hunt.running ? "Starting hunt…" : "Run hunt"}
+          </button>
+        </div>
         <p className="list-sub">
           Ranked pairs of Wikidata video-game items that may be duplicates. Confidence is heuristic;
           always review before merging.
         </p>
+        {hunt.note && <p className="list-msg hunt-note">{hunt.note}</p>}
       </header>
 
       <div className="list-controls">

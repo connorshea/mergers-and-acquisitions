@@ -417,10 +417,37 @@ body {
 .list-head {
   margin-bottom: 1.25rem;
 }
+.list-head-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
 .list-head h1 {
   font-size: 1.6rem;
   font-weight: 600;
   margin: 0;
+}
+.btn-hunt {
+  font: inherit;
+  font-weight: 600;
+  padding: 0.45rem 1rem;
+  border: 1px solid var(--identical);
+  border-radius: 6px;
+  background: var(--identical);
+  color: var(--surface);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn-hunt:hover:not(:disabled) {
+  filter: brightness(1.05);
+}
+.btn-hunt:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.hunt-note {
+  margin-top: 0.6rem;
 }
 .list-sub {
   color: var(--muted);

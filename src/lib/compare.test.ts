@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
+  bestNameSimilarity,
   buildRows,
   compareValues,
   installment,
@@ -238,6 +239,77 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(withPredicate.reasons.some((r) => r.includes("external identifier"))).toBe(false);
     expect(legacy.reasons.some((r) => r.includes("external identifier"))).toBe(true);
     expect(withPredicate.confidence).toBeLessThan(legacy.confidence - 0.4);
+  });
+
+  it("penalises clearly-distinct names and rewards matching ones", () => {
+    const stmts = stmt({ P178: [{ type: "item" as const, value: "Q555", label: "Studio" }] });
+    const sharedName: Item = {
+      ...base,
+      id: "Q20",
+      labels: { en: "Alpha Quest" },
+      statements: stmts,
+    };
+    const sameSubject: Item = {
+      ...base,
+      id: "Q21",
+      labels: { en: "Alpha Quest" },
+      statements: stmts,
+    };
+    const other: Item = {
+      ...base,
+      id: "Q22",
+      labels: { en: "Zeta Marauder" },
+      statements: stmts,
+    };
+
+    const matching = scoreCandidate(sharedName, sameSubject);
+    const distinct = scoreCandidate(sharedName, other);
+
+    expect(matching.confidence).toBeGreaterThan(distinct.confidence + 0.4);
+    // Different names alone drop an otherwise-similar pair below the 0.3 floor.
+    expect(distinct.confidence).toBeLessThan(0.3);
+    expect(distinct.reasons.some((r) => r.startsWith("different names"))).toBe(true);
+  });
+
+  it("bestNameSimilarity matches a label against the other item's alias", () => {
+    const a: Item = { ...base, id: "Q30", labels: { en: "Meridian Games" }, statements: stmt({}) };
+    const b: Item = {
+      ...base,
+      id: "Q31",
+      labels: { en: "Meridian Interactive" },
+      aliases: { en: ["Meridian Games"] },
+      statements: stmt({}),
+    };
+    expect(bestNameSimilarity(a, b)).toBe(1);
+    expect(bestNameSimilarity(a, b, false)).toBeLessThan(1);
+  });
+
+  it("disqualifies a pair whose external identifiers all differ (>6)", () => {
+    const ids = (prefix: string) =>
+      Object.fromEntries(
+        Array.from({ length: 7 }, (_, i) => [
+          `P900${i + 1}`,
+          [{ type: "external-id" as const, value: `${prefix}${i}` }],
+        ]),
+      );
+    // Identical name + same P31 would otherwise score high, but seven external
+    // ids present on both items with entirely different values give it away.
+    const a: Item = {
+      ...base,
+      id: "Q40",
+      labels: { en: "Look-Alike" },
+      statements: stmt(ids("a")),
+    };
+    const b: Item = {
+      ...base,
+      id: "Q41",
+      labels: { en: "Look-Alike" },
+      statements: stmt(ids("b")),
+    };
+    const isId = (pid: string) => pid.startsWith("P900");
+    const result = scoreCandidate(a, b, { isIdentifierProp: isId });
+    expect(result.confidence).toBeLessThanOrEqual(0.05);
+    expect(result.reasons[0]).toContain("external identifiers differ");
   });
 
   it('zeroes out a pair one item declares "different from" the other (P1889)', () => {

@@ -319,6 +319,10 @@ function CandidateRowView({
   onDismiss: (id: number) => Promise<void>;
 }) {
   const pct = Math.round(c.confidence * 100);
+  // "same instance of (P31)" is true of nearly every in-scope pair (all video
+  // games), so it's noise in the compact list summary — drop it here. The full
+  // reason list still shows on the detail view.
+  const summaryReasons = c.reasons.filter((r) => !r.includes("instance of"));
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(false);
 
@@ -347,7 +351,9 @@ function CandidateRowView({
             {c.intoLabel ?? c.intoQid} <span className="pair-qid">{c.intoQid}</span>
           </span>
         </Link>
-        {c.reasons.length > 0 && <div className="pair-reasons">{c.reasons.join(" · ")}</div>}
+        {summaryReasons.length > 0 && (
+          <div className="pair-reasons">{summaryReasons.join(" · ")}</div>
+        )}
       </td>
       <td className="col-conf">
         <span

@@ -324,6 +324,7 @@ const WEAK_ID_PROPS = new Set<string>([
   "P2984", // Snapchat
   "P6634", // LinkedIn personal profile ID
   "P1581", // official blog URL
+  "P3185", // VK username
 ]);
 
 const ROMAN_RE = /^m{0,3}(cm|cd|d?c{0,3})(xc|xl|l?x{0,3})(ix|iv|v?i{0,3})$/i;
@@ -361,6 +362,34 @@ export function installment(label: string): { base: string; num: number | null }
 
 function bestLabel(item: Item): string {
   return item.labels.en ?? item.labels.mul ?? Object.values(item.labels)[0] ?? "";
+}
+
+/** Every label (and, optionally, alias) string an item carries, across languages. */
+function nameStrings(item: Item, includeAliases: boolean): string[] {
+  const out = Object.values(item.labels);
+  if (includeAliases) for (const arr of Object.values(item.aliases)) out.push(...arr);
+  return out.filter(Boolean);
+}
+
+/**
+ * Best string similarity (0–1) between any name of `a` and any name of `b`.
+ * With `includeAliases` (the default) it also considers aliases on both sides,
+ * so a rename — where the label differs but matches the other item's alias —
+ * still reads as a match. With it off, only labels are compared, which lets the
+ * caller tell an outright identical label from an alias-only match.
+ */
+export function bestNameSimilarity(a: Item, b: Item, includeAliases = true): number {
+  const as = nameStrings(a, includeAliases);
+  const bs = nameStrings(b, includeAliases);
+  if (as.length === 0 || bs.length === 0) return 0;
+  let best = 0;
+  for (const x of as) {
+    for (const y of bs) {
+      best = Math.max(best, stringSimilarity(x, y));
+      if (best === 1) return 1;
+    }
+  }
+  return best;
 }
 
 /**
@@ -403,11 +432,13 @@ export interface CandidateScore {
 /**
  * Heuristic duplicate-confidence score for a pair of items, built on top of
  * buildRows. Combines a handful of signals — shared external identifiers, same
- * vs. different `instance of` (P31), label agreement (including label<->alias
- * cross-matches from renames), and how much of the shared statements agree —
- * into a 0–1 score. Blockers (conflicting descriptions or same-wiki sitelinks)
- * are surfaced via `hasBlocker` but do not by themselves sink the score: real
- * duplicates routinely have conflicting descriptions.
+ * vs. different `instance of` (P31), name similarity/distinctness (labels and
+ * aliases, so renames still match), and how much of the shared statements agree
+ * — into a 0–1 score. Two strong negatives can effectively disqualify a pair:
+ * clearly-different names, and many external identifiers that are present on
+ * both items yet all differ. Blockers (conflicting descriptions or same-wiki
+ * sitelinks) are surfaced via `hasBlocker` but do not by themselves sink the
+ * score: real duplicates routinely have conflicting descriptions.
  */
 export interface ScoreOptions {
   /**
@@ -450,11 +481,14 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     reasons.push(`shares account/social identifier: ${weakIds.map((r) => r.label).join(", ")}`);
   }
 
-  // Instance of (P31): agreement supports a merge; disagreement strongly opposes.
+  // Instance of (P31): agreement is necessary but far from sufficient — nearly
+  // every in-scope pair shares it (all video games are P31=Q7889), so it barely
+  // distinguishes anything and gets only a token boost. Disagreement, on the
+  // other hand, strongly opposes a merge.
   const p31 = rows.find((r) => r.key === "P31");
   if (p31) {
     if (p31.status === "identical") {
-      score += 0.2;
+      score += 0.1;
       reasons.push("same instance of (P31)");
     } else if (p31.status === "distinct") {
       score -= 0.45;
@@ -462,22 +496,27 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     }
   }
 
-  // Label agreement, including label<->alias cross-matches (renames).
-  const labelRows = rows.filter((r) => r.key.startsWith("label:"));
-  const crossMatched = rows.some(
-    (r) =>
-      (r.key.startsWith("label:") || r.key.startsWith("alias:")) &&
-      [...r.a, ...r.b].some((v) => v.note?.startsWith("matches ")),
-  );
-  if (labelRows.some((r) => r.status === "identical")) {
-    score += 0.25;
-    reasons.push("identical label");
-  } else if (crossMatched) {
+  // Name agreement/distinctness — the single strongest distinguisher between a
+  // real duplicate and two different games that merely share a type and a couple
+  // of properties. It both rewards matches and *penalises* clearly-distinct
+  // names. Aliases count on both sides, so a rename (label differs but matches
+  // the other item's alias) still reads as a match; comparing labels-only lets
+  // us tell an outright identical label from an alias-only match in the reason.
+  const nameSim = bestNameSimilarity(a, b);
+  const labelSim = bestNameSimilarity(a, b, false);
+  const namePct = Math.round(nameSim * 100);
+  if (nameSim >= 0.995) {
+    score += 0.35;
+    reasons.push(labelSim >= 0.995 ? "identical label" : "label matches the other item's alias");
+  } else if (nameSim >= 0.75) {
     score += 0.2;
-    reasons.push("label matches the other item's alias");
-  } else if (labelRows.some((r) => r.status === "similar")) {
-    score += 0.1;
-    reasons.push("similar label");
+    reasons.push(`very similar names (${namePct}%)`);
+  } else if (nameSim >= 0.5) {
+    score += 0.05;
+    reasons.push(`loosely similar names (${namePct}%)`);
+  } else {
+    score -= 0.35;
+    reasons.push(`different names (${namePct}%)`);
   }
 
   // How much of the shared statement set agrees (excluding P31, counted above).
@@ -493,6 +532,27 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     reasons.push(
       `${blockers.length} conflict${blockers.length > 1 ? "s" : ""} would block the merge`,
     );
+  }
+
+  // Many external identifiers held by *both* items with entirely different
+  // values are near-conclusive evidence of two distinct subjects: a single game
+  // has one Steam/GOG/MobyGames/etc. page, so if each item carries its own set of
+  // store/database ids and none of them agree, they are almost certainly not the
+  // same game. Only real ExternalId properties count (when we can tell), so a
+  // shared non-id literal like a review score never trips this.
+  const distinctExtIdRows = rows.filter(
+    (r) =>
+      r.kind === "statement" &&
+      r.status === "distinct" &&
+      r.a.some((v) => v.type === "external-id") &&
+      r.b.some((v) => v.type === "external-id") &&
+      (isId ? isId(r.key) : true),
+  );
+  if (distinctExtIdRows.length > 6) {
+    reasons.unshift(
+      `${distinctExtIdRows.length} external identifiers differ across the pair — almost certainly different subjects`,
+    );
+    score = Math.min(score, 0.05);
   }
 
   // A sequel is not a duplicate. Different entries in the same series share a

@@ -463,6 +463,24 @@ body {
   opacity: 0.6;
   cursor: default;
 }
+.btn-danger {
+  font: inherit;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--distinct);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--distinct);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn-danger:hover:not(:disabled) {
+  background: var(--distinct);
+  color: var(--surface);
+}
+.btn-danger:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
 .btn-hunt {
   font: inherit;
   font-weight: 600;

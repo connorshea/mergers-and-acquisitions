@@ -11,6 +11,7 @@ import {
   type CandidateSummary,
   type HuntTriggerResponse,
   type PropertiesSyncResponse,
+  type ResetResponse,
 } from "../lib/api-types";
 
 const PAGE_SIZE = 25;
@@ -48,6 +49,7 @@ export default function CandidatesList() {
     note: null,
   });
   const [syncing, setSyncing] = useState(false);
+  const [resetting, setResetting] = useState(false);
   // Candidates dismissed in-place this session, hidden without a full refetch.
   const [dismissedIds, setDismissedIds] = useState<Set<number>>(new Set());
 
@@ -115,6 +117,33 @@ export default function CandidatesList() {
     }
   }
 
+  async function resetCandidates() {
+    const ok = window.confirm(
+      "Delete ALL found merge candidates (including dismissed ones) so the hunt " +
+        "can run from scratch?\n\nThis does not touch synced items — only the " +
+        "candidate list. This cannot be undone.",
+    );
+    if (!ok) return;
+    setResetting(true);
+    setHunt({ running: false, note: null });
+    try {
+      const res = await fetch("/api/reset", { method: "POST" });
+      const { deleted } = res as ResetResponse;
+      setHunt({
+        running: false,
+        note: `Cleared ${deleted.toLocaleString()} candidates. Run the hunt to rebuild.`,
+      });
+      setReloadKey((k) => k + 1);
+    } catch (e: unknown) {
+      setHunt({
+        running: false,
+        note: e instanceof FetchError ? `Reset failed (${e.status}).` : "Reset failed.",
+      });
+    } finally {
+      setResetting(false);
+    }
+  }
+
   // Dismiss straight from the list; the row hides itself on success.
   async function dismissCandidate(id: number): Promise<void> {
     const res = await fetch("/api/candidates/:id/dismiss", {
@@ -148,6 +177,15 @@ export default function CandidatesList() {
         <div className="list-head-row">
           <h1>Merge candidates</h1>
           <div className="head-actions">
+            <button
+              type="button"
+              className="btn-danger"
+              onClick={resetCandidates}
+              disabled={resetting}
+              title="Delete all found candidates so the hunt can run from scratch"
+            >
+              {resetting ? "Resetting…" : "Reset"}
+            </button>
             <button
               type="button"
               className="btn-secondary"

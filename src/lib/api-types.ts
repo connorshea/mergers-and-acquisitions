@@ -57,3 +57,8 @@ export interface PropertiesSyncResponse {
   /** Number of property labels fetched and upserted. */
   synced: number;
 }
+
+export interface ResetResponse {
+  /** Number of merge candidates deleted. */
+  deleted: number;
+}

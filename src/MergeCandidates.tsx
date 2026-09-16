@@ -287,7 +287,10 @@ function compareValues(x: Value, y: Value): [Status, string?] {
   }
 }
 
-function compareSets(a: Value[], b: Value[]): { status: Status; a: AnnotatedValue[]; b: AnnotatedValue[] } {
+function compareSets(
+  a: Value[],
+  b: Value[],
+): { status: Status; a: AnnotatedValue[]; b: AnnotatedValue[] } {
   const annotate = (side: Value[], other: Value[]): AnnotatedValue[] =>
     side.map((v) => {
       let best: Status = "distinct";
@@ -370,11 +373,18 @@ function buildRows(a: Item, b: Item): Row[] {
     Array.from(new Set([...Object.keys(o), ...Object.keys(p)])).sort();
 
   for (const l of langs(a.labels, b.labels))
-    termRow(`label:${l}`, `label (${l})`, a.labels[l] ? [a.labels[l]] : [], b.labels[l] ? [b.labels[l]] : [], false, {
-      a: a.aliases[l] ?? [],
-      b: b.aliases[l] ?? [],
-      what: "an alias",
-    });
+    termRow(
+      `label:${l}`,
+      `label (${l})`,
+      a.labels[l] ? [a.labels[l]] : [],
+      b.labels[l] ? [b.labels[l]] : [],
+      false,
+      {
+        a: a.aliases[l] ?? [],
+        b: b.aliases[l] ?? [],
+        what: "an alias",
+      },
+    );
   for (const l of langs(a.descriptions, b.descriptions))
     termRow(
       `description:${l}`,
@@ -403,7 +413,10 @@ function buildRows(a: Item, b: Item): Row[] {
       blocker: !oneSided && cmp.status !== "identical",
       a: cmp.a,
       b: cmp.b,
-      note: !oneSided && cmp.status !== "identical" ? "two different pages on the same wiki — a real merge would need one removed first" : undefined,
+      note:
+        !oneSided && cmp.status !== "identical"
+          ? "two different pages on the same wiki — a real merge would need one removed first"
+          : undefined,
     });
   }
 
@@ -429,9 +442,12 @@ function buildRows(a: Item, b: Item): Row[] {
 // ---------- UI ----------
 
 function ValueChip({ v }: { v: AnnotatedValue }) {
-  const text = v.type === "item" ? v.label ?? v.value : v.value;
+  const text = v.type === "item" ? (v.label ?? v.value) : v.value;
   return (
-    <span className={`chip chip-${v.status}`} title={v.note ?? (v.type === "item" ? v.value : undefined)}>
+    <span
+      className={`chip chip-${v.status}`}
+      title={v.note ?? (v.type === "item" ? v.value : undefined)}
+    >
       {text}
       {v.type === "item" && <span className="chip-id">{v.value}</span>}
     </span>
@@ -478,23 +494,32 @@ export default function MergeCandidates() {
 
   const rows = useMemo(() => buildRows(from, into), [from, into]);
   const blockers = rows.filter((r) => r.blocker);
-  const counts = rows.reduce(
-    (acc, r) => ({ ...acc, [r.status]: acc[r.status] + 1 }),
-    { identical: 0, similar: 0, distinct: 0, "one-sided": 0 } as Record<RowStatus, number>,
-  );
+  const counts = rows.reduce((acc, r) => ({ ...acc, [r.status]: acc[r.status] + 1 }), {
+    identical: 0,
+    similar: 0,
+    distinct: 0,
+    "one-sided": 0,
+  } as Record<RowStatus, number>);
 
   return (
     <div className="mc">
       <nav className="examples" aria-label="Example pairs">
         {EXAMPLES.map((ex, i) => (
-          <button key={ex.name} className={i === exampleIdx ? "is-active" : undefined} onClick={() => setExampleIdx(i)} aria-pressed={i === exampleIdx}>
+          <button
+            key={ex.name}
+            className={i === exampleIdx ? "is-active" : undefined}
+            onClick={() => setExampleIdx(i)}
+            aria-pressed={i === exampleIdx}
+          >
             {ex.name}
           </button>
         ))}
       </nav>
       <header className="mc-head">
         <ItemPlate item={from} side="from" />
-        <div className="arrow" aria-hidden="true" title="Higher ID merges into lower ID">→</div>
+        <div className="arrow" aria-hidden="true" title="Higher ID merges into lower ID">
+          →
+        </div>
         <ItemPlate item={into} side="into" />
       </header>
 
@@ -524,9 +549,13 @@ export default function MergeCandidates() {
               <li key={r.key}>
                 <span className="blocker-prop">{r.label}</span>
                 <span className="blocker-values">
-                  {r.a.map((v, i) => <ValueChip key={"a" + i} v={v} />)}
+                  {r.a.map((v, i) => (
+                    <ValueChip key={"a" + i} v={v} />
+                  ))}
                   <span className="blocker-vs">vs</span>
-                  {r.b.map((v, i) => <ValueChip key={"b" + i} v={v} />)}
+                  {r.b.map((v, i) => (
+                    <ValueChip key={"b" + i} v={v} />
+                  ))}
                 </span>
               </li>
             ))}
@@ -563,7 +592,11 @@ export default function MergeCandidates() {
                           <div className="prop-label">{r.label}</div>
                           <div className="prop-key">
                             {r.kind === "statement" ? (
-                              <a href={`https://www.wikidata.org/wiki/Property:${r.key}`} target="_blank" rel="noopener noreferrer">
+                              <a
+                                href={`https://www.wikidata.org/wiki/Property:${r.key}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
                                 {r.key}
                               </a>
                             ) : (
@@ -572,14 +605,24 @@ export default function MergeCandidates() {
                           </div>
                           {r.note && <div className="prop-note">{r.note}</div>}
                           {!r.note && r.a.concat(r.b).find((v) => v.note) && (
-                            <div className="prop-note">{r.a.concat(r.b).find((v) => v.note)!.note}</div>
+                            <div className="prop-note">
+                              {r.a.concat(r.b).find((v) => v.note)!.note}
+                            </div>
                           )}
                         </td>
                         <td className="col-a">
-                          {r.a.length === 0 ? <span className="none">—</span> : r.a.map((v, i) => <ValueChip key={i} v={v} />)}
+                          {r.a.length === 0 ? (
+                            <span className="none">—</span>
+                          ) : (
+                            r.a.map((v, i) => <ValueChip key={i} v={v} />)
+                          )}
                         </td>
                         <td className="col-b">
-                          {r.b.length === 0 ? <span className="none">—</span> : r.b.map((v, i) => <ValueChip key={i} v={v} />)}
+                          {r.b.length === 0 ? (
+                            <span className="none">—</span>
+                          ) : (
+                            r.b.map((v, i) => <ValueChip key={i} v={v} />)
+                          )}
                         </td>
                       </tr>
                     ))}

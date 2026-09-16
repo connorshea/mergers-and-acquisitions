@@ -139,9 +139,22 @@ body {
 }
 .plate-id {
   color: var(--muted);
+  text-decoration: none;
+}
+.plate-id:hover {
+  color: var(--focus);
+  text-decoration: underline;
 }
 .plate-desc {
   color: var(--muted);
+}
+.col-id {
+  color: inherit;
+  text-decoration: none;
+}
+.col-id:hover {
+  color: var(--focus);
+  text-decoration: underline;
 }
 .arrow {
   align-self: center;

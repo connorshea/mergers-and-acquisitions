@@ -23,7 +23,14 @@ function ItemPlate({ item, side }: { item: Item; side: "from" | "into" }) {
       <div className="plate-role">{side === "from" ? "merge from" : "merge into"}</div>
       <div className="plate-label">{item.labels.en ?? item.id}</div>
       <div className="plate-meta">
-        <span className="plate-id">{item.id}</span>
+        <a
+          className="plate-id"
+          href={`https://www.wikidata.org/wiki/${item.id}`}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {item.id}
+        </a>
         {item.descriptions.en && <span className="plate-desc">{item.descriptions.en}</span>}
       </div>
     </div>
@@ -128,8 +135,26 @@ export default function MergeCandidates({ from, into }: { from: Item; into: Item
                   <thead>
                     <tr>
                       <th className="col-prop">property</th>
-                      <th className="col-a">{from.id}</th>
-                      <th className="col-b">{into.id}</th>
+                      <th className="col-a">
+                        <a
+                          className="col-id"
+                          href={`https://www.wikidata.org/wiki/${from.id}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {from.id}
+                        </a>
+                      </th>
+                      <th className="col-b">
+                        <a
+                          className="col-id"
+                          href={`https://www.wikidata.org/wiki/${into.id}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {into.id}
+                        </a>
+                      </th>
                     </tr>
                   </thead>
                   <tbody>

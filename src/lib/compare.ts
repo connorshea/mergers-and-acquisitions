@@ -383,14 +383,17 @@ const WEAK_ID_PROPS = new Set<string>([
  * games share these exact values ("single-player", "action game", a country),
  * so agreement on them is near-meaningless and must not inflate the
  * statement-agreement signal — it's excluded from that term entirely. Genuinely
- * discriminative properties (developer, publisher, series, per-title ids) keep
- * full weight.
+ * discriminative properties (developer, publisher, per-title ids) keep full
+ * weight. Series (P179) is here too: sharing a series is at best a weak hint of
+ * sameness — every entry in a franchise shares it, and a sequel is not a
+ * duplicate — so it must not inflate the match signal.
  */
 const LOW_ENTROPY_PROPS = new Set<string>([
   "P136", // genre
   "P404", // game mode
   "P495", // country of origin
   "P407", // language of work or name
+  "P179", // part of the series (a whole franchise shares it; weak match evidence)
 ]);
 
 /**

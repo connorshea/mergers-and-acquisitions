@@ -578,6 +578,21 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(result.confidence).toBeGreaterThan(0.4);
   });
 
+  it("does not let a shared series (P179) inflate the match signal", () => {
+    // Two distinctly-named games that merely share a franchise: agreeing on the
+    // series must not count toward the statement-agreement signal.
+    const mk = (id: string, name: string, withSeries: boolean): Item => ({
+      ...base,
+      id,
+      labels: { en: name },
+      statements: stmt(withSeries ? { P179: [{ type: "item" as const, value: "Q999" }] } : {}),
+    });
+    const withSeries = scoreCandidate(mk("Q80", "Alpha", true), mk("Q81", "Beta", true));
+    const without = scoreCandidate(mk("Q82", "Alpha", false), mk("Q83", "Beta", false));
+    expect(withSeries.confidence).toBeCloseTo(without.confidence);
+    expect(withSeries.reasons.some((r) => r.includes("shared statements agree"))).toBe(false);
+  });
+
   it("penalises a disjoint developer for same-named games", () => {
     const mk = (id: string, dev: string): Item => ({
       ...base,

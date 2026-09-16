@@ -31,11 +31,20 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # Void generates its route/queue type declarations (.void/routes.d.ts,
+      # .void/queues.d.ts) in the Vite plugin's `buildStart` hook — i.e. during
+      # a build, not during `vp check`. On a fresh checkout those files don't
+      # exist yet, and the generated .void/tsconfig.json references them, so a
+      # type-check before any build fails with "File '.void/routes.d.ts' not
+      # found". Build first so the codegen runs before the type-check.
+      - name: Build
+        run: pnpm exec vp build
+
       - name: Format, lint, and type-check
         run: pnpm exec vp check
 
       - name: Run tests
         run: pnpm exec vp test --passWithNoTests
 
-      - name: Build
-        run: pnpm build
+      - name: Type-check project references
+        run: pnpm exec tsc -b

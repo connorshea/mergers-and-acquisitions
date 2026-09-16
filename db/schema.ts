@@ -78,6 +78,20 @@ export const properties = sqliteTable("properties", {
     .default(sql`(datetime('now'))`),
 });
 
+// Human-readable labels for Wikidata *items* that appear as statement values
+// (genre, platform, developer, instance of, …), synced from Wikidata (see
+// crons/sync-entity-labels.ts). Lets the comparison view show "role-playing
+// video game" instead of a bare "Q744038". Populated from the set of item
+// values actually referenced by in-scope games, so it stays far smaller than
+// all of Wikidata.
+export const entityLabels = sqliteTable("entity_labels", {
+  qid: text("qid").primaryKey(), // e.g. "Q744038"
+  label: text("label").notNull(), // English label, e.g. "role-playing video game"
+  syncedAt: text("synced_at")
+    .notNull()
+    .default(sql`(datetime('now'))`),
+});
+
 // Cursor bookkeeping for the paged Wikidata sync. One row per scope (e.g. the
 // video-game population); `cursor` is the SPARQL OFFSET reached so far.
 export const syncState = sqliteTable("sync_state", {

@@ -172,10 +172,26 @@ export function compareSets(
 /**
  * Build the field-by-field comparison rows for a pair. `propertyLabels` (Pxxx →
  * human label) is an optional DB-backed override; it falls back to the built-in
- * PROPERTY_LABELS map and finally to the bare property id.
+ * PROPERTY_LABELS map and finally to the bare property id. `valueLabels` (Qxxx →
+ * human label) backfills the display label of item-valued statements whose
+ * label the sync didn't resolve, so genre/platform/etc. show a name instead of
+ * a bare QID; it's ignored for non-item values.
  */
-export function buildRows(a: Item, b: Item, propertyLabels: Record<string, string> = {}): Row[] {
+export function buildRows(
+  a: Item,
+  b: Item,
+  propertyLabels: Record<string, string> = {},
+  valueLabels: Record<string, string> = {},
+): Row[] {
   const rows: Row[] = [];
+
+  // Backfill a display label for item values missing one, from valueLabels.
+  const withLabels = (values: Value[]): Value[] =>
+    values.map((v) =>
+      v.type === "item" && !v.label && valueLabels[v.value]
+        ? { ...v, label: valueLabels[v.value] }
+        : v,
+    );
 
   /**
    * Label/alias values are also checked against the *other* term kind on the
@@ -279,8 +295,8 @@ export function buildRows(a: Item, b: Item, propertyLabels: Record<string, strin
   }
 
   for (const pid of langs(a.statements, b.statements)) {
-    const va = a.statements[pid] ?? [];
-    const vb = b.statements[pid] ?? [];
+    const va = withLabels(a.statements[pid] ?? []);
+    const vb = withLabels(b.statements[pid] ?? []);
     const cmp = compareSets(va, vb);
     const oneSided = va.length === 0 || vb.length === 0;
     rows.push({

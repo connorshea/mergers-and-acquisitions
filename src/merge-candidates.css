@@ -463,24 +463,6 @@ body {
   opacity: 0.6;
   cursor: default;
 }
-.btn-danger {
-  font: inherit;
-  padding: 0.45rem 0.9rem;
-  border: 1px solid var(--distinct);
-  border-radius: 6px;
-  background: var(--surface);
-  color: var(--distinct);
-  cursor: pointer;
-  white-space: nowrap;
-}
-.btn-danger:hover:not(:disabled) {
-  background: var(--distinct);
-  color: var(--surface);
-}
-.btn-danger:disabled {
-  opacity: 0.6;
-  cursor: default;
-}
 .btn-hunt {
   font: inherit;
   font-weight: 600;
@@ -521,6 +503,56 @@ body {
 .btn-hunt:disabled {
   opacity: 0.6;
   cursor: default;
+}
+/* "Manage" dropdown: maintenance actions (sync/reset) collapsed out of the header. */
+.menu {
+  position: relative;
+}
+.menu > summary {
+  list-style: none;
+  user-select: none;
+}
+.menu > summary::-webkit-details-marker {
+  display: none;
+}
+.menu-panel {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.35rem);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  min-width: 13rem;
+  padding: 0.3rem;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 12%);
+}
+.menu-panel button {
+  font: inherit;
+  text-align: left;
+  padding: 0.5rem 0.6rem;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.menu-panel button:hover:not(:disabled) {
+  background: var(--bg);
+}
+.menu-panel button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.menu-danger {
+  color: var(--distinct);
+}
+.menu-danger:hover:not(:disabled) {
+  background: var(--distinct);
+  color: var(--surface);
 }
 .hunt-note {
   margin-top: 0.6rem;

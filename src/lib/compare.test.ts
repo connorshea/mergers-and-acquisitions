@@ -82,6 +82,30 @@ describe("buildRows (behavior-preserving extraction)", () => {
       [...(label?.a ?? []), ...(label?.b ?? [])].some((v) => v.note?.startsWith("matches ")),
     ).toBe(true);
   });
+
+  it("backfills item-value display labels from valueLabels, leaving existing ones", () => {
+    const base = { descriptions: {}, aliases: {}, sitelinks: {} };
+    const a: Item = {
+      ...base,
+      id: "Q1",
+      labels: { en: "Game A" },
+      statements: {
+        P136: [{ type: "item", value: "Q23916" }], // no label
+        P400: [{ type: "item", value: "Q10676", label: "Existing Label" }], // keep
+      },
+    };
+    const b: Item = {
+      ...base,
+      id: "Q2",
+      labels: { en: "Game B" },
+      statements: { P136: [{ type: "item", value: "Q828322" }] },
+    };
+    const rows = buildRows(a, b, {}, { Q23916: "action game", Q10676: "should-not-override" });
+    const genre = rows.find((r) => r.key === "P136");
+    expect(genre?.a.find((v) => v.value === "Q23916")?.label).toBe("action game");
+    const platform = rows.find((r) => r.key === "P400");
+    expect(platform?.a.find((v) => v.value === "Q10676")?.label).toBe("Existing Label");
+  });
 });
 
 describe("scoreCandidate", () => {

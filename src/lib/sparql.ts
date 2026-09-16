@@ -99,3 +99,39 @@ export async function fetchAllProperties(opts?: SparqlOptions): Promise<Property
   }
   return rows;
 }
+
+export interface EntityLabelRow {
+  qid: string; // "Q744038"
+  label: string; // "role-playing video game"
+}
+
+/**
+ * Fetch English labels for the Wikidata *items* that appear as statement values
+ * of in-scope games (genre, platform, developer, publisher, instance of, …).
+ * QLever derives the value set itself — every item-valued direct claim on a
+ * video game (P31 = Q7889) or free/libre video game (Q21125433) — so we never
+ * enumerate QIDs from our own DB. That keeps this to the entities we actually
+ * display (tens of thousands) rather than all of Wikidata. Restricting to
+ * `wikibase:WikibaseItem` properties drops external-ids/strings/dates, which
+ * carry their own value, not a QID needing a label.
+ */
+export async function fetchEntityLabels(opts?: SparqlOptions): Promise<EntityLabelRow[]> {
+  const query = `SELECT DISTINCT ?v ?vLabel WHERE {
+  VALUES ?t { wd:Q7889 wd:Q21125433 }
+  ?game wdt:P31 ?t .
+  ?game ?claim ?v .
+  ?prop wikibase:directClaim ?claim .
+  ?prop wikibase:propertyType wikibase:WikibaseItem .
+  ?v rdfs:label ?vLabel .
+  FILTER(lang(?vLabel) = "en")
+}`;
+  const bindings = await sparqlSelect(query, opts);
+  const rows: EntityLabelRow[] = [];
+  for (const b of bindings) {
+    if (!b.v || !b.vLabel) continue;
+    const qid = localName(b.v.value);
+    if (!/^Q\d+$/.test(qid)) continue;
+    rows.push({ qid, label: b.vLabel.value });
+  }
+  return rows;
+}

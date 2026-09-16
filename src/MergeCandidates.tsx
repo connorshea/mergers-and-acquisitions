@@ -54,11 +54,14 @@ export default function MergeCandidates({
   from,
   into,
   propertyLabels,
+  valueLabels,
 }: {
   from: Item;
   into: Item;
   /** Pxxx → human label, from the DB-backed properties table. */
   propertyLabels?: Record<string, string>;
+  /** Qxxx → human label, from the DB-backed entity_labels table. */
+  valueLabels?: Record<string, string>;
 }) {
   const [hidden, setHidden] = useState<Record<RowStatus, boolean>>({
     identical: false,
@@ -67,7 +70,10 @@ export default function MergeCandidates({
     "one-sided": false,
   });
 
-  const rows = useMemo(() => buildRows(from, into, propertyLabels), [from, into, propertyLabels]);
+  const rows = useMemo(
+    () => buildRows(from, into, propertyLabels, valueLabels),
+    [from, into, propertyLabels, valueLabels],
+  );
   const blockers = rows.filter((r) => r.blocker);
   const counts = rows.reduce((acc, r) => ({ ...acc, [r.status]: acc[r.status] + 1 }), {
     identical: 0,

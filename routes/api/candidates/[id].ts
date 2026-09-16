@@ -1,7 +1,7 @@
 // GET /api/candidates/:id — one candidate with both items' full data, ready to
 // feed straight into the comparison view.
 import { and, asc, db, desc, eq, gt, inArray, lt, or } from "void/db";
-import { items, mergeCandidates, properties } from "@schema";
+import { entityLabels, items, mergeCandidates, properties } from "@schema";
 import { defineHandler } from "void";
 import type { Item } from "../../../src/lib/compare";
 import type { CandidateDetailResponse } from "../../../src/lib/api-types";
@@ -70,20 +70,43 @@ export const GET = defineHandler(async (c) => {
   // comparison view shows names instead of bare Pxxx. Missing rows (unsynced
   // properties) simply fall back to the id client-side.
   const pids = [...new Set([...Object.keys(from.statements), ...Object.keys(into.statements)])];
-  const propertyLabels: Record<string, string> = {};
-  if (pids.length > 0) {
-    const labelRows = await db
-      .select({ pid: properties.pid, label: properties.label })
-      .from(properties)
-      .where(inArray(properties.pid, pids));
-    for (const r of labelRows) propertyLabels[r.pid] = r.label;
+  // Item-valued statements reference other Qids that need a display label too
+  // (genre, platform, developer, …). Collect them from both items' statements.
+  const valueQids = new Set<string>();
+  for (const item of [from, into]) {
+    for (const values of Object.values(item.statements)) {
+      for (const v of values) {
+        if (v.type === "item" && !v.label) valueQids.add(v.value);
+      }
+    }
   }
+
+  const [propertyRows, valueRows] = await Promise.all([
+    pids.length > 0
+      ? db
+          .select({ pid: properties.pid, label: properties.label })
+          .from(properties)
+          .where(inArray(properties.pid, pids))
+      : Promise.resolve([]),
+    valueQids.size > 0
+      ? db
+          .select({ qid: entityLabels.qid, label: entityLabels.label })
+          .from(entityLabels)
+          .where(inArray(entityLabels.qid, [...valueQids]))
+      : Promise.resolve([]),
+  ]);
+
+  const propertyLabels: Record<string, string> = {};
+  for (const r of propertyRows) propertyLabels[r.pid] = r.label;
+  const valueLabels: Record<string, string> = {};
+  for (const r of valueRows) valueLabels[r.qid] = r.label;
 
   const payload: CandidateDetailResponse = {
     candidate: toSummary(row, labels),
     from,
     into,
     propertyLabels,
+    valueLabels,
     prevId: prevRows[0]?.id ?? null,
     nextId: nextRows[0]?.id ?? null,
   };

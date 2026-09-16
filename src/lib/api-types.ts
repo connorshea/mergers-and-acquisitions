@@ -39,6 +39,8 @@ export interface CandidateDetailResponse {
   into: Item;
   /** Pxxx → human label, for the property ids present on this pair. */
   propertyLabels: Record<string, string>;
+  /** Qxxx → human label, for the item values present on this pair. */
+  valueLabels: Record<string, string>;
   /** Neighbour candidate ids for prev/next navigation (same status, confidence order). */
   prevId: number | null;
   nextId: number | null;
@@ -55,6 +57,11 @@ export interface HuntTriggerResponse {
 
 export interface PropertiesSyncResponse {
   /** Number of property labels fetched and upserted. */
+  synced: number;
+}
+
+export interface EntityLabelsSyncResponse {
+  /** Number of item/value labels fetched and upserted. */
   synced: number;
 }
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { fetch, FetchError } from "void/client";
 import {
@@ -9,6 +9,7 @@ import {
   type CandidateStatus,
   type CandidateDismissResponse,
   type CandidateSummary,
+  type EntityLabelsSyncResponse,
   type HuntTriggerResponse,
   type PropertiesSyncResponse,
   type ResetResponse,
@@ -49,9 +50,14 @@ export default function CandidatesList() {
     note: null,
   });
   const [syncing, setSyncing] = useState(false);
+  const [syncingValues, setSyncingValues] = useState(false);
   const [resetting, setResetting] = useState(false);
   // Candidates dismissed in-place this session, hidden without a full refetch.
   const [dismissedIds, setDismissedIds] = useState<Set<number>>(new Set());
+  const menuRef = useRef<HTMLDetailsElement>(null);
+  const closeMenu = () => {
+    if (menuRef.current) menuRef.current.open = false;
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -117,6 +123,23 @@ export default function CandidatesList() {
     }
   }
 
+  async function syncValueNames() {
+    setSyncingValues(true);
+    setHunt({ running: false, note: null });
+    try {
+      const res = await fetch("/api/entity-labels/sync", { method: "POST" });
+      const { synced } = res as EntityLabelsSyncResponse;
+      setHunt({ running: false, note: `Synced ${synced.toLocaleString()} value names.` });
+    } catch (e: unknown) {
+      setHunt({
+        running: false,
+        note: e instanceof FetchError ? `Value sync failed (${e.status}).` : "Value sync failed.",
+      });
+    } finally {
+      setSyncingValues(false);
+    }
+  }
+
   async function resetCandidates() {
     const ok = window.confirm(
       "Delete ALL found merge candidates (including dismissed ones) so the hunt " +
@@ -177,27 +200,44 @@ export default function CandidatesList() {
         <div className="list-head-row">
           <h1>Merge candidates</h1>
           <div className="head-actions">
-            <button
-              type="button"
-              className="btn-danger"
-              onClick={resetCandidates}
-              disabled={resetting}
-              title="Delete all found candidates so the hunt can run from scratch"
-            >
-              {resetting ? "Resetting…" : "Reset"}
-            </button>
-            <button
-              type="button"
-              className="btn-secondary"
-              onClick={syncProperties}
-              disabled={syncing}
-              title="Fetch human-readable property names from Wikidata"
-            >
-              {syncing ? "Syncing names…" : "Sync property names"}
-            </button>
             <button type="button" className="btn-hunt" onClick={runHunt} disabled={hunt.running}>
               {hunt.running ? "Starting hunt…" : "Run hunt"}
             </button>
+            <details className="menu" ref={menuRef}>
+              <summary className="btn-secondary" aria-label="Maintenance actions">
+                Manage ▾
+              </summary>
+              <div className="menu-panel" role="menu" onClick={closeMenu}>
+                <button
+                  type="button"
+                  role="menuitem"
+                  onClick={syncProperties}
+                  disabled={syncing}
+                  title="Fetch human-readable property names from Wikidata"
+                >
+                  {syncing ? "Syncing property names…" : "Sync property names"}
+                </button>
+                <button
+                  type="button"
+                  role="menuitem"
+                  onClick={syncValueNames}
+                  disabled={syncingValues}
+                  title="Fetch human-readable labels for item values (genre, platform, …)"
+                >
+                  {syncingValues ? "Syncing value names…" : "Sync value names"}
+                </button>
+                <button
+                  type="button"
+                  role="menuitem"
+                  className="menu-danger"
+                  onClick={resetCandidates}
+                  disabled={resetting}
+                  title="Delete all found candidates so the hunt can run from scratch"
+                >
+                  {resetting ? "Resetting…" : "Reset candidates"}
+                </button>
+              </div>
+            </details>
           </div>
         </div>
         <p className="list-sub">

@@ -15,6 +15,9 @@ export default function CandidateDetail() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [dismissing, setDismissing] = useState(false);
+  // Which "not implemented yet" dialog is open, if any. Merge and
+  // "mark as different from" are placeholders until those flows are built.
+  const [dialog, setDialog] = useState<"merge" | "different" | null>(null);
 
   useEffect(() => {
     if (!id) return;
@@ -118,6 +121,16 @@ export default function CandidateDetail() {
               </ul>
             )}
             <div className="detail-actions">
+              <button type="button" className="btn-merge" onClick={() => setDialog("merge")}>
+                Merge
+              </button>
+              <button
+                type="button"
+                className="btn-different"
+                onClick={() => setDialog("different")}
+              >
+                Mark as different from
+              </button>
               {status && status !== "open" ? (
                 <span className="flag flag-status">{status}</span>
               ) : (
@@ -144,6 +157,58 @@ export default function CandidateDetail() {
           valueLabels={data.valueLabels}
         />
       )}
+
+      {dialog && (
+        <NotImplementedDialog
+          title={dialog === "merge" ? "Merge items" : "Mark as different from"}
+          body={
+            dialog === "merge"
+              ? "Applying merges via Wikidata (wbmergeitems) isn't implemented yet."
+              : "Recording a “different from” (P1889) statement isn't implemented yet."
+          }
+          onClose={() => setDialog(null)}
+        />
+      )}
     </>
+  );
+}
+
+// A minimal modal used for the not-yet-built merge / "different from" actions.
+// Closes on backdrop click, the Close button, or Escape.
+function NotImplementedDialog({
+  title,
+  body,
+  onClose,
+}: {
+  title: string;
+  body: string;
+  onClose: () => void;
+}) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  return (
+    <div className="modal-backdrop" onClick={onClose}>
+      <div
+        className="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-label={title}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h2 className="modal-title">{title}</h2>
+        <p className="modal-body">{body}</p>
+        <div className="modal-actions">
+          <button type="button" className="btn-secondary" onClick={onClose}>
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }

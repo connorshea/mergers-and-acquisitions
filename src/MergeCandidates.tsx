@@ -20,9 +20,11 @@ function displayValue(v: AnnotatedValue): string {
 
 function ValueChip({ v, formatter }: { v: AnnotatedValue; formatter?: string }) {
   const text = displayValue(v);
-  // An external identifier with a formatter URL (P1630) becomes a link to the
-  // source database, e.g. a Steam application ID → its store page.
-  const idUrl = v.type === "external-id" ? formatIdUrl(formatter, v.value) : null;
+  // Link out where the value points somewhere: a `url` value is itself a URL
+  // (e.g. an itch.io page), and an external identifier with a formatter URL
+  // (P1630) resolves to its source database, e.g. a Steam app ID → store page.
+  const idUrl =
+    v.type === "url" ? v.value : v.type === "external-id" ? formatIdUrl(formatter, v.value) : null;
   return (
     <span
       className={`chip chip-${v.status}`}

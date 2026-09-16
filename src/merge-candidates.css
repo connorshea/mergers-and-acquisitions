@@ -831,8 +831,72 @@ a.chip-id:hover {
 }
 .detail-actions {
   margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 .btn-dismiss:disabled {
   opacity: 0.5;
   cursor: default;
+}
+.btn-merge {
+  font: inherit;
+  font-weight: 600;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--identical);
+  border-radius: 6px;
+  background: var(--identical);
+  color: var(--surface);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn-merge:hover {
+  filter: brightness(1.05);
+}
+.btn-different {
+  font: inherit;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn-different:hover {
+  border-color: var(--muted);
+}
+
+/* ---------- Modal ---------- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  background: rgb(0 0 0 / 45%);
+}
+.modal {
+  width: 100%;
+  max-width: 26rem;
+  padding: 1.25rem 1.4rem 1.1rem;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  box-shadow: 0 12px 40px rgb(0 0 0 / 25%);
+}
+.modal-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+}
+.modal-body {
+  color: var(--muted);
+  margin: 0 0 1.1rem;
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
 }

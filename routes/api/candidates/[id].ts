@@ -4,6 +4,7 @@ import { and, asc, db, desc, eq, gt, inArray, lt, or } from "void/db";
 import { entityLabels, items, mergeCandidates, properties } from "@schema";
 import { defineHandler } from "void";
 import type { Item } from "../../../src/lib/compare";
+import { chunk, D1_MAX_BOUND_PARAMS } from "../../../src/lib/chunk";
 import type { CandidateDetailResponse } from "../../../src/lib/api-types";
 import { loadLabels, summaryColumns, toSummary } from "./index";
 
@@ -81,25 +82,32 @@ export const GET = defineHandler(async (c) => {
     }
   }
 
-  const [propertyRows, valueRows] = await Promise.all([
-    pids.length > 0
-      ? db
+  // Chunk both lookups under D1's 100-bound-parameter cap: a statement-rich pair
+  // can reference more than 100 property ids or item-value qids.
+  const idChunk = D1_MAX_BOUND_PARAMS - 10;
+  const [propertyChunks, valueChunks] = await Promise.all([
+    Promise.all(
+      chunk(pids, idChunk).map((ids) =>
+        db
           .select({ pid: properties.pid, label: properties.label })
           .from(properties)
-          .where(inArray(properties.pid, pids))
-      : Promise.resolve([]),
-    valueQids.size > 0
-      ? db
+          .where(inArray(properties.pid, ids)),
+      ),
+    ),
+    Promise.all(
+      chunk([...valueQids], idChunk).map((ids) =>
+        db
           .select({ qid: entityLabels.qid, label: entityLabels.label })
           .from(entityLabels)
-          .where(inArray(entityLabels.qid, [...valueQids]))
-      : Promise.resolve([]),
+          .where(inArray(entityLabels.qid, ids)),
+      ),
+    ),
   ]);
 
   const propertyLabels: Record<string, string> = {};
-  for (const r of propertyRows) propertyLabels[r.pid] = r.label;
+  for (const r of propertyChunks.flat()) propertyLabels[r.pid] = r.label;
   const valueLabels: Record<string, string> = {};
-  for (const r of valueRows) valueLabels[r.qid] = r.label;
+  for (const r of valueChunks.flat()) valueLabels[r.qid] = r.label;
 
   const payload: CandidateDetailResponse = {
     candidate: toSummary(row, labels),

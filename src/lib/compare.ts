@@ -108,6 +108,24 @@ export function stringSimilarity(a: string, b: string): number {
   return max === 0 ? 1 : 1 - levenshtein(na, nb) / max;
 }
 
+/**
+ * Blocking key for a label: a deliberately looser normalization than
+ * `normalize()` used only to decide which items are *considered* as a pair (see
+ * the label+type route in queues/hunt-candidates.ts). It drops punctuation and
+ * symbols so titles that differ only in punctuation land in the same bucket —
+ * e.g. "Go West: A Lucky Luke Adventure" and "Go West! A Lucky Luke Adventure",
+ * or straight vs. curly apostrophes and en/em dashes. Letters (incl. accented)
+ * and digits are kept, so sequels ("Portal" vs "Portal 2") stay distinct. This
+ * only widens what gets scored; scoreCandidate still gates the result, so a
+ * looser key can't by itself create a false positive.
+ */
+export function blockingLabelKey(label: string): string {
+  return normalize(label)
+    .replace(/[^\p{L}\p{N}\s]+/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 /** Returns [status, note] for a pair of values of the same property. */
 export function compareValues(x: Value, y: Value): [Status, string?] {
   if (x.type !== y.type) return ["distinct"];

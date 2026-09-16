@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
   bestNameSimilarity,
+  blockingLabelKey,
   buildRows,
   compareValues,
   installment,
@@ -146,6 +147,61 @@ describe("scoreCandidate", () => {
     for (const e of EXAMPLES) {
       expect(scoreCandidate(e.a, e.b).confidence).toBeCloseTo(scoreCandidate(e.b, e.a).confidence);
     }
+  });
+});
+
+describe("blockingLabelKey / punctuation-insensitive blocking", () => {
+  it("collapses titles that differ only in punctuation to one key", () => {
+    // Regression: "Go West: A Lucky Luke Adventure" (Q16571916) and
+    // "Go West! A Lucky Luke Adventure" (Q139781716) are the same game but were
+    // never blocked together, because the old normalize()-based key kept the
+    // ':' vs '!'. They must share a blocking key so the hunt scores the pair.
+    expect(blockingLabelKey("Go West: A Lucky Luke Adventure")).toBe(
+      blockingLabelKey("Go West! A Lucky Luke Adventure"),
+    );
+    // straight vs curly apostrophe, en/em dashes, trailing punctuation
+    expect(blockingLabelKey("Assassin's Creed")).toBe(blockingLabelKey("Assassin’s Creed"));
+    expect(blockingLabelKey("Half-Life")).toBe(blockingLabelKey("Half—Life"));
+  });
+
+  it("keeps accented letters and digits so distinct titles stay distinct", () => {
+    // Sequels must not collapse into their base game.
+    expect(blockingLabelKey("Portal")).not.toBe(blockingLabelKey("Portal 2"));
+    // Diacritics are preserved (not folded), so this is intentionally NOT equal.
+    expect(blockingLabelKey("Pokémon")).not.toBe(blockingLabelKey("Pokemon"));
+    expect(blockingLabelKey("  Go   West:  ")).toBe("go west");
+  });
+});
+
+describe("scoreCandidate — Go West regression (found as a candidate)", () => {
+  // The two real items differ only by ':' vs '!' and share MobyGames ID
+  // (P11688 = 44640). With the punctuation-insensitive blocking key they get
+  // scored; this asserts the score itself is comfortably above the 0.3
+  // persistence floor, so the pair surfaces as a merge candidate.
+  const base = { descriptions: {}, aliases: {}, sitelinks: {} };
+  const a: Item = {
+    ...base,
+    id: "Q139781716",
+    labels: { en: "Go West! A Lucky Luke Adventure" },
+    statements: {
+      P31: [{ type: "item", value: "Q7889", label: "video game" }],
+      P11688: [{ type: "external-id", value: "44640" }],
+    },
+  };
+  const b: Item = {
+    ...base,
+    id: "Q16571916",
+    labels: { en: "Go West: A Lucky Luke Adventure" },
+    statements: {
+      P31: [{ type: "item", value: "Q7889", label: "video game" }],
+      P11688: [{ type: "external-id", value: "44640" }],
+    },
+  };
+
+  it("scores the pair well above the persistence floor", () => {
+    const result = scoreCandidate(a, b, { isIdentifierProp: (pid) => pid === "P11688" });
+    expect(result.confidence).toBeGreaterThan(0.6);
+    expect(result.reasons.some((r) => r.includes("external identifier"))).toBe(true);
   });
 });
 

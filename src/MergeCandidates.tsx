@@ -26,7 +26,20 @@ function ValueChip({ v }: { v: AnnotatedValue }) {
       title={v.note ?? (v.type === "item" ? v.value : v.type === "time" ? v.value : undefined)}
     >
       {text}
-      {v.type === "item" && <span className="chip-id">{v.value}</span>}
+      {v.type === "item" && (
+        <a
+          className="chip-id"
+          href={`https://www.wikidata.org/wiki/${v.value}`}
+          target="_blank"
+          rel="noreferrer"
+          // Don't let the QID link inherit the chip's tooltip/selection; it's its
+          // own affordance.
+          title={v.value}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {v.value}
+        </a>
+      )}
     </span>
   );
 }

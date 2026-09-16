@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { fetch, FetchError } from "void/client";
 import MergeCandidates from "../MergeCandidates";
-import type { CandidateDetailResponse, CandidateDismissResponse } from "../lib/api-types";
+import type {
+  CandidateDetailResponse,
+  CandidateDismissResponse,
+  CandidateReopenResponse,
+} from "../lib/api-types";
 
 // Detail view for one candidate: a summary bar (confidence, reasons, dismiss)
 // over the full field-by-field comparison. The API returns the pair already
@@ -58,6 +62,19 @@ export default function CandidateDetail() {
       setStatus((res as CandidateDismissResponse).candidate.status);
     } catch (e: unknown) {
       setError(e instanceof FetchError ? `Dismiss failed (${e.status}).` : "Dismiss failed.");
+    } finally {
+      setDismissing(false);
+    }
+  }
+
+  async function reopen() {
+    if (!id) return;
+    setDismissing(true);
+    try {
+      const res = await fetch("/api/candidates/:id/reopen", { method: "POST", params: { id } });
+      setStatus((res as CandidateReopenResponse).candidate.status);
+    } catch (e: unknown) {
+      setError(e instanceof FetchError ? `Reopen failed (${e.status}).` : "Reopen failed.");
     } finally {
       setDismissing(false);
     }
@@ -121,18 +138,36 @@ export default function CandidateDetail() {
               </ul>
             )}
             <div className="detail-actions">
-              <button type="button" className="btn-merge" onClick={() => setDialog("merge")}>
-                Merge
-              </button>
-              <button
-                type="button"
-                className="btn-different"
-                onClick={() => setDialog("different")}
-              >
-                Mark as different from
-              </button>
+              {/* Merge / "different from" only make sense on an open pair; once
+                  it's dismissed or merged they're hidden. */}
+              {(!status || status === "open") && (
+                <>
+                  <button type="button" className="btn-merge" onClick={() => setDialog("merge")}>
+                    Merge
+                  </button>
+                  <button
+                    type="button"
+                    className="btn-different"
+                    onClick={() => setDialog("different")}
+                  >
+                    Mark as different from
+                  </button>
+                </>
+              )}
               {status && status !== "open" ? (
-                <span className="flag flag-status">{status}</span>
+                <>
+                  <span className="flag flag-status">{status}</span>
+                  {status === "dismissed" && (
+                    <button
+                      type="button"
+                      className="btn-dismiss"
+                      onClick={reopen}
+                      disabled={dismissing}
+                    >
+                      {dismissing ? "Reopening…" : "Un-dismiss"}
+                    </button>
+                  )}
+                </>
               ) : (
                 <button
                   type="button"

@@ -52,6 +52,11 @@ export interface CandidateDismissResponse {
   candidate: CandidateSummary;
 }
 
+/** Response for reopening (un-dismissing) a candidate back to `open`. */
+export interface CandidateReopenResponse {
+  candidate: CandidateSummary;
+}
+
 export interface HuntTriggerResponse {
   enqueued: boolean;
   message: string;

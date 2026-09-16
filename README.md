@@ -1,4 +1,4 @@
-# Wikidata merge viewer
+# M&A: A Wikidata Merge Assistant
 
 Compares two Wikidata items and groups their labels, aliases, sitelinks and
 statements into identical / similar / distinct / one-sided, flagging anything

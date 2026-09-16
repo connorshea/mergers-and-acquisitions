@@ -6,7 +6,11 @@ export default defineConfig({
   staged: {
     "*": "vp check --fix",
   },
-  fmt: {},
+  fmt: {
+    // Drizzle-generated migration metadata is rewritten on every
+    // `void db generate`, so leave it in its generated shape.
+    ignorePatterns: ["db/migrations/meta/"],
+  },
   lint: {
     // `plugins` overwrites Oxlint's default set, so keep the built-ins that are
     // on by default (unicorn, oxc, typescript) and add react (includes react-hooks).

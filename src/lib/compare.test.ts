@@ -499,6 +499,85 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(distinct.reasons.some((r) => r.includes("external identifiers differ"))).toBe(false);
   });
 
+  it("caps a pair hard when two+ per-title ids differ, even with a shared id and identical name", () => {
+    // Identical name, same P31 and a *shared* IGDB id would score very high, but
+    // two per-title store pages differ (Steam + MobyGames) — distinct games.
+    const a: Item = {
+      ...base,
+      id: "Q50",
+      labels: { en: "Twin Peaks" },
+      statements: stmt({
+        P5794: [{ type: "external-id" as const, value: "shared-igdb" }],
+        P1733: [{ type: "external-id" as const, value: "111" }],
+        P11688: [{ type: "external-id" as const, value: "moby-a" }],
+      }),
+    };
+    const b: Item = {
+      ...base,
+      id: "Q51",
+      labels: { en: "Twin Peaks" },
+      statements: stmt({
+        P5794: [{ type: "external-id" as const, value: "shared-igdb" }],
+        P1733: [{ type: "external-id" as const, value: "222" }],
+        P11688: [{ type: "external-id" as const, value: "moby-b" }],
+      }),
+    };
+    const isId = (pid: string) => ["P5794", "P1733", "P11688"].includes(pid);
+    const result = scoreCandidate(a, b, { isIdentifierProp: isId });
+    expect(result.confidence).toBeLessThanOrEqual(0.1);
+    expect(result.reasons[0]).toContain("per-title identifiers differ");
+  });
+
+  it("counts itch.io URL (a url-typed value, not an ExternalId) toward the per-title rule", () => {
+    // itch.io URL (P7294) is a `url` datatype; paired with a differing Steam id
+    // that's two distinct per-title pages, so the cap fires by property id even
+    // though isIdentifierProp excludes the url value.
+    const mk = (id: string, steam: string, itch: string): Item => ({
+      ...base,
+      id,
+      labels: { en: "Uncursed" },
+      statements: stmt({
+        P1733: [{ type: "external-id" as const, value: steam }],
+        P7294: [{ type: "url" as const, value: itch }],
+      }),
+    });
+    const result = scoreCandidate(
+      mk("Q60", "111", "https://a.itch.io/uncursed"),
+      mk("Q61", "222", "https://b.itch.io/uncursed"),
+      { isIdentifierProp: (pid) => pid === "P1733" },
+    );
+    expect(result.confidence).toBeLessThanOrEqual(0.1);
+    expect(result.reasons[0]).toContain("per-title identifiers differ");
+  });
+
+  it("does not trip the per-title rule on a single differing id or one-sided ids", () => {
+    // One differing per-title id (Steam) plus a MobyGames id present on only one
+    // side: exactly one prop is "distinct", so the pair is not capped.
+    const a: Item = {
+      ...base,
+      id: "Q70",
+      labels: { en: "Solstice" },
+      statements: stmt({
+        P5794: [{ type: "external-id" as const, value: "shared-igdb" }],
+        P1733: [{ type: "external-id" as const, value: "111" }],
+        P11688: [{ type: "external-id" as const, value: "moby-only-a" }],
+      }),
+    };
+    const b: Item = {
+      ...base,
+      id: "Q71",
+      labels: { en: "Solstice" },
+      statements: stmt({
+        P5794: [{ type: "external-id" as const, value: "shared-igdb" }],
+        P1733: [{ type: "external-id" as const, value: "222" }],
+      }),
+    };
+    const isId = (pid: string) => ["P5794", "P1733", "P11688"].includes(pid);
+    const result = scoreCandidate(a, b, { isIdentifierProp: isId });
+    expect(result.reasons.some((r) => r.includes("per-title identifiers differ"))).toBe(false);
+    expect(result.confidence).toBeGreaterThan(0.4);
+  });
+
   it("penalises a disjoint developer for same-named games", () => {
     const mk = (id: string, dev: string): Item => ({
       ...base,

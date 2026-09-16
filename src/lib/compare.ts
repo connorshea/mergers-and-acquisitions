@@ -414,6 +414,26 @@ const MIRRORED_ID_PROPS = new Set<string>([
  */
 const LARGE_YEAR_GAP = 10;
 
+/**
+ * Per-title identifiers where each distinct game has exactly one page: a
+ * specific store or database entry for one title. If two items each carry their
+ * *own differing* value for two or more of these, they point at two different
+ * store/database pages — near-conclusive that they are different games, even if
+ * some other id happens to collide (a shared id across differing store pages is
+ * far more likely stale/mis-entered than a real match). A single differing id
+ * can be a data-entry slip; two or more is a pattern. One-sided ids — present on
+ * only one item — never count. (itch.io URL is a `url` datatype, not an
+ * ExternalId, so this set is matched by property id rather than value shape.)
+ */
+const PER_TITLE_ID_PROPS = new Set<string>([
+  "P1733", // Steam application ID
+  "P6337", // PCGamingWiki ID
+  "P11688", // MobyGames game ID
+  "P5794", // IGDB game ID
+  "P7294", // itch.io URL
+  "P5247", // Giant Bomb ID
+]);
+
 const ROMAN_RE = /^m{0,3}(cm|cd|d?c{0,3})(xc|xl|l?x{0,3})(ix|iv|v?i{0,3})$/i;
 
 /** Parse a Roman numeral (i–mmmm range); null if not a well-formed numeral. */
@@ -526,7 +546,10 @@ export interface CandidateScore {
  * the pair — except a *large* publication-year gap, which overrides even that).
  * Two strong negatives can effectively disqualify a pair: clearly-different
  * names, and many external identifiers that are present on both items yet all
- * differ. Identifiers that mirror Wikidata itself (vglist, GamerProfiles) are
+ * differ. More narrowly, two or more differing *per-title* identifiers (Steam,
+ * PCGamingWiki, MobyGames, IGDB, itch.io, Giant Bomb) point at distinct
+ * store/database pages and cap the score hard, overriding even a shared id.
+ * Identifiers that mirror Wikidata itself (vglist, GamerProfiles) are
  * ignored as evidence in either direction. Blockers (conflicting descriptions or same-wiki
  * sitelinks) are surfaced via `hasBlocker` but do not by themselves sink the
  * score: real duplicates routinely have conflicting descriptions.
@@ -704,6 +727,24 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
       `${distinctExtIdRows.length} external identifiers differ across the pair — almost certainly different subjects`,
     );
     score = Math.min(score, 0.05);
+  }
+
+  // Two or more *per-title* identifiers (Steam, PCGamingWiki, MobyGames, IGDB,
+  // itch.io, Giant Bomb) present on both items with differing values means the
+  // pair points at two distinct store/database pages — near-conclusive that they
+  // are different games. Cap hard, below the persistence floor, overriding even a
+  // shared id. (Ids present on only one side are "one-sided", not "distinct", and
+  // don't count.)
+  const distinctPerTitleIds = rows.filter(
+    (r) => r.kind === "statement" && r.status === "distinct" && PER_TITLE_ID_PROPS.has(r.key),
+  );
+  if (distinctPerTitleIds.length >= 2) {
+    reasons.unshift(
+      `${distinctPerTitleIds.length} per-title identifiers differ (${distinctPerTitleIds
+        .map((r) => r.label)
+        .join(", ")}) — almost certainly different games`,
+    );
+    score = Math.min(score, 0.1);
   }
 
   // A sequel is not a duplicate. Different entries in the same series share a

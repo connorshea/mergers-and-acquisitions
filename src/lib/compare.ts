@@ -300,6 +300,77 @@ export function orderByAge(x: Item, y: Item): [from: Item, into: Item] {
 
 // ---------- Confidence scoring ----------
 
+/**
+ * External-identifier properties that identify an *account or franchise*, not a
+ * single title — a developer's Facebook page or a series' Twitter handle is the
+ * same across their whole catalog, so a shared value here is weak evidence of a
+ * duplicate (it's exactly what makes a game and its sequel look identical).
+ * Per-title store/database IDs (Steam, GOG, MobyGames, …) are not listed and
+ * keep their full weight.
+ */
+const WEAK_ID_PROPS = new Set<string>([
+  "P2013", // Facebook ID
+  "P2002", // X/Twitter username
+  "P2003", // Instagram username
+  "P2397", // YouTube channel ID
+  "P7085", // TikTok username
+  "P3789", // Telegram
+  "P4264", // LinkedIn company ID
+  "P2984", // Snapchat
+  "P6634", // LinkedIn personal profile ID
+  "P1581", // official blog URL
+]);
+
+const ROMAN_RE = /^m{0,3}(cm|cd|d?c{0,3})(xc|xl|l?x{0,3})(ix|iv|v?i{0,3})$/i;
+
+/** Parse a Roman numeral (i–mmmm range); null if not a well-formed numeral. */
+function romanToInt(s: string): number | null {
+  const t = s.toLowerCase();
+  if (!t || !ROMAN_RE.test(t)) return null;
+  const map: Record<string, number> = { i: 1, v: 5, x: 10, l: 50, c: 100, d: 500, m: 1000 };
+  let total = 0;
+  for (let i = 0; i < t.length; i++) {
+    const cur = map[t[i]];
+    const next = map[t[i + 1]] ?? 0;
+    total += cur < next ? -cur : cur;
+  }
+  return total;
+}
+
+/**
+ * Split a title into its base and a trailing installment number, e.g.
+ * "Revenge on the Streets 2" → { base: "revenge on the streets", num: 2 } and
+ * "Final Fantasy VII" → { base: "final fantasy", num: 7 }. `num` is null when
+ * there's no trailing arabic/Roman number.
+ */
+export function installment(label: string): { base: string; num: number | null } {
+  const norm = normalize(label);
+  const m = norm.match(/^(.+?)[\s:._-]+([0-9]{1,4}|[ivxlcdm]+)$/i);
+  if (!m) return { base: norm, num: null };
+  const base = m[1].trim();
+  const tok = m[2];
+  const num = /^[0-9]+$/.test(tok) ? parseInt(tok, 10) : romanToInt(tok);
+  if (num === null || base.length === 0) return { base: norm, num: null };
+  return { base, num };
+}
+
+function bestLabel(item: Item): string {
+  return item.labels.en ?? item.labels.mul ?? Object.values(item.labels)[0] ?? "";
+}
+
+/**
+ * True when two titles are different entries in the same series (a sequel), not
+ * duplicates — same base, but different (or present-vs-absent) installment
+ * numbers, e.g. "X" vs "X 2" or "X II" vs "X III".
+ */
+export function isSeriesSequelPair(a: Item, b: Item): boolean {
+  const ia = installment(bestLabel(a));
+  const ib = installment(bestLabel(b));
+  if (!ia.base || ia.base !== ib.base) return false;
+  if (ia.num === null && ib.num === null) return false;
+  return ia.num !== ib.num;
+}
+
 export interface CandidateScore {
   /** 0–1 likelihood the two items are the same subject and should be merged. */
   confidence: number;
@@ -323,16 +394,24 @@ export function scoreCandidate(a: Item, b: Item): CandidateScore {
   const reasons: string[] = [];
   let score = 0;
 
-  // Shared external identifiers are the strongest single signal.
+  // Shared external identifiers are the strongest single signal — but only
+  // per-title ones. A shared account/franchise id (a developer's Facebook page,
+  // a series' Twitter handle) is what makes a game and its sequel look alike, so
+  // it counts for far less (see WEAK_ID_PROPS).
   const sharedExtIds = rows.filter(
     (r) =>
       r.kind === "statement" &&
       r.status === "identical" &&
       r.a.some((v) => v.type === "external-id"),
   );
-  if (sharedExtIds.length > 0) {
+  const strongIds = sharedExtIds.filter((r) => !WEAK_ID_PROPS.has(r.key));
+  const weakIds = sharedExtIds.filter((r) => WEAK_ID_PROPS.has(r.key));
+  if (strongIds.length > 0) {
     score += 0.6;
-    reasons.push(`shares external identifier: ${sharedExtIds.map((r) => r.label).join(", ")}`);
+    reasons.push(`shares external identifier: ${strongIds.map((r) => r.label).join(", ")}`);
+  } else if (weakIds.length > 0) {
+    score += 0.1;
+    reasons.push(`shares account/social identifier: ${weakIds.map((r) => r.label).join(", ")}`);
   }
 
   // Instance of (P31): agreement supports a merge; disagreement strongly opposes.
@@ -378,6 +457,15 @@ export function scoreCandidate(a: Item, b: Item): CandidateScore {
     reasons.push(
       `${blockers.length} conflict${blockers.length > 1 ? "s" : ""} would block the merge`,
     );
+  }
+
+  // A sequel is not a duplicate. Different entries in the same series share a
+  // developer, genre, platforms and often an account-level id, so they'd
+  // otherwise score very high — cap them below the persistence floor so they
+  // never surface as candidates.
+  if (isSeriesSequelPair(a, b)) {
+    reasons.unshift("different entries in a series (sequel), not a duplicate");
+    score = Math.min(score, 0.1);
   }
 
   const confidence = Math.max(0, Math.min(1, score));

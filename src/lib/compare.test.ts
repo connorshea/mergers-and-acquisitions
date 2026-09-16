@@ -2,6 +2,9 @@ import { describe, expect, it } from "vite-plus/test";
 import {
   buildRows,
   compareValues,
+  installment,
+  type Item,
+  isSeriesSequelPair,
   normalize,
   orderByAge,
   scoreCandidate,
@@ -117,5 +120,99 @@ describe("scoreCandidate", () => {
     for (const e of EXAMPLES) {
       expect(scoreCandidate(e.a, e.b).confidence).toBeCloseTo(scoreCandidate(e.b, e.a).confidence);
     }
+  });
+});
+
+describe("installment / sequel detection", () => {
+  it("parses trailing arabic and Roman installment numbers", () => {
+    expect(installment("Revenge on the Streets 2")).toEqual({
+      base: "revenge on the streets",
+      num: 2,
+    });
+    expect(installment("Final Fantasy VII")).toEqual({ base: "final fantasy", num: 7 });
+    expect(installment("Spinning_Kid_2")).toEqual({ base: "spinning_kid", num: 2 });
+    expect(installment("Portal")).toEqual({ base: "portal", num: null });
+    // An internal number is not a trailing installment.
+    expect(installment("Left 4 Dead")).toEqual({ base: "left 4 dead", num: null });
+  });
+
+  it("recognizes same-base / different-number pairs as sequels", () => {
+    const base = { descriptions: {}, aliases: {}, sitelinks: {}, statements: {} };
+    const a: Item = { ...base, id: "Q2", labels: { en: "Revenge on the Streets 2" } };
+    const b: Item = { ...base, id: "Q1", labels: { en: "Revenge on the Streets" } };
+    const c: Item = { ...base, id: "Q3", labels: { en: "Portal 2" } };
+    const c2: Item = { ...base, id: "Q4", labels: { en: "Portal 2" } };
+
+    expect(isSeriesSequelPair(a, b)).toBe(true);
+    expect(isSeriesSequelPair(c, c2)).toBe(false); // same title, same number
+    expect(isSeriesSequelPair(a, c)).toBe(false); // different bases
+  });
+});
+
+describe("scoreCandidate — sequel and weak-id handling", () => {
+  const stmt = (extra: Record<string, unknown>) => ({
+    P31: [{ type: "item" as const, value: "Q7889" }],
+    ...extra,
+  });
+  const base = { descriptions: {}, aliases: {}, sitelinks: {} };
+
+  it("caps a sequel pair below the persistence floor despite shared signals", () => {
+    // A game and its sequel: same developer Facebook page (weak id), same P31,
+    // similar label — the exact false positive we saw in production.
+    const a: Item = {
+      ...base,
+      id: "Q114881600",
+      labels: { en: "Revenge on the Streets 2" },
+      statements: stmt({
+        P2013: [{ type: "external-id", value: "DevStudioPage" }],
+        P178: [{ type: "item", value: "Q114881581" }],
+      }),
+    };
+    const b: Item = {
+      ...base,
+      id: "Q114881591",
+      labels: { en: "Revenge on the Streets" },
+      statements: stmt({
+        P2013: [{ type: "external-id", value: "DevStudioPage" }],
+        P178: [{ type: "item", value: "Q114881581" }],
+      }),
+    };
+    const result = scoreCandidate(a, b);
+    expect(result.confidence).toBeLessThanOrEqual(0.1);
+    expect(result.reasons[0]).toContain("sequel");
+  });
+
+  it("weights a shared account/social id far below a per-title id", () => {
+    // Distinct labels so the shared id is the dominant signal and neither score
+    // saturates at the 1.0 cap, exposing the full weighting gap.
+    const strongA: Item = {
+      ...base,
+      id: "Q10",
+      labels: { en: "Alpha Quest" },
+      statements: stmt({ P1733: [{ type: "external-id", value: "555" }] }),
+    };
+    const strongB: Item = {
+      ...base,
+      id: "Q11",
+      labels: { en: "Beta Voyage" },
+      statements: stmt({ P1733: [{ type: "external-id", value: "555" }] }),
+    };
+    const weakA: Item = {
+      ...base,
+      id: "Q12",
+      labels: { en: "Alpha Quest" },
+      statements: stmt({ P2013: [{ type: "external-id", value: "shared-page" }] }),
+    };
+    const weakB: Item = {
+      ...base,
+      id: "Q13",
+      labels: { en: "Beta Voyage" },
+      statements: stmt({ P2013: [{ type: "external-id", value: "shared-page" }] }),
+    };
+    const strong = scoreCandidate(strongA, strongB);
+    const weak = scoreCandidate(weakA, weakB);
+    expect(strong.confidence).toBeGreaterThan(weak.confidence + 0.3);
+    expect(strong.reasons).toContain("shares external identifier: Steam application ID");
+    expect(weak.reasons.some((r) => r.startsWith("shares account/social identifier"))).toBe(true);
   });
 });

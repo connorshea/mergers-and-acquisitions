@@ -87,3 +87,23 @@ pnpm eval:fetch-nondupes Q4047343 Q1535818  Q140140365 Q213911
 
 Good sources of hard negatives: pairs you personally confirm are distinct, and —
 once the app is running — the hunt's own **dismissed** candidates.
+
+## Scoring the dataset
+
+`pnpm eval:score` runs the current heuristic scorer (`src/lib/compare.ts`)
+against every pair here and reports a confusion matrix, precision/recall/F1, and
+each misclassified pair (with its confidence and the reasons that fed the score).
+It reads the checked-in blobs only — no DB, no network — so it runs anywhere, and
+it exits non-zero if anything is misclassified (usable as a CI gate).
+
+```sh
+pnpm eval:score                  # confusion matrix + any mistakes
+pnpm eval:score -- --verbose      # every pair, sorted by confidence
+pnpm eval:score -- --threshold 0.5  # sweep the decision boundary
+```
+
+The default threshold (0.4) mirrors the hunt's `MIN_CONFIDENCE`. Because the full
+entity blobs carry real property datatypes, external identifiers are classified
+exactly and `isIdentifierProp` is reproduced faithfully; the sync-only
+`isMirroredIdProp` predicate isn't available offline, so only compare.ts's
+hardcoded mirror-Wikidata floor applies (see the harness header for detail).

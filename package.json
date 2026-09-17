@@ -18,7 +18,8 @@
     "job:sync-entity-labels": "tsx jobs/sync-entity-labels.ts",
     "job:sync-descriptions": "tsx jobs/sync-descriptions.ts",
     "eval:fetch-pairs": "tsx scripts/fetch-merge-pairs.ts",
-    "eval:fetch-nondupes": "tsx scripts/fetch-nondupe-pairs.ts"
+    "eval:fetch-nondupes": "tsx scripts/fetch-nondupe-pairs.ts",
+    "eval:score": "tsx scripts/eval-score.ts"
   },
   "dependencies": {
     "@hono/node-server": "^2.1.1",

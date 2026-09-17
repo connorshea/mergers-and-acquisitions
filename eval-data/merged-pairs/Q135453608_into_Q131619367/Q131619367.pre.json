@@ -1,0 +1,390 @@
+{
+  "pageid": 125526545,
+  "ns": 0,
+  "title": "Q131619367",
+  "lastrevid": 2518048095,
+  "modified": "2026-07-16T06:08:51Z",
+  "type": "item",
+  "id": "Q131619367",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "This Is Not Your House"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "This Is Not Your House"
+    }
+  },
+  "descriptions": {},
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "03d2d8ec4a899b29435a104a9ce7c189a31ae380",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7889,
+              "id": "Q7889"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q131619367$76EA4067-F9ED-41DE-AAD7-AFA3A15B89E1",
+        "rank": "normal"
+      }
+    ],
+    "P750": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P750",
+          "hash": "30e74a8ec835acc14307ea99ea5b2aa0c694cb54",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 22905933,
+              "id": "Q22905933"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q131619367$74EE67CE-0891-46F9-9E9A-B5C13527C410",
+        "rank": "normal"
+      }
+    ],
+    "P7294": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7294",
+          "hash": "b8c9457f0d6ee7948e15de11ecbf6d7198024ec7",
+          "datavalue": {
+            "value": "https://trasheyes.itch.io/this-is-not-your-house",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q131619367$6492D5DA-AD6B-45E1-AAD9-82AC0742AD84",
+        "rank": "normal"
+      }
+    ],
+    "P12813": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12813",
+          "hash": "b59d68d86ef456291a12b412a173f729994d7216",
+          "datavalue": {
+            "value": "2920878",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q131619367$03d898dc-755e-4618-abf2-cc14b636da69",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "809dfc9838e86a03216dbaa781720d0019d096b2",
+            "snaks": {
+              "P11797": [
+                {
+                  "snaktype": "value",
+                  "property": "P11797",
+                  "hash": "e59bef7d616ac6ef4dfe24b901f6214bda23c9e4",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 22905933,
+                      "id": "Q22905933"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P7294": [
+                {
+                  "snaktype": "value",
+                  "property": "P7294",
+                  "hash": "b8c9457f0d6ee7948e15de11ecbf6d7198024ec7",
+                  "datavalue": {
+                    "value": "https://trasheyes.itch.io/this-is-not-your-house",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "0b4f07f84ee539d2d013666f380be9608fb7c4cb",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2025-01-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P11797", "P7294", "P813"]
+          }
+        ]
+      }
+    ],
+    "P5494": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5494",
+          "hash": "bce8bb848c0d7e709c237ee767d305977fae4011",
+          "datavalue": {
+            "value": "this-is-not-your-house",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q131619367$E4222FDE-80FF-4A75-96C9-869675F1881F",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "079f57bd56ca70425c69a24ff4a8ee29727c89e5",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "a9ce7bc5abfdb439fe31499c93ad37c7fe98b487",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 45836,
+                      "id": "Q45836"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P5494": [
+                {
+                  "snaktype": "value",
+                  "property": "P5494",
+                  "hash": "bce8bb848c0d7e709c237ee767d305977fae4011",
+                  "datavalue": {
+                    "value": "this-is-not-your-house",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "04811fc19e5e67aedb6d73cda13320e313c06105",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2025-04-22T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P5494", "P813"]
+          }
+        ]
+      }
+    ],
+    "P12001": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12001",
+          "hash": "c0ee17a20c287d8500b84794d40ea728e2b5ab24",
+          "datavalue": {
+            "value": "7xPvD",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q131619367$53F3119B-986F-4E09-A920-8FAF68ABA8DB",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "5453a7df082b0517c174ebb0f06714d0035c4c70",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "08fba3511bad9285e16847928bbcc37907ec04a4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2025-07-22T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P813"]
+          }
+        ]
+      }
+    ],
+    "P5794": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5794",
+          "hash": "ccf9b9b894dd4a651a8ad944b092f22685e86835",
+          "datavalue": {
+            "value": "this-is-not-your-house",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9043": [
+            {
+              "snaktype": "value",
+              "property": "P9043",
+              "hash": "d8d657e0ae17cfe6e760166c12cd83e302020a2c",
+              "datavalue": {
+                "value": "315439",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9043"],
+        "id": "Q131619367$9D2CD974-81ED-4B0A-9A06-0BEC5F85FB78",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "4100a69596acfc23befb0b7a8652a5cf3b48787f",
+            "snaks": {
+              "P11797": [
+                {
+                  "snaktype": "value",
+                  "property": "P11797",
+                  "hash": "e59bef7d616ac6ef4dfe24b901f6214bda23c9e4",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 22905933,
+                      "id": "Q22905933"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P12813": [
+                {
+                  "snaktype": "value",
+                  "property": "P12813",
+                  "hash": "b59d68d86ef456291a12b412a173f729994d7216",
+                  "datavalue": {
+                    "value": "2920878",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "3652a43fb8c5b3a6423f52d9c9955c58d3afcf51",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-02-15T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P11797", "P12813", "P813"]
+          }
+        ]
+      }
+    ],
+    "P14470": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P14470",
+          "hash": "ac60185c7523440800b8ffacb2f23cc1ca625c58",
+          "datavalue": {
+            "value": "Games/This_Is_Not_Your_House",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9675": [
+            {
+              "snaktype": "value",
+              "property": "P9675",
+              "hash": "26ad2e6500ab95a71fe7573f473fdab40ac98692",
+              "datavalue": {
+                "value": "254401",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9675"],
+        "id": "Q131619367$2ED8EBC2-1552-4B71-BE1B-2A593F2D124D",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

@@ -251,7 +251,7 @@ export default function MergeCandidates({
                               {r.kind === "statement" && isMirrored(r.key) && (
                                 <span
                                   className="prop-mirror"
-                                  title="Identifier sourced from Wikidata — a shared value is circular, a differing one only means one side is out of sync; not evidence either way."
+                                  title="Identifier is for a database based on Wikidata, these may be distinct values but they tell us nothing about whether these are distinct entities."
                                 >
                                   ↺ Wikidata-sourced
                                 </span>

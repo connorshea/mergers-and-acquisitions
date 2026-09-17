@@ -270,17 +270,7 @@ export default function MergeCandidates({
                       return (
                         <tr key={r.key} className={r.blocker ? "is-blocker" : undefined}>
                           <td className="col-prop">
-                            <div className="prop-label">
-                              {r.label}
-                              {r.kind === "statement" && isMirrored(r.key) && (
-                                <span
-                                  className="prop-mirror"
-                                  title="Identifier is for a database based on Wikidata, these may be distinct values but they tell us nothing about whether these are distinct entities."
-                                >
-                                  ↺ Wikidata-sourced
-                                </span>
-                              )}
-                            </div>
+                            <div className="prop-label">{r.label}</div>
                             <div className="prop-key">
                               {r.kind === "statement" ? (
                                 <a
@@ -292,6 +282,14 @@ export default function MergeCandidates({
                                 </a>
                               ) : (
                                 r.kind
+                              )}
+                              {r.kind === "statement" && isMirrored(r.key) && (
+                                <span
+                                  className="prop-mirror"
+                                  title="Identifier is for a database based on Wikidata, these may be distinct values but they tell us nothing about whether these are distinct entities."
+                                >
+                                  ↺ Wikidata-sourced
+                                </span>
                               )}
                             </div>
                             {r.note && <div className="prop-note">{r.note}</div>}

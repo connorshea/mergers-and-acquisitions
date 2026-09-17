@@ -380,8 +380,15 @@ body {
   cursor: help;
 }
 .prop-key {
+  display: flex;
+  align-items: center;
   font-size: 0.78rem;
   color: var(--muted);
+}
+/* Push the Wikidata-sourced marker to the bottom-right of the cell, past the
+   property id. */
+.prop-key .prop-mirror {
+  margin-left: auto;
 }
 .prop-key a {
   color: inherit;

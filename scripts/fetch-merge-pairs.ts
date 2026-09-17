@@ -17,7 +17,7 @@
 //   tsx scripts/fetch-merge-pairs.ts Q135453621 Q131619393
 //   tsx scripts/fetch-merge-pairs.ts --out eval-data/merged-pairs Q135453621 …
 
-import { mkdir, writeFile, appendFile } from "node:fs/promises";
+import { mkdir, writeFile, readFile } from "node:fs/promises";
 import { join } from "node:path";
 
 const API = "https://www.wikidata.org/w/api.php";
@@ -125,6 +125,31 @@ async function resolvePair(qid: string): Promise<Pair> {
   };
 }
 
+const pairKey = (source: string, target: string): string => `${source}_into_${target}`;
+
+/**
+ * Rewrite index.jsonl, keyed by `source_into_target`, so a pair present in both
+ * the existing file and this run (or twice in one run) collapses to a single
+ * line instead of duplicating. Existing lines keep their order; new pairs are
+ * appended; a re-fetched pair updates its line in place. Also self-heals any
+ * pre-existing duplicate lines.
+ */
+async function upsertIndex(indexPath: string, records: { source: string; target: string }[]) {
+  const byKey = new Map<string, string>();
+  try {
+    const existing = await readFile(indexPath, "utf8");
+    for (const line of existing.split("\n")) {
+      if (!line.trim()) continue;
+      const r = JSON.parse(line) as { source: string; target: string };
+      byKey.set(pairKey(r.source, r.target), line);
+    }
+  } catch (err) {
+    if ((err as NodeJS.ErrnoException).code !== "ENOENT") throw err;
+  }
+  for (const r of records) byKey.set(pairKey(r.source, r.target), JSON.stringify(r));
+  await writeFile(indexPath, Array.from(byKey.values()).join("\n") + "\n");
+}
+
 async function main() {
   const args = process.argv.slice(2);
   let outDir = "eval-data/merged-pairs";
@@ -140,15 +165,25 @@ async function main() {
   await mkdir(outDir, { recursive: true });
   const indexPath = join(outDir, "index.jsonl");
 
+  const records: { source: string; target: string }[] = [];
+  const seen = new Set<string>();
   for (const qid of qids) {
     const pair = await resolvePair(qid);
+    const key = pairKey(pair.source, pair.target);
+    // Both sides of one merge resolve to the same pair — fetch it only once.
+    if (seen.has(key)) {
+      console.log(`${key}: already fetched this run (both sides given?), skipping`);
+      continue;
+    }
+    seen.add(key);
+
     await sleep(PAUSE_MS);
     const [sourcePre, targetPre] = await Promise.all([
       fetchEntityAt(pair.source, pair.sourcePreRevid),
       fetchEntityAt(pair.target, pair.targetPreRevid),
     ]);
 
-    const dir = join(outDir, `${pair.source}_into_${pair.target}`);
+    const dir = join(outDir, key);
     await mkdir(dir, { recursive: true });
     await writeFile(join(dir, `${pair.source}.pre.json`), JSON.stringify(sourcePre, null, 2));
     await writeFile(join(dir, `${pair.target}.pre.json`), JSON.stringify(targetPre, null, 2));
@@ -166,7 +201,7 @@ async function main() {
       provenance: "wikidata-merge-redirect",
     };
     await writeFile(join(dir, "meta.json"), JSON.stringify(record, null, 2));
-    await appendFile(indexPath, JSON.stringify(record) + "\n");
+    records.push(record);
 
     console.log(
       `${pair.source} (${record.sourceLabel}) -> ${pair.target} (${record.targetLabel})  ` +
@@ -174,7 +209,8 @@ async function main() {
     );
     await sleep(PAUSE_MS);
   }
-  console.log(`\nWrote ${qids.length} pair(s) to ${outDir} (index: ${indexPath})`);
+  await upsertIndex(indexPath, records);
+  console.log(`\nWrote ${records.length} pair(s) to ${outDir} (index: ${indexPath})`);
 }
 
 main().catch((err) => {

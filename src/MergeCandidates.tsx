@@ -1,6 +1,11 @@
 import { useMemo, useState } from "react";
 import type { AnnotatedValue, Item, RowStatus } from "./lib/compare";
-import { buildRows, formatIdUrl, isHardcodedMirrorProp } from "./lib/compare";
+import {
+  buildRows,
+  formatIdUrl,
+  isHardcodedMirrorProp,
+  sharedIdentifierProps,
+} from "./lib/compare";
 
 // ---------- UI ----------
 
@@ -132,6 +137,14 @@ export default function MergeCandidates({
   // the floor guarantees the well-known ones are always marked.
   const mirrorSet = useMemo(() => new Set(propertyMirrors ?? []), [propertyMirrors]);
   const isMirrored = (pid: string): boolean => mirrorSet.has(pid) || isHardcodedMirrorProp(pid);
+  // Identifiers one item declares "shared with" (P4070) the other: Wikidata's
+  // own statement that a single id value covers both items, so agreeing on it
+  // is not evidence of a duplicate. Flagged and sunk like mirrored ids.
+  const sharedSet = useMemo(() => sharedIdentifierProps(from, into), [from, into]);
+  const isShared = (pid: string): boolean => sharedSet.has(pid);
+  // Either kind of non-evidence identifier sinks to the bottom of its group.
+  const isDiscounted = (r: { kind: string; key: string }): boolean =>
+    r.kind === "statement" && (isMirrored(r.key) || isShared(r.key));
 
   // Best display name for a column header, shown de-emphasized next to the QID
   // (e.g. "Q134990310 (HYPER METEOR)"). Omitted when the item carries no label.
@@ -215,12 +228,12 @@ export default function MergeCandidates({
       )}
 
       {GROUPS.filter((g) => !hidden[g.status]).map((g) => {
-        // P31 first, then Wikidata-sourced (mirrored) identifiers sink to the
-        // bottom — they're weak evidence either way; everything else keeps its
-        // build order (terms, sitelinks, statements). Array.sort is stable, so
-        // rows within a rank stay in build order.
+        // P31 first, then Wikidata-sourced (mirrored) and declared-shared (P4070)
+        // identifiers sink to the bottom — they're weak evidence either way;
+        // everything else keeps its build order (terms, sitelinks, statements).
+        // Array.sort is stable, so rows within a rank stay in build order.
         const rank = (r: (typeof rows)[number]): number =>
-          r.key === "P31" ? -1 : r.kind === "statement" && isMirrored(r.key) ? 1 : 0;
+          r.key === "P31" ? -1 : isDiscounted(r) ? 1 : 0;
         const groupRows = rows
           .filter((r) => r.status === g.status)
           .sort((x, y) => rank(x) - rank(y));
@@ -271,10 +284,7 @@ export default function MergeCandidates({
                         <tr
                           key={r.key}
                           className={
-                            [
-                              r.blocker ? "is-blocker" : "",
-                              r.kind === "statement" && isMirrored(r.key) ? "is-mirror" : "",
-                            ]
+                            [r.blocker ? "is-blocker" : "", isDiscounted(r) ? "is-discounted" : ""]
                               .filter(Boolean)
                               .join(" ") || undefined
                           }
@@ -299,6 +309,14 @@ export default function MergeCandidates({
                                   title="Identifier is for a database based on Wikidata, these may be distinct values but they tell us nothing about whether these are distinct entities."
                                 >
                                   ↺ Wikidata-sourced
+                                </span>
+                              )}
+                              {r.kind === "statement" && isShared(r.key) && (
+                                <span
+                                  className="prop-shared"
+                                  title="Wikidata marks this identifier as shared between these two items (P4070 “identifier shared with”): one id legitimately covers both, so agreeing on it tells us nothing about whether they are the same entity."
+                                >
+                                  ⇄ shared identifier
                                 </span>
                               )}
                             </div>

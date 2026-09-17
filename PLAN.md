@@ -167,6 +167,15 @@ already-merged positives skew toward "mergers editors actually found," so pair
 them with the hard negatives above so the benchmark rewards precision, not just
 recall.
 
+Tooling for the positive set exists: `scripts/fetch-merge-pairs.ts`
+(`pnpm eval:fetch-pairs Qxxx …`) takes any QID touched by a merge, reads the
+`wbmergeitems-to/from` audit trail to resolve the (source, target) pair, and
+saves both items' **pre-merge** full entity blobs plus a `meta.json` (labels,
+pinned revids, who/when merged) under `eval-data/merged-pairs/`. Pinning the
+revision is essential — a now-redirected item fetched at HEAD silently resolves
+to its merge target. The negative set still needs building (seed it from
+dismissed candidates).
+
 ## Deployment (Toolforge)
 
 - **Web service:** the Build Service (Cloud Native Buildpacks, Node) —

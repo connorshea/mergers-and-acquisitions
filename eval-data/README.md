@@ -17,6 +17,12 @@ eval-data/
       <SOURCE>.pre.json         source item's full entity blob, pre-merge
       <TARGET>.pre.json         target item's full entity blob, pre-merge
       meta.json                 the pair's record (same shape as an index line)
+  non-dupe-pairs/               negative examples — pairs that are NOT duplicates
+    index.jsonl                 one JSON record per pair (the manifest)
+    <A>_vs_<B>/                 (A/B ordered by QID number, lower first)
+      <A>.json                  item A's full entity blob, current revision
+      <B>.json                  item B's full entity blob, current revision
+      meta.json                 the pair's record (same shape as an index line)
 ```
 
 Each `*.pre.json` is the **full official Wikibase entity JSON** (labels, aliases,
@@ -61,11 +67,23 @@ It writes the `<SOURCE>_into_<TARGET>/` directory and appends to
 merges you perform yourself, and any true duplicates you find on live Wikidata
 (merge them, then run the fetcher on either QID).
 
-## Negative examples (still to build)
+## Negative examples
 
-The benchmark also needs **non-duplicate** pairs, weighted toward _hard_
+`non-dupe-pairs/` holds **non-duplicate** pairs, weighted toward _hard_
 negatives — pairs that look mergeable (same label/type, shared blocking bucket)
 but are genuinely different subjects: two different games sharing a title, an
 original vs. its remake, a series vs. one entry, a game vs. its soundtrack/DLC.
-The natural source is the hunt's own **dismissed** candidates once the app is
-running; easy negatives (unrelated items) teach little. Not yet collected.
+Easy negatives (unrelated items) teach little. Negatives have no merge trail, so
+each item is fetched at its current revision (`lastrevid` recorded in `meta.json`
+for reproducibility).
+
+### Add new examples
+
+Pass QIDs pairwise (the fetcher canonicalizes each pair's order):
+
+```sh
+pnpm eval:fetch-nondupes Q4047343 Q1535818  Q140140365 Q213911
+```
+
+Good sources of hard negatives: pairs you personally confirm are distinct, and —
+once the app is running — the hunt's own **dismissed** candidates.

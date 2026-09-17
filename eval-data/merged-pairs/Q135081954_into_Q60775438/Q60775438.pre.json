@@ -1,0 +1,486 @@
+{
+  "pageid": 60631911,
+  "ns": 0,
+  "title": "Q60775438",
+  "lastrevid": 2521521725,
+  "modified": "2026-07-23T07:02:46Z",
+  "type": "item",
+  "id": "Q60775438",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Bayani: Fighting Game"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Bayani: Fighting Game"
+    }
+  },
+  "descriptions": {
+    "ru": {
+      "language": "ru",
+      "value": "компьютерная игра"
+    },
+    "en": {
+      "language": "en",
+      "value": "Philippine fighting video game"
+    },
+    "it": {
+      "language": "it",
+      "value": "videogioco"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "لعبة فيديو"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "03d2d8ec4a899b29435a104a9ce7c189a31ae380",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7889,
+              "id": "Q7889"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q60775438$27E2D477-FE50-4A15-AB7A-C8B9A521EC06",
+        "rank": "normal"
+      }
+    ],
+    "P840": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P840",
+          "hash": "37651507bc8ef698743078d32c6de89579327b2f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 928,
+              "id": "Q928"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q60775438$6cae885c-abac-4146-8479-ff3dec88eb93",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P8351": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8351",
+          "hash": "cd2522c3f78a4501ea7dadff0313842718b0721b",
+          "datavalue": {
+            "value": "32605",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q60775438$5081F171-5D6A-487E-A61E-82B66CEF83A1",
+        "rank": "normal"
+      }
+    ],
+    "P5794": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5794",
+          "hash": "638a5931a4ac3e5b20e90a26d5a3122033935de3",
+          "datavalue": {
+            "value": "bayani",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9043": [
+            {
+              "snaktype": "value",
+              "property": "P9043",
+              "hash": "24cd6edcb5f49ebec55d6a3649f8f70f741a74c8",
+              "datavalue": {
+                "value": "112611",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9043"],
+        "id": "Q60775438$ACE04F14-AA6E-4F60-A02D-76337763F5CF",
+        "rank": "normal"
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "4f714dc6a80a86d3496e9981b35b554996a66a11",
+          "datavalue": {
+            "value": "/g/11fhtl6f6w",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q60775438$E3657AFF-690F-425D-892A-73A693084551",
+        "rank": "normal"
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "42c5ddbf2a3f56bd523a89c7ec962a552c1ba0dc",
+          "datavalue": {
+            "value": "https://www.bayaniph.com",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q60775438$371d4b94-9f5a-4d58-9c9a-b64fb3c638cd",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P7597": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7597",
+          "hash": "fe0bd9760c2908ba1ac7e9898ccd9f7f8d135efe",
+          "datavalue": {
+            "value": "bayani",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q60775438$6e810e66-3612-4a21-a666-3f93b0ffb4ab",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "b66bb5bb31c0db23557a701e8f874d53b28b9a3d",
+            "snaks": {
+              "P11797": [
+                {
+                  "snaktype": "value",
+                  "property": "P11797",
+                  "hash": "e127f8a7d2a9472b95daa3801e6c1c9ec0b992cd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 20056333,
+                      "id": "Q20056333"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P5794": [
+                {
+                  "snaktype": "value",
+                  "property": "P5794",
+                  "hash": "638a5931a4ac3e5b20e90a26d5a3122033935de3",
+                  "datavalue": {
+                    "value": "bayani",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "16dc1a747227a42c3a4ae5a9a2908fdde99e1d85",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-07-12T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P11797", "P5794", "P813"]
+          }
+        ]
+      }
+    ],
+    "P5247": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5247",
+          "hash": "af9ca405bb430047bfda185db50eb68c8adcd1ac",
+          "datavalue": {
+            "value": "3030-74373",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q60775438$F91982C3-09A5-49C2-9EE3-0FAFAD248258",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "6498567674b53e3bd85f6096b1236c73b239c381",
+            "snaks": {
+              "P11797": [
+                {
+                  "snaktype": "value",
+                  "property": "P11797",
+                  "hash": "e127f8a7d2a9472b95daa3801e6c1c9ec0b992cd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 20056333,
+                      "id": "Q20056333"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P5794": [
+                {
+                  "snaktype": "value",
+                  "property": "P5794",
+                  "hash": "638a5931a4ac3e5b20e90a26d5a3122033935de3",
+                  "datavalue": {
+                    "value": "bayani",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "4f6bcf85f788a1c0f8e1d67b9bc114ea4f858970",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-12-27T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P11797", "P5794", "P813"]
+          }
+        ]
+      }
+    ],
+    "P12001": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12001",
+          "hash": "e2da34adcac26a6db2480494c2b8afec9e38026d",
+          "datavalue": {
+            "value": "7Y99",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q60775438$EBEA6B30-4358-4359-A361-1A15EC40FA45",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "00263de4f901e5f62cb60df61d90654b1d39e2a9",
+            "snaks": {
+              "P12001": [
+                {
+                  "snaktype": "value",
+                  "property": "P12001",
+                  "hash": "e2da34adcac26a6db2480494c2b8afec9e38026d",
+                  "datavalue": {
+                    "value": "7Y99",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "46c3401396fdc597d58062bd3bb5ad995e268f13",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 124398839,
+                      "id": "Q124398839"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "3ec6f320fcfee3fbd5d4c04317410eea9762a888",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2024-05-17T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P12001", "P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P11771": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11771",
+          "hash": "8c7bc31e7608456ed001893c654bdaadd1d19506",
+          "datavalue": {
+            "value": "182286",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q60775438$62E23838-9FB2-47CB-B416-82E7987F67F6",
+        "rank": "normal"
+      }
+    ],
+    "P14470": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P14470",
+          "hash": "649ab3dca6bf7b75cb2cc678e6da52dcc4e4029d",
+          "datavalue": {
+            "value": "Games/Bayani",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9675": [
+            {
+              "snaktype": "value",
+              "property": "P9675",
+              "hash": "3b77f119c16fe7c5ae8b11b67efac7a65547aa80",
+              "datavalue": {
+                "value": "230095",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9675"],
+        "id": "Q60775438$2F4FCA93-561B-496F-A78F-DCEEB6AAB617",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Bayani: Fighting Game",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Bayani:_Fighting_Game"
+    }
+  }
+}

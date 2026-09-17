@@ -167,8 +167,19 @@ async function main() {
 
   const records: { source: string; target: string }[] = [];
   const seen = new Set<string>();
+  let failed = 0;
   for (const qid of qids) {
-    const pair = await resolvePair(qid);
+    // One un-resolvable QID (a redirect that isn't a merge, an API hiccup) must
+    // not abort a whole batch — log it and move on. Useful when the input is a
+    // bulk redirect list (Special:ListRedirects) rather than known merges.
+    let pair: Pair;
+    try {
+      pair = await resolvePair(qid);
+    } catch (err) {
+      failed++;
+      console.warn(`${qid}: skipped — ${err instanceof Error ? err.message : err}`);
+      continue;
+    }
     const key = pairKey(pair.source, pair.target);
     // Both sides of one merge resolve to the same pair — fetch it only once.
     if (seen.has(key)) {
@@ -210,7 +221,10 @@ async function main() {
     await sleep(PAUSE_MS);
   }
   await upsertIndex(indexPath, records);
-  console.log(`\nWrote ${records.length} pair(s) to ${outDir} (index: ${indexPath})`);
+  console.log(
+    `\nWrote ${records.length} pair(s) to ${outDir} (index: ${indexPath})` +
+      (failed > 0 ? `; ${failed} QID(s) skipped` : ""),
+  );
 }
 
 main().catch((err) => {

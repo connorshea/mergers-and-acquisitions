@@ -103,6 +103,39 @@ user's OAuth grant and uses it to call the Wikidata Action API (e.g.
 which is part of why it's the deployment target. Until this lands the app is
 review-only (find / rank / compare / dismiss); nothing writes back to Wikidata.
 
+## ML / LLM-assisted evaluation (planned, advisory-only)
+
+The hunt's confidence score is hand-written heuristics. A later assist is an
+**ML model or LLM that evaluates a candidate pair** — judging how likely two
+items are the same subject, to **re-rank** candidates and **automatically discard
+obvious false positives** before they reach the human review queue.
+
+Hard constraint: this is **strictly advisory**. It augments the heuristic score
+and prunes noise; it **never acts on a user's behalf and never writes to
+Wikidata**. Every actual merge still goes through a human via OAuth (see above).
+The model's failure modes are all recoverable — a wrong "reject" only hides a
+candidate, a wrong "keep" only leaves one for a human to dismiss — so it stays a
+best-effort filter, degrading gracefully (fall back to the heuristic score) when
+unavailable, and is never a hard gate on its own.
+
+Where the model runs — options, cheapest first:
+
+- **Wikimedia LiftWing hosted LLMs** — LiftWing (the ML serving platform /
+  ORES successor) now hosts general open-weight LLMs (Qwen3-class) behind an
+  OpenAI-compatible API at `api.wikimedia.org`, **free and effectively unlimited
+  from Toolforge**. The strongest first thing to prototype: no cost, already
+  reachable from where we run, standard client. Caveat: **experimental, no SLA,
+  endpoints may change** — hence advisory-only and graceful-degradation above.
+  Note: LiftWing's _pre-hosted_ model catalog is **not** usable here — it's all
+  revision/article scoring (revert-risk, article-quality, …); `revertrisk-wikidata`
+  is edit-vandalism detection on a revision, **not** item-pair matching. And
+  hosting a custom dedup model on LiftWing is a heavy, WMF-reviewed process, not
+  worth it for this.
+- **External LLM API** (Claude / OpenAI) from the job/server — stronger and more
+  stable than the experimental open models, at a per-call cost.
+- **Embedding-based similarity** on labels/descriptions as a cheap local
+  pre-filter, with or without an LLM on top.
+
 ## Deployment (Toolforge)
 
 - **Web service:** the Build Service (Cloud Native Buildpacks, Node) —
@@ -121,3 +154,5 @@ review-only (find / rank / compare / dismiss); nothing writes back to Wikidata.
 - [ ] Deploy to Toolforge (build service, ToolsDB, load `jobs.yaml`, one-off seed).
 - [ ] **Wikimedia OAuth** login + apply-merge on the user's behalf.
 - [ ] Widen the item scope beyond video games toward all non-scholarly items.
+- [ ] **ML/LLM-assisted, advisory-only** candidate evaluation (re-rank + auto-drop
+      obvious false positives); prototype on LiftWing's free hosted LLMs first.

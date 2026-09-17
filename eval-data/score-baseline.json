@@ -1,11 +1,11 @@
 {
   "threshold": 0.4,
-  "generatedAt": "2026-09-16T22:46:22.942Z",
+  "generatedAt": "2026-09-16T22:50:27.543Z",
   "summary": {
-    "pairs": 80,
+    "pairs": 82,
     "duplicate": 35,
-    "distinct": 45,
-    "accuracy": 0.8875,
+    "distinct": 47,
+    "accuracy": 0.8902,
     "precision": 1,
     "recall": 0.7429,
     "f1": 0.8525
@@ -191,6 +191,11 @@
       "correct": true,
       "confidence": 0
     },
+    "Q170489_vs_Q854487": {
+      "label": "distinct",
+      "correct": true,
+      "confidence": 0.05
+    },
     "Q174496_vs_Q45201240": {
       "label": "distinct",
       "correct": true,
@@ -280,6 +285,11 @@
       "label": "distinct",
       "correct": true,
       "confidence": 0
+    },
+    "Q3275498_vs_Q3275499": {
+      "label": "distinct",
+      "correct": true,
+      "confidence": 0.05
     },
     "Q3307706_vs_Q128405486": {
       "label": "distinct",

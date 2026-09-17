@@ -398,15 +398,23 @@ const LOW_ENTROPY_PROPS = new Set<string>([
 
 /**
  * Identifiers that third-party databases populate *from* Wikidata rather than
- * independently (vglist, GamerProfiles mirror Wikidata's own item mapping). A
- * shared value is therefore circular — not independent evidence the two items
- * are the same — and a differing value only means one side hasn't been re-synced,
- * not that the subjects are distinct. Ignore them as an identifier signal in
- * both directions (neither a match nor a distinction).
+ * independently (they mirror Wikidata's own item mapping). A shared value is
+ * therefore circular — not independent evidence the two items are the same — and
+ * a differing value only means one side hasn't been re-synced, not that the
+ * subjects are distinct. Ignore them as an identifier signal in both directions
+ * (neither a match nor a distinction).
+ *
+ * This is a hardcoded *floor*, unioned at runtime with the synced set of
+ * properties tagged P31 = Q24075706 ("authority control with reciprocal use of
+ * Wikidata") via ScoreOptions.isMirroredIdProp. The floor guarantees correct
+ * behaviour before the first property sync and in callers that pass no options
+ * (the unit tests), and additionally covers services Wikidata hasn't tagged
+ * (GamerProfiles). Once synced, the (much larger) tagged set handles the rest —
+ * including vglist — and stays current without edits here.
  */
 const MIRRORED_ID_PROPS = new Set<string>([
-  "P8351", // vglist video game ID
-  "P12001", // GamerProfiles game ID
+  "P8351", // vglist video game ID (also tagged P31=Q24075706, so synced too)
+  "P12001", // GamerProfiles game ID — mirrors Wikidata but untagged (P31≠Q24075706)
 ]);
 
 /**
@@ -568,6 +576,17 @@ export interface ScoreOptions {
    * as before.
    */
   isIdentifierProp?: (pid: string) => boolean;
+  /**
+   * Predicate for whether a property mirrors Wikidata — an authority-control id
+   * whose service sources its ids *from* Wikidata (P31 = Q24075706: vglist,
+   * VNDB, MusicBrainz, …). Such ids are minted per Wikidata item, so a shared
+   * value is circular and a differing value is not evidence of distinct
+   * subjects: they count neither for a match nor against one. Unioned with the
+   * hardcoded MIRRORED_ID_PROPS (which also covers services Wikidata hasn't
+   * tagged, e.g. GamerProfiles). Supplied by the hunt from the synced
+   * `properties.mirrors_wikidata`; omitted before the first property sync.
+   */
+  isMirroredIdProp?: (pid: string) => boolean;
 }
 
 export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): CandidateScore {
@@ -581,12 +600,17 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // scores, then further split out account/franchise ids (WEAK_ID_PROPS) that a
   // game shares with its whole series.
   const isId = opts.isIdentifierProp;
+  // A property mirrors Wikidata if it's in the hardcoded floor OR the synced set
+  // (P31 = Q24075706) says so. Such ids are excluded as evidence in both
+  // directions — neither a shared value nor a differing one means anything.
+  const isMirrored = (pid: string): boolean =>
+    MIRRORED_ID_PROPS.has(pid) || (opts.isMirroredIdProp?.(pid) ?? false);
   const sharedExtIds = rows.filter(
     (r) =>
       r.kind === "statement" &&
       r.status === "identical" &&
       r.a.some((v) => v.type === "external-id") &&
-      !MIRRORED_ID_PROPS.has(r.key) &&
+      !isMirrored(r.key) &&
       (isId ? isId(r.key) : true),
   );
   const strongIds = sharedExtIds.filter((r) => !WEAK_ID_PROPS.has(r.key));
@@ -722,7 +746,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
       r.status === "distinct" &&
       r.a.some((v) => v.type === "external-id") &&
       r.b.some((v) => v.type === "external-id") &&
-      !MIRRORED_ID_PROPS.has(r.key) &&
+      !isMirrored(r.key) &&
       (isId ? isId(r.key) : true),
   );
   if (distinctExtIdRows.length > 6) {

@@ -25,7 +25,7 @@ import { and, eq, inArray, isNotNull, notInArray, sql } from "drizzle-orm";
 import * as schema from "../db/schema";
 import { externalIds, items, mergeCandidates, properties } from "../db/schema";
 import { connConfig } from "./db-config";
-import type { Item } from "../src/lib/compare";
+import type { Item, ScoreOptions } from "../src/lib/compare";
 import { blockingLabelKey, orderByAge, scoreCandidate } from "../src/lib/compare";
 import { chunk } from "../src/lib/chunk";
 
@@ -90,6 +90,20 @@ async function loadIdentifierProps(db: Db): Promise<Set<string>> {
     .select({ pid: properties.pid })
     .from(properties)
     .where(eq(properties.datatype, "ExternalId"));
+  return new Set(rows.map((r) => r.pid));
+}
+
+/**
+ * Load the set of properties that mirror Wikidata (P31 = Q24075706 — their
+ * external service sources ids *from* Wikidata, so each item gets its own id).
+ * Passed to scoreCandidate so a shared or differing value on these counts
+ * neither for nor against a match. Empty until the property table is synced.
+ */
+async function loadMirroredIdProps(db: Db): Promise<Set<string>> {
+  const rows = await db
+    .select({ pid: properties.pid })
+    .from(properties)
+    .where(eq(properties.mirrorsWikidata, true));
   return new Set(rows.map((r) => r.pid));
 }
 
@@ -171,10 +185,17 @@ async function score(db: Db, pairs: [string, string][]): Promise<HuntStats> {
   const byQid = new Map<string, Item>();
   for (const row of rowChunks.flat()) byQid.set(row.qid, row.data as Item);
 
-  const idProps = await loadIdentifierProps(db);
+  const [idProps, mirroredProps] = await Promise.all([
+    loadIdentifierProps(db),
+    loadMirroredIdProps(db),
+  ]);
   // Only count real ExternalId properties as shared identifiers once synced;
-  // before that, fall back to legacy value-shape scoring (no predicate).
-  const scoreOpts = idProps.size > 0 ? { isIdentifierProp: (pid: string) => idProps.has(pid) } : {};
+  // before that, fall back to legacy value-shape scoring (no predicate). The
+  // mirrored-props predicate is unioned with compare.ts's hardcoded floor, so
+  // an empty set here just leaves that floor in effect.
+  const scoreOpts: ScoreOptions = {};
+  if (idProps.size > 0) scoreOpts.isIdentifierProp = (pid) => idProps.has(pid);
+  if (mirroredProps.size > 0) scoreOpts.isMirroredIdProp = (pid) => mirroredProps.has(pid);
 
   for (const [qa, qb] of pairs) {
     const a = byQid.get(qa);

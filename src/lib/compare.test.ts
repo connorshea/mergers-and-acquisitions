@@ -499,6 +499,40 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(distinct.reasons.some((r) => r.includes("external identifiers differ"))).toBe(false);
   });
 
+  it("ignores synced mirrors-Wikidata ids (P31=Q24075706) via isMirroredIdProp", () => {
+    // Seven differing external ids on both items would trip the >6 distinct-id
+    // disqualifier — but every one is an authority-control property that sources
+    // its ids from Wikidata (e.g. VNDB P3180), supplied at runtime from the
+    // synced properties table. None are in the hardcoded MIRRORED_ID_PROPS floor,
+    // so this exercises the synced path specifically.
+    const pids = ["P3180", "P9001", "P9002", "P9003", "P9004", "P9005", "P9006"];
+    const mk = (id: string, prefix: string): Item => ({
+      ...base,
+      id,
+      labels: { en: "Sync Echo" },
+      statements: stmt(
+        Object.fromEntries(
+          pids.map((p, i) => [p, [{ type: "external-id" as const, value: `${prefix}${i}` }]]),
+        ),
+      ),
+    });
+    const a = mk("Q60", "a");
+    const b = mk("Q61", "b");
+    const isId = (pid: string) => pids.includes(pid);
+
+    // Without the mirrored predicate the seven differing ids disqualify the pair.
+    const withoutMirror = scoreCandidate(a, b, { isIdentifierProp: isId });
+    expect(withoutMirror.reasons.some((r) => r.includes("external identifiers differ"))).toBe(true);
+
+    // With it, all seven are mirrors, so none count and the disqualifier must not
+    // fire — differing Wikidata-sourced ids are not evidence of distinct subjects.
+    const withMirror = scoreCandidate(a, b, {
+      isIdentifierProp: isId,
+      isMirroredIdProp: (pid) => pids.includes(pid),
+    });
+    expect(withMirror.reasons.some((r) => r.includes("external identifiers differ"))).toBe(false);
+  });
+
   it("caps a pair hard when two+ per-title ids differ, even with a shared id and identical name", () => {
     // Identical name, same P31 and a *shared* IGDB id would score very high, but
     // two per-title store pages differ (Steam + MobyGames) — distinct games.

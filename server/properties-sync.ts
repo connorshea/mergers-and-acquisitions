@@ -19,6 +19,7 @@ export async function syncProperties(rows: PropertyRow[]): Promise<number> {
       label: r.label,
       datatype: r.datatype,
       formatterUrl: r.formatterUrl,
+      mirrorsWikidata: r.mirrorsWikidata,
     }));
     if (chunk.length === 0) continue;
     await db
@@ -29,6 +30,7 @@ export async function syncProperties(rows: PropertyRow[]): Promise<number> {
           label: sql`values(${properties.label})`,
           datatype: sql`values(${properties.datatype})`,
           formatterUrl: sql`values(${properties.formatterUrl})`,
+          mirrorsWikidata: sql`values(${properties.mirrorsWikidata})`,
           syncedAt: sql`CURRENT_TIMESTAMP`,
         },
       });

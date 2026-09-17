@@ -110,6 +110,13 @@ export const properties = mysqlTable("properties", {
   // "https://store.steampowered.com/app/$1/". Lets the UI turn an external-id
   // value into a link. The preferred-rank value is used when several exist.
   formatterUrl: varchar("formatter_url", { length: 2048 }), // nullable — most non-identifier props have none
+  // True when the property is instance of (P31) "Wikidata property for authority
+  // control, with reciprocal use of Wikidata" (Q24075706): the external service
+  // sources its ids *from* Wikidata, so each Wikidata item gets its own id. A
+  // shared value is circular and a differing value is not evidence of distinct
+  // subjects. Synced from Wikidata; the hunt feeds this into scoreCandidate so
+  // such ids count neither for a match nor against one (see MIRRORED_ID_PROPS).
+  mirrorsWikidata: boolean("mirrors_wikidata").notNull().default(false),
   syncedAt: datetime("synced_at", { mode: "string" })
     .notNull()
     .default(sql`CURRENT_TIMESTAMP`),

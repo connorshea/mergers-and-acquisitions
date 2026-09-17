@@ -1,0 +1,381 @@
+{
+  "pageid": 62962801,
+  "ns": 0,
+  "title": "Q63224918",
+  "lastrevid": 2352790117,
+  "modified": "2025-05-26T08:17:49Z",
+  "type": "item",
+  "id": "Q63224918",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Flowers -Le volume sur ete-"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Flowers -Le volume sur ete-"
+    }
+  },
+  "descriptions": {
+    "nl": {
+      "language": "nl",
+      "value": "computerspel"
+    },
+    "ru": {
+      "language": "ru",
+      "value": "компьютерная игра"
+    },
+    "it": {
+      "language": "it",
+      "value": "videogioco"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "لعبة فيديو"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "03d2d8ec4a899b29435a104a9ce7c189a31ae380",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7889,
+              "id": "Q7889"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q63224918$82E7A188-9EC7-4274-8B18-26A564F9F347",
+        "rank": "normal"
+      }
+    ],
+    "P4965": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4965",
+          "hash": "9b6f7c0ab65bd32621b99f70b3c5c134e375123c",
+          "datavalue": {
+            "value": "Flowers-Le-volume-sur-ete",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q63224918$DB41D9A0-6585-4355-8293-BA694A1335F3",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d7bfb75194bd93b2d3b4f10f013d2cd6cb62e9f6",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "eb57caf4f71fa30facf1cfa9b7459a561579c7a8",
+                  "datavalue": {
+                    "value": "http://www.behindthevoiceactors.com/video-games/Flowers-Le-volume-sur-ete",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "5b67a0baf3acbe0388e1a7dc8f9664f8fe465723",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2019-04-19T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P1933": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1933",
+          "hash": "1843de96a0743b4bf44496c299811b4b3b9ce18d",
+          "datavalue": {
+            "value": "flowers-le-volume-sur-t-first-press-limited-edition",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P548": [
+            {
+              "snaktype": "value",
+              "property": "P548",
+              "hash": "9788b3482c4d40b11f6b7dd781c06b619fbd3396",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 6549529,
+                  "id": "Q6549529"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P548"],
+        "id": "Q63224918$5C88576E-B116-4821-8FD4-C57626FF3BE2",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1933",
+          "hash": "5cde07c5eab83a88b04f3abc859fd3b7b520385b",
+          "datavalue": {
+            "value": "flowers-le-volume-sur-t",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q63224918$64C66096-9F16-4BF5-B356-A8B7E582D6E8",
+        "rank": "normal"
+      }
+    ],
+    "P8351": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8351",
+          "hash": "593381b975f9ae9ce94fd3fcaa28606d980a9785",
+          "datavalue": {
+            "value": "30901",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q63224918$8F70FB91-6A23-4FF9-91FD-C136AF59EEE4",
+        "rank": "normal"
+      }
+    ],
+    "P179": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P179",
+          "hash": "15d61dee40d2c3e83cebc67a22c46ed28fdec0b9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 18339185,
+              "id": "Q18339185"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1545": [
+            {
+              "snaktype": "value",
+              "property": "P1545",
+              "hash": "7241753c62a310cf84895620ea82250dcea65835",
+              "datavalue": {
+                "value": "2",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ],
+          "P155": [
+            {
+              "snaktype": "value",
+              "property": "P155",
+              "hash": "c187f3f2bee8d32bee47a76186ab0148285d3146",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 63224922,
+                  "id": "Q63224922"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P156": [
+            {
+              "snaktype": "value",
+              "property": "P156",
+              "hash": "c92b032074961156415c12b7c1c7cec5f02c4776",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 63224920,
+                  "id": "Q63224920"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1545", "P155", "P156"],
+        "id": "Q63224918$3cb4f969-4e70-6df3-8d33-98606c0b4677",
+        "rank": "normal"
+      }
+    ],
+    "P7564": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7564",
+          "hash": "d684a4c6d22a5b1d079971eb396b70f80c27a070",
+          "datavalue": {
+            "value": "38546",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q63224918$E6431756-E6A1-45A3-8B5F-98FF894BA514",
+        "rank": "normal"
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "e9d62405b1bb9b7b979f00006a344891e4c4f072",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 17,
+              "id": "Q17"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q63224918$1e89e133-7f29-43fe-ac2d-9d1ee5dc4006",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "4f36418a61c772126c7eba677b66d1e273e908f1",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "317fdbb13cea617ed6a6b20f6a34f98d47f383f8",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 60315954,
+                      "id": "Q60315954"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P7564": [
+                {
+                  "snaktype": "value",
+                  "property": "P7564",
+                  "hash": "d684a4c6d22a5b1d079971eb396b70f80c27a070",
+                  "datavalue": {
+                    "value": "38546",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "ebbe0f969b8fbc8dae73ee16a86affe94a748d3f",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-10-23T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P7564", "P813"]
+          }
+        ]
+      }
+    ],
+    "P11688": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11688",
+          "hash": "1a240921e9af40db6311cb347fcea530ede4daf4",
+          "datavalue": {
+            "value": "88135",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q63224918$c6f0c21a-6e05-47c6-8b15-cf332559fbe6",
+        "rank": "normal"
+      }
+    ],
+    "P12001": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12001",
+          "hash": "161db70525ff0448e1d214c5ddefc324285dd421",
+          "datavalue": {
+            "value": "76NQ",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q63224918$A56EF3B0-3463-4B3A-A324-E7F4D626035E",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

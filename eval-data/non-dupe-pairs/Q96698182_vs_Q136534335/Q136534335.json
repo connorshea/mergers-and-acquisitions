@@ -1,0 +1,305 @@
+{
+  "pageid": 130236637,
+  "ns": 0,
+  "title": "Q136534335",
+  "lastrevid": 2540360184,
+  "modified": "2026-09-05T04:31:56Z",
+  "type": "item",
+  "id": "Q136534335",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Bulletin of the American Association of University Professors"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "journal 2010-2013"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "Bulletin of the American Association of University Professors (2010-)"
+      }
+    ]
+  },
+  "claims": {
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "04aab8c6555c91a6b0ffa6460f05a0d1e25d7bea",
+          "datavalue": {
+            "value": {
+              "text": "Bulletin of the American Association of University Professors",
+              "language": "en"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q136534335$A6B788CC-DBA3-46B4-8B24-01F3BA48F82F",
+        "rank": "normal"
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "79be89a40eb5519d22350a1eb211ad5c13106a0b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5633421,
+              "id": "Q5633421"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q136534335$5790D91D-2B54-4B6E-9BF4-AF11255CCB27",
+        "rank": "normal"
+      }
+    ],
+    "P1230": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1230",
+          "hash": "0518bb117d04a82be7a3b08d704b343dc6db9f56",
+          "datavalue": {
+            "value": "bulletinaaup",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q136534335$8D4D576A-3D58-40A9-B5D5-BD349FF4219B",
+        "rank": "normal"
+      }
+    ],
+    "P407": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P407",
+          "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1860,
+              "id": "Q1860"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q136534335$EDCC71A2-7B43-4753-9556-4D60746F5564",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "e488df9d8f857e97216fa53a752316e94dc0909a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 96698182,
+              "id": "Q96698182"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q136534335$c2a45587-4f26-5752-1c34-0ab9c54719cf",
+        "rank": "normal"
+      }
+    ],
+    "P6981": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6981",
+          "hash": "99e6266592611b7d1c60e565a550261d2297e14c",
+          "datavalue": {
+            "value": "3048799",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q136534335$CD4226D3-0A17-490E-A2D7-3C39DF621671",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fc399f37a7141fecadf36f44d89fb01016b4ef54",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "3ec4a7729b1fc3a56dc3cfe2424d9083464075f9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 3600584,
+                      "id": "Q3600584"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P248"]
+          }
+        ]
+      }
+    ],
+    "P236": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P236",
+          "hash": "d6d4893622f4e9e92e45907ffb1053a94a62621a",
+          "datavalue": {
+            "value": "2156-4698",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "e6570e76b44c5cec55b736d5bf8f3c25021ff0b3",
+              "datavalue": {
+                "value": "Bulletin of the American Association of University Professors (2010)",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ],
+          "P437": [
+            {
+              "snaktype": "value",
+              "property": "P437",
+              "hash": "740efe54118a78473c6a596896830ec77b53c578",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 1261026,
+                  "id": "Q1261026"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810", "P437"],
+        "id": "Q136534335$0ee527ec-4d24-fdae-1017-7c233c38bd12",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P236",
+          "hash": "f336d0bebcff332edc72f8a63dd71ed0c6ab0aec",
+          "datavalue": {
+            "value": "2330-6599",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "9f179468e1398820b81a18dbe9cbb5aa962a926c",
+              "datavalue": {
+                "value": "Bulletin of the American Association of University Professors (2010. Online)",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ],
+          "P437": [
+            {
+              "snaktype": "value",
+              "property": "P437",
+              "hash": "8ed89d7950d3d2aef771ec9b4aa756407efb8f1d",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 1714118,
+                  "id": "Q1714118"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810", "P437"],
+        "id": "Q136534335$5a8d902c-45a7-8e02-5aa4-184cab0f5695",
+        "rank": "normal"
+      }
+    ],
+    "P7363": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7363",
+          "hash": "e08f7785a8b9ec04b09375d41ac55ca5216aea8f",
+          "datavalue": {
+            "value": "2156-4698",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q136534335$6985ffde-4f66-aa75-14a4-604618588b9f",
+        "rank": "normal"
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "7f985e15819b74ed189d022e004890e66d2ae42e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 30,
+              "id": "Q30"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q136534335$9d7ee883-464f-ebd2-3852-e4f760fccb41",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

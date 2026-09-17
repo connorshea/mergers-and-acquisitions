@@ -1,0 +1,1 @@
+ALTER TABLE `properties` ADD `mirrors_wikidata` boolean DEFAULT false NOT NULL;

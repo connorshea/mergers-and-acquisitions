@@ -1,0 +1,328 @@
+{
+  "pageid": 129472364,
+  "ns": 0,
+  "title": "Q135738540",
+  "lastrevid": 2391185037,
+  "modified": "2025-08-12T17:46:10Z",
+  "type": "item",
+  "id": "Q135738540",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Nature Conservation Society of South-West Häme"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "Lounais-Hämeen Luonnonsuojeluyhdistys (LHLY)"
+    },
+    "de": {
+      "language": "de",
+      "value": "Naturschutzverein von Südwest-Häme"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "Sydvästra Tavastlands Naturskyddsförening"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "organization in Forssa, Finland"
+    }
+  },
+  "aliases": {
+    "fi": [
+      {
+        "language": "fi",
+        "value": "LHLY"
+      },
+      {
+        "language": "fi",
+        "value": "Lounais-Hämeen Luonnonsuojeluyhdistys"
+      }
+    ]
+  },
+  "claims": {
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "478fb2513e99d97c0e19259525594c35a7deb28d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 33,
+              "id": "Q33"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q135738540$23D7B07A-1A9D-48C5-B076-B964390E5AED",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "1b2b4a8af4478bc9c934896af45e6aacfa149cc6",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "d1e25e3b81a706cda409153bd0e179db67a19ec9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 135732912,
+                      "id": "Q135732912"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P6782": [
+                {
+                  "snaktype": "value",
+                  "property": "P6782",
+                  "hash": "f79f224ecfa80936236c6ceb49473d7cf2e6e499",
+                  "datavalue": {
+                    "value": "01dv35y78",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P6782"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "20b3c9267c82af90c6e03e3b112a810207b32cc0",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 43229,
+              "id": "Q43229"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q135738540$3CD468C7-AEFA-4566-9C53-6079FD239C77",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "1b2b4a8af4478bc9c934896af45e6aacfa149cc6",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "d1e25e3b81a706cda409153bd0e179db67a19ec9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 135732912,
+                      "id": "Q135732912"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P6782": [
+                {
+                  "snaktype": "value",
+                  "property": "P6782",
+                  "hash": "f79f224ecfa80936236c6ceb49473d7cf2e6e499",
+                  "datavalue": {
+                    "value": "01dv35y78",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P6782"]
+          }
+        ]
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "2ec76fbf219c17d3cb318aa6843d5c4baec6506d",
+          "datavalue": {
+            "value": {
+              "time": "+1951-01-01T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q135738540$B1FB1058-4618-4B7D-A28E-BCF8B5E0D162",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "1b2b4a8af4478bc9c934896af45e6aacfa149cc6",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "d1e25e3b81a706cda409153bd0e179db67a19ec9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 135732912,
+                      "id": "Q135732912"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P6782": [
+                {
+                  "snaktype": "value",
+                  "property": "P6782",
+                  "hash": "f79f224ecfa80936236c6ceb49473d7cf2e6e499",
+                  "datavalue": {
+                    "value": "01dv35y78",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P6782"]
+          }
+        ]
+      }
+    ],
+    "P6782": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6782",
+          "hash": "f79f224ecfa80936236c6ceb49473d7cf2e6e499",
+          "datavalue": {
+            "value": "01dv35y78",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q135738540$913044FD-7E92-4FEB-8414-1399D78908BB",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "1b2b4a8af4478bc9c934896af45e6aacfa149cc6",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "d1e25e3b81a706cda409153bd0e179db67a19ec9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 135732912,
+                      "id": "Q135732912"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P6782": [
+                {
+                  "snaktype": "value",
+                  "property": "P6782",
+                  "hash": "f79f224ecfa80936236c6ceb49473d7cf2e6e499",
+                  "datavalue": {
+                    "value": "01dv35y78",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P6782"]
+          }
+        ]
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "84db0230c364ad84fcd8e8ddc816dcb188606863",
+          "datavalue": {
+            "value": "https://www.sll.fi/lounais-hame/",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q135738540$1610E78A-E8AC-4708-AB4B-9384FF7AD860",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "1b2b4a8af4478bc9c934896af45e6aacfa149cc6",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "d1e25e3b81a706cda409153bd0e179db67a19ec9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 135732912,
+                      "id": "Q135732912"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P6782": [
+                {
+                  "snaktype": "value",
+                  "property": "P6782",
+                  "hash": "f79f224ecfa80936236c6ceb49473d7cf2e6e499",
+                  "datavalue": {
+                    "value": "01dv35y78",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P6782"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {}
+}

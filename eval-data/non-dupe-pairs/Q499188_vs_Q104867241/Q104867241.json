@@ -1,0 +1,110 @@
+{
+  "pageid": 100279917,
+  "ns": 0,
+  "title": "Q104867241",
+  "lastrevid": 2514702825,
+  "modified": "2026-07-07T04:41:37Z",
+  "type": "item",
+  "id": "Q104867241",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Los Angeles Daily News"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "19th century newspaper"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "231bc92d9d3652530cc01c798409bd6175bd1ee4",
+          "datavalue": {
+            "value": "/g/11mvm3d0fw",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q104867241$91D3746C-9B5A-486B-893B-6A71907CF52D",
+        "rank": "normal"
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "3019c5266316b68849d36b14dc2d48a88bec07fd",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11032,
+              "id": "Q11032"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q104867241$0f395e35-4176-7dec-ea74-28cd36af4da6",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "72c78e0f0e360b9a238fc5327579e68c641bf5ff",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6682116,
+              "id": "Q6682116"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q104867241$2334dc9f-49b4-f708-a0c4-63a38d42958e",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "801b19361682648f705f67275f9af471e1083edf",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 499188,
+              "id": "Q499188"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q104867241$e35839f5-432a-0ec9-98ca-1f4e53b235ab",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Los Angeles Daily News (19th century)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Los_Angeles_Daily_News_(19th_century)"
+    }
+  }
+}

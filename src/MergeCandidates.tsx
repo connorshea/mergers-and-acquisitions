@@ -1,8 +1,18 @@
 import { useMemo, useState } from "react";
 import type { AnnotatedValue, Item, RowStatus } from "./lib/compare";
-import { buildRows, formatIdUrl } from "./lib/compare";
+import { buildRows, formatIdUrl, isHardcodedMirrorProp } from "./lib/compare";
 
 // ---------- UI ----------
+
+/**
+ * Wikidata's special snaks: an *unknown* value (somevalue) and an explicit *no*
+ * value (novalue). Both are placeholders with no real value to show.
+ */
+function specialValueText(v: AnnotatedValue): string | null {
+  if (v.type === "somevalue") return "unknown value";
+  if (v.type === "novalue") return "no value";
+  return null;
+}
 
 /**
  * Display text for a value. Wikidata day-precision dates come through as
@@ -10,6 +20,8 @@ import { buildRows, formatIdUrl } from "./lib/compare";
  * just the calendar date. Non-midnight times are left intact.
  */
 function displayValue(v: AnnotatedValue): string {
+  const special = specialValueText(v);
+  if (special) return special;
   if (v.type === "item") return v.label ?? v.value;
   if (v.type === "time") {
     const m = /^([+-]?\d{4}-\d{2}-\d{2})T00:00:00Z$/.exec(v.value);
@@ -20,14 +32,21 @@ function displayValue(v: AnnotatedValue): string {
 
 function ValueChip({ v, formatter }: { v: AnnotatedValue; formatter?: string }) {
   const text = displayValue(v);
+  const special = specialValueText(v) != null;
   // Link out where the value points somewhere: a `url` value is itself a URL
   // (e.g. an itch.io page), and an external identifier with a formatter URL
   // (P1630) resolves to its source database, e.g. a Steam app ID → store page.
-  const idUrl =
-    v.type === "url" ? v.value : v.type === "external-id" ? formatIdUrl(formatter, v.value) : null;
+  // Special (unknown/no) values are placeholders, never links.
+  const idUrl = special
+    ? null
+    : v.type === "url"
+      ? v.value
+      : v.type === "external-id"
+        ? formatIdUrl(formatter, v.value)
+        : null;
   return (
     <span
-      className={`chip chip-${v.status}`}
+      className={`chip chip-${v.status}${special ? " chip-special" : ""}`}
       title={v.note ?? (v.type === "item" ? v.value : v.type === "time" ? v.value : undefined)}
     >
       {idUrl ? (
@@ -93,6 +112,7 @@ export default function MergeCandidates({
   into,
   propertyLabels,
   propertyFormatters,
+  propertyMirrors,
   valueLabels,
 }: {
   from: Item;
@@ -101,9 +121,24 @@ export default function MergeCandidates({
   propertyLabels?: Record<string, string>;
   /** Pxxx → formatter URL (with "$1"), so external-id values can be linked. */
   propertyFormatters?: Record<string, string>;
+  /** Pxxx that source their ids from Wikidata (synced `mirrors_wikidata`). */
+  propertyMirrors?: string[];
   /** Qxxx → human label, from the DB-backed entity_labels table. */
   valueLabels?: Record<string, string>;
 }) {
+  // A property is Wikidata-sourced if the synced set flags it OR it's in the
+  // hardcoded floor (which covers services Wikidata hasn't tagged, e.g.
+  // GamerProfiles). The synced set is absent before the first property sync, so
+  // the floor guarantees the well-known ones are always marked.
+  const mirrorSet = useMemo(() => new Set(propertyMirrors ?? []), [propertyMirrors]);
+  const isMirrored = (pid: string): boolean => mirrorSet.has(pid) || isHardcodedMirrorProp(pid);
+
+  // Best display name for a column header, shown de-emphasized next to the QID
+  // (e.g. "Q134990310 (HYPER METEOR)"). Omitted when the item carries no label.
+  const nameOf = (item: Item): string | undefined =>
+    item.labels.en ?? item.labels.mul ?? Object.values(item.labels)[0];
+  const fromName = nameOf(from);
+  const intoName = nameOf(into);
   const [hidden, setHidden] = useState<Record<RowStatus, boolean>>({
     identical: false,
     similar: false,
@@ -180,10 +215,15 @@ export default function MergeCandidates({
       )}
 
       {GROUPS.filter((g) => !hidden[g.status]).map((g) => {
-        // P31 first; everything else keeps its build order (terms, sitelinks, statements).
+        // P31 first, then Wikidata-sourced (mirrored) identifiers sink to the
+        // bottom — they're weak evidence either way; everything else keeps its
+        // build order (terms, sitelinks, statements). Array.sort is stable, so
+        // rows within a rank stay in build order.
+        const rank = (r: (typeof rows)[number]): number =>
+          r.key === "P31" ? -1 : r.kind === "statement" && isMirrored(r.key) ? 1 : 0;
         const groupRows = rows
           .filter((r) => r.status === g.status)
-          .sort((x, y) => Number(y.key === "P31") - Number(x.key === "P31"));
+          .sort((x, y) => rank(x) - rank(y));
         return (
           <section key={g.status} className={`group group-${g.status}`}>
             <h2>
@@ -206,6 +246,7 @@ export default function MergeCandidates({
                         >
                           {from.id}
                         </a>
+                        {fromName && <span className="col-name">{fromName}</span>}
                       </th>
                       <th className="col-b">
                         <a
@@ -216,6 +257,7 @@ export default function MergeCandidates({
                         >
                           {into.id}
                         </a>
+                        {intoName && <span className="col-name">{intoName}</span>}
                       </th>
                     </tr>
                   </thead>
@@ -226,7 +268,17 @@ export default function MergeCandidates({
                       const formatter =
                         r.kind === "statement" ? propertyFormatters?.[r.key] : undefined;
                       return (
-                        <tr key={r.key} className={r.blocker ? "is-blocker" : undefined}>
+                        <tr
+                          key={r.key}
+                          className={
+                            [
+                              r.blocker ? "is-blocker" : "",
+                              r.kind === "statement" && isMirrored(r.key) ? "is-mirror" : "",
+                            ]
+                              .filter(Boolean)
+                              .join(" ") || undefined
+                          }
+                        >
                           <td className="col-prop">
                             <div className="prop-label">{r.label}</div>
                             <div className="prop-key">
@@ -240,6 +292,14 @@ export default function MergeCandidates({
                                 </a>
                               ) : (
                                 r.kind
+                              )}
+                              {r.kind === "statement" && isMirrored(r.key) && (
+                                <span
+                                  className="prop-mirror"
+                                  title="Identifier is for a database based on Wikidata, these may be distinct values but they tell us nothing about whether these are distinct entities."
+                                >
+                                  ↺ Wikidata-sourced
+                                </span>
                               )}
                             </div>
                             {r.note && <div className="prop-note">{r.note}</div>}

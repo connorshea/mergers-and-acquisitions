@@ -1,0 +1,494 @@
+{
+  "pageid": 273713,
+  "ns": 0,
+  "title": "Q283159",
+  "lastrevid": 1593982667,
+  "modified": "2022-03-14T10:00:24Z",
+  "type": "item",
+  "id": "Q283159",
+  "labels": {
+    "fa": {
+      "language": "fa",
+      "value": "جراحی"
+    },
+    "ur": {
+      "language": "ur",
+      "value": "جراحی دریا"
+    },
+    "en": {
+      "language": "en",
+      "value": "Jarahi River"
+    },
+    "hr": {
+      "language": "hr",
+      "value": "Džarahi"
+    },
+    "sh": {
+      "language": "sh",
+      "value": "Džarahi"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "نهر جراحي"
+    },
+    "be-tarask": {
+      "language": "be-tarask",
+      "value": "Джарахі"
+    },
+    "cy": {
+      "language": "cy",
+      "value": "Afon Jarahi"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "Abhainn Jarahi"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "賈拉希河"
+    },
+    "arz": {
+      "language": "arz",
+      "value": "نهر جراحى"
+    },
+    "vec": {
+      "language": "vec",
+      "value": "Fiume Jarahi"
+    },
+    "ru": {
+      "language": "ru",
+      "value": "Джеррахи"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "river in Iran"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "rivier in Iran"
+    },
+    "he": {
+      "language": "he",
+      "value": "נהר"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "نهر"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "ইরানের নদী"
+    },
+    "es": {
+      "language": "es",
+      "value": "río de Irán"
+    },
+    "de": {
+      "language": "de",
+      "value": "Fluss im Iran"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "abhainn san Iaráin"
+    }
+  },
+  "aliases": {
+    "fa": [
+      {
+        "language": "fa",
+        "value": "رودخانهٔ جراحی"
+      },
+      {
+        "language": "fa",
+        "value": "رودخانه جراحی"
+      }
+    ],
+    "ru": [
+      {
+        "language": "ru",
+        "value": "Джераки"
+      },
+      {
+        "language": "ru",
+        "value": "Джарахи"
+      }
+    ],
+    "en": [
+      {
+        "language": "en",
+        "value": "Kordestān river"
+      }
+    ]
+  },
+  "claims": {
+    "P403": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P403",
+          "hash": "4e99a29eef6e5efc4868ace6904d8285b5ea9cc8",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 461557,
+              "id": "Q461557"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q283159$17234e01-4783-c3ff-8a35-4fa722a56daa",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "5aaa553bc94004bf83427e213fd6c3c49f882a7d",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "ab5ad8b09083e4bb12817ad8a9b947e967af198c",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 4115217,
+                      "id": "Q4115217"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P248"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P403",
+          "hash": "745235183270d86da5ed05b2d59bca33324f61ec",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 34675,
+              "id": "Q34675"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q283159$89bf58b7-4547-5216-bed3-4e9a628b600b",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "5aaa553bc94004bf83427e213fd6c3c49f882a7d",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "ab5ad8b09083e4bb12817ad8a9b947e967af198c",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 4115217,
+                      "id": "Q4115217"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P248"]
+          }
+        ]
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "f04a6c4dcfe72579de0b7e32985a08f0ad868b7d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 794,
+              "id": "Q794"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q283159$d70aa96a-435e-be09-af45-51695311864b",
+        "rank": "normal"
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "abe1fef15ca7c678e5cb6a039e5bda82c75b62df",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4022,
+              "id": "Q4022"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q283159$DE703496-945A-450A-8E42-210B9675F7D7",
+        "rank": "normal"
+      }
+    ],
+    "P18": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "f1b668be2e76b992fc8664f4693ff764d5bf46cc",
+          "datavalue": {
+            "value": "Jarahi River.JPG",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q283159$0ec23355-48df-cab1-2bd4-ce62a46bb1fe",
+        "rank": "normal"
+      }
+    ],
+    "P373": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P373",
+          "hash": "75daf323fcd44b9d542c82e0daca4564c8c79d8f",
+          "datavalue": {
+            "value": "Jarahi River",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q283159$e92e8369-42c2-89c5-8787-0fe0724299cd",
+        "rank": "normal"
+      }
+    ],
+    "P625": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P625",
+          "hash": "d1de8690037c8ac14639809da0788bc8e34c4994",
+          "datavalue": {
+            "value": {
+              "latitude": 30.43138888888889,
+              "longitude": 49.055277777777775,
+              "altitude": null,
+              "precision": 0.0002777777777777778,
+              "globe": "http://www.wikidata.org/entity/Q2"
+            },
+            "type": "globecoordinate"
+          },
+          "datatype": "globe-coordinate"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P518": [
+            {
+              "snaktype": "value",
+              "property": "P518",
+              "hash": "544b353c2ef8ad17b20e5e38254f37c3b3858ebf",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 1233637,
+                  "id": "Q1233637"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P518"],
+        "id": "Q283159$92ee178a-4129-f632-30df-ad73d75deec5",
+        "rank": "normal"
+      }
+    ],
+    "P131": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P131",
+          "hash": "74345f9b1915acff6c9c3bb178c5e2885f457536",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 241119,
+              "id": "Q241119"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q283159$99081a47-4612-3ce8-3b33-16218e833458",
+        "rank": "normal"
+      }
+    ],
+    "P974": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P974",
+          "hash": "9792f71c53f1d927e1b5a180286257f3ed678316",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 12626672,
+              "id": "Q12626672"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q283159$daaac6d4-4cca-a7e5-9c2c-51b9173def6b",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P974",
+          "hash": "50ccb5d86ad3a674d720294ecfa6f66673c8b445",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3437153,
+              "id": "Q3437153"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q283159$a0f3addb-4647-5c12-8511-f2d31ac8a4cd",
+        "rank": "normal"
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "b52093fc595cee3bcd0643abf55842a65681e29a",
+          "datavalue": {
+            "value": "/m/0c40p65",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q283159$9950C044-EC66-4D71-9B86-61704DD72C51",
+        "rank": "normal"
+      }
+    ],
+    "P4614": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4614",
+          "hash": "8d0dedfe31d2d15f18b37fb81768cd271f08aed4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 107998950,
+              "id": "Q107998950"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q283159$0991c7f6-4b3f-f3d6-8f76-8c4f811cbc2d",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "urwiki": {
+      "site": "urwiki",
+      "title": "جراحی دریا",
+      "badges": [],
+      "url": "https://ur.wikipedia.org/wiki/%D8%AC%D8%B1%D8%A7%D8%AD%DB%8C_%D8%AF%D8%B1%DB%8C%D8%A7"
+    },
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Jarahi River",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Jarahi_River"
+    },
+    "hrwiki": {
+      "site": "hrwiki",
+      "title": "Džarahi",
+      "badges": [],
+      "url": "https://hr.wikipedia.org/wiki/D%C5%BEarahi"
+    },
+    "be_x_oldwiki": {
+      "site": "be_x_oldwiki",
+      "title": "Джарахі",
+      "badges": [],
+      "url": "https://be-tarask.wikipedia.org/wiki/%D0%94%D0%B6%D0%B0%D1%80%D0%B0%D1%85%D1%96"
+    },
+    "shwiki": {
+      "site": "shwiki",
+      "title": "Džarahi",
+      "badges": [],
+      "url": "https://sh.wikipedia.org/wiki/D%C5%BEarahi"
+    },
+    "arwiki": {
+      "site": "arwiki",
+      "title": "نهر جراحي",
+      "badges": [],
+      "url": "https://ar.wikipedia.org/wiki/%D9%86%D9%87%D8%B1_%D8%AC%D8%B1%D8%A7%D8%AD%D9%8A"
+    },
+    "fawiki": {
+      "site": "fawiki",
+      "title": "رود جراحی",
+      "badges": [],
+      "url": "https://fa.wikipedia.org/wiki/%D8%B1%D9%88%D8%AF_%D8%AC%D8%B1%D8%A7%D8%AD%DB%8C"
+    },
+    "commonswiki": {
+      "site": "commonswiki",
+      "title": "Category:Jarahi River",
+      "badges": [],
+      "url": "https://commons.wikimedia.org/wiki/Category:Jarahi_River"
+    },
+    "arzwiki": {
+      "site": "arzwiki",
+      "title": "نهر جراحى",
+      "badges": [],
+      "url": "https://arz.wikipedia.org/wiki/%D9%86%D9%87%D8%B1_%D8%AC%D8%B1%D8%A7%D8%AD%D9%89"
+    },
+    "ruwiki": {
+      "site": "ruwiki",
+      "title": "Джеррахи",
+      "badges": [],
+      "url": "https://ru.wikipedia.org/wiki/%D0%94%D0%B6%D0%B5%D1%80%D1%80%D0%B0%D1%85%D0%B8"
+    }
+  }
+}

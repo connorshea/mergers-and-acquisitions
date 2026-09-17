@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { fetch, FetchError } from "void/client";
+import { fetch, FetchError } from "../lib/client";
 import {
   CANDIDATE_SORTS,
   CANDIDATE_STATUSES,
@@ -23,6 +23,21 @@ const SORT_LABELS: Record<CandidateSort, string> = {
   detectedAt: "Recently found",
 };
 
+// Common instance-of (P31) types to offer as quick filters. Scope is video
+// games, so most pairs are Q7889; the rest surface mod/DLC/series/remake/etc.
+// duplicates. The filter still accepts any QID via the URL `type` param — this
+// is just the prefilled dropdown. QIDs/labels verified against Wikidata.
+const P31_OPTIONS: { qid: string; label: string }[] = [
+  { qid: "Q7889", label: "video game" },
+  { qid: "Q21125433", label: "free and open-source video game" },
+  { qid: "Q865493", label: "video game mod" },
+  { qid: "Q7058673", label: "video game series" },
+  { qid: "Q1066707", label: "downloadable content" },
+  { qid: "Q4393107", label: "video game remake" },
+  { qid: "Q1755420", label: "game demo" },
+  { qid: "Q61475894", label: "cancelled/unreleased video game" },
+];
+
 function confidenceTier(confidence: number): "identical" | "similar" | "distinct" {
   if (confidence >= 0.6) return "identical";
   if (confidence >= 0.4) return "similar";
@@ -38,6 +53,7 @@ export default function CandidatesList() {
   const q = params.get("q") ?? "";
   const status = oneOf<CandidateStatus>(CANDIDATE_STATUSES, params.get("status"), "open");
   const sort = oneOf<CandidateSort>(CANDIDATE_SORTS, params.get("sort"), "confidence");
+  const type = params.get("type") ?? "";
   const page = Math.max(1, Number(params.get("page")) || 1);
 
   const [data, setData] = useState<CandidateListResponse | null>(null);
@@ -61,6 +77,30 @@ export default function CandidatesList() {
     if (menuRef.current) menuRef.current.open = false;
   };
 
+  // A native <details> menu doesn't dismiss on an outside click or Escape the way
+  // a real dropdown should — wire both up. Handlers read menuRef.current live so
+  // they stay correct across re-renders; they no-op when the menu is closed or
+  // (outside dev) never rendered.
+  useEffect(() => {
+    function onPointerDown(e: PointerEvent) {
+      const menu = menuRef.current;
+      if (menu?.open && !menu.contains(e.target as Node)) menu.open = false;
+    }
+    function onKeyDown(e: KeyboardEvent) {
+      const menu = menuRef.current;
+      if (e.key === "Escape" && menu?.open) {
+        menu.open = false;
+        menu.querySelector<HTMLElement>("summary")?.focus();
+      }
+    }
+    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, []);
+
   useEffect(() => {
     let cancelled = false;
     async function load() {
@@ -74,6 +114,7 @@ export default function CandidatesList() {
         pageSize: String(PAGE_SIZE),
       };
       if (q) query.q = q;
+      if (type) query.type = type;
       try {
         const res = await fetch("/api/candidates", { query });
         if (!cancelled) setData(res as CandidateListResponse);
@@ -89,7 +130,7 @@ export default function CandidatesList() {
     return () => {
       cancelled = true;
     };
-  }, [q, status, sort, page, reloadKey]);
+  }, [q, status, sort, type, page, reloadKey]);
 
   async function runHunt() {
     setHunt({ running: true, note: null });
@@ -317,6 +358,23 @@ export default function CandidatesList() {
         </label>
 
         <label className="field">
+          <span>Type</span>
+          <select value={type} onChange={(e) => update({ type: e.target.value })}>
+            <option value="">All types</option>
+            {P31_OPTIONS.map((o) => (
+              <option key={o.qid} value={o.qid}>
+                {o.label}
+              </option>
+            ))}
+            {/* A `type` from the URL that isn't one of the presets still needs a
+                selectable option so the control reflects it. */}
+            {type && !P31_OPTIONS.some((o) => o.qid === type) && (
+              <option value={type}>{type}</option>
+            )}
+          </select>
+        </label>
+
+        <label className="field">
           <span>Sort</span>
           <select value={sort} onChange={(e) => update({ sort: e.target.value })}>
             {CANDIDATE_SORTS.map((s) => (
@@ -336,8 +394,9 @@ export default function CandidatesList() {
       {loading && !data && <p className="list-msg">Loading…</p>}
       {data && visible.length === 0 && !loading && (
         <p className="list-msg">
-          No {status} candidates{q ? ` matching “${q}”` : ""}. They appear here once the hunt job
-          has scored some pairs.
+          No {status} candidates{q ? ` matching “${q}”` : ""}
+          {type ? ` of type ${P31_OPTIONS.find((o) => o.qid === type)?.label ?? type}` : ""}. They
+          appear here once the hunt job has scored some pairs.
         </p>
       )}
 

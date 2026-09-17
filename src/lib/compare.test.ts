@@ -34,10 +34,43 @@ describe("normalize / stringSimilarity", () => {
 });
 
 describe("compareValues", () => {
-  it("matches times on year with differing precision", () => {
+  it("flags a genuine precision mismatch (year-precision vs day) as such", () => {
+    // Year precision is encoded with 00 month/day (`+2019-00-00T…`).
     expect(
-      compareValues({ type: "time", value: "2019-03-12" }, { type: "time", value: "2019" }),
+      compareValues(
+        { type: "time", value: "+2019-03-12T00:00:00Z" },
+        { type: "time", value: "+2019-00-00T00:00:00Z" },
+      ),
     ).toEqual(["similar", "same year, different precision"]);
+  });
+
+  it("reports two same-precision days that differ by a day as a day apart, not a precision mismatch", () => {
+    // Regression: 2022-11-11 vs 2022-11-12 are both day precision — the note must
+    // not claim "different precision".
+    expect(
+      compareValues(
+        { type: "time", value: "+2022-11-11T00:00:00Z" },
+        { type: "time", value: "+2022-11-12T00:00:00Z" },
+      ),
+    ).toEqual(["similar", "one day apart"]);
+  });
+
+  it("reports same-year days in different months as a month difference", () => {
+    expect(
+      compareValues(
+        { type: "time", value: "+2022-11-11T00:00:00Z" },
+        { type: "time", value: "+2022-06-11T00:00:00Z" },
+      ),
+    ).toEqual(["similar", "same year, different month"]);
+  });
+
+  it("treats different years as distinct", () => {
+    expect(
+      compareValues(
+        { type: "time", value: "+2022-11-11T00:00:00Z" },
+        { type: "time", value: "+2006-01-20T00:00:00Z" },
+      )[0],
+    ).toBe("distinct");
   });
 
   it("requires exact match for external ids", () => {
@@ -52,6 +85,20 @@ describe("compareValues", () => {
   it("treats different types as distinct", () => {
     expect(compareValues({ type: "url", value: "x" }, { type: "string", value: "x" })[0]).toBe(
       "distinct",
+    );
+  });
+
+  it("never treats two unknown values (somevalue) as identical", () => {
+    // Their blank-node value strings must not be compared; an unknown value can't
+    // be confirmed equal to another unknown value.
+    expect(
+      compareValues({ type: "somevalue", value: "" }, { type: "somevalue", value: "" }),
+    ).toEqual(["distinct", "unknown value on both sides"]);
+  });
+
+  it("treats two explicit no-values (novalue) as identical", () => {
+    expect(compareValues({ type: "novalue", value: "" }, { type: "novalue", value: "" })[0]).toBe(
+      "identical",
     );
   });
 });
@@ -499,6 +546,40 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(distinct.reasons.some((r) => r.includes("external identifiers differ"))).toBe(false);
   });
 
+  it("ignores synced mirrors-Wikidata ids (P31=Q24075706) via isMirroredIdProp", () => {
+    // Seven differing external ids on both items would trip the >6 distinct-id
+    // disqualifier — but every one is an authority-control property that sources
+    // its ids from Wikidata (e.g. VNDB P3180), supplied at runtime from the
+    // synced properties table. None are in the hardcoded MIRRORED_ID_PROPS floor,
+    // so this exercises the synced path specifically.
+    const pids = ["P3180", "P9001", "P9002", "P9003", "P9004", "P9005", "P9006"];
+    const mk = (id: string, prefix: string): Item => ({
+      ...base,
+      id,
+      labels: { en: "Sync Echo" },
+      statements: stmt(
+        Object.fromEntries(
+          pids.map((p, i) => [p, [{ type: "external-id" as const, value: `${prefix}${i}` }]]),
+        ),
+      ),
+    });
+    const a = mk("Q60", "a");
+    const b = mk("Q61", "b");
+    const isId = (pid: string) => pids.includes(pid);
+
+    // Without the mirrored predicate the seven differing ids disqualify the pair.
+    const withoutMirror = scoreCandidate(a, b, { isIdentifierProp: isId });
+    expect(withoutMirror.reasons.some((r) => r.includes("external identifiers differ"))).toBe(true);
+
+    // With it, all seven are mirrors, so none count and the disqualifier must not
+    // fire — differing Wikidata-sourced ids are not evidence of distinct subjects.
+    const withMirror = scoreCandidate(a, b, {
+      isIdentifierProp: isId,
+      isMirroredIdProp: (pid) => pids.includes(pid),
+    });
+    expect(withMirror.reasons.some((r) => r.includes("external identifiers differ"))).toBe(false);
+  });
+
   it("caps a pair hard when two+ per-title ids differ, even with a shared id and identical name", () => {
     // Identical name, same P31 and a *shared* IGDB id would score very high, but
     // two per-title store pages differ (Steam + MobyGames) — distinct games.
@@ -656,5 +737,48 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(result.reasons[0]).toContain("different from");
     // Symmetric: the declaration counts from whichever side holds it.
     expect(scoreCandidate(b, a).confidence).toBe(0);
+  });
+
+  it("reaches near-certain (1.0) for a well-corroborated identical pair, with no 'held below' reason", () => {
+    // Identical name + two shared strong ids + an agreeing developer = three
+    // corroborating signals and no differences, so the ceiling is 1.0. The raw
+    // additive score exceeds 1.0 and is clamped, but that clamp is the ordinary
+    // cap — not the ceiling holding the pair back — so no "held below" reason.
+    const mk = (id: string): Item => ({
+      ...base,
+      id,
+      labels: { en: "Chrono Rift" },
+      statements: stmt({
+        P5794: [{ type: "external-id" as const, value: "igdb-777" }], // shared IGDB
+        P11688: [{ type: "external-id" as const, value: "moby-777" }], // shared MobyGames
+        P178: [{ type: "item" as const, value: "Q900" }], // agreeing developer
+      }),
+    });
+    const result = scoreCandidate(mk("Q1"), mk("Q2"), {
+      isIdentifierProp: (pid) => ["P5794", "P11688"].includes(pid),
+    });
+    expect(result.confidence).toBe(1);
+    expect(result.reasons.some((r) => r.startsWith("held below near-certain"))).toBe(false);
+  });
+
+  it("holds a lone-shared-id identical pair below near-certain and explains it", () => {
+    // Identical name + a single shared id is strong but not conclusive (the id
+    // could be stale/mis-entered), so the ceiling caps it at 0.85 and says so.
+    const mk = (id: string): Item => ({
+      ...base,
+      id,
+      labels: { en: "Solo Signal" },
+      statements: stmt({ P5794: [{ type: "external-id" as const, value: "igdb-1" }] }),
+    });
+    const result = scoreCandidate(mk("Q1"), mk("Q2"), {
+      isIdentifierProp: (pid) => pid === "P5794",
+    });
+    expect(result.confidence).toBeLessThanOrEqual(0.85);
+    expect(result.confidence).toBeGreaterThan(0.4);
+    expect(
+      result.reasons.some((r) =>
+        r.includes("held below near-certain — only one strong corroborating signal"),
+      ),
+    ).toBe(true);
   });
 });

@@ -1,0 +1,488 @@
+{
+  "pageid": 103632540,
+  "ns": 0,
+  "title": "Q108370681",
+  "lastrevid": 2528261365,
+  "modified": "2026-08-06T20:50:16Z",
+  "type": "item",
+  "id": "Q108370681",
+  "labels": {
+    "de": {
+      "language": "de",
+      "value": "Cave Story"
+    },
+    "en-ca": {
+      "language": "en-ca",
+      "value": "Cave Story"
+    },
+    "ru": {
+      "language": "ru",
+      "value": "Cave Story"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "Cave Story"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "Cave Story"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "Cave Story"
+    },
+    "lv": {
+      "language": "lv",
+      "value": "Cave Story"
+    },
+    "it": {
+      "language": "it",
+      "value": "Cave Story"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Cave Story"
+    },
+    "es": {
+      "language": "es",
+      "value": "Cave Story"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "Cave Story"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "Cave Story"
+    },
+    "en-gb": {
+      "language": "en-gb",
+      "value": "Cave Story"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Cave Story"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "Cave Story"
+    },
+    "sco": {
+      "language": "sco",
+      "value": "Cave Story"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Cave Story"
+    }
+  },
+  "descriptions": {
+    "de": {
+      "language": "de",
+      "value": "Computerspielserie"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "datorspelsserie"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "videopelisarja"
+    },
+    "en-ca": {
+      "language": "en-ca",
+      "value": "video game series"
+    },
+    "ru": {
+      "language": "ru",
+      "value": "серия компьютерных игр"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "série de jogos eletrônicos"
+    },
+    "en": {
+      "language": "en",
+      "value": "video game series"
+    },
+    "lv": {
+      "language": "lv",
+      "value": "datorspēļu sērija"
+    },
+    "it": {
+      "language": "it",
+      "value": "serie di videogiochi"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "série de jeux vidéo"
+    },
+    "es": {
+      "language": "es",
+      "value": "serie de videojuegos"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "серія відеоігор"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "seria gier komputerowych"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "sèrie de videojocs"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "computerspelserie"
+    },
+    "sco": {
+      "language": "sco",
+      "value": "video gemme series"
+    },
+    "en-gb": {
+      "language": "en-gb",
+      "value": "video game series"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P9835": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P9835",
+          "hash": "c9732ce9f5917732243c4e2dab1e53d35f52c8ac",
+          "datavalue": {
+            "value": "270",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q108370681$9533ECEA-5AF8-4DB9-8B22-AC9F31A58449",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "e0f7278914cf2d0b9b0abb274c8befb676a79320",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "55ed57b842fbc2b8fc798f18027465aa88e32b62",
+                  "datavalue": {
+                    "value": "https://www.igromania.ru/game/series/270/Cave_Story.html",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P1476": [
+                {
+                  "snaktype": "value",
+                  "property": "P1476",
+                  "hash": "7aef2207f1caced01ee37f391781a50461f852d0",
+                  "datavalue": {
+                    "value": {
+                      "text": "Серия игр Cave Story",
+                      "language": "ru"
+                    },
+                    "type": "monolingualtext"
+                  },
+                  "datatype": "monolingualtext"
+                }
+              ],
+              "P407": [
+                {
+                  "snaktype": "value",
+                  "property": "P407",
+                  "hash": "d291ddb7cd77c94a7bd709a8395934147e0864fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 7737,
+                      "id": "Q7737"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P1433": [
+                {
+                  "snaktype": "value",
+                  "property": "P1433",
+                  "hash": "4e500b64c836bab7f8abb5ef15e8dd96de79bebd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 4197757,
+                      "id": "Q4197757"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "d8342b01ad3eb6af21917e6ba1515da43a2d9e74",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-09-01T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P1476", "P407", "P1433", "P813"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "28e85ae78b1fad0af0f87f70f08c5f9c3dbbc52f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7058673,
+              "id": "Q7058673"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q108370681$0BF4CA36-4774-4A27-B8CA-B6FDEE540F6A",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "e0f7278914cf2d0b9b0abb274c8befb676a79320",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "55ed57b842fbc2b8fc798f18027465aa88e32b62",
+                  "datavalue": {
+                    "value": "https://www.igromania.ru/game/series/270/Cave_Story.html",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P1476": [
+                {
+                  "snaktype": "value",
+                  "property": "P1476",
+                  "hash": "7aef2207f1caced01ee37f391781a50461f852d0",
+                  "datavalue": {
+                    "value": {
+                      "text": "Серия игр Cave Story",
+                      "language": "ru"
+                    },
+                    "type": "monolingualtext"
+                  },
+                  "datatype": "monolingualtext"
+                }
+              ],
+              "P407": [
+                {
+                  "snaktype": "value",
+                  "property": "P407",
+                  "hash": "d291ddb7cd77c94a7bd709a8395934147e0864fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 7737,
+                      "id": "Q7737"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P1433": [
+                {
+                  "snaktype": "value",
+                  "property": "P1433",
+                  "hash": "4e500b64c836bab7f8abb5ef15e8dd96de79bebd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 4197757,
+                      "id": "Q4197757"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "d8342b01ad3eb6af21917e6ba1515da43a2d9e74",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-09-01T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P1476", "P407", "P1433", "P813"]
+          }
+        ]
+      }
+    ],
+    "P11891": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11891",
+          "hash": "c89e8a311ab62ef1039b37717576fe3854be46a2",
+          "datavalue": {
+            "value": "cave-story-serie",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q108370681$81E19C68-B1E9-4002-849E-9A15BA442BB5",
+        "rank": "normal"
+      }
+    ],
+    "P5360": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5360",
+          "hash": "c794182756c20a0b585a9599bd8e401eb81107ca",
+          "datavalue": {
+            "value": "cave-story-series",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q108370681$2DC6FBAF-D383-4E7D-ABE9-54D93F1FB5B4",
+        "rank": "normal"
+      }
+    ],
+    "P14470": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P14470",
+          "hash": "f311216f8d95c78bac48d793014b0d351a820172",
+          "datavalue": {
+            "value": "Franchises/Cave_Story",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9675": [
+            {
+              "snaktype": "value",
+              "property": "P9675",
+              "hash": "50f2616c145e051a9215d175ad140aa7345472c4",
+              "datavalue": {
+                "value": "101261",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9675"],
+        "id": "Q108370681$9CF4FFA2-2A10-4B58-9674-65C5528CF665",
+        "rank": "normal"
+      }
+    ],
+    "P527": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P527",
+          "hash": "992cc4d6772ced9b702235f57f896609f3e784f6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1051853,
+              "id": "Q1051853"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q108370681$afb9282f-4b01-c36b-b654-0631155967b5",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P527",
+          "hash": "ac95339c2eb7be9fb5ea701f01a326b39c59b063",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 104875807,
+              "id": "Q104875807"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q108370681$2563e2b1-4bb8-d9da-b3c5-2c69308c3206",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P527",
+          "hash": "b39c55acbb15ab0527ee1e5d2fad618912d497b4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 101076778,
+              "id": "Q101076778"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q108370681$15239545-45ac-a5b5-07e1-7ac668702bf4",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

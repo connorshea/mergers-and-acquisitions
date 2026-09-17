@@ -4,22 +4,41 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vp dev",
-    "build": "tsc -b && vp build",
-    "preview": "vp preview",
-    "prepare": "vp config"
+    "dev": "concurrently -k -n server,client \"tsx watch server/index.ts\" \"vp dev\"",
+    "dev:server": "tsx watch server/index.ts",
+    "dev:client": "vp dev",
+    "build": "vp build",
+    "start": "tsx server/index.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx scripts/migrate.ts",
+    "db:push": "drizzle-kit push",
+    "seed": "tsx db/seed.ts",
+    "job:hunt": "tsx jobs/hunt.ts",
+    "job:sync-properties": "tsx jobs/sync-properties.ts",
+    "job:sync-entity-labels": "tsx jobs/sync-entity-labels.ts",
+    "job:sync-descriptions": "tsx jobs/sync-descriptions.ts",
+    "eval:fetch-pairs": "tsx scripts/fetch-merge-pairs.ts",
+    "eval:fetch-nondupes": "tsx scripts/fetch-nondupe-pairs.ts",
+    "eval:score": "tsx scripts/eval-score.ts"
   },
   "dependencies": {
+    "@hono/node-server": "^2.1.1",
+    "dotenv": "^17.4.2",
+    "drizzle-orm": "^0.45.2",
+    "hono": "^4.13.8",
+    "mysql2": "^3.12.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
-    "react-router-dom": "^7.18.3",
-    "void": "^0.10.13"
+    "react-router-dom": "^7.18.4",
+    "tsx": "^4.19.2"
   },
   "devDependencies": {
     "@types/node": "^24.13.4",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.1",
+    "concurrently": "^10.0.5",
+    "drizzle-kit": "^0.31.10",
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"
@@ -30,5 +49,8 @@
       "version": "12.4.2",
       "onFail": "download"
     }
+  },
+  "engines": {
+    "node": ">=20"
   }
 }

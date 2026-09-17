@@ -1,0 +1,212 @@
+{
+  "pageid": 49793469,
+  "ns": 0,
+  "title": "Q48772220",
+  "lastrevid": 1994127975,
+  "modified": "2023-10-20T14:54:13Z",
+  "type": "item",
+  "id": "Q48772220",
+  "labels": {
+    "fr": {
+      "language": "fr",
+      "value": "Sometimes When We Touch"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Sometimes When We Touch"
+    },
+    "en": {
+      "language": "en",
+      "value": "Sometimes When We Touch"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Sometimes When We Touch"
+    },
+    "es": {
+      "language": "es",
+      "value": "Sometimes When We Touch"
+    }
+  },
+  "descriptions": {
+    "nl": {
+      "language": "nl",
+      "value": "lied van Tina Turner"
+    },
+    "en": {
+      "language": "en",
+      "value": "song performed by Tina Turner"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "cantar de Tina Turner"
+    }
+  },
+  "aliases": {
+    "ast": [
+      {
+        "language": "ast",
+        "value": "Sometimes When We Touch (cantar de Tina Turner)"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5be109d8a3cbbd062357a9d210d4ef00ef25244e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 105543609,
+              "id": "Q105543609"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q48772220$AC9DFC9B-8EEB-4EC9-9411-B177AA817E28",
+        "rank": "normal"
+      }
+    ],
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "38a0187eb12a10edb12b7bffc534e7a751689041",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 131814,
+              "id": "Q131814"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q48772220$9d333e44-40ac-36e9-cd5e-2a1ee062df64",
+        "rank": "normal"
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "30acf3f5e021ae65e70b1bb6f8d14d5dd06513f5",
+          "datavalue": {
+            "value": {
+              "time": "+1978-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q48772220$fcacd790-d0c3-4e73-bfe6-d83a63588abb",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d4bd87b862b12d99d26e86472d44f26858dee639",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "f30cbd35620c4ea6d0633aaf0210a8916130469b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8447,
+                      "id": "Q8447"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "9b902efd70e5963f032c8433a8ee5e6e8020a275",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3434135,
+              "id": "Q3434135"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q48772220$4F090024-6CBD-4BF3-92E0-38799B7434CB",
+        "rank": "normal"
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "03276b9917f6acc2e0026b7574ceb0aef669bebc",
+          "datavalue": {
+            "value": "/m/0cwfh9",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q48772220$3047324C-3F6D-4715-BD50-9BC13CD4F927",
+        "rank": "normal"
+      }
+    ],
+    "P7937": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7937",
+          "hash": "95c182f3c475d9df12743fde55dc93e0a76efa11",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7366,
+              "id": "Q7366"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q48772220$CC236E58-80B8-4E73-A16C-6BF009296177",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "frwiki": {
+      "site": "frwiki",
+      "title": "Sometimes When We Touch (chanson de Tina Turner)",
+      "badges": ["Q70893996"],
+      "url": "https://fr.wikipedia.org/wiki/Sometimes_When_We_Touch_(chanson_de_Tina_Turner)"
+    }
+  }
+}

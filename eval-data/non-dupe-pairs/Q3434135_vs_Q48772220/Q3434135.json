@@ -1,0 +1,847 @@
+{
+  "pageid": 3271622,
+  "ns": 0,
+  "title": "Q3434135",
+  "lastrevid": 2318068180,
+  "modified": "2025-02-28T10:53:07Z",
+  "type": "item",
+  "id": "Q3434135",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Sometimes When We Touch"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "Sometimes When We Touch"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Sometimes When We Touch"
+    },
+    "nb": {
+      "language": "nb",
+      "value": "Sometimes When We Touch"
+    },
+    "de": {
+      "language": "de",
+      "value": "Sometimes When We Touch"
+    },
+    "nn": {
+      "language": "nn",
+      "value": "Sometimes When We Touch"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Sometimes When We Touch"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Sometimes When We Touch"
+    },
+    "es": {
+      "language": "es",
+      "value": "Sometimes When We Touch"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "Sometimes When We Touch"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "ふれあい"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "song written and composed by Dan Hill and Barry Mann, originally recorded by Dan Hill and released in 1977"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "sång skriven och komponerad av Dan Hill och Barry Mann"
+    },
+    "de": {
+      "language": "de",
+      "value": "Lied aus dem Jahr 1977 von Dan Hill"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "lied van Dan Hill"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "cantar de Dan Hill"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "ダン・ヒルのシングル曲"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "laulu"
+    }
+  },
+  "aliases": {
+    "ja": [
+      {
+        "language": "ja",
+        "value": "サムタイムズ・ホエン・ウィ・タッチ"
+      },
+      {
+        "language": "ja",
+        "value": "サムタイムズ・ウェン・ウィ・タッチ"
+      },
+      {
+        "language": "ja",
+        "value": "Sometimes When We Touch"
+      }
+    ]
+  },
+  "claims": {
+    "P435": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P435",
+          "hash": "4c83e7b936fd48cf090c3edc20e8e337e15ae2c6",
+          "datavalue": {
+            "value": "7074d32f-054d-4477-91da-5979317a965a",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "q3434135$42237A24-5AFB-425B-A9C5-902B8BE9E715",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "706208b3024200fd0a39ad499808dd0d98d74065",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "623cc8f0e2f65afe4d66b91962d354a2f3aa9a27",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 14005,
+                      "id": "Q14005"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P248"]
+          }
+        ]
+      }
+    ],
+    "P264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P264",
+          "hash": "012dbc7d795b8955cef655009e538ff897a954a4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1780995,
+              "id": "Q1780995"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3434135$DBF5D3B7-B3D3-47B2-934B-4F66A5CED5F8",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "03276b9917f6acc2e0026b7574ceb0aef669bebc",
+          "datavalue": {
+            "value": "/m/0cwfh9",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q3434135$EF933B01-7571-46F9-BE8E-E89AB0C5F67E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2b00cb481cddcac7623114367489b5c194901c4a",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "a94b740202b097dd33355e0e6c00e54b9395e5e0",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 15241312,
+                      "id": "Q15241312"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P577": [
+                {
+                  "snaktype": "value",
+                  "property": "P577",
+                  "hash": "fde79ecb015112d2f29229ccc1ec514ed3e71fa2",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2013-10-28T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P577"]
+          }
+        ]
+      }
+    ],
+    "P2624": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2624",
+          "hash": "d79d24424e4f395b5c75fbecc2146ef0ce6fdd5f",
+          "datavalue": {
+            "value": "sometimes-when-we-touch-lyrics-dan-hill",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q3434135$B35EBA64-A01A-4AFD-A3DA-2B121057C294",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "c0d921d1fc09616814e7a42d4d85374050859bc5",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 217191,
+              "id": "Q217191"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3434135$24B087DE-B073-4200-9D6A-17A4D0FEAA2E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "020fc4340c7b13c62b0bdde93fc80977a5a9dd92",
+          "datavalue": {
+            "value": {
+              "time": "+1978-02-04T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q3434135$FF59F643-FE83-48B2-8238-7757A4C289E0",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P162": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P162",
+          "hash": "1f864c3424c274cb1b4655457c15d598482d2ede",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6790940,
+              "id": "Q6790940"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3434135$107799A5-1BB4-4419-B8FA-82479924443A",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "1063f45bb5cfc19fcf8324379b8b9ad43130ea7d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 48772220,
+              "id": "Q48772220"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3434135$8CFE2F56-31B4-4C12-AF53-93D78F7027A7",
+        "rank": "normal"
+      }
+    ],
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "3a393355f9059c7b839ff2dbe42e45020d7b954d",
+          "datavalue": {
+            "value": {
+              "text": "Sometimes When We Touch",
+              "language": "en"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q3434135$3b43aed8-4b7f-3a4b-a12d-439f3cc69c87",
+        "rank": "normal"
+      }
+    ],
+    "P4969": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4969",
+          "hash": "16e55ecd7d6046e238e36d341ba04f0c36cd203c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 105666557,
+              "id": "Q105666557"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "e41efcf0acaa18ea8fca63b87e2e0c24618f5664",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 9027,
+                  "id": "Q9027"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P3831": [
+            {
+              "snaktype": "value",
+              "property": "P3831",
+              "hash": "1e3133f203ce06eb934f45757ac122dba7794770",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 63141557,
+                  "id": "Q63141557"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P5202": [
+            {
+              "snaktype": "value",
+              "property": "P5202",
+              "hash": "3b433bbb4459db33832553b171610b3fd66b374e",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 3372224,
+                  "id": "Q3372224"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P407", "P3831", "P5202"],
+        "id": "Q3434135$c0f02eac-48ee-cf49-d988-af6106a0f1e6",
+        "rank": "normal"
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5be109d8a3cbbd062357a9d210d4ef00ef25244e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 105543609,
+              "id": "Q105543609"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3434135$2d777327-4106-8aee-b151-5c6a363a5452",
+        "rank": "normal"
+      }
+    ],
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "9fdd9f94bec0a5b054682ffdfb4f7071a984f092",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1159082,
+              "id": "Q1159082"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P577": [
+            {
+              "snaktype": "value",
+              "property": "P577",
+              "hash": "cbe7e848be62e9ca2af340eb4b7626ee258bc092",
+              "datavalue": {
+                "value": {
+                  "time": "+1977-00-00T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 9,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P10663": [
+            {
+              "snaktype": "value",
+              "property": "P10663",
+              "hash": "eb62b63b6c6406a2c13aefaf9f01862b28806c5a",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 106473689,
+                  "id": "Q106473689"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P577", "P10663"],
+        "id": "q3434135$A345D570-801D-470A-8A56-9CBE203D79CE",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "297ce2e4f75723834c3e23595850aa0e5e1aec69",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 235820,
+              "id": "Q235820"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P10663": [
+            {
+              "snaktype": "value",
+              "property": "P10663",
+              "hash": "d5e1ff9397f3f029863580fd40800e3d583b773a",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 106592888,
+                  "id": "Q106592888"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P1552": [
+            {
+              "snaktype": "value",
+              "property": "P1552",
+              "hash": "10e8f27ad2fc19c91160c68a29a420099372e440",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 155171,
+                  "id": "Q155171"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P577": [
+            {
+              "snaktype": "value",
+              "property": "P577",
+              "hash": "28257f5beb5474ee5d6023a4863cc2ff349bc513",
+              "datavalue": {
+                "value": {
+                  "time": "+1980-00-00T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 9,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P10663", "P1552", "P577"],
+        "id": "Q3434135$68c65b3d-42ea-5774-17ba-b24df280d87d",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "a8ff25bb67288367611f8997dbfb3ae78a44c0d5",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 212524,
+              "id": "Q212524"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P10663": [
+            {
+              "snaktype": "value",
+              "property": "P10663",
+              "hash": "b73410f8d77f9974c2cb87d3f15cb41518d7baf0",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 106473584,
+                  "id": "Q106473584"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P577": [
+            {
+              "snaktype": "value",
+              "property": "P577",
+              "hash": "4367cda6537661c5710e711f17accacfd223c57e",
+              "datavalue": {
+                "value": {
+                  "time": "+1985-00-00T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 9,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P1552": [
+            {
+              "snaktype": "value",
+              "property": "P1552",
+              "hash": "10e8f27ad2fc19c91160c68a29a420099372e440",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 155171,
+                  "id": "Q155171"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P10663", "P577", "P1552"],
+        "id": "Q3434135$bb83949d-46ac-ecab-71cb-282525729501",
+        "rank": "normal"
+      }
+    ],
+    "P7937": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7937",
+          "hash": "95c182f3c475d9df12743fde55dc93e0a76efa11",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7366,
+              "id": "Q7366"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3434135$52d2d6b9-4223-29dd-0b2b-5cb13177c560",
+        "rank": "normal"
+      }
+    ],
+    "P407": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P407",
+          "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1860,
+              "id": "Q1860"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3434135$63dd23ea-4436-8b73-9368-2bb9ca0f47ae",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Sometimes When We Touch",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Sometimes_When_We_Touch"
+    },
+    "nowiki": {
+      "site": "nowiki",
+      "title": "Sometimes When We Touch",
+      "badges": [],
+      "url": "https://no.wikipedia.org/wiki/Sometimes_When_We_Touch"
+    },
+    "svwiki": {
+      "site": "svwiki",
+      "title": "Sometimes When We Touch",
+      "badges": [],
+      "url": "https://sv.wikipedia.org/wiki/Sometimes_When_We_Touch"
+    },
+    "nnwiki": {
+      "site": "nnwiki",
+      "title": "Sometimes When We Touch",
+      "badges": [],
+      "url": "https://nn.wikipedia.org/wiki/Sometimes_When_We_Touch"
+    },
+    "simplewiki": {
+      "site": "simplewiki",
+      "title": "Sometimes When We Touch",
+      "badges": [],
+      "url": "https://simple.wikipedia.org/wiki/Sometimes_When_We_Touch"
+    },
+    "frwiki": {
+      "site": "frwiki",
+      "title": "Sometimes When We Touch",
+      "badges": [],
+      "url": "https://fr.wikipedia.org/wiki/Sometimes_When_We_Touch"
+    }
+  }
+}

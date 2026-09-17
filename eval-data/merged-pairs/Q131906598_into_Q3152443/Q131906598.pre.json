@@ -1,0 +1,139 @@
+{
+  "pageid": 125791574,
+  "ns": 0,
+  "title": "Q131906598",
+  "lastrevid": 2302406805,
+  "modified": "2025-01-25T18:57:21Z",
+  "type": "item",
+  "id": "Q131906598",
+  "labels": {
+    "mul": {
+      "language": "mul",
+      "value": "Institut National du Cancer"
+    }
+  },
+  "descriptions": {
+    "ar": {
+      "language": "ar",
+      "value": "منظمة في لوكسمبورغ"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "291b10e8046c4951933718cade0398bbd5c9866d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 32,
+              "id": "Q32"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q131906598$C8B7BB25-F2FC-46AA-AC34-7EEC32D29141",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "608a7780d00881a2dbefc64a2709e07d3d207a62",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "dd025c44f9f29d980d26137c6e658bb695f9153c",
+                  "datavalue": {
+                    "value": "https://www.lobbyfacts.eu/datacard/institut-national-du-cancer?rid=627490337969-58",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P2657": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2657",
+          "hash": "adceb97a29d8b0fc1466c03692149635a9b3ee8c",
+          "datavalue": {
+            "value": "627490337969-58",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1932": [
+            {
+              "snaktype": "value",
+              "property": "P1932",
+              "hash": "177821a1a11f7dfbbacfdb131549c027bad28635",
+              "datavalue": {
+                "value": "Institut National du Cancer",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1932"],
+        "id": "Q131906598$3EB11425-C11F-4BE0-AFD0-C407E963DEB3",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "608a7780d00881a2dbefc64a2709e07d3d207a62",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "dd025c44f9f29d980d26137c6e658bb695f9153c",
+                  "datavalue": {
+                    "value": "https://www.lobbyfacts.eu/datacard/institut-national-du-cancer?rid=627490337969-58",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "20b3c9267c82af90c6e03e3b112a810207b32cc0",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 43229,
+              "id": "Q43229"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q131906598$9B8E8D79-06CA-453A-8CC0-C3491CD6FB31",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

@@ -1,0 +1,227 @@
+{
+  "pageid": 108778607,
+  "ns": 0,
+  "title": "Q114065008",
+  "lastrevid": 2146144199,
+  "modified": "2024-05-06T00:43:29Z",
+  "type": "item",
+  "id": "Q114065008",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "The American Chess Magazine"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "magazine (established 1875)"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "American Chess Magazine"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "fb7666e2e8ef0fcade84a1db13a7740ac93e8426",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 41298,
+              "id": "Q41298"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q114065008$f381407f-4deb-e2f5-83bd-85eff564dfb2",
+        "rank": "normal"
+      }
+    ],
+    "P407": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P407",
+          "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1860,
+              "id": "Q1860"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q114065008$81a3cad7-47f4-644b-8f5c-754c56bdce25",
+        "rank": "normal"
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "e43e80638a2858d54f967f6eb3b29b67f821729f",
+          "datavalue": {
+            "value": {
+              "time": "+1875-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q114065008$0175cc14-4f69-caab-6864-8d33f439eff9",
+        "rank": "normal"
+      }
+    ],
+    "P1844": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1844",
+          "hash": "0379d6f0a6f43e1f842e8faa86a7d07ee8aaf0a9",
+          "datavalue": {
+            "value": "102749541",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q114065008$c003b79a-49a3-078e-a0cc-b9c158f626f1",
+        "rank": "normal"
+      }
+    ],
+    "P243": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P243",
+          "hash": "4ae1ca8b4d43a0547cb2f8498b5fd4c2c09e3d01",
+          "datavalue": {
+            "value": "8275268",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q114065008$1a4bb4b8-4f0d-91ce-ecb6-7be90587a228",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P243",
+          "hash": "1a9dcf46cc2a8a1440a38444878de956b668ea9c",
+          "datavalue": {
+            "value": "1102833582",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q114065008$24eb385b-4cc9-8fe1-b389-0fa6966df732",
+        "rank": "normal"
+      }
+    ],
+    "P291": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P291",
+          "hash": "ce305009e1efab41ad101ed1cdc3018f2547df24",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 33486,
+              "id": "Q33486"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q114065008$7eaba98a-44bc-d780-b247-995b5e07f603",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "fb6c6117796174d5bc3cd0d36466fe79c3a59e72",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4050932,
+              "id": "Q4050932"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q114065008$295be020-49e5-cf8f-6d36-6dde4da45edb",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "6e0a530bbf5c62bc435adb13e457c5bd9bd6f814",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 114065045,
+              "id": "Q114065045"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q114065008$ddc6c33e-4b24-019e-0000-f145bf55b7e5",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "399202ba1623480103b98bc958c7bd90b1898427",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 124040034,
+              "id": "Q124040034"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q114065008$b51af9d2-4e6c-1ea8-4391-d9079627f73c",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

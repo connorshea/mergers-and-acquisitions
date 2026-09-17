@@ -1,0 +1,911 @@
+{
+  "pageid": 2197425,
+  "ns": 0,
+  "title": "Q2274947",
+  "lastrevid": 2479792855,
+  "modified": "2026-04-09T13:30:53Z",
+  "type": "item",
+  "id": "Q2274947",
+  "labels": {
+    "pt": {
+      "language": "pt",
+      "value": "O Rato do Campo e o Rato da Cidade"
+    },
+    "he": {
+      "language": "he",
+      "value": "עכבר העיר ועכבר הכפר"
+    },
+    "en": {
+      "language": "en",
+      "value": "The Town Mouse and the Country Mouse"
+    },
+    "es": {
+      "language": "es",
+      "value": "El ratón de campo y el ratón de ciudad"
+    },
+    "it": {
+      "language": "it",
+      "value": "Il topo di città e il topo di campagna"
+    },
+    "el": {
+      "language": "el",
+      "value": "Αισώπου Μύθοι/Μυς αρουραίος και μυς αστικός"
+    },
+    "la": {
+      "language": "la",
+      "value": "Fabulae"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "乡村鼠与城市鼠"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "田舎のネズミと町のネズミ"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Le Rat de ville et le Rat des champs"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "The Town Mouse and the Country Mouse"
+    },
+    "pa": {
+      "language": "pa",
+      "value": "ਸ਼ਹਿਰੀ ਚੂਹਾ ਅਤੇ ਪੇਂਡੂ ਚੂਹਾ"
+    },
+    "ko": {
+      "language": "ko",
+      "value": "시골쥐와 도시쥐"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "Stadsmusen och lantmusen"
+    },
+    "de": {
+      "language": "de",
+      "value": "Stadtratte und Landratte"
+    },
+    "vi": {
+      "language": "vi",
+      "value": "Con chuột ở thành thị với con chuột ở ruộng rẫy"
+    }
+  },
+  "descriptions": {
+    "fr": {
+      "language": "fr",
+      "value": "fable de La Fontaine"
+    },
+    "en": {
+      "language": "en",
+      "value": "La Fontaine's fable"
+    },
+    "de": {
+      "language": "de",
+      "value": "Fabel aus dem ersten Buch der Fabelsammlung Fables Choisies, Mises En Vers von Jean de La Fontaine"
+    }
+  },
+  "aliases": {
+    "pt": [
+      {
+        "language": "pt",
+        "value": "O Rato da Cidade e o Rato do Campo"
+      }
+    ],
+    "es": [
+      {
+        "language": "es",
+        "value": "El raton de campo y el ratón de ciudad"
+      },
+      {
+        "language": "es",
+        "value": "El raton de campo y el raton de ciudad"
+      }
+    ],
+    "fr": [
+      {
+        "language": "fr",
+        "value": "Le Rat des villes et le Rat des champs (fable)"
+      },
+      {
+        "language": "fr",
+        "value": "Le Rat des villes et le Rat des champs (La Fontaine)"
+      }
+    ],
+    "sv": [
+      {
+        "language": "sv",
+        "value": "Lantmusen och Stadsmusen"
+      }
+    ]
+  },
+  "claims": {
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "7a9af6e65ed12807767560dca989c8bf48dfe1ab",
+          "datavalue": {
+            "value": "/m/0bs0y4",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q2274947$9104636A-C8D3-43B5-8944-F943617EE26E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2b00cb481cddcac7623114367489b5c194901c4a",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "a94b740202b097dd33355e0e6c00e54b9395e5e0",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 15241312,
+                      "id": "Q15241312"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P577": [
+                {
+                  "snaktype": "value",
+                  "property": "P577",
+                  "hash": "fde79ecb015112d2f29229ccc1ec514ed3e71fa2",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2013-10-28T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P577"]
+          }
+        ]
+      }
+    ],
+    "P50": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P50",
+          "hash": "5a6148dbdc9ed3f49c6e5cbd880b1ba2c66e5778",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 49496,
+              "id": "Q49496"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2274947$DFC1910F-6904-475B-B07D-B92EA587BF9A",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d4bd87b862b12d99d26e86472d44f26858dee639",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "f30cbd35620c4ea6d0633aaf0210a8916130469b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8447,
+                      "id": "Q8447"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5963e3cad5eee4ae1cffbefbac15327800b9a7e6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7725634,
+              "id": "Q7725634"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2274947$5cfd0e48-4b7c-6e9f-5896-b376b44a0df2",
+        "rank": "normal"
+      }
+    ],
+    "P18": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "592eb2dbc891360b8079148d1c2c51e7ae701294",
+          "datavalue": {
+            "value": "Aunt louisa.JPG",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q2274947$17FBACC9-A493-49B9-868B-89CECCCEDC9E",
+        "rank": "normal"
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "b66f673883f4aa1711fb3307f8bd08035347189b",
+          "datavalue": {
+            "value": {
+              "time": "+1668-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q2274947$AAFFBFDA-503C-4D09-BFCF-D6CDD98DF53F",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d4bd87b862b12d99d26e86472d44f26858dee639",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "f30cbd35620c4ea6d0633aaf0210a8916130469b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8447,
+                      "id": "Q8447"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P2540": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2540",
+          "hash": "04611a8d93847250afbf0bfd03110768d0c2d79b",
+          "datavalue": {
+            "value": "112",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q2274947$a76276f4-4bb6-8121-27cb-5cdbc5b8b744",
+        "rank": "normal"
+      }
+    ],
+    "P373": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P373",
+          "hash": "934d14e7fbcdd420ff8f1b6eb01183e2d1b5372e",
+          "datavalue": {
+            "value": "Le Rat de ville et le Rat des champs",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q2274947$56661f9a-4543-a35e-f145-c0a8bc1752a4",
+        "rank": "normal"
+      }
+    ],
+    "P144": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P144",
+          "hash": "68d0633a09850381a81477cb8d1707c572b7b418",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 53841930,
+              "id": "Q53841930"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2274947$beb42262-4ae2-3a03-d45c-af50e7f5187d",
+        "rank": "normal"
+      }
+    ],
+    "P180": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P180",
+          "hash": "722f286c462667e264b29fd7f266ce5bc0170dfe",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 36396,
+              "id": "Q36396"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2274947$88067a47-41a6-7b9c-dc26-5b333f79351a",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P180",
+          "hash": "7de6e25737007ebf70a90c71f57da8b343c4ee45",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 206630,
+              "id": "Q206630"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2274947$ae87d322-4793-8689-b8a4-1a0628871fcc",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P180",
+          "hash": "344d4457c34f13d19b7731daad5bd5b7aae0966c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 163446,
+              "id": "Q163446"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2274947$e797fd57-4972-fe76-27ed-4b2026654d94",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P180",
+          "hash": "b0c901cc7dc16869cfd1411585b3ca79fbd7618c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1134237,
+              "id": "Q1134237"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2274947$a038fbc4-4c29-9ece-b220-2f32041ce236",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "ce526f5a46a306a45269148d73cc50f91320f5e6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 53841930,
+              "id": "Q53841930"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2274947$DB0C44A3-A5D0-44B1-B85F-9201B5F1BCE6",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "e77d02ffea8d82675821c49a0ffe240cd482a7d9",
+            "snaks": {
+              "P3452": [
+                {
+                  "snaktype": "value",
+                  "property": "P3452",
+                  "hash": "1601705fddf510f3b15633356bd80030848cf833",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 53841930,
+                      "id": "Q53841930"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P3452"]
+          }
+        ]
+      }
+    ],
+    "P6216": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6216",
+          "hash": "f69dc45ce9c48664155022498b34100d801bd549",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 19652,
+              "id": "Q19652"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1001": [
+            {
+              "snaktype": "value",
+              "property": "P1001",
+              "hash": "fd03a46bac885aad8c96834e86183c078494dce6",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 30,
+                  "id": "Q30"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P459": [
+            {
+              "snaktype": "value",
+              "property": "P459",
+              "hash": "e8a997f8c7723e2bc8daa542a8b44577d4b3b7eb",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 47246828,
+                  "id": "Q47246828"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1001", "P459"],
+        "id": "Q2274947$597193AE-7995-4B97-976C-58B2622646D7",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6216",
+          "hash": "f69dc45ce9c48664155022498b34100d801bd549",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 19652,
+              "id": "Q19652"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1001": [
+            {
+              "snaktype": "value",
+              "property": "P1001",
+              "hash": "91dce20cb7cf8d03dc976a70e56b19939881d751",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 60332278,
+                  "id": "Q60332278"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P459": [
+            {
+              "snaktype": "value",
+              "property": "P459",
+              "hash": "8f1a08d7359ea45500b600d7ad0f13a7f032145e",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 29940705,
+                  "id": "Q29940705"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1001", "P459"],
+        "id": "Q2274947$7607BD87-1D3F-44EF-BA8C-D2F01E35BD1C",
+        "rank": "normal"
+      }
+    ],
+    "P747": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P747",
+          "hash": "be8e0d78de1ac57213e6b9ef9f2df1f5c2638971",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 19198243,
+              "id": "Q19198243"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "d197d0a5efa4b4c23a302a829dd3ef43684fe002",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 150,
+                  "id": "Q150"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P407"],
+        "id": "Q2274947$25BB2B6D-00EB-423D-85B2-A1FB34A5D203",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P747",
+          "hash": "4cc377209edc40b6e83a1c306c53c04c75268db1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 114939463,
+              "id": "Q114939463"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2274947$DA364B6A-D243-406F-98D3-5ADFD9C747BE",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P747",
+          "hash": "9e9c62374ad07bcfa49db087adbd236fd0497d2f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 114939499,
+              "id": "Q114939499"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "d197d0a5efa4b4c23a302a829dd3ef43684fe002",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 150,
+                  "id": "Q150"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P407"],
+        "id": "Q2274947$DFFDA3B3-FFA4-4DAA-BE04-819689B3FE0D",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P747",
+          "hash": "46e613b0f482d60dfb7bdfd46111d574c3c71774",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 114939519,
+              "id": "Q114939519"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "d197d0a5efa4b4c23a302a829dd3ef43684fe002",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 150,
+                  "id": "Q150"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P407"],
+        "id": "Q2274947$F99F9260-842D-4172-B4A8-61C9D3894464",
+        "rank": "normal"
+      }
+    ],
+    "P7937": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7937",
+          "hash": "96868d127d1aaa57a6ea5e965ec35ed241f0b91a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 693,
+              "id": "Q693"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2274947$49C3C0EC-ADFC-4397-BF68-1A8EB7AAF104",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d4bd87b862b12d99d26e86472d44f26858dee639",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "f30cbd35620c4ea6d0633aaf0210a8916130469b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8447,
+                      "id": "Q8447"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P407": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P407",
+          "hash": "d197d0a5efa4b4c23a302a829dd3ef43684fe002",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 150,
+              "id": "Q150"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2274947$c72d39ac-48a6-d617-a678-eb4feecd49d9",
+        "rank": "normal"
+      }
+    ],
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "a83e86470a3e475bf5f9ed9eac92a0674443b957",
+          "datavalue": {
+            "value": {
+              "text": "Le Rat de ville et le Rat des champs",
+              "language": "fr"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q2274947$69cb9e56-46a5-d260-549f-0c61449432b0",
+        "rank": "normal"
+      }
+    ],
+    "P1922": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1922",
+          "hash": "5de13b4010c34be3fc7cf36dc5788985158b2348",
+          "datavalue": {
+            "value": {
+              "text": "Autrefois le rat de ville",
+              "language": "fr"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q2274947$c72939a7-4f56-6a0e-4303-ed697f636532",
+        "rank": "normal"
+      }
+    ],
+    "P12800": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12800",
+          "hash": "e59da69f46e8b20f087d6262562c4f01242754b1",
+          "datavalue": {
+            "value": "fr:Le_Rat_de_ville_et_le_Rat_des_champs",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q2274947$8ADCF85F-6E0C-410F-8939-767B6F39AD79",
+        "rank": "normal"
+      }
+    ],
+    "P648": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P648",
+          "hash": "a701496ada0d2dd76d92cbbad9b4cf9325d91f07",
+          "datavalue": {
+            "value": "OL34628798W",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q2274947$28986457-4F4F-4AFA-A84C-1F5951B1E459",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "frwiki": {
+      "site": "frwiki",
+      "title": "Le Rat de ville et le Rat des champs",
+      "badges": [],
+      "url": "https://fr.wikipedia.org/wiki/Le_Rat_de_ville_et_le_Rat_des_champs"
+    },
+    "commonswiki": {
+      "site": "commonswiki",
+      "title": "Category:Le Rat de ville et le Rat des champs",
+      "badges": [],
+      "url": "https://commons.wikimedia.org/wiki/Category:Le_Rat_de_ville_et_le_Rat_des_champs"
+    },
+    "frwikisource": {
+      "site": "frwikisource",
+      "title": "Le Rat de Ville, et le Rat des Champs (La Fontaine)",
+      "badges": [],
+      "url": "https://fr.wikisource.org/wiki/Le_Rat_de_Ville,_et_le_Rat_des_Champs_(La_Fontaine)"
+    },
+    "dewiki": {
+      "site": "dewiki",
+      "title": "Stadtratte und Landratte",
+      "badges": [],
+      "url": "https://de.wikipedia.org/wiki/Stadtratte_und_Landratte"
+    },
+    "viwikisource": {
+      "site": "viwikisource",
+      "title": "Con chuột ở thành thị với con chuột ở ruộng rẫy",
+      "badges": [],
+      "url": "https://vi.wikisource.org/wiki/Con_chu%E1%BB%99t_%E1%BB%9F_th%C3%A0nh_th%E1%BB%8B_v%E1%BB%9Bi_con_chu%E1%BB%99t_%E1%BB%9F_ru%E1%BB%99ng_r%E1%BA%ABy"
+    }
+  }
+}

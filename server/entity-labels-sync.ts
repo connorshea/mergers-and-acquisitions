@@ -1,40 +1,70 @@
 // Shared server-side write path for the Wikidata entity-label sync, used by both
-// the manual route (routes/api/entity-labels/sync.ts) and the scheduled cron
-// (crons/sync-entity-labels.ts). Lives under server/ (not src/lib) so it can
-// import void/db without pulling server code into the client bundle.
-import { db, sql } from "void/db";
-import { entityLabels } from "@schema";
-import type { EntityLabelRow } from "../src/lib/sparql";
+// the manual route (server/sync-routes.ts) and the scheduled job
+// (jobs/sync-entity-labels.ts).
+import { asc, gt, sql } from "drizzle-orm";
+import { db } from "./db";
+import { entityLabels, items } from "../db/schema";
+import type { Item } from "../src/lib/compare";
+import { referencedItemQids } from "../src/lib/wikidata";
+import { fetchEntityLabels, type EntityLabelRow } from "../src/lib/sparql";
 
-// D1 caps bound parameters at 100 per statement. With 2 columns per row an
-// INSERT can carry up to 50 rows; stay under that, then group the statements
-// into db.batch() calls so the sync is a handful of round-trips, not hundreds.
-const ROWS_PER_STMT = 45; // 45 × 2 cols = 90 bound params, under D1's 100 cap
-const STMTS_PER_BATCH = 20;
+const ROWS_PER_STMT = 1000;
+/** Items scanned per DB page when collecting referenced QIDs (keyset-paged). */
+const READ_PAGE = 5000;
+
+/**
+ * Collect the distinct item-valued statement QIDs referenced across every synced
+ * game (genre, platform, developer, instance of, …) — the entities the
+ * comparison view shows by name, and exactly the set the entity-label lookup
+ * needs. We enumerate them from our own `items` rather than asking Wikidata to
+ * derive the set, because the derive-it query (`?game ?claim ?v`) reliably times
+ * out on QLever. Keyset pagination over the `qid` primary key keeps this O(n).
+ */
+async function collectReferencedItemQids(): Promise<string[]> {
+  const set = new Set<string>();
+  let after = "";
+  for (;;) {
+    const batch = await db
+      .select({ qid: items.qid, data: items.data })
+      .from(items)
+      .where(after ? gt(items.qid, after) : sql`1 = 1`)
+      .orderBy(asc(items.qid))
+      .limit(READ_PAGE);
+    if (batch.length === 0) break;
+    for (const row of batch) {
+      for (const qid of referencedItemQids(row.data as Item)) set.add(qid);
+    }
+    after = batch[batch.length - 1].qid;
+    if (batch.length < READ_PAGE) break;
+  }
+  return [...set];
+}
 
 /** Upsert fetched entity-label rows, refreshing label/syncedAt. */
 export async function syncEntityLabels(rows: EntityLabelRow[]): Promise<number> {
-  const statements = [];
   for (let i = 0; i < rows.length; i += ROWS_PER_STMT) {
     const chunk = rows.slice(i, i + ROWS_PER_STMT).map((r) => ({ qid: r.qid, label: r.label }));
     if (chunk.length === 0) continue;
-    statements.push(
-      db
-        .insert(entityLabels)
-        .values(chunk)
-        .onConflictDoUpdate({
-          target: entityLabels.qid,
-          set: { label: sql`excluded.label`, syncedAt: sql`(datetime('now'))` },
-        }),
-    );
-  }
-
-  type Stmt = (typeof statements)[number];
-  for (let i = 0; i < statements.length; i += STMTS_PER_BATCH) {
-    const group = statements.slice(i, i + STMTS_PER_BATCH);
-    if (group.length === 0) continue;
-    // db.batch wants a non-empty tuple; the slice is guaranteed non-empty here.
-    await db.batch(group as [Stmt, ...Stmt[]]);
+    await db
+      .insert(entityLabels)
+      .values(chunk)
+      .onDuplicateKeyUpdate({
+        set: {
+          label: sql`values(${entityLabels.label})`,
+          syncedAt: sql`CURRENT_TIMESTAMP`,
+        },
+      });
   }
   return rows.length;
+}
+
+/**
+ * Full entity-label sync: enumerate the referenced value-QIDs from our items,
+ * look their en/mul labels up on QLever, and upsert. Returns the number of
+ * labels written.
+ */
+export async function runEntityLabelsSync(): Promise<number> {
+  const qids = await collectReferencedItemQids();
+  const rows = await fetchEntityLabels(qids);
+  return syncEntityLabels(rows);
 }

@@ -1,0 +1,245 @@
+{
+  "pageid": 1048332,
+  "ns": 0,
+  "title": "Q1100978",
+  "lastrevid": 406432220,
+  "modified": "2016-11-12T23:22:21Z",
+  "type": "item",
+  "id": "Q1100978",
+  "labels": {
+    "nn": {
+      "language": "nn",
+      "value": "Cape Fairweather"
+    },
+    "eu": {
+      "language": "eu",
+      "value": "Fairweather lurmuturra"
+    },
+    "en": {
+      "language": "en",
+      "value": "Cape Fairweather"
+    },
+    "lv": {
+      "language": "lv",
+      "value": "Fērvetera rags"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "費爾韋瑟角"
+    },
+    "de": {
+      "language": "de",
+      "value": "Kap Fairweather"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Cape Fairweather"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "フェアウェザー岬 (南極大陸)"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "headland"
+    }
+  },
+  "aliases": {
+    "lv": [
+      {
+        "language": "lv",
+        "value": "Cape Fairweather"
+      },
+      {
+        "language": "lv",
+        "value": "Cabo Fairweather"
+      },
+      {
+        "language": "lv",
+        "value": "Fairweather"
+      }
+    ]
+  },
+  "claims": {
+    "P30": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P30",
+          "hash": "77e34ffde618f991c8f369d7e41b019138e5d69d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 51,
+              "id": "Q51"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q1100978$EBAB7F0C-B205-4CC2-B71D-4AE2F2AE2063",
+        "rank": "normal"
+      }
+    ],
+    "P625": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P625",
+          "hash": "9945b6c99702e0635d029ffe76727f9e4f7322b2",
+          "datavalue": {
+            "value": {
+              "latitude": -65,
+              "longitude": -61.0167,
+              "altitude": null,
+              "precision": 0.00001,
+              "globe": "http://www.wikidata.org/entity/Q2"
+            },
+            "type": "globecoordinate"
+          },
+          "datatype": "globe-coordinate"
+        },
+        "type": "statement",
+        "id": "Q1100978$D7B1ADBD-826D-44FA-B365-4E71F36E80E8",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "db22ccfe04ec6ea238d4ceb7ab757c5d077138e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 191992,
+              "id": "Q191992"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1100978$6CD1FA60-9F43-4D81-A2BE-5A8BA3022479",
+        "rank": "normal"
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "novalue",
+          "property": "P17",
+          "hash": "9bd0d5bb5273ae454d4fbf369b5913462e400339",
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1100978$C5C57A2A-7B9D-41ED-9458-EBD8ED8E0FCA",
+        "rank": "normal"
+      }
+    ],
+    "P131": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P131",
+          "hash": "49c60ef8bd0c6379fd1d998a76bc66e2ac9d800c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 21590062,
+              "id": "Q21590062"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1100978$DFB2A021-AFF0-4AE4-932E-918197055C0C",
+        "rank": "normal"
+      }
+    ],
+    "P804": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P804",
+          "hash": "c9cf990b6e8a41f74bd8bd42ece1b50fca2026fb",
+          "datavalue": {
+            "value": "4731",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q1100978$A10A1E93-C848-4CC6-8279-4B811FE63A4B",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "nnwiki": {
+      "site": "nnwiki",
+      "title": "Cape Fairweather",
+      "badges": [],
+      "url": "https://nn.wikipedia.org/wiki/Cape_Fairweather"
+    },
+    "euwiki": {
+      "site": "euwiki",
+      "title": "Fairweather lurmuturra",
+      "badges": [],
+      "url": "https://eu.wikipedia.org/wiki/Fairweather_lurmuturra"
+    },
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Cape Fairweather",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Cape_Fairweather"
+    },
+    "lvwiki": {
+      "site": "lvwiki",
+      "title": "Fērvetera rags",
+      "badges": [],
+      "url": "https://lv.wikipedia.org/wiki/F%C4%93rvetera_rags"
+    },
+    "zhwiki": {
+      "site": "zhwiki",
+      "title": "費爾韋瑟角",
+      "badges": [],
+      "url": "https://zh.wikipedia.org/wiki/%E8%B2%BB%E7%88%BE%E9%9F%8B%E7%91%9F%E8%A7%92"
+    },
+    "dewiki": {
+      "site": "dewiki",
+      "title": "Kap Fairweather",
+      "badges": [],
+      "url": "https://de.wikipedia.org/wiki/Kap_Fairweather"
+    }
+  }
+}

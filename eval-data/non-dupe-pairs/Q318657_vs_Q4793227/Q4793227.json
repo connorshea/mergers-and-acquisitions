@@ -1,0 +1,330 @@
+{
+  "pageid": 4580138,
+  "ns": 0,
+  "title": "Q4793227",
+  "lastrevid": 1489766521,
+  "modified": "2021-08-30T02:08:23Z",
+  "type": "item",
+  "id": "Q4793227",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Armenian Revolutionary Federation"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "Armeńska Federacja Rewolucyjna (Liban)"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Fédération révolutionnaire arménienne au Liban"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "黎巴嫩亞美尼亞革命聯合會"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "الاتحاد الثوري الأرمني في لبنان"
+    },
+    "fa": {
+      "language": "fa",
+      "value": "فدراسیون انقلابی ارمنی در لبنان"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "political party in Lebanon"
+    },
+    "id": {
+      "language": "id",
+      "value": "partai politik di Lebanon"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "حزب سياسي في لبنان"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "politieke partij uit Libanon"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "páirtí polaitíochta sa Liobáin"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "parti politique"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "b3cf8d5f7490b867f6b08bd5335ccf6a7fddf17b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7278,
+              "id": "Q7278"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q4793227$39dc03ad-46fa-db55-cd58-737f3560f994",
+        "rank": "normal"
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "c3c0e4cbffd8f123d426fa9c63201f56170ad682",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 822,
+              "id": "Q822"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q4793227$F9475F13-CAC8-45CD-A108-8BE73F9C4B2B",
+        "rank": "normal"
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "9fd53c0f6c008c7e4a40b3db7abadf24f5d6143d",
+          "datavalue": {
+            "value": {
+              "time": "+1890-01-01T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q4793227$6150042F-81D7-4D2A-8561-8A6B87409447",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "89b8096fdbdbe22d01ffb5624ddf6e7e4f7b4c24",
+            "snaks": {
+              "P3452": [
+                {
+                  "snaktype": "value",
+                  "property": "P3452",
+                  "hash": "b1d37f8235f8a0871ff652d54bf537570ffce81b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8770838,
+                      "id": "Q8770838"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "5b6d62ddba36f462264924298e15ef31ea5650af",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2018-11-13T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P3452", "P813"]
+          }
+        ]
+      }
+    ],
+    "P159": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P159",
+          "hash": "bd5f548bfa5cb63cb5115158989e5cd61d8d00a2",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3820,
+              "id": "Q3820"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q4793227$F42CA90D-B30F-47CC-9FFD-D6FE980C2E3F",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "403d944905a07d83b7132a20cde2119d0b795e7d",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "6346c2dd1845933da8813dd598f1ebf9c56450cf",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Armenian_Revolutionary_Federation_in_Lebanon&oldid=877500637",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "69c6564a5ef89dedbd47ad606782b744e7eb189d",
+          "datavalue": {
+            "value": "/m/080k0c5",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q4793227$DF4908B3-4CC2-4E7F-951C-5F962BE1FAB9",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "b1ced6cdc5bf6806ed0205d39f76bf5c0e35aeeb",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 318657,
+              "id": "Q318657"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q4793227$58D6F0AA-D187-4DC9-8AF9-9B1579A48EF7",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f89de225924df9c48450c9f00a8aaf0375aa8fc0",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "39224a9c2e8ce5424defbd16603d25771956c7fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 1551807,
+                      "id": "Q1551807"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "fed4f9e8fffffcb75e7aa4acf7a5d628ccb689a7",
+                  "datavalue": {
+                    "value": "https://pl.wikipedia.org/w/index.php?title=Armeńska_Federacja_Rewolucyjna_(Liban)&oldid=61681094",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Armenian Revolutionary Federation in Lebanon",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Armenian_Revolutionary_Federation_in_Lebanon"
+    },
+    "plwiki": {
+      "site": "plwiki",
+      "title": "Armeńska Federacja Rewolucyjna (Liban)",
+      "badges": [],
+      "url": "https://pl.wikipedia.org/wiki/Arme%C5%84ska_Federacja_Rewolucyjna_(Liban)"
+    },
+    "arwiki": {
+      "site": "arwiki",
+      "title": "الاتحاد الثوري الأرمني في لبنان",
+      "badges": [],
+      "url": "https://ar.wikipedia.org/wiki/%D8%A7%D9%84%D8%A7%D8%AA%D8%AD%D8%A7%D8%AF_%D8%A7%D9%84%D8%AB%D9%88%D8%B1%D9%8A_%D8%A7%D9%84%D8%A3%D8%B1%D9%85%D9%86%D9%8A_%D9%81%D9%8A_%D9%84%D8%A8%D9%86%D8%A7%D9%86"
+    },
+    "fawiki": {
+      "site": "fawiki",
+      "title": "فدراسیون انقلابی ارمنی در لبنان",
+      "badges": [],
+      "url": "https://fa.wikipedia.org/wiki/%D9%81%D8%AF%D8%B1%D8%A7%D8%B3%DB%8C%D9%88%D9%86_%D8%A7%D9%86%D9%82%D9%84%D8%A7%D8%A8%DB%8C_%D8%A7%D8%B1%D9%85%D9%86%DB%8C_%D8%AF%D8%B1_%D9%84%D8%A8%D9%86%D8%A7%D9%86"
+    }
+  }
+}

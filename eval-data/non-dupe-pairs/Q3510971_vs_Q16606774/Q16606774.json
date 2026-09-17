@@ -1,0 +1,421 @@
+{
+  "pageid": 18219625,
+  "ns": 0,
+  "title": "Q16606774",
+  "lastrevid": 2470613499,
+  "modified": "2026-03-09T01:00:29Z",
+  "type": "item",
+  "id": "Q16606774",
+  "labels": {
+    "it": {
+      "language": "it",
+      "value": "Sky Atlantic"
+    },
+    "ru": {
+      "language": "ru",
+      "value": "Sky Atlantic"
+    },
+    "en": {
+      "language": "en",
+      "value": "Sky Atlantic"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "Sky Atlantic (Italien)"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "Sky Atlantic"
+    },
+    "de": {
+      "language": "de",
+      "value": "Sky Atlantic (Italien)"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Sky Atlantic"
+    },
+    "vec": {
+      "language": "vec",
+      "value": "Sky Atlantic (Italy)"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "Sky Atlantic"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "天空大西洋臺"
+    },
+    "es": {
+      "language": "es",
+      "value": "Sky Atlantic"
+    },
+    "uz": {
+      "language": "uz",
+      "value": "Sky Atlantic (Italiya)"
+    }
+  },
+  "descriptions": {
+    "it": {
+      "language": "it",
+      "value": "canale televisivo italiano"
+    },
+    "en": {
+      "language": "en",
+      "value": "Italian television channel"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "canal de televisão italiano"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "a805808f2c1d49132e2c4b824e5ee97b7eb47ce7",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1616075,
+              "id": "Q1616075"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16606774$D24B8E3B-02A6-485D-99F2-4E3292AB2E02",
+        "rank": "normal"
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "2be7d886d17e1a3a1004d2191a778478950054e8",
+          "datavalue": {
+            "value": {
+              "time": "+2014-04-09T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q16606774$88d23cf9-4e1c-1334-dbc6-3230de68c807",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "569221c34a976e0e926e7bbbd49ab4da30cf8eef",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3510971,
+              "id": "Q3510971"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16606774$A50C6007-4D7E-493E-9045-B75658390F81",
+        "rank": "normal"
+      }
+    ],
+    "P2936": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2936",
+          "hash": "1b161717737a932065f5cc768211eedf652c2c8f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 652,
+              "id": "Q652"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16606774$F08F02B7-1754-4A2E-B925-BB88813FC85A",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "686b58f8fbb3b8e67eb372e52f4aea9c7af4ffdf",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "5a343e7e758a4282a01316d3e959b6e653b767fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11920,
+                      "id": "Q11920"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "86500cf1ed0c41ab996c0e7fe05a7ff39ef0dbd9",
+                  "datavalue": {
+                    "value": "https://it.wikipedia.org/w/index.php?title=Sky_Atlantic_(Italia)&oldid=98363623",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "b48529e9f7e0898ab1ddaefe8547cdb863e0167c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 38,
+              "id": "Q38"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16606774$CBB3C3AC-E345-4039-AE4D-836D4DCA9BE7",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "1d14a4d937773fd03df1f41e94bca6adccdc225c",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "498cdfeb55a34ed83f3f426c2010d8a4e1982e6d",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Sky_Atlantic_(Italy)&oldid=943200147",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P159": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P159",
+          "hash": "3af724b4574f7a32ff9ac8da2535a5fc841c8165",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3940173,
+              "id": "Q3940173"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16606774$73C8BB7D-ED0C-4F2C-BD8C-153B7278DA27",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "1d14a4d937773fd03df1f41e94bca6adccdc225c",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "498cdfeb55a34ed83f3f426c2010d8a4e1982e6d",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Sky_Atlantic_(Italy)&oldid=943200147",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "ecd49598bf47018b0fded1198028bb5d3af22339",
+          "datavalue": {
+            "value": "/g/11b7clzbzl",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q16606774$A809C073-ACB8-4E28-805E-2045D3C8628B",
+        "rank": "normal"
+      }
+    ],
+    "P373": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P373",
+          "hash": "24b3b2459e38dbcc562e90fb021b93c5293abc4a",
+          "datavalue": {
+            "value": "Sky Atlantic (Italy)",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q16606774$862b718d-4bd0-1734-a3d1-e24bb848eb5c",
+        "rank": "normal"
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "e544dbfb721da51dfa2c5a4bde9a582e296057e2",
+          "datavalue": {
+            "value": "https://tg24.sky.it/spettacolo/sky-atlantic",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "2ab2e485ce235a18142330fa1873a5bba7115d23",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 652,
+                  "id": "Q652"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P407"],
+        "id": "Q16606774$035e8cb7-4bff-55b3-1f97-67c63d7d85ff",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "itwiki": {
+      "site": "itwiki",
+      "title": "Sky Atlantic (Italia)",
+      "badges": [],
+      "url": "https://it.wikipedia.org/wiki/Sky_Atlantic_(Italia)"
+    },
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Sky Atlantic (Italy)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Sky_Atlantic_(Italy)"
+    },
+    "ptwiki": {
+      "site": "ptwiki",
+      "title": "Sky Atlantic (Itália)",
+      "badges": [],
+      "url": "https://pt.wikipedia.org/wiki/Sky_Atlantic_(It%C3%A1lia)"
+    },
+    "commonswiki": {
+      "site": "commonswiki",
+      "title": "Category:Sky Atlantic (Italy)",
+      "badges": [],
+      "url": "https://commons.wikimedia.org/wiki/Category:Sky_Atlantic_(Italy)"
+    },
+    "eswiki": {
+      "site": "eswiki",
+      "title": "Sky Atlantic",
+      "badges": [],
+      "url": "https://es.wikipedia.org/wiki/Sky_Atlantic"
+    },
+    "uzwiki": {
+      "site": "uzwiki",
+      "title": "Sky Atlantic (Italiya)",
+      "badges": [],
+      "url": "https://uz.wikipedia.org/wiki/Sky_Atlantic_(Italiya)"
+    }
+  }
+}

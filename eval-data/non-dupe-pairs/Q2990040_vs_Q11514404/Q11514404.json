@@ -1,0 +1,440 @@
+{
+  "pageid": 12654171,
+  "ns": 0,
+  "title": "Q11514404",
+  "lastrevid": 2493019429,
+  "modified": "2026-05-17T06:39:13Z",
+  "type": "item",
+  "id": "Q11514404",
+  "labels": {
+    "ja": {
+      "language": "ja",
+      "value": "時津風"
+    },
+    "es": {
+      "language": "es",
+      "value": "Tokitsukaze (1917)"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "Tokitsukaze"
+    },
+    "en": {
+      "language": "en",
+      "value": "Japanese destroyer Tokitsukaze"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Tokitsukaze"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "Tokitsukaze (1916)"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "Isokaze-class destroyer"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "磯風型駆逐艦"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "japoński niszczyciel"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P18": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "f6cd83873e532f54faa9236845c462f93a46d2d0",
+          "datavalue": {
+            "value": "IJN DD Tokitsukaze in 1920 on trial run.jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q11514404$F73F7A0C-F24A-491E-A8E9-78EA9266EA0E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "c456dc5cd2117249948c288206ff3f8b1bf574f0",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e17507043402fe54ae6c4d65cc51f46cec987de9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8449,
+                      "id": "Q8449"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "f0e6a97c99841f199d01ec2ad1b6f717fbf7c5b8",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 174736,
+              "id": "Q174736"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11514404$547752C5-9034-41D1-B027-0B3CA8CE8FB7",
+        "rank": "normal"
+      }
+    ],
+    "P289": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P289",
+          "hash": "cff3a589e6cee263924534361c4d449302d98c92",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2615082,
+              "id": "Q2615082"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11514404$D5E89A42-E98B-4281-8A5D-0BF27761039D",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "60699d9cac33d6fe8c9ef83b5884222306e47a8d",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e17507043402fe54ae6c4d65cc51f46cec987de9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8449,
+                      "id": "Q8449"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "e3f482e48e2ed39865cffeb9edd1cffc5edd35ae",
+                  "datavalue": {
+                    "value": "https://es.wikipedia.org/w/index.php?title=Tokitsukaze_(1917)&oldid=120450396",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "95162e48b09ab4c6a0286bb3dc3f36362797304b",
+          "datavalue": {
+            "value": "/g/120rs0d6",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11514404$EF5418C6-F1EB-483B-80B2-8402B0DC8160",
+        "rank": "normal"
+      }
+    ],
+    "P1619": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1619",
+          "hash": "cb9f71038e97ca7432b817973784f0fd16a217ee",
+          "datavalue": {
+            "value": {
+              "time": "+1916-12-27T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q11514404$BA522DB6-43B4-44AA-ADCB-F838EDD331F4",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "11e280293a4a635f8b7569c100dc8acbca4c6f4d",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e17507043402fe54ae6c4d65cc51f46cec987de9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8449,
+                      "id": "Q8449"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "911a9712f79b6e2ab544c1936d06868d9319bbad",
+                  "datavalue": {
+                    "value": "https://es.wikipedia.org/w/index.php?title=Tokitsukaze_(1917)&oldid=145298533",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P137": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P137",
+          "hash": "2d90133791795e0e5d36af7e14321bf5a90060d0",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 219712,
+              "id": "Q219712"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11514404$99ED42CA-C64C-43F9-BA66-6726287D4713",
+        "rank": "normal"
+      }
+    ],
+    "P8047": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8047",
+          "hash": "a4172eea86fe8b442ebf0d140b572a2f42b384ae",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 188712,
+              "id": "Q188712"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11514404$4A785148-39C0-4366-BA0C-9B1933CA1843",
+        "rank": "normal"
+      }
+    ],
+    "P1814": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1814",
+          "hash": "edc0c22db21eb501f48cb80e49d6078e3c361784",
+          "datavalue": {
+            "value": "ときつかぜ",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q11514404$0BF6635E-4625-4B37-AAC0-3A5079D1E2A1",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "93042e08aaa154e6966b4f61e8fea62325d54e56",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2990040,
+              "id": "Q2990040"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11514404$E167B7FA-BCBE-4E2F-9279-85D22710717B",
+        "rank": "normal"
+      }
+    ],
+    "P2561": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2561",
+          "hash": "3f8c46a03353a21a110ad41b5261f4fe8f87f037",
+          "datavalue": {
+            "value": {
+              "text": "Tokitsukaze",
+              "language": "mul"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q11514404$3C8D4A8E-403D-4532-85CF-B61545529818",
+        "rank": "normal"
+      }
+    ],
+    "P373": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P373",
+          "hash": "4a3860b2c8f09598f38a690e5baede4449180701",
+          "datavalue": {
+            "value": "Tokitsukaze (ship, 1920)",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q11514404$9a35b0de-4216-a779-35e2-9f23b35e78fc",
+        "rank": "normal"
+      }
+    ],
+    "P793": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P793",
+          "hash": "fc955dc587acbec96f461971530e93e2bdd58c69",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 596643,
+              "id": "Q596643"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P585": [
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "4e9dab92035ae82cc4f20601731c7340a00d3cbc",
+              "datavalue": {
+                "value": {
+                  "time": "+1916-12-27T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P585"],
+        "id": "Q11514404$1DD95F1D-8A72-4D7F-9F6D-106499E2B0F8",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "jawiki": {
+      "site": "jawiki",
+      "title": "時津風 (磯風型駆逐艦)",
+      "badges": [],
+      "url": "https://ja.wikipedia.org/wiki/%E6%99%82%E6%B4%A5%E9%A2%A8_(%E7%A3%AF%E9%A2%A8%E5%9E%8B%E9%A7%86%E9%80%90%E8%89%A6)"
+    },
+    "eswiki": {
+      "site": "eswiki",
+      "title": "Tokitsukaze (1917)",
+      "badges": [],
+      "url": "https://es.wikipedia.org/wiki/Tokitsukaze_(1917)"
+    },
+    "fiwiki": {
+      "site": "fiwiki",
+      "title": "Tokitsukaze (1916)",
+      "badges": [],
+      "url": "https://fi.wikipedia.org/wiki/Tokitsukaze_(1916)"
+    },
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Japanese destroyer Tokitsukaze (1916)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Japanese_destroyer_Tokitsukaze_(1916)"
+    },
+    "commonswiki": {
+      "site": "commonswiki",
+      "title": "Category:Tokitsukaze (ship, 1920)",
+      "badges": [],
+      "url": "https://commons.wikimedia.org/wiki/Category:Tokitsukaze_(ship,_1920)"
+    }
+  }
+}

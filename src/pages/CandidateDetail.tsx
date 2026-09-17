@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { fetch, FetchError } from "void/client";
+import { fetch, FetchError } from "../lib/client";
 import MergeCandidates from "../MergeCandidates";
 import type {
   CandidateDetailResponse,
@@ -133,7 +133,9 @@ export default function CandidateDetail() {
             {candidate.reasons.length > 0 && (
               <ul className="detail-reasons">
                 {candidate.reasons.map((r) => (
-                  <li key={r}>{r}</li>
+                  <li key={r}>
+                    <ReasonText text={r} propertyLabels={data?.propertyLabels} />
+                  </li>
                 ))}
               </ul>
             )}
@@ -189,6 +191,7 @@ export default function CandidateDetail() {
           into={data.into}
           propertyLabels={data.propertyLabels}
           propertyFormatters={data.propertyFormatters}
+          propertyMirrors={data.propertyMirrors}
           valueLabels={data.valueLabels}
         />
       )}
@@ -204,6 +207,36 @@ export default function CandidateDetail() {
           onClose={() => setDialog(null)}
         />
       )}
+    </>
+  );
+}
+
+// Renders one reason line, turning any Wikidata property id (Pxxx) into a
+// hoverable token that shows the property's human label. The scorer builds
+// reasons without property labels, so they embed raw pids (e.g. "shares external
+// identifier: P12813, P5794"); the detail payload carries the labels, so we
+// resolve them here for the tooltip while keeping the pid visible.
+function ReasonText({
+  text,
+  propertyLabels,
+}: {
+  text: string;
+  propertyLabels?: Record<string, string>;
+}) {
+  // Split on pid tokens, keeping them (capturing group) so we can decorate each.
+  const parts = text.split(/(\bP\d+\b)/g);
+  return (
+    <>
+      {parts.map((part, i) => {
+        const label = /^P\d+$/.test(part) ? propertyLabels?.[part] : undefined;
+        return label ? (
+          <abbr key={i} className="reason-prop" title={label}>
+            {part}
+          </abbr>
+        ) : (
+          <span key={i}>{part}</span>
+        );
+      })}
     </>
   );
 }

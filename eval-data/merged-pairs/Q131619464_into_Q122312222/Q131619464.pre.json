@@ -1,0 +1,299 @@
+{
+  "pageid": 125526642,
+  "ns": 0,
+  "title": "Q131619464",
+  "lastrevid": 2470043344,
+  "modified": "2026-03-07T03:37:36Z",
+  "type": "item",
+  "id": "Q131619464",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "The Wratch's Den 👹"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "The Wratch's Den 👹"
+    }
+  },
+  "descriptions": {},
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "The Wratch's Den"
+      }
+    ],
+    "mul": [
+      {
+        "language": "mul",
+        "value": "The Wratch's Den"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "03d2d8ec4a899b29435a104a9ce7c189a31ae380",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7889,
+              "id": "Q7889"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q131619464$4A858AA3-DE88-44FF-99E8-17E5453B0C56",
+        "rank": "normal"
+      }
+    ],
+    "P750": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P750",
+          "hash": "30e74a8ec835acc14307ea99ea5b2aa0c694cb54",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 22905933,
+              "id": "Q22905933"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q131619464$0888C7FA-2D42-4C80-B342-06D22C9844FA",
+        "rank": "normal"
+      }
+    ],
+    "P7294": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7294",
+          "hash": "4be50578dd8ed2fda7aa293db479f638b965d930",
+          "datavalue": {
+            "value": "https://punkcake.itch.io/wratchs-den",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q131619464$1107123E-043E-4977-975C-38E264526ED8",
+        "rank": "normal"
+      }
+    ],
+    "P12813": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12813",
+          "hash": "76746554d6c0ad7ae5b366a1b461e07783d076b7",
+          "datavalue": {
+            "value": "1152323",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q131619464$1a535a3b-c842-47e8-a0d8-20f5fd0773f3",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "551462160f9b33fab9c7b3c86a670b76665fe094",
+            "snaks": {
+              "P11797": [
+                {
+                  "snaktype": "value",
+                  "property": "P11797",
+                  "hash": "e59bef7d616ac6ef4dfe24b901f6214bda23c9e4",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 22905933,
+                      "id": "Q22905933"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P7294": [
+                {
+                  "snaktype": "value",
+                  "property": "P7294",
+                  "hash": "4be50578dd8ed2fda7aa293db479f638b965d930",
+                  "datavalue": {
+                    "value": "https://punkcake.itch.io/wratchs-den",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "0b4f07f84ee539d2d013666f380be9608fb7c4cb",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2025-01-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P11797", "P7294", "P813"]
+          }
+        ]
+      }
+    ],
+    "P12001": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12001",
+          "hash": "280ec6f249309952da798f6e80f65febf6f0c9e4",
+          "datavalue": {
+            "value": "zMmYX",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q131619464$EA7F1D57-22D8-45C9-B3B4-6105A56E87A4",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "5453a7df082b0517c174ebb0f06714d0035c4c70",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "08fba3511bad9285e16847928bbcc37907ec04a4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2025-07-22T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P813"]
+          }
+        ]
+      }
+    ],
+    "P5794": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5794",
+          "hash": "d1dab541f67274bfa050049d3ad595f06f3a141b",
+          "datavalue": {
+            "value": "the-wratchs-den",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9043": [
+            {
+              "snaktype": "value",
+              "property": "P9043",
+              "hash": "6234b586be4662e046fdbe99fb8bd27e31e4b7ad",
+              "datavalue": {
+                "value": "163128",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9043"],
+        "id": "Q131619464$D80BC2B4-D764-4594-AD53-52B513C5217C",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "c66079ba6f845c869b6873b3b6691acdc8f9e983",
+            "snaks": {
+              "P11797": [
+                {
+                  "snaktype": "value",
+                  "property": "P11797",
+                  "hash": "e59bef7d616ac6ef4dfe24b901f6214bda23c9e4",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 22905933,
+                      "id": "Q22905933"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P12813": [
+                {
+                  "snaktype": "value",
+                  "property": "P12813",
+                  "hash": "76746554d6c0ad7ae5b366a1b461e07783d076b7",
+                  "datavalue": {
+                    "value": "1152323",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "3652a43fb8c5b3a6423f52d9c9955c58d3afcf51",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-02-15T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P11797", "P12813", "P813"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {}
+}

@@ -1,0 +1,38 @@
+# Toolforge Jobs manifest. Load with:  toolforge jobs load jobs.yaml
+#
+# `image` must be this tool's Build Service image. After a `toolforge build`,
+# find it with `toolforge images` — it looks like
+# `tool-<TOOLNAME>/tool-<TOOLNAME>:latest`. Replace TOOLNAME below.
+#
+# These replace the Void crons/ + queues/ pipeline:
+#   crons/sync-*.ts        -> the scheduled sync-* jobs
+#   crons/ + queues/ hunt  -> the single scheduled `hunt` job (server/hunt.ts)
+# The initial dump load is a one-off job (see README) rather than a scheduled one.
+
+- name: sync-properties
+  command: npm run job:sync-properties
+  image: tool-TOOLNAME/tool-TOOLNAME:latest
+  schedule: "0 2 * * 0" # Sundays 02:00 UTC
+  emails: onfailure
+
+- name: sync-entity-labels
+  command: npm run job:sync-entity-labels
+  image: tool-TOOLNAME/tool-TOOLNAME:latest
+  schedule: "15 2 * * 0" # Sundays 02:15 UTC
+  emails: onfailure
+
+- name: sync-descriptions
+  command: npm run job:sync-descriptions
+  image: tool-TOOLNAME/tool-TOOLNAME:latest
+  schedule: "30 2 * * 0" # Sundays 02:30 UTC
+  emails: onfailure
+
+- name: hunt
+  command: npm run job:hunt
+  image: tool-TOOLNAME/tool-TOOLNAME:latest
+  schedule: "0 3 * * *" # nightly 03:00 UTC, after the syncs settle
+  # Defaults (512Mi / 0.1 CPU) are tiny; the in-memory label+type blocking and
+  # scoring want more headroom as the item count grows.
+  memory: 2Gi
+  cpu: 1
+  emails: onfailure

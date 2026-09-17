@@ -1,0 +1,545 @@
+{
+  "pageid": 4314618,
+  "ns": 0,
+  "title": "Q4520528",
+  "lastrevid": 2455395039,
+  "modified": "2026-01-16T09:50:19Z",
+  "type": "item",
+  "id": "Q4520528",
+  "labels": {
+    "pt": {
+      "language": "pt",
+      "value": "Universal Wrestling Federation"
+    },
+    "es": {
+      "language": "es",
+      "value": "Universal Wrestling Federation"
+    },
+    "en": {
+      "language": "en",
+      "value": "Universal Wrestling Federation"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "聯合摔角聯盟"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "UWF(ミッドサウスレスリング)"
+    },
+    "mwl": {
+      "language": "mwl",
+      "value": "Universal Wrestling Federation"
+    },
+    "en-ca": {
+      "language": "en-ca",
+      "value": "Universal Wrestling Federation"
+    },
+    "en-gb": {
+      "language": "en-gb",
+      "value": "Universal Wrestling Federation"
+    },
+    "it": {
+      "language": "it",
+      "value": "Universal Wrestling Federation"
+    },
+    "pt-br": {
+      "language": "pt-br",
+      "value": "Universal Wrestling Federation"
+    },
+    "de": {
+      "language": "de",
+      "value": "Universal Wrestling Federation"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Universal Wrestling Federation"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Universal Wrestling Federation"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "American professional wrestling company (1986-1987)"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "شركة أمريكية"
+    },
+    "it": {
+      "language": "it",
+      "value": "federazione statunitense di wrestling"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "アメリカのプロレス団体 (1986-1987)"
+    }
+  },
+  "aliases": {
+    "pt": [
+      {
+        "language": "pt",
+        "value": "Mid-South Wrestling"
+      }
+    ],
+    "es": [
+      {
+        "language": "es",
+        "value": "Mid-South Wrestling"
+      },
+      {
+        "language": "es",
+        "value": "Mid South Wrestling"
+      },
+      {
+        "language": "es",
+        "value": "NWA Tri State"
+      },
+      {
+        "language": "es",
+        "value": "NWA Tri-State"
+      }
+    ],
+    "en": [
+      {
+        "language": "en",
+        "value": "UWF"
+      },
+      {
+        "language": "en",
+        "value": "Mid-South Wrestling"
+      },
+      {
+        "language": "en",
+        "value": "Mid-South Wrestling Association"
+      },
+      {
+        "language": "en",
+        "value": "MSW Wrestling"
+      },
+      {
+        "language": "en",
+        "value": "UWF Wrestling"
+      },
+      {
+        "language": "en",
+        "value": "MSWA Wrestling"
+      },
+      {
+        "language": "en",
+        "value": "NWATS Wrestling"
+      },
+      {
+        "language": "en",
+        "value": "Tri-State Wrestling"
+      },
+      {
+        "language": "en",
+        "value": "TSW Wrestling"
+      },
+      {
+        "language": "en",
+        "value": "TS Wrestling"
+      }
+    ],
+    "ja": [
+      {
+        "language": "ja",
+        "value": "ユニバーサル・レスリング・フェデレーション"
+      }
+    ]
+  },
+  "claims": {
+    "P910": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P910",
+          "hash": "449bccbefbdc3cf6c71c9e9f6d9527bcc3951c91",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 13299941,
+              "id": "Q13299941"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q4520528$A02826A0-49C5-4E3F-B575-7D5E3F7C2369",
+        "rank": "normal"
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "2c46ca3b05f41cb0e772790f6a037a05e7a3db8f",
+          "datavalue": {
+            "value": "/m/02dq9t",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q4520528$7C359F8B-6E4B-4314-92AB-5D0088DC9EAB",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2b00cb481cddcac7623114367489b5c194901c4a",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "a94b740202b097dd33355e0e6c00e54b9395e5e0",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 15241312,
+                      "id": "Q15241312"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P577": [
+                {
+                  "snaktype": "value",
+                  "property": "P577",
+                  "hash": "fde79ecb015112d2f29229ccc1ec514ed3e71fa2",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2013-10-28T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P577"]
+          }
+        ]
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "be4c6eafa2984964f04be85667263f5642ba1a72",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 30,
+              "id": "Q30"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q4520528$0284EF77-9BF0-4874-BEF6-985C2EFB09D2",
+        "rank": "normal"
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "963285a206e48a3a70ddb5a0ddbf3f8d883f8f9e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 131359,
+              "id": "Q131359"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q4520528$2F103A28-3A07-4641-BF9E-EAE1DA69A2CE",
+        "rank": "normal"
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "326e3d41d1e9c34715e880be6e1c6a1e822e4317",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4830453,
+              "id": "Q4830453"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q4520528$40ea1547-4a85-1597-0474-952f4e12b549",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "452fa0e8bd107a606533e3bdc52c3a6fb61a871e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 721067,
+              "id": "Q721067"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q4520528$c36712ac-4b99-f2da-6851-7b82dd403a85",
+        "rank": "normal"
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "1ce5533a7719cce8613a3fcdfd86190bfafd31fc",
+          "datavalue": {
+            "value": {
+              "time": "+1986-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q4520528$26a55331-46cd-5c4d-219b-93a436c7a25c",
+        "rank": "normal"
+      }
+    ],
+    "P576": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P576",
+          "hash": "8b25add22384e9a99fac9d98c610f1a9d8608adb",
+          "datavalue": {
+            "value": {
+              "time": "+1987-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q4520528$501066e8-457b-0c6d-fb15-7bb46235257c",
+        "rank": "normal"
+      }
+    ],
+    "P112": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P112",
+          "hash": "503b413044259d4c3e0a4100f025badeb8e79125",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1134918,
+              "id": "Q1134918"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q4520528$485fbf3e-4b96-6c84-4f96-70051ca95022",
+        "rank": "normal"
+      }
+    ],
+    "P159": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P159",
+          "hash": "0533ae2582903165b43dd25b5f9b77a3f8fa1c14",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 941310,
+              "id": "Q941310"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q4520528$6d3c2314-4b06-5756-884f-7f7eda303528",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "40ad21f4e683cbe41e711714e304b753680712e3",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1670446,
+              "id": "Q1670446"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q4520528$11bd6513-4e28-8060-8a8c-ff3584d1a437",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "a109e63c85d0336f331cfc6322266787b63b4551",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 535150,
+              "id": "Q535150"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q4520528$3bca2e67-4520-64f4-6308-4f67f2808dc2",
+        "rank": "normal"
+      }
+    ],
+    "P740": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P740",
+          "hash": "82d710c32dbf6e2ca2360afcc66330b5cbc13d24",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 941310,
+              "id": "Q941310"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q4520528$A27AB45B-B5D8-4CF7-BAF7-B147CD41B957",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "94966acc41e59d9a65f82830a03f249ec7ca27ae",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "5a343e7e758a4282a01316d3e959b6e653b767fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11920,
+                      "id": "Q11920"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "abd6edb227560279b95dfea9cd9284b1e745469e",
+                  "datavalue": {
+                    "value": "https://it.wikipedia.org/w/index.php?title=Universal_Wrestling_Federation_(Bill_Watts)&oldid=120874624",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {
+    "ptwiki": {
+      "site": "ptwiki",
+      "title": "Universal Wrestling Federation (Bill Watts)",
+      "badges": [],
+      "url": "https://pt.wikipedia.org/wiki/Universal_Wrestling_Federation_(Bill_Watts)"
+    },
+    "eswiki": {
+      "site": "eswiki",
+      "title": "Universal Wrestling Federation (Bill Watts)",
+      "badges": [],
+      "url": "https://es.wikipedia.org/wiki/Universal_Wrestling_Federation_(Bill_Watts)"
+    },
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Universal Wrestling Federation (Bill Watts)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Universal_Wrestling_Federation_(Bill_Watts)"
+    },
+    "mwlwiki": {
+      "site": "mwlwiki",
+      "title": "Universal Wrestling Federation (Bill Watts)",
+      "badges": [],
+      "url": "https://mwl.wikipedia.org/wiki/Universal_Wrestling_Federation_(Bill_Watts)"
+    },
+    "itwiki": {
+      "site": "itwiki",
+      "title": "Universal Wrestling Federation (Bill Watts)",
+      "badges": [],
+      "url": "https://it.wikipedia.org/wiki/Universal_Wrestling_Federation_(Bill_Watts)"
+    },
+    "dewiki": {
+      "site": "dewiki",
+      "title": "Universal Wrestling Federation (Bill Watts)",
+      "badges": [],
+      "url": "https://de.wikipedia.org/wiki/Universal_Wrestling_Federation_(Bill_Watts)"
+    }
+  }
+}

@@ -1,0 +1,949 @@
+{
+  "pageid": 71862270,
+  "ns": 0,
+  "title": "Q72208266",
+  "lastrevid": 2484303193,
+  "modified": "2026-04-24T05:56:42Z",
+  "type": "item",
+  "id": "Q72208266",
+  "labels": {
+    "de": {
+      "language": "de",
+      "value": "The Legend of the Lone Ranger"
+    },
+    "en": {
+      "language": "en",
+      "value": "The Legend of the Lone Ranger"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "1952 film by George B. Seitz Jr."
+    },
+    "nl": {
+      "language": "nl",
+      "value": "film"
+    },
+    "de": {
+      "language": "de",
+      "value": "Western-Film"
+    },
+    "an": {
+      "language": "an",
+      "value": "cinta de 1952 dirichita por George B. Seitz Jr."
+    },
+    "ar": {
+      "language": "ar",
+      "value": "فيلم أنتج عام 1952"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "película de 1952 dirixida por George B. Seitz Jr."
+    },
+    "ca": {
+      "language": "ca",
+      "value": "pel·lícula de 1952 dirigida per George B. Seitz Jr."
+    },
+    "es": {
+      "language": "es",
+      "value": "película de 1952 dirigida por George B. Seitz Jr."
+    },
+    "et": {
+      "language": "et",
+      "value": "1952. aasta film, lavastanud George B. Seitz Jr."
+    },
+    "ext": {
+      "language": "ext",
+      "value": "pinicla de 1952 dirigía por George B. Seitz Jr."
+    },
+    "fr": {
+      "language": "fr",
+      "value": "film de George B. Seitz Jr., sorti en 1952"
+    },
+    "fy": {
+      "language": "fy",
+      "value": "film út 1952 fan George B. Seitz Jr."
+    },
+    "gl": {
+      "language": "gl",
+      "value": "filme de 1952 dirixido por George B. Seitz Jr."
+    },
+    "he": {
+      "language": "he",
+      "value": "סרט משנת 1952"
+    },
+    "it": {
+      "language": "it",
+      "value": "film del 1952 diretto da George B. Seitz Jr."
+    },
+    "oc": {
+      "language": "oc",
+      "value": "filme de 1952 dirigit per George B. Seitz Jr."
+    },
+    "pt": {
+      "language": "pt",
+      "value": "filme de 1952 dirigido por George B. Seitz Jr."
+    },
+    "ro": {
+      "language": "ro",
+      "value": "film din 1952 regizat de George B. Seitz Jr."
+    },
+    "sv": {
+      "language": "sv",
+      "value": "film från 1952 regisserad av George B. Seitz Jr."
+    },
+    "uk": {
+      "language": "uk",
+      "value": "фільм 1952 року"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "fa41184cb03f49f0edfbf2fc4f9d33e35afecaea",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11424,
+              "id": "Q11424"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q72208266$d3894cd2-4167-a10d-23a9-3b8b790324f8",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "0f15aed61686814d95ad8bc14d71b26445b9ee1b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4345913,
+              "id": "Q4345913"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q72208266$8fe36ea2-4158-bef8-9bab-907832ed753c",
+        "rank": "normal"
+      }
+    ],
+    "P345": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P345",
+          "hash": "1ea1afc493cdfd8f16203ffe4c64137d71d301fc",
+          "datavalue": {
+            "value": "tt0242593",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q72208266$D5F14803-DBD2-4263-83DF-082CD509C351",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f5dde6ab32e1e8ef30b9c1abe7167e6b4d621887",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 48183,
+                      "id": "Q48183"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "7f3d9b645a7000c0a924fabacae2bda0d9663f8d",
+                  "datavalue": {
+                    "value": "https://de.wikipedia.org/w/index.php?title=The_Legend_of_the_Lone_Ranger_(1952)&oldid=193436845",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P462": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P462",
+          "hash": "3a54909b84e89027076dc951333afbbabd2a9eef",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 838368,
+              "id": "Q838368"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q72208266$ab1dc0ee-644b-4a8d-b0bb-b4e6d7e35e3e",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9a24f7c0208b05d6be97077d855671d1dfdbc0dd",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 48183,
+                      "id": "Q48183"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "bcc491e20935646922e031dd45820156941282cc",
+          "datavalue": {
+            "value": {
+              "time": "+1952-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q72208266$57fac5ca-b6d4-4a80-af53-c80c4d78f967",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9a24f7c0208b05d6be97077d855671d1dfdbc0dd",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 48183,
+                      "id": "Q48183"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P162": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P162",
+          "hash": "9e6f618b14578aa51001a769c8ea335597b604c3",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1676994,
+              "id": "Q1676994"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q72208266$2754CCA6-9D49-4F95-BDC9-4DEEB3A44CA4",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "732cf342d548bac54dc110906f0c175d02bbbfed",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 48183,
+                      "id": "Q48183"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "0acc92136830f28e9d752288f4cc29a5b1cf5b69",
+                  "datavalue": {
+                    "value": "https://de.wikipedia.org/w/index.php?title=The_Legend_of_the_Lone_Ranger_(1952)&oldid=193487115",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P2603": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2603",
+          "hash": "9f268e1db619295422e75001a4ce173db9831f6e",
+          "datavalue": {
+            "value": "33038",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q72208266$CA33845A-6857-42A2-A58F-98DB3714D57C",
+        "rank": "normal"
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "09babe51547cd81b5213bfdce355b8d09ae7dc54",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 172980,
+              "id": "Q172980"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q72208266$307BDB09-7511-4202-9C98-5BEFD9AE0C65",
+        "rank": "normal"
+      }
+    ],
+    "P6127": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6127",
+          "hash": "f63a2d429e8af0fef1b74ea45f0fb3c3b89090cf",
+          "datavalue": {
+            "value": "the-legend-of-the-lone-ranger-1952",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q72208266$E659E261-BCBF-462E-A630-809650DE437B",
+        "rank": "normal"
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "bd6fed8291ed3297ff7760b42c2ac18f9f021e8e",
+          "datavalue": {
+            "value": "/g/11j0hsv39n",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q72208266$CBD157C3-B755-4BF2-B89C-6C36D3C77EE1",
+        "rank": "normal"
+      }
+    ],
+    "P4947": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4947",
+          "hash": "19193263516b472c5ce798cb2fbebca39f526876",
+          "datavalue": {
+            "value": "288614",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q72208266$EB667371-FD8C-497C-BDF1-988AEFE0FB68",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ccc307a850235e9104cf212c3e441bbb124441fa",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "01c5ccdb20291acf36831371f5891341513dc666",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 20828898,
+                      "id": "Q20828898"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P11797": [
+                {
+                  "snaktype": "value",
+                  "property": "P11797",
+                  "hash": "201760a29ff588d59f692d581849a13bfbaea92f",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 37312,
+                      "id": "Q37312"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P345": [
+                {
+                  "snaktype": "value",
+                  "property": "P345",
+                  "hash": "1ea1afc493cdfd8f16203ffe4c64137d71d301fc",
+                  "datavalue": {
+                    "value": "tt0242593",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P11797", "P345"]
+          }
+        ]
+      }
+    ],
+    "P8013": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8013",
+          "hash": "7d1bbab9cf5771bdd82e52adf427aad7b70c0e5a",
+          "datavalue": {
+            "value": "movies/the-legend-of-the-lone-ranger-1952",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q72208266$9E86B6C6-A469-4CDE-8B90-EDF600585655",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "1bf21b242c6208e829a3ba1f4d542f17a5db57c9",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "5347f50330c720277bc3d083bf442720604ae513",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-04-30T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P887": [
+                {
+                  "snaktype": "value",
+                  "property": "P887",
+                  "hash": "d518a2a49d32a68844bae408564089415051ed31",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 115288501,
+                      "id": "Q115288501"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P813", "P887"]
+          }
+        ]
+      }
+    ],
+    "P12096": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12096",
+          "hash": "9ce16834e21f904f461f53fa4a81c3fd5509fb94",
+          "datavalue": {
+            "value": "264560",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q72208266$EA91C460-39C0-441F-9F5B-B07989BDBB25",
+        "rank": "normal"
+      }
+    ],
+    "P11460": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11460",
+          "hash": "b0e30451d76fe6885f837584f047247e06266d1a",
+          "datavalue": {
+            "value": "5d776b14ad5437001f792686",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q72208266$C43782D4-286A-47E0-994F-C70DBB4D63E2",
+        "rank": "normal"
+      }
+    ],
+    "P12683": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12683",
+          "hash": "f922875a3d9468147d893a68eaf40a7b90622a13",
+          "datavalue": {
+            "value": "film/22312",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q72208266$98EE07D2-1EA3-4106-A008-45A634657769",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "c03dc9fc808b181089d60bcd9f5abf4af35d7f3e",
+            "snaks": {
+              "P12683": [
+                {
+                  "snaktype": "value",
+                  "property": "P12683",
+                  "hash": "f922875a3d9468147d893a68eaf40a7b90622a13",
+                  "datavalue": {
+                    "value": "film/22312",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "5d09a104443b756ce9d5baa0f8bc02bf1ade6eba",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 97065088,
+                      "id": "Q97065088"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "6c27c780acdd3ae98e9a335f27df021e7524adfd",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2024-04-29T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P12683", "P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P2704": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2704",
+          "hash": "9cd8c4e54c35826bccc4aaa76a344fa42f42a89a",
+          "datavalue": {
+            "value": "10.5240/85CF-4F16-0B15-D110-1978-M",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q72208266$90C6E8FB-A8B0-41F3-ACB9-A07438AD0EE3",
+        "rank": "normal"
+      }
+    ],
+    "P12492": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12492",
+          "hash": "95028f03959faa6588384c2ddf2ad3a2510b33da",
+          "datavalue": {
+            "value": "185632",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q72208266$ab4efab6-5525-4f37-9163-f64fa97a4cb1",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "1f0e7c4dc208dddf16fae1452fe8e0f138e22793",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "fcc69088e6134a1e916e47e9ade1d0df0241a232",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 84591894,
+                      "id": "Q84591894"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P11797": [
+                {
+                  "snaktype": "value",
+                  "property": "P11797",
+                  "hash": "201760a29ff588d59f692d581849a13bfbaea92f",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 37312,
+                      "id": "Q37312"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P345": [
+                {
+                  "snaktype": "value",
+                  "property": "P345",
+                  "hash": "1ea1afc493cdfd8f16203ffe4c64137d71d301fc",
+                  "datavalue": {
+                    "value": "tt0242593",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P11797", "P345"]
+          }
+        ]
+      }
+    ],
+    "P2529": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2529",
+          "hash": "a813798401f54d538fdfa2cebff074ec708620ac",
+          "datavalue": {
+            "value": "140795",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q72208266$FD36AAD9-3700-4CD9-B28E-E5BD63577880",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ee83a8caad5ca31a21a9733049ad5324933d9759",
+            "snaks": {
+              "P11797": [
+                {
+                  "snaktype": "value",
+                  "property": "P11797",
+                  "hash": "201760a29ff588d59f692d581849a13bfbaea92f",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 37312,
+                      "id": "Q37312"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P345": [
+                {
+                  "snaktype": "value",
+                  "property": "P345",
+                  "hash": "1ea1afc493cdfd8f16203ffe4c64137d71d301fc",
+                  "datavalue": {
+                    "value": "tt0242593",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "79b00827ec12847fdb92ed63451c43a31a89d6c8",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-02-20T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P11797", "P345", "P813"]
+          }
+        ]
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "7f985e15819b74ed189d022e004890e66d2ae42e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 30,
+              "id": "Q30"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q72208266$E984ECC6-2526-469A-9A4D-892BA172A2B2",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "513bfb5bf65134282a8b3acf23caddf173fc68cf",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "5b1d8822665b93354ad9e43cfd669997cf9bf44e",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 3561957,
+                      "id": "Q3561957"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "aabbc5e304841edfb9986220e63d611f40aabe4b",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-04-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P2047": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2047",
+          "hash": "3fd270e04bb38f509110645e97bb6c7f01a6ae71",
+          "datavalue": {
+            "value": {
+              "amount": "+74",
+              "unit": "http://www.wikidata.org/entity/Q7727"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q72208266$5AA7DBB7-C408-45DC-91F1-AAEF272114FC",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "513bfb5bf65134282a8b3acf23caddf173fc68cf",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "5b1d8822665b93354ad9e43cfd669997cf9bf44e",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 3561957,
+                      "id": "Q3561957"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "aabbc5e304841edfb9986220e63d611f40aabe4b",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-04-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {
+    "dewiki": {
+      "site": "dewiki",
+      "title": "The Legend of the Lone Ranger (1952)",
+      "badges": [],
+      "url": "https://de.wikipedia.org/wiki/The_Legend_of_the_Lone_Ranger_(1952)"
+    }
+  }
+}

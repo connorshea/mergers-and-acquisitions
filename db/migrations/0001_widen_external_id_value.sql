@@ -1,0 +1,1 @@
+ALTER TABLE `external_ids` MODIFY COLUMN `value` varchar(512) NOT NULL;

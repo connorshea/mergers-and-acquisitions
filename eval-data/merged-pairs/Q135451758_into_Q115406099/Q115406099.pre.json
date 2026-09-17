@@ -1,0 +1,732 @@
+{
+  "pageid": 109987263,
+  "ns": 0,
+  "title": "Q115406099",
+  "lastrevid": 2463873488,
+  "modified": "2026-02-16T07:08:22Z",
+  "type": "item",
+  "id": "Q115406099",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Boris the Rocket"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Boris the Rocket"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "2021 video game"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "لعبة فيديو"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "відеогра 2021 року"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "03d2d8ec4a899b29435a104a9ce7c189a31ae380",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7889,
+              "id": "Q7889"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q115406099$ced94880-460a-ea83-00e3-5a85b14a0fbc",
+        "rank": "normal"
+      }
+    ],
+    "P400": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P400",
+          "hash": "2e31cb0a82f44474a5c42bb159a94cc48633fffd",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 19610114,
+              "id": "Q19610114"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q115406099$68df03ae-4601-59e1-eec6-d5ffc5c53a19",
+        "rank": "normal"
+      }
+    ],
+    "P437": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P437",
+          "hash": "f9236afa39444ad69be7efe47f3a9e888d6081d2",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 54820071,
+              "id": "Q54820071"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q115406099$ad2cb0c9-4376-8eb8-42ee-a5594b387e5f",
+        "rank": "normal"
+      }
+    ],
+    "P8084": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8084",
+          "hash": "524aecac9d4ba5ab0586b269d06c436f9d10767d",
+          "datavalue": {
+            "value": "boris-the-rocket-switch",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P400": [
+            {
+              "snaktype": "value",
+              "property": "P400",
+              "hash": "2e31cb0a82f44474a5c42bb159a94cc48633fffd",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 19610114,
+                  "id": "Q19610114"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P400"],
+        "id": "Q115406099$f1310da4-4eed-1ed1-2771-b19e15404afc",
+        "rank": "normal"
+      }
+    ],
+    "P750": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P750",
+          "hash": "8db3ebc57aa9c1b4f2cb3067e25f1e17df62e22a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3070866,
+              "id": "Q3070866"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q115406099$8479777c-47df-bf26-9adc-d26ffdddd2c8",
+        "rank": "normal"
+      }
+    ],
+    "P444": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P444",
+          "hash": "edcde3ab8b67ac40e1d8ba55480c16e762c51557",
+          "datavalue": {
+            "value": "5/10",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P447": [
+            {
+              "snaktype": "value",
+              "property": "P447",
+              "hash": "02a843af17f9ae06a225333b313af787f54258ba",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 2366665,
+                  "id": "Q2366665"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P585": [
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "a1d890898a4d53242a0d1e48a2238b9b37ea3f17",
+              "datavalue": {
+                "value": {
+                  "time": "+2021-05-01T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P400": [
+            {
+              "snaktype": "value",
+              "property": "P400",
+              "hash": "2e31cb0a82f44474a5c42bb159a94cc48633fffd",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 19610114,
+                  "id": "Q19610114"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P447", "P585", "P400"],
+        "id": "Q115406099$cf4c2321-43fd-fb03-16c6-e172798af8cb",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "c2ad232f1ff0de93e670511e4957dbdd9eb24dc7",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "37bad13b1456537435d518a261983ad3c2de5801",
+                  "datavalue": {
+                    "value": "https://www.gameblog.fr/jeu-video/jeux/tests/test-de-boris-the-rocket-switch-une-missive-nucleaire-95113",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "fca90a3882887e60584ee2b10e8ba8be94926a97",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-11-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P577": [
+                {
+                  "snaktype": "value",
+                  "property": "P577",
+                  "hash": "f581b9bc428f0c9fbfe78ce0af8e62234929d37d",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-05-01T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813", "P577"]
+          }
+        ]
+      }
+    ],
+    "P2864": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2864",
+          "hash": "ed1f832449c8c3c3bcd14d49732bc3ab9b4d015a",
+          "datavalue": {
+            "value": "11310",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q115406099$C65B1AD6-E5AD-431C-812F-D06A81F496E4",
+        "rank": "normal"
+      }
+    ],
+    "P8351": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8351",
+          "hash": "072cc4e10aba2aee00a1bd33b5de4a83d3fd9861",
+          "datavalue": {
+            "value": "51467",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q115406099$E4E52E01-BBE2-4781-8B53-BDE5E2F5CD01",
+        "rank": "normal"
+      }
+    ],
+    "P12332": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12332",
+          "hash": "812a78a8c87790fb1b483bdbcf276802ba6a5a9e",
+          "datavalue": {
+            "value": "10002312",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q115406099$7623D785-1E5D-4A29-8842-49A4DCC33601",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ed7356ab1ef38629a58d9721f4c0c6c32c964f4f",
+            "snaks": {
+              "P12332": [
+                {
+                  "snaktype": "value",
+                  "property": "P12332",
+                  "hash": "812a78a8c87790fb1b483bdbcf276802ba6a5a9e",
+                  "datavalue": {
+                    "value": "10002312",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "3b5fa831af313fd8b0b505348b8c630b6033ab23",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 1052025,
+                      "id": "Q1052025"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "ca42bed342bc1db3e40543755ab51e963e6a91f2",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2024-01-22T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P12332", "P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P852": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P852",
+          "hash": "e7461931401b1a939dc7596f0f815669ab568d24",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 14864329,
+              "id": "Q14864329"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P7367": [
+            {
+              "snaktype": "value",
+              "property": "P7367",
+              "hash": "363b8cd01e622d33dbcd6a661cbae0b10a2e750f",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 60316458,
+                  "id": "Q60316458"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            {
+              "snaktype": "value",
+              "property": "P7367",
+              "hash": "247a978e00f637d42e34e02e6a63cceddf2c54af",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 60324381,
+                  "id": "Q60324381"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            {
+              "snaktype": "value",
+              "property": "P7367",
+              "hash": "23113bdd8b291c452ec857b7f7c10c61218a4cc5",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 68205918,
+                  "id": "Q68205918"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P7367"],
+        "id": "Q115406099$C080B15D-361B-433B-BCAC-F2B79624FB41",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "eeaf33f4fc83c26cbe76f6e9a0ee6d88b99a8797",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "44acae6c8a57918d5e7d3a63ae035a797a51a887",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 3070866,
+                      "id": "Q3070866"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P248"]
+          }
+        ]
+      }
+    ],
+    "P12001": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12001",
+          "hash": "c1bdfa715360bf63ca4a5fd0df0ad4239c685713",
+          "datavalue": {
+            "value": "p8Gp",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q115406099$8118C3BE-BD34-4091-ABE1-327AEF0C8904",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "3a766003ba068d7724f9e43ac933aba01c6de237",
+            "snaks": {
+              "P12001": [
+                {
+                  "snaktype": "value",
+                  "property": "P12001",
+                  "hash": "c1bdfa715360bf63ca4a5fd0df0ad4239c685713",
+                  "datavalue": {
+                    "value": "p8Gp",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "46c3401396fdc597d58062bd3bb5ad995e268f13",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 124398839,
+                      "id": "Q124398839"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "3ec6f320fcfee3fbd5d4c04317410eea9762a888",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2024-05-17T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P12001", "P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P5494": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5494",
+          "hash": "83054729e61be6bb45174cc3d09a4a5e36889ffd",
+          "datavalue": {
+            "value": "boris-the-rocket",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q115406099$5D2CB03F-FD08-4765-A896-82B796713F49",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "08fe6e85b6e6c2aa1f750a29a5f179367161b35c",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "a9ce7bc5abfdb439fe31499c93ad37c7fe98b487",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 45836,
+                      "id": "Q45836"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P5494": [
+                {
+                  "snaktype": "value",
+                  "property": "P5494",
+                  "hash": "83054729e61be6bb45174cc3d09a4a5e36889ffd",
+                  "datavalue": {
+                    "value": "boris-the-rocket",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "04811fc19e5e67aedb6d73cda13320e313c06105",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2025-04-22T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P5494", "P813"]
+          }
+        ]
+      }
+    ],
+    "P11771": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11771",
+          "hash": "1bab64fb7c5294e54a5f980748e6a6a519d5bd07",
+          "datavalue": {
+            "value": "184429",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q115406099$EC83C0FD-4D68-41B4-809A-421049766463",
+        "rank": "normal"
+      }
+    ],
+    "P5794": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5794",
+          "hash": "f4f38588f074e2b9ededd6b2683457e8a62dccdd",
+          "datavalue": {
+            "value": "boris-the-rocket",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9043": [
+            {
+              "snaktype": "value",
+              "property": "P9043",
+              "hash": "5f332193f1d56c188a7ba457221ea5fedd230c52",
+              "datavalue": {
+                "value": "139602",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9043"],
+        "id": "Q115406099$D3E8C863-BE6E-46A0-BCD6-8FFD48E46005",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "b4165d766022f26acea0e5752ad50082c00684dd",
+            "snaks": {
+              "P11797": [
+                {
+                  "snaktype": "value",
+                  "property": "P11797",
+                  "hash": "238fb6bf52e5dff9d9d13745775ff264da81e525",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 1052025,
+                      "id": "Q1052025"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P12332": [
+                {
+                  "snaktype": "value",
+                  "property": "P12332",
+                  "hash": "812a78a8c87790fb1b483bdbcf276802ba6a5a9e",
+                  "datavalue": {
+                    "value": "10002312",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "3652a43fb8c5b3a6423f52d9c9955c58d3afcf51",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-02-15T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P11797", "P12332", "P813"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {}
+}

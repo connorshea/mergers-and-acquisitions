@@ -1,0 +1,286 @@
+{
+  "pageid": 125526665,
+  "ns": 0,
+  "title": "Q131619487",
+  "lastrevid": 2463876593,
+  "modified": "2026-02-16T07:20:52Z",
+  "type": "item",
+  "id": "Q131619487",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Repugnant Bounty"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Repugnant Bounty"
+    }
+  },
+  "descriptions": {},
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "03d2d8ec4a899b29435a104a9ce7c189a31ae380",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7889,
+              "id": "Q7889"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q131619487$9DCF8BE6-8E2D-4B32-92ED-52507243CDDB",
+        "rank": "normal"
+      }
+    ],
+    "P750": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P750",
+          "hash": "30e74a8ec835acc14307ea99ea5b2aa0c694cb54",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 22905933,
+              "id": "Q22905933"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q131619487$B7361D89-AD10-43E9-8261-472DE89C8CA3",
+        "rank": "normal"
+      }
+    ],
+    "P7294": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7294",
+          "hash": "6ada4c8c7f95ce95a63fd8f9052798365f00c83a",
+          "datavalue": {
+            "value": "https://skittlesfiddles.itch.io/repugnant-bounty",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q131619487$B42F192F-99F8-40A3-987C-6D0B0AF1622E",
+        "rank": "normal"
+      }
+    ],
+    "P12813": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12813",
+          "hash": "67302dc889d261e2d62a6c40ee74105ed79b0f1b",
+          "datavalue": {
+            "value": "1848159",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q131619487$a9652356-e8f0-425a-bb8b-fc133c87d38f",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "861d2ec64b7e66c41efb2cd30c3f7489bb8cab3c",
+            "snaks": {
+              "P11797": [
+                {
+                  "snaktype": "value",
+                  "property": "P11797",
+                  "hash": "e59bef7d616ac6ef4dfe24b901f6214bda23c9e4",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 22905933,
+                      "id": "Q22905933"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P7294": [
+                {
+                  "snaktype": "value",
+                  "property": "P7294",
+                  "hash": "6ada4c8c7f95ce95a63fd8f9052798365f00c83a",
+                  "datavalue": {
+                    "value": "https://skittlesfiddles.itch.io/repugnant-bounty",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "0b4f07f84ee539d2d013666f380be9608fb7c4cb",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2025-01-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P11797", "P7294", "P813"]
+          }
+        ]
+      }
+    ],
+    "P12001": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12001",
+          "hash": "9232d3d7caec673a616e5f285648a44933e392b3",
+          "datavalue": {
+            "value": "kJg99",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q131619487$E3477C50-A9A4-44AC-B77B-D70BB6AC4F5E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "5453a7df082b0517c174ebb0f06714d0035c4c70",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "08fba3511bad9285e16847928bbcc37907ec04a4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2025-07-22T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P813"]
+          }
+        ]
+      }
+    ],
+    "P5794": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5794",
+          "hash": "e4a981b31a0e197a5d89686390c3e9357eae06d2",
+          "datavalue": {
+            "value": "repugnant-bounty",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9043": [
+            {
+              "snaktype": "value",
+              "property": "P9043",
+              "hash": "be39368b8d63e7c4ede329e4c8ca47b035d56c90",
+              "datavalue": {
+                "value": "229493",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9043"],
+        "id": "Q131619487$56C0F74B-39FE-4F97-AD2A-62DD7B361F64",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "832b9c87d5c330ce00e263a14e60014cf2bb8b6d",
+            "snaks": {
+              "P11797": [
+                {
+                  "snaktype": "value",
+                  "property": "P11797",
+                  "hash": "e59bef7d616ac6ef4dfe24b901f6214bda23c9e4",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 22905933,
+                      "id": "Q22905933"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P12813": [
+                {
+                  "snaktype": "value",
+                  "property": "P12813",
+                  "hash": "67302dc889d261e2d62a6c40ee74105ed79b0f1b",
+                  "datavalue": {
+                    "value": "1848159",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "3652a43fb8c5b3a6423f52d9c9955c58d3afcf51",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-02-15T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P11797", "P12813", "P813"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {}
+}

@@ -1,51 +1,39 @@
 // Shared server-side write path for the Wikidata property-label sync, used by
-// both the manual route (routes/api/properties/sync.ts) and the scheduled cron
-// (crons/sync-properties.ts). Lives under server/ (not src/lib) so it can import
-// void/db without pulling server code into the client bundle.
-import { db, sql } from "void/db";
-import { properties } from "@schema";
+// both the manual route (server/sync-routes.ts) and the scheduled job
+// (jobs/sync-properties.ts).
+import { sql } from "drizzle-orm";
+import { db } from "./db";
+import { properties } from "../db/schema";
 import type { PropertyRow } from "../src/lib/sparql";
 
-// D1 caps bound parameters at 100 per statement (lower than SQLite's own limit),
-// so with 4 columns per row an INSERT can carry at most 25 rows. Stay under
-// that, then group the statements into db.batch() calls so the whole sync is a
-// handful of round-trips rather than hundreds of separate subrequests.
-const ROWS_PER_STMT = 24; // 24 × 4 cols = 96 bound params, under D1's 100 cap
-const STMTS_PER_BATCH = 20;
+// MariaDB allows tens of thousands of bound params per statement, so batch
+// generously — a handful of round-trips rather than the ~25-row statements D1's
+// 100-param cap forced.
+const ROWS_PER_STMT = 500;
 
 /** Upsert fetched property rows, refreshing label/datatype/formatterUrl/syncedAt. */
 export async function syncProperties(rows: PropertyRow[]): Promise<number> {
-  const statements = [];
   for (let i = 0; i < rows.length; i += ROWS_PER_STMT) {
     const chunk = rows.slice(i, i + ROWS_PER_STMT).map((r) => ({
       pid: r.pid,
       label: r.label,
       datatype: r.datatype,
       formatterUrl: r.formatterUrl,
+      mirrorsWikidata: r.mirrorsWikidata,
     }));
     if (chunk.length === 0) continue;
-    statements.push(
-      db
-        .insert(properties)
-        .values(chunk)
-        .onConflictDoUpdate({
-          target: properties.pid,
-          set: {
-            label: sql`excluded.label`,
-            datatype: sql`excluded.datatype`,
-            formatterUrl: sql`excluded.formatter_url`,
-            syncedAt: sql`(datetime('now'))`,
-          },
-        }),
-    );
-  }
-
-  type Stmt = (typeof statements)[number];
-  for (let i = 0; i < statements.length; i += STMTS_PER_BATCH) {
-    const group = statements.slice(i, i + STMTS_PER_BATCH);
-    if (group.length === 0) continue;
-    // db.batch wants a non-empty tuple; the slice is guaranteed non-empty here.
-    await db.batch(group as [Stmt, ...Stmt[]]);
+    await db
+      .insert(properties)
+      .values(chunk)
+      .onDuplicateKeyUpdate({
+        set: {
+          label: sql`values(${properties.label})`,
+          datatype: sql`values(${properties.datatype})`,
+          formatterUrl: sql`values(${properties.formatterUrl})`,
+          mirrorsWikidata: sql`values(${properties.mirrorsWikidata})`,
+          syncedAt: sql`CURRENT_TIMESTAMP`,
+        },
+      });
   }
   return rows.length;
 }

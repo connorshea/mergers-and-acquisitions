@@ -12,6 +12,8 @@
   --distinct-bg: #fbe8e6;
   --blocker: #bb4038;
   --focus: #3b6fd6;
+  --mirror: #5a53a6;
+  --mirror-bg: #edecf8;
   --font: "IBM Plex Sans", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 @media (prefers-color-scheme: dark) {
@@ -29,6 +31,8 @@
     --distinct-bg: #3e1e1b;
     --blocker: #ef8a82;
     --focus: #7ea2ee;
+    --mirror: #b3aef0;
+    --mirror-bg: #262445;
   }
 }
 :root[data-theme="dark"] {
@@ -45,6 +49,8 @@
   --distinct-bg: #3e1e1b;
   --blocker: #ef8a82;
   --focus: #7ea2ee;
+  --mirror: #b3aef0;
+  --mirror-bg: #262445;
 }
 
 * {
@@ -155,6 +161,13 @@ body {
 .col-id:hover {
   color: var(--focus);
   text-decoration: underline;
+}
+/* The item's name beside its QID in a table header, de-emphasized so the QID
+   stays the primary identifier. */
+.col-name {
+  margin-left: 0.4rem;
+  color: var(--muted);
+  font-weight: 400;
 }
 .arrow {
   align-self: center;
@@ -335,6 +348,11 @@ body {
 .ledger tr:last-child td {
   border-bottom: none;
 }
+/* Wikidata-sourced (mirrored) identifier rows are weak evidence either way, so
+   de-emphasize them with a subtle darkening overlay (theme-agnostic). */
+.ledger tr.is-mirror td {
+  background: rgba(0, 0, 0, 0.03);
+}
 .col-a,
 .col-b {
   width: 38%;
@@ -349,9 +367,33 @@ body {
 .prop-label {
   font-weight: 500;
 }
+/* Marker for identifiers Wikidata itself is the source of (mirrored ids like
+   vglist or GamerProfiles): a shared value is circular and a differing one only
+   means one side is out of sync, so it's evidence neither way. */
+.prop-mirror {
+  display: inline-block;
+  margin-left: 0.4rem;
+  padding: 0.02rem 0.4rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+  vertical-align: middle;
+  color: var(--mirror);
+  background: var(--mirror-bg);
+  cursor: help;
+}
 .prop-key {
+  display: flex;
+  align-items: center;
   font-size: 0.78rem;
   color: var(--muted);
+}
+/* Push the Wikidata-sourced marker to the bottom-right of the cell, past the
+   property id. */
+.prop-key .prop-mirror {
+  margin-left: auto;
 }
 .prop-key a {
   color: inherit;
@@ -404,6 +446,11 @@ body {
 .chip-id {
   font-size: 0.75em;
   opacity: 0.7;
+}
+/* Unknown / no value: a placeholder, not a real value — de-emphasize it. */
+.chip-special {
+  font-style: italic;
+  opacity: 0.8;
 }
 a.chip-id {
   color: inherit;
@@ -828,6 +875,13 @@ a.chip-id:hover {
   border: 1px solid var(--rule);
   border-radius: 999px;
   padding: 0.1rem 0.55rem;
+}
+/* A property id inside a reason, hoverable to reveal the property's name. */
+.reason-prop {
+  color: var(--ink);
+  text-decoration: underline dotted;
+  text-underline-offset: 2px;
+  cursor: help;
 }
 .detail-actions {
   margin-left: auto;

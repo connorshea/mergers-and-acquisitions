@@ -6,7 +6,19 @@
 
 // ---------- Types ----------
 
-export type ValueType = "item" | "string" | "time" | "quantity" | "url" | "external-id";
+// "somevalue" / "novalue" mirror Wikidata's special snak types: an *unknown*
+// value (a value exists but isn't recorded — a blank node on the wire) and an
+// explicit *no* value (the property is asserted to have none). They carry no
+// meaningful `value` string.
+export type ValueType =
+  | "item"
+  | "string"
+  | "time"
+  | "quantity"
+  | "url"
+  | "external-id"
+  | "somevalue"
+  | "novalue";
 
 export interface Value {
   type: ValueType;
@@ -141,6 +153,12 @@ export function formatIdUrl(template: string | undefined, value: string): string
 /** Returns [status, note] for a pair of values of the same property. */
 export function compareValues(x: Value, y: Value): [Status, string?] {
   if (x.type !== y.type) return ["distinct"];
+  // Unknown value (somevalue): a value exists but isn't recorded, so two of them
+  // can't be confirmed equal — never an identical match, and their (blank-node)
+  // `value` strings must not be compared. No value (novalue): an explicit
+  // assertion of absence, so two of them agree.
+  if (x.type === "somevalue") return ["distinct", "unknown value on both sides"];
+  if (x.type === "novalue") return ["identical"];
   if (x.value === y.value) return ["identical"];
 
   switch (x.type) {
@@ -150,10 +168,30 @@ export function compareValues(x: Value, y: Value): [Status, string?] {
         return ["similar", "different items with similar labels"];
       return ["distinct"];
     case "time": {
-      const yx = x.value.slice(0, 4);
-      const yy = y.value.slice(0, 4);
-      if (yx === yy) return ["similar", "same year, different precision"];
-      return ["distinct"];
+      // Wikidata times are `±YYYY-MM-DDThh:mm:ssZ`; a "00" month or day marks an
+      // unspecified (coarser-precision) part, e.g. year precision is
+      // `+2022-00-00T…`. Parse the calendar parts so we can tell an actual
+      // difference (a day off) from a genuine precision mismatch.
+      const parse = (s: string): { y: number; mo: number; d: number } | null => {
+        const m = /^([+-]?\d+)-(\d\d)-(\d\d)/.exec(s);
+        return m ? { y: Number(m[1]), mo: Number(m[2]), d: Number(m[3]) } : null;
+      };
+      const da = parse(x.value);
+      const db = parse(y.value);
+      if (!da || !db)
+        return x.value.slice(0, 4) === y.value.slice(0, 4)
+          ? ["similar", "same year"]
+          : ["distinct"];
+      if (da.y !== db.y) return ["distinct"];
+      // Same year. Precision = how many calendar parts are specified.
+      const precision = (p: { mo: number; d: number }): number =>
+        p.mo === 0 ? 1 : p.d === 0 ? 2 : 3;
+      if (precision(da) !== precision(db)) return ["similar", "same year, different precision"];
+      // Same precision, same year — report how they actually differ. (An exact
+      // match was already returned above, so something differs here.)
+      if (da.mo !== db.mo) return ["similar", "same year, different month"];
+      const gap = Math.abs(da.d - db.d);
+      return ["similar", gap === 1 ? "one day apart" : `${gap} days apart`];
     }
     case "quantity":
     case "external-id":
@@ -398,16 +436,36 @@ const LOW_ENTROPY_PROPS = new Set<string>([
 
 /**
  * Identifiers that third-party databases populate *from* Wikidata rather than
- * independently (vglist, GamerProfiles mirror Wikidata's own item mapping). A
- * shared value is therefore circular — not independent evidence the two items
- * are the same — and a differing value only means one side hasn't been re-synced,
- * not that the subjects are distinct. Ignore them as an identifier signal in
- * both directions (neither a match nor a distinction).
+ * independently (they mirror Wikidata's own item mapping). A shared value is
+ * therefore circular — not independent evidence the two items are the same — and
+ * a differing value only means one side hasn't been re-synced, not that the
+ * subjects are distinct. Ignore them as an identifier signal in both directions
+ * (neither a match nor a distinction).
+ *
+ * This is a hardcoded *floor*, unioned at runtime with the synced set of
+ * properties tagged P31 = Q24075706 ("authority control with reciprocal use of
+ * Wikidata") via ScoreOptions.isMirroredIdProp. The floor guarantees correct
+ * behaviour before the first property sync and in callers that pass no options
+ * (the unit tests), and additionally covers services Wikidata hasn't tagged
+ * (GamerProfiles). Once synced, the (much larger) tagged set handles the rest —
+ * including vglist — and stays current without edits here.
  */
 const MIRRORED_ID_PROPS = new Set<string>([
-  "P8351", // vglist video game ID
-  "P12001", // GamerProfiles game ID
+  "P8351", // vglist video game ID (also tagged P31=Q24075706, so synced too)
+  "P12001", // GamerProfiles game ID — mirrors Wikidata but untagged (P31≠Q24075706)
 ]);
+
+/**
+ * Whether a property is a *hardcoded* Wikidata-mirroring identifier (the
+ * MIRRORED_ID_PROPS floor). This is the subset that callers without the synced
+ * `properties.mirrors_wikidata` set — chiefly the UI — can recognise on their
+ * own, and notably includes services Wikidata hasn't tagged P31=Q24075706 (e.g.
+ * GamerProfiles). The full runtime predicate additionally unions the synced set;
+ * see ScoreOptions.isMirroredIdProp.
+ */
+export function isHardcodedMirrorProp(pid: string): boolean {
+  return MIRRORED_ID_PROPS.has(pid);
+}
 
 /**
  * A publication-year gap at or beyond this is treated as near-conclusive that
@@ -547,6 +605,12 @@ export interface CandidateScore {
  * — into a 0–1 score. Concrete disagreement subtracts too: a differing release
  * year, developer, or publisher (unless a shared strong per-title id vouches for
  * the pair — except a *large* publication-year gap, which overrides even that).
+ * A near-certain (≈1.0) score is *reserved*: it takes a very similar name plus
+ * strong corroboration — two or more shared external ids, or an id plus agreeing
+ * discriminative properties — and minimal differences. A lone shared id with a
+ * matching name is strong but not conclusive and is capped below 1.0; any
+ * concrete difference (differing developer/publisher, a year gap, or a single
+ * conflicting per-title id like two different Steam pages) caps it further.
  * Two strong negatives can effectively disqualify a pair: clearly-different
  * names, and many external identifiers that are present on both items yet all
  * differ. More narrowly, two or more differing *per-title* identifiers (Steam,
@@ -568,6 +632,17 @@ export interface ScoreOptions {
    * as before.
    */
   isIdentifierProp?: (pid: string) => boolean;
+  /**
+   * Predicate for whether a property mirrors Wikidata — an authority-control id
+   * whose service sources its ids *from* Wikidata (P31 = Q24075706: vglist,
+   * VNDB, MusicBrainz, …). Such ids are minted per Wikidata item, so a shared
+   * value is circular and a differing value is not evidence of distinct
+   * subjects: they count neither for a match nor against one. Unioned with the
+   * hardcoded MIRRORED_ID_PROPS (which also covers services Wikidata hasn't
+   * tagged, e.g. GamerProfiles). Supplied by the hunt from the synced
+   * `properties.mirrors_wikidata`; omitted before the first property sync.
+   */
+  isMirroredIdProp?: (pid: string) => boolean;
 }
 
 export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): CandidateScore {
@@ -581,12 +656,17 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // scores, then further split out account/franchise ids (WEAK_ID_PROPS) that a
   // game shares with its whole series.
   const isId = opts.isIdentifierProp;
+  // A property mirrors Wikidata if it's in the hardcoded floor OR the synced set
+  // (P31 = Q24075706) says so. Such ids are excluded as evidence in both
+  // directions — neither a shared value nor a differing one means anything.
+  const isMirrored = (pid: string): boolean =>
+    MIRRORED_ID_PROPS.has(pid) || (opts.isMirroredIdProp?.(pid) ?? false);
   const sharedExtIds = rows.filter(
     (r) =>
       r.kind === "statement" &&
       r.status === "identical" &&
       r.a.some((v) => v.type === "external-id") &&
-      !MIRRORED_ID_PROPS.has(r.key) &&
+      !isMirrored(r.key) &&
       (isId ? isId(r.key) : true),
   );
   const strongIds = sharedExtIds.filter((r) => !WEAK_ID_PROPS.has(r.key));
@@ -673,31 +753,38 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     score = Math.min(score, 0.1);
   }
 
+  // Concrete disagreements on discriminative facts. Computed unconditionally (a
+  // shared strong id suppresses the *penalties* below but these differences still
+  // feed the confidence ceiling, so "minimal differences" is required to reach the
+  // very top of the range).
+  const itemValues = (item: Item, pid: string): string[] =>
+    (item.statements[pid] ?? []).filter((v) => v.type === "item").map((v) => v.value);
+  const disjoint = (pid: string): boolean => {
+    const va = itemValues(a, pid);
+    const vb = itemValues(b, pid);
+    return va.length > 0 && vb.length > 0 && !va.some((v) => vb.includes(v));
+  };
+  const diffDeveloper = disjoint("P178");
+  const diffPublisher = disjoint("P123");
+  const modestYearGap = Number.isFinite(yearGap) && yearGap >= 2 && yearGap < LARGE_YEAR_GAP;
+
   // Lesser disagreement penalties. A shared strong per-title identifier is near-
-  // conclusive for these, so when we have one we trust it and skip them (a small
-  // release-date or renamed-studio mismatch shouldn't sink a genuine duplicate).
-  // Otherwise, concrete disagreement on discriminative facts — a modest release-
-  // year gap, the developer, the publisher — is strong evidence of two different
-  // games that merely share a title.
+  // conclusive for these, so when we have one we trust it and skip the *penalties*
+  // (a small release-date or renamed-studio mismatch shouldn't sink a genuine
+  // duplicate). Otherwise, concrete disagreement — a modest release-year gap, the
+  // developer, the publisher — is strong evidence of two different games that
+  // merely share a title.
   if (strongIds.length === 0) {
-    if (yearGap >= 2 && yearGap < LARGE_YEAR_GAP) {
+    if (modestYearGap) {
       const penalty = Math.min(0.35, 0.25 + (yearGap - 2) / 30);
       score -= penalty;
       reasons.push(`publication years differ by ${yearGap}`);
     }
-
-    const itemValues = (item: Item, pid: string): string[] =>
-      (item.statements[pid] ?? []).filter((v) => v.type === "item").map((v) => v.value);
-    const disjoint = (pid: string): boolean => {
-      const va = itemValues(a, pid);
-      const vb = itemValues(b, pid);
-      return va.length > 0 && vb.length > 0 && !va.some((v) => vb.includes(v));
-    };
-    if (disjoint("P178")) {
+    if (diffDeveloper) {
       score -= 0.25;
       reasons.push("different developer");
     }
-    if (disjoint("P123")) {
+    if (diffPublisher) {
       score -= 0.2;
       reasons.push("different publisher");
     }
@@ -722,7 +809,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
       r.status === "distinct" &&
       r.a.some((v) => v.type === "external-id") &&
       r.b.some((v) => v.type === "external-id") &&
-      !MIRRORED_ID_PROPS.has(r.key) &&
+      !isMirrored(r.key) &&
       (isId ? isId(r.key) : true),
   );
   if (distinctExtIdRows.length > 6) {
@@ -748,6 +835,16 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
         .join(", ")}) — almost certainly different games`,
     );
     score = Math.min(score, 0.1);
+  } else if (distinctPerTitleIds.length === 1) {
+    // A single differing per-title id (e.g. two different Steam or itch.io pages)
+    // is a real discrepancy — usually different games, occasionally a data slip
+    // when a stronger id still agrees. Dock it modestly and (via the ceiling
+    // below) hold the pair well off a near-certain score, but keep the nudge
+    // small so a genuine duplicate with one mis-entered id stays a candidate.
+    score -= 0.1;
+    reasons.push(
+      `a per-title identifier differs (${distinctPerTitleIds[0].label}) — points at a different store/database page`,
+    );
   }
 
   // A sequel is not a duplicate. Different entries in the same series share a
@@ -765,6 +862,52 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   if (isDeclaredDifferent(a, b)) {
     reasons.unshift('marked "different from" on Wikidata (P1889), not a duplicate');
     score = 0;
+  }
+
+  // Confidence ceiling. A near-certain (≈1.0) score is reserved for pairs with a
+  // very similar name AND strong, corroborated agreement — two or more shared
+  // external identifiers, or an identifier plus agreeing discriminative
+  // properties (developer, publisher, date, …) — and *minimal* differences. A
+  // single shared identifier with a matching name is strong but not conclusive
+  // (that lone id could be stale or mis-entered), so it is capped well below 1.0;
+  // any concrete disagreement — a differing developer/publisher, a release-year
+  // gap, or a conflicting per-title id — caps it further. Corroborating signals
+  // are the shared strong ids plus the discriminative statements (non-id) that
+  // agree. This clamp only ever lowers a score; it cannot make a non-duplicate
+  // look like one.
+  const propAgreement = stmtRows.filter(
+    (r) => r.status === "identical" && !r.a.some((v) => v.type === "external-id"),
+  ).length;
+  const strongSignals = strongIds.length + propAgreement;
+  let ceiling = 1;
+  if (nameSim >= 0.75) {
+    if (strongSignals >= 3) ceiling = 1;
+    else if (strongSignals === 2) ceiling = 0.93;
+    else if (strongSignals === 1) ceiling = 0.85;
+    else ceiling = 0.72;
+  }
+  const hasConcreteDifference =
+    diffDeveloper ||
+    diffPublisher ||
+    modestYearGap ||
+    distinctPerTitleIds.length > 0 ||
+    distinctExtIdRows.length > 0;
+  if (hasConcreteDifference) ceiling = Math.min(ceiling, 0.9);
+  if (distinctPerTitleIds.length === 1) ceiling = Math.min(ceiling, 0.8);
+  if (score > ceiling) {
+    score = ceiling;
+    // Only explain the clamp when the ceiling actually held the pair *below*
+    // near-certain. A ceiling of 1.0 (very similar name + 3+ corroborating
+    // signals, no differences) means the pair earned the top of the range and
+    // we're just clamping the raw additive sum — the ordinary `Math.min(1, …)`
+    // below — so no "held back" reason applies.
+    if (ceiling < 1) {
+      reasons.push(
+        strongSignals <= 1 && !hasConcreteDifference
+          ? "held below near-certain — only one strong corroborating signal"
+          : "held below near-certain — a difference remains or corroboration is thin",
+      );
+    }
   }
 
   const confidence = Math.max(0, Math.min(1, score));

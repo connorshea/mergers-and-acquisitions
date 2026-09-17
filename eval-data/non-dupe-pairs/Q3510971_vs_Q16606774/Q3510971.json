@@ -1,0 +1,850 @@
+{
+  "pageid": 3343216,
+  "ns": 0,
+  "title": "Q3510971",
+  "lastrevid": 2396723543,
+  "modified": "2025-08-26T10:11:31Z",
+  "type": "item",
+  "id": "Q3510971",
+  "labels": {
+    "cs": {
+      "language": "cs",
+      "value": "Sky Atlantic"
+    },
+    "fa": {
+      "language": "fa",
+      "value": "اسکای آتلانتیک"
+    },
+    "en": {
+      "language": "en",
+      "value": "Sky Atlantic"
+    },
+    "en-ca": {
+      "language": "en-ca",
+      "value": "Sky Atlantic"
+    },
+    "en-gb": {
+      "language": "en-gb",
+      "value": "Sky Atlantic"
+    },
+    "es": {
+      "language": "es",
+      "value": "Sky Atlantic"
+    },
+    "eu": {
+      "language": "eu",
+      "value": "Sky Atlantic"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "Sky Atlantic"
+    },
+    "de": {
+      "language": "de",
+      "value": "Sky Atlantic HD"
+    },
+    "ru": {
+      "language": "ru",
+      "value": "Sky Atlantic"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "スカイ・アトランティク"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Sky Atlantic"
+    },
+    "id": {
+      "language": "id",
+      "value": "Sky Atlantic"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "Sky Atlantic"
+    },
+    "hu": {
+      "language": "hu",
+      "value": "Sky Atlantic"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "Sky Atlantic"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "天空大西洋"
+    },
+    "zh-hant": {
+      "language": "zh-hant",
+      "value": "天空大西洋臺"
+    },
+    "zh-hans": {
+      "language": "zh-hans",
+      "value": "天空大西洋台"
+    },
+    "hy": {
+      "language": "hy",
+      "value": "Sky Atlantic"
+    },
+    "ckb": {
+      "language": "ckb",
+      "value": "سکای ئەتلانتیک"
+    },
+    "sco": {
+      "language": "sco",
+      "value": "Sky Atlantic"
+    },
+    "he": {
+      "language": "he",
+      "value": "סקיי אטלנטיק"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "Sky Atlantic"
+    },
+    "it": {
+      "language": "it",
+      "value": "Sky Atlantic"
+    },
+    "tr": {
+      "language": "tr",
+      "value": "Sky Atlantic"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "Sky Atlantic"
+    },
+    "vec": {
+      "language": "vec",
+      "value": "Sky Atlantic"
+    },
+    "nb": {
+      "language": "nb",
+      "value": "Sky Atlantic"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "سكاي أتلانتيك"
+    },
+    "sq": {
+      "language": "sq",
+      "value": "Sky Atlantic"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "British television channel"
+    },
+    "de": {
+      "language": "de",
+      "value": "Fernsehkanal"
+    },
+    "hu": {
+      "language": "hu",
+      "value": "brit televíziós csatorna"
+    },
+    "it": {
+      "language": "it",
+      "value": "rete televisiva britannica"
+    },
+    "cs": {
+      "language": "cs",
+      "value": "britská televizní stanice"
+    }
+  },
+  "aliases": {
+    "cs": [
+      {
+        "language": "cs",
+        "value": "Sky Atlantic HD"
+      }
+    ],
+    "fa": [
+      {
+        "language": "fa",
+        "value": "اسکای اتلانتیک"
+      }
+    ],
+    "de": [
+      {
+        "language": "de",
+        "value": "Sky Atlantic"
+      }
+    ],
+    "ja": [
+      {
+        "language": "ja",
+        "value": "スカイ・アトランティック"
+      }
+    ],
+    "zh": [
+      {
+        "language": "zh",
+        "value": "天空大西洋台"
+      },
+      {
+        "language": "zh",
+        "value": "天空大西洋頻道"
+      },
+      {
+        "language": "zh",
+        "value": "大西洋天空電視台"
+      }
+    ]
+  },
+  "claims": {
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "6756eae1e6c3b8fd34607610e9ed5c7065ffa6f9",
+          "datavalue": {
+            "value": "http://skyatlantic.sky.com/",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q3510971$E047874B-D400-4A46-9387-7A5E64B8FB6A",
+        "rank": "deprecated",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "74496e445a6c551c823791551bc6ef727a26c7dd",
+          "datavalue": {
+            "value": "https://www.sky.com/watch/channel/sky-atlantic",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q3510971$d1616245-452b-df9d-cd7d-4bdb12bd3a2c",
+        "rank": "normal"
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "a805808f2c1d49132e2c4b824e5ee97b7eb47ce7",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1616075,
+              "id": "Q1616075"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3510971$79103622-C859-4D42-B828-E2EFD39428BA",
+        "rank": "normal"
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "a44880420787fb348836dc51d3babc5227c4ef7e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 145,
+              "id": "Q145"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3510971$DD79B926-0D56-4ED8-ADEA-EFDF6E1FCCAB",
+        "rank": "normal"
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "d55bc036c7a6ae9cec184e865296c8b9506abfac",
+          "datavalue": {
+            "value": {
+              "time": "+2011-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q3510971$70BECCC3-6B01-4E59-BA49-9E602ED0FE74",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P127": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P127",
+          "hash": "cfee0cf0aa0e81cf0175308c10bee3ab93164689",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 918390,
+              "id": "Q918390"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3510971$7E1DDBE1-8FDA-40BD-940C-21F08710098B",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P137": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P137",
+          "hash": "a61772c40cbff8168a6eebda41f1d518d482883c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 918390,
+              "id": "Q918390"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3510971$967870CD-67B9-4B92-8DA9-59AB89B48B9E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "3bf39867b037e8e494a8389ae8a03bad6825a7fc",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "5946b91c53409c48f5f1fb0319ed41fc67a764da",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 191168,
+                      "id": "Q191168"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P3417": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3417",
+          "hash": "29a2ac3dda53a4459f180cc0a6e6a292f69150c3",
+          "datavalue": {
+            "value": "Sky-Atlantic",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q3510971$01BAEE28-AEC9-4A1F-BA09-4079DD07DB94",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "3b0a5bb3c1f955edce73740124f7d935698092ad",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "3ac9682e789a3a3791d4fd088b265ea03abef101",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 51711,
+                      "id": "Q51711"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P248"]
+          }
+        ]
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "d8f4c6124eedffa0edbcc22cd5921985a4576515",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 16606774,
+              "id": "Q16606774"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3510971$A4697FB3-5A77-4B0B-8C38-2D86807CFBE2",
+        "rank": "normal"
+      }
+    ],
+    "P2002": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2002",
+          "hash": "7a28fbba8a190f0086cd199e3331e82220c5ecc8",
+          "datavalue": {
+            "value": "skyatlantic",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P6552": [
+            {
+              "snaktype": "value",
+              "property": "P6552",
+              "hash": "47096c1787a8638d7a353c048f199d16d273de90",
+              "datavalue": {
+                "value": "197365064",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ],
+          "P1552": [
+            {
+              "snaktype": "value",
+              "property": "P1552",
+              "hash": "62f0039d240f7eeba6c6908a0d8807a6188324a1",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 28378282,
+                  "id": "Q28378282"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P3744": [
+            {
+              "snaktype": "value",
+              "property": "P3744",
+              "hash": "08c528ec2cc5f2ef1de8301d702967e9166bac61",
+              "datavalue": {
+                "value": {
+                  "amount": "+223379",
+                  "unit": "1"
+                },
+                "type": "quantity"
+              },
+              "datatype": "quantity"
+            }
+          ],
+          "P580": [
+            {
+              "snaktype": "value",
+              "property": "P580",
+              "hash": "6c3c23f0196caf4b203afaa836ba33d58695dd98",
+              "datavalue": {
+                "value": {
+                  "time": "+2010-10-01T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P585": [
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "f4da88e58bb9b446848b3eed88e75b74e12d6336",
+              "datavalue": {
+                "value": {
+                  "time": "+2020-04-24T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P6552", "P1552", "P3744", "P580", "P585"],
+        "id": "Q3510971$fb92c4c8-4a60-4bd3-23d4-6499afb3746a",
+        "rank": "normal"
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "f40e807a4732505a39a8ca94f87e291ddcc2cc2f",
+          "datavalue": {
+            "value": "/m/0dgqk91",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q3510971$34A8280E-A200-4C99-A291-CF81E8F68DAF",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f257cd5bcdeccdddcd3f02d8bc26dd7eea4ba041",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "8ab77c7cd50031c3ae514693b69b28bd375a315a",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 648625,
+                      "id": "Q648625"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "1cec2ddb9163d3e96d41ff75199d25ba13376766",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2020-10-16T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P8687": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8687",
+          "hash": "ef2f49f66f843aefccb743e0f5ea9b46b28cbe01",
+          "datavalue": {
+            "value": {
+              "amount": "+218832",
+              "unit": "1"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P6552": [
+            {
+              "snaktype": "value",
+              "property": "P6552",
+              "hash": "47096c1787a8638d7a353c048f199d16d273de90",
+              "datavalue": {
+                "value": "197365064",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ],
+          "P585": [
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "5e87034f0d28e51df907453fa46fe72e1480e65a",
+              "datavalue": {
+                "value": {
+                  "time": "+2021-01-01T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P6552", "P585"],
+        "id": "Q3510971$21160b59-74ee-4e79-9d66-8fa9b71848f4",
+        "rank": "preferred"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8687",
+          "hash": "ff8c8220bd271552d1736159f48e42824ceed733",
+          "datavalue": {
+            "value": {
+              "amount": "+223379",
+              "unit": "1"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P6552": [
+            {
+              "snaktype": "value",
+              "property": "P6552",
+              "hash": "47096c1787a8638d7a353c048f199d16d273de90",
+              "datavalue": {
+                "value": "197365064",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ],
+          "P585": [
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "f4da88e58bb9b446848b3eed88e75b74e12d6336",
+              "datavalue": {
+                "value": {
+                  "time": "+2020-04-24T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P6552", "P585"],
+        "id": "Q3510971$d2eb014e-02b7-4f6e-8033-866bb6708d36",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "cswiki": {
+      "site": "cswiki",
+      "title": "Sky Atlantic",
+      "badges": [],
+      "url": "https://cs.wikipedia.org/wiki/Sky_Atlantic"
+    },
+    "fawiki": {
+      "site": "fawiki",
+      "title": "اسکای آتلانتیک",
+      "badges": [],
+      "url": "https://fa.wikipedia.org/wiki/%D8%A7%D8%B3%DA%A9%D8%A7%DB%8C_%D8%A2%D8%AA%D9%84%D8%A7%D9%86%D8%AA%DB%8C%DA%A9"
+    },
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Sky Atlantic",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Sky_Atlantic"
+    },
+    "plwiki": {
+      "site": "plwiki",
+      "title": "Sky Atlantic",
+      "badges": [],
+      "url": "https://pl.wikipedia.org/wiki/Sky_Atlantic"
+    },
+    "gawiki": {
+      "site": "gawiki",
+      "title": "Sky Atlantic",
+      "badges": [],
+      "url": "https://ga.wikipedia.org/wiki/Sky_Atlantic"
+    },
+    "idwiki": {
+      "site": "idwiki",
+      "title": "Sky Atlantic",
+      "badges": [],
+      "url": "https://id.wikipedia.org/wiki/Sky_Atlantic"
+    },
+    "huwiki": {
+      "site": "huwiki",
+      "title": "Sky Atlantic",
+      "badges": [],
+      "url": "https://hu.wikipedia.org/wiki/Sky_Atlantic"
+    },
+    "ptwiki": {
+      "site": "ptwiki",
+      "title": "Sky Atlantic",
+      "badges": [],
+      "url": "https://pt.wikipedia.org/wiki/Sky_Atlantic"
+    },
+    "ckbwiki": {
+      "site": "ckbwiki",
+      "title": "سکای ئەتلانتیک",
+      "badges": [],
+      "url": "https://ckb.wikipedia.org/wiki/%D8%B3%DA%A9%D8%A7%DB%8C_%D8%A6%DB%95%D8%AA%D9%84%D8%A7%D9%86%D8%AA%DB%8C%DA%A9"
+    },
+    "simplewiki": {
+      "site": "simplewiki",
+      "title": "Sky Atlantic",
+      "badges": [],
+      "url": "https://simple.wikipedia.org/wiki/Sky_Atlantic"
+    },
+    "itwiki": {
+      "site": "itwiki",
+      "title": "Sky Atlantic (Regno Unito e Irlanda)",
+      "badges": [],
+      "url": "https://it.wikipedia.org/wiki/Sky_Atlantic_(Regno_Unito_e_Irlanda)"
+    },
+    "trwiki": {
+      "site": "trwiki",
+      "title": "Sky Atlantic",
+      "badges": [],
+      "url": "https://tr.wikipedia.org/wiki/Sky_Atlantic"
+    },
+    "arwiki": {
+      "site": "arwiki",
+      "title": "سكاي أتلانتيك",
+      "badges": [],
+      "url": "https://ar.wikipedia.org/wiki/%D8%B3%D9%83%D8%A7%D9%8A_%D8%A3%D8%AA%D9%84%D8%A7%D9%86%D8%AA%D9%8A%D9%83"
+    },
+    "sqwiki": {
+      "site": "sqwiki",
+      "title": "Sky Atlantic",
+      "badges": [],
+      "url": "https://sq.wikipedia.org/wiki/Sky_Atlantic"
+    }
+  }
+}

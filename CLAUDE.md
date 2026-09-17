@@ -29,11 +29,31 @@ release. Add a tool name to select part of the graph. For example, run
 # Mergers & Acquisitions — project notes
 
 Full-stack app for finding, ranking, reviewing, and (eventually) applying
-Wikidata merge candidates, scoped to video games. Built on [Void](https://void.cloud/)
-(Cloudflare Workers + D1) with a Vite+ / React 19 SPA client. Server code lives in
-`routes/`, `queues/`, `crons/`; the DB schema is `db/schema.ts`; shared, DOM-free
-heuristics (comparison + `scoreCandidate`) are in `src/lib/compare.ts`; the
-Wikidata dump→`Item` adapter is `src/lib/wikidata.ts`.
+Wikidata merge candidates, scoped to video games. Runs on **Wikimedia Toolforge**:
+a **Hono** (Node) web server + **Drizzle** on **MariaDB**, with a Vite+ / React 19
+SPA client. (Migrated off Void/Cloudflare Workers+D1 — see the `migrate/toolforge`
+branch history.)
+
+Layout:
+
+- `server/` — the Hono app (`index.ts`) and its routers (`candidates.ts`,
+  `actions.ts`, `sync-routes.ts`); the Drizzle handle (`db.ts`) + connection
+  config (`db-config.ts`); the shared sync write paths (`*-sync.ts`); and the
+  hunt (`hunt.ts`, scan→score→upsert in one pass).
+- `jobs/` — Toolforge scheduled jobs (`hunt.ts`, `sync-*.ts`), run via `tsx`.
+  Declared in `jobs.yaml` (`toolforge jobs load`).
+- `db/` — the MySQL-dialect schema (`schema.ts`), the seed script (`seed.ts`),
+  and drizzle-kit migrations (`migrations/`, generated via `pnpm db:generate`).
+- `src/` — the React SPA; DOM-free heuristics (comparison + `scoreCandidate`) in
+  `src/lib/compare.ts`; the Wikidata dump→`Item` adapter in `src/lib/wikidata.ts`;
+  the typed API client in `src/lib/client.ts`.
+
+DB notes: MariaDB uses Drizzle's **MySQL dialect** (`mysql-core` + `mysql2`,
+`mode: "default"`; drizzle-kit `dialect: "mysql"`) — there is no `mariadb` dialect.
+JSON columns use a custom type that (de)serializes in the ORM layer, because mysql2
+returns MariaDB `JSON` (a `LONGTEXT` alias) as a string. `datetime` columns are
+`mode: "string"` paired with the driver's `dateStrings: true`. Local dev DB is
+Homebrew MariaDB (`mergers`/`mergers`, utf8mb4); see `.env.example`.
 
 ## SPARQL: always use QLever, never WDQS
 
@@ -49,27 +69,28 @@ a descriptive User-Agent, pace requests (~1s apart), and back off on 429.
 
 ## Running tooling inside the Claude Code sandbox
 
-The sandbox blocks writes to the usual global cache dirs, so `vp`, `void`,
-`pnpm`, and `git commit` (via the pre-commit hook, which runs `vp check --fix`)
-fail unless these are redirected into the writable `$TMPDIR` first:
+The sandbox blocks writes to the usual global cache dirs, so `vp`, `pnpm`, and
+`git commit` (via the pre-commit hook, which runs `vp check --fix`) fail unless
+these are redirected into the writable `$TMPDIR` first:
 
 ```sh
 export npm_config_cache="$TMPDIR/npm-cache" \
-       npm_config_devdir="$TMPDIR/node-gyp" \
-       WRANGLER_LOG_PATH="$TMPDIR/wrangler-logs"
+       npm_config_devdir="$TMPDIR/node-gyp"
 ```
 
-Set those before any `git commit`, `pnpm add`, `vp check/test`, or `void db …`
-command. Other sandbox notes:
+Set those before any `git commit`, `pnpm add`, or `vp check/test`. Other sandbox
+notes:
 
-- Run the binaries directly (`node_modules/.bin/vp`, `node_modules/.bin/void`),
+- Run the binaries directly (`node_modules/.bin/vp`, `node_modules/.bin/drizzle-kit`),
   not `pnpm run <script>` — pnpm's `prepare`/verify steps try to write to
   `.git/config` and fail under the sandbox.
-- `vp dev`, `pnpm build`, and `/usr/bin/time -l` do **not** work in-sandbox
-  (miniflare dev registry / git write / `sysctl` are all blocked). They work on
-  the user's machine; don't use them here or hand them to the user as a
-  sandbox verification step.
+- `vp dev` / `pnpm dev` and `/usr/bin/time -l` do **not** work in-sandbox (Vite's
+  dev watcher exhausts FSEvents; `sysctl` is blocked). They work on the user's
+  machine; don't hand them to the user as a sandbox verification step.
+- Anything that touches **MariaDB** (`pnpm db:migrate`, `pnpm seed`, `pnpm db:push`,
+  running a job) needs a reachable DB, which the sandbox has none of — those run
+  on the user's machine (local Homebrew MariaDB) or on Toolforge.
+- `drizzle-kit generate` is offline (diffs the schema against `db/migrations/meta`),
+  so it _does_ run in-sandbox; `migrate`/`push`/`studio` do not.
 - macOS has no `timeout`; use `perl -e 'alarm N; exec @ARGV' <cmd>` and redirect
   `< /dev/null` for anything that might prompt.
-- `void db execute --file <path>` resolves `<path>` relative to the repo root,
-  not as an absolute path.

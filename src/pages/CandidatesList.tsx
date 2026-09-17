@@ -61,6 +61,30 @@ export default function CandidatesList() {
     if (menuRef.current) menuRef.current.open = false;
   };
 
+  // A native <details> menu doesn't dismiss on an outside click or Escape the way
+  // a real dropdown should — wire both up. Handlers read menuRef.current live so
+  // they stay correct across re-renders; they no-op when the menu is closed or
+  // (outside dev) never rendered.
+  useEffect(() => {
+    function onPointerDown(e: PointerEvent) {
+      const menu = menuRef.current;
+      if (menu?.open && !menu.contains(e.target as Node)) menu.open = false;
+    }
+    function onKeyDown(e: KeyboardEvent) {
+      const menu = menuRef.current;
+      if (e.key === "Escape" && menu?.open) {
+        menu.open = false;
+        menu.querySelector<HTMLElement>("summary")?.focus();
+      }
+    }
+    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, []);
+
   useEffect(() => {
     let cancelled = false;
     async function load() {

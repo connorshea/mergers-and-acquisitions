@@ -239,6 +239,7 @@ candidates.get("/:id", async (c) => {
             pid: properties.pid,
             label: properties.label,
             formatterUrl: properties.formatterUrl,
+            mirrorsWikidata: properties.mirrorsWikidata,
           })
           .from(properties)
           .where(inArray(properties.pid, ids)),
@@ -260,9 +261,14 @@ candidates.get("/:id", async (c) => {
 
   const propertyLabels: Record<string, string> = {};
   const propertyFormatters: Record<string, string> = {};
+  // Properties whose ids are sourced *from* Wikidata (P31=Q24075706, the synced
+  // `mirrors_wikidata` flag). The UI marks these; it unions this with the
+  // hardcoded floor (isHardcodedMirrorProp) for services Wikidata hasn't tagged.
+  const propertyMirrors: string[] = [];
   for (const r of propertyChunks.flat()) {
     propertyLabels[r.pid] = r.label;
     if (r.formatterUrl) propertyFormatters[r.pid] = r.formatterUrl;
+    if (r.mirrorsWikidata) propertyMirrors.push(r.pid);
   }
   const valueLabels: Record<string, string> = {};
   for (const r of valueChunks.flat()) valueLabels[r.qid] = r.label;
@@ -282,6 +288,7 @@ candidates.get("/:id", async (c) => {
     into,
     propertyLabels,
     propertyFormatters,
+    propertyMirrors,
     valueLabels,
     prevId: prevRows[0]?.id ?? null,
     nextId: nextRows[0]?.id ?? null,

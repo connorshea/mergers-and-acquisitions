@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import type { AnnotatedValue, Item, RowStatus } from "./lib/compare";
-import { buildRows, formatIdUrl } from "./lib/compare";
+import { buildRows, formatIdUrl, isHardcodedMirrorProp } from "./lib/compare";
 
 // ---------- UI ----------
 
@@ -93,6 +93,7 @@ export default function MergeCandidates({
   into,
   propertyLabels,
   propertyFormatters,
+  propertyMirrors,
   valueLabels,
 }: {
   from: Item;
@@ -101,9 +102,17 @@ export default function MergeCandidates({
   propertyLabels?: Record<string, string>;
   /** Pxxx → formatter URL (with "$1"), so external-id values can be linked. */
   propertyFormatters?: Record<string, string>;
+  /** Pxxx that source their ids from Wikidata (synced `mirrors_wikidata`). */
+  propertyMirrors?: string[];
   /** Qxxx → human label, from the DB-backed entity_labels table. */
   valueLabels?: Record<string, string>;
 }) {
+  // A property is Wikidata-sourced if the synced set flags it OR it's in the
+  // hardcoded floor (which covers services Wikidata hasn't tagged, e.g.
+  // GamerProfiles). The synced set is absent before the first property sync, so
+  // the floor guarantees the well-known ones are always marked.
+  const mirrorSet = useMemo(() => new Set(propertyMirrors ?? []), [propertyMirrors]);
+  const isMirrored = (pid: string): boolean => mirrorSet.has(pid) || isHardcodedMirrorProp(pid);
   const [hidden, setHidden] = useState<Record<RowStatus, boolean>>({
     identical: false,
     similar: false,
@@ -228,7 +237,17 @@ export default function MergeCandidates({
                       return (
                         <tr key={r.key} className={r.blocker ? "is-blocker" : undefined}>
                           <td className="col-prop">
-                            <div className="prop-label">{r.label}</div>
+                            <div className="prop-label">
+                              {r.label}
+                              {r.kind === "statement" && isMirrored(r.key) && (
+                                <span
+                                  className="prop-mirror"
+                                  title="Identifier sourced from Wikidata — a shared value is circular, a differing one only means one side is out of sync; not evidence either way."
+                                >
+                                  ↺ Wikidata-sourced
+                                </span>
+                              )}
+                            </div>
                             <div className="prop-key">
                               {r.kind === "statement" ? (
                                 <a

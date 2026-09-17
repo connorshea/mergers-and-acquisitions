@@ -41,6 +41,9 @@ export interface CandidateDetailResponse {
   propertyLabels: Record<string, string>;
   /** Pxxx → formatter URL (with "$1" placeholder), for props that have one. */
   propertyFormatters: Record<string, string>;
+  /** Pxxx that source their ids from Wikidata (synced `mirrors_wikidata`); the UI
+   * unions this with its hardcoded floor to mark Wikidata-sourced identifiers. */
+  propertyMirrors: string[];
   /** Qxxx → human label, for the item values present on this pair. */
   valueLabels: Record<string, string>;
   /** Neighbour candidate ids for prev/next navigation (same status, confidence order). */

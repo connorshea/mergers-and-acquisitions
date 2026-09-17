@@ -418,6 +418,18 @@ const MIRRORED_ID_PROPS = new Set<string>([
 ]);
 
 /**
+ * Whether a property is a *hardcoded* Wikidata-mirroring identifier (the
+ * MIRRORED_ID_PROPS floor). This is the subset that callers without the synced
+ * `properties.mirrors_wikidata` set — chiefly the UI — can recognise on their
+ * own, and notably includes services Wikidata hasn't tagged P31=Q24075706 (e.g.
+ * GamerProfiles). The full runtime predicate additionally unions the synced set;
+ * see ScoreOptions.isMirroredIdProp.
+ */
+export function isHardcodedMirrorProp(pid: string): boolean {
+  return MIRRORED_ID_PROPS.has(pid);
+}
+
+/**
  * A publication-year gap at or beyond this is treated as near-conclusive that
  * two items are different games/editions: no single game is first published a
  * decade-plus apart, so even a shared external identifier (more likely stale or

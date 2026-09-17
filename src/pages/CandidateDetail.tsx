@@ -189,6 +189,7 @@ export default function CandidateDetail() {
           into={data.into}
           propertyLabels={data.propertyLabels}
           propertyFormatters={data.propertyFormatters}
+          propertyMirrors={data.propertyMirrors}
           valueLabels={data.valueLabels}
         />
       )}

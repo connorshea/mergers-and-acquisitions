@@ -68,8 +68,11 @@ const termMap = (o?: Record<string, { value: string }>): Record<string, string> 
   return out;
 };
 
-/** Convert one mainsnak into a scorer Value, or null for no-value/unknown snaks. */
+/** Convert one mainsnak into a scorer Value. Preserves Wikidata's special snak
+ * types: "somevalue" (unknown value) and "novalue" (explicit no value). */
 function snakValue(snak: Snak): Value | null {
+  if (snak.snaktype === "somevalue") return { type: "somevalue", value: "" };
+  if (snak.snaktype === "novalue") return { type: "novalue", value: "" };
   if (snak.snaktype !== "value" || !snak.datavalue) return null;
   const { type, value } = snak.datavalue;
   switch (type) {

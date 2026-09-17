@@ -78,6 +78,12 @@ function literalType(node: DumpValueLiteral, pid?: string): ValueType {
   return "external-id"; // bare literal — an identifier in practice
 }
 
+// A Wikidata "somevalue" (unknown value) snak is a blank node; over SPARQL/QLever
+// it comes back as a skolem IRI under `/.well-known/genid/`. It is not a real URL
+// — treat it as an unknown value, not a link. (A "novalue" snak yields no `wdt:`
+// binding at all, so it never reaches the dump path.)
+export const GENID_URI_RE = /\/\.well-known\/genid\//;
+
 /**
  * Classify a single dump/query value node into the `Item` value model. Pass the
  * value's property id so known plain-string properties (NON_ID_STRING_PROPS)
@@ -88,7 +94,9 @@ export function classifyValue(node: DumpValue, pid?: string): Value {
     case "entity":
       return { type: "item", value: node.value };
     case "uri":
-      return { type: "url", value: node.value };
+      return GENID_URI_RE.test(node.value)
+        ? { type: "somevalue", value: "" }
+        : { type: "url", value: node.value };
     default:
       return { type: literalType(node, pid), value: node.value };
   }

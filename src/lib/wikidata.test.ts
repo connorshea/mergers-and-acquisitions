@@ -56,6 +56,19 @@ describe("classifyValue", () => {
     });
   });
 
+  it("maps an unknown-value blank node (genid IRI) to a somevalue, not a url", () => {
+    expect(
+      classifyValue({
+        type: "uri",
+        value: "https://www.wikidata.org/.well-known/genid/28e2798fd6042f09b601b1a78c228844",
+      }),
+    ).toEqual({ type: "somevalue", value: "" });
+    // A real URL is still a url.
+    expect(
+      classifyValue({ type: "uri", value: "https://store.steampowered.com/app/400/" }),
+    ).toEqual({ type: "url", value: "https://store.steampowered.com/app/400/" });
+  });
+
   it("keeps a known plain-string property (P348 version) as a string, not an id", () => {
     // Without the property id the value shape is indistinguishable from an id.
     expect(classifyValue({ type: "literal", value: "1.9" })).toEqual({

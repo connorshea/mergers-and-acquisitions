@@ -5,11 +5,23 @@ import { buildRows, formatIdUrl, isHardcodedMirrorProp } from "./lib/compare";
 // ---------- UI ----------
 
 /**
+ * Wikidata's special snaks: an *unknown* value (somevalue) and an explicit *no*
+ * value (novalue). Both are placeholders with no real value to show.
+ */
+function specialValueText(v: AnnotatedValue): string | null {
+  if (v.type === "somevalue") return "unknown value";
+  if (v.type === "novalue") return "no value";
+  return null;
+}
+
+/**
  * Display text for a value. Wikidata day-precision dates come through as
  * `YYYY-MM-DDT00:00:00Z`; drop the (meaningless) midnight time part and show
  * just the calendar date. Non-midnight times are left intact.
  */
 function displayValue(v: AnnotatedValue): string {
+  const special = specialValueText(v);
+  if (special) return special;
   if (v.type === "item") return v.label ?? v.value;
   if (v.type === "time") {
     const m = /^([+-]?\d{4}-\d{2}-\d{2})T00:00:00Z$/.exec(v.value);
@@ -20,14 +32,21 @@ function displayValue(v: AnnotatedValue): string {
 
 function ValueChip({ v, formatter }: { v: AnnotatedValue; formatter?: string }) {
   const text = displayValue(v);
+  const special = specialValueText(v) != null;
   // Link out where the value points somewhere: a `url` value is itself a URL
   // (e.g. an itch.io page), and an external identifier with a formatter URL
   // (P1630) resolves to its source database, e.g. a Steam app ID → store page.
-  const idUrl =
-    v.type === "url" ? v.value : v.type === "external-id" ? formatIdUrl(formatter, v.value) : null;
+  // Special (unknown/no) values are placeholders, never links.
+  const idUrl = special
+    ? null
+    : v.type === "url"
+      ? v.value
+      : v.type === "external-id"
+        ? formatIdUrl(formatter, v.value)
+        : null;
   return (
     <span
-      className={`chip chip-${v.status}`}
+      className={`chip chip-${v.status}${special ? " chip-special" : ""}`}
       title={v.note ?? (v.type === "item" ? v.value : v.type === "time" ? v.value : undefined)}
     >
       {idUrl ? (

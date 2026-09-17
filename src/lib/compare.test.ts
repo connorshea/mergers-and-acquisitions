@@ -54,6 +54,20 @@ describe("compareValues", () => {
       "distinct",
     );
   });
+
+  it("never treats two unknown values (somevalue) as identical", () => {
+    // Their blank-node value strings must not be compared; an unknown value can't
+    // be confirmed equal to another unknown value.
+    expect(
+      compareValues({ type: "somevalue", value: "" }, { type: "somevalue", value: "" }),
+    ).toEqual(["distinct", "unknown value on both sides"]);
+  });
+
+  it("treats two explicit no-values (novalue) as identical", () => {
+    expect(compareValues({ type: "novalue", value: "" }, { type: "novalue", value: "" })[0]).toBe(
+      "identical",
+    );
+  });
 });
 
 describe("buildRows (behavior-preserving extraction)", () => {

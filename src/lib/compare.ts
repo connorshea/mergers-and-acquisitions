@@ -6,7 +6,19 @@
 
 // ---------- Types ----------
 
-export type ValueType = "item" | "string" | "time" | "quantity" | "url" | "external-id";
+// "somevalue" / "novalue" mirror Wikidata's special snak types: an *unknown*
+// value (a value exists but isn't recorded — a blank node on the wire) and an
+// explicit *no* value (the property is asserted to have none). They carry no
+// meaningful `value` string.
+export type ValueType =
+  | "item"
+  | "string"
+  | "time"
+  | "quantity"
+  | "url"
+  | "external-id"
+  | "somevalue"
+  | "novalue";
 
 export interface Value {
   type: ValueType;
@@ -141,6 +153,12 @@ export function formatIdUrl(template: string | undefined, value: string): string
 /** Returns [status, note] for a pair of values of the same property. */
 export function compareValues(x: Value, y: Value): [Status, string?] {
   if (x.type !== y.type) return ["distinct"];
+  // Unknown value (somevalue): a value exists but isn't recorded, so two of them
+  // can't be confirmed equal — never an identical match, and their (blank-node)
+  // `value` strings must not be compared. No value (novalue): an explicit
+  // assertion of absence, so two of them agree.
+  if (x.type === "somevalue") return ["distinct", "unknown value on both sides"];
+  if (x.type === "novalue") return ["identical"];
   if (x.value === y.value) return ["identical"];
 
   switch (x.type) {

@@ -20,10 +20,20 @@ Needs a local MariaDB. On macOS:
 
 ```sh
 brew install mariadb && brew services start mariadb
-mariadb -u root -e "CREATE DATABASE mergers CHARACTER SET utf8mb4;
+# Homebrew MariaDB uses unix_socket auth for root, so connect as your own user
+# (no -u root). The utf8mb4_bin collation is required — see the note below.
+mariadb -e "CREATE DATABASE mergers CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
   CREATE USER 'mergers'@'localhost' IDENTIFIED BY 'mergers';
   GRANT ALL ON mergers.* TO 'mergers'@'localhost';"
 ```
+
+The database is created with the **`utf8mb4_bin`** collation (not the usual
+`utf8mb4_unicode_ci`): every string column inherits it, so comparisons are exact
+(case- and accent-sensitive). This is correct for external identifiers — two IDs
+that differ only in case are genuinely different — and restores the binary
+comparison the original SQLite schema used. Candidate search still folds case,
+because it lowercases both sides explicitly (`lower(primary_label) LIKE …`). On
+Toolforge, create the ToolsDB database with the same `COLLATE utf8mb4_bin`.
 
 ```sh
 cp .env.example .env   # local DB defaults match the setup above
@@ -60,5 +70,6 @@ Build the image (`toolforge build`), apply migrations and seed as one-off jobs,
 start the web service (`toolforge webservice buildservice start`; runs the
 `Procfile` `web` process), and load the schedule with `toolforge jobs load
 jobs.yaml` (set the image name in `jobs.yaml` first). The DB is a ToolsDB MariaDB
-database; connection details come from the tool's credentials via the `DB_*` env
-vars.
+database, created with `CHARACTER SET utf8mb4 COLLATE utf8mb4_bin` (see the
+collation note above); connection details come from the tool's credentials via
+the `DB_*` env vars.

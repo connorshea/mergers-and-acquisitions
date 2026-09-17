@@ -52,8 +52,12 @@ DB notes: MariaDB uses Drizzle's **MySQL dialect** (`mysql-core` + `mysql2`,
 `mode: "default"`; drizzle-kit `dialect: "mysql"`) — there is no `mariadb` dialect.
 JSON columns use a custom type that (de)serializes in the ORM layer, because mysql2
 returns MariaDB `JSON` (a `LONGTEXT` alias) as a string. `datetime` columns are
-`mode: "string"` paired with the driver's `dateStrings: true`. Local dev DB is
-Homebrew MariaDB (`mergers`/`mergers`, utf8mb4); see `.env.example`.
+`mode: "string"` paired with the driver's `dateStrings: true`. The database is
+created with the **`utf8mb4_bin`** collation (all string columns inherit it), so
+comparisons are exact/case-sensitive — correct for external identifiers and a
+match for SQLite's binary default; candidate search still folds case because it
+lowercases both sides explicitly. Local dev DB is Homebrew MariaDB
+(`mergers`/`mergers`, `utf8mb4` / `utf8mb4_bin`); see `.env.example`.
 
 ## SPARQL: always use QLever, never WDQS
 

@@ -61,7 +61,10 @@ export const externalIds = mysqlTable(
     id: int("id").autoincrement().primaryKey(),
     qid: varchar("qid", { length: 32 }).notNull(),
     property: varchar("property", { length: 16 }).notNull(), // e.g. "P1733" (Steam application ID)
-    value: varchar("value", { length: 255 }).notNull(),
+    // 512 (not 255): some Wikidata identifiers are long slug-style titles that
+    // overflow 255 (MariaDB strict mode rejects with ER_DATA_TOO_LONG). Stays
+    // well under the 3072-byte index limit in idx_external_ids_unique.
+    value: varchar("value", { length: 512 }).notNull(),
   },
   (t) => [
     index("idx_external_ids_property_value").on(t.property, t.value),

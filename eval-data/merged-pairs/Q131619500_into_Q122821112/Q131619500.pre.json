@@ -1,0 +1,286 @@
+{
+  "pageid": 125526678,
+  "ns": 0,
+  "title": "Q131619500",
+  "lastrevid": 2463876783,
+  "modified": "2026-02-16T07:21:48Z",
+  "type": "item",
+  "id": "Q131619500",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Unconventional Warfare"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Unconventional Warfare"
+    }
+  },
+  "descriptions": {},
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "03d2d8ec4a899b29435a104a9ce7c189a31ae380",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7889,
+              "id": "Q7889"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q131619500$16545BAD-01CD-4825-BB8D-72787F588ADE",
+        "rank": "normal"
+      }
+    ],
+    "P750": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P750",
+          "hash": "30e74a8ec835acc14307ea99ea5b2aa0c694cb54",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 22905933,
+              "id": "Q22905933"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q131619500$F882F338-065D-4F28-9EC5-9FCF3F90F326",
+        "rank": "normal"
+      }
+    ],
+    "P7294": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7294",
+          "hash": "c41e789d26f2945dd09f8989512b1b690349f5f4",
+          "datavalue": {
+            "value": "https://duque.itch.io/uw",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q131619500$A2CD013F-127E-4197-A70F-1E2FDE05B043",
+        "rank": "normal"
+      }
+    ],
+    "P12813": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12813",
+          "hash": "f633c699d948e7d38d268b73e7bbdb14a480f0f2",
+          "datavalue": {
+            "value": "179895",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q131619500$d0eabd5b-c88b-4189-b784-429ff5bed7a0",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "079b1f575484c0f166f8b1c478263571a8fa27b6",
+            "snaks": {
+              "P11797": [
+                {
+                  "snaktype": "value",
+                  "property": "P11797",
+                  "hash": "e59bef7d616ac6ef4dfe24b901f6214bda23c9e4",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 22905933,
+                      "id": "Q22905933"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P7294": [
+                {
+                  "snaktype": "value",
+                  "property": "P7294",
+                  "hash": "c41e789d26f2945dd09f8989512b1b690349f5f4",
+                  "datavalue": {
+                    "value": "https://duque.itch.io/uw",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "0b4f07f84ee539d2d013666f380be9608fb7c4cb",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2025-01-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P11797", "P7294", "P813"]
+          }
+        ]
+      }
+    ],
+    "P12001": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12001",
+          "hash": "5b7a5cc33d59add3f1b773cccf33ea1136f9a1dc",
+          "datavalue": {
+            "value": "8JLQ5",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q131619500$FF5862B0-44C3-4D8E-B3C7-F89CC5D4515C",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "5453a7df082b0517c174ebb0f06714d0035c4c70",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "08fba3511bad9285e16847928bbcc37907ec04a4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2025-07-22T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P813"]
+          }
+        ]
+      }
+    ],
+    "P5794": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5794",
+          "hash": "afa3e67dbff2689ee16aa2200d7467f0086dd164",
+          "datavalue": {
+            "value": "unconventional-warfare",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9043": [
+            {
+              "snaktype": "value",
+              "property": "P9043",
+              "hash": "919a7e0a5cc45d01aaca5896b79bb75da49639d2",
+              "datavalue": {
+                "value": "119907",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9043"],
+        "id": "Q131619500$EDB4AB13-1184-4B71-A4B4-D3D2A06EBC0D",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "14facdd6a211b2131139ecb2b86dcc21a0f98605",
+            "snaks": {
+              "P11797": [
+                {
+                  "snaktype": "value",
+                  "property": "P11797",
+                  "hash": "e59bef7d616ac6ef4dfe24b901f6214bda23c9e4",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 22905933,
+                      "id": "Q22905933"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P12813": [
+                {
+                  "snaktype": "value",
+                  "property": "P12813",
+                  "hash": "f633c699d948e7d38d268b73e7bbdb14a480f0f2",
+                  "datavalue": {
+                    "value": "179895",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "3652a43fb8c5b3a6423f52d9c9955c58d3afcf51",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-02-15T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P11797", "P12813", "P813"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {}
+}

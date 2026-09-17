@@ -1,0 +1,686 @@
+{
+  "pageid": 21362043,
+  "ns": 0,
+  "title": "Q19759613",
+  "lastrevid": 2411036079,
+  "modified": "2025-09-30T12:20:14Z",
+  "type": "item",
+  "id": "Q19759613",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Working Model for Three Piece Reclining Figure: Draped"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Working Model for Three Piece Reclining Figure: Draped"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "sculpture by Henry Moore (LH 654, Freiaparken, Oslo)"
+    },
+    "he": {
+      "language": "he",
+      "value": "פסל של הנרי מור"
+    },
+    "de": {
+      "language": "de",
+      "value": "Skulptur von Henry Moore"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "rzeźba Henry’ego Moore’a"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "منحوتة"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "64114526c020c1f7bc1bbee1971b1629d0b52d25",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 860861,
+              "id": "Q860861"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q19759613$228EFDD7-0A1F-449D-AF82-4937A69E7D8A",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9f6dab000327776bea115cd99437220c28b33aec",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "06f0b793db5c11253ec8555715221b5f60528e5d",
+                  "datavalue": {
+                    "value": "http://www.henry-moore.org/works-in-public/world/norway/oslo/freiaparken/working-model-for-three-piece-reclining-figure-dr",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P1065": [
+                {
+                  "snaktype": "value",
+                  "property": "P1065",
+                  "hash": "366a912b89d57f568f36ad23a1eb2926f830248f",
+                  "datavalue": {
+                    "value": "https://web.archive.org/web/20160303202311/http://www.henry-moore.org/works-in-public/world/norway/oslo/freiaparken/working-model-for-three-piece-reclining-figure-dr",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P2960": [
+                {
+                  "snaktype": "value",
+                  "property": "P2960",
+                  "hash": "e92b20b7a14ab5f1cc85248267dc042a76d46538",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2016-03-03T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P1065", "P2960"]
+          }
+        ]
+      }
+    ],
+    "P170": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P170",
+          "hash": "4c81fe893a7e68cc532d1860c5fe34241d79d976",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 151097,
+              "id": "Q151097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q19759613$D6DFA82B-F55B-4B4A-9C6B-458793D691DC",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9f6dab000327776bea115cd99437220c28b33aec",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "06f0b793db5c11253ec8555715221b5f60528e5d",
+                  "datavalue": {
+                    "value": "http://www.henry-moore.org/works-in-public/world/norway/oslo/freiaparken/working-model-for-three-piece-reclining-figure-dr",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P1065": [
+                {
+                  "snaktype": "value",
+                  "property": "P1065",
+                  "hash": "366a912b89d57f568f36ad23a1eb2926f830248f",
+                  "datavalue": {
+                    "value": "https://web.archive.org/web/20160303202311/http://www.henry-moore.org/works-in-public/world/norway/oslo/freiaparken/working-model-for-three-piece-reclining-figure-dr",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P2960": [
+                {
+                  "snaktype": "value",
+                  "property": "P2960",
+                  "hash": "e92b20b7a14ab5f1cc85248267dc042a76d46538",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2016-03-03T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P1065", "P2960"]
+          }
+        ]
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "6b641ae447361ea7b9069dd798128243a1cdca37",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 20,
+              "id": "Q20"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q19759613$870AEC04-D264-40B0-8B58-26EE8325CDED",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9f6dab000327776bea115cd99437220c28b33aec",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "06f0b793db5c11253ec8555715221b5f60528e5d",
+                  "datavalue": {
+                    "value": "http://www.henry-moore.org/works-in-public/world/norway/oslo/freiaparken/working-model-for-three-piece-reclining-figure-dr",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P1065": [
+                {
+                  "snaktype": "value",
+                  "property": "P1065",
+                  "hash": "366a912b89d57f568f36ad23a1eb2926f830248f",
+                  "datavalue": {
+                    "value": "https://web.archive.org/web/20160303202311/http://www.henry-moore.org/works-in-public/world/norway/oslo/freiaparken/working-model-for-three-piece-reclining-figure-dr",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P2960": [
+                {
+                  "snaktype": "value",
+                  "property": "P2960",
+                  "hash": "e92b20b7a14ab5f1cc85248267dc042a76d46538",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2016-03-03T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P1065", "P2960"]
+          }
+        ]
+      }
+    ],
+    "P131": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P131",
+          "hash": "1dbf5f1da4b3ea3fee1875890659028d83ae8359",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5245991,
+              "id": "Q5245991"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q19759613$ED37EAF8-9ED1-4799-A8CB-09674B212E73",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9f6dab000327776bea115cd99437220c28b33aec",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "06f0b793db5c11253ec8555715221b5f60528e5d",
+                  "datavalue": {
+                    "value": "http://www.henry-moore.org/works-in-public/world/norway/oslo/freiaparken/working-model-for-three-piece-reclining-figure-dr",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P1065": [
+                {
+                  "snaktype": "value",
+                  "property": "P1065",
+                  "hash": "366a912b89d57f568f36ad23a1eb2926f830248f",
+                  "datavalue": {
+                    "value": "https://web.archive.org/web/20160303202311/http://www.henry-moore.org/works-in-public/world/norway/oslo/freiaparken/working-model-for-three-piece-reclining-figure-dr",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P2960": [
+                {
+                  "snaktype": "value",
+                  "property": "P2960",
+                  "hash": "e92b20b7a14ab5f1cc85248267dc042a76d46538",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2016-03-03T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P1065", "P2960"]
+          }
+        ]
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "6cb2b2f1035a9ec3ced6bb92bfcba34b662b1225",
+          "datavalue": {
+            "value": {
+              "time": "+1975-01-01T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q19759613$B0B79AB6-614D-41FB-B755-667FCE932597",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9f6dab000327776bea115cd99437220c28b33aec",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "06f0b793db5c11253ec8555715221b5f60528e5d",
+                  "datavalue": {
+                    "value": "http://www.henry-moore.org/works-in-public/world/norway/oslo/freiaparken/working-model-for-three-piece-reclining-figure-dr",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P1065": [
+                {
+                  "snaktype": "value",
+                  "property": "P1065",
+                  "hash": "366a912b89d57f568f36ad23a1eb2926f830248f",
+                  "datavalue": {
+                    "value": "https://web.archive.org/web/20160303202311/http://www.henry-moore.org/works-in-public/world/norway/oslo/freiaparken/working-model-for-three-piece-reclining-figure-dr",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P2960": [
+                {
+                  "snaktype": "value",
+                  "property": "P2960",
+                  "hash": "e92b20b7a14ab5f1cc85248267dc042a76d46538",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2016-03-03T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P1065", "P2960"]
+          }
+        ]
+      }
+    ],
+    "P186": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P186",
+          "hash": "1aafd58b38495eb02b371701f0aff3ff4f8c1193",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 34095,
+              "id": "Q34095"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q19759613$E5317D2F-B1BC-4965-91EB-B49C708A1727",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9f6dab000327776bea115cd99437220c28b33aec",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "06f0b793db5c11253ec8555715221b5f60528e5d",
+                  "datavalue": {
+                    "value": "http://www.henry-moore.org/works-in-public/world/norway/oslo/freiaparken/working-model-for-three-piece-reclining-figure-dr",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P1065": [
+                {
+                  "snaktype": "value",
+                  "property": "P1065",
+                  "hash": "366a912b89d57f568f36ad23a1eb2926f830248f",
+                  "datavalue": {
+                    "value": "https://web.archive.org/web/20160303202311/http://www.henry-moore.org/works-in-public/world/norway/oslo/freiaparken/working-model-for-three-piece-reclining-figure-dr",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P2960": [
+                {
+                  "snaktype": "value",
+                  "property": "P2960",
+                  "hash": "e92b20b7a14ab5f1cc85248267dc042a76d46538",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2016-03-03T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P1065", "P2960"]
+          }
+        ]
+      }
+    ],
+    "P528": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P528",
+          "hash": "f585b9e01ccab541582a3111777066f6f6090191",
+          "datavalue": {
+            "value": "LH 654",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P972": [
+            {
+              "snaktype": "value",
+              "property": "P972",
+              "hash": "0c498f6bfbf457f02327c398f48f456fec88f382",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 19758835,
+                  "id": "Q19758835"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P972"],
+        "id": "Q19759613$D456F149-A8A7-498C-98DB-ADC2B3525AB4",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9f6dab000327776bea115cd99437220c28b33aec",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "06f0b793db5c11253ec8555715221b5f60528e5d",
+                  "datavalue": {
+                    "value": "http://www.henry-moore.org/works-in-public/world/norway/oslo/freiaparken/working-model-for-three-piece-reclining-figure-dr",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P1065": [
+                {
+                  "snaktype": "value",
+                  "property": "P1065",
+                  "hash": "366a912b89d57f568f36ad23a1eb2926f830248f",
+                  "datavalue": {
+                    "value": "https://web.archive.org/web/20160303202311/http://www.henry-moore.org/works-in-public/world/norway/oslo/freiaparken/working-model-for-three-piece-reclining-figure-dr",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P2960": [
+                {
+                  "snaktype": "value",
+                  "property": "P2960",
+                  "hash": "e92b20b7a14ab5f1cc85248267dc042a76d46538",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2016-03-03T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P1065", "P2960"]
+          }
+        ]
+      }
+    ],
+    "P973": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P973",
+          "hash": "1cc90f31f1465069524d9f1da8a5a1b38776ce77",
+          "datavalue": {
+            "value": "http://www.henry-moore.org/works-in-public/world/norway/oslo/freiaparken/working-model-for-three-piece-reclining-figure-dr",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q19759613$47ECD214-1749-4D4B-AAC1-287F00900358",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "c0882ea22e14875a4653019abc591df085166924",
+            "snaks": {
+              "P1065": [
+                {
+                  "snaktype": "value",
+                  "property": "P1065",
+                  "hash": "366a912b89d57f568f36ad23a1eb2926f830248f",
+                  "datavalue": {
+                    "value": "https://web.archive.org/web/20160303202311/http://www.henry-moore.org/works-in-public/world/norway/oslo/freiaparken/working-model-for-three-piece-reclining-figure-dr",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P2960": [
+                {
+                  "snaktype": "value",
+                  "property": "P2960",
+                  "hash": "e92b20b7a14ab5f1cc85248267dc042a76d46538",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2016-03-03T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P1065", "P2960"]
+          }
+        ]
+      }
+    ],
+    "P179": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P179",
+          "hash": "1e9d3dc7a1b6d61cf2fdcdec0a0025e78de0e136",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 19760225,
+              "id": "Q19760225"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q19759613$34958537-F946-4A6C-A2ED-B3BBA883E084",
+        "rank": "normal"
+      }
+    ],
+    "P276": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P276",
+          "hash": "f6fc59f17a88cc3e11daa17605a3947325e8a79c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 14536972,
+              "id": "Q14536972"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q19759613$4a26fad1-4583-422f-dced-c9fa483a152b",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "d41462f2d48ee06b373ff6556c19d57dae9e4a74",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 19759612,
+              "id": "Q19759612"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q19759613$cc9e11be-4a3c-f2c4-3e1d-548ffb8769f0",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

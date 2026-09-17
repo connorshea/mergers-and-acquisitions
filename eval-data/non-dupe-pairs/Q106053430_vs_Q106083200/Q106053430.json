@@ -1,0 +1,637 @@
+{
+  "pageid": 101382844,
+  "ns": 0,
+  "title": "Q106053430",
+  "lastrevid": 2098824508,
+  "modified": "2024-03-10T20:23:31Z",
+  "type": "item",
+  "id": "Q106053430",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Chiesa dei Santi Pietro e Paolo Apostoli"
+    },
+    "it": {
+      "language": "it",
+      "value": "chiesa dei Santi Pietro e Paolo Apostoli"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "church in Olina - Pavullo nel Frignano (MO)"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "kerkgebouw in Italië"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "كنيسة في بافولو نل فرينيانو، إيطاليا"
+    },
+    "it": {
+      "language": "it",
+      "value": "chiesa parrocchiale di Olina, frazione di Pavullo nel Frignano in provincia di Modena"
+    }
+  },
+  "aliases": {
+    "fr": [
+      {
+        "language": "fr",
+        "value": "Chiesa dei Santi Pietro e Paolo Apostoli"
+      }
+    ],
+    "en": [
+      {
+        "language": "en",
+        "value": "Santi Pietro e Paolo Apostoli"
+      }
+    ]
+  },
+  "claims": {
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "b48529e9f7e0898ab1ddaefe8547cdb863e0167c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 38,
+              "id": "Q38"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q106053430$2308A370-74A7-4C79-A926-8A118C590027",
+        "rank": "normal"
+      }
+    ],
+    "P4133": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4133",
+          "hash": "b150639a996797a4751ccdb63cfad54dff23e118",
+          "datavalue": {
+            "value": "5215",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q106053430$E2BFC8E4-F421-4978-9EB0-FEF0B4705B2F",
+        "rank": "normal"
+      }
+    ],
+    "P131": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P131",
+          "hash": "dec559989f44073be10584d20acb925b557e5cd1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 100084,
+              "id": "Q100084"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q106053430$D7D3C3CA-1524-44C5-9BF0-ECE0E89EA0FE",
+        "rank": "normal"
+      }
+    ],
+    "P625": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P625",
+          "hash": "028c7abfb3c96f60d748891b55f130a03beb9286",
+          "datavalue": {
+            "value": {
+              "latitude": 44.304621,
+              "longitude": 10.78119,
+              "altitude": null,
+              "precision": 0.000001,
+              "globe": "http://www.wikidata.org/entity/Q2"
+            },
+            "type": "globecoordinate"
+          },
+          "datatype": "globe-coordinate"
+        },
+        "type": "statement",
+        "id": "Q106053430$DCB34463-FD43-4EA0-AE81-79246317F2CA",
+        "rank": "deprecated",
+        "references": [
+          {
+            "hash": "6541d8ee4388686a04d9663341b16f1123728c3b",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "2d1161ac9ba91fa1c51c684c641a8d012d9f5f45",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 105826821,
+                      "id": "Q105826821"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P248"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P625",
+          "hash": "c5fc8c442fd4688bb10e3a0e6528825e0a2f20ed",
+          "datavalue": {
+            "value": {
+              "latitude": 44.304694,
+              "longitude": 10.781444,
+              "altitude": null,
+              "precision": 0.000001,
+              "globe": "http://www.wikidata.org/entity/Q2"
+            },
+            "type": "globecoordinate"
+          },
+          "datatype": "globe-coordinate"
+        },
+        "type": "statement",
+        "id": "Q106053430$4658D5D9-5AA0-4EC3-B6E6-BCDBBAF603D5",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "26f3302f0d24002b62ae2e599434eadb48107ffb",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "d1e923075a89220a981d8c2511065b97bcf4dc5c",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 77541206,
+                      "id": "Q77541206"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P248"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "fe3e98790529edca4e494c5b753fa3abef71052c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 16970,
+              "id": "Q16970"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q106053430$A6F25FFE-F3C8-4D28-AA86-820772534002",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "6d94139fe4b65a6b1ca3cedc1743f2821b247c42",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 317557,
+              "id": "Q317557"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q106053430$C10C0A7F-2C1E-43A1-92C3-F649BEF5CE56",
+        "rank": "normal"
+      }
+    ],
+    "P6375": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6375",
+          "hash": "a786ead00d983a3ca2a2f440a8d0ab033cee1209",
+          "datavalue": {
+            "value": {
+              "text": "via Olina ‒ Olina ‒ Pavullo Nel Frignano (MO)",
+              "language": "it"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q106053430$0D227120-23C3-438C-9E42-0599EFE5E1F3",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "6541d8ee4388686a04d9663341b16f1123728c3b",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "2d1161ac9ba91fa1c51c684c641a8d012d9f5f45",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 105826821,
+                      "id": "Q105826821"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P248"]
+          }
+        ]
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "457a25f8f84d11b58bb3a3a124e36e2dce6b041b",
+          "datavalue": {
+            "value": {
+              "time": "+1750-01-01T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 7,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q106053430$050E238E-4C47-4EA8-A85A-2A7E0F990583",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2d47ee2d87638e1d1f2871cf02f21f9d69f7ca39",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "2d1161ac9ba91fa1c51c684c641a8d012d9f5f45",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 105826821,
+                      "id": "Q105826821"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4133": [
+                {
+                  "snaktype": "value",
+                  "property": "P4133",
+                  "hash": "b150639a996797a4751ccdb63cfad54dff23e118",
+                  "datavalue": {
+                    "value": "5215",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "27d69366b85393b96de19d7a76d9b949c98aacea",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-03-18T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P4133", "P813"]
+          }
+        ]
+      }
+    ],
+    "P1435": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1435",
+          "hash": "5aaab4cb9a8ba871dd9053155d7e78af15cb5896",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 26971668,
+              "id": "Q26971668"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q106053430$AD7AA8C6-3C5F-4AF3-9CFE-49026AD7236E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "6541d8ee4388686a04d9663341b16f1123728c3b",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "2d1161ac9ba91fa1c51c684c641a8d012d9f5f45",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 105826821,
+                      "id": "Q105826821"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P248"]
+          }
+        ]
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "945ed72d4ded1e9460280272d1f1a363521f051b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 106083200,
+              "id": "Q106083200"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q106053430$6868814f-4e8e-b1ea-6ea3-a7cb2e5bfb60",
+        "rank": "normal"
+      }
+    ],
+    "P276": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P276",
+          "hash": "7c2b7f90bc5bf5308f87f028bbed05b376e905a2",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 431007,
+              "id": "Q431007"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q106053430$0EE8CC07-18F0-4809-BBA8-3FDFEB6BAB1A",
+        "rank": "normal"
+      }
+    ],
+    "P5611": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5611",
+          "hash": "11e386c17b5fffbb6756a57d68ad57ea8b915607",
+          "datavalue": {
+            "value": "34811",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q106053430$0F58FD2F-123A-4E79-AFB7-9DE75C638750",
+        "rank": "normal"
+      }
+    ],
+    "P708": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P708",
+          "hash": "329b35bbbed6fcacca665195574da9f4fad4e34c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1365040,
+              "id": "Q1365040"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q106053430$19CA18D7-ADFA-4F25-AA7A-14467A5BC0EC",
+        "rank": "normal"
+      }
+    ],
+    "P140": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P140",
+          "hash": "1d37cef459ae3310e8856a343b4f5d0ceaee71e2",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1841,
+              "id": "Q1841"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q106053430$D2FA2ECE-D68F-4CA4-B5C9-B857A4763B0A",
+        "rank": "normal"
+      }
+    ],
+    "P3501": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3501",
+          "hash": "6625c2116039d72e46b1665c05bcffde3a0b1a36",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 730757,
+              "id": "Q730757"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q106053430$F010DF86-E3BD-407D-81BD-8C18DB47547C",
+        "rank": "normal"
+      }
+    ],
+    "P373": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P373",
+          "hash": "0e321ee189458d13591a571b55c4930d1dd8f499",
+          "datavalue": {
+            "value": "Santi Pietro e Paolo Apostoli (Olina, Pavullo nel Frignano)",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q106053430$1C9782E7-85DC-4A75-9055-3979EBB533F0",
+        "rank": "normal"
+      }
+    ],
+    "P18": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "5f20d0aff34fcf0f908e0736b291c53f8a46b468",
+          "datavalue": {
+            "value": "Chiesaolina.jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q106053430$02CED0C8-A226-4F2F-9EC4-15A8266029EA",
+        "rank": "normal"
+      }
+    ],
+    "P2186": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2186",
+          "hash": "c6b39425ebe4538e8d4ad06bdf5f174c2c70e968",
+          "datavalue": {
+            "value": "08G3930011",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P580": [
+            {
+              "snaktype": "value",
+              "property": "P580",
+              "hash": "6c03bdef0fce00878f5ad9588f761a3baa3e4e13",
+              "datavalue": {
+                "value": {
+                  "time": "+2023-03-21T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P8001": [
+            {
+              "snaktype": "value",
+              "property": "P8001",
+              "hash": "ba36ec9d8e36bbf97d8fdc6e9ad581e80b1d7d3c",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 112244655,
+                  "id": "Q112244655"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P580", "P8001"],
+        "id": "Q106053430$19B4790E-B69D-4CEB-98B7-E1B37F19C3CB",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "itwiki": {
+      "site": "itwiki",
+      "title": "Chiesa dei Santi Pietro e Paolo Apostoli (Pavullo nel Frignano)",
+      "badges": [],
+      "url": "https://it.wikipedia.org/wiki/Chiesa_dei_Santi_Pietro_e_Paolo_Apostoli_(Pavullo_nel_Frignano)"
+    },
+    "commonswiki": {
+      "site": "commonswiki",
+      "title": "Category:Santi Pietro e Paolo Apostoli (Olina, Pavullo nel Frignano)",
+      "badges": [],
+      "url": "https://commons.wikimedia.org/wiki/Category:Santi_Pietro_e_Paolo_Apostoli_(Olina,_Pavullo_nel_Frignano)"
+    }
+  }
+}

@@ -1,0 +1,552 @@
+{
+  "pageid": 3807011,
+  "ns": 0,
+  "title": "Q3993099",
+  "lastrevid": 2481228699,
+  "modified": "2026-04-14T02:19:31Z",
+  "type": "item",
+  "id": "Q3993099",
+  "labels": {
+    "ja": {
+      "language": "ja",
+      "value": "TONIGHT,TONIGHT,TONIGHT"
+    },
+    "it": {
+      "language": "it",
+      "value": "Tonight, Tonight, Tonight"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Tonight, Tonight, Tonight"
+    },
+    "en": {
+      "language": "en",
+      "value": "Tonight, Tonight, Tonight"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Tonight, Tonight, Tonight"
+    },
+    "de": {
+      "language": "de",
+      "value": "Tonight, Tonight, Tonight"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Tonight, Tonight, Tonight"
+    },
+    "es": {
+      "language": "es",
+      "value": "Tonight, Tonight, Tonight"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "Tonight, Tonight, Tonight"
+    }
+  },
+  "descriptions": {
+    "it": {
+      "language": "it",
+      "value": "singolo dei Beat Crusaders del 2006"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "single van Beat Crusaders"
+    },
+    "de": {
+      "language": "de",
+      "value": "Single von Beat Crusaders aus 2006"
+    },
+    "en": {
+      "language": "en",
+      "value": "2006 single by Beat Crusaders"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "cantar de Beat Crusaders"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "chanson de Beat Crusaders"
+    }
+  },
+  "aliases": {
+    "ja": [
+      {
+        "language": "ja",
+        "value": "TONIGHT, TONIGHT, TONIGHT"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "33d81754a79b2dab75d17c156313b0f8f0f4f086",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 134556,
+              "id": "Q134556"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3993099$B423CDAC-2681-4ADD-8F65-2AF70D799FDB",
+        "rank": "normal"
+      }
+    ],
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "cf2b08545331a33e9a0b7425479a75c5ec51dc07",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 813064,
+              "id": "Q813064"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3993099$23E8FF6C-9972-477E-90AA-EE79EB221567",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 177837,
+                      "id": "Q177837"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P264",
+          "hash": "c083268f83b5920a537c3da14641637cad4c9bb8",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1072803,
+              "id": "Q1072803"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3993099$7C5BE516-39BD-4083-A55E-9EB68932630A",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 177837,
+                      "id": "Q177837"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "ede0e2fbda389131708f492fd46895d556ca5674",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 131578,
+              "id": "Q131578"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3993099$39E28222-2D39-478B-BA44-BCCFA3472744",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 177837,
+                      "id": "Q177837"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "54bb75adeb596d415e9a97e3814851e642543041",
+          "datavalue": {
+            "value": {
+              "time": "+2006-09-06T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q3993099$D202589C-B907-44DE-8A69-FCB21CB4ED4E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 177837,
+                      "id": "Q177837"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P155": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P155",
+          "hash": "cf60222d7a111023182e5619fccd51127e48191e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11195573,
+              "id": "Q11195573"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3993099$035BB901-76EC-4177-AC1A-1871F9CDE115",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 177837,
+                      "id": "Q177837"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P156": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P156",
+          "hash": "4f7b69af264fa1dd7d07a92b3835721b41f9f9c1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11201039,
+              "id": "Q11201039"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3993099$7FE7BE72-2893-4BDB-B381-45B0AFFDBCD5",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 177837,
+                      "id": "Q177837"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "e6416cbee6d41c1cd23af2123f13990a2ab35f61",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11704563,
+              "id": "Q11704563"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3993099$CF1CBA06-F789-4643-8553-96741CAA9342",
+        "rank": "normal"
+      }
+    ],
+    "P1651": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1651",
+          "hash": "4eb5f3f6f44605d54cf3df87b4a665776551b1de",
+          "datavalue": {
+            "value": "AN0Cu8G4k_8",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "7b8c5e0bb203f7e9932188f55ee2636067313576",
+              "datavalue": {
+                "value": "Tonight Tonight Tonight - Beat Crusaders (Bleach 4th Opening song) with lyrics",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ],
+          "P5436": [
+            {
+              "snaktype": "value",
+              "property": "P5436",
+              "hash": "5b16a56a8a019b543e2cd2758c031c5ae1afa981",
+              "datavalue": {
+                "value": {
+                  "amount": "+1300117",
+                  "unit": "1"
+                },
+                "type": "quantity"
+              },
+              "datatype": "quantity"
+            }
+          ],
+          "P577": [
+            {
+              "snaktype": "value",
+              "property": "P577",
+              "hash": "ffa4bc3ec772506f0603d5a182f648b1aefe193e",
+              "datavalue": {
+                "value": {
+                  "time": "+2013-09-25T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P2047": [
+            {
+              "snaktype": "value",
+              "property": "P2047",
+              "hash": "d1bf2612fe77b95cb702edbcf96f94d6da90706b",
+              "datavalue": {
+                "value": {
+                  "amount": "+163.0",
+                  "unit": "http://www.wikidata.org/entity/Q11574",
+                  "upperBound": "+164.0",
+                  "lowerBound": "+162.0"
+                },
+                "type": "quantity"
+              },
+              "datatype": "quantity"
+            }
+          ],
+          "P585": [
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "18938166eaa0c6e558ef9676090d5fa2fb81c498",
+              "datavalue": {
+                "value": {
+                  "time": "+2021-03-19T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810", "P5436", "P577", "P2047", "P585"],
+        "id": "Q3993099$0ade2f84-45e5-a593-79eb-3d2138a735f5",
+        "rank": "normal"
+      }
+    ],
+    "P9182": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P9182",
+          "hash": "ff845ca0ba7bb297bb666fd46383c231174648a3",
+          "datavalue": {
+            "value": "45203",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q3993099$801AD292-B6C5-4EEC-A1CF-38994186A3BE",
+        "rank": "normal"
+      }
+    ],
+    "P13602": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P13602",
+          "hash": "ca41b5339003cc43549aa83cc1552b9d037dcd13",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11198384,
+              "id": "Q11198384"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3993099$89E7B37B-20FE-4321-9E67-82B0340C01B1",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "jawiki": {
+      "site": "jawiki",
+      "title": "TONIGHT,TONIGHT,TONIGHT",
+      "badges": [],
+      "url": "https://ja.wikipedia.org/wiki/TONIGHT,TONIGHT,TONIGHT"
+    },
+    "itwiki": {
+      "site": "itwiki",
+      "title": "Tonight, Tonight, Tonight (Beat Crusaders)",
+      "badges": [],
+      "url": "https://it.wikipedia.org/wiki/Tonight,_Tonight,_Tonight_(Beat_Crusaders)"
+    }
+  }
+}

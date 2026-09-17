@@ -69,11 +69,13 @@ async function upsertIndex(indexPath: string, records: { a: string; b: string }[
 async function main() {
   const args = process.argv.slice(2);
   let outDir = "eval-data/non-dupe-pairs";
+  let provenance = "hand-curated";
   const qids: string[] = [];
   for (let i = 0; i < args.length; i++) {
     if (args[i] === "--out") outDir = args[++i];
+    else if (args[i] === "--provenance") provenance = args[++i];
     else if (/^Q\d+$/.test(args[i])) qids.push(args[i]);
-    else throw new Error(`unexpected arg: ${args[i]} (want Qxxx or --out DIR)`);
+    else throw new Error(`unexpected arg: ${args[i]} (want Qxxx, --out DIR, or --provenance STR)`);
   }
   if (qids.length === 0 || qids.length % 2 !== 0)
     throw new Error(
@@ -85,18 +87,36 @@ async function main() {
 
   const records: { a: string; b: string }[] = [];
   const seen = new Set<string>();
+  let failed = 0;
   for (let i = 0; i < qids.length; i += 2) {
     // Canonicalize each pair (lower QID number first) so directory names are
     // stable regardless of the order the two ids were given.
     const [a, b] =
       qidNum(qids[i]) <= qidNum(qids[i + 1]) ? [qids[i], qids[i + 1]] : [qids[i + 1], qids[i]];
+    if (a === b) {
+      // Guard against a fat-fingered arg list (Qx Qx) producing a degenerate
+      // "item vs itself" pair, which is not a valid negative example.
+      console.warn(`${a}: skipped — a pair needs two distinct QIDs`);
+      failed++;
+      continue;
+    }
     const key = pairKey(a, b);
     if (seen.has(key)) {
       console.log(`${key}: already fetched this run, skipping`);
       continue;
     }
     seen.add(key);
-    const [ea, eb] = await Promise.all([fetchEntity(a), fetchEntity(b)]);
+    // One un-fetchable item (since merged/deleted, or an API hiccup) must not
+    // abort a whole batch — log it and move on. Useful for bulk candidate lists.
+    let ea: Record<string, unknown>;
+    let eb: Record<string, unknown>;
+    try {
+      [ea, eb] = await Promise.all([fetchEntity(a), fetchEntity(b)]);
+    } catch (err) {
+      failed++;
+      console.warn(`${key}: skipped — ${err instanceof Error ? err.message : err}`);
+      continue;
+    }
 
     const dir = join(outDir, key);
     await mkdir(dir, { recursive: true });
@@ -111,7 +131,7 @@ async function main() {
       bLabel: enLabel(eb),
       aRevid: ea.lastrevid ?? null,
       bRevid: eb.lastrevid ?? null,
-      provenance: "hand-curated",
+      provenance,
     };
     await writeFile(join(dir, "meta.json"), JSON.stringify(record, null, 2));
     records.push(record);
@@ -122,7 +142,10 @@ async function main() {
     await sleep(PAUSE_MS);
   }
   await upsertIndex(indexPath, records);
-  console.log(`\nWrote ${records.length} pair(s) to ${outDir} (index: ${indexPath})`);
+  console.log(
+    `\nWrote ${records.length} pair(s) to ${outDir} (index: ${indexPath})` +
+      (failed > 0 ? `; ${failed} pair(s) skipped` : ""),
+  );
 }
 
 main().catch((err) => {

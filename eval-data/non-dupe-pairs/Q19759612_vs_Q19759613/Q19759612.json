@@ -1,0 +1,597 @@
+{
+  "pageid": 21362042,
+  "ns": 0,
+  "title": "Q19759612",
+  "lastrevid": 2411036003,
+  "modified": "2025-09-30T12:19:51Z",
+  "type": "item",
+  "id": "Q19759612",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Working Model for Three Piece Reclining Figure: Draped"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Working Model for Three Piece Reclining Figure: Draped"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "sculpture by Henry Moore (LH 654, Didrichsen Art Museum)"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "sculpture d'Henry Moore"
+    },
+    "he": {
+      "language": "he",
+      "value": "פסל של הנרי מור"
+    },
+    "de": {
+      "language": "de",
+      "value": "Skulptur von Henry Moore"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "rzeźba Henry’ego Moore’a"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "منحوتة"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "64114526c020c1f7bc1bbee1971b1629d0b52d25",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 860861,
+              "id": "Q860861"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q19759612$D8B5CD09-C3CE-4A09-A052-17BD7618739D",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "3097ca521b9002c681a57df0c079d04a7519ac7c",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "aa463a802229bf6b26a3e40f4fe33a8dbd638b6c",
+                  "datavalue": {
+                    "value": "http://www.henry-moore.org/works-in-public/world/finland/helsinki/didrichsen-art-museum/working-model-for-three-piece-reclining-figure-dr",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P1065": [
+                {
+                  "snaktype": "value",
+                  "property": "P1065",
+                  "hash": "c6f50e58d6c115124239f9f510e8bd3aa2d4ed80",
+                  "datavalue": {
+                    "value": "https://web.archive.org/web/20141111220937/http://www.henry-moore.org/works-in-public/world/finland/helsinki/didrichsen-art-museum/working-model-for-three-piece-reclining-figure-dr",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P2960": [
+                {
+                  "snaktype": "value",
+                  "property": "P2960",
+                  "hash": "e9e2f207dc5ee41e5aedfead157acd4e5804d98f",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2014-11-11T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P1065", "P2960"]
+          }
+        ]
+      }
+    ],
+    "P170": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P170",
+          "hash": "4c81fe893a7e68cc532d1860c5fe34241d79d976",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 151097,
+              "id": "Q151097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q19759612$AC0775BE-C743-47CC-8DBD-D569C526C9C2",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "3097ca521b9002c681a57df0c079d04a7519ac7c",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "aa463a802229bf6b26a3e40f4fe33a8dbd638b6c",
+                  "datavalue": {
+                    "value": "http://www.henry-moore.org/works-in-public/world/finland/helsinki/didrichsen-art-museum/working-model-for-three-piece-reclining-figure-dr",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P1065": [
+                {
+                  "snaktype": "value",
+                  "property": "P1065",
+                  "hash": "c6f50e58d6c115124239f9f510e8bd3aa2d4ed80",
+                  "datavalue": {
+                    "value": "https://web.archive.org/web/20141111220937/http://www.henry-moore.org/works-in-public/world/finland/helsinki/didrichsen-art-museum/working-model-for-three-piece-reclining-figure-dr",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P2960": [
+                {
+                  "snaktype": "value",
+                  "property": "P2960",
+                  "hash": "e9e2f207dc5ee41e5aedfead157acd4e5804d98f",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2014-11-11T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P1065", "P2960"]
+          }
+        ]
+      }
+    ],
+    "P195": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P195",
+          "hash": "dae5032b73e9323a081047c88b6f50c2e6120248",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5274238,
+              "id": "Q5274238"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q19759612$4DB68B0B-F0EE-4600-AC6B-AB3024E82A5A",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "3097ca521b9002c681a57df0c079d04a7519ac7c",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "aa463a802229bf6b26a3e40f4fe33a8dbd638b6c",
+                  "datavalue": {
+                    "value": "http://www.henry-moore.org/works-in-public/world/finland/helsinki/didrichsen-art-museum/working-model-for-three-piece-reclining-figure-dr",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P1065": [
+                {
+                  "snaktype": "value",
+                  "property": "P1065",
+                  "hash": "c6f50e58d6c115124239f9f510e8bd3aa2d4ed80",
+                  "datavalue": {
+                    "value": "https://web.archive.org/web/20141111220937/http://www.henry-moore.org/works-in-public/world/finland/helsinki/didrichsen-art-museum/working-model-for-three-piece-reclining-figure-dr",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P2960": [
+                {
+                  "snaktype": "value",
+                  "property": "P2960",
+                  "hash": "e9e2f207dc5ee41e5aedfead157acd4e5804d98f",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2014-11-11T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P1065", "P2960"]
+          }
+        ]
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "6cb2b2f1035a9ec3ced6bb92bfcba34b662b1225",
+          "datavalue": {
+            "value": {
+              "time": "+1975-01-01T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q19759612$62E520CA-1F62-4FF0-B630-EF2EA0C4E260",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "3097ca521b9002c681a57df0c079d04a7519ac7c",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "aa463a802229bf6b26a3e40f4fe33a8dbd638b6c",
+                  "datavalue": {
+                    "value": "http://www.henry-moore.org/works-in-public/world/finland/helsinki/didrichsen-art-museum/working-model-for-three-piece-reclining-figure-dr",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P1065": [
+                {
+                  "snaktype": "value",
+                  "property": "P1065",
+                  "hash": "c6f50e58d6c115124239f9f510e8bd3aa2d4ed80",
+                  "datavalue": {
+                    "value": "https://web.archive.org/web/20141111220937/http://www.henry-moore.org/works-in-public/world/finland/helsinki/didrichsen-art-museum/working-model-for-three-piece-reclining-figure-dr",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P2960": [
+                {
+                  "snaktype": "value",
+                  "property": "P2960",
+                  "hash": "e9e2f207dc5ee41e5aedfead157acd4e5804d98f",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2014-11-11T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P1065", "P2960"]
+          }
+        ]
+      }
+    ],
+    "P186": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P186",
+          "hash": "1aafd58b38495eb02b371701f0aff3ff4f8c1193",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 34095,
+              "id": "Q34095"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q19759612$D46C5F17-F068-42E3-A1A2-867EA8E28915",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "3097ca521b9002c681a57df0c079d04a7519ac7c",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "aa463a802229bf6b26a3e40f4fe33a8dbd638b6c",
+                  "datavalue": {
+                    "value": "http://www.henry-moore.org/works-in-public/world/finland/helsinki/didrichsen-art-museum/working-model-for-three-piece-reclining-figure-dr",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P1065": [
+                {
+                  "snaktype": "value",
+                  "property": "P1065",
+                  "hash": "c6f50e58d6c115124239f9f510e8bd3aa2d4ed80",
+                  "datavalue": {
+                    "value": "https://web.archive.org/web/20141111220937/http://www.henry-moore.org/works-in-public/world/finland/helsinki/didrichsen-art-museum/working-model-for-three-piece-reclining-figure-dr",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P2960": [
+                {
+                  "snaktype": "value",
+                  "property": "P2960",
+                  "hash": "e9e2f207dc5ee41e5aedfead157acd4e5804d98f",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2014-11-11T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P1065", "P2960"]
+          }
+        ]
+      }
+    ],
+    "P528": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P528",
+          "hash": "f585b9e01ccab541582a3111777066f6f6090191",
+          "datavalue": {
+            "value": "LH 654",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P972": [
+            {
+              "snaktype": "value",
+              "property": "P972",
+              "hash": "0c498f6bfbf457f02327c398f48f456fec88f382",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 19758835,
+                  "id": "Q19758835"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P972"],
+        "id": "Q19759612$2ABA2AFC-6D0F-4AD6-A6EC-11DA22D65265",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "3097ca521b9002c681a57df0c079d04a7519ac7c",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "aa463a802229bf6b26a3e40f4fe33a8dbd638b6c",
+                  "datavalue": {
+                    "value": "http://www.henry-moore.org/works-in-public/world/finland/helsinki/didrichsen-art-museum/working-model-for-three-piece-reclining-figure-dr",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P1065": [
+                {
+                  "snaktype": "value",
+                  "property": "P1065",
+                  "hash": "c6f50e58d6c115124239f9f510e8bd3aa2d4ed80",
+                  "datavalue": {
+                    "value": "https://web.archive.org/web/20141111220937/http://www.henry-moore.org/works-in-public/world/finland/helsinki/didrichsen-art-museum/working-model-for-three-piece-reclining-figure-dr",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P2960": [
+                {
+                  "snaktype": "value",
+                  "property": "P2960",
+                  "hash": "e9e2f207dc5ee41e5aedfead157acd4e5804d98f",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2014-11-11T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P1065", "P2960"]
+          }
+        ]
+      }
+    ],
+    "P973": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P973",
+          "hash": "d8ddd0f4dc242e8df9558358535378d7fcda1fa0",
+          "datavalue": {
+            "value": "http://www.henry-moore.org/works-in-public/world/finland/helsinki/didrichsen-art-museum/working-model-for-three-piece-reclining-figure-dr",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q19759612$A9C626B8-815E-4974-880D-B7E67E600F86",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "1dc91a24ad28c145083b7401fce18eaf17df05eb",
+            "snaks": {
+              "P1065": [
+                {
+                  "snaktype": "value",
+                  "property": "P1065",
+                  "hash": "c6f50e58d6c115124239f9f510e8bd3aa2d4ed80",
+                  "datavalue": {
+                    "value": "https://web.archive.org/web/20141111220937/http://www.henry-moore.org/works-in-public/world/finland/helsinki/didrichsen-art-museum/working-model-for-three-piece-reclining-figure-dr",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P2960": [
+                {
+                  "snaktype": "value",
+                  "property": "P2960",
+                  "hash": "e9e2f207dc5ee41e5aedfead157acd4e5804d98f",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2014-11-11T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P1065", "P2960"]
+          }
+        ]
+      }
+    ],
+    "P179": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P179",
+          "hash": "1e9d3dc7a1b6d61cf2fdcdec0a0025e78de0e136",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 19760225,
+              "id": "Q19760225"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q19759612$519E6CD9-2F57-460D-BB96-BC6195D7B4E4",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "c0c5b8e7fff3f288f8e594eeac7cfc81bf2592a8",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 19759613,
+              "id": "Q19759613"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q19759612$b17eb746-4277-c3e7-6a98-7e0c74c9b577",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

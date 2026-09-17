@@ -1,0 +1,542 @@
+{
+  "pageid": 3860114,
+  "ns": 0,
+  "title": "Q4050932",
+  "lastrevid": 2226861285,
+  "modified": "2024-08-13T23:01:35Z",
+  "type": "item",
+  "id": "Q4050932",
+  "labels": {
+    "ru": {
+      "language": "ru",
+      "value": "The American Chess Magazine"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "American Chess Magazine"
+    },
+    "en": {
+      "language": "en",
+      "value": "The American Chess Magazine"
+    }
+  },
+  "descriptions": {
+    "nl": {
+      "language": "nl",
+      "value": "periodiek"
+    },
+    "en": {
+      "language": "en",
+      "value": "magazine established 1846"
+    }
+  },
+  "aliases": {
+    "ru": [
+      {
+        "language": "ru",
+        "value": "The American Chess Magazin"
+      },
+      {
+        "language": "ru",
+        "value": "Американ чесс мэгэзин"
+      }
+    ],
+    "en": [
+      {
+        "language": "en",
+        "value": "The Chess Player's Magazine"
+      }
+    ]
+  },
+  "claims": {
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "37e04ade0992f5fa495a5fb0aec5e640feb0bc5d",
+          "datavalue": {
+            "value": "/g/12326cz5",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q4050932$8A16FA08-967F-4151-8395-A6E465F37D22",
+        "rank": "normal"
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5a7e4696633b9e9f5244b9dfb3ca98300d2b0604",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1002697,
+              "id": "Q1002697"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q4050932$37BB4EF6-5B73-4521-B190-3E78FEF35737",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "14d2400e3b1d36332748dc330276f099eeaa8800",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "39224a9c2e8ce5424defbd16603d25771956c7fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 1551807,
+                      "id": "Q1551807"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "fb7666e2e8ef0fcade84a1db13a7740ac93e8426",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 41298,
+              "id": "Q41298"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q4050932$299B4C03-D895-421F-9BCF-E70509F51160",
+        "rank": "preferred"
+      }
+    ],
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "1259189d804d52afc010d13b0e72c65dc0eae46a",
+          "datavalue": {
+            "value": {
+              "text": "The American Chess Magazine",
+              "language": "en"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q4050932$40586234-BD43-476D-8C4A-1AE10D2DF733",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "14d2400e3b1d36332748dc330276f099eeaa8800",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "39224a9c2e8ce5424defbd16603d25771956c7fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 1551807,
+                      "id": "Q1551807"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P576": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P576",
+          "hash": "2372838ec967838b2460e9a72e30e714517ad23c",
+          "datavalue": {
+            "value": {
+              "time": "+1847-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q4050932$53754B38-F261-491E-B32A-2F30E49681C0",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "14d2400e3b1d36332748dc330276f099eeaa8800",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "39224a9c2e8ce5424defbd16603d25771956c7fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 1551807,
+                      "id": "Q1551807"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "fb44a2bc4018ba1fa46949188a0d5135b9f9664b",
+          "datavalue": {
+            "value": "https://www.acmchess.com/",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q4050932$774FC5C9-5010-468E-ADE1-E877AE6811CA",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "be3fabf4b74a81b93bfd2aa1788bf4d6bdee19c3",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "39224a9c2e8ce5424defbd16603d25771956c7fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 1551807,
+                      "id": "Q1551807"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "d2f558ed4007cc73a9559f0e9d47a72e580d2cd1",
+                  "datavalue": {
+                    "value": "https://pl.wikipedia.org/w/index.php?title=American_Chess_Magazine&oldid=53446812",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "61e452733efcaee9d0a6817ecd2fde3ac77aa116",
+          "datavalue": {
+            "value": {
+              "time": "+1846-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q4050932$F9244AB2-B1C5-43F3-AEC7-BC2E8FC24178",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "be3fabf4b74a81b93bfd2aa1788bf4d6bdee19c3",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "39224a9c2e8ce5424defbd16603d25771956c7fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 1551807,
+                      "id": "Q1551807"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "d2f558ed4007cc73a9559f0e9d47a72e580d2cd1",
+                  "datavalue": {
+                    "value": "https://pl.wikipedia.org/w/index.php?title=American_Chess_Magazine&oldid=53446812",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P1844": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1844",
+          "hash": "83c789e9729f35e33bd57e0d84cb8c8493b3a4fd",
+          "datavalue": {
+            "value": "011621091",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q4050932$5A835318-A50F-40C7-96F3-FEC7752E3112",
+        "rank": "normal"
+      }
+    ],
+    "P243": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P243",
+          "hash": "6d28aaac76f89a932a825e7d65bc293784233da9",
+          "datavalue": {
+            "value": "1516789",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q4050932$9AECAA64-FA3B-4637-8DFA-4433D8B2A3E6",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P243",
+          "hash": "445c78379d2526f6d1c473386b652b539d8594e9",
+          "datavalue": {
+            "value": "861286875",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "656bc04b01266fef2b96a291808c06022a357b5d",
+              "datavalue": {
+                "value": "The chess player's magazine",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q4050932$2d5948eb-4ab6-86ae-5d95-86502d09480e",
+        "rank": "normal"
+      }
+    ],
+    "P98": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P98",
+          "hash": "2166b99c8207f2134948a0ecebc6134bb097d1a2",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 728106,
+              "id": "Q728106"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q4050932$330AA7A7-9AE7-4424-A697-A16A99BB5C5C",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "a181de7a53bcc3da840e00726ebedc523cddeb98",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 114065008,
+              "id": "Q114065008"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q4050932$326bae4b-4ad3-c779-4ce4-3cdc41daa4ee",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "6e0a530bbf5c62bc435adb13e457c5bd9bd6f814",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 114065045,
+              "id": "Q114065045"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q4050932$43255cec-4b71-eb84-94d4-ced825832aa3",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "399202ba1623480103b98bc958c7bd90b1898427",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 124040034,
+              "id": "Q124040034"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q4050932$5480b651-48f5-4e56-5053-f822ce18c703",
+        "rank": "normal"
+      }
+    ],
+    "P407": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P407",
+          "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1860,
+              "id": "Q1860"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q4050932$B6D61136-EFA1-48AA-A9DA-7C1883A41940",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "89c36a25d88097ba2150a2eb1007c5f75ed4f7c2",
+            "snaks": {
+              "P3452": [
+                {
+                  "snaktype": "value",
+                  "property": "P3452",
+                  "hash": "77a99078091b15b34182bb54d47b722af5e1c4c4",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 4050932,
+                      "id": "Q4050932"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P3452"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {
+    "ruwiki": {
+      "site": "ruwiki",
+      "title": "The American Chess Magazine",
+      "badges": [],
+      "url": "https://ru.wikipedia.org/wiki/The_American_Chess_Magazine"
+    },
+    "plwiki": {
+      "site": "plwiki",
+      "title": "American Chess Magazine",
+      "badges": [],
+      "url": "https://pl.wikipedia.org/wiki/American_Chess_Magazine"
+    }
+  }
+}

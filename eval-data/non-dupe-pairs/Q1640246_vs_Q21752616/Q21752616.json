@@ -1,0 +1,1085 @@
+{
+  "pageid": 23791065,
+  "ns": 0,
+  "title": "Q21752616",
+  "lastrevid": 2535212415,
+  "modified": "2026-08-23T03:50:23Z",
+  "type": "item",
+  "id": "Q21752616",
+  "labels": {
+    "it": {
+      "language": "it",
+      "value": "Ali Baba and the Forty Thieves"
+    },
+    "en": {
+      "language": "en",
+      "value": "Ali Baba and the Forty Thieves"
+    },
+    "hu": {
+      "language": "hu",
+      "value": "Ali baba és a negyven rabló"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Ali Baba and the Forty Thieves"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Ali Baba en de veertig rovers"
+    },
+    "nb": {
+      "language": "nb",
+      "value": "Ali Baba and the Forty Thieves"
+    },
+    "da": {
+      "language": "da",
+      "value": "Ali Baba and the Forty Thieves (film fra 1918)"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "علي بابا والأربعون حرامي"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "1918 film by Chester M. Franklin"
+    },
+    "de": {
+      "language": "de",
+      "value": "Film von Chester M. Franklin (1918)"
+    },
+    "hu": {
+      "language": "hu",
+      "value": "amerikai némafilm, 1918, Chester M. Franklin"
+    },
+    "ro": {
+      "language": "ro",
+      "value": "film, 1918"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "film uit 1918 van Chester M. Franklin"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "فيلم أنتج عام 1918"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "film från 1918 regisserad av Chester M. Franklin"
+    },
+    "es": {
+      "language": "es",
+      "value": "película de 1918 dirigida por Chester M. Franklin"
+    },
+    "et": {
+      "language": "et",
+      "value": "1918. aasta film, lavastanud Chester M. Franklin"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "pel·lícula de 1918 dirigida per Chester M. Franklin"
+    },
+    "an": {
+      "language": "an",
+      "value": "cinta de 1918 dirichita por Chester M. Franklin"
+    },
+    "fy": {
+      "language": "fy",
+      "value": "film út 1918 fan Chester M. Franklin"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "película de 1918 dirixida por Chester M. Franklin"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "film de Chester M. Franklin, sorti en 1918"
+    },
+    "gl": {
+      "language": "gl",
+      "value": "filme de 1918 dirixido por Chester M. Franklin"
+    },
+    "it": {
+      "language": "it",
+      "value": "film del 1918 diretto da Chester M. Franklin"
+    },
+    "oc": {
+      "language": "oc",
+      "value": "filme de 1918 dirigit per Chester M. Franklin"
+    },
+    "ext": {
+      "language": "ext",
+      "value": "pinicla de 1918 dirigía por Chester M. Franklin"
+    },
+    "he": {
+      "language": "he",
+      "value": "סרט משנת 1918"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "filme de 1918 dirigido por Chester M. Franklin"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "фільм 1918 року"
+    }
+  },
+  "aliases": {
+    "hu": [
+      {
+        "language": "hu",
+        "value": "Ali Baba and the Forty Thieves"
+      }
+    ]
+  },
+  "claims": {
+    "P345": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P345",
+          "hash": "dd8766c59e01b84bb613d0f545a5565587ba345b",
+          "datavalue": {
+            "value": "tt0008821",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q21752616$9344793A-465E-4245-A071-E97996070D11",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d5847b9b6032aa8b13dae3c2dfd9ed5d114d21b3",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "5a343e7e758a4282a01316d3e959b6e653b767fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11920,
+                      "id": "Q11920"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "fa41184cb03f49f0edfbf2fc4f9d33e35afecaea",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11424,
+              "id": "Q11424"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q21752616$83AF8A0E-DE5E-4D86-AB85-BD500EC250A0",
+        "rank": "normal"
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "7f985e15819b74ed189d022e004890e66d2ae42e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 30,
+              "id": "Q30"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q21752616$B4D5A78D-F70D-4D34-9C72-35306D0E7577",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d5847b9b6032aa8b13dae3c2dfd9ed5d114d21b3",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "5a343e7e758a4282a01316d3e959b6e653b767fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11920,
+                      "id": "Q11920"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P364": [
+      {
+        "mainsnak": {
+          "snaktype": "novalue",
+          "property": "P364",
+          "hash": "7709a1a3fd3ba75c72ce3ec37f245d1a48c10826",
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P518": [
+            {
+              "snaktype": "value",
+              "property": "P518",
+              "hash": "47fc2b260410cf20549115856fffec0cf39e8016",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 131395,
+                  "id": "Q131395"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P518"],
+        "id": "Q21752616$16DFA616-1BA8-48C8-9BDB-0F9A4BA13C44",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d5847b9b6032aa8b13dae3c2dfd9ed5d114d21b3",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "5a343e7e758a4282a01316d3e959b6e653b767fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11920,
+                      "id": "Q11920"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P373": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P373",
+          "hash": "0f48cfe0dfea184b5ab558b38f4569c80eae441b",
+          "datavalue": {
+            "value": "Ali Baba and the Forty Thieves (1918 film)",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q21752616$7eb0fb77-49d2-9e5c-c32b-c9c5605edd7a",
+        "rank": "normal"
+      }
+    ],
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "73c88bb13e5d6eb28f85d65273c3022a7e9f8341",
+          "datavalue": {
+            "value": {
+              "text": "Ali Baba and the Forty Thieves",
+              "language": "en"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q21752616$81382009-0C4B-4BC7-96E6-C9EC58AAA735",
+        "rank": "normal"
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "3f8414a36d3020b8ad9dda08db97174f11ccbfb5",
+          "datavalue": {
+            "value": {
+              "time": "+1918-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q21752616$08F7CBEA-CAEB-43FB-B311-D89AD5D5D8EC",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d5847b9b6032aa8b13dae3c2dfd9ed5d114d21b3",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "5a343e7e758a4282a01316d3e959b6e653b767fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11920,
+                      "id": "Q11920"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P57": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P57",
+          "hash": "7b74fc62392f4ab0a38f0838de03efa175721b6a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2962860,
+              "id": "Q2962860"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q21752616$B89A25D3-C20A-4585-AC0A-DE4A92D2862D",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d5847b9b6032aa8b13dae3c2dfd9ed5d114d21b3",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "5a343e7e758a4282a01316d3e959b6e653b767fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11920,
+                      "id": "Q11920"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          },
+          {
+            "hash": "eda32c1ccf49cdb3ddb01beb163dcd925a869e0d",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "044572ec4b3d469c4b081205fa66a0f8bda3b22a",
+                  "datavalue": {
+                    "value": "http://www.imdb.com/title/tt0008821/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "169e8a648477a2fda15764e56715b999e9e1ec3f",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2016-05-19T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P272": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P272",
+          "hash": "00a05849178213b941180d0cb9a056275916acf6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2644123,
+              "id": "Q2644123"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q21752616$6218E319-DA84-4396-8B03-F72752B30ED3",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d5847b9b6032aa8b13dae3c2dfd9ed5d114d21b3",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "5a343e7e758a4282a01316d3e959b6e653b767fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11920,
+                      "id": "Q11920"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P3593": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3593",
+          "hash": "18210724231aa71b6083caa0b9212860d5282bda",
+          "datavalue": {
+            "value": "18100",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q21752616$4365E30C-D495-4CE0-A1FC-29CD83E8A48D",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d5847b9b6032aa8b13dae3c2dfd9ed5d114d21b3",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "5a343e7e758a4282a01316d3e959b6e653b767fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11920,
+                      "id": "Q11920"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P2603": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2603",
+          "hash": "fc4e1ea5177a945d2845b69cfeb1bf18f95337b2",
+          "datavalue": {
+            "value": "235017",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q21752616$E3B51CE4-8AC0-4818-9D20-48CFC42D4E83",
+        "rank": "normal"
+      }
+    ],
+    "P2529": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2529",
+          "hash": "dbdb60d59d528ed5e65e21bc66f5e4310b1355a2",
+          "datavalue": {
+            "value": "153050",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q21752616$8ec99e22-4837-57eb-6e8e-053cdf4d883e",
+        "rank": "normal"
+      }
+    ],
+    "P1562": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1562",
+          "hash": "b8c6a2576b85afcb16a4d62714079fcdcab6f6b3",
+          "datavalue": {
+            "value": "v131007",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q21752616$600ec366-42e5-ae32-db76-973859fb12ac",
+        "rank": "normal"
+      }
+    ],
+    "P18": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "22a1f3dddad0692ed09e38e4e7ef659e9e66f584",
+          "datavalue": {
+            "value": "Ali Baba and the Forty Thieves (1918) - 1.jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q21752616$BA206C8C-C70C-4B8B-88AE-460E7C104971",
+        "rank": "normal"
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "5c1dd007d4f102dd99a36b87901262ce8275ac0b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 226730,
+              "id": "Q226730"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q21752616$951462B3-F5C0-4B0D-9D99-BDEFC9DBFE53",
+        "rank": "normal"
+      }
+    ],
+    "P5338": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5338",
+          "hash": "e25dad76e0a9c57fa43ab27769c6e36a5b89936d",
+          "datavalue": {
+            "value": "A/AliBabaAndTheFortyThie1918",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q21752616$747A9034-E9C5-49FC-A2E7-B2268E525D7D",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d5847b9b6032aa8b13dae3c2dfd9ed5d114d21b3",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "5a343e7e758a4282a01316d3e959b6e653b767fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11920,
+                      "id": "Q11920"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P2047": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2047",
+          "hash": "a77dd5cf5f292a01e750f19e55484db4f245f676",
+          "datavalue": {
+            "value": {
+              "amount": "+50",
+              "unit": "http://www.wikidata.org/entity/Q7727",
+              "upperBound": "+50",
+              "lowerBound": "+50"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q21752616$FFF6D51F-BAEA-4BCB-AAB0-F98CC259BC22",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d5847b9b6032aa8b13dae3c2dfd9ed5d114d21b3",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "5a343e7e758a4282a01316d3e959b6e653b767fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11920,
+                      "id": "Q11920"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P6216": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6216",
+          "hash": "f69dc45ce9c48664155022498b34100d801bd549",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 19652,
+              "id": "Q19652"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1001": [
+            {
+              "snaktype": "value",
+              "property": "P1001",
+              "hash": "fd03a46bac885aad8c96834e86183c078494dce6",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 30,
+                  "id": "Q30"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P459": [
+            {
+              "snaktype": "value",
+              "property": "P459",
+              "hash": "e8a997f8c7723e2bc8daa542a8b44577d4b3b7eb",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 47246828,
+                  "id": "Q47246828"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1001", "P459"],
+        "id": "Q21752616$84A42D81-AFF7-42A9-A30F-104DD8B7BE71",
+        "rank": "normal"
+      }
+    ],
+    "P8296": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8296",
+          "hash": "293c10cfce3582285fcfcf80ae7704aa44369212",
+          "datavalue": {
+            "value": "F001483",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q21752616$d6c2d8a4-c263-486b-a6ae-5e2a8f25d5fa",
+        "rank": "normal"
+      }
+    ],
+    "P462": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P462",
+          "hash": "3a54909b84e89027076dc951333afbbabd2a9eef",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 838368,
+              "id": "Q838368"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q21752616$da1c2b58-f6f6-4398-870f-e3a58a673d34",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "38d51f2ccbf3fd31791e4d2955982972c986a434",
+          "datavalue": {
+            "value": "/g/11bxdsnbrb",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q21752616$8EF07684-88E9-4237-8414-E4D33ACCB46E",
+        "rank": "normal"
+      }
+    ],
+    "P4947": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4947",
+          "hash": "d209a84ffe7445e4539bedf98d1f346d52689c93",
+          "datavalue": {
+            "value": "615912",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q21752616$A06E4120-57A6-4767-8973-E4EB796A0810",
+        "rank": "normal"
+      }
+    ],
+    "P6127": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6127",
+          "hash": "18c9ceae61903f05255ff97402e8875c658794b3",
+          "datavalue": {
+            "value": "ali-baba-and-the-forty-thieves-1918",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q21752616$a359b250-f53b-466d-a44c-79b9dfa26110",
+        "rank": "normal"
+      }
+    ],
+    "P12096": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12096",
+          "hash": "fb6e2b922136380189ab7fb000ef019cc64d3f53",
+          "datavalue": {
+            "value": "56380",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q21752616$A3B879B0-6F26-40CE-91E5-D763E844D36F",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12096",
+          "hash": "7fb5b52fa5c6e85168b678cee46f9a1edd232a77",
+          "datavalue": {
+            "value": "319424",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q21752616$EFCB3D0A-1314-4672-BBF2-67FD647ABD68",
+        "rank": "normal"
+      }
+    ],
+    "P2704": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2704",
+          "hash": "3637395c56537aefe8cdd9537246084ad0a508f4",
+          "datavalue": {
+            "value": "10.5240/4F4B-4F4F-F6E9-82E4-1273-6",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q21752616$2C34797F-EE3A-4AFF-86E9-06E4E65CDBF0",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "35995f1a4645493b3a45d8d57c43ecb734eb5aad",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "51473be9baab20b35273c4d1141cafce107f9cb5",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 5323129,
+                      "id": "Q5323129"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "461184b83ff7d8878bf4b542c86a42da85af91e0",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-12-12T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "fdff92887f375e345342a1fe70ba1e83330b4afc",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1640246,
+              "id": "Q1640246"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q21752616$ffc654eb-48df-43f1-e048-0d12c3c00ddc",
+        "rank": "normal"
+      }
+    ],
+    "P13235": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P13235",
+          "hash": "bb315893b5b3c26e2b35521258c700cc6d8bb76a",
+          "datavalue": {
+            "value": "9110",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q21752616$3A5C8682-0E49-4B30-B937-0E6794674F32",
+        "rank": "normal"
+      }
+    ],
+    "P12879": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12879",
+          "hash": "9370a5bb4ef3166354043e11c568de7d6c6b71d6",
+          "datavalue": {
+            "value": "189666",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q21752616$C09A84DC-8610-49A8-B40A-6DE5D013A557",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "itwiki": {
+      "site": "itwiki",
+      "title": "Ali Baba and the Forty Thieves (film 1918)",
+      "badges": [],
+      "url": "https://it.wikipedia.org/wiki/Ali_Baba_and_the_Forty_Thieves_(film_1918)"
+    },
+    "commonswiki": {
+      "site": "commonswiki",
+      "title": "Category:Ali Baba and the Forty Thieves (1918 film)",
+      "badges": [],
+      "url": "https://commons.wikimedia.org/wiki/Category:Ali_Baba_and_the_Forty_Thieves_(1918_film)"
+    },
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Ali Baba and the Forty Thieves (1918 film)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Ali_Baba_and_the_Forty_Thieves_(1918_film)"
+    },
+    "dawiki": {
+      "site": "dawiki",
+      "title": "Ali Baba and the Forty Thieves (film fra 1918)",
+      "badges": [],
+      "url": "https://da.wikipedia.org/wiki/Ali_Baba_and_the_Forty_Thieves_(film_fra_1918)"
+    },
+    "nowiki": {
+      "site": "nowiki",
+      "title": "Ali Baba and the Forty Thieves",
+      "badges": [],
+      "url": "https://no.wikipedia.org/wiki/Ali_Baba_and_the_Forty_Thieves"
+    },
+    "arwiki": {
+      "site": "arwiki",
+      "title": "علي بابا والأربعون حرامي (فلم 1918)",
+      "badges": [],
+      "url": "https://ar.wikipedia.org/wiki/%D8%B9%D9%84%D9%8A_%D8%A8%D8%A7%D8%A8%D8%A7_%D9%88%D8%A7%D9%84%D8%A3%D8%B1%D8%A8%D8%B9%D9%88%D9%86_%D8%AD%D8%B1%D8%A7%D9%85%D9%8A_(%D9%81%D9%84%D9%85_1918)"
+    }
+  }
+}

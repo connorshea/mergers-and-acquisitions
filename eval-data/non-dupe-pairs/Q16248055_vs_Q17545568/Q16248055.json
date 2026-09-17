@@ -1,0 +1,721 @@
+{
+  "pageid": 17872557,
+  "ns": 0,
+  "title": "Q16248055",
+  "lastrevid": 2512137277,
+  "modified": "2026-06-30T08:40:11Z",
+  "type": "item",
+  "id": "Q16248055",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "St Andrew's Castle"
+    },
+    "de": {
+      "language": "de",
+      "value": "St Andrew’s Castle"
+    },
+    "ceb": {
+      "language": "ceb",
+      "value": "St Andrews Castle"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "St Andrews Castle"
+    }
+  },
+  "descriptions": {
+    "de": {
+      "language": "de",
+      "value": "Ruine eines Artillerieforts in der englischen Grafschaft Hampshire"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "قاعدة عسكرية في المملكة المتحدة"
+    },
+    "en": {
+      "language": "en",
+      "value": "artillery fort constructed by Henry VIII near Hamble-le-Rice, Hampshire, between 1542 and 1543"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "St Andrews Castle"
+      },
+      {
+        "language": "en",
+        "value": "St Andrew's Castle, Hamble"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "0f8a2604e0be9140829f3405acbf15a65ae300eb",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 245016,
+              "id": "Q245016"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16248055$9F86E4A3-E91C-471A-BC47-FB164959A437",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "4db8a2ca6d3bdbdd670b2ac30210650da845e18b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 109607,
+              "id": "Q109607"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16248055$b433efbc-44c8-e6c8-4889-36279d461039",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "9f8f53c005e864670b86a082151ca0136325348c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 23413,
+              "id": "Q23413"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16248055$061D8D10-86C6-4CB6-BE52-4972EEA9BCDA",
+        "rank": "normal"
+      }
+    ],
+    "P625": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P625",
+          "hash": "2bb9fa22ec6155006e54785fa0e1708be0ce0716",
+          "datavalue": {
+            "value": {
+              "latitude": 50.8524,
+              "longitude": -1.3166,
+              "altitude": null,
+              "precision": 0.014229152277524,
+              "globe": "http://www.wikidata.org/entity/Q2"
+            },
+            "type": "globecoordinate"
+          },
+          "datatype": "globe-coordinate"
+        },
+        "type": "statement",
+        "id": "Q16248055$12B11E43-C87C-443A-B6AD-5A0A3FBB9D8A",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "a44880420787fb348836dc51d3babc5227c4ef7e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 145,
+              "id": "Q145"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16248055$9999fa8f-49d1-5a01-0b86-0d92801fab52",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "43a0088c51fd85e5a85d1b46412c3a635e6d4edc",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d8fbf8671e3c630db61bfac691068cfb6857f243",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 837615,
+                      "id": "Q837615"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P18": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "e1513c8e7e1f8e0a79beedb1b46aa9857e605dd8",
+          "datavalue": {
+            "value": "St Andrew's Castle, Hamble.jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q16248055$82B60DF5-899D-4CA1-8F2F-305A8D8091C3",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P131": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P131",
+          "hash": "892ed50a7b287db8216823f6fedc7a3926a49b05",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1439543,
+              "id": "Q1439543"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16248055$63BB7E00-DF96-45A5-947C-170BC1B02534",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "edc1192281f80bf88cc4b1c707a16c2a7bdcdb29",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "9848271962bcfb74b954b29f4104978b4b76f55c",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=St_Andrew's_Castle,_Hamble&oldid=843470623",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P131",
+          "hash": "79a958c5372b44d6f5600b0355fa1d47e6edf524",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 23204,
+              "id": "Q23204"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16248055$F3AF7F51-FCBA-4B6F-A75A-54B65FE22EB3",
+        "rank": "normal"
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "b5c112e4140a1e0ef1bed77d59a9f8f5a934e318",
+          "datavalue": {
+            "value": {
+              "time": "+1542-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985786"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q16248055$E11FD138-2248-40E0-BFB3-F6FE069A53E3",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "5a906a5842c5409d67180c52a6483d143f0cb4e2",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "df1db9469849030327acf363c2b5bc1e0588d5b5",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=St_Andrew's_Castle,_Hamble&oldid=918310864",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P7959": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7959",
+          "hash": "bd124a5b995ce2df05a291767f1ac97ebf16092a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 67531563,
+              "id": "Q67531563"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16248055$3ffda3b7-054c-4c19-9ea5-d69f266d159d",
+        "rank": "normal"
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "a70b0f23d60d9881eb82cfb898326fe2d4317cd0",
+          "datavalue": {
+            "value": "/m/0ztfjxd",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q16248055$792F338B-1615-49A7-B7F5-9F8602DBE7E5",
+        "rank": "normal"
+      }
+    ],
+    "P373": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P373",
+          "hash": "1d8f0f7d2e436467e1fa4e73b01351e999f0160f",
+          "datavalue": {
+            "value": "St Andrew's Castle, Hamble",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q16248055$658efed2-f161-4f37-aeda-db39a01bd8ee",
+        "rank": "normal"
+      }
+    ],
+    "P1566": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1566",
+          "hash": "ca3071030f864aa4eb7871ff57336f302c956df2",
+          "datavalue": {
+            "value": "6286296",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q16248055$01094DBC-A145-418C-9798-B79E318B39A2",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "43a0088c51fd85e5a85d1b46412c3a635e6d4edc",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d8fbf8671e3c630db61bfac691068cfb6857f243",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 837615,
+                      "id": "Q837615"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "349baae8794f1b789fc6e4fbdd6fcde1ec3e095f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2287936,
+              "id": "Q2287936"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16248055$9289c063-4935-64cc-731f-65fe43049b59",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "de4d518bfd582b9a7123eb44ca12efb3d559564a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 17545568,
+              "id": "Q17545568"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16248055$11edec4b-412b-ebb8-707f-386ab228e3df",
+        "rank": "normal"
+      }
+    ],
+    "P1435": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1435",
+          "hash": "833b95edcea74234fec4481fee56fc5c1ea911c0",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 219538,
+              "id": "Q219538"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P580": [
+            {
+              "snaktype": "value",
+              "property": "P580",
+              "hash": "49f10cc8f775b4f464edaf6fad515cdfb42ec389",
+              "datavalue": {
+                "value": {
+                  "time": "+1982-08-08T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P1216": [
+            {
+              "snaktype": "value",
+              "property": "P1216",
+              "hash": "cae26807bf5a1ad3716e010de0d4aa62115f8c1f",
+              "datavalue": {
+                "value": "1008695",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ]
+        },
+        "qualifiers-order": ["P580", "P1216"],
+        "id": "Q16248055$aa60f5fb-4a03-6e54-ecd5-7f7994ed5b55",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "c42b362c86a9e75460b01cf6e277f7f9142bd84c",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "e4003706b6d34f66ff13b43ddff031e39761d749",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 6973052,
+                      "id": "Q6973052"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P248"]
+          }
+        ]
+      }
+    ],
+    "P1216": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1216",
+          "hash": "cae26807bf5a1ad3716e010de0d4aa62115f8c1f",
+          "datavalue": {
+            "value": "1008695",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1435": [
+            {
+              "snaktype": "value",
+              "property": "P1435",
+              "hash": "833b95edcea74234fec4481fee56fc5c1ea911c0",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 219538,
+                  "id": "Q219538"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P613": [
+            {
+              "snaktype": "value",
+              "property": "P613",
+              "hash": "0620aba883c6c2dedb13496a2cb3c32f8aaf7947",
+              "datavalue": {
+                "value": "SU 48150 06091",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ],
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "207f87702eb24f0759834a0b3d9c9ad429fb2d44",
+              "datavalue": {
+                "value": "Promontory defined by an Iron Age linear earthwork, St Andrew's Castle and additional remains on Hamble Common",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1435", "P613", "P1810"],
+        "id": "Q16248055$4be5b413-4cc1-d41b-f23b-e0c425d894f0",
+        "rank": "normal"
+      }
+    ],
+    "P4141": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4141",
+          "hash": "e84648c4b50e626198e72e08ff1e99f6c423f7a8",
+          "datavalue": {
+            "value": "English%20sites/1294",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q16248055$816d2d56-4ddd-4d78-39d9-54c3124c7926",
+        "rank": "normal"
+      }
+    ],
+    "P1813": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1813",
+          "hash": "f6195c25f096ce9e605df34a1bee72d3cda49bbe",
+          "datavalue": {
+            "value": {
+              "text": "St Andrew",
+              "language": "mul"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q16248055$812E8E44-0955-4EF0-A8BA-72991FAE3964",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "St Andrew's Castle, Hamble",
+      "badges": ["Q17437798"],
+      "url": "https://en.wikipedia.org/wiki/St_Andrew%27s_Castle,_Hamble"
+    },
+    "dewiki": {
+      "site": "dewiki",
+      "title": "St Andrew’s Castle",
+      "badges": [],
+      "url": "https://de.wikipedia.org/wiki/St_Andrew%E2%80%99s_Castle"
+    },
+    "commonswiki": {
+      "site": "commonswiki",
+      "title": "Category:St Andrew's Castle, Hamble",
+      "badges": [],
+      "url": "https://commons.wikimedia.org/wiki/Category:St_Andrew%27s_Castle,_Hamble"
+    },
+    "cebwiki": {
+      "site": "cebwiki",
+      "title": "St Andrews Castle",
+      "badges": [],
+      "url": "https://ceb.wikipedia.org/wiki/St_Andrews_Castle"
+    }
+  }
+}

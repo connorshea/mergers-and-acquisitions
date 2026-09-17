@@ -1,0 +1,1267 @@
+{
+  "pageid": 1586064,
+  "ns": 0,
+  "title": "Q1652366",
+  "lastrevid": 2268675875,
+  "modified": "2024-11-01T14:33:15Z",
+  "type": "item",
+  "id": "Q1652366",
+  "labels": {
+    "zea": {
+      "language": "zea",
+      "value": "The Voice Kids"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "The Voice Kids"
+    },
+    "en": {
+      "language": "en",
+      "value": "The Voice Kids"
+    },
+    "it": {
+      "language": "it",
+      "value": "The Voice Kids"
+    },
+    "da": {
+      "language": "da",
+      "value": "The Voice Kids"
+    },
+    "af": {
+      "language": "af",
+      "value": "The Voice Kids"
+    },
+    "de": {
+      "language": "de",
+      "value": "The Voice Kids"
+    },
+    "fo": {
+      "language": "fo",
+      "value": "The Voice Kids"
+    },
+    "nn": {
+      "language": "nn",
+      "value": "The Voice Kids"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "The Voice Kids"
+    },
+    "nb": {
+      "language": "nb",
+      "value": "The Voice Kids"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "The Voice Kids (Pays-Bas)"
+    },
+    "es": {
+      "language": "es",
+      "value": "The Voice Kids"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "The Voice Kids"
+    },
+    "eo": {
+      "language": "eo",
+      "value": "The Voice Kids"
+    },
+    "sl": {
+      "language": "sl",
+      "value": "The Voice Kids"
+    }
+  },
+  "descriptions": {
+    "nl": {
+      "language": "nl",
+      "value": "Nederland"
+    },
+    "it": {
+      "language": "it",
+      "value": "programma televisivo olandese"
+    },
+    "da": {
+      "language": "da",
+      "value": "Nederlandene"
+    },
+    "af": {
+      "language": "af",
+      "value": "Nederland"
+    },
+    "de": {
+      "language": "de",
+      "value": "Niederlande"
+    },
+    "en": {
+      "language": "en",
+      "value": "The Netherlands"
+    },
+    "nn": {
+      "language": "nn",
+      "value": "Nederland"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "Nederlanderna"
+    },
+    "nb": {
+      "language": "nb",
+      "value": "Nederland"
+    },
+    "eo": {
+      "language": "eo",
+      "value": "televida talentkonkursa programo en Nederlando"
+    },
+    "sl": {
+      "language": "sl",
+      "value": "nizozemska televizijska oddaja"
+    }
+  },
+  "aliases": {
+    "nl": [
+      {
+        "language": "nl",
+        "value": "The Voice Kids (Nederland)"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "6b8e8d6f6e2430e3c7378c7a62da7144b4307ca8",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 15416,
+              "id": "Q15416"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1652366$58FC8A51-284E-4CED-BCEE-DD88A615A21C",
+        "rank": "normal"
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "d1bb05edbb23c889726dbad3a8f25dbd9df8f99f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 55,
+              "id": "Q55"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1652366$BC4BD699-BAFB-4C09-BAB3-36A11FD7E9EE",
+        "rank": "normal"
+      }
+    ],
+    "P449": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P449",
+          "hash": "8b2c89d8077446c43b37c34016268944ee7fff72",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 686817,
+              "id": "Q686817"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1652366$C274E716-7881-49B2-B6F4-50E2DD0F6A2F",
+        "rank": "normal"
+      }
+    ],
+    "P527": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P527",
+          "hash": "cf6bc9ff6cba6d71a2ac877f609a799a39c8d47a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1705369,
+              "id": "Q1705369"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1545": [
+            {
+              "snaktype": "value",
+              "property": "P1545",
+              "hash": "2a1ced1dca90648ea7e306acbadd74fc81a10722",
+              "datavalue": {
+                "value": "1",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1545"],
+        "id": "Q1652366$c8cdd9e4-42bd-a391-f325-f18b04ce6ad7",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P527",
+          "hash": "b18bb8eb63e0f1b6f7dabc4e74019fdff62ce2e6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2490548,
+              "id": "Q2490548"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1545": [
+            {
+              "snaktype": "value",
+              "property": "P1545",
+              "hash": "7241753c62a310cf84895620ea82250dcea65835",
+              "datavalue": {
+                "value": "2",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1545"],
+        "id": "Q1652366$3fcbebd5-4ffd-af77-84f4-51af2f97e5c9",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P527",
+          "hash": "2f01bed3c7348444779dea0b6cbb79c5329a5839",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 15943741,
+              "id": "Q15943741"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1545": [
+            {
+              "snaktype": "value",
+              "property": "P1545",
+              "hash": "0e979f28bf306fefdcd352b4eb8dee5da2153a6d",
+              "datavalue": {
+                "value": "3",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1545"],
+        "id": "Q1652366$bd2bb548-4ebf-2bca-3d51-a9a7e5c8bbea",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P527",
+          "hash": "b26b3781ea0170358a57a32f9f6c1821d6e7e65b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 19831896,
+              "id": "Q19831896"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1545": [
+            {
+              "snaktype": "value",
+              "property": "P1545",
+              "hash": "cbff8d4b3b7b35f905ef3147a7a6cb88845a774f",
+              "datavalue": {
+                "value": "4",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1545"],
+        "id": "Q1652366$ef63c424-4f7b-f901-1191-1495f2ced1ed",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P527",
+          "hash": "e8d043abed83310a0da9c328cc743e144ce7514b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 22969532,
+              "id": "Q22969532"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1545": [
+            {
+              "snaktype": "value",
+              "property": "P1545",
+              "hash": "ea4583c18f699186700d21642b477a2dc1d345c8",
+              "datavalue": {
+                "value": "5",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1545"],
+        "id": "Q1652366$0E8654C3-5034-4943-9082-B9C1BC287A2D",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P527",
+          "hash": "1b22b6ba6f683dd980bab2e60a7d66e34c489c52",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 63347623,
+              "id": "Q63347623"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1545": [
+            {
+              "snaktype": "value",
+              "property": "P1545",
+              "hash": "32387bd293902a2430b5bb680033d36ecea00dd0",
+              "datavalue": {
+                "value": "6",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1545"],
+        "id": "Q1652366$931b411c-436d-b9ee-7b17-1bde3c908013",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P527",
+          "hash": "889d360abe6fdb088a07ec563dcd70ba504c13eb",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 50398769,
+              "id": "Q50398769"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1545": [
+            {
+              "snaktype": "value",
+              "property": "P1545",
+              "hash": "9a4403310d2d27312d0a93830981a1e51b735843",
+              "datavalue": {
+                "value": "7",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1545"],
+        "id": "Q1652366$bf571cdb-4ddc-14ac-5e40-de3fb96b6854",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P527",
+          "hash": "4fb5a90c196d38f344d6dfe118b0933d43259471",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 63323514,
+              "id": "Q63323514"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1545": [
+            {
+              "snaktype": "value",
+              "property": "P1545",
+              "hash": "94d4f77373c2051829a238495246b458b7737ef9",
+              "datavalue": {
+                "value": "8",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1545"],
+        "id": "Q1652366$d0913021-46d1-893a-72ed-302c1081a2b0",
+        "rank": "normal"
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "06e0cb5440e0483dfe10ebac1c8b3cbce8291ce8",
+          "datavalue": {
+            "value": "http://www.thevoicekids.nl/",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "700aeaff381db1a1b58c6d58777ab5ec7daefe17",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 7411,
+                  "id": "Q7411"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P407"],
+        "id": "Q1652366$D358F349-616E-40F7-9C65-5089363084FB",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P1113": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1113",
+          "hash": "ae491b451fc53c77c0cd435d414335fb89c0340d",
+          "datavalue": {
+            "value": {
+              "amount": "+45",
+              "unit": "1"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q1652366$DCDF43EA-B523-4932-A091-BFB136153BAA",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P2437": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2437",
+          "hash": "ccbfb78fc2061020468bd9a3a3d8546390199764",
+          "datavalue": {
+            "value": {
+              "amount": "+6",
+              "unit": "1"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q1652366$5A3BAA7E-3C69-437B-AEE8-8C8671AA985D",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "cfefe30930eb96b69555b82f4b49ee0025d6fe39",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 37534970,
+              "id": "Q37534970"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1652366$db6e4750-4a8f-c603-075a-eecb727045cf",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "0d662f4c89a9dd7e0c663ca69f3ebe432bfc406c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4142130,
+              "id": "Q4142130"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1652366$32f51788-4629-942c-2950-9b6cdd4d3a29",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "dae65f345d1fe84f99c44479bd970db2ce9aa188",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 26721404,
+              "id": "Q26721404"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1652366$183fce19-4411-3510-8d22-a12f0853d988",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "7885ff041777a10b89b09e65961b5ee653f9ce5b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 23042070,
+              "id": "Q23042070"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1652366$e0c39b09-4081-cab9-f7a2-1a93d0f52ce8",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "820ef94c4706c6eb3905d4acc7bb776834418b9c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 17111617,
+              "id": "Q17111617"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1652366$f2c474e2-4f37-df6e-fea1-062c23746136",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "65a26e15af5657bd80038d76a2347079f79db3c8",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 30609070,
+              "id": "Q30609070"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1652366$537ec857-4998-b775-530e-56f0f3e0a1d0",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "93eecca24387fdc15af7e0ab6bf08ea55db846a1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 18631708,
+              "id": "Q18631708"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1652366$b51e1e99-4d98-ca4b-60d3-8ae437b93c1f",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "155f45cccd4da286eb030d7d282d86ac738ebfc3",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 21733371,
+              "id": "Q21733371"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1652366$2213176d-4083-48a7-6d29-c1ee752e843a",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "45cbb92ce3e5b9d99eb0a033bb009f8f47e24f0e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 30668288,
+              "id": "Q30668288"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1652366$70179d66-4aea-9f94-17b5-882d789d294a",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "fbe5911a54e7add5e3e16142001df976fba0cb16",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 18109021,
+              "id": "Q18109021"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1652366$953d4fe3-410e-f83a-37c1-b0a53f6a51c9",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "60ed9279e24d1aee74be1bf8b155501da473de51",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 25443439,
+              "id": "Q25443439"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1652366$c459b69f-4bb9-ca2b-cf14-3fc5946c4e69",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "9acf6453ef2a484d28e734b65c01cff92e03491c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 17111372,
+              "id": "Q17111372"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1652366$e3b91fe9-4d31-5a8c-3ba5-295685776594",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "06c696ffa1e32d9230cf1daed854428a3372a27b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 23707625,
+              "id": "Q23707625"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1652366$1760349c-463b-dbac-2d1b-c4a2bb33e832",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "ef443009125922c93d6c5b2eea0eb769b28f4ebf",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 16182852,
+              "id": "Q16182852"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1652366$1b39d784-4361-5449-b4b1-eca6a5f124e4",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "3d2919bf711b2e2c147fd671d20e56605b80f807",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 13025041,
+              "id": "Q13025041"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1652366$0d068316-4a2e-9ade-b6be-85f063019f9b",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "9f81594d986cc6b98726b37fd76c197afce1d6b1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 16637678,
+              "id": "Q16637678"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1652366$84432ec3-4a86-7d51-6488-66e455a3c935",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "2f6306dc0635764b8436862498719e6265769060",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 51845389,
+              "id": "Q51845389"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1652366$441086e7-47a3-7066-3b52-6515fed21029",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "03180fdba65e67f60282d84b40e8c424c69a53b5",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 86724030,
+              "id": "Q86724030"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1652366$0705a751-4aaa-2fe8-253b-b9565e1d5888",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "1250ef4b48f9a043751d2a0d80f88149ef5ffed3",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 16587910,
+              "id": "Q16587910"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1652366$0ae60618-4ac1-dc61-58ab-13f196235864",
+        "rank": "normal"
+      }
+    ],
+    "P580": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P580",
+          "hash": "3c53b729fb8b2ef4c6d7ff87bad931cceb873e4d",
+          "datavalue": {
+            "value": {
+              "time": "+2012-01-27T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q1652366$5D5F8EDB-329D-40CB-B7B1-FBE00F7DC69F",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9f1f995611257a5464ac32ecd0600a93c4bfa365",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "1a512ede55806ed49817d1f317e88c9473455ab2",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2020-04-19T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "dc83d39b99b47189f017ace9f07ac3ddc1241802",
+                  "datavalue": {
+                    "value": "http://live.dbpedia.org/resource/The_Voice_Kids_(Dutch_TV_series)",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P813", "P854"]
+          }
+        ]
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "328f3b6a73fc26689fa2dc76b82d9d832891cf1d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1484397,
+              "id": "Q1484397"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1652366$6DDF86D9-FF0E-4045-A005-EEE54A2BFEAC",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "66c9540061993975ba0e4bffd8dcef20680d994c",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "9123b0de1cc9c3954366ba797d598e4e1ea4146f",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 10000,
+                      "id": "Q10000"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "e924340428396258c8215c410eadd1c3d0222f23",
+                  "datavalue": {
+                    "value": "https://nl.wikipedia.org/w/index.php?title=The_Voice_Kids_(Nederland)&oldid=56163192",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P371": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P371",
+          "hash": "26d5bdc759e5f041e3c37217e9eeb2ac8a5d94f0",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3545345,
+              "id": "Q3545345"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1652366$4A851A78-9A47-49D9-AE6C-42ECE527DD55",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "66c9540061993975ba0e4bffd8dcef20680d994c",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "9123b0de1cc9c3954366ba797d598e4e1ea4146f",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 10000,
+                      "id": "Q10000"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "e924340428396258c8215c410eadd1c3d0222f23",
+                  "datavalue": {
+                    "value": "https://nl.wikipedia.org/w/index.php?title=The_Voice_Kids_(Nederland)&oldid=56163192",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "0597f28dc6d41e93e97deb190cc7c3da43c556fd",
+          "datavalue": {
+            "value": {
+              "text": "The Voice Kids",
+              "language": "en"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q1652366$adbaa041-4f9b-4ee6-93eb-2361b0f58b8a",
+        "rank": "normal"
+      }
+    ],
+    "P364": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P364",
+          "hash": "c9c2aefa8e33c7dba441d339bedcafa6f2d93009",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7411,
+              "id": "Q7411"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1652366$8976c3d2-4219-5630-2015-743a1a3809cb",
+        "rank": "normal"
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "db2e8a073726b34af78642f8e26496cc784cdfba",
+          "datavalue": {
+            "value": "/m/012srr7l",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q1652366$9933F964-3EC4-48F3-9806-3161196161D3",
+        "rank": "normal"
+      }
+    ],
+    "P1424": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1424",
+          "hash": "15a95714c7a465d696032a19bda8e4f4eda8e6d1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 118140547,
+              "id": "Q118140547"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1652366$f29c8c32-43a5-b930-0e23-2cb9087bf6d1",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "zeawiki": {
+      "site": "zeawiki",
+      "title": "The Voice Kids",
+      "badges": [],
+      "url": "https://zea.wikipedia.org/wiki/The_Voice_Kids"
+    },
+    "nlwiki": {
+      "site": "nlwiki",
+      "title": "The Voice Kids (Nederland)",
+      "badges": [],
+      "url": "https://nl.wikipedia.org/wiki/The_Voice_Kids_(Nederland)"
+    },
+    "dawiki": {
+      "site": "dawiki",
+      "title": "The Voice Kids (Nederlandene)",
+      "badges": [],
+      "url": "https://da.wikipedia.org/wiki/The_Voice_Kids_(Nederlandene)"
+    },
+    "frwiki": {
+      "site": "frwiki",
+      "title": "The Voice Kids (Pays-Bas)",
+      "badges": [],
+      "url": "https://fr.wikipedia.org/wiki/The_Voice_Kids_(Pays-Bas)"
+    },
+    "enwiki": {
+      "site": "enwiki",
+      "title": "The Voice Kids (Dutch TV series)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/The_Voice_Kids_(Dutch_TV_series)"
+    }
+  }
+}

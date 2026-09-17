@@ -1,0 +1,1171 @@
+{
+  "pageid": 174424,
+  "ns": 0,
+  "title": "Q174496",
+  "lastrevid": 2485490898,
+  "modified": "2026-04-29T06:14:27Z",
+  "type": "item",
+  "id": "Q174496",
+  "labels": {
+    "de": {
+      "language": "de",
+      "value": "Mitsubishi Space Star"
+    },
+    "da": {
+      "language": "da",
+      "value": "Mitsubishi Space Star"
+    },
+    "en": {
+      "language": "en",
+      "value": "Mitsubishi Space Star"
+    },
+    "fa": {
+      "language": "fa",
+      "value": "میتسوبیشی اسپیس استار"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Mitsubishi Space Star"
+    },
+    "it": {
+      "language": "it",
+      "value": "Mitsubishi Space Star"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "三菱・スペーススター"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Mitsubishi Space Star"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "Mitsubishi Space Star"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "Mitsubishi Space Star"
+    },
+    "ru": {
+      "language": "ru",
+      "value": "Mitsubishi Space Star"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "Mitsubishi Space Star"
+    },
+    "tr": {
+      "language": "tr",
+      "value": "Mitsubishi Space Star"
+    },
+    "nb": {
+      "language": "nb",
+      "value": "Mitsubishi Space Star"
+    },
+    "af": {
+      "language": "af",
+      "value": "Mitsubishi Space Star"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "Mitsubishi Space Star"
+    },
+    "hu": {
+      "language": "hu",
+      "value": "Mitsubishi Space Star"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "Mitsubishi Space Star"
+    },
+    "he": {
+      "language": "he",
+      "value": "מיצובישי ספייס סטאר"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "三菱Space Star"
+    },
+    "tly": {
+      "language": "tly",
+      "value": "Mitsubishi Space Star"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Mitsubishi Space Star"
+    },
+    "es": {
+      "language": "es",
+      "value": "Mitsubishi Space Star"
+    }
+  },
+  "descriptions": {
+    "it": {
+      "language": "it",
+      "value": "autovettura del 1998 prodotta dalla Mitsubishi Motors Corporation"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "automobile"
+    },
+    "en": {
+      "language": "en",
+      "value": "car model"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "automodel van Mitsubishi Motors"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "طراز سيارة"
+    },
+    "el": {
+      "language": "el",
+      "value": "μοντέλο αυτοκινήτου"
+    },
+    "de": {
+      "language": "de",
+      "value": "Van des japanischen Autoherstellers Mitsubishi Motors"
+    },
+    "he": {
+      "language": "he",
+      "value": "מכונית מיני יפנית"
+    },
+    "ru": {
+      "language": "ru",
+      "value": "модель автомобиля"
+    },
+    "cs": {
+      "language": "cs",
+      "value": "model automobilu"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "модель автомобіля"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "automóvel"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P373": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P373",
+          "hash": "87fae054a894b1fa71a8770f6d891219fdf04f20",
+          "datavalue": {
+            "value": "Mitsubishi Space Star",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "q174496$8EB15122-9F08-4B89-B40D-57E18CE54E3B",
+        "rank": "normal"
+      }
+    ],
+    "P176": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P176",
+          "hash": "69547d0da00269d20b9f1a59c3461f1a0a0a5738",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 36033,
+              "id": "Q36033"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q174496$D3547972-2D18-451A-8E98-19735377AA50",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "98b61cf144ab8a3da1aca0ebfb24b4d6939295c7",
+          "datavalue": {
+            "value": "/m/0bqw85",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q174496$2C0C12CC-4D24-477F-AC95-4449CFA9DFC0",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2b00cb481cddcac7623114367489b5c194901c4a",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "a94b740202b097dd33355e0e6c00e54b9395e5e0",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 15241312,
+                      "id": "Q15241312"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P577": [
+                {
+                  "snaktype": "value",
+                  "property": "P577",
+                  "hash": "fde79ecb015112d2f29229ccc1ec514ed3e71fa2",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2013-10-28T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P577"]
+          }
+        ]
+      }
+    ],
+    "P18": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "9ac27ff010e2c98bf8766da97596510ec3d845ab",
+          "datavalue": {
+            "value": "Mitsubishi Space Star front 20080228.jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q174496$15915592-00F3-4969-8792-CEC79966BD4E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "732ec1c90a6f0694c7db9a71bf09fe7f2b674172",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "9123b0de1cc9c3954366ba797d598e4e1ea4146f",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 10000,
+                      "id": "Q10000"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "009f0bb35d8b3090863038f06f5be81c184eccfe",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3231690,
+              "id": "Q3231690"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q174496$3BF97E8B-4A8B-49A9-A6CD-26627EA51BE4",
+        "rank": "normal"
+      }
+    ],
+    "P155": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P155",
+          "hash": "46251245c7b0b38adc7901c53dcc3b922de3f9dc",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 14552535,
+              "id": "Q14552535"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q174496$88016AAE-B0CE-4E05-83C3-1D29D1FC958C",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9a24f7c0208b05d6be97077d855671d1dfdbc0dd",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 48183,
+                      "id": "Q48183"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P1716": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1716",
+          "hash": "3c45db4606b401a1e5f9924f159de780f32d861d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 36033,
+              "id": "Q36033"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q174496$5CB0699A-CB48-411F-AB77-D91EFF8C4BAB",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9a24f7c0208b05d6be97077d855671d1dfdbc0dd",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 48183,
+                      "id": "Q48183"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P516": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P516",
+          "hash": "9555c922c160e4afb690016c80c80c0c408b6347",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 502048,
+              "id": "Q502048"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q174496$5A31724B-1C89-42B6-BEF8-7923F98F0811",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9a24f7c0208b05d6be97077d855671d1dfdbc0dd",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 48183,
+                      "id": "Q48183"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P516",
+          "hash": "65fa77545499f8a7e739c122743a20becd86812a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 174174,
+              "id": "Q174174"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P580": [
+            {
+              "snaktype": "value",
+              "property": "P580",
+              "hash": "8752b82cdffad4bcee274913d130a05ca27d08b0",
+              "datavalue": {
+                "value": {
+                  "time": "+2001-00-00T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 9,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P580"],
+        "id": "Q174496$d14d1827-4519-2e42-85fc-2df3f13cab3d",
+        "rank": "normal"
+      }
+    ],
+    "P2043": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2043",
+          "hash": "9009588d89579c8816127f5a010b26d5be6573b1",
+          "datavalue": {
+            "value": {
+              "amount": "+4050",
+              "unit": "http://www.wikidata.org/entity/Q174789"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q174496$B596A5D3-A666-4900-8575-319E41A0EB25",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9a24f7c0208b05d6be97077d855671d1dfdbc0dd",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 48183,
+                      "id": "Q48183"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P3039": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3039",
+          "hash": "4682fc7f12313b90db36fdf4c4d8c91436de0278",
+          "datavalue": {
+            "value": {
+              "amount": "+2500",
+              "unit": "http://www.wikidata.org/entity/Q174789"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q174496$BC98A404-6D61-4B08-B31C-205F57203E33",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "7ebf8c8c21ef7f7e3c9fa7d9e09bf2dfb3cb3e49",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 48183,
+                      "id": "Q48183"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "0b0c81f82dd95917bb1d7738ee7c60200ce44343",
+                  "datavalue": {
+                    "value": "https://de.wikipedia.org/w/index.php?title=Mitsubishi_Space_Star&oldid=180483101",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P2052": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2052",
+          "hash": "c06986d3fc4a82f8c0303a83c6b581eb02a90be9",
+          "datavalue": {
+            "value": {
+              "amount": "+173",
+              "unit": "http://www.wikidata.org/entity/Q180154"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q174496$714DB466-AA9D-442C-829C-D0FD62AB8450",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "212285eeaa6017d12871650a10a3fdfa90dd8f0e",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "07596fc82d3ed4d248b85e5543852cc31e37dc8c",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 199913,
+                      "id": "Q199913"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "aa4c3e65438f94fe718b3ac4a4ddaec32f09c6b3",
+                  "datavalue": {
+                    "value": "https://he.wikipedia.org/w/index.php?title=מיצובישי_ספייס_סטאר&oldid=25773327",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P279": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P279",
+          "hash": "ffac579e1cd30dec68dc9eb05cf4c77f7aec8dea",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 223189,
+              "id": "Q223189"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q174496$2F5705D5-3FE3-43FE-BCDD-9E829F1E84A0",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "e4b85022ab772f1d9eb9c0ccb97944b6f96d28d2",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "f30cbd35620c4ea6d0633aaf0210a8916130469b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8447,
+                      "id": "Q8447"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "ea7adc5319825cbb29b8f7e13b00930c87f82347",
+                  "datavalue": {
+                    "value": "https://fr.wikipedia.org/w/index.php?title=Mitsubishi_Space_Star&oldid=176617647",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P1071": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1071",
+          "hash": "cab8b36ded78ad1db02ec860ba3afb7b2c91847f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 502343,
+              "id": "Q502343"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q174496$447FDF49-CE25-402D-B839-E64DB61986EA",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "e4b85022ab772f1d9eb9c0ccb97944b6f96d28d2",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "f30cbd35620c4ea6d0633aaf0210a8916130469b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8447,
+                      "id": "Q8447"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "ea7adc5319825cbb29b8f7e13b00930c87f82347",
+                  "datavalue": {
+                    "value": "https://fr.wikipedia.org/w/index.php?title=Mitsubishi_Space_Star&oldid=176617647",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "26d3d0eff8e26fa6326282e3e249d15e7637dd84",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 45201240,
+              "id": "Q45201240"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q174496$a7d18014-40cf-1348-c106-f7549374068e",
+        "rank": "normal"
+      }
+    ],
+    "P580": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P580",
+          "hash": "39e72875dbec51b64891e0226e3293966e2e7f80",
+          "datavalue": {
+            "value": {
+              "time": "+1998-06-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 10,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q174496$95f623bc-4128-62dd-cd4c-f5f71086b31e",
+        "rank": "normal"
+      }
+    ],
+    "P582": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P582",
+          "hash": "092a645fff1c2d900422d324f6a443d985cb3da9",
+          "datavalue": {
+            "value": {
+              "time": "+2004-12-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 10,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q174496$40f088db-4e49-8563-0d68-2bcb8eb2ec58",
+        "rank": "normal"
+      }
+    ],
+    "P2067": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2067",
+          "hash": "083fc6868de53a49607e09f7f10010152b4974ae",
+          "datavalue": {
+            "value": {
+              "amount": "+865",
+              "unit": "http://www.wikidata.org/entity/Q11570"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q174496$7CFFF011-5293-445E-9A75-F3EF03664B6E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "81304afccd15095a6faab176c1bdff9f3ef0c610",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "07596fc82d3ed4d248b85e5543852cc31e37dc8c",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 199913,
+                      "id": "Q199913"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "79f47ad2b4627d0f050cb5e3b70eb8903cf0e2f6",
+                  "datavalue": {
+                    "value": "https://he.wikipedia.org/w/index.php?title=מיצובישי_ספייס_סטאר&oldid=33265540",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P2048": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2048",
+          "hash": "8e0b6c0aac9528e41cdccd082cc07f82efa969de",
+          "datavalue": {
+            "value": {
+              "amount": "+150.5",
+              "unit": "http://www.wikidata.org/entity/Q174728"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q174496$9073CE97-2502-47F9-88D5-2834FA4F895D",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "81304afccd15095a6faab176c1bdff9f3ef0c610",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "07596fc82d3ed4d248b85e5543852cc31e37dc8c",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 199913,
+                      "id": "Q199913"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "79f47ad2b4627d0f050cb5e3b70eb8903cf0e2f6",
+                  "datavalue": {
+                    "value": "https://he.wikipedia.org/w/index.php?title=מיצובישי_ספייס_סטאר&oldid=33265540",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P1705": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1705",
+          "hash": "2df0c189fcef3e968c9b4fa885ab1e92f93fa01c",
+          "datavalue": {
+            "value": {
+              "text": "Mitsubishi Space Star",
+              "language": "en"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q174496$f057db7b-4352-cc6f-9c59-f1b9178b36a9",
+        "rank": "normal"
+      }
+    ],
+    "P2049": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2049",
+          "hash": "db2dc2f429a6512cbe2d7b92c02f85374f3b59a4",
+          "datavalue": {
+            "value": {
+              "amount": "+166.5",
+              "unit": "http://www.wikidata.org/entity/Q174728"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q174496$5820A557-5B01-4ED4-BDE3-47E281774326",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "c767e9ddc0d086ee8564af9470c63b709a571f1d",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "07596fc82d3ed4d248b85e5543852cc31e37dc8c",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 199913,
+                      "id": "Q199913"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "53b5a7d3e18a35c94a10726cdcaad5bc1ef2e877",
+                  "datavalue": {
+                    "value": "https://he.wikipedia.org/w/index.php?title=מיצובישי_ספייס_סטאר&oldid=40084288",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {
+    "dewiki": {
+      "site": "dewiki",
+      "title": "Mitsubishi Space Star",
+      "badges": [],
+      "url": "https://de.wikipedia.org/wiki/Mitsubishi_Space_Star"
+    },
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Mitsubishi Space Star",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Mitsubishi_Space_Star"
+    },
+    "fawiki": {
+      "site": "fawiki",
+      "title": "میتسوبیشی اسپیس استار",
+      "badges": [],
+      "url": "https://fa.wikipedia.org/wiki/%D9%85%DB%8C%D8%AA%D8%B3%D9%88%D8%A8%DB%8C%D8%B4%DB%8C_%D8%A7%D8%B3%D9%BE%DB%8C%D8%B3_%D8%A7%D8%B3%D8%AA%D8%A7%D8%B1"
+    },
+    "frwiki": {
+      "site": "frwiki",
+      "title": "Mitsubishi Space Star",
+      "badges": [],
+      "url": "https://fr.wikipedia.org/wiki/Mitsubishi_Space_Star"
+    },
+    "itwiki": {
+      "site": "itwiki",
+      "title": "Mitsubishi Space Star",
+      "badges": [],
+      "url": "https://it.wikipedia.org/wiki/Mitsubishi_Space_Star"
+    },
+    "jawiki": {
+      "site": "jawiki",
+      "title": "三菱・スペーススター",
+      "badges": [],
+      "url": "https://ja.wikipedia.org/wiki/%E4%B8%89%E8%8F%B1%E3%83%BB%E3%82%B9%E3%83%9A%E3%83%BC%E3%82%B9%E3%82%B9%E3%82%BF%E3%83%BC"
+    },
+    "nlwiki": {
+      "site": "nlwiki",
+      "title": "Mitsubishi Space Star",
+      "badges": [],
+      "url": "https://nl.wikipedia.org/wiki/Mitsubishi_Space_Star"
+    },
+    "nowiki": {
+      "site": "nowiki",
+      "title": "Mitsubishi Space Star",
+      "badges": [],
+      "url": "https://no.wikipedia.org/wiki/Mitsubishi_Space_Star"
+    },
+    "plwiki": {
+      "site": "plwiki",
+      "title": "Mitsubishi Space Star",
+      "badges": [],
+      "url": "https://pl.wikipedia.org/wiki/Mitsubishi_Space_Star"
+    },
+    "ptwiki": {
+      "site": "ptwiki",
+      "title": "Mitsubishi Space Star",
+      "badges": [],
+      "url": "https://pt.wikipedia.org/wiki/Mitsubishi_Space_Star"
+    },
+    "ruwiki": {
+      "site": "ruwiki",
+      "title": "Mitsubishi Space Star",
+      "badges": [],
+      "url": "https://ru.wikipedia.org/wiki/Mitsubishi_Space_Star"
+    },
+    "svwiki": {
+      "site": "svwiki",
+      "title": "Mitsubishi Space Star",
+      "badges": [],
+      "url": "https://sv.wikipedia.org/wiki/Mitsubishi_Space_Star"
+    },
+    "trwiki": {
+      "site": "trwiki",
+      "title": "Mitsubishi Space Star",
+      "badges": [],
+      "url": "https://tr.wikipedia.org/wiki/Mitsubishi_Space_Star"
+    },
+    "dawiki": {
+      "site": "dawiki",
+      "title": "Mitsubishi Space Star (1998)",
+      "badges": [],
+      "url": "https://da.wikipedia.org/wiki/Mitsubishi_Space_Star_(1998)"
+    },
+    "afwiki": {
+      "site": "afwiki",
+      "title": "Mitsubishi Space Star",
+      "badges": [],
+      "url": "https://af.wikipedia.org/wiki/Mitsubishi_Space_Star"
+    },
+    "ukwiki": {
+      "site": "ukwiki",
+      "title": "Mitsubishi Space Star",
+      "badges": [],
+      "url": "https://uk.wikipedia.org/wiki/Mitsubishi_Space_Star"
+    },
+    "commonswiki": {
+      "site": "commonswiki",
+      "title": "Category:Mitsubishi Space Star",
+      "badges": [],
+      "url": "https://commons.wikimedia.org/wiki/Category:Mitsubishi_Space_Star"
+    },
+    "hewiki": {
+      "site": "hewiki",
+      "title": "מיצובישי ספייס סטאר",
+      "badges": [],
+      "url": "https://he.wikipedia.org/wiki/%D7%9E%D7%99%D7%A6%D7%95%D7%91%D7%99%D7%A9%D7%99_%D7%A1%D7%A4%D7%99%D7%99%D7%A1_%D7%A1%D7%98%D7%90%D7%A8"
+    },
+    "zhwiki": {
+      "site": "zhwiki",
+      "title": "三菱Space Star",
+      "badges": [],
+      "url": "https://zh.wikipedia.org/wiki/%E4%B8%89%E8%8F%B1Space_Star"
+    },
+    "tlywiki": {
+      "site": "tlywiki",
+      "title": "Mitsubishi Space Star",
+      "badges": [],
+      "url": "https://tly.wikipedia.org/wiki/Mitsubishi_Space_Star"
+    },
+    "eswiki": {
+      "site": "eswiki",
+      "title": "Mitsubishi Space Star",
+      "badges": [],
+      "url": "https://es.wikipedia.org/wiki/Mitsubishi_Space_Star"
+    }
+  }
+}

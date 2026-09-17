@@ -1,0 +1,481 @@
+{
+  "pageid": 46377854,
+  "ns": 0,
+  "title": "Q45201240",
+  "lastrevid": 2470117442,
+  "modified": "2026-03-07T09:47:35Z",
+  "type": "item",
+  "id": "Q45201240",
+  "labels": {
+    "de": {
+      "language": "de",
+      "value": "Mitsubishi Space Star"
+    },
+    "en": {
+      "language": "en",
+      "value": "Mitsubishi Space Star"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Mitsubishi Space Star"
+    },
+    "ms": {
+      "language": "ms",
+      "value": "Mitsubishi Space Star"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "Mitsubishi Space Star"
+    },
+    "id": {
+      "language": "id",
+      "value": "Mitsubishi Space Star"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "Mitsubishi Space Star"
+    },
+    "it": {
+      "language": "it",
+      "value": "Mitsubishi Space Star (2012)"
+    },
+    "nb": {
+      "language": "nb",
+      "value": "Mitsubishi Space Star"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Mitsubishi Space Star"
+    }
+  },
+  "descriptions": {
+    "de": {
+      "language": "de",
+      "value": "Kleinwagen von Mitsubishi Motors"
+    },
+    "en": {
+      "language": "en",
+      "value": "city car by Mitsubishi, 6th generation Mirage"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "automodel"
+    },
+    "nb": {
+      "language": "nb",
+      "value": "kjøretøymodell"
+    }
+  },
+  "aliases": {
+    "de": [
+      {
+        "language": "de",
+        "value": "Mitsubishi Mirage"
+      }
+    ],
+    "en": [
+      {
+        "language": "en",
+        "value": "Mitsubishi Mirage (6th generation)"
+      }
+    ],
+    "fr": [
+      {
+        "language": "fr",
+        "value": "Mitsubishi Mirage"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "009f0bb35d8b3090863038f06f5be81c184eccfe",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3231690,
+              "id": "Q3231690"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q45201240$915ab02d-45e4-306f-ab02-13d7714987d2",
+        "rank": "normal"
+      }
+    ],
+    "P155": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P155",
+          "hash": "ea35ab740f22aacb0e1c99e351524f90766a5a6a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 934776,
+              "id": "Q934776"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q45201240$c25f2e72-4ca2-cea5-db65-98d035d3704b",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d409bf41bcecd8d718f14a76fb36844fa5a026b4",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "39224a9c2e8ce5424defbd16603d25771956c7fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 1551807,
+                      "id": "Q1551807"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "74aaafde20789da3f19e8b670fdaf2b265829033",
+                  "datavalue": {
+                    "value": "https://pl.wikipedia.org/w/index.php?title=Mitsubishi_Space_Star_(2013)&oldid=55802323",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P155",
+          "hash": "5c9445d6291c2cb7e3c0dd5ac8ecf8b1c4400031",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1241335,
+              "id": "Q1241335"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q45201240$9d8c6a00-4831-4720-7b1a-b6afd4649004",
+        "rank": "normal"
+      }
+    ],
+    "P176": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P176",
+          "hash": "69547d0da00269d20b9f1a59c3461f1a0a0a5738",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 36033,
+              "id": "Q36033"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q45201240$d539b6c0-498a-98e3-c7cc-c76c133c9ffb",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d409bf41bcecd8d718f14a76fb36844fa5a026b4",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "39224a9c2e8ce5424defbd16603d25771956c7fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 1551807,
+                      "id": "Q1551807"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "74aaafde20789da3f19e8b670fdaf2b265829033",
+                  "datavalue": {
+                    "value": "https://pl.wikipedia.org/w/index.php?title=Mitsubishi_Space_Star_(2013)&oldid=55802323",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P1716": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1716",
+          "hash": "3c45db4606b401a1e5f9924f159de780f32d861d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 36033,
+              "id": "Q36033"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q45201240$96adf26b-4293-c031-ed25-e9572d725438",
+        "rank": "normal"
+      }
+    ],
+    "P516": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P516",
+          "hash": "9555c922c160e4afb690016c80c80c0c408b6347",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 502048,
+              "id": "Q502048"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q45201240$1f20acab-4f46-1290-4320-a748a57ccb37",
+        "rank": "normal"
+      }
+    ],
+    "P373": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P373",
+          "hash": "65b596199890c72a2ed5e5dea8f205b62d194c26",
+          "datavalue": {
+            "value": "Mitsubishi Space Star (2012)",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q45201240$a766d46f-4235-a9da-9924-3c27554a168f",
+        "rank": "normal"
+      }
+    ],
+    "P18": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "0a2c4c3bda15a4d0e1cd7820df86a9923fd522ba",
+          "datavalue": {
+            "value": "Mitsubishi Space Star - Mondial de l'Automobile de Paris 2016 - 001.jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q45201240$77911d35-4b9a-fa78-d0be-78ee859e76c8",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "87295e17ff73c7cb5f9000c61ead7b8fac46be6a",
+          "datavalue": {
+            "value": "'15 Mitusbishi Mirage (MIAS '15).jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q45201240$047A5378-442F-419A-99D7-848F0C9A792C",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d409bf41bcecd8d718f14a76fb36844fa5a026b4",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "39224a9c2e8ce5424defbd16603d25771956c7fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 1551807,
+                      "id": "Q1551807"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "74aaafde20789da3f19e8b670fdaf2b265829033",
+                  "datavalue": {
+                    "value": "https://pl.wikipedia.org/w/index.php?title=Mitsubishi_Space_Star_(2013)&oldid=55802323",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P3039": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3039",
+          "hash": "ef191c43de14f61dcdad2fe600d4977830d154d5",
+          "datavalue": {
+            "value": {
+              "amount": "+2450",
+              "unit": "http://www.wikidata.org/entity/Q174789"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q45201240$A334533B-C3EB-469A-9DD1-5BE3C9247B13",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "8c1d7060f583a4dfc51f43c9cb89b4a92fb80b81",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 48183,
+                      "id": "Q48183"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "c2128714e2ace3a0b339ecf33f3087c37ec71246",
+                  "datavalue": {
+                    "value": "https://de.wikipedia.org/w/index.php?title=Mitsubishi_Space_Star_(2012)&oldid=186255225",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "cb247b9488b7aca8e666aff13d079141f36e3f44",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 174496,
+              "id": "Q174496"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q45201240$75ac34ad-47b1-b4c3-39bb-eed69672b5a8",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "dewiki": {
+      "site": "dewiki",
+      "title": "Mitsubishi Space Star (2012)",
+      "badges": [],
+      "url": "https://de.wikipedia.org/wiki/Mitsubishi_Space_Star_(2012)"
+    },
+    "fiwiki": {
+      "site": "fiwiki",
+      "title": "Mitsubishi Space Star (2012)",
+      "badges": [],
+      "url": "https://fi.wikipedia.org/wiki/Mitsubishi_Space_Star_(2012)"
+    },
+    "commonswiki": {
+      "site": "commonswiki",
+      "title": "Category:Mitsubishi Space Star (2012)",
+      "badges": [],
+      "url": "https://commons.wikimedia.org/wiki/Category:Mitsubishi_Space_Star_(2012)"
+    },
+    "plwiki": {
+      "site": "plwiki",
+      "title": "Mitsubishi Space Star (2013)",
+      "badges": [],
+      "url": "https://pl.wikipedia.org/wiki/Mitsubishi_Space_Star_(2013)"
+    },
+    "itwiki": {
+      "site": "itwiki",
+      "title": "Mitsubishi Space Star (2012)",
+      "badges": [],
+      "url": "https://it.wikipedia.org/wiki/Mitsubishi_Space_Star_(2012)"
+    }
+  }
+}

@@ -1,0 +1,290 @@
+{
+  "pageid": 18285332,
+  "ns": 0,
+  "title": "Q16679450",
+  "lastrevid": 2228928597,
+  "modified": "2024-08-16T17:05:00Z",
+  "type": "item",
+  "id": "Q16679450",
+  "labels": {
+    "fr": {
+      "language": "fr",
+      "value": "The Best of the Black President"
+    },
+    "de": {
+      "language": "de",
+      "value": "The Best of the Black President"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "The Best of the Black President"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "The Best of the Black President"
+    },
+    "he": {
+      "language": "he",
+      "value": "The Best of the Black President"
+    },
+    "en": {
+      "language": "en",
+      "value": "The Best of the Black President"
+    },
+    "es": {
+      "language": "es",
+      "value": "The Best of the Black President"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "The Best of the Black President"
+    }
+  },
+  "descriptions": {
+    "nl": {
+      "language": "nl",
+      "value": "muziekalbum"
+    },
+    "en": {
+      "language": "en",
+      "value": "2002 edition of the 1999 compilation album by Fela Kuti"
+    },
+    "eo": {
+      "language": "eo",
+      "value": "albumo de Fela Kuti"
+    },
+    "es": {
+      "language": "es",
+      "value": "álbum de Fela Kuti"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "réédition française en 2002 de la compilation de Fela Kuti parue en 1999"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "フェラ・クティのアルバム"
+    },
+    "en-gb": {
+      "language": "en-gb",
+      "value": "album by Fela Kuti"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "ألبوم من أداء فيلا كوتي"
+    },
+    "en-ca": {
+      "language": "en-ca",
+      "value": "album by Fela Kuti"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "музичний альбом"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "dc16d32b615bf1c6edf1919941065eedccacb8e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 482994,
+              "id": "Q482994"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16679450$DFDEC909-CA24-4DEE-BC4A-30DB1CF45E74",
+        "rank": "normal"
+      }
+    ],
+    "P264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P264",
+          "hash": "1a1f76b1632eef552c2f10d18a81d1b211a91898",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2535085,
+              "id": "Q2535085"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16679450$F2BD0168-2222-4087-BCAA-D871615F6EEF",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d4bd87b862b12d99d26e86472d44f26858dee639",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "f30cbd35620c4ea6d0633aaf0210a8916130469b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8447,
+                      "id": "Q8447"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "579d146b8be2db7620b8a4b19e5e3efca1c1ad51",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 313868,
+              "id": "Q313868"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16679450$BECE5F2E-05C4-473B-A77E-57CFDFF97197",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d4bd87b862b12d99d26e86472d44f26858dee639",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "f30cbd35620c4ea6d0633aaf0210a8916130469b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8447,
+                      "id": "Q8447"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "6e4c72503964f214691496be01a2a67e98a75530",
+          "datavalue": {
+            "value": {
+              "time": "+2002-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q16679450$E6FCCA6D-8F0F-4BD3-8047-F1582491C10D",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d4bd87b862b12d99d26e86472d44f26858dee639",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "f30cbd35620c4ea6d0633aaf0210a8916130469b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8447,
+                      "id": "Q8447"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P9237": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P9237",
+          "hash": "63689a0b0cad8aec5ff9bfabf023cde60502879b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2905443,
+              "id": "Q2905443"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16679450$38ac589f-4186-22c7-af74-73907f458ae5",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "21405d2b7448f934e64bfee6333f6b928b10e062",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2905443,
+              "id": "Q2905443"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16679450$8cbf7f66-4faf-1e43-0b8c-e99c8cf396ca",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

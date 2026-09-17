@@ -1,0 +1,476 @@
+{
+  "pageid": 2781236,
+  "ns": 0,
+  "title": "Q2905443",
+  "lastrevid": 2241117303,
+  "modified": "2024-09-01T01:07:38Z",
+  "type": "item",
+  "id": "Q2905443",
+  "labels": {
+    "fr": {
+      "language": "fr",
+      "value": "The Best of Black President"
+    },
+    "en": {
+      "language": "en",
+      "value": "The Best of the Black President"
+    },
+    "de": {
+      "language": "de",
+      "value": "The Best of the Black President"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "The Best of the Black President"
+    },
+    "it": {
+      "language": "it",
+      "value": "The Best of Black President"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "The Best of the Black President"
+    }
+  },
+  "descriptions": {
+    "it": {
+      "language": "it",
+      "value": "album di Fela Kuti del 1999"
+    },
+    "en": {
+      "language": "en",
+      "value": "1999 compilation album by Fela Kuti"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "muziekalbum van Fela Kuti"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "compilation de Fela Kuti parue en 1999"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "ألبوم من أداء فيلا كوتي"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "The Best Best of Fela Kuti"
+      }
+    ]
+  },
+  "claims": {
+    "P264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P264",
+          "hash": "706655b0cafcc24661d6780a1585966dc3b3bf09",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 38903,
+              "id": "Q38903"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2905443$075EF7FC-89E4-4E34-A0FE-84C347330559",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d4bd87b862b12d99d26e86472d44f26858dee639",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "f30cbd35620c4ea6d0633aaf0210a8916130469b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8447,
+                      "id": "Q8447"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "dc16d32b615bf1c6edf1919941065eedccacb8e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 482994,
+              "id": "Q482994"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2905443$5323185E-99E0-4715-BEBD-4A3D5F148539",
+        "rank": "normal"
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "3939fc1c20a6fbb11c42ca3f7ca5c15131e9d9b9",
+          "datavalue": {
+            "value": {
+              "time": "+1999-01-01T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q2905443$FD31FB3C-9CA6-4F1D-8F39-61314AE4437E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "579d146b8be2db7620b8a4b19e5e3efca1c1ad51",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 313868,
+              "id": "Q313868"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2905443$8C2669FF-AE27-4A27-BD3B-AD98BA33B83D",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d4bd87b862b12d99d26e86472d44f26858dee639",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "f30cbd35620c4ea6d0633aaf0210a8916130469b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8447,
+                      "id": "Q8447"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "e891e6b73c259eedb003f70f0cee1496d243aa8d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 388296,
+              "id": "Q388296"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2905443$BEC20E49-B321-4CE1-8D6B-879458A890A9",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "415823b535734803a4c8fe8aa00df498e742f586",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "d96ee85ec6bf5bfbe7bb4dadce0607e860d7d39e",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=The_Best_Best_of_Fela_Kuti&oldid=866245079",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "eb1d412af6a61c4ca651864f1d39c046b22e8740",
+          "datavalue": {
+            "value": "/m/01m1tdb",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q2905443$6CA5F29C-369D-488D-B014-84A55C9356EA",
+        "rank": "normal"
+      }
+    ],
+    "P7937": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7937",
+          "hash": "3996d6688afa8d700ed48428d5a8e5d263aba7a7",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 222910,
+              "id": "Q222910"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2905443$6D64027E-84AB-4790-AE13-F8A4DB92F5AC",
+        "rank": "normal"
+      }
+    ],
+    "P436": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P436",
+          "hash": "b1996cf18cc0826b9c9710848e769a50101f874a",
+          "datavalue": {
+            "value": "afeb4c5f-637b-3d5a-8c37-e55a8bfb5dc1",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q2905443$28d9b7b0-acf7-4fa4-a03c-61fef792c275",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2176e949e94d608203915cd4bc674b8c48a3ad12",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "623cc8f0e2f65afe4d66b91962d354a2f3aa9a27",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 14005,
+                      "id": "Q14005"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "2659d7624a07ad125e13f8664158de4f10593e07",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-05-15T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "74a3c00b1b736bfcc18b705ba4b84a46e192e09d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 16679450,
+              "id": "Q16679450"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2905443$bb88d443-4f14-4608-fbb7-08ddb7315090",
+        "rank": "normal"
+      }
+    ],
+    "P1954": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1954",
+          "hash": "610089843b940aa4df0f153162b55cf2c4789540",
+          "datavalue": {
+            "value": "114003",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q2905443$E9303E7D-2886-4E3C-AB05-3468E5B4E1E0",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "dc7ed8692db6ee645a67ce96dbd5ecca768383a1",
+            "snaks": {
+              "P887": [
+                {
+                  "snaktype": "value",
+                  "property": "P887",
+                  "hash": "0ca41c4135639ebe0e0ddac1f02e9b8648203ca7",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11660,
+                      "id": "Q11660"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a450999b51bcabb241de9ae30602e93be3f99075",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2019-10-09T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P887", "P813"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "The Best Best of Fela Kuti",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/The_Best_Best_of_Fela_Kuti"
+    },
+    "frwiki": {
+      "site": "frwiki",
+      "title": "The Best of the Black President",
+      "badges": [],
+      "url": "https://fr.wikipedia.org/wiki/The_Best_of_the_Black_President"
+    }
+  }
+}

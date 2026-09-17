@@ -1,0 +1,367 @@
+{
+  "pageid": 3098885,
+  "ns": 0,
+  "title": "Q3246974",
+  "lastrevid": 2445170316,
+  "modified": "2025-12-21T20:56:36Z",
+  "type": "item",
+  "id": "Q3246974",
+  "labels": {
+    "lb": {
+      "language": "lb",
+      "value": "Die vier fröhlichen Wellen"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "Radio Luxembourg"
+    },
+    "en": {
+      "language": "en",
+      "value": "Radio Luxembourg"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "Radio Luxembourg"
+    },
+    "da": {
+      "language": "da",
+      "value": "Radio Luxembourg"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Radio Luxembourg"
+    },
+    "nb": {
+      "language": "nb",
+      "value": "Radio Luxembourg"
+    },
+    "es": {
+      "language": "es",
+      "value": "Radio Luxembourg"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "Radio Luxembourg"
+    },
+    "de": {
+      "language": "de",
+      "value": "Radio Luxembourg"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "راديو لوكسمبورغ"
+    }
+  },
+  "descriptions": {
+    "es": {
+      "language": "es",
+      "value": "2005-"
+    },
+    "en": {
+      "language": "en",
+      "value": "commercial radio station"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "radiokanal i Västeuropa"
+    },
+    "lb": {
+      "language": "lb",
+      "value": "lëtzebuergesche Radiosender an däitscher Sprooch"
+    }
+  },
+  "aliases": {
+    "lb": [
+      {
+        "language": "lb",
+        "value": "Vier fröhliche Wellen"
+      },
+      {
+        "language": "lb",
+        "value": "Radio Lëtzebuerg"
+      },
+      {
+        "language": "lb",
+        "value": "Fröhliche Wellen"
+      },
+      {
+        "language": "lb",
+        "value": "Radio Luxemburg"
+      }
+    ],
+    "da": [
+      {
+        "language": "da",
+        "value": "Radio Luxemborg"
+      },
+      {
+        "language": "da",
+        "value": "Radio Luxemburg"
+      }
+    ]
+  },
+  "claims": {
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "02d679fab4cdaee8b0cb2e2f8b61be4a764023ca",
+          "datavalue": {
+            "value": "/m/02pmv3k",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q3246974$D8B0C1FF-31CC-4833-A02B-938CDD2F2E5F",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2b00cb481cddcac7623114367489b5c194901c4a",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "a94b740202b097dd33355e0e6c00e54b9395e5e0",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 15241312,
+                      "id": "Q15241312"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P577": [
+                {
+                  "snaktype": "value",
+                  "property": "P577",
+                  "hash": "fde79ecb015112d2f29229ccc1ec514ed3e71fa2",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2013-10-28T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P577"]
+          }
+        ]
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "cf8c956e40dbf1413d56c719a165b89a548aedd5",
+          "datavalue": {
+            "value": {
+              "time": "+2005-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q3246974$DEA27AA3-82A5-4F53-99EE-6381C15AFDFC",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "b9f825983044007a0023cda892e9dbed23009fa5",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 14350,
+              "id": "Q14350"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3246974$e7265ae3-40a0-80cf-8836-276ee95d6161",
+        "rank": "normal"
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "291b10e8046c4951933718cade0398bbd5c9866d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 32,
+              "id": "Q32"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3246974$8c2749b7-4571-da37-554b-a9926a20b133",
+        "rank": "normal"
+      }
+    ],
+    "P8313": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8313",
+          "hash": "e7486e9e1f50e521401c97ead274e24275278266",
+          "datavalue": {
+            "value": "Radio_Luxembourg",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q3246974$5431784C-5DF0-473D-B698-245C4FFCC156",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "7de8c996376373581bf6982345f2d634a42be266",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3196539,
+              "id": "Q3196539"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3246974$0c17de18-49ae-1b84-ea04-4e45682a5712",
+        "rank": "normal"
+      }
+    ],
+    "P127": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P127",
+          "hash": "cef60e7c43cf5631df334132f6ac7b5617d31b11",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 921159,
+              "id": "Q921159"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3246974$0cbaf56e-492a-49a3-b29d-e6770086e354",
+        "rank": "normal"
+      }
+    ],
+    "P2936": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2936",
+          "hash": "7824fa245af4e39bf1803a12ffa31ef1fa15cfd6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 188,
+              "id": "Q188"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3246974$d7650b54-4caa-64a1-fd74-221d262d564f",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "plwiki": {
+      "site": "plwiki",
+      "title": "Radio Luxembourg (DRM)",
+      "badges": [],
+      "url": "https://pl.wikipedia.org/wiki/Radio_Luxembourg_(DRM)"
+    },
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Radio Luxembourg (DRM)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Radio_Luxembourg_(DRM)"
+    },
+    "svwiki": {
+      "site": "svwiki",
+      "title": "Radio Luxembourg",
+      "badges": [],
+      "url": "https://sv.wikipedia.org/wiki/Radio_Luxembourg"
+    },
+    "dawiki": {
+      "site": "dawiki",
+      "title": "Radio Luxembourg",
+      "badges": [],
+      "url": "https://da.wikipedia.org/wiki/Radio_Luxembourg"
+    },
+    "lbwiki": {
+      "site": "lbwiki",
+      "title": "RTL Deutschlands Hit-Radio",
+      "badges": [],
+      "url": "https://lb.wikipedia.org/wiki/RTL_Deutschlands_Hit-Radio"
+    }
+  }
+}

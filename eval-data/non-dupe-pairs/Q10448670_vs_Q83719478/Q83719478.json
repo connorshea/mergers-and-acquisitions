@@ -1,0 +1,847 @@
+{
+  "pageid": 83029462,
+  "ns": 0,
+  "title": "Q83719478",
+  "lastrevid": 2433651477,
+  "modified": "2025-11-25T05:03:31Z",
+  "type": "item",
+  "id": "Q83719478",
+  "labels": {
+    "de": {
+      "language": "de",
+      "value": "Checkpoint Charlie"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Checkpoint Charlie"
+    },
+    "en": {
+      "language": "en",
+      "value": "Checkpoint Charlie"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Checkpoint Charlie"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Checkpoint Charlie"
+    }
+  },
+  "descriptions": {
+    "de": {
+      "language": "de",
+      "value": "Deutsche Band"
+    },
+    "en": {
+      "language": "en",
+      "value": "German band"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "groupe de musique"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "طاقم موسيقي"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "музичний гурт"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "3c9f9d423bb4b1080c7bbebd83a3f9cce18cb443",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 215380,
+              "id": "Q215380"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q83719478$24600203-4a4f-4b79-ee38-77c9d63cd4d6",
+        "rank": "normal"
+      }
+    ],
+    "P1953": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1953",
+          "hash": "d0218d43ea159e5e4d6772a723c695c322aa9a44",
+          "datavalue": {
+            "value": "699151",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q83719478$3276912E-B1D2-4CC9-8AB4-F858CD36A4C1",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "adca19251f6cf97986a546c4013ddeabef7ab053",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 48183,
+                      "id": "Q48183"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "9e6761220a6eea17dfa861fc6e408272305d3eb4",
+                  "datavalue": {
+                    "value": "https://de.wikipedia.org/w/index.php?title=Checkpoint_Charlie_(Band)&oldid=199027248",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "773038ad64e97e0f9d8625533270820634bea685",
+          "datavalue": {
+            "value": "/g/11j23sw2n4",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q83719478$E0D18A37-2BF5-4773-88FD-2CCA1C61A3FB",
+        "rank": "normal"
+      }
+    ],
+    "P5882": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5882",
+          "hash": "1c30a287a7fe7d2f5ae45d8054ef01c769263ecd",
+          "datavalue": {
+            "value": "M00000037816",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q83719478$72A7C655-7890-43E6-B85E-3B8706D3A573",
+        "rank": "normal"
+      }
+    ],
+    "P434": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P434",
+          "hash": "5f2bbf83fe791086c98cabb746e9b7e17a9edb44",
+          "datavalue": {
+            "value": "0fa5cb59-c270-45cc-b5d8-504dcd103413",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q83719478$A450F11A-B8F9-43F7-BBC2-718319F440D9",
+        "rank": "normal"
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "7ace969f65f42c75665109850278ffa517cedf3e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 183,
+              "id": "Q183"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q83719478$c0248dc0-4c7b-5151-8c74-50682dd3c2b1",
+        "rank": "normal"
+      }
+    ],
+    "P264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P264",
+          "hash": "2ba4f84faf1ca133cef592b78c21490b90699bfc",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 42871748,
+              "id": "Q42871748"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q83719478$7c6185e9-4a80-31bf-935c-78642b040614",
+        "rank": "normal"
+      }
+    ],
+    "P740": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P740",
+          "hash": "c80d8b2077b7d76a32c33489ce02679bb5b28974",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1040,
+              "id": "Q1040"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q83719478$f9f04ec1-41dc-d5b1-b02a-7da1b2d2b35d",
+        "rank": "normal"
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "d4ce17a4ad10dfba399fb975a483ad3afa5f8ef1",
+          "datavalue": {
+            "value": {
+              "time": "+1968-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q83719478$d5da6bfd-4c27-c4d0-1cc0-a69b04070a54",
+        "rank": "normal"
+      }
+    ],
+    "P2031": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2031",
+          "hash": "415e72b85623b3f9281105bb65b86ad4dfe0e543",
+          "datavalue": {
+            "value": {
+              "time": "+1968-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q83719478$e9de2e61-4587-c7d0-8abd-fa3a87583f1b",
+        "rank": "normal"
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "0ea2eeeb898a7b2cf2647cb2a6eeb996786cdfb5",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 320592,
+              "id": "Q320592"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q83719478$c58de784-4e7b-83fd-a756-b4e8ac2d93b1",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "bb1c33144e4a3c4df471dbe4ded119d16087f1e3",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11399,
+              "id": "Q11399"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q83719478$f51167e9-465a-dcc1-c173-e5da76ff7499",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "ea46375ac24dedb4ee2eeeab0cb57a27c565c62e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2101613,
+              "id": "Q2101613"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q83719478$68f7144c-4876-a533-450a-d3841f75dbe7",
+        "rank": "normal"
+      }
+    ],
+    "P3478": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3478",
+          "hash": "39588780da5a74123d3ab323df132d84cd8138a3",
+          "datavalue": {
+            "value": "256278",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q83719478$A81AF73D-9992-4DC7-AD21-9B850DE8E333",
+        "rank": "normal"
+      }
+    ],
+    "P12984": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12984",
+          "hash": "558a275fab2c198e90c49bdf43d5a1bf8eecdc6b",
+          "datavalue": {
+            "value": "92509",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "95b6eda86f132007ed006d740d8ac10d51b43cb6",
+              "datavalue": {
+                "value": "Checkpoint Charlie",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q83719478$5713aae5-420e-35c5-b237-030dc6cb60b7",
+        "rank": "normal"
+      }
+    ],
+    "P244": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P244",
+          "hash": "0e0131996e9f0a8bc0fb7308ffa6328b2ec5ffc3",
+          "datavalue": {
+            "value": "no98061497",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "9a82f2f2ce6bef73b62749404a8dfc17d4efbdf5",
+              "datavalue": {
+                "value": "Checkpoint Charlie (Musical group)",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q83719478$43096286-4f17-ba66-32f0-4271ba6aefa8",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "4b2cebf51e0e691f9e54822b31c8c2733c5ec0d6",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "d29d09e6acaeb2bde42bcc6eb145b6c39fd49019",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 18912790,
+                      "id": "Q18912790"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "9b98e1e5b93ad0143c02141af5d8553aa4803a61",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2025-03-19T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P214": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P214",
+          "hash": "94a918919850678a276efab2e1d14ced89580e83",
+          "datavalue": {
+            "value": "126280480",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q83719478$8f368f55-47b7-6d76-dacd-52ba838ae521",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "e6ce77ee58dbf5c6cd122df75f28a7b11775a2a5",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "6b7d4330c4aac4caec4ede9de0311ce273f88ecd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 54919,
+                      "id": "Q54919"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "9b98e1e5b93ad0143c02141af5d8553aa4803a61",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2025-03-19T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P214",
+          "hash": "a86b5818dcac09299e54da8663d16343cb1d5889",
+          "datavalue": {
+            "value": "249020624",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q83719478$ee227c6d-44c0-32fd-2ccb-12dc4408750f",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "e6ce77ee58dbf5c6cd122df75f28a7b11775a2a5",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "6b7d4330c4aac4caec4ede9de0311ce273f88ecd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 54919,
+                      "id": "Q54919"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "9b98e1e5b93ad0143c02141af5d8553aa4803a61",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2025-03-19T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "dc870a3cdbc414664dcde87ec9910f39c6ff5a69",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 10448670,
+              "id": "Q10448670"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q83719478$965c1931-490f-1a59-c5a2-0566edc883db",
+        "rank": "normal"
+      }
+    ],
+    "P227": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P227",
+          "hash": "0f0820af2005d2382c670dc95a47240d80e2fa8e",
+          "datavalue": {
+            "value": "10283759-4",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q83719478$c9720a83-4906-b4ca-d739-6d9727131213",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "1c4a137057d96c29ea9cb0a44d42649269132b72",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "6b7d4330c4aac4caec4ede9de0311ce273f88ecd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 54919,
+                      "id": "Q54919"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P214": [
+                {
+                  "snaktype": "value",
+                  "property": "P214",
+                  "hash": "94a918919850678a276efab2e1d14ced89580e83",
+                  "datavalue": {
+                    "value": "126280480",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "9b98e1e5b93ad0143c02141af5d8553aa4803a61",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2025-03-19T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P214", "P813"]
+          }
+        ]
+      }
+    ],
+    "P213": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P213",
+          "hash": "a6d6a064e3be3c42a19acc366833e93b8849b39d",
+          "datavalue": {
+            "value": "0000000114979692",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q83719478$3bb5d3ce-4d9f-1ac7-f669-3c5cc7f9fef4",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "1c4a137057d96c29ea9cb0a44d42649269132b72",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "6b7d4330c4aac4caec4ede9de0311ce273f88ecd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 54919,
+                      "id": "Q54919"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P214": [
+                {
+                  "snaktype": "value",
+                  "property": "P214",
+                  "hash": "94a918919850678a276efab2e1d14ced89580e83",
+                  "datavalue": {
+                    "value": "126280480",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "9b98e1e5b93ad0143c02141af5d8553aa4803a61",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2025-03-19T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P214", "P813"]
+          }
+        ]
+      }
+    ],
+    "P1448": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1448",
+          "hash": "eb133cc6c9d3cb121be9d730763f264f89f676e3",
+          "datavalue": {
+            "value": {
+              "text": "Checkpoint Charlie",
+              "language": "mul"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q83719478$F090D1CD-2A88-417C-8B1F-4B6054E396BC",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fb5d789e8d1676e44644857ea7b90aa048d7bfc1",
+            "snaks": {
+              "P887": [
+                {
+                  "snaktype": "value",
+                  "property": "P887",
+                  "hash": "55abda5c8b7ab2fcd84013838ae150705250aa60",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 84423633,
+                      "id": "Q84423633"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P887"]
+          }
+        ]
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "754cad0c315042b0fa28b661186039b71bd2bdb1",
+          "datavalue": {
+            "value": "http://www.schneeball-records.de/main-105.html",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q83719478$F76E5074-3B10-45AD-B809-BCBA3DEAEA36",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "b51a978d427a5f2b4859f79fe2366bb03311919a",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "47e6544b0191f605c2434c7b6f2c2bc7b9649353",
+                  "datavalue": {
+                    "value": "https://www.musik-sammler.de/artist/checkpoint-charlie",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {
+    "dewiki": {
+      "site": "dewiki",
+      "title": "Checkpoint Charlie (Band)",
+      "badges": [],
+      "url": "https://de.wikipedia.org/wiki/Checkpoint_Charlie_(Band)"
+    }
+  }
+}

@@ -1,0 +1,718 @@
+{
+  "pageid": 1874412,
+  "ns": 0,
+  "title": "Q1944954",
+  "lastrevid": 2506580973,
+  "modified": "2026-06-16T06:33:02Z",
+  "type": "item",
+  "id": "Q1944954",
+  "labels": {
+    "ru": {
+      "language": "ru",
+      "value": "Mad, Bad, and Dangerous to Know"
+    },
+    "en": {
+      "language": "en",
+      "value": "Mad, Bad, and Dangerous to Know"
+    },
+    "it": {
+      "language": "it",
+      "value": "Mad, Bad and Dangerous to Know"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Mad, Bad, and Dangerous to Know"
+    },
+    "es": {
+      "language": "es",
+      "value": "Mad, Bad, and Dangerous to Know"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Mad, Bad, and Dangerous to Know"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "Mad, Bad, and Dangerous to Know"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Mad, Bad, and Dangerous to Know"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "Mad, Bad, and Dangerous to Know (альбом Dead or Alive)"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "Mad, Bad, and Dangerous to Know"
+    }
+  },
+  "descriptions": {
+    "it": {
+      "language": "it",
+      "value": "album dei Dead or Alive del 1987"
+    },
+    "de": {
+      "language": "de",
+      "value": "Album von Dead or Alive"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "muziekalbum van Dead or Alive"
+    },
+    "he": {
+      "language": "he",
+      "value": "אלבום"
+    },
+    "en": {
+      "language": "en",
+      "value": "album by Dead or Alive"
+    },
+    "eo": {
+      "language": "eo",
+      "value": "albumo de Dead or Alive"
+    },
+    "es": {
+      "language": "es",
+      "value": "álbum de Dead or Alive"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "album de Dead or Alive"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "デッド・オア・アライヴのアルバム"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "ألبوم"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "Dead or Aliven studioalbumi"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P264",
+          "hash": "fb5d3e89cb30bfc7b8d22630f401e144739d6395",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 216364,
+              "id": "Q216364"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q1944954$E02B3FB9-5796-4163-A850-C83BACD9FEE3",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "dc16d32b615bf1c6edf1919941065eedccacb8e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 482994,
+              "id": "Q482994"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q1944954$6E5DEEE7-C7D5-4687-8DDE-423C8BCE2BA8",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "954ff5a3d37bccdea96f8777589e545b5df6ddeb",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 368961,
+              "id": "Q368961"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q1944954$E29FA68D-B6CD-4838-B3D2-917DC926CBD6",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P436": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P436",
+          "hash": "5b533659fcf0eee5c9ee93589e6d9d9234c6c412",
+          "datavalue": {
+            "value": "79453cc8-e23e-3531-9277-a52c26bf83be",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "q1944954$77D8275F-3812-4F43-9CB6-066B1385E343",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "706208b3024200fd0a39ad499808dd0d98d74065",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "623cc8f0e2f65afe4d66b91962d354a2f3aa9a27",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 14005,
+                      "id": "Q14005"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P248"]
+          }
+        ]
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "666ea82ca2fdcda39970ef9f8ac6cf64e64c771c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 606393,
+              "id": "Q606393"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1944954$C9DE5937-7F31-4639-9D95-AC04B51D9467",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "9b4b3d90563cfde63614252a4aa8035cb99ae06e",
+          "datavalue": {
+            "value": {
+              "time": "+1987-02-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 10,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q1944954$40d786fc-48de-6809-2823-2d1223be5b2c",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "a18a8a85445857a60e391b8ecc16b2d36dbb4900",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 897982,
+              "id": "Q897982"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1944954$8e2a8630-4117-50cb-d90f-989fc38549ad",
+        "rank": "normal"
+      }
+    ],
+    "P162": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P162",
+          "hash": "fd4e3477542f1b4891e04a639e7ce994b5ba9857",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 945153,
+              "id": "Q945153"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1944954$ad302ddb-ae30-4c1e-b33f-76697786d63a",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P407": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P407",
+          "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1860,
+              "id": "Q1860"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1944954$2bbd05f4-ddf2-4f9c-a449-97724cd52c46",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "c456dc5cd2117249948c288206ff3f8b1bf574f0",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e17507043402fe54ae6c4d65cc51f46cec987de9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8449,
+                      "id": "Q8449"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P1954": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1954",
+          "hash": "7099f3a91a32790c14f8eb4dd515832a2814f87c",
+          "datavalue": {
+            "value": "60742",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q1944954$439b5096-cf08-48c7-98cb-f81004a6add9",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "dc7ed8692db6ee645a67ce96dbd5ecca768383a1",
+            "snaks": {
+              "P887": [
+                {
+                  "snaktype": "value",
+                  "property": "P887",
+                  "hash": "0ca41c4135639ebe0e0ddac1f02e9b8648203ca7",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11660,
+                      "id": "Q11660"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a450999b51bcabb241de9ae30602e93be3f99075",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2019-10-09T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P887", "P813"]
+          }
+        ]
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "97710c6fa6eb93c1703e95349faee19b25351aeb",
+          "datavalue": {
+            "value": "/m/01hh9xv",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q1944954$DEBA34D7-DEFA-4DDE-9634-1C4B8576741F",
+        "rank": "normal"
+      }
+    ],
+    "P437": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P437",
+          "hash": "a9e6303ba7f6a25dd0ce03e6c75f3c9e02b5f449",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 34467,
+              "id": "Q34467"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q1944954$C6B048EE-DB92-426E-8957-8EF84C04EA1E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "e13511836d1f042fd44a53d16da9c747d2636b8e",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e17507043402fe54ae6c4d65cc51f46cec987de9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8449,
+                      "id": "Q8449"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "4cddfecacd5b2b85e437906f085d749423926d6e",
+                  "datavalue": {
+                    "value": "https://es.wikipedia.org/w/index.php?title=Mad,_Bad,_and_Dangerous_to_Know&oldid=128004779",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P361": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P361",
+          "hash": "0657411d22d92ecfd218aa5c769b14be979fb3b7",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 109622790,
+              "id": "Q109622790"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P155": [
+            {
+              "snaktype": "value",
+              "property": "P155",
+              "hash": "ca2cc70a49b1222ceebfbfd75c647ef2d75abf04",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 1938265,
+                  "id": "Q1938265"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P156": [
+            {
+              "snaktype": "value",
+              "property": "P156",
+              "hash": "ca1a7e6466caf8f277dd1db85ceef3715c4de76f",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 3936318,
+                  "id": "Q3936318"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P155", "P156"],
+        "id": "Q1944954$92EC4836-FCA8-4FFE-BCB0-CA8171A357C7",
+        "rank": "normal"
+      }
+    ],
+    "P1729": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1729",
+          "hash": "69c7b29ae30bec541cf668c040b6e662a278e8bd",
+          "datavalue": {
+            "value": "mw0000189735",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q1944954$592EAE10-F113-4786-8AA5-0FDCB2C6434B",
+        "rank": "normal"
+      }
+    ],
+    "P3192": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3192",
+          "hash": "2c25a80831be664d908aa06909790455aef0c808",
+          "datavalue": {
+            "value": "Dead+or+Alive/Mad,+Bad,+and+Dangerous+To+Know",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q1944954$F7F95340-DC7B-4855-99FA-572F993F80CA",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "ruwiki": {
+      "site": "ruwiki",
+      "title": "Mad, Bad, and Dangerous to Know",
+      "badges": [],
+      "url": "https://ru.wikipedia.org/wiki/Mad,_Bad,_and_Dangerous_to_Know"
+    },
+    "itwiki": {
+      "site": "itwiki",
+      "title": "Mad, Bad and Dangerous to Know (Dead or Alive)",
+      "badges": [],
+      "url": "https://it.wikipedia.org/wiki/Mad,_Bad_and_Dangerous_to_Know_(Dead_or_Alive)"
+    },
+    "eswiki": {
+      "site": "eswiki",
+      "title": "Mad, Bad, and Dangerous to Know",
+      "badges": [],
+      "url": "https://es.wikipedia.org/wiki/Mad,_Bad,_and_Dangerous_to_Know"
+    },
+    "ukwiki": {
+      "site": "ukwiki",
+      "title": "Mad, Bad, and Dangerous to Know (альбом Dead or Alive)",
+      "badges": [],
+      "url": "https://uk.wikipedia.org/wiki/Mad,_Bad,_and_Dangerous_to_Know_(%D0%B0%D0%BB%D1%8C%D0%B1%D0%BE%D0%BC_Dead_or_Alive)"
+    },
+    "fiwiki": {
+      "site": "fiwiki",
+      "title": "Mad, Bad and Dangerous to Know",
+      "badges": [],
+      "url": "https://fi.wikipedia.org/wiki/Mad,_Bad_and_Dangerous_to_Know"
+    },
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Mad, Bad and Dangerous to Know (Dead or Alive album)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Mad,_Bad_and_Dangerous_to_Know_(Dead_or_Alive_album)"
+    }
+  }
+}

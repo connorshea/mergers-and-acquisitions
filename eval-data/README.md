@@ -75,18 +75,31 @@ but are genuinely different subjects: two different games sharing a title, an
 original vs. its remake, a series vs. one entry, a game vs. its soundtrack/DLC.
 Easy negatives (unrelated items) teach little. Negatives have no merge trail, so
 each item is fetched at its current revision (`lastrevid` recorded in `meta.json`
-for reproducibility).
+for reproducibility). Scope is deliberately broad (not just games): people,
+companies, products, films, albums, ships, taxa, etc.
+
+Each record's `provenance` records where the pair came from:
+
+- `hand-curated` — a pair a maintainer personally confirmed is distinct.
+- `wikidata-p1889-different-from` — mined from Wikidata's **P1889 ("different
+  from")** statements, which editors add precisely to separate commonly-confused
+  items. Filtered to same-type, near-identical-label pairs (the confusable ones)
+  and excludes scholarly-article / category / disambiguation items.
 
 ### Add new examples
 
-Pass QIDs pairwise (the fetcher canonicalizes each pair's order):
+Pass QIDs pairwise (the fetcher canonicalizes each pair's order). `--provenance`
+tags where they came from; it defaults to `hand-curated`:
 
 ```sh
 pnpm eval:fetch-nondupes Q4047343 Q1535818  Q140140365 Q213911
+pnpm eval:fetch-nondupes -- --provenance wikidata-p1889-different-from Q719960 Q116783524 …
 ```
 
-Good sources of hard negatives: pairs you personally confirm are distinct, and —
-once the app is running — the hunt's own **dismissed** candidates.
+Good sources of hard negatives: pairs you personally confirm are distinct;
+Wikidata P1889 "different from" pairs (query QLever for `?a wdt:P1889 ?b`,
+Q-items only, ranked by label similarity + shared type); and — once the app is
+running — the hunt's own **dismissed** candidates.
 
 ## Scoring the dataset
 

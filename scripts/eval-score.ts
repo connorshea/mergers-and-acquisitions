@@ -35,7 +35,7 @@
 import { readFile, readdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import type { Item, Value, ValueType, ScoreOptions } from "../src/lib/compare.ts";
-import { orderByAge, scoreCandidate } from "../src/lib/compare.ts";
+import { IDENTIFIER_SHARED_WITH, orderByAge, scoreCandidate } from "../src/lib/compare.ts";
 
 const EVAL_DIR = "eval-data";
 const BASELINE_PATH = join(EVAL_DIR, "score-baseline.json");
@@ -52,6 +52,7 @@ interface Snak {
 interface Statement {
   mainsnak: Snak;
   rank: "preferred" | "normal" | "deprecated";
+  qualifiers?: Record<string, Snak[]>;
 }
 interface Entity {
   id: string;
@@ -114,11 +115,27 @@ function bestRank(statements: Statement[]): Statement[] {
   return preferred.length > 0 ? preferred : live;
 }
 
+/**
+ * Convert one statement into a scorer Value, carrying the QIDs of its
+ * "identifier shared with" (P4070) qualifiers as `sharedWith` — the same shape
+ * the dump path emits (see script/dump_wikidata_games.rb), so the scorer's
+ * shared-identifier handling is exercised here too.
+ */
+function statementValue(statement: Statement): Value | null {
+  const value = snakValue(statement.mainsnak);
+  if (!value) return null;
+  const sharedWith = (statement.qualifiers?.[IDENTIFIER_SHARED_WITH] ?? [])
+    .map((q) => snakValue(q))
+    .filter((q): q is Value => q !== null && q.type === "item")
+    .map((q) => q.value);
+  return sharedWith.length > 0 ? { ...value, sharedWith } : value;
+}
+
 function entityToItem(entity: Entity): Item {
   const statements: Record<string, Value[]> = {};
   for (const [pid, sts] of Object.entries(entity.claims ?? {})) {
     const values = bestRank(sts)
-      .map((s) => snakValue(s.mainsnak))
+      .map(statementValue)
       .filter((v): v is Value => v !== null);
     if (values.length > 0) statements[pid] = values;
   }

@@ -1,0 +1,218 @@
+{
+  "pageid": 36893852,
+  "ns": 0,
+  "title": "Q35482204",
+  "lastrevid": 950136384,
+  "modified": "2019-05-27T10:25:55Z",
+  "type": "item",
+  "id": "Q35482204",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Rūdkhāneh-ye Jarāḩī"
+    },
+    "ceb": {
+      "language": "ceb",
+      "value": "Rūdkhāneh-ye Jarāḩī"
+    }
+  },
+  "descriptions": {
+    "ar": {
+      "language": "ar",
+      "value": "جدول مائي في إيران"
+    },
+    "de": {
+      "language": "de",
+      "value": "Bach im Iran"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P625": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P625",
+          "hash": "8d81d2ed1c119897106484e86f22e1267a27f610",
+          "datavalue": {
+            "value": {
+              "latitude": 30.7498,
+              "longitude": 49.2254,
+              "altitude": null,
+              "precision": 0.00001,
+              "globe": "http://www.wikidata.org/entity/Q2"
+            },
+            "type": "globecoordinate"
+          },
+          "datatype": "globe-coordinate"
+        },
+        "type": "statement",
+        "id": "Q35482204$17010C90-5AA5-4C3B-AF2D-BB0303B0791C",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "43a0088c51fd85e5a85d1b46412c3a635e6d4edc",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d8fbf8671e3c630db61bfac691068cfb6857f243",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 837615,
+                      "id": "Q837615"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "e59a43b1d4a00e0a5149fef62acc53e1b5d41c35",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 47521,
+              "id": "Q47521"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q35482204$E761AA8C-8CC8-4390-9584-DFB4E8107F1D",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "43a0088c51fd85e5a85d1b46412c3a635e6d4edc",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d8fbf8671e3c630db61bfac691068cfb6857f243",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 837615,
+                      "id": "Q837615"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P1566": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1566",
+          "hash": "a87bbf87e37d2989409ed30b79c16252795dfd0c",
+          "datavalue": {
+            "value": "6648120",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q35482204$59366F92-E038-44C0-B30A-E7AEC3678B36",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "43a0088c51fd85e5a85d1b46412c3a635e6d4edc",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d8fbf8671e3c630db61bfac691068cfb6857f243",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 837615,
+                      "id": "Q837615"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "f04a6c4dcfe72579de0b7e32985a08f0ad868b7d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 794,
+              "id": "Q794"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q35482204$C0BA8573-6E9F-4A22-8248-79241B0C17D1",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "43a0088c51fd85e5a85d1b46412c3a635e6d4edc",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d8fbf8671e3c630db61bfac691068cfb6857f243",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 837615,
+                      "id": "Q837615"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {
+    "cebwiki": {
+      "site": "cebwiki",
+      "title": "Rūdkhāneh-ye Jarāḩī (suba sa Iran)",
+      "badges": [],
+      "url": "https://ceb.wikipedia.org/wiki/R%C5%ABdkh%C4%81neh-ye_Jar%C4%81%E1%B8%A9%C4%AB_(suba_sa_Iran)"
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "pageid": 35176346,
+  "ns": 0,
+  "title": "Q33732193",
+  "lastrevid": 2114559577,
+  "modified": "2024-03-30T18:39:20Z",
+  "type": "item",
+  "id": "Q33732193",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Żelechów"
+    },
+    "ceb": {
+      "language": "ceb",
+      "value": "Żelechów"
+    }
+  },
+  "descriptions": {},
+  "aliases": {},
+  "claims": {
+    "P1566": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1566",
+          "hash": "e926011a9864745d6e344014da5fadd1a5aba3c0",
+          "datavalue": {
+            "value": "7533078",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q33732193$850212ED-3FBE-4279-BD23-A69C61CA6A86",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "43a0088c51fd85e5a85d1b46412c3a635e6d4edc",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d8fbf8671e3c630db61bfac691068cfb6857f243",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 837615,
+                      "id": "Q837615"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {
+    "cebwiki": {
+      "site": "cebwiki",
+      "title": "Żelechów (munisipyo)",
+      "badges": [],
+      "url": "https://ceb.wikipedia.org/wiki/%C5%BBelech%C3%B3w_(munisipyo)"
+    }
+  }
+}

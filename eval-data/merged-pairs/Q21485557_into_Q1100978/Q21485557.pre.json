@@ -1,0 +1,222 @@
+{
+  "pageid": 23530506,
+  "ns": 0,
+  "title": "Q21485557",
+  "lastrevid": 377636862,
+  "modified": "2016-09-20T07:16:35Z",
+  "type": "item",
+  "id": "Q21485557",
+  "labels": {
+    "ceb": {
+      "language": "ceb",
+      "value": "Fairweather"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "Fairweather"
+    },
+    "en": {
+      "language": "en",
+      "value": "Fairweather"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Fairweather"
+    }
+  },
+  "descriptions": {
+    "nl": {
+      "language": "nl",
+      "value": "schiereiland in  Antarctica"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "udde"
+    },
+    "ceb": {
+      "language": "ceb",
+      "value": "punta"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P30": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P30",
+          "hash": "77e34ffde618f991c8f369d7e41b019138e5d69d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 51,
+              "id": "Q51"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q21485557$9A8767A1-22E8-4C36-BD40-2249F049D372",
+        "rank": "normal"
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "456025348bcd1aca0554e284dca75a1c44590f92",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 34763,
+              "id": "Q34763"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q21485557$2E4E81E1-8347-4828-BC5F-9CD8827DAA4D",
+        "rank": "normal"
+      }
+    ],
+    "P1566": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1566",
+          "hash": "eab2ed053ff4c2be3724aa8cdc0db8d6b0b6fc4b",
+          "datavalue": {
+            "value": "6632926",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q21485557$47783A81-5854-46BA-B6B6-3D34A776F1F6",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "bd49d3e4f67bc460ce7a06b6ac3027347cf5ee55",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e84b0343e79e2a9aa8abadd7301051e15fba52d6",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 169514,
+                      "id": "Q169514"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P625": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P625",
+          "hash": "7784c2cc93d44e6f491a833bc31a328dddf17384",
+          "datavalue": {
+            "value": {
+              "latitude": -65.01286,
+              "longitude": -61.03871,
+              "altitude": null,
+              "precision": 0.000001,
+              "globe": "http://www.wikidata.org/entity/Q2"
+            },
+            "type": "globecoordinate"
+          },
+          "datatype": "globe-coordinate"
+        },
+        "type": "statement",
+        "id": "Q21485557$0D2AAA15-F0D7-4E51-A985-8678B6343BB7",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "bd49d3e4f67bc460ce7a06b6ac3027347cf5ee55",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e84b0343e79e2a9aa8abadd7301051e15fba52d6",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 169514,
+                      "id": "Q169514"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "novalue",
+          "property": "P17",
+          "hash": "9bd0d5bb5273ae454d4fbf369b5913462e400339",
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q21485557$E6E8D144-1A55-4B82-8128-DE15620FB928",
+        "rank": "normal"
+      }
+    ],
+    "P131": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P131",
+          "hash": "49c60ef8bd0c6379fd1d998a76bc66e2ac9d800c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 21590062,
+              "id": "Q21590062"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q21485557$CF32E7E4-E412-4D07-9657-555E4751D0EF",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "svwiki": {
+      "site": "svwiki",
+      "title": "Fairweather (udde)",
+      "badges": [],
+      "url": "https://sv.wikipedia.org/wiki/Fairweather_(udde)"
+    },
+    "cebwiki": {
+      "site": "cebwiki",
+      "title": "Fairweather (punta)",
+      "badges": [],
+      "url": "https://ceb.wikipedia.org/wiki/Fairweather_(punta)"
+    }
+  }
+}

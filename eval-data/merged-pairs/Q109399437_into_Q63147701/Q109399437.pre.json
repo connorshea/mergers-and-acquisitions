@@ -1,0 +1,176 @@
+{
+  "pageid": 104555888,
+  "ns": 0,
+  "title": "Q109399437",
+  "lastrevid": 1525644360,
+  "modified": "2021-11-11T01:18:17Z",
+  "type": "item",
+  "id": "Q109399437",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "24 Sydenham Street"
+    }
+  },
+  "descriptions": {},
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "Hochelaga Inn"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "cde5c4e0193f7c6ae9c9a96ee2fa5d9e3bc9ac9f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3947,
+              "id": "Q3947"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q109399437$e320261e-48db-2259-ce5c-6817fb356e73",
+        "rank": "normal"
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "a3723c4c3601569aebcc86e0f0c5c3697821da1b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 16,
+              "id": "Q16"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q109399437$d0565210-47a6-e474-6e21-a730888b13b8",
+        "rank": "normal"
+      }
+    ],
+    "P84": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P84",
+          "hash": "d2d71722af06090f8a93568d38efa393ea38f6eb",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 109399416,
+              "id": "Q109399416"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q109399437$9bbc89ba-4e28-2e5b-5c9b-d3877328aa9f",
+        "rank": "normal"
+      }
+    ],
+    "P131": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P131",
+          "hash": "349d619d64cf55183a6baa10df9674868e51cee9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 202973,
+              "id": "Q202973"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q109399437$c127aa20-4cda-97ab-7b56-a7ff50dad88e",
+        "rank": "normal"
+      }
+    ],
+    "P149": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P149",
+          "hash": "7cbc62b6df52327325090b4894a9bdf32604b3a0",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 565165,
+              "id": "Q565165"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q109399437$f5b421e9-4c97-1348-8ce3-03c84ccdfa6c",
+        "rank": "normal"
+      }
+    ],
+    "P625": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P625",
+          "hash": "62a31e744ecf86168637621dba4b69d29012cdea",
+          "datavalue": {
+            "value": {
+              "latitude": 44.22852606470042,
+              "longitude": -76.48858443361105,
+              "altitude": null,
+              "precision": 1e-8,
+              "globe": "http://www.wikidata.org/entity/Q2"
+            },
+            "type": "globecoordinate"
+          },
+          "datatype": "globe-coordinate"
+        },
+        "type": "statement",
+        "id": "Q109399437$301b2530-4254-8198-2bd8-a58f42377cb5",
+        "rank": "normal"
+      }
+    ],
+    "P1435": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1435",
+          "hash": "c7896477be29847f8cf34d8a18ca534cb81ced88",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 15080599,
+              "id": "Q15080599"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q109399437$d8e9dc73-46e4-be73-e30c-14479f3bf3b4",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

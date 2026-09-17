@@ -1,0 +1,997 @@
+{
+  "pageid": 2268123,
+  "ns": 0,
+  "title": "Q2347653",
+  "lastrevid": 1950338476,
+  "modified": "2023-08-09T11:12:32Z",
+  "type": "item",
+  "id": "Q2347653",
+  "labels": {
+    "pt": {
+      "language": "pt",
+      "value": "Comuna de Żelechów"
+    },
+    "war": {
+      "language": "war",
+      "value": "Gmina Żelechów"
+    },
+    "sk": {
+      "language": "sk",
+      "value": "Gmina Żelechów"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "Żelechów"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Żelechów"
+    },
+    "ru": {
+      "language": "ru",
+      "value": "Желехув"
+    },
+    "en": {
+      "language": "en",
+      "value": "Gmina Żelechów"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "Ґміна Желехув"
+    },
+    "it": {
+      "language": "it",
+      "value": "Żelechów"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Żelechów"
+    },
+    "nan": {
+      "language": "nan",
+      "value": "Żelechów"
+    },
+    "be": {
+      "language": "be",
+      "value": "Гміна Жалехаў"
+    },
+    "fa": {
+      "language": "fa",
+      "value": "گمینا ژلخوو"
+    },
+    "azb": {
+      "language": "azb",
+      "value": "قمینا ژلخوو"
+    },
+    "eu": {
+      "language": "eu",
+      "value": "Żelechów udalerria"
+    },
+    "vi": {
+      "language": "vi",
+      "value": "Thị trấn Żelechów"
+    },
+    "de": {
+      "language": "de",
+      "value": "Gmina Żelechów"
+    }
+  },
+  "descriptions": {
+    "it": {
+      "language": "it",
+      "value": "comune polacco"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "commune polonaise"
+    },
+    "en": {
+      "language": "en",
+      "value": "urban-rural gmina of Poland"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "місько-сільська ґміна Польщі"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "gemeente"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "gmina miejsko-wiejska w województwie mazowieckim"
+    },
+    "sk": {
+      "language": "sk",
+      "value": "mestsko-vidiecka gmina v Poľsku"
+    },
+    "de": {
+      "language": "de",
+      "value": "Stadt-und-Land-Gemeinde im Powiat Garwoliński der Woiwodschaft Masowien in Polen"
+    }
+  },
+  "aliases": {
+    "fr": [
+      {
+        "language": "fr",
+        "value": "Gmina Żelechów"
+      }
+    ],
+    "ru": [
+      {
+        "language": "ru",
+        "value": "Гмина Желехув"
+      }
+    ],
+    "uk": [
+      {
+        "language": "uk",
+        "value": "Гміна Желехув"
+      }
+    ],
+    "it": [
+      {
+        "language": "it",
+        "value": "Zelechow"
+      }
+    ],
+    "pl": [
+      {
+        "language": "pl",
+        "value": "gmina Żelechów"
+      }
+    ]
+  },
+  "claims": {
+    "P131": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P131",
+          "hash": "cb31b88a62e4c56b7ec53853e85576c1cfe1a6c7",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 924007,
+              "id": "Q924007"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q2347653$B584FDE3-EA78-4648-9E09-680DD87894CA",
+        "rank": "normal"
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "88bdf0debebfba0d0f20c85ee32a18fb3e6c71a6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 36,
+              "id": "Q36"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q2347653$DC10DA2A-A2BE-4BF5-BCA7-DD5E30390216",
+        "rank": "normal"
+      }
+    ],
+    "P373": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P373",
+          "hash": "83ff4d8713cc18bd78d9c513e95d649600ef23f5",
+          "datavalue": {
+            "value": "Gmina Żelechów",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "q2347653$C341AA99-C642-474F-82DD-7AC89A051F18",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P625": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P625",
+          "hash": "3eb0533fb44e170a4379168cdafb9c5d3c2d9283",
+          "datavalue": {
+            "value": {
+              "latitude": 51.8,
+              "longitude": 21.9,
+              "altitude": null,
+              "precision": 0.016666666666667,
+              "globe": "http://www.wikidata.org/entity/Q2"
+            },
+            "type": "globecoordinate"
+          },
+          "datatype": "globe-coordinate"
+        },
+        "type": "statement",
+        "id": "q2347653$705434A0-C92D-4ADB-A9FA-C125B8BF6C59",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "a6a180a5736efd46d04a06859fabdabb5c8974c1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3491915,
+              "id": "Q3491915"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2347653$E7B5AD42-F7AF-4DDB-BA97-ED0DB8F52E5D",
+        "rank": "normal"
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "c4775bbebd055b700f9f39230f4afc1e78f06534",
+          "datavalue": {
+            "value": "/m/03h42kz",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q2347653$10B0EEB6-3232-4160-B63B-605283CCA00D",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2b00cb481cddcac7623114367489b5c194901c4a",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "a94b740202b097dd33355e0e6c00e54b9395e5e0",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 15241312,
+                      "id": "Q15241312"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P577": [
+                {
+                  "snaktype": "value",
+                  "property": "P577",
+                  "hash": "fde79ecb015112d2f29229ccc1ec514ed3e71fa2",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2013-10-28T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P577"]
+          }
+        ]
+      }
+    ],
+    "P910": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P910",
+          "hash": "31b28c30ce41cbd04bfca46f498ec1b79786d32c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 9499764,
+              "id": "Q9499764"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2347653$5EF32D50-EB8E-412C-83B1-D70200564AFD",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "14d2400e3b1d36332748dc330276f099eeaa8800",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "39224a9c2e8ce5424defbd16603d25771956c7fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 1551807,
+                      "id": "Q1551807"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P1653": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1653",
+          "hash": "b9cb1b9545a8696686343b0a097558e042580664",
+          "datavalue": {
+            "value": "1403143",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q2347653$B5880050-D3DE-4753-BC85-0FEE6768BB2A",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "732ec1c90a6f0694c7db9a71bf09fe7f2b674172",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "9123b0de1cc9c3954366ba797d598e4e1ea4146f",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 10000,
+                      "id": "Q10000"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          },
+          {
+            "hash": "071205b0961e93830d2d9ec38fecf4eeeccddca1",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "f35d18af24eb138c5a536ea17c812702277e33ef",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-01-01T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "b6154833a9f58d8b7ffe5930589f13a5e8ce77f8",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 2635117,
+                      "id": "Q2635117"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P813", "P248"]
+          }
+        ]
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "932c3775cd14404a09cecc29db0dbb5d30c7db63",
+          "datavalue": {
+            "value": "http://www.zelechow.pl/",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q2347653$DEA08513-D7E5-49E9-8CE9-E8DF625B35A1",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d5847b9b6032aa8b13dae3c2dfd9ed5d114d21b3",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "5a343e7e758a4282a01316d3e959b6e653b767fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11920,
+                      "id": "Q11920"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P47": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P47",
+          "hash": "fb620ac3add7c384061a8241419f3c017e8f2e0a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1936748,
+              "id": "Q1936748"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2347653$A0C26275-D159-4956-A44D-3304D2FD1647",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P47",
+          "hash": "0b9299408e613cc990e163fd9bf812370cf686b4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2193958,
+              "id": "Q2193958"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2347653$7ACD6990-3A97-4F91-8178-0D4EDE266D65",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P47",
+          "hash": "30fe9e2700811709b84627b7c4eebb5ccbdb576f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 577158,
+              "id": "Q577158"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2347653$80CDD423-A20A-40AA-BD99-1E8F00D53BFF",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P47",
+          "hash": "5996044c88fb3e150e752f4d0cff1faf49ac3318",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2180796,
+              "id": "Q2180796"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2347653$3CAE7A74-2F12-4B23-AA1E-7CB61FF2B731",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P47",
+          "hash": "4786ed8f20e62bafd40f8fabc6d8458ffdcaf7fc",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2302287,
+              "id": "Q2302287"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2347653$1B813953-B278-448E-9671-49E31154F961",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P47",
+          "hash": "7a81aa8c8685b83ea24ac62817941fb219a614dc",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 650641,
+              "id": "Q650641"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2347653$9BEE61AA-6C93-42B8-B8C6-9A3189A15680",
+        "rank": "normal"
+      }
+    ],
+    "P94": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P94",
+          "hash": "b188d7fc6b794f43d5dd1e263c7f02c8318a395f",
+          "datavalue": {
+            "value": "POL Żelechów COA.svg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q2347653$B1036D0A-EE76-49AD-AE48-F983FFABE9F5",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "288ab581e7d2d02995a26dfa8b091d96e78457fc",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 206855,
+                      "id": "Q206855"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P242": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P242",
+          "hash": "79f22b3a6bc3b9e0a15d806ac784ab9c60026cc1",
+          "datavalue": {
+            "value": "Mazowsze Garwoliński.png",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q2347653$35B4B23D-0E7F-45C3-B806-E7E988AB349B",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "288ab581e7d2d02995a26dfa8b091d96e78457fc",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 206855,
+                      "id": "Q206855"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P395": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P395",
+          "hash": "9c9c30359f44cc27fb97f72d262292ec2a2d3abe",
+          "datavalue": {
+            "value": "WG",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q2347653$2E53F461-CD8B-4E60-8B84-8588F5435100",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "288ab581e7d2d02995a26dfa8b091d96e78457fc",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 206855,
+                      "id": "Q206855"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "b1e4a75b3f55b78f8f9756138eb50c4b6fa88e8a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 393091,
+              "id": "Q393091"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2347653$D8A2DA5D-C699-4771-8B30-A8537D8400DA",
+        "rank": "normal"
+      }
+    ],
+    "P2046": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2046",
+          "hash": "99875ed5ae462fc220ed1a2932ba44d8c97a83f8",
+          "datavalue": {
+            "value": {
+              "amount": "+87.64",
+              "unit": "http://www.wikidata.org/entity/Q712226"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q2347653$E45E0681-5ADA-44D6-BB18-82AF04A286D3",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "44e7647ac4bdcf008ba664bb343c5cb1c835a48a",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "400eb47062d7542352157f3876e8fcbfef320ad1",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Gmina_Żelechów&oldid=771021295",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P11012": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11012",
+          "hash": "82a0e55249ba9fcf3b534b89681365193b5d821f",
+          "datavalue": {
+            "value": "Q2524429",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q2347653$953185F5-1B47-4C65-9F81-2CE1189AF1B5",
+        "rank": "normal"
+      }
+    ],
+    "P2503": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2503",
+          "hash": "575aba841c04b740471d09d746650752abdff483",
+          "datavalue": {
+            "value": "object_1071944",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q2347653$ba88d02a-91d8-4fea-8cd8-e253fd59063a",
+        "rank": "normal"
+      }
+    ],
+    "P402": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P402",
+          "hash": "c0cd55aea71180a007e2199bf6ac387a2f973001",
+          "datavalue": {
+            "value": "2695101",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q2347653$ABC2974B-CACC-4FED-AA88-504E39D0FD1D",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Gmina Żelechów",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Gmina_%C5%BBelech%C3%B3w"
+    },
+    "frwiki": {
+      "site": "frwiki",
+      "title": "Żelechów (gmina)",
+      "badges": [],
+      "url": "https://fr.wikipedia.org/wiki/%C5%BBelech%C3%B3w_(gmina)"
+    },
+    "ruwiki": {
+      "site": "ruwiki",
+      "title": "Желехув (гмина)",
+      "badges": [],
+      "url": "https://ru.wikipedia.org/wiki/%D0%96%D0%B5%D0%BB%D0%B5%D1%85%D1%83%D0%B2_(%D0%B3%D0%BC%D0%B8%D0%BD%D0%B0)"
+    },
+    "itwiki": {
+      "site": "itwiki",
+      "title": "Żelechów",
+      "badges": [],
+      "url": "https://it.wikipedia.org/wiki/%C5%BBelech%C3%B3w"
+    },
+    "nlwiki": {
+      "site": "nlwiki",
+      "title": "Żelechów (gemeente)",
+      "badges": [],
+      "url": "https://nl.wikipedia.org/wiki/%C5%BBelech%C3%B3w_(gemeente)"
+    },
+    "plwiki": {
+      "site": "plwiki",
+      "title": "Żelechów (gmina)",
+      "badges": [],
+      "url": "https://pl.wikipedia.org/wiki/%C5%BBelech%C3%B3w_(gmina)"
+    },
+    "ptwiki": {
+      "site": "ptwiki",
+      "title": "Comuna de Żelechów",
+      "badges": [],
+      "url": "https://pt.wikipedia.org/wiki/Comuna_de_%C5%BBelech%C3%B3w"
+    },
+    "fawiki": {
+      "site": "fawiki",
+      "title": "گمینا ژلخوو",
+      "badges": [],
+      "url": "https://fa.wikipedia.org/wiki/%DA%AF%D9%85%DB%8C%D9%86%D8%A7_%DA%98%D9%84%D8%AE%D9%88%D9%88"
+    },
+    "azbwiki": {
+      "site": "azbwiki",
+      "title": "قمینا ژلخوو",
+      "badges": [],
+      "url": "https://azb.wikipedia.org/wiki/%D9%82%D9%85%DB%8C%D9%86%D8%A7_%DA%98%D9%84%D8%AE%D9%88%D9%88"
+    },
+    "bewiki": {
+      "site": "bewiki",
+      "title": "Жалехаў (гміна)",
+      "badges": [],
+      "url": "https://be.wikipedia.org/wiki/%D0%96%D0%B0%D0%BB%D0%B5%D1%85%D0%B0%D1%9E_(%D0%B3%D0%BC%D1%96%D0%BD%D0%B0)"
+    },
+    "euwiki": {
+      "site": "euwiki",
+      "title": "Żelechów udalerria",
+      "badges": [],
+      "url": "https://eu.wikipedia.org/wiki/%C5%BBelech%C3%B3w_udalerria"
+    },
+    "skwiki": {
+      "site": "skwiki",
+      "title": "Gmina Żelechów",
+      "badges": [],
+      "url": "https://sk.wikipedia.org/wiki/Gmina_%C5%BBelech%C3%B3w"
+    },
+    "warwiki": {
+      "site": "warwiki",
+      "title": "Gmina Żelechów",
+      "badges": [],
+      "url": "https://war.wikipedia.org/wiki/Gmina_%C5%BBelech%C3%B3w"
+    },
+    "viwiki": {
+      "site": "viwiki",
+      "title": "Żelechów (công xã)",
+      "badges": [],
+      "url": "https://vi.wikipedia.org/wiki/%C5%BBelech%C3%B3w_(c%C3%B4ng_x%C3%A3)"
+    },
+    "zh_min_nanwiki": {
+      "site": "zh_min_nanwiki",
+      "title": "Żelechów Kong-siā",
+      "badges": [],
+      "url": "https://zh-min-nan.wikipedia.org/wiki/%C5%BBelech%C3%B3w_Kong-si%C4%81"
+    },
+    "dewiki": {
+      "site": "dewiki",
+      "title": "Gmina Żelechów",
+      "badges": [],
+      "url": "https://de.wikipedia.org/wiki/Gmina_%C5%BBelech%C3%B3w"
+    },
+    "ukwiki": {
+      "site": "ukwiki",
+      "title": "Желехув (гміна)",
+      "badges": [],
+      "url": "https://uk.wikipedia.org/wiki/%D0%96%D0%B5%D0%BB%D0%B5%D1%85%D1%83%D0%B2_(%D0%B3%D0%BC%D1%96%D0%BD%D0%B0)"
+    }
+  }
+}

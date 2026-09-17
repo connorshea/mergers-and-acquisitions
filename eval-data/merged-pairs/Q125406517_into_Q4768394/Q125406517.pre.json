@@ -1,0 +1,89 @@
+{
+  "pageid": 119533461,
+  "ns": 0,
+  "title": "Q125406517",
+  "lastrevid": 2128400501,
+  "modified": "2024-04-14T02:00:29Z",
+  "type": "item",
+  "id": "Q125406517",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Anne Graham"
+    },
+    "de": {
+      "language": "de",
+      "value": "Anne Graham"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Anne Graham"
+    },
+    "es": {
+      "language": "es",
+      "value": "Anne Graham"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "Anne Graham"
+    },
+    "pt-br": {
+      "language": "pt-br",
+      "value": "Anne Graham"
+    }
+  },
+  "descriptions": {},
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q125406517$9b742577-a02c-41bf-b3b1-b6022b3e0b6a",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "5760796ff6ebc63aae12cdcbf509b07ebf0bd201",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581072,
+              "id": "Q6581072"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q125406517$71f67fce-4f08-558f-88c5-61502e6e4701",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "eswiki": {
+      "site": "eswiki",
+      "title": "Anne Graham",
+      "badges": [],
+      "url": "https://es.wikipedia.org/wiki/Anne_Graham"
+    }
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "pageid": 85143024,
+  "ns": 0,
+  "title": "Q85872424",
+  "lastrevid": 2018362943,
+  "modified": "2023-11-26T18:17:32Z",
+  "type": "item",
+  "id": "Q85872424",
+  "labels": {
+    "pt": {
+      "language": "pt",
+      "value": "Gonçalo Mendes da Maia"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Gonçalo Mendes da Maia"
+    },
+    "en": {
+      "language": "en",
+      "value": "Gonçalo Mendes da Maia"
+    },
+    "pt-br": {
+      "language": "pt-br",
+      "value": "Gonçalo Mendes da Maia"
+    }
+  },
+  "descriptions": {
+    "pt": {
+      "language": "pt",
+      "value": "Amigo pessoal de Celso Queiroz (Duque de São Mamede)"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q85872424$AF998FD8-66C2-44ED-92F0-734DD580F47A",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q85872424$2aa8d212-4b2f-8a85-0726-7bd0bf040d01",
+        "rank": "normal"
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "1b17ffdb04519a59ae6bd68b307f55160ef9de7f",
+          "datavalue": {
+            "value": "/g/11bc6svgy6",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q85872424$18F3088F-458A-48C0-9803-B86EF1DE9A53",
+        "rank": "normal"
+      }
+    ],
+    "P22": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P22",
+          "hash": "a2a03e5634336cbcce5765d57def14bcb1e457ca",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 10328638,
+              "id": "Q10328638"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q85872424$28da8b83-4441-68e5-e745-1fa8fb5972a1",
+        "rank": "normal"
+      }
+    ],
+    "P4159": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4159",
+          "hash": "c9440a68f4af52a3027ebd18c7169ee802bc1b3c",
+          "datavalue": {
+            "value": "Goncalo_Mendes-da-Maia_(1)",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q85872424$356F8000-B93E-4EEC-B463-9C22F8499A41",
+        "rank": "normal"
+      }
+    ],
+    "P7929": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7929",
+          "hash": "72a81f74608623067fecf89ffdb29e129c93eac7",
+          "datavalue": {
+            "value": "p=goncalo mendes;n=da maia",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q85872424$DD6E121B-09C6-4BEE-8751-68D970F9784E",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "ptwiki": {
+      "site": "ptwiki",
+      "title": "Gonçalo Mendes da Maia",
+      "badges": [],
+      "url": "https://pt.wikipedia.org/wiki/Gon%C3%A7alo_Mendes_da_Maia"
+    }
+  }
+}

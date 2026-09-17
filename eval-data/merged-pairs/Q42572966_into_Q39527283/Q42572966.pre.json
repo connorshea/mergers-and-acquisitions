@@ -1,0 +1,117 @@
+{
+  "pageid": 43837824,
+  "ns": 0,
+  "title": "Q42572966",
+  "lastrevid": 960892611,
+  "modified": "2019-06-12T17:18:10Z",
+  "type": "item",
+  "id": "Q42572966",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Sabiha Essack"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Sabiha Essack"
+    },
+    "es": {
+      "language": "es",
+      "value": "Sabiha Essack"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Sabiha Essack"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "researcher"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q42572966$BF7D991C-22CD-418F-971A-FB4A635A09AE",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "5760796ff6ebc63aae12cdcbf509b07ebf0bd201",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581072,
+              "id": "Q6581072"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q42572966$E153F4A0-1EC8-4E0A-8495-61143B984370",
+        "rank": "normal"
+      }
+    ],
+    "P496": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P496",
+          "hash": "e0721c446355e249c4f334b75bc4206575879a80",
+          "datavalue": {
+            "value": "0000-0003-3357-2761",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q42572966$B851DC80-47F6-4826-9239-B04CF4A7A157",
+        "rank": "normal"
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "b2146e4e2394f55779529e985bc7f2a657879ef2",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1650915,
+              "id": "Q1650915"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q42572966$92DE1CED-D742-478F-AE37-0573B6677E90",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

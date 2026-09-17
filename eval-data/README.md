@@ -106,14 +106,29 @@ running — the hunt's own **dismissed** candidates.
 `pnpm eval:score` runs the current heuristic scorer (`src/lib/compare.ts`)
 against every pair here and reports a confusion matrix, precision/recall/F1, and
 each misclassified pair (with its confidence and the reasons that fed the score).
-It reads the checked-in blobs only — no DB, no network — so it runs anywhere, and
-it exits non-zero if anything is misclassified (usable as a CI gate).
+It reads the checked-in blobs only — no DB, no network — so it runs anywhere.
 
 ```sh
-pnpm eval:score                  # confusion matrix + any mistakes
-pnpm eval:score -- --verbose      # every pair, sorted by confidence
-pnpm eval:score -- --threshold 0.5  # sweep the decision boundary
+pnpm eval:score                     # confusion matrix + gate against the baseline
+pnpm eval:score -- --verbose        # also print every pair, sorted by confidence
+pnpm eval:score -- --threshold 0.5  # sweep the boundary (report-only, no gate)
+pnpm eval:score -- --update-baseline # re-record the baseline after a deliberate change
 ```
+
+**Pass/fail is a baseline-regression gate, not a demand for 100%.** The dataset
+deliberately includes _hard positives the scorer can't yet catch_ — merges whose
+two names genuinely differ (romanizations, married/maiden names, cross-catalog
+astronomical designations, address↔building-name, native↔English). Those are the
+point: they map where the label-similarity-heavy scorer is blind. So a perfect
+score is neither expected nor the target.
+
+Instead, `eval-data/score-baseline.json` records each pair's current
+correct/incorrect verdict. A run exits **non-zero only on a true regression** — a
+pair the baseline classified correctly that is now wrong. Newly-added pairs,
+removed pairs, and newly-_fixed_ pairs are reported as warnings and never fail the
+gate; fold them into the baseline with `--update-baseline` (then commit the
+updated `score-baseline.json`) once you've eyeballed the change. A missing
+baseline, or a non-default `--threshold`, disables gating (report-only).
 
 The default threshold (0.4) mirrors the hunt's `MIN_CONFIDENCE`. Because the full
 entity blobs carry real property datatypes, external identifiers are classified

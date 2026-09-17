@@ -1,0 +1,233 @@
+{
+  "pageid": 60252433,
+  "ns": 0,
+  "title": "Q60378890",
+  "lastrevid": 2117790072,
+  "modified": "2024-04-02T22:03:44Z",
+  "type": "item",
+  "id": "Q60378890",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Hugh de Vivonne"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Hugh de Vivonne"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Hugh de Vivonne"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "French knight"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q60378890$BBFCE79F-A64F-4395-94D6-BDC230783E2C",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q60378890$13EAA720-780C-4FA1-A4B0-F6831BD8CE8C",
+        "rank": "normal"
+      }
+    ],
+    "P570": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P570",
+          "hash": "630271e8fd17a9c712d3eb5434b58f88e47b722e",
+          "datavalue": {
+            "value": {
+              "time": "+1249-01-01T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q60378890$d129dcbe-dcfd-4afa-bee9-349838cdfa0e",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P569": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P569",
+          "hash": "2583dad862f9786a7c0712bc80035ddc3a6f7717",
+          "datavalue": {
+            "value": {
+              "time": "+1150-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 7,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985786"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q60378890$c3ddd0ad-d567-4f27-af4a-2dbd988a339c",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P735": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P735",
+          "hash": "f984e9e354985176552cc9688b183e8eba4f5a1e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 839387,
+              "id": "Q839387"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q60378890$242AAF02-B1D2-4608-B31A-176DA1447E42",
+        "rank": "normal"
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "b78d59ecc0fe17aad2541453285a5fac71d2f970",
+          "datavalue": {
+            "value": "/g/11fj7hr2yr",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q60378890$B0397B76-67B3-4B3A-8BDD-B3D2F0E395B3",
+        "rank": "normal"
+      }
+    ],
+    "P7929": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7929",
+          "hash": "df4a89c6d2516c8ec5c1bdfef3194c411a4859cf",
+          "datavalue": {
+            "value": "p=hugh;n=de+vivonia;",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q60378890$55e1a9cd-45cc-1073-395e-8ebc5d0ba9ea",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Hugh de Vivonne",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Hugh_de_Vivonne"
+    }
+  }
+}

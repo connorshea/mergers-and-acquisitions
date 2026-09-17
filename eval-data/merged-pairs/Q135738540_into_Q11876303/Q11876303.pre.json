@@ -1,0 +1,332 @@
+{
+  "pageid": 13016076,
+  "ns": 0,
+  "title": "Q11876303",
+  "lastrevid": 2340796207,
+  "modified": "2025-04-22T23:14:12Z",
+  "type": "item",
+  "id": "Q11876303",
+  "labels": {
+    "fi": {
+      "language": "fi",
+      "value": "Lounais-Hämeen luonnonsuojeluyhdistys"
+    },
+    "en": {
+      "language": "en",
+      "value": "Lounais-Hämeen Luonnonsuojeluyhdistys"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "organization"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "organisaatio"
+    },
+    "sq": {
+      "language": "sq",
+      "value": "organizatë"
+    },
+    "de": {
+      "language": "de",
+      "value": "Organisation"
+    },
+    "ml": {
+      "language": "ml",
+      "value": "സംഘടന"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "منظمة فنلندية"
+    },
+    "hy": {
+      "language": "hy",
+      "value": "կազմակերպություն"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "সংস্থা"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "організація"
+    }
+  },
+  "aliases": {
+    "fi": [
+      {
+        "language": "fi",
+        "value": "Lounais-Hämeen Luonnonsuojeluyhdistys"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "20b3c9267c82af90c6e03e3b112a810207b32cc0",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 43229,
+              "id": "Q43229"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11876303$CDE9809D-73E1-4CDC-B231-C92203839D6C",
+        "rank": "normal"
+      }
+    ],
+    "P244": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P244",
+          "hash": "b84c76498dbfe80935f5d420e76bbc925d344274",
+          "datavalue": {
+            "value": "n82063615",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11876303$1D285E3A-AA20-4F70-A7E7-A79F84AFD536",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "14fa5898ac764e0660517aa07ea0bbba505f262b",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "6b7d4330c4aac4caec4ede9de0311ce273f88ecd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 54919,
+                      "id": "Q54919"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "e0d08f96012770600b942d5e8563b2a3499cba8e",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2019-03-06T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P214": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P214",
+          "hash": "f7f43f3ff756f61f3b3fc2939e4ed447340814c9",
+          "datavalue": {
+            "value": "137227339",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11876303$3FF98B61-6C57-462F-8374-4500FE3ABF1F",
+        "rank": "normal"
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "478fb2513e99d97c0e19259525594c35a7deb28d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 33,
+              "id": "Q33"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11876303$67F37402-4579-423F-9AFD-CB1F1DFBD9C4",
+        "rank": "normal"
+      }
+    ],
+    "P5266": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5266",
+          "hash": "209d8459aaa796ab406d7693c7c4ee54d1c87245",
+          "datavalue": {
+            "value": "15055A",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "311592586178acf5595a6dbb92b15e8db6a800dc",
+              "datavalue": {
+                "value": "Lounais-Hämeen luonnonsuojeluyhdistys",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q11876303$c2104a06-4d9b-15b0-9de2-ddaf01a4c52f",
+        "rank": "normal"
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "a1d1998553934bdceaa365a613089b63e7898765",
+          "datavalue": {
+            "value": "/g/122hpl27",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11876303$10FC44D0-C482-407E-8761-65B6758C78EE",
+        "rank": "normal"
+      }
+    ],
+    "P8980": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8980",
+          "hash": "41a7154e346a92f9c52d473cdcb5bad4e45424c6",
+          "datavalue": {
+            "value": "000002612",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11876303$4C1EF424-D550-4090-998D-DAE386E2328B",
+        "rank": "normal"
+      }
+    ],
+    "P213": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P213",
+          "hash": "d8e68409f5afcbefd8b9aa90b8c5a3fab9d3f4dc",
+          "datavalue": {
+            "value": "0000000093399620",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11876303$E3D8AA09-F477-442F-BD9B-63A9999C9FD0",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "54a1ec64d519547187cc10670103e2d548480f82",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "81f8afeefe3382641dc09f4b32dc0965218c947e",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 104089764,
+                      "id": "Q104089764"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P8980": [
+                {
+                  "snaktype": "value",
+                  "property": "P8980",
+                  "hash": "41a7154e346a92f9c52d473cdcb5bad4e45424c6",
+                  "datavalue": {
+                    "value": "000002612",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "04811fc19e5e67aedb6d73cda13320e313c06105",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2025-04-22T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P8980", "P813"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {
+    "fiwiki": {
+      "site": "fiwiki",
+      "title": "Lounais-Hämeen luonnonsuojeluyhdistys",
+      "badges": [],
+      "url": "https://fi.wikipedia.org/wiki/Lounais-H%C3%A4meen_luonnonsuojeluyhdistys"
+    }
+  }
+}

@@ -50,30 +50,47 @@ export interface WikidataDump {
 // by their *shape*, which is unambiguous in practice. Measured over ~1.18M
 // values from the real video-game dump: literals are either time (xsd:dateTime),
 // quantity (xsd:decimal), monolingual text (a language tag), or — 93% of them —
-// a bare literal with neither, which is an external identifier. A rare genuine
-// string-datatype property would land in "external-id" too, which is harmless
-// for shared-id blocking; the authoritative fix (a QLever-sourced list of
-// ExternalId-datatype properties) can refine this later.
+// a bare literal with neither, which is an external identifier. Most genuine
+// string-datatype properties landing in "external-id" is harmless for shared-id
+// blocking, but a few plain-string properties carry values that *look* like an
+// id and collide across unrelated games (see NON_ID_STRING_PROPS); those are
+// pinned to "string" by property id so they never count as a shared identifier.
 const TIME_XSD = ["dateTime", "date", "gYear", "gYearMonth", "gMonthDay"];
 const QUANTITY_XSD = ["decimal", "double", "float", "integer", "int", "long", "nonNegativeInteger"];
 
-function literalType(node: DumpValueLiteral): ValueType {
+// Plain-string (not ExternalId) Wikidata properties whose bare-literal values
+// would otherwise be shape-classified as external identifiers and produce false
+// matches. P348 (software version identifier) is the canonical case: two
+// unrelated games both at "1.0"/"1.9" would look like they share an id (e.g.
+// Doom Q189784 and its port POOM Q130723192, both P348="1.9"). Keep this list
+// to genuine string-datatype props that collide in practice; the datatype-aware
+// eval path already classifies these correctly and doesn't rely on it.
+const NON_ID_STRING_PROPS = new Set<string>([
+  "P348", // software version identifier
+]);
+
+function literalType(node: DumpValueLiteral, pid?: string): ValueType {
   const xsd = node.datatype?.split("#")[1] ?? "";
   if (TIME_XSD.includes(xsd)) return "time";
   if (QUANTITY_XSD.includes(xsd)) return "quantity";
   if (node.lang) return "string"; // monolingual text (e.g. title P1476, native label P1705)
+  if (pid && NON_ID_STRING_PROPS.has(pid)) return "string"; // known plain-string prop, not an id
   return "external-id"; // bare literal — an identifier in practice
 }
 
-/** Classify a single dump/query value node into the `Item` value model. */
-export function classifyValue(node: DumpValue): Value {
+/**
+ * Classify a single dump/query value node into the `Item` value model. Pass the
+ * value's property id so known plain-string properties (NON_ID_STRING_PROPS)
+ * aren't mistaken for external identifiers by their value shape.
+ */
+export function classifyValue(node: DumpValue, pid?: string): Value {
   switch (node.type) {
     case "entity":
       return { type: "item", value: node.value };
     case "uri":
       return { type: "url", value: node.value };
     default:
-      return { type: literalType(node), value: node.value };
+      return { type: literalType(node, pid), value: node.value };
   }
 }
 
@@ -93,7 +110,7 @@ export function mapDumpGame(game: DumpGame): Item {
 
   const statements: Record<string, Value[]> = {};
   for (const [property, nodes] of Object.entries(game.properties)) {
-    const values = nodes.map((n) => classifyValue(n));
+    const values = nodes.map((n) => classifyValue(n, property));
     if (values.length > 0) statements[property] = values;
   }
 

@@ -55,6 +55,20 @@ describe("classifyValue", () => {
       value: "pikmin-3-deluxe",
     });
   });
+
+  it("keeps a known plain-string property (P348 version) as a string, not an id", () => {
+    // Without the property id the value shape is indistinguishable from an id.
+    expect(classifyValue({ type: "literal", value: "1.9" })).toEqual({
+      type: "external-id",
+      value: "1.9",
+    });
+    // With it, the denylist pins P348 to "string" so unrelated games sharing a
+    // version (e.g. Doom and its port POOM, both "1.9") don't look id-matched.
+    expect(classifyValue({ type: "literal", value: "1.9" }, "P348")).toEqual({
+      type: "string",
+      value: "1.9",
+    });
+  });
 });
 
 // A compact game in the exact dump shape (values as they arrive from QLever).
@@ -77,6 +91,7 @@ const game: DumpGame = {
     P1733: [{ type: "literal", value: "1385730" }],
     P10248: [{ type: "literal", value: "pikmin-3-deluxe" }],
     P1476: [{ type: "literal", value: "Pikmin 3 Deluxe", lang: "en" }],
+    P348: [{ type: "literal", value: "1.0" }],
   },
 };
 
@@ -101,6 +116,7 @@ describe("mapDumpGame", () => {
     expect(item.statements.P1733[0].type).toBe("external-id");
     expect(item.statements.P10248[0].type).toBe("external-id");
     expect(item.statements.P1476[0].type).toBe("string");
+    expect(item.statements.P348[0].type).toBe("string"); // version, not an id
   });
 
   it("omits en/mul labels when the dump has none", () => {

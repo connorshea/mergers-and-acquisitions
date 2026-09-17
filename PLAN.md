@@ -136,6 +136,37 @@ Where the model runs — options, cheapest first:
 - **Embedding-based similarity** on labels/descriptions as a cheap local
   pre-filter, with or without an LLM on top.
 
+## Evaluation datasets (needed)
+
+To measure and improve merge-detection accuracy — for the heuristic scorer now
+and any ML/LLM assist later — we need **labelled ground-truth pairs**, both
+positive and negative. These drive precision/recall metrics, model
+training/eval, and regression tests so a scoring change can be judged against a
+fixed benchmark instead of by eyeballing.
+
+- **Positive set — pairs that are/were duplicates:**
+  - **Already-merged items.** A Wikidata merge turns the merged-away item into a
+    **redirect** to the surviving item, so historical merges are mineable: collect
+    redirected QIDs and their targets (with the pre-merge revision recoverable
+    from history for a realistic "how it looked before merge" example). This is
+    the largest, cheapest source of true positives.
+  - **Active dupes found on live Wikidata** — pairs the maintainer spots that
+    genuinely should be merged but haven't been. Smaller, hand-curated, but
+    valuable current examples.
+- **Negative set — pairs that are NOT duplicates:** confirmed-distinct items,
+  weighted toward **hard negatives** — pairs that _look_ mergeable (same
+  label/type, shared blocking bucket) but are genuinely different subjects: two
+  different games sharing a title, an original vs. its remake/remaster, a series
+  vs. one entry, a game vs. its soundtrack/DLC. Easy negatives (unrelated items)
+  teach the model little; the hunt's own **dismissed** candidates are a natural,
+  continuously-growing source of exactly these hard negatives.
+
+Store these as a versioned, checked-in fixture (QID pairs + label + provenance),
+kept scope-appropriate as the item scope widens. Beware leakage/bias: the
+already-merged positives skew toward "mergers editors actually found," so pair
+them with the hard negatives above so the benchmark rewards precision, not just
+recall.
+
 ## Deployment (Toolforge)
 
 - **Web service:** the Build Service (Cloud Native Buildpacks, Node) —
@@ -156,3 +187,6 @@ Where the model runs — options, cheapest first:
 - [ ] Widen the item scope beyond video games toward all non-scholarly items.
 - [ ] **ML/LLM-assisted, advisory-only** candidate evaluation (re-rank + auto-drop
       obvious false positives); prototype on LiftWing's free hosted LLMs first.
+- [ ] **Labelled eval datasets** — positive pairs (mined from Wikidata merge
+      redirects + hand-found live dupes) and hard negatives (confirmed non-dupes,
+      seeded from dismissed candidates) for accuracy metrics, training, and tests.

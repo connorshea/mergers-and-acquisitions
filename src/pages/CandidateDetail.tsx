@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { fetch, FetchError } from "void/client";
+import { fetch, FetchError } from "../lib/client";
 import MergeCandidates from "../MergeCandidates";
 import type {
   CandidateDetailResponse,

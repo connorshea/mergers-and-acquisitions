@@ -1,1 +1,0 @@
-ALTER TABLE `properties` ADD `formatter_url` text;

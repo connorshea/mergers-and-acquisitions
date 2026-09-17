@@ -1,40 +1,12 @@
 {
   "version": "7",
-  "dialect": "sqlite",
+  "dialect": "mysql",
   "entries": [
     {
       "idx": 0,
-      "version": "6",
-      "when": 1789526510633,
-      "tag": "20260916024150_funny_sugar_man",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "6",
-      "when": 1789530350023,
-      "tag": "20260916034550_magical_toro",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "6",
-      "when": 1789532447936,
-      "tag": "20260916042047_legal_gargoyle",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "6",
-      "when": 1789533793900,
-      "tag": "20260916044313_sharp_prodigy",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "6",
-      "when": 1789535854406,
-      "tag": "20260916051734_gorgeous_adam_destine",
+      "version": "5",
+      "when": 1789584758192,
+      "tag": "0000_init",
       "breakpoints": true
     }
   ]

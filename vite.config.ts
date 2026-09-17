@@ -1,30 +1,35 @@
 import { defineConfig, lazyPlugins } from "vite-plus";
 import react from "@vitejs/plugin-react";
-import { voidPlugin } from "void";
 
-// The Void plugin starts a project-wide file watcher whenever Vite actually
-// runs. Under `vp test` that watcher exhausts macOS FSEvents streams in the
-// sandbox (EMFILE). The unit tests are pure/DOM-free and don't need Void's
-// virtual modules (@schema, void/db, void/client), so we drop voidPlugin during
-// test runs. Revisit if we add route/SSR tests that need those to resolve.
-const isTest = !!process.env.VITEST;
-
+// Plain Vite+ React SPA (no Void). The client is built to dist/client and, in
+// production, served by the Hono server (server/index.ts). In dev, Vite serves
+// the SPA and proxies the API to the Node server on :8000.
 export default defineConfig({
   staged: {
     "*": "vp check --fix",
   },
   fmt: {
     // Drizzle-generated migration metadata is rewritten on every
-    // `void db generate`, so leave it in its generated shape.
-    ignorePatterns: ["db/migrations/meta/"],
+    // `drizzle-kit generate`, so leave it in its generated shape.
+    ignorePatterns: ["db/migrations/"],
   },
   lint: {
     // `plugins` overwrites Oxlint's default set, so keep the built-ins that are
     // on by default (unicorn, oxc, typescript) and add react (includes react-hooks).
     plugins: ["react", "unicorn", "oxc", "typescript"],
-    jsPlugins: [{ name: "vite-plus", specifier: "vite-plus/oxlint-plugin" }],
-    rules: { "vite-plus/prefer-vite-plus-imports": "error" },
     options: { typeAware: true, typeCheck: true },
   },
-  plugins: isTest ? [lazyPlugins(() => [react()])] : [voidPlugin(), lazyPlugins(() => [react()])],
+  build: {
+    outDir: "dist/client",
+    emptyOutDir: true,
+  },
+  server: {
+    proxy: {
+      "/api": {
+        target: `http://localhost:${process.env.PORT ?? 8000}`,
+        changeOrigin: true,
+      },
+    },
+  },
+  plugins: [lazyPlugins(() => [react()])],
 });

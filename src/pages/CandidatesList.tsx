@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { fetch, FetchError } from "void/client";
+import { fetch, FetchError } from "../lib/client";
 import {
   CANDIDATE_SORTS,
   CANDIDATE_STATUSES,

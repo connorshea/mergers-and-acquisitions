@@ -1,68 +1,75 @@
 {
-  "version": "6",
-  "dialect": "sqlite",
-  "id": "1b78adf9-5417-44fe-8397-5558a66fbf2b",
-  "prevId": "4af97a83-0aef-4c4d-82e6-442a9caa51dd",
+  "version": "5",
+  "dialect": "mysql",
+  "id": "2fba20b8-7852-4fe0-bbde-0c72c22d5d1e",
+  "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "entity_labels": {
       "name": "entity_labels",
       "columns": {
         "qid": {
           "name": "qid",
-          "type": "text",
-          "primaryKey": true,
+          "type": "varchar(32)",
+          "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "label": {
           "name": "label",
-          "type": "text",
+          "type": "varchar(512)",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "synced_at": {
           "name": "synced_at",
-          "type": "text",
+          "type": "datetime",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "(datetime('now'))"
+          "default": "CURRENT_TIMESTAMP"
         }
       },
       "indexes": {},
       "foreignKeys": {},
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "entity_labels_qid": {
+          "name": "entity_labels_qid",
+          "columns": [
+            "qid"
+          ]
+        }
+      },
       "uniqueConstraints": {},
-      "checkConstraints": {}
+      "checkConstraint": {}
     },
     "external_ids": {
       "name": "external_ids",
       "columns": {
         "id": {
           "name": "id",
-          "type": "integer",
-          "primaryKey": true,
+          "type": "int",
+          "primaryKey": false,
           "notNull": true,
           "autoincrement": true
         },
         "qid": {
           "name": "qid",
-          "type": "text",
+          "type": "varchar(32)",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "property": {
           "name": "property",
-          "type": "text",
+          "type": "varchar(16)",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "value": {
           "name": "value",
-          "type": "text",
+          "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -95,17 +102,24 @@
         }
       },
       "foreignKeys": {},
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "external_ids_id": {
+          "name": "external_ids_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
       "uniqueConstraints": {},
-      "checkConstraints": {}
+      "checkConstraint": {}
     },
     "item_descriptions": {
       "name": "item_descriptions",
       "columns": {
         "qid": {
           "name": "qid",
-          "type": "text",
-          "primaryKey": true,
+          "type": "varchar(32)",
+          "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
@@ -118,57 +132,64 @@
         },
         "synced_at": {
           "name": "synced_at",
-          "type": "text",
+          "type": "datetime",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "(datetime('now'))"
+          "default": "CURRENT_TIMESTAMP"
         }
       },
       "indexes": {},
       "foreignKeys": {},
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "item_descriptions_qid": {
+          "name": "item_descriptions_qid",
+          "columns": [
+            "qid"
+          ]
+        }
+      },
       "uniqueConstraints": {},
-      "checkConstraints": {}
+      "checkConstraint": {}
     },
     "items": {
       "name": "items",
       "columns": {
         "qid": {
           "name": "qid",
-          "type": "text",
-          "primaryKey": true,
+          "type": "varchar(32)",
+          "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "primary_label": {
           "name": "primary_label",
-          "type": "text",
+          "type": "varchar(255)",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
         "primary_type": {
           "name": "primary_type",
-          "type": "text",
+          "type": "varchar(32)",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
         "data": {
           "name": "data",
-          "type": "text",
+          "type": "json",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "last_synced_at": {
           "name": "last_synced_at",
-          "type": "text",
+          "type": "datetime",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "(datetime('now'))"
+          "default": "CURRENT_TIMESTAMP"
         }
       },
       "indexes": {
@@ -188,44 +209,51 @@
         }
       },
       "foreignKeys": {},
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "items_qid": {
+          "name": "items_qid",
+          "columns": [
+            "qid"
+          ]
+        }
+      },
       "uniqueConstraints": {},
-      "checkConstraints": {}
+      "checkConstraint": {}
     },
     "merge_candidates": {
       "name": "merge_candidates",
       "columns": {
         "id": {
           "name": "id",
-          "type": "integer",
-          "primaryKey": true,
+          "type": "int",
+          "primaryKey": false,
           "notNull": true,
           "autoincrement": true
         },
         "from_qid": {
           "name": "from_qid",
-          "type": "text",
+          "type": "varchar(32)",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "into_qid": {
           "name": "into_qid",
-          "type": "text",
+          "type": "varchar(32)",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "confidence": {
           "name": "confidence",
-          "type": "real",
+          "type": "double",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "status": {
           "name": "status",
-          "type": "text",
+          "type": "varchar(16)",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
@@ -233,15 +261,14 @@
         },
         "reasons": {
           "name": "reasons",
-          "type": "text",
+          "type": "json",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false,
-          "default": "'[]'"
+          "autoincrement": false
         },
         "has_blocker": {
           "name": "has_blocker",
-          "type": "integer",
+          "type": "boolean",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
@@ -249,22 +276,22 @@
         },
         "detected_at": {
           "name": "detected_at",
-          "type": "text",
+          "type": "datetime",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "(datetime('now'))"
+          "default": "CURRENT_TIMESTAMP"
         },
         "resolved_at": {
           "name": "resolved_at",
-          "type": "text",
+          "type": "datetime",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
         "resolution": {
           "name": "resolution",
-          "type": "text",
+          "type": "varchar(255)",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -289,69 +316,83 @@
         }
       },
       "foreignKeys": {},
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "merge_candidates_id": {
+          "name": "merge_candidates_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
       "uniqueConstraints": {},
-      "checkConstraints": {}
+      "checkConstraint": {}
     },
     "properties": {
       "name": "properties",
       "columns": {
         "pid": {
           "name": "pid",
-          "type": "text",
-          "primaryKey": true,
+          "type": "varchar(16)",
+          "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "label": {
           "name": "label",
-          "type": "text",
+          "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "datatype": {
           "name": "datatype",
-          "type": "text",
+          "type": "varchar(64)",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
         "formatter_url": {
           "name": "formatter_url",
-          "type": "text",
+          "type": "varchar(2048)",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
         "synced_at": {
           "name": "synced_at",
-          "type": "text",
+          "type": "datetime",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "(datetime('now'))"
+          "default": "CURRENT_TIMESTAMP"
         }
       },
       "indexes": {},
       "foreignKeys": {},
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "properties_pid": {
+          "name": "properties_pid",
+          "columns": [
+            "pid"
+          ]
+        }
+      },
       "uniqueConstraints": {},
-      "checkConstraints": {}
+      "checkConstraint": {}
     },
     "sync_state": {
       "name": "sync_state",
       "columns": {
         "scope": {
           "name": "scope",
-          "type": "text",
-          "primaryKey": true,
+          "type": "varchar(64)",
+          "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "cursor": {
           "name": "cursor",
-          "type": "integer",
+          "type": "int",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
@@ -359,7 +400,7 @@
         },
         "last_run_at": {
           "name": "last_run_at",
-          "type": "text",
+          "type": "datetime",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -367,19 +408,26 @@
       },
       "indexes": {},
       "foreignKeys": {},
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "sync_state_scope": {
+          "name": "sync_state_scope",
+          "columns": [
+            "scope"
+          ]
+        }
+      },
       "uniqueConstraints": {},
-      "checkConstraints": {}
+      "checkConstraint": {}
     }
   },
   "views": {},
-  "enums": {},
   "_meta": {
     "schemas": {},
     "tables": {},
     "columns": {}
   },
   "internal": {
+    "tables": {},
     "indexes": {}
   }
 }

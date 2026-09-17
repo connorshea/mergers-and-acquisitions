@@ -19,14 +19,14 @@
     "job:sync-descriptions": "tsx jobs/sync-descriptions.ts"
   },
   "dependencies": {
-    "@hono/node-server": "^1.13.7",
-    "dotenv": "^16.4.7",
-    "drizzle-orm": "^0.38.3",
-    "hono": "^4.6.14",
+    "@hono/node-server": "^2.1.1",
+    "dotenv": "^17.4.2",
+    "drizzle-orm": "^0.45.2",
+    "hono": "^4.13.8",
     "mysql2": "^3.12.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
-    "react-router-dom": "^7.18.3",
+    "react-router-dom": "^7.18.4",
     "tsx": "^4.19.2"
   },
   "devDependencies": {
@@ -34,8 +34,8 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.1",
-    "concurrently": "^9.1.2",
-    "drizzle-kit": "^0.30.1",
+    "concurrently": "^10.0.5",
+    "drizzle-kit": "^0.31.10",
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"

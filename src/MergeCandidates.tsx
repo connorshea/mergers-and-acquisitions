@@ -268,7 +268,17 @@ export default function MergeCandidates({
                       const formatter =
                         r.kind === "statement" ? propertyFormatters?.[r.key] : undefined;
                       return (
-                        <tr key={r.key} className={r.blocker ? "is-blocker" : undefined}>
+                        <tr
+                          key={r.key}
+                          className={
+                            [
+                              r.blocker ? "is-blocker" : "",
+                              r.kind === "statement" && isMirrored(r.key) ? "is-mirror" : "",
+                            ]
+                              .filter(Boolean)
+                              .join(" ") || undefined
+                          }
+                        >
                           <td className="col-prop">
                             <div className="prop-label">{r.label}</div>
                             <div className="prop-key">

@@ -162,6 +162,13 @@ body {
   color: var(--focus);
   text-decoration: underline;
 }
+/* The item's name beside its QID in a table header, de-emphasized so the QID
+   stays the primary identifier. */
+.col-name {
+  margin-left: 0.4rem;
+  color: var(--muted);
+  font-weight: 400;
+}
 .arrow {
   align-self: center;
   color: var(--muted);
@@ -851,6 +858,13 @@ a.chip-id:hover {
   border: 1px solid var(--rule);
   border-radius: 999px;
   padding: 0.1rem 0.55rem;
+}
+/* A property id inside a reason, hoverable to reveal the property's name. */
+.reason-prop {
+  color: var(--ink);
+  text-decoration: underline dotted;
+  text-underline-offset: 2px;
+  cursor: help;
 }
 .detail-actions {
   margin-left: auto;

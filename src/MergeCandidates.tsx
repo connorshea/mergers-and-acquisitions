@@ -113,6 +113,13 @@ export default function MergeCandidates({
   // the floor guarantees the well-known ones are always marked.
   const mirrorSet = useMemo(() => new Set(propertyMirrors ?? []), [propertyMirrors]);
   const isMirrored = (pid: string): boolean => mirrorSet.has(pid) || isHardcodedMirrorProp(pid);
+
+  // Best display name for a column header, shown de-emphasized next to the QID
+  // (e.g. "Q134990310 (HYPER METEOR)"). Omitted when the item carries no label.
+  const nameOf = (item: Item): string | undefined =>
+    item.labels.en ?? item.labels.mul ?? Object.values(item.labels)[0];
+  const fromName = nameOf(from);
+  const intoName = nameOf(into);
   const [hidden, setHidden] = useState<Record<RowStatus, boolean>>({
     identical: false,
     similar: false,
@@ -215,6 +222,7 @@ export default function MergeCandidates({
                         >
                           {from.id}
                         </a>
+                        {fromName && <span className="col-name">{fromName}</span>}
                       </th>
                       <th className="col-b">
                         <a
@@ -225,6 +233,7 @@ export default function MergeCandidates({
                         >
                           {into.id}
                         </a>
+                        {intoName && <span className="col-name">{intoName}</span>}
                       </th>
                     </tr>
                   </thead>

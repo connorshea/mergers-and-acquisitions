@@ -691,4 +691,47 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     // Symmetric: the declaration counts from whichever side holds it.
     expect(scoreCandidate(b, a).confidence).toBe(0);
   });
+
+  it("reaches near-certain (1.0) for a well-corroborated identical pair, with no 'held below' reason", () => {
+    // Identical name + two shared strong ids + an agreeing developer = three
+    // corroborating signals and no differences, so the ceiling is 1.0. The raw
+    // additive score exceeds 1.0 and is clamped, but that clamp is the ordinary
+    // cap — not the ceiling holding the pair back — so no "held below" reason.
+    const mk = (id: string): Item => ({
+      ...base,
+      id,
+      labels: { en: "Chrono Rift" },
+      statements: stmt({
+        P5794: [{ type: "external-id" as const, value: "igdb-777" }], // shared IGDB
+        P11688: [{ type: "external-id" as const, value: "moby-777" }], // shared MobyGames
+        P178: [{ type: "item" as const, value: "Q900" }], // agreeing developer
+      }),
+    });
+    const result = scoreCandidate(mk("Q1"), mk("Q2"), {
+      isIdentifierProp: (pid) => ["P5794", "P11688"].includes(pid),
+    });
+    expect(result.confidence).toBe(1);
+    expect(result.reasons.some((r) => r.startsWith("held below near-certain"))).toBe(false);
+  });
+
+  it("holds a lone-shared-id identical pair below near-certain and explains it", () => {
+    // Identical name + a single shared id is strong but not conclusive (the id
+    // could be stale/mis-entered), so the ceiling caps it at 0.85 and says so.
+    const mk = (id: string): Item => ({
+      ...base,
+      id,
+      labels: { en: "Solo Signal" },
+      statements: stmt({ P5794: [{ type: "external-id" as const, value: "igdb-1" }] }),
+    });
+    const result = scoreCandidate(mk("Q1"), mk("Q2"), {
+      isIdentifierProp: (pid) => pid === "P5794",
+    });
+    expect(result.confidence).toBeLessThanOrEqual(0.85);
+    expect(result.confidence).toBeGreaterThan(0.4);
+    expect(
+      result.reasons.some((r) =>
+        r.includes("held below near-certain — only one strong corroborating signal"),
+      ),
+    ).toBe(true);
+  });
 });

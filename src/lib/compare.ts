@@ -846,11 +846,18 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   if (distinctPerTitleIds.length === 1) ceiling = Math.min(ceiling, 0.8);
   if (score > ceiling) {
     score = ceiling;
-    reasons.push(
-      strongSignals <= 1 && !hasConcreteDifference
-        ? "held below near-certain — only one strong corroborating signal"
-        : "held below near-certain — a difference remains or corroboration is thin",
-    );
+    // Only explain the clamp when the ceiling actually held the pair *below*
+    // near-certain. A ceiling of 1.0 (very similar name + 3+ corroborating
+    // signals, no differences) means the pair earned the top of the range and
+    // we're just clamping the raw additive sum — the ordinary `Math.min(1, …)`
+    // below — so no "held back" reason applies.
+    if (ceiling < 1) {
+      reasons.push(
+        strongSignals <= 1 && !hasConcreteDifference
+          ? "held below near-certain — only one strong corroborating signal"
+          : "held below near-certain — a difference remains or corroboration is thin",
+      );
+    }
   }
 
   const confidence = Math.max(0, Math.min(1, score));

@@ -215,10 +215,15 @@ export default function MergeCandidates({
       )}
 
       {GROUPS.filter((g) => !hidden[g.status]).map((g) => {
-        // P31 first; everything else keeps its build order (terms, sitelinks, statements).
+        // P31 first, then Wikidata-sourced (mirrored) identifiers sink to the
+        // bottom — they're weak evidence either way; everything else keeps its
+        // build order (terms, sitelinks, statements). Array.sort is stable, so
+        // rows within a rank stay in build order.
+        const rank = (r: (typeof rows)[number]): number =>
+          r.key === "P31" ? -1 : r.kind === "statement" && isMirrored(r.key) ? 1 : 0;
         const groupRows = rows
           .filter((r) => r.status === g.status)
-          .sort((x, y) => Number(y.key === "P31") - Number(x.key === "P31"));
+          .sort((x, y) => rank(x) - rank(y));
         return (
           <section key={g.status} className={`group group-${g.status}`}>
             <h2>

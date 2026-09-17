@@ -555,6 +555,12 @@ export interface CandidateScore {
  * — into a 0–1 score. Concrete disagreement subtracts too: a differing release
  * year, developer, or publisher (unless a shared strong per-title id vouches for
  * the pair — except a *large* publication-year gap, which overrides even that).
+ * A near-certain (≈1.0) score is *reserved*: it takes a very similar name plus
+ * strong corroboration — two or more shared external ids, or an id plus agreeing
+ * discriminative properties — and minimal differences. A lone shared id with a
+ * matching name is strong but not conclusive and is capped below 1.0; any
+ * concrete difference (differing developer/publisher, a year gap, or a single
+ * conflicting per-title id like two different Steam pages) caps it further.
  * Two strong negatives can effectively disqualify a pair: clearly-different
  * names, and many external identifiers that are present on both items yet all
  * differ. More narrowly, two or more differing *per-title* identifiers (Steam,
@@ -697,31 +703,38 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     score = Math.min(score, 0.1);
   }
 
+  // Concrete disagreements on discriminative facts. Computed unconditionally (a
+  // shared strong id suppresses the *penalties* below but these differences still
+  // feed the confidence ceiling, so "minimal differences" is required to reach the
+  // very top of the range).
+  const itemValues = (item: Item, pid: string): string[] =>
+    (item.statements[pid] ?? []).filter((v) => v.type === "item").map((v) => v.value);
+  const disjoint = (pid: string): boolean => {
+    const va = itemValues(a, pid);
+    const vb = itemValues(b, pid);
+    return va.length > 0 && vb.length > 0 && !va.some((v) => vb.includes(v));
+  };
+  const diffDeveloper = disjoint("P178");
+  const diffPublisher = disjoint("P123");
+  const modestYearGap = Number.isFinite(yearGap) && yearGap >= 2 && yearGap < LARGE_YEAR_GAP;
+
   // Lesser disagreement penalties. A shared strong per-title identifier is near-
-  // conclusive for these, so when we have one we trust it and skip them (a small
-  // release-date or renamed-studio mismatch shouldn't sink a genuine duplicate).
-  // Otherwise, concrete disagreement on discriminative facts — a modest release-
-  // year gap, the developer, the publisher — is strong evidence of two different
-  // games that merely share a title.
+  // conclusive for these, so when we have one we trust it and skip the *penalties*
+  // (a small release-date or renamed-studio mismatch shouldn't sink a genuine
+  // duplicate). Otherwise, concrete disagreement — a modest release-year gap, the
+  // developer, the publisher — is strong evidence of two different games that
+  // merely share a title.
   if (strongIds.length === 0) {
-    if (yearGap >= 2 && yearGap < LARGE_YEAR_GAP) {
+    if (modestYearGap) {
       const penalty = Math.min(0.35, 0.25 + (yearGap - 2) / 30);
       score -= penalty;
       reasons.push(`publication years differ by ${yearGap}`);
     }
-
-    const itemValues = (item: Item, pid: string): string[] =>
-      (item.statements[pid] ?? []).filter((v) => v.type === "item").map((v) => v.value);
-    const disjoint = (pid: string): boolean => {
-      const va = itemValues(a, pid);
-      const vb = itemValues(b, pid);
-      return va.length > 0 && vb.length > 0 && !va.some((v) => vb.includes(v));
-    };
-    if (disjoint("P178")) {
+    if (diffDeveloper) {
       score -= 0.25;
       reasons.push("different developer");
     }
-    if (disjoint("P123")) {
+    if (diffPublisher) {
       score -= 0.2;
       reasons.push("different publisher");
     }
@@ -772,6 +785,16 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
         .join(", ")}) — almost certainly different games`,
     );
     score = Math.min(score, 0.1);
+  } else if (distinctPerTitleIds.length === 1) {
+    // A single differing per-title id (e.g. two different Steam or itch.io pages)
+    // is a real discrepancy — usually different games, occasionally a data slip
+    // when a stronger id still agrees. Dock it modestly and (via the ceiling
+    // below) hold the pair well off a near-certain score, but keep the nudge
+    // small so a genuine duplicate with one mis-entered id stays a candidate.
+    score -= 0.1;
+    reasons.push(
+      `a per-title identifier differs (${distinctPerTitleIds[0].label}) — points at a different store/database page`,
+    );
   }
 
   // A sequel is not a duplicate. Different entries in the same series share a
@@ -789,6 +812,45 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   if (isDeclaredDifferent(a, b)) {
     reasons.unshift('marked "different from" on Wikidata (P1889), not a duplicate');
     score = 0;
+  }
+
+  // Confidence ceiling. A near-certain (≈1.0) score is reserved for pairs with a
+  // very similar name AND strong, corroborated agreement — two or more shared
+  // external identifiers, or an identifier plus agreeing discriminative
+  // properties (developer, publisher, date, …) — and *minimal* differences. A
+  // single shared identifier with a matching name is strong but not conclusive
+  // (that lone id could be stale or mis-entered), so it is capped well below 1.0;
+  // any concrete disagreement — a differing developer/publisher, a release-year
+  // gap, or a conflicting per-title id — caps it further. Corroborating signals
+  // are the shared strong ids plus the discriminative statements (non-id) that
+  // agree. This clamp only ever lowers a score; it cannot make a non-duplicate
+  // look like one.
+  const propAgreement = stmtRows.filter(
+    (r) => r.status === "identical" && !r.a.some((v) => v.type === "external-id"),
+  ).length;
+  const strongSignals = strongIds.length + propAgreement;
+  let ceiling = 1;
+  if (nameSim >= 0.75) {
+    if (strongSignals >= 3) ceiling = 1;
+    else if (strongSignals === 2) ceiling = 0.93;
+    else if (strongSignals === 1) ceiling = 0.85;
+    else ceiling = 0.72;
+  }
+  const hasConcreteDifference =
+    diffDeveloper ||
+    diffPublisher ||
+    modestYearGap ||
+    distinctPerTitleIds.length > 0 ||
+    distinctExtIdRows.length > 0;
+  if (hasConcreteDifference) ceiling = Math.min(ceiling, 0.9);
+  if (distinctPerTitleIds.length === 1) ceiling = Math.min(ceiling, 0.8);
+  if (score > ceiling) {
+    score = ceiling;
+    reasons.push(
+      strongSignals <= 1 && !hasConcreteDifference
+        ? "held below near-certain — only one strong corroborating signal"
+        : "held below near-certain — a difference remains or corroboration is thin",
+    );
   }
 
   const confidence = Math.max(0, Math.min(1, score));

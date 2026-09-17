@@ -40,8 +40,5 @@ jobs:
       - name: Type-check project references
         run: pnpm exec tsc -b
 
-      # Smoke-test that the SPA still builds. No longer a prerequisite for the
-      # type-check (the old Void plugin's buildStart codegen is gone), so it runs
-      # last.
       - name: Build
         run: pnpm exec vp build

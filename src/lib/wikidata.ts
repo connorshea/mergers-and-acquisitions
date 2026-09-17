@@ -12,17 +12,25 @@ import type { Item, Value, ValueType } from "./compare";
 
 // ---------- dump / query wire format ----------
 
-export interface DumpValueEntity {
+interface DumpValueBase {
+  /**
+   * QIDs from the statement's "identifier shared with" (P4070) qualifiers, when
+   * it has any — other items this same id value is declared to cover. Emitted
+   * by script/dump_wikidata_games.rb; absent on the vast majority of values.
+   */
+  shared_with?: string[];
+}
+export interface DumpValueEntity extends DumpValueBase {
   type: "entity";
   value: string; // "Q123"
 }
-export interface DumpValueLiteral {
+export interface DumpValueLiteral extends DumpValueBase {
   type: "literal";
   value: string;
   datatype?: string; // raw XSD datatype IRI, when the endpoint provided one
   lang?: string; // BCP-47 tag, when present
 }
-export interface DumpValueUri {
+export interface DumpValueUri extends DumpValueBase {
   type: "uri";
   value: string; // full non-entity IRI
 }
@@ -87,9 +95,18 @@ export const GENID_URI_RE = /\/\.well-known\/genid\//;
 /**
  * Classify a single dump/query value node into the `Item` value model. Pass the
  * value's property id so known plain-string properties (NON_ID_STRING_PROPS)
- * aren't mistaken for external identifiers by their value shape.
+ * aren't mistaken for external identifiers by their value shape. A node's
+ * "identifier shared with" (P4070) qualifier QIDs, if any, are carried through
+ * as `sharedWith` so the scorer can discount an id declared to span two items.
  */
 export function classifyValue(node: DumpValue, pid?: string): Value {
+  const value = classifyBare(node, pid);
+  return node.shared_with && node.shared_with.length > 0
+    ? { ...value, sharedWith: node.shared_with }
+    : value;
+}
+
+function classifyBare(node: DumpValue, pid?: string): Value {
   switch (node.type) {
     case "entity":
       return { type: "item", value: node.value };

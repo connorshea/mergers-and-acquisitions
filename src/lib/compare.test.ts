@@ -34,10 +34,43 @@ describe("normalize / stringSimilarity", () => {
 });
 
 describe("compareValues", () => {
-  it("matches times on year with differing precision", () => {
+  it("flags a genuine precision mismatch (year-precision vs day) as such", () => {
+    // Year precision is encoded with 00 month/day (`+2019-00-00T…`).
     expect(
-      compareValues({ type: "time", value: "2019-03-12" }, { type: "time", value: "2019" }),
+      compareValues(
+        { type: "time", value: "+2019-03-12T00:00:00Z" },
+        { type: "time", value: "+2019-00-00T00:00:00Z" },
+      ),
     ).toEqual(["similar", "same year, different precision"]);
+  });
+
+  it("reports two same-precision days that differ by a day as a day apart, not a precision mismatch", () => {
+    // Regression: 2022-11-11 vs 2022-11-12 are both day precision — the note must
+    // not claim "different precision".
+    expect(
+      compareValues(
+        { type: "time", value: "+2022-11-11T00:00:00Z" },
+        { type: "time", value: "+2022-11-12T00:00:00Z" },
+      ),
+    ).toEqual(["similar", "one day apart"]);
+  });
+
+  it("reports same-year days in different months as a month difference", () => {
+    expect(
+      compareValues(
+        { type: "time", value: "+2022-11-11T00:00:00Z" },
+        { type: "time", value: "+2022-06-11T00:00:00Z" },
+      ),
+    ).toEqual(["similar", "same year, different month"]);
+  });
+
+  it("treats different years as distinct", () => {
+    expect(
+      compareValues(
+        { type: "time", value: "+2022-11-11T00:00:00Z" },
+        { type: "time", value: "+2006-01-20T00:00:00Z" },
+      )[0],
+    ).toBe("distinct");
   });
 
   it("requires exact match for external ids", () => {

@@ -168,10 +168,30 @@ export function compareValues(x: Value, y: Value): [Status, string?] {
         return ["similar", "different items with similar labels"];
       return ["distinct"];
     case "time": {
-      const yx = x.value.slice(0, 4);
-      const yy = y.value.slice(0, 4);
-      if (yx === yy) return ["similar", "same year, different precision"];
-      return ["distinct"];
+      // Wikidata times are `±YYYY-MM-DDThh:mm:ssZ`; a "00" month or day marks an
+      // unspecified (coarser-precision) part, e.g. year precision is
+      // `+2022-00-00T…`. Parse the calendar parts so we can tell an actual
+      // difference (a day off) from a genuine precision mismatch.
+      const parse = (s: string): { y: number; mo: number; d: number } | null => {
+        const m = /^([+-]?\d+)-(\d\d)-(\d\d)/.exec(s);
+        return m ? { y: Number(m[1]), mo: Number(m[2]), d: Number(m[3]) } : null;
+      };
+      const da = parse(x.value);
+      const db = parse(y.value);
+      if (!da || !db)
+        return x.value.slice(0, 4) === y.value.slice(0, 4)
+          ? ["similar", "same year"]
+          : ["distinct"];
+      if (da.y !== db.y) return ["distinct"];
+      // Same year. Precision = how many calendar parts are specified.
+      const precision = (p: { mo: number; d: number }): number =>
+        p.mo === 0 ? 1 : p.d === 0 ? 2 : 3;
+      if (precision(da) !== precision(db)) return ["similar", "same year, different precision"];
+      // Same precision, same year — report how they actually differ. (An exact
+      // match was already returned above, so something differs here.)
+      if (da.mo !== db.mo) return ["similar", "same year, different month"];
+      const gap = Math.abs(da.d - db.d);
+      return ["similar", gap === 1 ? "one day apart" : `${gap} days apart`];
     }
     case "quantity":
     case "external-id":

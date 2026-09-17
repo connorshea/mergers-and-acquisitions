@@ -1,0 +1,286 @@
+{
+  "pageid": 125526496,
+  "ns": 0,
+  "title": "Q131619317",
+  "lastrevid": 2463876983,
+  "modified": "2026-02-16T07:22:46Z",
+  "type": "item",
+  "id": "Q131619317",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Perfect Vermin"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Perfect Vermin"
+    }
+  },
+  "descriptions": {},
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "03d2d8ec4a899b29435a104a9ce7c189a31ae380",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7889,
+              "id": "Q7889"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q131619317$E384417D-84D5-4D66-B8AC-7DDD0E5DBB04",
+        "rank": "normal"
+      }
+    ],
+    "P750": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P750",
+          "hash": "30e74a8ec835acc14307ea99ea5b2aa0c694cb54",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 22905933,
+              "id": "Q22905933"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q131619317$FCE97F50-0C1E-4BF5-81A9-80E160AE7662",
+        "rank": "normal"
+      }
+    ],
+    "P7294": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7294",
+          "hash": "b09da756d7c7e7dd3d884780dcb8f4ec382c4396",
+          "datavalue": {
+            "value": "https://itsthetalia.itch.io/perfect-vermin",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q131619317$E9A46124-8DF3-4F70-B15E-D2C8ED2DBB24",
+        "rank": "normal"
+      }
+    ],
+    "P12813": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12813",
+          "hash": "3a23d802f00a7a594e0ef027c32a36b9e21001bd",
+          "datavalue": {
+            "value": "635197",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q131619317$eab65ad0-4312-498b-a690-0ebfdcdf5030",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "25828d674ca3118585cb51dfacd10aef19b9e091",
+            "snaks": {
+              "P11797": [
+                {
+                  "snaktype": "value",
+                  "property": "P11797",
+                  "hash": "e59bef7d616ac6ef4dfe24b901f6214bda23c9e4",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 22905933,
+                      "id": "Q22905933"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P7294": [
+                {
+                  "snaktype": "value",
+                  "property": "P7294",
+                  "hash": "b09da756d7c7e7dd3d884780dcb8f4ec382c4396",
+                  "datavalue": {
+                    "value": "https://itsthetalia.itch.io/perfect-vermin",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "0b4f07f84ee539d2d013666f380be9608fb7c4cb",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2025-01-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P11797", "P7294", "P813"]
+          }
+        ]
+      }
+    ],
+    "P12001": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12001",
+          "hash": "992d3298635c73f36bf5d1f2f9749714b497c685",
+          "datavalue": {
+            "value": "ml14p",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q131619317$2D4B9A24-2A55-46DB-9649-90D0B50F2EAB",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "5453a7df082b0517c174ebb0f06714d0035c4c70",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "08fba3511bad9285e16847928bbcc37907ec04a4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2025-07-22T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P813"]
+          }
+        ]
+      }
+    ],
+    "P5794": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5794",
+          "hash": "c0d92f7900a1061356760593ac253ea528581f27",
+          "datavalue": {
+            "value": "perfect-vermin",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9043": [
+            {
+              "snaktype": "value",
+              "property": "P9043",
+              "hash": "d87b55521a130f9311141911cad589c0db26c674",
+              "datavalue": {
+                "value": "140857",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9043"],
+        "id": "Q131619317$49303ECE-14FC-4CB1-94CA-3264AE93DB13",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "94bdeb4b97f4bdcc95ef1a68fdfb6d8b66d2ca63",
+            "snaks": {
+              "P11797": [
+                {
+                  "snaktype": "value",
+                  "property": "P11797",
+                  "hash": "e59bef7d616ac6ef4dfe24b901f6214bda23c9e4",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 22905933,
+                      "id": "Q22905933"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P12813": [
+                {
+                  "snaktype": "value",
+                  "property": "P12813",
+                  "hash": "3a23d802f00a7a594e0ef027c32a36b9e21001bd",
+                  "datavalue": {
+                    "value": "635197",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "3652a43fb8c5b3a6423f52d9c9955c58d3afcf51",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-02-15T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P11797", "P12813", "P813"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {}
+}

@@ -1,0 +1,405 @@
+{
+  "pageid": 125526470,
+  "ns": 0,
+  "title": "Q131619291",
+  "lastrevid": 2539682913,
+  "modified": "2026-09-03T11:04:53Z",
+  "type": "item",
+  "id": "Q131619291",
+  "labels": {
+    "mul": {
+      "language": "mul",
+      "value": "Hypnagogia 無限の夢 Boundless Dreams"
+    },
+    "en": {
+      "language": "en",
+      "value": "Hypnagogia 無限の夢 Boundless Dreams"
+    },
+    "id": {
+      "language": "id",
+      "value": "Hypnagogia 無限の夢 Boundless Dreams"
+    }
+  },
+  "descriptions": {},
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "Hypnagogia Boundless Dreams"
+      }
+    ],
+    "zh": [
+      {
+        "language": "zh",
+        "value": "Hypnagogia 無限の夢"
+      },
+      {
+        "language": "zh",
+        "value": "Hypnagogia 無限の夢 Boundless Dreams"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "03d2d8ec4a899b29435a104a9ce7c189a31ae380",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7889,
+              "id": "Q7889"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q131619291$602F6248-C998-4C92-8F19-067031644821",
+        "rank": "normal"
+      }
+    ],
+    "P750": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P750",
+          "hash": "30e74a8ec835acc14307ea99ea5b2aa0c694cb54",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 22905933,
+              "id": "Q22905933"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q131619291$36928369-487E-4CC4-968F-0E6B86AD7324",
+        "rank": "normal"
+      }
+    ],
+    "P7294": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7294",
+          "hash": "068efb7e76ad4023a97ead00ae94f796587be34b",
+          "datavalue": {
+            "value": "https://sodaraptor.itch.io/hypnagogia-boundless-dreams",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q131619291$26265816-B131-4E5F-9FC7-76AD55EA983E",
+        "rank": "normal"
+      }
+    ],
+    "P12813": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12813",
+          "hash": "1f9a6f78d565e21d2cd609e8ee1a42d3281cc814",
+          "datavalue": {
+            "value": "1251739",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q131619291$cffb6b95-0412-47d1-a4f7-464aa0728920",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "0d84567c1b656904c9ce818d7fd9ce9eed5ff492",
+            "snaks": {
+              "P11797": [
+                {
+                  "snaktype": "value",
+                  "property": "P11797",
+                  "hash": "e59bef7d616ac6ef4dfe24b901f6214bda23c9e4",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 22905933,
+                      "id": "Q22905933"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P7294": [
+                {
+                  "snaktype": "value",
+                  "property": "P7294",
+                  "hash": "068efb7e76ad4023a97ead00ae94f796587be34b",
+                  "datavalue": {
+                    "value": "https://sodaraptor.itch.io/hypnagogia-boundless-dreams",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "0b4f07f84ee539d2d013666f380be9608fb7c4cb",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2025-01-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P11797", "P7294", "P813"]
+          }
+        ]
+      }
+    ],
+    "P5794": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5794",
+          "hash": "94e43cbfaed045bb040d9464bebc3aa02dad38e6",
+          "datavalue": {
+            "value": "hypnagogia-boundless-dreams",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9043": [
+            {
+              "snaktype": "value",
+              "property": "P9043",
+              "hash": "da14a078bd66fc789183d1b000352ea997cab570",
+              "datavalue": {
+                "value": "159865",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9043"],
+        "id": "Q131619291$697E44AD-403D-4996-A0A3-94041CF3893C",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ec09c4559b58c9faef654adf74a9d977903bf47c",
+            "snaks": {
+              "P11797": [
+                {
+                  "snaktype": "value",
+                  "property": "P11797",
+                  "hash": "e59bef7d616ac6ef4dfe24b901f6214bda23c9e4",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 22905933,
+                      "id": "Q22905933"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P12813": [
+                {
+                  "snaktype": "value",
+                  "property": "P12813",
+                  "hash": "1f9a6f78d565e21d2cd609e8ee1a42d3281cc814",
+                  "datavalue": {
+                    "value": "1251739",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "3652a43fb8c5b3a6423f52d9c9955c58d3afcf51",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-02-15T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P11797", "P12813", "P813"]
+          }
+        ]
+      }
+    ],
+    "P437": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P437",
+          "hash": "87ee8a96ba9c0d680a53715c86643c654cb999e7",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 269415,
+              "id": "Q269415"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q131619291$c7298ea9-4ca6-e28e-0c25-0770fcace61a",
+        "rank": "normal"
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "838194d391af3ae37952d900e38da755cdfba6f7",
+          "datavalue": {
+            "value": {
+              "time": "+2021-10-29T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q131619291$8b2104d4-4a3c-59fa-b6e2-61adb692c1a9",
+        "rank": "normal"
+      }
+    ],
+    "P400": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P400",
+          "hash": "0b7430c76aa932002363740d965c9f0a5cd61191",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1406,
+              "id": "Q1406"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q131619291$2aae3c8b-4b88-679d-1880-3d28f9d7fa99",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P400",
+          "hash": "fd458c3f1c6ad0c620d2551f6e682dcf6ba6cb47",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 14116,
+              "id": "Q14116"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q131619291$36959788-4c8a-ef22-562e-3b36dc233a06",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P400",
+          "hash": "925050644793bc0311cf1d5fb597838d2bb0e330",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 388,
+              "id": "Q388"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q131619291$eb8a3660-4b25-f65c-b40d-e5a1f34aab17",
+        "rank": "normal"
+      }
+    ],
+    "P155": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P155",
+          "hash": "f4c7370dfc95eebd79780c8e2ca8b43e90c07bda",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 130723296,
+              "id": "Q130723296"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q131619291$b4ce96b9-4a23-084e-2eca-b08b9c176b1e",
+        "rank": "normal"
+      }
+    ],
+    "P12001": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12001",
+          "hash": "746f086e4680677e0ea841b0d9754fd4eff76aa2",
+          "datavalue": {
+            "value": "7Xz14",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q131619291$8891F5AE-A073-4E3B-95DA-9519D3EB0FDA",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

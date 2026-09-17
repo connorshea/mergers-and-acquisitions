@@ -14,7 +14,6 @@
   --focus: #3b6fd6;
   --mirror: #5a53a6;
   --mirror-bg: #edecf8;
-  --mirror-row-bg: #f0efec;
   --font: "IBM Plex Sans", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 @media (prefers-color-scheme: dark) {
@@ -34,7 +33,6 @@
     --focus: #7ea2ee;
     --mirror: #b3aef0;
     --mirror-bg: #262445;
-    --mirror-row-bg: #191d23;
   }
 }
 :root[data-theme="dark"] {
@@ -53,7 +51,6 @@
   --focus: #7ea2ee;
   --mirror: #b3aef0;
   --mirror-bg: #262445;
-  --mirror-row-bg: #191d23;
 }
 
 * {
@@ -352,9 +349,9 @@ body {
   border-bottom: none;
 }
 /* Wikidata-sourced (mirrored) identifier rows are weak evidence either way, so
-   de-emphasize them with a slightly darker background against the white cell. */
+   de-emphasize them with a subtle darkening overlay (theme-agnostic). */
 .ledger tr.is-mirror td {
-  background: var(--mirror-row-bg);
+  background: rgba(0, 0, 0, 0.03);
 }
 .col-a,
 .col-b {

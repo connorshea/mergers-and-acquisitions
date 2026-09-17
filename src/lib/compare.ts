@@ -25,6 +25,15 @@ export interface Value {
   value: string;
   /** Human label for item values; ignored otherwise. */
   label?: string;
+  /**
+   * QIDs of the *other* items this identifier is declared to also cover —
+   * Wikidata's "identifier shared with" (P4070) qualifier on the statement. An
+   * editor adds it when one external id (e.g. a MusicBrainz release group)
+   * legitimately covers several distinct items, so a match on such a value is
+   * not evidence of a duplicate (see sharedIdentifierProps). Only ever set on
+   * identifier-like values; absent otherwise.
+   */
+  sharedWith?: string[];
 }
 
 export interface Item {
@@ -362,6 +371,9 @@ export function buildRows(
     });
   }
 
+  // Identifiers either item declares (P4070) to be shared with the other are
+  // annotated so the UI can explain why an agreeing value is not a match signal.
+  const sharedProps = sharedIdentifierProps(a, b);
   for (const pid of langs(a.statements, b.statements)) {
     const va = withLabels(a.statements[pid] ?? []);
     const vb = withLabels(b.statements[pid] ?? []);
@@ -375,6 +387,9 @@ export function buildRows(
       blocker: false,
       a: cmp.a,
       b: cmp.b,
+      note: sharedProps.has(pid)
+        ? "declared shared between these two items (P4070) — agreeing on it is not evidence of a duplicate"
+        : undefined,
     });
   }
 
@@ -588,6 +603,35 @@ export function isDeclaredDifferent(a: Item, b: Item): boolean {
   return points(a, b.id) || points(b, a.id);
 }
 
+/**
+ * Wikidata "identifier shared with" — a qualifier on an external-identifier
+ * statement naming other items the same id value also covers.
+ */
+export const IDENTIFIER_SHARED_WITH = "P4070";
+
+/**
+ * Property ids on which either item carries a value that is declared — via the
+ * "identifier shared with" (P4070) qualifier — to be shared with the *other*
+ * item of the pair. An editor adds that qualifier precisely because one id
+ * (e.g. a MusicBrainz release group covering a game and its re-release)
+ * legitimately spans several distinct items, so the two items agreeing on it
+ * says nothing about whether they are the same subject. Like a Wikidata-
+ * mirroring id, such a property is excluded as evidence in either direction.
+ * A qualifier pointing at some *third* item does not count: the id is only
+ * known to be non-unique with respect to that item, not this pair.
+ */
+export function sharedIdentifierProps(a: Item, b: Item): Set<string> {
+  const out = new Set<string>();
+  const collect = (from: Item, otherId: string) => {
+    for (const [pid, values] of Object.entries(from.statements)) {
+      if (values.some((v) => v.sharedWith?.includes(otherId))) out.add(pid);
+    }
+  };
+  collect(a, b.id);
+  collect(b, a.id);
+  return out;
+}
+
 export interface CandidateScore {
   /** 0–1 likelihood the two items are the same subject and should be merged. */
   confidence: number;
@@ -617,7 +661,9 @@ export interface CandidateScore {
  * PCGamingWiki, MobyGames, IGDB, itch.io, Giant Bomb) point at distinct
  * store/database pages and cap the score hard, overriding even a shared id.
  * Identifiers that mirror Wikidata itself (vglist, GamerProfiles) are
- * ignored as evidence in either direction. Blockers (conflicting descriptions or same-wiki
+ * ignored as evidence in either direction, as is any identifier one item
+ * declares "shared with" (P4070) the other — Wikidata's own way of saying one
+ * id covers both items. Blockers (conflicting descriptions or same-wiki
  * sitelinks) are surfaced via `hasBlocker` but do not by themselves sink the
  * score: real duplicates routinely have conflicting descriptions.
  */
@@ -661,12 +707,16 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // directions — neither a shared value nor a differing one means anything.
   const isMirrored = (pid: string): boolean =>
     MIRRORED_ID_PROPS.has(pid) || (opts.isMirroredIdProp?.(pid) ?? false);
+  // An id either item declares shared with the other (the P4070 qualifier) is
+  // likewise non-evidence: the editor is telling us one id covers both items.
+  const sharedWithOther = sharedIdentifierProps(a, b);
+  const isNonEvidence = (pid: string): boolean => isMirrored(pid) || sharedWithOther.has(pid);
   const sharedExtIds = rows.filter(
     (r) =>
       r.kind === "statement" &&
       r.status === "identical" &&
       r.a.some((v) => v.type === "external-id") &&
-      !isMirrored(r.key) &&
+      !isNonEvidence(r.key) &&
       (isId ? isId(r.key) : true),
   );
   const strongIds = sharedExtIds.filter((r) => !WEAK_ID_PROPS.has(r.key));
@@ -677,6 +727,18 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   } else if (weakIds.length > 0) {
     score += 0.1;
     reasons.push(`shares account/social identifier: ${weakIds.map((r) => r.label).join(", ")}`);
+  }
+  // Explain the ids we deliberately ignored: a value the pair agrees on but
+  // that Wikidata itself says is shared between exactly these two items.
+  const declaredShared = rows.filter(
+    (r) => r.kind === "statement" && r.status === "identical" && sharedWithOther.has(r.key),
+  );
+  if (declaredShared.length > 0) {
+    reasons.push(
+      `identifier declared shared between the two items (P4070), not counted: ${declaredShared
+        .map((r) => r.label)
+        .join(", ")}`,
+    );
   }
 
   // Instance of (P31): agreement is necessary but far from sufficient — nearly
@@ -721,7 +783,11 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // only (P31 counted above; low-entropy props like genre/game mode/country
   // excluded, since agreeing on "single-player" says nothing about sameness).
   const stmtRows = rows.filter(
-    (r) => r.kind === "statement" && r.key !== "P31" && !LOW_ENTROPY_PROPS.has(r.key),
+    (r) =>
+      r.kind === "statement" &&
+      r.key !== "P31" &&
+      !LOW_ENTROPY_PROPS.has(r.key) &&
+      !sharedWithOther.has(r.key),
   );
   const agreeing = stmtRows.filter((r) => r.status === "identical" || r.status === "similar");
   if (stmtRows.length > 0 && agreeing.length > 0) {
@@ -809,7 +875,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
       r.status === "distinct" &&
       r.a.some((v) => v.type === "external-id") &&
       r.b.some((v) => v.type === "external-id") &&
-      !isMirrored(r.key) &&
+      !isNonEvidence(r.key) &&
       (isId ? isId(r.key) : true),
   );
   if (distinctExtIdRows.length > 6) {

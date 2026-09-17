@@ -132,6 +132,20 @@ candidates.get("/", async (c) => {
     );
   }
 
+  // Instance-of (P31) filter: keep pairs where *either* item's denormalized
+  // primaryType matches the given QID (the hunt's label+type path pairs items of
+  // the same type, but the shared-id path can pair across types, so match either
+  // side — same shape as the `q` search above). Ignored unless it's a valid QID.
+  const typeParam = req.query("type")?.trim();
+  if (typeParam && /^Q\d+$/.test(typeParam)) {
+    conditions.push(
+      sql`(
+        exists (select 1 from items where items.qid = ${mergeCandidates.fromQid} and items.primary_type = ${typeParam})
+        or exists (select 1 from items where items.qid = ${mergeCandidates.intoQid} and items.primary_type = ${typeParam})
+      )`,
+    );
+  }
+
   const where = and(...conditions);
   const sortColumn =
     sort === "confidence" ? mergeCandidates.confidence : mergeCandidates.detectedAt;

@@ -513,7 +513,7 @@ describe.skipIf(!DB_TEST)("auth", () => {
       expect(tokenCalls).toHaveLength(1);
     });
 
-    it("refreshes once when two requests race, thanks to the row lock", async () => {
+    it("refreshes once when several requests race, via in-process coalescing", async () => {
       const { tokenCalls } = stubProvider({
         tokenBody: { access_token: "access-2", refresh_token: "refresh-2", expires_in: 3600 },
       });

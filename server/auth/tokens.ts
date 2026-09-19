@@ -1,9 +1,11 @@
 // Storage and refresh of a user's OAuth tokens. `getAccessToken` is what the
 // Wikidata edit path calls: it returns a token valid for at least a few minutes,
-// refreshing (under a row lock, so concurrent requests can't race the rotating
-// refresh token) when needed. Tokens are encrypted at rest (crypto.ts), with
-// the owning user id as authenticated data so a row can't be re-pointed at
-// another user by copying ciphertext around in the database.
+// refreshing when needed. The refresh's provider round-trip is never made while
+// holding a DB connection or row lock — the common (still-valid) path is a plain
+// read, and concurrent refreshes for one user are coalesced in-process, with a
+// short transaction reconciling the write. Tokens are encrypted at rest
+// (crypto.ts), with the owning user id as authenticated data so a row can't be
+// re-pointed at another user by copying ciphertext around in the database.
 import { eq } from "drizzle-orm";
 import { db } from "../db.ts";
 import { oauthTokens } from "../../db/schema.ts";
@@ -67,37 +69,84 @@ function tokenRow(userId: number, tokens: TokenResponse, now: Date) {
 }
 
 /**
+ * Coalesce concurrent refreshes for the same user within this process, so a
+ * burst of edits near expiry makes a single provider round-trip rather than one
+ * per request. The web server runs as a single Node process; the short
+ * transaction in `refreshAndStore` still reconciles with any other writer.
+ */
+const refreshInFlight = new Map<number, Promise<string>>();
+
+/**
  * Return a usable access token for `userId`, refreshing it first if it is
  * about to expire. Throws `TokenError` when the user has no stored token or the
  * provider rejects the refresh (grant revoked): the caller should ask them to
  * log in again.
  */
 export async function getAccessToken(userId: number, now = new Date()): Promise<string> {
+  // Fast path: a plain read — no transaction, no row lock. This is every call
+  // whose token is still comfortably valid, i.e. the overwhelming majority.
+  const [row] = await db.select().from(oauthTokens).where(eq(oauthTokens.userId, userId));
+  if (!row) throw new TokenError("no-token", "No OAuth token stored for this user");
+  if (fromSqlDatetime(row.accessExpiresAt) > addSeconds(now, REFRESH_MARGIN_SECONDS)) {
+    return decrypt(row.accessToken, tokenAad(userId));
+  }
+  if (!row.refreshToken) {
+    throw new TokenError("revoked", "Access token expired and no refresh token is available");
+  }
+
+  const existing = refreshInFlight.get(userId);
+  if (existing) return existing;
+  const promise = refreshAndStore(userId, now).finally(() => refreshInFlight.delete(userId));
+  refreshInFlight.set(userId, promise);
+  return promise;
+}
+
+/**
+ * Refresh `userId`'s token against the provider and persist the result. The
+ * network call happens with no DB connection held; only the read-back-and-write
+ * reconciliation runs inside a transaction (under a row lock).
+ */
+async function refreshAndStore(userId: number, now: Date): Promise<string> {
+  const aad = tokenAad(userId);
+
+  // Re-read (unlocked) to pick up a token another writer may have just stored
+  // and to get the refresh token we will send to the provider.
+  const [row] = await db.select().from(oauthTokens).where(eq(oauthTokens.userId, userId));
+  if (!row) throw new TokenError("no-token", "No OAuth token stored for this user");
+  if (fromSqlDatetime(row.accessExpiresAt) > addSeconds(now, REFRESH_MARGIN_SECONDS)) {
+    return decrypt(row.accessToken, aad);
+  }
+  if (!row.refreshToken) {
+    throw new TokenError("revoked", "Access token expired and no refresh token is available");
+  }
+  const usedRefreshCipher = row.refreshToken;
+  const refreshed = await refreshTokens(decrypt(usedRefreshCipher, aad));
+
   const result = await db.transaction(async (tx) => {
-    const [row] = await tx
+    const [cur] = await tx
       .select()
       .from(oauthTokens)
       .where(eq(oauthTokens.userId, userId))
       .for("update");
-    if (!row) throw new TokenError("no-token", "No OAuth token stored for this user");
-    const aad = tokenAad(userId);
+    if (!cur) throw new TokenError("no-token", "No OAuth token stored for this user");
 
-    if (fromSqlDatetime(row.accessExpiresAt) > addSeconds(now, REFRESH_MARGIN_SECONDS)) {
-      return { token: decrypt(row.accessToken, aad) };
-    }
-    if (!row.refreshToken) {
-      throw new TokenError("revoked", "Access token expired and no refresh token is available");
+    // Another writer refreshed while we were on the network: adopt their token.
+    if (fromSqlDatetime(cur.accessExpiresAt) > addSeconds(now, REFRESH_MARGIN_SECONDS)) {
+      return { token: decrypt(cur.accessToken, aad) };
     }
 
-    const refreshed = await refreshTokens(decrypt(row.refreshToken, aad));
     if (!refreshed.ok) {
-      if (refreshed.revoked) return { revoked: true as const };
+      // If the stored refresh token changed under us, our failure is a lost
+      // rotation race (another writer already spent it), not a real revocation.
+      const raced = cur.refreshToken !== usedRefreshCipher;
+      if (refreshed.revoked && !raced) return { revoked: true as const };
       throw new TokenError("refresh-failed", `Token refresh failed: ${refreshed.error}`);
     }
+
     // The provider rotates refresh tokens; if it did not return a new one, keep the old.
     const tokens: TokenResponse = {
       ...refreshed.tokens,
-      refresh_token: refreshed.tokens.refresh_token ?? decrypt(row.refreshToken, aad),
+      refresh_token: refreshed.tokens.refresh_token ?? decrypt(usedRefreshCipher, aad),
     };
     await tx
       .update(oauthTokens)

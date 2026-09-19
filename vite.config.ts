@@ -41,6 +41,10 @@ export default defineConfig({
     // The DB tests share one database and truncate it between tests, so files
     // must not run concurrently when they are enabled.
     fileParallelism: process.env.DB_TEST !== "1",
+    // Randomize file and test order so nothing silently grows an ordering
+    // dependency. The seed defaults to Date.now() and is printed on each run;
+    // reproduce a failing order with `vp test --sequence.seed=<seed>`.
+    sequence: { shuffle: true },
   },
   build: {
     outDir: "dist/client",

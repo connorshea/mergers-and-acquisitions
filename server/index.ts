@@ -1,8 +1,14 @@
-// The web server entrypoint: binds the Hono app (server/app.ts) to $PORT. Runs
-// as the Toolforge webservice (buildservice Node image).
+// The web server entrypoint: checks the DB schema is current (server/preflight.ts),
+// then binds the Hono app (server/app.ts) to $PORT. Runs as the Toolforge
+// webservice (buildservice Node image).
 import { serve } from "@hono/node-server";
 import { app } from "./app.ts";
 import { pool } from "./db.ts";
+import { preflight } from "./preflight.ts";
+
+// Refuse to serve against a database with pending migrations (or none at all);
+// exits with an actionable message rather than failing on the first query.
+await preflight();
 
 const port = Number(process.env.PORT ?? 8000);
 const server = serve({ fetch: app.fetch, port }, (info) => {

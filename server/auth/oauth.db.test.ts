@@ -281,6 +281,10 @@ describe.skipIf(!DB_TEST)("auth", () => {
       expect(safeReturnTo("")).toBe("/");
       expect(safeReturnTo("https://evil.example/")).toBe("/");
       expect(safeReturnTo("javascript:alert(1)")).toBe("/");
+      // Control characters (CRLF) would poison the redirect's Location header.
+      expect(safeReturnTo("/foo\r\nSet-Cookie: x=1")).toBe("/");
+      expect(safeReturnTo("/foo\nbar")).toBe("/");
+      expect(safeReturnTo("/foo\x00bar")).toBe("/");
     });
 
     it("sends the user home with a note when they decline on Wikimedia", async () => {

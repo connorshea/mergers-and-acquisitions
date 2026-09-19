@@ -61,10 +61,14 @@ function loginCookieOptions() {
 
 /**
  * Only ever send the user back to a path on this site. Anything with a scheme,
- * a host, or a protocol-relative `//` prefix is an open-redirect vector.
+ * a host, or a protocol-relative `//` prefix is an open-redirect vector, and any
+ * control character (notably CR/LF) would poison the `Location` header on the
+ * eventual redirect — Node rejects such a header with ERR_INVALID_CHAR (a 500).
  */
 export function safeReturnTo(raw: string | undefined): string {
   if (!raw || !raw.startsWith("/") || raw.startsWith("//") || raw.startsWith("/\\")) return "/";
+  // eslint-disable-next-line no-control-regex -- deliberately matching control chars
+  if (/[\u0000-\u001f\u007f]/.test(raw)) return "/";
   return raw;
 }
 

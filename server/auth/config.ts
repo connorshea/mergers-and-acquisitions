@@ -24,11 +24,20 @@ export const DEFAULT_WIKIDATA_API_URL = "https://www.wikidata.org/w/api.php";
 
 const MIN_SECRET_LENGTH = 32;
 
-/** True when the variables needed to start an OAuth login are all present. */
+/**
+ * True when the variables needed to start an OAuth login are all present and
+ * usable. Mirrors the checks `authConfig()` enforces (including the minimum
+ * secret length) so a misconfiguration degrades to a 503 rather than throwing a
+ * 500 from inside the login route.
+ */
 export function authConfigured(): boolean {
   const env = process.env;
   return Boolean(
-    env.OAUTH_CLIENT_ID && env.OAUTH_CLIENT_SECRET && env.SESSION_SECRET && env.TOKEN_ENC_KEY,
+    env.OAUTH_CLIENT_ID &&
+    env.OAUTH_CLIENT_SECRET &&
+    env.SESSION_SECRET &&
+    env.SESSION_SECRET.length >= MIN_SECRET_LENGTH &&
+    env.TOKEN_ENC_KEY,
   );
 }
 

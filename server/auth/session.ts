@@ -119,8 +119,17 @@ export const sessionMiddleware: MiddlewareHandler<AuthEnv> = async (c, next) => 
   await next();
 };
 
+// Parsing ADMIN_USERS is pure over its raw string, so memoize against it: the
+// session middleware calls this on every authenticated request, and the env var
+// only ever changes between test runs (never mid-process in production).
+let adminIdsCache: { raw: string | undefined; ids: Set<number> } | undefined;
+
 function isAdminId(id: number): boolean {
-  return parseAdminIds(process.env.ADMIN_USERS).has(id);
+  const raw = process.env.ADMIN_USERS;
+  if (!adminIdsCache || adminIdsCache.raw !== raw) {
+    adminIdsCache = { raw, ids: parseAdminIds(raw) };
+  }
+  return adminIdsCache.ids.has(id);
 }
 
 /** 401 unless a user is logged in. */

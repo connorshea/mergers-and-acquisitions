@@ -53,6 +53,11 @@ describe("authConfigured / authConfig", () => {
     expect(authConfigured()).toBe(true);
   });
 
+  it("treats a too-short SESSION_SECRET as unconfigured, so login degrades to 503", () => {
+    setEnv({ ...COMPLETE, SESSION_SECRET: "too-short" });
+    expect(authConfigured()).toBe(false);
+  });
+
   it("refuses a short SESSION_SECRET and names a missing variable", () => {
     setEnv({ ...COMPLETE, SESSION_SECRET: "too-short" });
     expect(() => authConfig()).toThrow(/SESSION_SECRET must be at least 32/);

@@ -233,9 +233,14 @@ async function fetchProfile(
     const body = await res.text().catch(() => "");
     throw new Error(`profile fetch failed: HTTP ${res.status} ${body.slice(0, 500)}`);
   }
-  const profile = (await res.json()) as Partial<WikimediaProfile>;
-  if (typeof profile.sub !== "number" || typeof profile.username !== "string") {
-    throw new Error("profile response is missing sub/username");
+  const raw = (await res.json()) as Partial<WikimediaProfile>;
+  // The identity endpoint serializes `sub` as a JSON number on some wikis and as
+  // a decimal string on others (e.g. test.wikidata.org), so normalize to a number.
+  const sub = typeof raw.sub === "string" ? Number(raw.sub) : raw.sub;
+  if (typeof sub !== "number" || !Number.isInteger(sub) || typeof raw.username !== "string") {
+    throw new Error(
+      `profile response is missing sub/username: ${JSON.stringify(raw).slice(0, 500)}`,
+    );
   }
-  return profile as WikimediaProfile;
+  return { ...raw, sub } as WikimediaProfile;
 }

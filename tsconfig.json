@@ -10,6 +10,12 @@
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
+    // Node runs server/, jobs/, db/ and scripts/ via native type-stripping, which
+    // only *erases* types: it rejects enums, namespaces, and parameter
+    // properties, and does not elide a value import of a type-only export.
+    // These two flags make tsc reject exactly what node would fail on at runtime.
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",

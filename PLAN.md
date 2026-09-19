@@ -24,7 +24,7 @@ Wikidata-editing tool, with first-class access to Wikimedia OAuth and a MariaDB
 
 [Wikimedia Toolforge]: https://wikitech.wikimedia.org/wiki/Portal:Toolforge
 
-- **Language/runtime:** TypeScript on **Node.js** (>= 20).
+- **Language/runtime:** TypeScript on **Node.js 24** (pinned via `engines.node`; CI and the Toolforge buildpack both read it).
 - **Web server:** **Hono**, served with `@hono/node-server`. Serves the built SPA
   and mounts the JSON API under `/api`.
 - **Client:** **React 19** single-page app, built with **Vite+** (`vp`), routed

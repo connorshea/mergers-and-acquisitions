@@ -193,6 +193,18 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       expect((await candidateRow(alpha)).status).toBe("open");
     });
 
+    it("rejects a body that is not JSON instead of merging without overrides", async () => {
+      stubWikidata(() => mergeOk(101, 102));
+      const res = await app.request(`/api/candidates/${alpha}/merge`, {
+        method: "POST",
+        headers: { ...editor, "Content-Type": "application/json" },
+        body: '{"ignoreConflicts": ["sitelink"]',
+      });
+      expect(res.status).toBe(400);
+      expect((await candidateRow(alpha)).status).toBe("open");
+      expect(await db.select().from(wikidataEdits)).toEqual([]);
+    });
+
     it("merges, records the revisions, and settles the mirror", async () => {
       const calls = stubWikidata(() => mergeOk(101, 102));
       const { status, body } = await post<CandidateMergeResponse>(

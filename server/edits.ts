@@ -181,7 +181,18 @@ edits.post("/:id/merge", async (c) => {
   const id = parseId(c.req.param("id"));
   if (id === null) return c.json({ error: "Invalid candidate id" }, 404);
 
-  const ignoreConflicts = parseIgnoreConflicts(await c.req.json().catch(() => null));
+  // No body at all means "no overrides"; a body that isn't JSON is a client
+  // bug and must not quietly become a merge with none.
+  const text = await c.req.text();
+  let body: unknown = null;
+  if (text.trim() !== "") {
+    try {
+      body = JSON.parse(text);
+    } catch {
+      return errorResponse(c, { error: "Request body must be JSON" }, 400);
+    }
+  }
+  const ignoreConflicts = parseIgnoreConflicts(body);
   if (!ignoreConflicts) {
     return errorResponse(
       c,

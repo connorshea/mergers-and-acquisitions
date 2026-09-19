@@ -1,4 +1,5 @@
 import {
+  bigint,
   boolean,
   customType,
   datetime,
@@ -83,7 +84,11 @@ export const mergeCandidates = mysqlTable(
     fromQid: varchar("from_qid", { length: 32 }).notNull(),
     intoQid: varchar("into_qid", { length: 32 }).notNull(),
     confidence: double("confidence").notNull(),
-    status: varchar("status", { length: 16 }).notNull().default("open"), // open | dismissed | merged
+    // open | merging | dismissed | merged. `merging` is the short-lived claim an
+    // edit request (merge or "different from") takes via an optimistic
+    // UPDATE … WHERE status = 'open', so two submits can't both reach Wikidata;
+    // it reverts to `open` on failure.
+    status: varchar("status", { length: 16 }).notNull().default("open"),
     reasons: json<string[]>("reasons").notNull(), // string[]
     hasBlocker: boolean("has_blocker").notNull().default(false),
     detectedAt: datetime("detected_at", { mode: "string" })
@@ -91,6 +96,10 @@ export const mergeCandidates = mysqlTable(
       .default(sql`CURRENT_TIMESTAMP`),
     resolvedAt: datetime("resolved_at", { mode: "string" }),
     resolution: varchar("resolution", { length: 255 }), // free-form note on how it was resolved
+    // The user (central id) who resolved it, when a logged-in action did. No
+    // foreign key: the row is history and must survive whatever happens to
+    // the users table.
+    resolvedBy: int("resolved_by"),
   },
   (t) => [
     uniqueIndex("idx_merge_candidates_pair").on(t.fromQid, t.intoQid),
@@ -218,3 +227,43 @@ export const oauthTokens = mysqlTable("oauth_tokens", {
     .notNull()
     .default(sql`CURRENT_TIMESTAMP`),
 });
+
+// ---------------------------------------------------------------------------
+// Wikidata edits made through the app — see server/wikidata-client.ts.
+// ---------------------------------------------------------------------------
+
+// One row per edit *attempt* against Wikidata (a merge, or one direction of a
+// "different from" claim), success or failure, so there is an audit trail of
+// what the tool did under whose account and which revisions it produced.
+// `candidateId` is not a foreign key: /api/reset deletes candidates and the
+// history should outlive that. Revision ids are bigint — Wikidata's are past
+// 2^31 already.
+export const wikidataEdits = mysqlTable(
+  "wikidata_edits",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    userId: int("user_id")
+      .notNull()
+      .references(() => users.id),
+    candidateId: int("candidate_id"),
+    action: varchar("action", { length: 32 }).notNull(), // "merge" | "different-from"
+    fromQid: varchar("from_qid", { length: 32 }).notNull(), // merge: merged away; claim: the item edited
+    intoQid: varchar("into_qid", { length: 32 }).notNull(), // merge: survivor; claim: the value pointed at
+    params: json<Record<string, unknown>>("params"), // e.g. { ignoreConflicts: ["description"] }
+    ok: boolean("ok").notNull(),
+    errorCode: varchar("error_code", { length: 64 }),
+    errorText: text("error_text"),
+    fromRevid: bigint("from_revid", { mode: "number" }),
+    intoRevid: bigint("into_revid", { mode: "number" }),
+    // wbmergeitems only redirects the source when the merge emptied it; with
+    // ignored sitelink conflicts it can survive as a stub (null for claims).
+    redirected: boolean("redirected"),
+    createdAt: datetime("created_at", { mode: "string" })
+      .notNull()
+      .default(sql`CURRENT_TIMESTAMP`),
+  },
+  (t) => [
+    index("idx_wikidata_edits_user_id").on(t.userId),
+    index("idx_wikidata_edits_candidate_id").on(t.candidateId),
+  ],
+);

@@ -3,9 +3,11 @@ import type { AnnotatedValue, Item, RowStatus } from "./lib/compare.ts";
 import {
   buildRows,
   formatIdUrl,
+  isAutoIgnoredConflict,
   isHardcodedMirrorProp,
   sharedIdentifierProps,
 } from "./lib/compare.ts";
+import { wikiPageUrl } from "./lib/wiki.ts";
 
 // ---------- UI ----------
 
@@ -64,7 +66,7 @@ function ValueChip({ v, formatter }: { v: AnnotatedValue; formatter?: string }) 
       {v.type === "item" && (
         <a
           className="chip-id"
-          href={`https://www.wikidata.org/wiki/${v.value}`}
+          href={wikiPageUrl(v.value)}
           target="_blank"
           rel="noreferrer"
           // Don't let the QID link inherit the chip's tooltip/selection; it's its
@@ -85,12 +87,7 @@ function ItemPlate({ item, side }: { item: Item; side: "from" | "into" }) {
       <div className="plate-role">{side === "from" ? "merge from" : "merge into"}</div>
       <div className="plate-label">{item.labels.en ?? item.id}</div>
       <div className="plate-meta">
-        <a
-          className="plate-id"
-          href={`https://www.wikidata.org/wiki/${item.id}`}
-          target="_blank"
-          rel="noreferrer"
-        >
+        <a className="plate-id" href={wikiPageUrl(item.id)} target="_blank" rel="noreferrer">
           {item.id}
         </a>
         {item.descriptions.en && <span className="plate-desc">{item.descriptions.en}</span>}
@@ -169,7 +166,9 @@ export default function MergeCandidates({
       ),
     [from, into, propertyLabels, valueLabels],
   );
-  const blockers = rows.filter((r) => r.blocker);
+  // Auto-ignored conflicts (a differing description) are handled by the merge
+  // flow, so they aren't shown as blockers the user must resolve.
+  const blockers = rows.filter((r) => r.blocker && !isAutoIgnoredConflict(r.key));
   const counts = rows.reduce((acc, r) => ({ ...acc, [r.status]: acc[r.status] + 1 }), {
     identical: 0,
     similar: 0,
@@ -253,7 +252,7 @@ export default function MergeCandidates({
                       <th className="col-a">
                         <a
                           className="col-id"
-                          href={`https://www.wikidata.org/wiki/${from.id}`}
+                          href={wikiPageUrl(from.id)}
                           target="_blank"
                           rel="noreferrer"
                         >
@@ -264,7 +263,7 @@ export default function MergeCandidates({
                       <th className="col-b">
                         <a
                           className="col-id"
-                          href={`https://www.wikidata.org/wiki/${into.id}`}
+                          href={wikiPageUrl(into.id)}
                           target="_blank"
                           rel="noreferrer"
                         >
@@ -284,7 +283,10 @@ export default function MergeCandidates({
                         <tr
                           key={r.key}
                           className={
-                            [r.blocker ? "is-blocker" : "", isDiscounted(r) ? "is-discounted" : ""]
+                            [
+                              r.blocker && !isAutoIgnoredConflict(r.key) ? "is-blocker" : "",
+                              isDiscounted(r) ? "is-discounted" : "",
+                            ]
                               .filter(Boolean)
                               .join(" ") || undefined
                           }
@@ -294,7 +296,7 @@ export default function MergeCandidates({
                             <div className="prop-key">
                               {r.kind === "statement" ? (
                                 <a
-                                  href={`https://www.wikidata.org/wiki/Property:${r.key}`}
+                                  href={wikiPageUrl(`Property:${r.key}`)}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                 >

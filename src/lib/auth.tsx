@@ -3,6 +3,7 @@
 // action. Tokens never reach the client; this only knows the user's name/id.
 import { createContext, type ReactNode, useCallback, useContext, useEffect, useState } from "react";
 import { fetch } from "./client.ts";
+import { setWikiBaseUrl } from "./wiki.ts";
 import type { AuthMeResponse, AuthUserInfo } from "./api-types.ts";
 
 export interface AuthState {
@@ -34,6 +35,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .then((res) => {
         if (cancelled) return;
         const me = res as AuthMeResponse;
+        // The wiki instance is app-wide config, not per-render state: stash it in
+        // the shared holder so links can be built without prop drilling.
+        setWikiBaseUrl(me.wikiBaseUrl);
         setState({ user: me.user, configured: me.configured, loading: false });
       })
       .catch(() => {
@@ -54,20 +58,4 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 export function useAuth(): AuthState {
   return useContext(AuthContext);
-}
-
-/**
- * The login URL that brings the user back to `returnTo` (a same-site path).
- * Any `?auth=` outcome flag from an earlier failed login is stripped so a
- * successful retry doesn't land on a stale "Login cancelled" alert.
- */
-export function loginUrl(returnTo: string): string {
-  const qIndex = returnTo.indexOf("?");
-  if (qIndex !== -1) {
-    const query = new URLSearchParams(returnTo.slice(qIndex + 1));
-    query.delete("auth");
-    const rest = query.toString();
-    returnTo = returnTo.slice(0, qIndex) + (rest ? `?${rest}` : "");
-  }
-  return `/api/auth/login?returnTo=${encodeURIComponent(returnTo)}`;
 }

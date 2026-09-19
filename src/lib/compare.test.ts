@@ -7,8 +7,10 @@ import {
   formatIdUrl,
   installment,
   type Item,
+  isAutoIgnoredConflict,
   isDeclaredDifferent,
   isSeriesSequelPair,
+  mergeConflicts,
   normalize,
   orderByAge,
   scoreCandidate,
@@ -177,6 +179,54 @@ describe("buildRows (behavior-preserving extraction)", () => {
   });
 });
 
+describe("mergeConflicts", () => {
+  const base = { descriptions: {}, aliases: {}, sitelinks: {} };
+  const game = (id: string, extra: Partial<Item> = {}): Item => ({
+    id,
+    labels: { en: "Same Game" },
+    ...base,
+    statements: { P31: [{ type: "item", value: "Q7889" }] },
+    ...extra,
+  });
+
+  it("is empty for a pair wbmergeitems would accept as-is", () => {
+    expect(mergeConflicts(game("Q2"), game("Q1"))).toEqual([]);
+    // A description on one side only, or the same one on both, is fine.
+    expect(mergeConflicts(game("Q2", { descriptions: { en: "x" } }), game("Q1"))).toEqual([]);
+    expect(
+      mergeConflicts(
+        game("Q2", { descriptions: { en: "x" } }),
+        game("Q1", { descriptions: { en: "x" } }),
+      ),
+    ).toEqual([]);
+  });
+
+  it("reports differing descriptions and clashing sitelinks from the fixture pair", () => {
+    const ex = byName["Game with conflicts"];
+    const [from, into] = orderByAge(ex.a, ex.b);
+    expect(mergeConflicts(from, into)).toEqual(["description", "sitelink"]);
+  });
+
+  it("reports a statement on either item that points at the other", () => {
+    const a = game("Q2", {
+      statements: {
+        P31: [{ type: "item", value: "Q7889" }],
+        P1889: [{ type: "item", value: "Q1" }],
+      },
+    });
+    expect(mergeConflicts(a, game("Q1"))).toEqual(["statement"]);
+    expect(mergeConflicts(game("Q1"), a)).toEqual(["statement"]);
+    // Linking to some third item is not a conflict.
+    const c = game("Q2", {
+      statements: {
+        P31: [{ type: "item", value: "Q7889" }],
+        P155: [{ type: "item", value: "Q9" }],
+      },
+    });
+    expect(mergeConflicts(c, game("Q1"))).toEqual([]);
+  });
+});
+
 describe("scoreCandidate", () => {
   const scored = Object.fromEntries(EXAMPLES.map((e) => [e.name, scoreCandidate(e.a, e.b)]));
 
@@ -215,6 +265,42 @@ describe("scoreCandidate", () => {
     for (const e of EXAMPLES) {
       expect(scoreCandidate(e.a, e.b).confidence).toBeCloseTo(scoreCandidate(e.b, e.a).confidence);
     }
+  });
+
+  it("does not treat an auto-ignored (description) conflict as a blocker", () => {
+    const base = {
+      aliases: {},
+      sitelinks: {},
+      statements: { P31: [{ type: "item" as const, value: "Q7889" }] },
+    };
+    const a: Item = {
+      id: "Q2",
+      labels: { en: "Same Game" },
+      descriptions: { en: "2019 video game" },
+      ...base,
+    };
+    const b: Item = {
+      id: "Q1",
+      labels: { en: "Same Game" },
+      descriptions: { en: "an action RPG" },
+      ...base,
+    };
+
+    // The differing description is a real wbmergeitems conflict...
+    expect(mergeConflicts(a, b)).toEqual(["description"]);
+    // ...but the merge flow auto-ignores it, so it is not surfaced as a blocker
+    // and does not add a "would block the merge" reason.
+    const score = scoreCandidate(a, b);
+    expect(score.hasBlocker).toBe(false);
+    expect(score.reasons.some((r) => r.includes("would block the merge"))).toBe(false);
+  });
+});
+
+describe("isAutoIgnoredConflict", () => {
+  it("matches description rows only", () => {
+    expect(isAutoIgnoredConflict("description:en")).toBe(true);
+    expect(isAutoIgnoredConflict("sitelink:enwiki")).toBe(false);
+    expect(isAutoIgnoredConflict("P31")).toBe(false);
   });
 });
 

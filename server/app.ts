@@ -9,6 +9,7 @@ import { serveStatic } from "@hono/node-server/serve-static";
 import { Hono } from "hono";
 import { secureHeaders } from "hono/secure-headers";
 import { candidates } from "./candidates.ts";
+import { edits } from "./edits.ts";
 import { actions } from "./actions.ts";
 import { syncRoutes } from "./sync-routes.ts";
 import { authRoutes } from "./auth/oauth.ts";
@@ -30,6 +31,7 @@ app.use("/api/*", sameOriginOnly);
 app.use("/api/*", sessionMiddleware);
 app.route("/api/auth", authRoutes); // /api/auth/{login,callback,logout,me}
 app.route("/api/candidates", candidates);
+app.route("/api/candidates", edits); // /api/candidates/:id/{merge,different}
 app.route("/api", actions); // /api/hunt, /api/reset
 app.route("/api", syncRoutes); // /api/{properties,entity-labels,descriptions}/sync
 

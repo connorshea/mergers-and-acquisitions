@@ -16,7 +16,7 @@ import { eq } from "drizzle-orm";
 import { db } from "../db.ts";
 import { sessions, users } from "../../db/schema.ts";
 import type { AuthMeResponse, LogoutResponse } from "../../src/lib/api-types.ts";
-import { authConfig, authConfigured, callbackUrl, cookiesSecure } from "./config.ts";
+import { authConfig, authConfigured, callbackUrl, cookiesSecure, wikiOrigin } from "./config.ts";
 import { pkceChallenge, randomToken, safeEqual } from "./crypto.ts";
 import { type AuthEnv, createSession, deleteTokensIfLoggedOut, destroySession } from "./session.ts";
 import { toSqlDatetime } from "./time.ts";
@@ -184,7 +184,11 @@ authRoutes.post("/logout", async (c) => {
 
 authRoutes.get("/me", (c) => {
   c.header("Cache-Control", "no-store");
-  const payload: AuthMeResponse = { user: c.get("user"), configured: authConfigured() };
+  const payload: AuthMeResponse = {
+    user: c.get("user"),
+    configured: authConfigured(),
+    wikiBaseUrl: wikiOrigin(),
+  };
   return c.json(payload);
 });
 
@@ -229,10 +233,18 @@ async function fetchProfile(
     headers: { Authorization: `Bearer ${accessToken}`, "User-Agent": userAgent() },
     signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
   });
-  if (!res.ok) throw new Error(`profile fetch failed: HTTP ${res.status}`);
-  const profile = (await res.json()) as Partial<WikimediaProfile>;
-  if (typeof profile.sub !== "number" || typeof profile.username !== "string") {
-    throw new Error("profile response is missing sub/username");
+  if (!res.ok) {
+    const body = await res.text().catch(() => "");
+    throw new Error(`profile fetch failed: HTTP ${res.status} ${body.slice(0, 500)}`);
   }
-  return profile as WikimediaProfile;
+  const raw = (await res.json()) as Partial<WikimediaProfile>;
+  // The identity endpoint serializes `sub` as a JSON number on some wikis and as
+  // a decimal string on others (e.g. test.wikidata.org), so normalize to a number.
+  const sub = typeof raw.sub === "string" ? Number(raw.sub) : raw.sub;
+  if (typeof sub !== "number" || !Number.isInteger(sub) || typeof raw.username !== "string") {
+    throw new Error(
+      `profile response is missing sub/username: ${JSON.stringify(raw).slice(0, 500)}`,
+    );
+  }
+  return { ...raw, sub } as WikimediaProfile;
 }

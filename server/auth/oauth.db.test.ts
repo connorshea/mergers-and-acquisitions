@@ -19,6 +19,7 @@ import { oauthTokens, sessions, users } from "../../db/schema.ts";
 import type { AuthMeResponse } from "../../src/lib/api-types.ts";
 import { DB_TEST, loginAs, truncateAll } from "../../test/db-helpers.ts";
 import { decrypt, randomToken, sha256Hex } from "./crypto.ts";
+import { wikiOrigin } from "./config.ts";
 import { MAX_RETURN_TO_LENGTH, safeReturnTo } from "./oauth.ts";
 import { pruneExpiredSessions, SESSION_COOKIE, SESSION_TTL_SECONDS } from "./session.ts";
 import { addSeconds, fromSqlDatetime, toSqlDatetime } from "./time.ts";
@@ -225,6 +226,7 @@ describe.skipIf(!DB_TEST)("auth", () => {
       expect(await me(session)).toEqual({
         user: { id: 7, username: "Alice", isAdmin: false, blocked: false },
         configured: true,
+        wikiBaseUrl: wikiOrigin(),
       });
     });
 
@@ -374,7 +376,7 @@ describe.skipIf(!DB_TEST)("auth", () => {
 
   describe("sessions", () => {
     it("reports nobody when logged out, and flags admins", async () => {
-      expect(await me()).toEqual({ user: null, configured: true });
+      expect(await me()).toEqual({ user: null, configured: true, wikiBaseUrl: wikiOrigin() });
       const admin = await loginAs(42, "Root");
       expect((await me(admin.Cookie.split("=")[1])).user).toMatchObject({ isAdmin: true });
     });

@@ -84,10 +84,10 @@ run and a schema-drift check — see `.github/workflows/ci.yml`.
 ## Authentication
 
 Login is **Wikimedia OAuth 2.0** (authorization code + PKCE, confidential
-client). Anyone can browse candidates; dismissing/reopening needs a login, and
-the hunt / reset / sync triggers are limited to the user ids in `ADMIN_USERS`.
-Merges (when they land) run under the logged-in user's own account. With none of
-the `OAUTH_*` variables set the app runs read-only and the login link is hidden.
+client). Anyone can browse candidates; dismissing/reopening and the Wikidata
+edits below need a login, and the hunt / reset / sync triggers are limited to
+the user ids in `ADMIN_USERS`. With none of the `OAUTH_*` variables set the app
+runs read-only and the login link is hidden.
 
 1. Register a consumer at
    [Special:OAuthConsumerRegistration/propose/oauth2](https://meta.wikimedia.org/wiki/Special:OAuthConsumerRegistration/propose/oauth2)
@@ -106,6 +106,42 @@ the `OAUTH_*` variables set the app runs read-only and the login link is hidden.
 Session cookies are `HttpOnly; SameSite=Lax`, the DB stores only their hash, and
 state-changing API calls must carry a same-origin `Sec-Fetch-Site`/`Origin`. The
 nightly `prune-sessions` job deletes expired sessions.
+
+## Editing Wikidata
+
+Every edit is made **under the logged-in user's own account** through their
+OAuth grant (`server/wikidata-client.ts`) — never a shared or bot account, never
+with `bot=1`. Wikidata enforces the user's real rights; the app only refuses up
+front for accounts its profile snapshot says are blocked.
+
+- **Merge** (`POST /api/candidates/:id/merge`) runs `wbmergeitems` in the
+  app's order — the higher QID into the lower — with an edit summary crediting
+  the tool. The confirm dialog offers one checkbox per `ignoreconflicts` kind
+  (description / sitelink / statement), marking the ones the mirror predicts;
+  an override is only ever sent because the user ticked it. On success the
+  candidate becomes `merged` (with both revision ids linked from the page), the
+  merged-away item is dropped from the mirror so the hunt stops pairing it, and
+  any other open candidate that referenced it is settled as "merged elsewhere".
+  A merge takes a short `merging` claim on the row first, so a double click or a
+  second tab can't submit it twice; a claim abandoned by a crash goes stale
+  after ten minutes. If the request times out, the app checks whether the
+  source became a redirect before deciding: a merge that did go through is
+  settled as usual, and one that can't be checked keeps its claim until it
+  goes stale rather than inviting a retry against a redirect.
+- **Mark as different** (`POST /api/candidates/:id/different`) adds a
+  `different from` (P1889) statement in each direction via `wbcreateclaim`,
+  mirrors it locally, and dismisses the candidate. It takes the same claim as
+  a merge, so two submits can't each add their own copy of the statements.
+
+Requests carry `maxlag=5` and an `assert=user&assertuser=` check; the client
+retries once on `badtoken` and once on `maxlag`, drops the stored tokens and
+asks for a re-login when the grant was revoked, and surfaces Wikidata's own
+error text (`permissiondenied`, `blocked`, conflicts, …) verbatim. Every attempt
+— success or failure — is recorded in `wikidata_edits` with the user, the
+revision ids, and any error. Edits are rate limited per user
+(`EDIT_RATE_LIMIT`/minute, default 10). Point `WIKIDATA_API_URL` at
+`https://test.wikidata.org/w/api.php` to develop against Test Wikidata (the
+consumer must list `testwikidatawiki`; QIDs there won't match the mirror).
 
 ## Deploying to Toolforge
 

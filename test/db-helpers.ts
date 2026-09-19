@@ -24,7 +24,7 @@ const TABLES = [
 
 // The auth tables are linked by foreign keys, which MariaDB refuses to
 // TRUNCATE through; DELETE them children-first instead.
-const FK_TABLES = ["sessions", "oauth_tokens", "users"];
+const FK_TABLES = ["wikidata_edits", "sessions", "oauth_tokens", "users"];
 
 /** Empty every application table (not the migrations journal). */
 export async function truncateAll(): Promise<void> {

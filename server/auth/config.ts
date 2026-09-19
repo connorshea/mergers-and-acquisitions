@@ -70,8 +70,26 @@ export function authConfig(): AuthConfig {
     issuer: (env.OAUTH_ISSUER ?? DEFAULT_ISSUER).replace(/\/+$/, ""),
     baseUrl: baseUrl(),
     sessionSecret,
-    wikidataApiUrl: env.WIKIDATA_API_URL ?? DEFAULT_WIKIDATA_API_URL,
+    wikidataApiUrl: wikidataApiUrl(),
   };
+}
+
+/** The Wikidata Action API endpoint edits go to (test.wikidata.org while developing). */
+export function wikidataApiUrl(): string {
+  return process.env.WIKIDATA_API_URL ?? DEFAULT_WIKIDATA_API_URL;
+}
+
+/**
+ * Origin (scheme + host) of the Wikidata instance edits go to, e.g.
+ * `https://test.wikidata.org`. Used to build article/user-page links that point
+ * at the same wiki the app edits, not always www.wikidata.org.
+ */
+export function wikiOrigin(): string {
+  try {
+    return new URL(wikidataApiUrl()).origin;
+  } catch {
+    return new URL(DEFAULT_WIKIDATA_API_URL).origin;
+  }
 }
 
 /**

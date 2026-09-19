@@ -1,8 +1,8 @@
 // Scheduled job: refresh the Wikidata property-label table (~12k rows). Property
 // labels change rarely, so a weekly run keeps the UI's property names current.
 // Replaces Void's crons/sync-properties.ts.
-import { fetchAllProperties } from "../src/lib/sparql";
-import { syncProperties } from "../server/properties-sync";
+import { fetchAllProperties } from "../src/lib/sparql.ts";
+import { syncProperties } from "../server/properties-sync.ts";
 
 fetchAllProperties()
   .then((rows) => syncProperties(rows))

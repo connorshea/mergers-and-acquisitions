@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vite-plus/test";
-import { parseSparqlResults } from "./sparql";
+import { parseSparqlResults } from "./sparql.ts";
 
 describe("parseSparqlResults", () => {
   it("parses a normal SPARQL JSON results body", () => {

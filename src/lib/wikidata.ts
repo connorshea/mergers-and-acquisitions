@@ -8,7 +8,7 @@
 // so external-id vs plain string cannot be told apart from the value alone — we
 // key that off the property id via EXTERNAL_ID_PROPERTIES below.
 
-import type { Item, Value, ValueType } from "./compare";
+import type { Item, Value, ValueType } from "./compare.ts";
 
 // ---------- dump / query wire format ----------
 

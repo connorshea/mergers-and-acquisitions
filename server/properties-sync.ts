@@ -2,9 +2,9 @@
 // both the manual route (server/sync-routes.ts) and the scheduled job
 // (jobs/sync-properties.ts).
 import { sql } from "drizzle-orm";
-import { db } from "./db";
-import { properties } from "../db/schema";
-import type { PropertyRow } from "../src/lib/sparql";
+import { db } from "./db.ts";
+import { properties } from "../db/schema.ts";
+import type { PropertyRow } from "../src/lib/sparql.ts";
 
 // MariaDB allows tens of thousands of bound params per statement, so batch
 // generously — a handful of round-trips rather than the ~25-row statements D1's

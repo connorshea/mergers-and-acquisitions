@@ -22,12 +22,12 @@
 import mysql from "mysql2/promise";
 import { drizzle, type MySql2Database } from "drizzle-orm/mysql2";
 import { and, eq, inArray, isNotNull, notInArray, sql } from "drizzle-orm";
-import * as schema from "../db/schema";
-import { externalIds, items, mergeCandidates, properties } from "../db/schema";
-import { connConfig } from "./db-config";
-import type { Item, ScoreOptions } from "../src/lib/compare";
-import { blockingLabelKey, orderByAge, scoreCandidate } from "../src/lib/compare";
-import { chunk } from "../src/lib/chunk";
+import * as schema from "../db/schema.ts";
+import { externalIds, items, mergeCandidates, properties } from "../db/schema.ts";
+import { connConfig } from "./db-config.ts";
+import type { Item, ScoreOptions } from "../src/lib/compare.ts";
+import { blockingLabelKey, orderByAge, scoreCandidate } from "../src/lib/compare.ts";
+import { chunk } from "../src/lib/chunk.ts";
 
 // Accepts both the pool-backed handle and a dedicated-connection one (the hunt
 // opens its own connection), so avoid the `$client` intersection the `drizzle()`

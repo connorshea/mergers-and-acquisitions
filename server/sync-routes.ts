@@ -3,15 +3,15 @@
 // scheduled job (jobs/sync-*.ts), exposed for a manual/dev trigger. The heavy
 // lifting is in the shared server/*-sync.ts write paths.
 import { Hono } from "hono";
-import { fetchAllProperties } from "../src/lib/sparql";
-import { syncProperties } from "./properties-sync";
-import { runEntityLabelsSync } from "./entity-labels-sync";
-import { runDescriptionsSync } from "./descriptions-sync";
+import { fetchAllProperties } from "../src/lib/sparql.ts";
+import { syncProperties } from "./properties-sync.ts";
+import { runEntityLabelsSync } from "./entity-labels-sync.ts";
+import { runDescriptionsSync } from "./descriptions-sync.ts";
 import type {
   DescriptionsSyncResponse,
   EntityLabelsSyncResponse,
   PropertiesSyncResponse,
-} from "../src/lib/api-types";
+} from "../src/lib/api-types.ts";
 
 export const syncRoutes = new Hono();
 

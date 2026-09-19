@@ -2,10 +2,10 @@
 // hunt) and POST /api/reset (clear all found candidates).
 import { Hono } from "hono";
 import { count } from "drizzle-orm";
-import { db } from "./db";
-import { mergeCandidates } from "../db/schema";
-import { runHunt } from "./hunt";
-import type { HuntTriggerResponse, ResetResponse } from "../src/lib/api-types";
+import { db } from "./db.ts";
+import { mergeCandidates } from "../db/schema.ts";
+import { runHunt } from "./hunt.ts";
+import type { HuntTriggerResponse, ResetResponse } from "../src/lib/api-types.ts";
 
 // The Void version enqueued a Cloudflare-Queues message and returned at once.
 // Here we start the hunt in the background and return immediately, preserving

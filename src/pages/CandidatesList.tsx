@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { fetch, FetchError } from "../lib/client";
+import { fetch, FetchError } from "../lib/client.ts";
 import {
   CANDIDATE_SORTS,
   CANDIDATE_STATUSES,
@@ -14,7 +14,7 @@ import {
   type HuntTriggerResponse,
   type PropertiesSyncResponse,
   type ResetResponse,
-} from "../lib/api-types";
+} from "../lib/api-types.ts";
 
 const PAGE_SIZE = 25;
 

@@ -2,7 +2,7 @@
 // the compare.test.ts unit tests. They are illustrative fixtures, not real
 // Wikidata data (which arrives via the sync jobs in later phases).
 
-import type { Item } from "./compare";
+import type { Item } from "./compare.ts";
 
 export interface Example {
   name: string;

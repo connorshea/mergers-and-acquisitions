@@ -4,8 +4,8 @@
 // dedicated connection instead — see server/hunt.ts.
 import mysql from "mysql2/promise";
 import { drizzle } from "drizzle-orm/mysql2";
-import * as schema from "../db/schema";
-import { connConfig } from "./db-config";
+import * as schema from "../db/schema.ts";
+import { connConfig } from "./db-config.ts";
 
 export const pool = mysql.createPool({
   ...connConfig(),

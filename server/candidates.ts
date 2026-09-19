@@ -4,10 +4,16 @@
 // sync.
 import { Hono } from "hono";
 import { and, asc, count, desc, eq, gt, gte, inArray, lt, or, sql } from "drizzle-orm";
-import { db } from "./db";
-import { entityLabels, itemDescriptions, items, mergeCandidates, properties } from "../db/schema";
-import type { Item } from "../src/lib/compare";
-import { chunk } from "../src/lib/chunk";
+import { db } from "./db.ts";
+import {
+  entityLabels,
+  itemDescriptions,
+  items,
+  mergeCandidates,
+  properties,
+} from "../db/schema.ts";
+import type { Item } from "../src/lib/compare.ts";
+import { chunk } from "../src/lib/chunk.ts";
 import {
   CANDIDATE_SORTS,
   CANDIDATE_STATUSES,
@@ -16,7 +22,7 @@ import {
   type CandidateListResponse,
   type CandidateReopenResponse,
   type CandidateSummary,
-} from "../src/lib/api-types";
+} from "../src/lib/api-types.ts";
 
 const STATUSES = CANDIDATE_STATUSES;
 const SORTS = CANDIDATE_SORTS;

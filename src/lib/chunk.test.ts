@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vite-plus/test";
-import { chunk, D1_MAX_BOUND_PARAMS } from "./chunk";
+import { chunk, D1_MAX_BOUND_PARAMS } from "./chunk.ts";
 
 describe("chunk", () => {
   it("splits into consecutive fixed-size chunks", () => {

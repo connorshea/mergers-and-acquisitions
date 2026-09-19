@@ -2,7 +2,7 @@
 // server routes (routes/api/candidates/*) and the client pages so the shapes
 // stay in sync from one definition.
 
-import type { Item } from "./compare";
+import type { Item } from "./compare.ts";
 
 export const CANDIDATE_STATUSES = ["open", "dismissed", "merged"] as const;
 export type CandidateStatus = (typeof CANDIDATE_STATUSES)[number];

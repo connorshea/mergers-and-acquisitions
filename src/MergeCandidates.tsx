@@ -1,11 +1,11 @@
 import { useMemo, useState } from "react";
-import type { AnnotatedValue, Item, RowStatus } from "./lib/compare";
+import type { AnnotatedValue, Item, RowStatus } from "./lib/compare.ts";
 import {
   buildRows,
   formatIdUrl,
   isHardcodedMirrorProp,
   sharedIdentifierProps,
-} from "./lib/compare";
+} from "./lib/compare.ts";
 
 // ---------- UI ----------
 

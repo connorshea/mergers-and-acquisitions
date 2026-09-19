@@ -7,9 +7,9 @@ import { existsSync, readFileSync } from "node:fs";
 import { serve } from "@hono/node-server";
 import { serveStatic } from "@hono/node-server/serve-static";
 import { Hono } from "hono";
-import { candidates } from "./candidates";
-import { actions } from "./actions";
-import { syncRoutes } from "./sync-routes";
+import { candidates } from "./candidates.ts";
+import { actions } from "./actions.ts";
+import { syncRoutes } from "./sync-routes.ts";
 
 const CLIENT_DIR = process.env.CLIENT_DIR ?? "./dist/client";
 const INDEX_HTML = `${CLIENT_DIR}/index.html`;

@@ -6,7 +6,7 @@ import {
   mapDumpGame,
   primaryLabel,
   primaryType,
-} from "./wikidata";
+} from "./wikidata.ts";
 
 describe("classifyValue", () => {
   it("maps entity nodes to item values", () => {

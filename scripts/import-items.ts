@@ -13,10 +13,10 @@
 //   tsx scripts/import-items.ts Q133634 Q10423793
 //   pnpm run job:hunt          # then score — see if the pair surfaces
 import { eq } from "drizzle-orm";
-import { db, pool } from "../server/db";
-import { externalIds, items } from "../db/schema";
-import { externalIdRows, mapDumpGame, primaryLabel, primaryType } from "../src/lib/wikidata";
-import type { DumpGame, DumpValue } from "../src/lib/wikidata";
+import { db, pool } from "../server/db.ts";
+import { externalIds, items } from "../db/schema.ts";
+import { externalIdRows, mapDumpGame, primaryLabel, primaryType } from "../src/lib/wikidata.ts";
+import type { DumpGame, DumpValue } from "../src/lib/wikidata.ts";
 
 const ENTITYDATA = "https://www.wikidata.org/wiki/Special:EntityData";
 const UA = "mergers-and-acquisitions/0.1 (https://github.com/connorshea; single-item importer)";

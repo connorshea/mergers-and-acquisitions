@@ -15,14 +15,26 @@ import type {
   HuntTriggerResponse,
   ResetResponse,
 } from "../src/lib/api-types.ts";
-import { DB_TEST, insertItem, makeItem, truncateAll } from "../test/db-helpers.ts";
+import {
+  DB_TEST,
+  insertItem,
+  loginAs,
+  makeItem,
+  SAME_ORIGIN,
+  truncateAll,
+} from "../test/db-helpers.ts";
 
 async function request<T>(path: string, init?: RequestInit): Promise<{ status: number; body: T }> {
   const res = await app.request(path, init);
   return { status: res.status, body: (await res.json()) as T };
 }
 const get = <T>(path: string) => request<T>(path);
-const post = <T>(path: string) => request<T>(path, { method: "POST" });
+/** A same-origin POST; `headers` from `loginAs()` make it an authenticated one. */
+const post = <T>(path: string, headers: Record<string, string> = SAME_ORIGIN) =>
+  request<T>(path, { method: "POST", headers });
+
+const ADMIN_ID = 42;
+const EDITOR_ID = 7;
 
 async function list(query = ""): Promise<CandidateListResponse> {
   const { status, body } = await get<CandidateListResponse>(`/api/candidates${query}`);
@@ -44,8 +56,15 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
   let beta: number; // Q40 -> Q30, 0.5, open, blocker
   let orphan: number; // Q60 -> Q50, 0.7, dismissed, items missing
 
+  // Session headers for a plain editor and for an ADMIN_USERS member.
+  let editor: Record<string, string>;
+  let admin: Record<string, string>;
+
   beforeEach(async () => {
+    process.env.ADMIN_USERS = String(ADMIN_ID);
     await truncateAll();
+    editor = await loginAs(EDITOR_ID, "Editor");
+    admin = await loginAs(ADMIN_ID, "Admin");
     await insertItem(
       makeItem("Q10", "Alpha Quest", { P136: [{ type: "item", value: "Q744038" }] }),
     );
@@ -192,8 +211,21 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
   });
 
   describe("dismiss / reopen", () => {
+    it("requires a login and a same-origin request", async () => {
+      expect((await post(`/api/candidates/${alpha}/dismiss`)).status).toBe(401);
+      expect((await post(`/api/candidates/${alpha}/reopen`)).status).toBe(401);
+      // Logged in, but no Origin / Sec-Fetch-Site: the CSRF guard rejects it.
+      const { Cookie } = editor;
+      expect((await post(`/api/candidates/${alpha}/dismiss`, { Cookie })).status).toBe(403);
+      const [row] = await db.select().from(mergeCandidates).where(eq(mergeCandidates.id, alpha));
+      expect(row.status).toBe("open");
+    });
+
     it("dismisses, then reopens, a candidate", async () => {
-      const dismissed = await post<CandidateDismissResponse>(`/api/candidates/${alpha}/dismiss`);
+      const dismissed = await post<CandidateDismissResponse>(
+        `/api/candidates/${alpha}/dismiss`,
+        editor,
+      );
       expect(dismissed.status).toBe(200);
       expect(dismissed.body.candidate).toMatchObject({ id: alpha, status: "dismissed" });
       expect((await list()).candidates.map((c) => c.id)).toEqual([beta]);
@@ -201,7 +233,10 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       const [row] = await db.select().from(mergeCandidates).where(eq(mergeCandidates.id, alpha));
       expect(row.resolvedAt).not.toBeNull();
 
-      const reopened = await post<CandidateReopenResponse>(`/api/candidates/${alpha}/reopen`);
+      const reopened = await post<CandidateReopenResponse>(
+        `/api/candidates/${alpha}/reopen`,
+        editor,
+      );
       expect(reopened.body.candidate).toMatchObject({ id: alpha, status: "open" });
       const [after] = await db.select().from(mergeCandidates).where(eq(mergeCandidates.id, alpha));
       expect(after.resolvedAt).toBeNull();
@@ -209,14 +244,20 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
     });
 
     it("404s for an unknown candidate", async () => {
-      expect((await post("/api/candidates/999999/dismiss")).status).toBe(404);
-      expect((await post("/api/candidates/999999/reopen")).status).toBe(404);
+      expect((await post("/api/candidates/999999/dismiss", editor)).status).toBe(404);
+      expect((await post("/api/candidates/999999/reopen", editor)).status).toBe(404);
     });
   });
 
   describe("POST /api/reset", () => {
+    it("is admin-only", async () => {
+      expect((await post("/api/reset")).status).toBe(401);
+      expect((await post("/api/reset", editor)).status).toBe(403);
+      expect((await list()).total).toBe(2);
+    });
+
     it("deletes every candidate regardless of status", async () => {
-      const { body } = await post<ResetResponse>("/api/reset");
+      const { body } = await post<ResetResponse>("/api/reset", admin);
       expect(body).toEqual({ deleted: 3 });
       expect((await list()).total).toBe(0);
       expect((await list("?status=dismissed")).total).toBe(0);
@@ -226,7 +267,8 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
   describe("POST /api/hunt", () => {
     it("starts a hunt in the background that populates candidates", async () => {
       await db.delete(mergeCandidates);
-      const { status, body } = await post<HuntTriggerResponse>("/api/hunt");
+      expect((await post("/api/hunt", editor)).status).toBe(403);
+      const { status, body } = await post<HuntTriggerResponse>("/api/hunt", admin);
       expect(status).toBe(200);
       expect(body.enqueued).toBe(true);
       expect(body.message).toMatch(/^Hunt started/);
@@ -237,6 +279,9 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
 
   it("returns JSON 404s for unknown API routes", async () => {
     expect(await get("/api/nope")).toEqual({ status: 404, body: { error: "Not found" } });
-    expect((await post("/api/candidates/1/nope")).status).toBe(404);
+    expect((await post("/api/candidates/1/nope", editor)).status).toBe(404);
+    // The sync triggers are admin-only too.
+    expect((await post("/api/properties/sync")).status).toBe(401);
+    expect((await post("/api/properties/sync", editor)).status).toBe(403);
   });
 });

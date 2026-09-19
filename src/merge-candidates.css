@@ -974,3 +974,47 @@ a.chip-id:hover {
   display: flex;
   justify-content: flex-end;
 }
+
+/* ---------- Auth ---------- */
+.auth-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.auth-user {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.auth-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+  background: var(--shared-bg);
+  color: var(--shared);
+}
+.auth-badge.is-blocked {
+  background: var(--distinct-bg);
+  color: var(--distinct);
+}
+.auth-note {
+  color: var(--muted);
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+a.auth-login {
+  text-decoration: none;
+  display: inline-block;
+}
+.login-hint {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.login-hint a {
+  color: var(--focus);
+}

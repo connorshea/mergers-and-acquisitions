@@ -7,16 +7,28 @@
 import { existsSync, readFileSync } from "node:fs";
 import { serveStatic } from "@hono/node-server/serve-static";
 import { Hono } from "hono";
+import { secureHeaders } from "hono/secure-headers";
 import { candidates } from "./candidates.ts";
 import { actions } from "./actions.ts";
 import { syncRoutes } from "./sync-routes.ts";
+import { authRoutes } from "./auth/oauth.ts";
+import { sameOriginOnly } from "./auth/same-origin.ts";
+import { type AuthEnv, sessionMiddleware } from "./auth/session.ts";
 
 const CLIENT_DIR = process.env.CLIENT_DIR ?? "./dist/client";
 const INDEX_HTML = `${CLIENT_DIR}/index.html`;
 
-export const app = new Hono();
+export const app = new Hono<AuthEnv>();
+
+app.use("*", secureHeaders());
 
 // --- API ---
+// Every API request gets the session resolved (c.get("user")) and, if it is
+// state-changing, must come from this origin. Individual routes then gate with
+// requireUser / requireAdmin (server/auth/session.ts).
+app.use("/api/*", sameOriginOnly);
+app.use("/api/*", sessionMiddleware);
+app.route("/api/auth", authRoutes); // /api/auth/{login,callback,logout,me}
 app.route("/api/candidates", candidates);
 app.route("/api", actions); // /api/hunt, /api/reset
 app.route("/api", syncRoutes); // /api/{properties,entity-labels,descriptions}/sync

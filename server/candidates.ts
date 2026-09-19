@@ -5,6 +5,7 @@
 import { Hono } from "hono";
 import { and, asc, count, desc, eq, gt, gte, inArray, lt, or, sql } from "drizzle-orm";
 import { db } from "./db.ts";
+import { type AuthEnv, requireUser } from "./auth/session.ts";
 import {
   entityLabels,
   itemDescriptions,
@@ -92,7 +93,11 @@ function parseIntParam(value: string | undefined, fallback: number): number {
   return Number.isFinite(n) ? n : fallback;
 }
 
-export const candidates = new Hono();
+export const candidates = new Hono<AuthEnv>();
+
+// Reading is open; resolving a candidate requires a logged-in editor.
+candidates.use("/:id/dismiss", requireUser);
+candidates.use("/:id/reopen", requireUser);
 
 // GET /api/candidates — paginated, filterable, sortable list.
 candidates.get("/", async (c) => {

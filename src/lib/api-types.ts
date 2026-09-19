@@ -84,3 +84,21 @@ export interface ResetResponse {
   /** Number of merge candidates deleted. */
   deleted: number;
 }
+
+/** The logged-in user as exposed to the client (never tokens). */
+export interface AuthUserInfo {
+  id: number;
+  username: string;
+  isAdmin: boolean;
+  blocked: boolean;
+}
+
+export interface AuthMeResponse {
+  user: AuthUserInfo | null;
+  /** False when the server has no OAuth consumer configured (login is unavailable). */
+  configured: boolean;
+}
+
+export interface LogoutResponse {
+  ok: true;
+}

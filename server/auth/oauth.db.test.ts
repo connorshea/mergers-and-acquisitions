@@ -1,0 +1,410 @@
+// Integration tests for the OAuth login flow, sessions, and token refresh
+// against a real MariaDB, with meta.wikimedia.org replaced by a stubbed
+// `fetch`. Opt-in via DB_TEST=1 — see test/global-setup.ts.
+import {
+  afterAll,
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
+} from "vite-plus/test";
+import { randomBytes } from "node:crypto";
+import { eq } from "drizzle-orm";
+import { app } from "../app.ts";
+import { db, pool } from "../db.ts";
+import { oauthTokens, sessions, users } from "../../db/schema.ts";
+import type { AuthMeResponse } from "../../src/lib/api-types.ts";
+import { DB_TEST, loginAs, truncateAll } from "../../test/db-helpers.ts";
+import { decrypt, randomToken, sha256Hex } from "./crypto.ts";
+import { safeReturnTo } from "./oauth.ts";
+import { SESSION_COOKIE, SESSION_TTL_SECONDS } from "./session.ts";
+import { addSeconds, toSqlDatetime } from "./time.ts";
+import { getAccessToken, storeTokens, TokenError } from "./tokens.ts";
+
+const ISSUER = "https://oauth.test/w/rest.php/oauth2";
+const ENV = {
+  OAUTH_CLIENT_ID: "client-123",
+  OAUTH_CLIENT_SECRET: "shh-client-secret",
+  OAUTH_ISSUER: ISSUER,
+  BASE_URL: "http://localhost:5173",
+  SESSION_SECRET: "0123456789abcdef0123456789abcdef-session",
+  TOKEN_ENC_KEY: randomBytes(32).toString("base64"),
+  ADMIN_USERS: "42",
+};
+
+const PROFILE = {
+  sub: 7,
+  username: "Alice",
+  groups: ["*", "user", "autoconfirmed"],
+  blocked: false,
+};
+
+/** Parse `name=value` out of a Set-Cookie header list. */
+function cookieValue(res: Response, name: string): string | undefined {
+  for (const line of res.headers.getSetCookie()) {
+    const m = line.match(new RegExp(`^${name}=([^;]*)`));
+    if (m) return m[1];
+  }
+  return undefined;
+}
+
+/** The full Set-Cookie line for `name`, to inspect its attributes. */
+function cookieLine(res: Response, name: string): string | undefined {
+  return res.headers.getSetCookie().find((l) => l.startsWith(`${name}=`));
+}
+
+/**
+ * Stub `fetch` for the token + profile endpoints. Records each token-endpoint
+ * body so tests can assert on the exchange/refresh parameters.
+ */
+function stubProvider(opts: { tokenStatus?: number; tokenBody?: object; profile?: object } = {}) {
+  const tokenCalls: URLSearchParams[] = [];
+  const stub = vi.fn<typeof fetch>(async (input, init) => {
+    const url = String(input instanceof Request ? input.url : input);
+    if (url === `${ISSUER}/access_token`) {
+      // The client sends a URLSearchParams body; its toString() is the form encoding.
+      tokenCalls.push(new URLSearchParams(String(init?.body as URLSearchParams | undefined)));
+      return Response.json(
+        opts.tokenBody ?? {
+          access_token: "access-1",
+          refresh_token: "refresh-1",
+          expires_in: 3600,
+          token_type: "Bearer",
+        },
+        { status: opts.tokenStatus ?? 200 },
+      );
+    }
+    if (url === `${ISSUER}/resource/profile`) {
+      return Response.json(opts.profile ?? PROFILE);
+    }
+    throw new Error(`unexpected fetch ${url}`);
+  });
+  vi.stubGlobal("fetch", stub);
+  return { stub, tokenCalls };
+}
+
+/** Run the login redirect and return what the callback needs. */
+async function startLogin(returnTo = "/candidates/5") {
+  const res = await app.request(`/api/auth/login?returnTo=${encodeURIComponent(returnTo)}`);
+  expect(res.status).toBe(302);
+  const location = new URL(res.headers.get("location")!);
+  const loginCookie = cookieValue(res, "mna_oauth")!;
+  return { res, location, state: location.searchParams.get("state")!, loginCookie };
+}
+
+async function callback(query: string, loginCookie?: string) {
+  return app.request(`/api/auth/callback?${query}`, {
+    headers: loginCookie ? { Cookie: `mna_oauth=${loginCookie}` } : {},
+  });
+}
+
+async function me(sessionCookie?: string): Promise<AuthMeResponse> {
+  const res = await app.request("/api/auth/me", {
+    headers: sessionCookie ? { Cookie: `${SESSION_COOKIE}=${sessionCookie}` } : {},
+  });
+  expect(res.status).toBe(200);
+  return (await res.json()) as AuthMeResponse;
+}
+
+describe.skipIf(!DB_TEST)("auth", () => {
+  const saved: Record<string, string | undefined> = {};
+
+  beforeAll(() => {
+    for (const [k, v] of Object.entries(ENV)) {
+      saved[k] = process.env[k];
+      process.env[k] = v;
+    }
+  });
+  afterAll(async () => {
+    for (const [k, v] of Object.entries(saved)) {
+      if (v === undefined) delete process.env[k];
+      else process.env[k] = v;
+    }
+    await pool.end();
+  });
+  beforeEach(truncateAll);
+  afterEach(() => vi.unstubAllGlobals());
+
+  describe("GET /api/auth/login", () => {
+    it("redirects to the authorize endpoint with PKCE and a signed state cookie", async () => {
+      const { location, loginCookie, res } = await startLogin();
+      expect(location.origin + location.pathname).toBe(`${ISSUER}/authorize`);
+      expect(Object.fromEntries(location.searchParams)).toMatchObject({
+        response_type: "code",
+        client_id: "client-123",
+        redirect_uri: "http://localhost:5173/api/auth/callback",
+        code_challenge_method: "S256",
+      });
+      expect(location.searchParams.get("state")).toHaveLength(43);
+      expect(location.searchParams.get("code_challenge")).toHaveLength(43);
+      expect(loginCookie).toBeTruthy();
+      const line = cookieLine(res, "mna_oauth")!;
+      expect(line).toMatch(/HttpOnly/);
+      expect(line).toMatch(/SameSite=Lax/);
+      expect(line).toMatch(/Path=\/api\/auth/);
+      expect(line).toMatch(/Max-Age=600/);
+      // http BASE_URL → not Secure (dev); the flag flips with https.
+      expect(line).not.toMatch(/Secure/);
+      expect(res.headers.get("cache-control")).toBe("no-store");
+    });
+
+    it("503s when the consumer isn't configured", async () => {
+      const id = process.env.OAUTH_CLIENT_ID;
+      delete process.env.OAUTH_CLIENT_ID;
+      try {
+        expect((await app.request("/api/auth/login")).status).toBe(503);
+      } finally {
+        process.env.OAUTH_CLIENT_ID = id;
+      }
+    });
+  });
+
+  describe("GET /api/auth/callback", () => {
+    it("logs the user in: exchanges the code, stores encrypted tokens, sets a session", async () => {
+      const { tokenCalls } = stubProvider();
+      const { state, loginCookie } = await startLogin("/candidates/5");
+
+      const res = await callback(`code=abc&state=${state}`, loginCookie);
+      expect(res.status).toBe(303);
+      expect(res.headers.get("location")).toBe("/candidates/5");
+      expect(res.headers.get("cache-control")).toBe("no-store");
+
+      // The exchange is a confidential-client + PKCE request.
+      expect(tokenCalls).toHaveLength(1);
+      expect(Object.fromEntries(tokenCalls[0])).toMatchObject({
+        grant_type: "authorization_code",
+        code: "abc",
+        client_id: "client-123",
+        client_secret: "shh-client-secret",
+        redirect_uri: "http://localhost:5173/api/auth/callback",
+      });
+      expect(tokenCalls[0].get("code_verifier")).toHaveLength(64);
+
+      // The login cookie is consumed, the session cookie is set.
+      expect(cookieLine(res, "mna_oauth")).toMatch(/Max-Age=0/);
+      const session = cookieValue(res, SESSION_COOKIE)!;
+      expect(session).toHaveLength(43);
+      const line = cookieLine(res, SESSION_COOKIE)!;
+      expect(line).toMatch(/HttpOnly/);
+      expect(line).toMatch(/SameSite=Lax/);
+      expect(line).toMatch(/Path=\//);
+      expect(line).toMatch(new RegExp(`Max-Age=${SESSION_TTL_SECONDS}`));
+
+      // User upserted from the profile; tokens stored encrypted, not in the clear.
+      const [user] = await db.select().from(users).where(eq(users.id, 7));
+      expect(user).toMatchObject({ username: "Alice", groups: PROFILE.groups, blocked: false });
+      const [tok] = await db.select().from(oauthTokens).where(eq(oauthTokens.userId, 7));
+      expect(tok.accessToken).not.toContain("access-1");
+      expect(tok.refreshToken).not.toContain("refresh-1");
+      expect(decrypt(tok.accessToken)).toBe("access-1");
+      expect(decrypt(tok.refreshToken!)).toBe("refresh-1");
+
+      // The DB holds only the hash of the cookie, and the cookie resolves to the user.
+      const [row] = await db.select().from(sessions);
+      expect(row.id).toBe(sha256Hex(session));
+      expect(row.userId).toBe(7);
+      expect(await me(session)).toEqual({
+        user: { id: 7, username: "Alice", isAdmin: false, blocked: false },
+        configured: true,
+      });
+    });
+
+    it("rejects a state that doesn't match the login cookie", async () => {
+      stubProvider();
+      const { loginCookie } = await startLogin();
+      const res = await callback(`code=abc&state=${randomToken(32)}`, loginCookie);
+      expect(res.status).toBe(400);
+      expect(cookieValue(res, SESSION_COOKIE)).toBeUndefined();
+      expect(await db.select().from(sessions)).toHaveLength(0);
+      expect(await db.select().from(users)).toHaveLength(0);
+    });
+
+    it("rejects a callback with no login cookie, or a tampered one", async () => {
+      stubProvider();
+      const { state, loginCookie } = await startLogin();
+      expect((await callback(`code=abc&state=${state}`)).status).toBe(400);
+      const [value, sig] = loginCookie.split(".");
+      const tampered = `${value}${sig ? `.${sig.slice(0, -2)}xx` : ""}`;
+      expect((await callback(`code=abc&state=${state}`, tampered)).status).toBe(400);
+      expect(await db.select().from(sessions)).toHaveLength(0);
+    });
+
+    it("never redirects off-site after login", async () => {
+      stubProvider();
+      const { state, loginCookie } = await startLogin("https://evil.example/phish");
+      const res = await callback(`code=abc&state=${state}`, loginCookie);
+      expect(res.status).toBe(303);
+      expect(res.headers.get("location")).toBe("/");
+      expect(safeReturnTo("//evil.example")).toBe("/");
+      expect(safeReturnTo("/\\evil.example")).toBe("/");
+      expect(safeReturnTo("/candidates/1?x=1")).toBe("/candidates/1?x=1");
+      expect(safeReturnTo(undefined)).toBe("/");
+    });
+
+    it("sends the user home with a note when they decline on Wikimedia", async () => {
+      const { stub } = stubProvider();
+      const { loginCookie } = await startLogin();
+      const res = await callback("error=access_denied", loginCookie);
+      expect(res.status).toBe(303);
+      expect(res.headers.get("location")).toBe("/?auth=denied");
+      expect(stub).not.toHaveBeenCalled();
+    });
+
+    it("fails soft when the token exchange is refused", async () => {
+      stubProvider({ tokenStatus: 400, tokenBody: { error: "invalid_grant" } });
+      const { state, loginCookie } = await startLogin();
+      const res = await callback(`code=abc&state=${state}`, loginCookie);
+      expect(res.headers.get("location")).toBe("/?auth=failed");
+      expect(await db.select().from(sessions)).toHaveLength(0);
+    });
+
+    it("replaces an existing session in the same browser", async () => {
+      stubProvider();
+      const old = await loginAs(7, "Alice");
+      const oldToken = old.Cookie.split("=")[1];
+      const { state, loginCookie } = await startLogin();
+      const res = await app.request(`/api/auth/callback?code=abc&state=${state}`, {
+        headers: { Cookie: `mna_oauth=${loginCookie}; ${old.Cookie}` },
+      });
+      const fresh = cookieValue(res, SESSION_COOKIE)!;
+      expect(fresh).not.toBe(oldToken);
+      expect((await me(oldToken)).user).toBeNull();
+      expect((await me(fresh)).user?.id).toBe(7);
+      expect(await db.select().from(sessions)).toHaveLength(1);
+    });
+  });
+
+  describe("sessions", () => {
+    it("reports nobody when logged out, and flags admins", async () => {
+      expect(await me()).toEqual({ user: null, configured: true });
+      const admin = await loginAs(42, "Root");
+      expect((await me(admin.Cookie.split("=")[1])).user).toMatchObject({ isAdmin: true });
+    });
+
+    it("ignores and deletes an expired session", async () => {
+      const token = randomToken(32);
+      await db.insert(users).values({ id: 7, username: "Alice", groups: [] });
+      await db.insert(sessions).values({
+        id: sha256Hex(token),
+        userId: 7,
+        lastSeenAt: toSqlDatetime(new Date()),
+        expiresAt: toSqlDatetime(addSeconds(new Date(), -1)),
+      });
+      expect((await me(token)).user).toBeNull();
+      expect(await db.select().from(sessions)).toHaveLength(0);
+    });
+
+    it("ignores a session idle for too long", async () => {
+      const token = randomToken(32);
+      await db.insert(users).values({ id: 7, username: "Alice", groups: [] });
+      await db.insert(sessions).values({
+        id: sha256Hex(token),
+        userId: 7,
+        lastSeenAt: toSqlDatetime(addSeconds(new Date(), -8 * 24 * 3600)),
+        expiresAt: toSqlDatetime(addSeconds(new Date(), SESSION_TTL_SECONDS)),
+      });
+      expect((await me(token)).user).toBeNull();
+    });
+
+    it("logs out: drops the session and, with no other session left, the tokens", async () => {
+      const headers = await loginAs(7, "Alice");
+      const token = headers.Cookie.split("=")[1];
+      await storeTokens(7, { access_token: "a", refresh_token: "r", expires_in: 3600 });
+
+      const res = await app.request("/api/auth/logout", { method: "POST", headers });
+      expect(res.status).toBe(200);
+      expect(cookieLine(res, SESSION_COOKIE)).toMatch(/Max-Age=0/);
+      expect((await me(token)).user).toBeNull();
+      expect(await db.select().from(sessions)).toHaveLength(0);
+      expect(await db.select().from(oauthTokens)).toHaveLength(0);
+    });
+
+    it("keeps the tokens while another session is still alive", async () => {
+      const first = await loginAs(7, "Alice");
+      await loginAs(7, "Alice");
+      await storeTokens(7, { access_token: "a", refresh_token: "r", expires_in: 3600 });
+      await app.request("/api/auth/logout", { method: "POST", headers: first });
+      expect(await db.select().from(sessions)).toHaveLength(1);
+      expect(await db.select().from(oauthTokens)).toHaveLength(1);
+    });
+
+    it("rejects a cross-site logout", async () => {
+      const headers = await loginAs(7, "Alice");
+      const res = await app.request("/api/auth/logout", {
+        method: "POST",
+        headers: { Cookie: headers.Cookie, Origin: "https://evil.example" },
+      });
+      expect(res.status).toBe(403);
+      expect(await db.select().from(sessions)).toHaveLength(1);
+      // BASE_URL's origin is accepted (Vite's dev proxy rewrites the Host).
+      const ok = await app.request("/api/auth/logout", {
+        method: "POST",
+        headers: { Cookie: headers.Cookie, Origin: "http://localhost:5173" },
+      });
+      expect(ok.status).toBe(200);
+    });
+  });
+
+  describe("getAccessToken", () => {
+    beforeEach(async () => {
+      await db.insert(users).values({ id: 7, username: "Alice", groups: [] });
+    });
+
+    it("returns the stored token while it is fresh", async () => {
+      const { stub } = stubProvider();
+      await storeTokens(7, { access_token: "fresh", refresh_token: "r", expires_in: 3600 });
+      expect(await getAccessToken(7)).toBe("fresh");
+      expect(stub).not.toHaveBeenCalled();
+    });
+
+    it("refreshes an expiring token and persists the rotated pair", async () => {
+      const { tokenCalls } = stubProvider({
+        tokenBody: { access_token: "access-2", refresh_token: "refresh-2", expires_in: 3600 },
+      });
+      await storeTokens(7, { access_token: "old", refresh_token: "refresh-1", expires_in: 60 });
+      expect(await getAccessToken(7)).toBe("access-2");
+      expect(Object.fromEntries(tokenCalls[0])).toEqual({
+        grant_type: "refresh_token",
+        refresh_token: "refresh-1",
+        client_id: "client-123",
+        client_secret: "shh-client-secret",
+      });
+      const [row] = await db.select().from(oauthTokens).where(eq(oauthTokens.userId, 7));
+      expect(decrypt(row.accessToken)).toBe("access-2");
+      expect(decrypt(row.refreshToken!)).toBe("refresh-2");
+      // And now it's fresh: no second refresh.
+      expect(await getAccessToken(7)).toBe("access-2");
+      expect(tokenCalls).toHaveLength(1);
+    });
+
+    it("keeps the old refresh token when the provider doesn't rotate it", async () => {
+      stubProvider({ tokenBody: { access_token: "access-2", expires_in: 3600 } });
+      await storeTokens(7, { access_token: "old", refresh_token: "refresh-1", expires_in: 0 });
+      await getAccessToken(7);
+      const [row] = await db.select().from(oauthTokens).where(eq(oauthTokens.userId, 7));
+      expect(decrypt(row.refreshToken!)).toBe("refresh-1");
+    });
+
+    it("drops the tokens and reports a revoked grant on invalid_grant", async () => {
+      stubProvider({ tokenStatus: 400, tokenBody: { error: "invalid_grant" } });
+      await storeTokens(7, { access_token: "old", refresh_token: "refresh-1", expires_in: 0 });
+      await expect(getAccessToken(7)).rejects.toMatchObject({ code: "revoked" });
+      expect(await db.select().from(oauthTokens)).toHaveLength(0);
+    });
+
+    it("keeps the tokens on a transient refresh failure", async () => {
+      stubProvider({ tokenStatus: 503, tokenBody: { error: "temporarily_unavailable" } });
+      await storeTokens(7, { access_token: "old", refresh_token: "refresh-1", expires_in: 0 });
+      await expect(getAccessToken(7)).rejects.toMatchObject({ code: "refresh-failed" });
+      expect(await db.select().from(oauthTokens)).toHaveLength(1);
+    });
+
+    it("errors when the user has no token", async () => {
+      await expect(getAccessToken(7)).rejects.toBeInstanceOf(TokenError);
+      await expect(getAccessToken(7)).rejects.toMatchObject({ code: "no-token" });
+    });
+  });
+});

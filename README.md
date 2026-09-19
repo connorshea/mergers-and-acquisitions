@@ -55,6 +55,7 @@ pnpm seed              # load the dump into the DB
 
 pnpm job:hunt          # run the duplicate-candidate hunt once
 pnpm job:sync-properties / :sync-entity-labels / :sync-descriptions
+pnpm job:prune-sessions # delete expired login sessions
 ```
 
 Formatting, linting, testing, and type-checking go through the `vp` CLI directly:
@@ -79,6 +80,32 @@ DB_TEST=1 DB_NAME=test_mergers vp test
 (The `mergers` user created above can already create `test_*` databases.) CI runs
 them against a MariaDB service container, together with a from-scratch migration
 run and a schema-drift check — see `.github/workflows/ci.yml`.
+
+## Authentication
+
+Login is **Wikimedia OAuth 2.0** (authorization code + PKCE, confidential
+client). Anyone can browse candidates; dismissing/reopening needs a login, and
+the hunt / reset / sync triggers are limited to the user ids in `ADMIN_USERS`.
+Merges (when they land) run under the logged-in user's own account. With none of
+the `OAUTH_*` variables set the app runs read-only and the login link is hidden.
+
+1. Register a consumer at
+   [Special:OAuthConsumerRegistration/propose/oauth2](https://meta.wikimedia.org/wiki/Special:OAuthConsumerRegistration/propose/oauth2)
+   on meta.wikimedia.org: OAuth 2.0, **not** owner-only, callback URL exactly
+   `<BASE_URL>/api/auth/callback`, applicable projects `wikidatawiki` (and
+   `testwikidatawiki` for dev), grants "Basic rights" + "Edit existing pages".
+   Consumers that request edit grants are approved by hand, which can take a few
+   days; an owner-only consumer works for the owner immediately in the meantime.
+2. Set the variables listed under `# --- authentication` in `.env.example`
+   (`.env` locally; `toolforge envvars create` on Toolforge). `SESSION_SECRET`
+   signs the login-state cookie; `TOKEN_ENC_KEY` encrypts the stored OAuth
+   tokens; `BASE_URL` is the public origin (cookies are `Secure` iff https).
+3. Put your own central user id in `ADMIN_USERS` to see the hunt/maintenance
+   controls.
+
+Session cookies are `HttpOnly; SameSite=Lax`, the DB stores only their hash, and
+state-changing API calls must carry a same-origin `Sec-Fetch-Site`/`Origin`. The
+nightly `prune-sessions` job deletes expired sessions.
 
 ## Deploying to Toolforge
 

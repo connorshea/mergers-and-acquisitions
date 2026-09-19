@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { fetch, FetchError } from "../lib/client.ts";
+import { loginUrl, useAuth } from "../lib/auth.tsx";
+import AuthBar from "../AuthBar.tsx";
 import MergeCandidates from "../MergeCandidates.tsx";
 import type {
   CandidateDetailResponse,
@@ -14,6 +16,7 @@ import type {
 // MergeCandidates without re-ordering.
 export default function CandidateDetail() {
   const { id } = useParams();
+  const { user, configured } = useAuth();
   const [data, setData] = useState<CandidateDetailResponse | null>(null);
   const [status, setStatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -117,6 +120,7 @@ export default function CandidateDetail() {
               <span className="sibling-link is-disabled">Next →</span>
             )}
           </div>
+          <AuthBar />
         </nav>
 
         {loading && <p className="list-msg">Loading…</p>}
@@ -152,17 +156,32 @@ export default function CandidateDetail() {
               </ul>
             )}
             <div className="detail-actions">
+              {/* Every action edits state (here or on Wikidata) on the user's
+                  behalf, so all of them need a login. */}
+              {!user && configured && (
+                <span className="login-hint">
+                  <a href={loginUrl(`/candidates/${id ?? ""}`)}>Log in</a> to act on this pair
+                </span>
+              )}
               {/* Merge / "different from" only make sense on an open pair; once
                   it's dismissed or merged they're hidden. */}
               {(!status || status === "open") && (
                 <>
-                  <button type="button" className="btn-merge" onClick={() => setDialog("merge")}>
+                  <button
+                    type="button"
+                    className="btn-merge"
+                    onClick={() => setDialog("merge")}
+                    disabled={!user}
+                    title={user ? undefined : "Log in to merge"}
+                  >
                     Merge
                   </button>
                   <button
                     type="button"
                     className="btn-different"
                     onClick={() => setDialog("different")}
+                    disabled={!user}
+                    title={user ? undefined : "Log in to mark as different"}
                   >
                     Mark as different from
                   </button>
@@ -176,7 +195,8 @@ export default function CandidateDetail() {
                       type="button"
                       className="btn-dismiss"
                       onClick={reopen}
-                      disabled={dismissing}
+                      disabled={dismissing || !user}
+                      title={user ? undefined : "Log in to reopen"}
                     >
                       {dismissing ? "Reopening…" : "Un-dismiss"}
                     </button>
@@ -187,7 +207,8 @@ export default function CandidateDetail() {
                   type="button"
                   className="btn-dismiss"
                   onClick={dismiss}
-                  disabled={dismissing}
+                  disabled={dismissing || !user}
+                  title={user ? undefined : "Log in to dismiss"}
                 >
                   {dismissing ? "Dismissing…" : "Dismiss"}
                 </button>

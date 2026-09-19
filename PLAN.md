@@ -192,7 +192,8 @@ dismissed candidates).
 - [x] Core app: schema, seed, sync jobs, hunt, review SPA — migrated to
       Node/Hono/Drizzle+MariaDB and verified locally.
 - [ ] Deploy to Toolforge (build service, ToolsDB, load `jobs.yaml`, one-off seed).
-- [ ] **Wikimedia OAuth** login + apply-merge on the user's behalf.
+- [x] **Wikimedia OAuth** login (sessions, encrypted token storage, gated routes).
+- [ ] Apply-merge / "different from" edits on the user's behalf (issue #5).
 - [ ] Widen the item scope beyond video games toward all non-scholarly items.
 - [ ] **ML/LLM-assisted, advisory-only** candidate evaluation (re-rank + auto-drop
       obvious false positives); prototype on LiftWing's free hosted LLMs first.

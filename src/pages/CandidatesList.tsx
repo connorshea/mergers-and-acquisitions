@@ -219,7 +219,7 @@ export default function CandidatesList() {
   async function resetCandidates() {
     const ok = window.confirm(
       "Delete ALL found merge candidates (including dismissed ones) so the hunt " +
-        "can run from scratch?\n\nThis does not touch synced items — only the " +
+        "can run from scratch?\n\nThis does not touch synced items, only the " +
         "candidate list. This cannot be undone.",
     );
     if (!ok) return;
@@ -345,18 +345,17 @@ export default function CandidatesList() {
           </div>
         </div>
         <p className="list-sub">
-          Ranked pairs of Wikidata video-game items that may be duplicates. Confidence is heuristic;
-          always review before merging.
+          Pairs Wikidata items that may be duplicates. Always review before merging.
         </p>
         {hunt.note && <p className="list-msg hunt-note">{hunt.note}</p>}
         {authOutcome === "denied" && (
           <p className="list-msg is-error" role="alert">
-            Login cancelled: the authorization request was declined on Wikimedia.
+            Login cancelled: the authorization request was declined by Wikidata.
           </p>
         )}
         {authOutcome === "failed" && (
           <p className="list-msg is-error" role="alert">
-            Login failed while talking to Wikimedia. Try again; if it keeps failing, the OAuth
+            Login failed while talking to Wikidata. Try again; if it keeps failing, the OAuth
             consumer may be misconfigured.
           </p>
         )}

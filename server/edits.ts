@@ -9,11 +9,11 @@
 // rights; the only local gate beyond a login is the profile's `blocked` flag,
 // which turns a doomed edit into a clear message.
 //
-// The merge takes a `merging` claim on the candidate first (an optimistic
+// Both routes take a `merging` claim on the candidate first (an optimistic
 // UPDATE … WHERE status = 'open'), so a double click or a second tab can't
 // both reach Wikidata. The claim's timestamp rides in `resolved_at`; a claim
 // older than MERGING_STALE_SECONDS is treated as abandoned (the process died
-// mid-merge) and may be taken over.
+// mid-edit) and may be taken over.
 import { type Context, Hono } from "hono";
 import { and, eq, inArray, lt, or } from "drizzle-orm";
 import { db } from "./db.ts";
@@ -173,6 +173,53 @@ async function summaryFor(id: number) {
   return toSummary(row, await loadLabels([row.fromQid, row.intoQid]));
 }
 
+/**
+ * Take the edit claim on candidate `id`: `open` → `merging`, or take over a
+ * `merging` claim older than MERGING_STALE_SECONDS. Only whoever's UPDATE
+ * lands first gets `true`.
+ */
+async function claimCandidate(id: number, now: Date): Promise<boolean> {
+  const staleBefore = toSqlDatetime(addSeconds(now, -MERGING_STALE_SECONDS));
+  const [claim] = await db
+    .update(mergeCandidates)
+    .set({ status: "merging", resolvedAt: toSqlDatetime(now) })
+    .where(
+      and(
+        eq(mergeCandidates.id, id),
+        or(
+          eq(mergeCandidates.status, "open"),
+          and(eq(mergeCandidates.status, "merging"), lt(mergeCandidates.resolvedAt, staleBefore)),
+        ),
+      ),
+    );
+  return claim.affectedRows > 0;
+}
+
+/** Give a claim back so a failed edit never leaves the candidate stuck in `merging`. */
+async function releaseClaim(id: number): Promise<void> {
+  await db
+    .update(mergeCandidates)
+    .set({ status: "open", resolvedAt: null })
+    .where(and(eq(mergeCandidates.id, id), eq(mergeCandidates.status, "merging")));
+}
+
+/** The 404 / 409 for a claim that could not be taken; `verb` names the refused edit. */
+async function claimRefused(c: EditContext, id: number, verb: string) {
+  const current = await summaryFor(id);
+  if (!current) return c.json({ error: "Candidate not found" }, 404);
+  return errorResponse(
+    c,
+    {
+      error:
+        current.status === "merging"
+          ? "This candidate is being edited right now."
+          : `This candidate is ${current.status}; only open candidates can be ${verb}.`,
+      code: "not-open",
+    },
+    409,
+  );
+}
+
 // POST /api/candidates/:id/merge — wbmergeitems fromQid → intoQid.
 edits.post("/:id/merge", async (c) => {
   const user = c.get("user")!;
@@ -204,37 +251,7 @@ edits.post("/:id/merge", async (c) => {
   // the user's explicit choices, so the user never has to resolve them by hand.
   const effectiveIgnore = [...new Set([...ignoreConflicts, ...AUTO_IGNORED_CONFLICTS])];
 
-  // Take the claim. Only an open candidate — or one whose earlier claim went
-  // stale — can be merged, and only by whoever's UPDATE lands first.
-  const now = new Date();
-  const staleBefore = toSqlDatetime(addSeconds(now, -MERGING_STALE_SECONDS));
-  const [claim] = await db
-    .update(mergeCandidates)
-    .set({ status: "merging", resolvedAt: toSqlDatetime(now) })
-    .where(
-      and(
-        eq(mergeCandidates.id, id),
-        or(
-          eq(mergeCandidates.status, "open"),
-          and(eq(mergeCandidates.status, "merging"), lt(mergeCandidates.resolvedAt, staleBefore)),
-        ),
-      ),
-    );
-  if (claim.affectedRows === 0) {
-    const current = await summaryFor(id);
-    if (!current) return c.json({ error: "Candidate not found" }, 404);
-    return errorResponse(
-      c,
-      {
-        error:
-          current.status === "merging"
-            ? "This candidate is being merged right now."
-            : `This candidate is ${current.status}; only open candidates can be merged.`,
-        code: "not-open",
-      },
-      409,
-    );
-  }
+  if (!(await claimCandidate(id, new Date()))) return claimRefused(c, id, "merged");
 
   const [row] = await db
     .select({ fromQid: mergeCandidates.fromQid, intoQid: mergeCandidates.intoQid })
@@ -259,12 +276,8 @@ edits.post("/:id/merge", async (c) => {
       summary: `Merge duplicate items ${fromQid} → ${intoQid} — ${TOOL_CREDIT}`,
     });
   } catch (err) {
-    // Give the claim back before anything else, so a failure never leaves the
-    // candidate stuck in `merging`.
-    await db
-      .update(mergeCandidates)
-      .set({ status: "open", resolvedAt: null })
-      .where(and(eq(mergeCandidates.id, id), eq(mergeCandidates.status, "merging")));
+    // Give the claim back before anything else.
+    await releaseClaim(id);
     return failedEdit(c, await auditFailure(audit, err));
   }
 
@@ -345,6 +358,8 @@ function hasDifferentFrom(item: Item, target: string): boolean {
 // then dismiss the candidate. One direction is enough for Wikidata to treat the
 // pair as declared distinct, so a second-leg failure still dismisses (and is
 // reported per edit); a first-leg failure changes nothing and is an error.
+// The same `merging` claim as the merge route keeps two submits from each
+// adding their own copy of the statement (wbcreateclaim doesn't dedupe).
 edits.post("/:id/different", async (c) => {
   const user = c.get("user")!;
   const gate = editGate(c, user);
@@ -352,26 +367,12 @@ edits.post("/:id/different", async (c) => {
   const id = parseId(c.req.param("id"));
   if (id === null) return c.json({ error: "Invalid candidate id" }, 404);
 
+  if (!(await claimCandidate(id, new Date()))) return claimRefused(c, id, "marked");
+
   const [row] = await db
-    .select({
-      fromQid: mergeCandidates.fromQid,
-      intoQid: mergeCandidates.intoQid,
-      status: mergeCandidates.status,
-    })
+    .select({ fromQid: mergeCandidates.fromQid, intoQid: mergeCandidates.intoQid })
     .from(mergeCandidates)
     .where(eq(mergeCandidates.id, id));
-  if (!row) return c.json({ error: "Candidate not found" }, 404);
-  if (row.status !== "open") {
-    return errorResponse(
-      c,
-      {
-        error: `This candidate is ${row.status}; only open candidates can be marked.`,
-        code: "not-open",
-      },
-      409,
-    );
-  }
-
   const itemRows = await db
     .select({ qid: items.qid, primaryLabel: items.primaryLabel, data: items.data })
     .from(items)
@@ -380,6 +381,7 @@ edits.post("/:id/different", async (c) => {
   const from = byQid.get(row.fromQid);
   const into = byQid.get(row.intoQid);
   if (!from || !into) {
+    await releaseClaim(id);
     const missing = [!from && row.fromQid, !into && row.intoQid].filter(Boolean).join(", ");
     return c.json({ error: `Item data missing for: ${missing}` }, 404);
   }
@@ -433,11 +435,14 @@ edits.post("/:id/different", async (c) => {
       });
       succeeded++;
     } catch (err) {
-      const known = await auditFailure(audit, err);
       if (succeeded === 0 && results.every((r) => r.skipped)) {
         // Nothing has been written on Wikidata by this request: plain failure.
-        return failedEdit(c, known);
+        // Release first — auditFailure rethrows anything that isn't a Wikidata
+        // outcome, and that must not leave the claim held.
+        await releaseClaim(id);
+        return failedEdit(c, await auditFailure(audit, err));
       }
+      const known = await auditFailure(audit, err);
       results.push({ qid: item.qid, target: target.qid, error: known.message });
     }
   }
@@ -450,7 +455,7 @@ edits.post("/:id/different", async (c) => {
       resolvedBy: user.id,
       resolution: "marked as different from (P1889)",
     })
-    .where(and(eq(mergeCandidates.id, id), eq(mergeCandidates.status, "open")));
+    .where(and(eq(mergeCandidates.id, id), eq(mergeCandidates.status, "merging")));
 
   const payload: CandidateDifferentResponse = {
     candidate: (await summaryFor(id))!,

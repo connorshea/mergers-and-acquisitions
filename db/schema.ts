@@ -84,9 +84,10 @@ export const mergeCandidates = mysqlTable(
     fromQid: varchar("from_qid", { length: 32 }).notNull(),
     intoQid: varchar("into_qid", { length: 32 }).notNull(),
     confidence: double("confidence").notNull(),
-    // open | merging | dismissed | merged. `merging` is the short-lived claim a
-    // merge request takes (via an optimistic UPDATE … WHERE status = 'open') so
-    // two submits can't both reach Wikidata; it reverts to `open` on failure.
+    // open | merging | dismissed | merged. `merging` is the short-lived claim an
+    // edit request (merge or "different from") takes via an optimistic
+    // UPDATE … WHERE status = 'open', so two submits can't both reach Wikidata;
+    // it reverts to `open` on failure.
     status: varchar("status", { length: 16 }).notNull().default("open"),
     reasons: json<string[]>("reasons").notNull(), // string[]
     hasBlocker: boolean("has_blocker").notNull().default(false),

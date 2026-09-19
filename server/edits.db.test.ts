@@ -357,7 +357,7 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
         .where(eq(mergeCandidates.id, alpha));
       const busy = await post<EditErrorResponse>(`/api/candidates/${alpha}/merge`, editor, {});
       expect(busy.status).toBe(409);
-      expect(busy.body.error).toMatch(/being merged/);
+      expect(busy.body.error).toMatch(/being edited/);
       expect(calls).toHaveLength(0);
 
       await db
@@ -514,6 +514,37 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       expect(second.body.candidate.status).toBe("dismissed");
       expect(second.body.edits[0].revision?.revid).toBe(500);
       expect(second.body.edits[1]).toEqual({ qid: "Q10", target: "Q20", error: "Too fast" });
+    });
+
+    it("takes the claim, so concurrent submits add the statements only once", async () => {
+      const calls = stubWikidata((_p, n) => claimOk(200 + n));
+      const [a, b] = await Promise.all([
+        post<CandidateDifferentResponse | EditErrorResponse>(
+          `/api/candidates/${alpha}/different`,
+          editor,
+        ),
+        post<CandidateDifferentResponse | EditErrorResponse>(
+          `/api/candidates/${alpha}/different`,
+          editor,
+        ),
+      ]);
+      expect([a.status, b.status].sort((x, y) => x - y)).toEqual([200, 409]);
+      const refused = (a.status === 409 ? a : b).body as EditErrorResponse;
+      expect(refused.code).toBe("not-open");
+      // One claim per direction, no duplicates.
+      expect(calls.filter((x) => x.method === "POST")).toHaveLength(2);
+      expect((await db.select().from(wikidataEdits)).filter((e) => e.ok)).toHaveLength(2);
+      expect((await candidateRow(alpha)).status).toBe("dismissed");
+
+      // A claim someone else holds is refused outright…
+      await db
+        .update(mergeCandidates)
+        .set({ status: "merging", resolvedAt: toSqlDatetime(new Date()) })
+        .where(eq(mergeCandidates.id, beta));
+      const busy = await post<EditErrorResponse>(`/api/candidates/${beta}/different`, editor);
+      expect(busy.status).toBe(409);
+      expect(busy.body.error).toMatch(/being edited/);
+      expect(calls.filter((x) => x.method === "POST")).toHaveLength(2);
     });
 
     it("refuses a non-open candidate and an unknown one", async () => {

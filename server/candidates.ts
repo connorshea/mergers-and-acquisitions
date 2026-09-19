@@ -271,7 +271,7 @@ candidates.get("/:id", async (c) => {
 
 // POST /api/candidates/:id/dismiss — mark dismissed, stamp resolvedAt.
 // A merged candidate stays merged (dismiss → reopen would otherwise revive a
-// pair whose source item is already a redirect), and one being merged right
+// pair whose source item is already a redirect), and one being edited right
 // now keeps its claim until it goes stale. The status check lives in the
 // UPDATE itself so a concurrent merge claim can't slip in between.
 candidates.post("/:id/dismiss", async (c) => {
@@ -311,7 +311,7 @@ candidates.post("/:id/dismiss", async (c) => {
       {
         error:
           row.status === "merging"
-            ? "A merge of this candidate is in progress"
+            ? "An edit of this candidate is in progress"
             : "A merged candidate can't be dismissed",
       },
       409,
@@ -325,7 +325,7 @@ candidates.post("/:id/dismiss", async (c) => {
 
 // POST /api/candidates/:id/reopen — un-dismiss back to `open`, clear stamps.
 // A merged candidate stays merged (the merge already happened on Wikidata and
-// the merged-away item is gone from the mirror), and one that is being merged
+// the merged-away item is gone from the mirror), and one that is being edited
 // right now can only be reopened once its claim has gone stale.
 candidates.post("/:id/reopen", async (c) => {
   const id = Number(c.req.param("id"));
@@ -347,7 +347,7 @@ candidates.post("/:id/reopen", async (c) => {
     current.status === "merging" &&
     (current.resolvedAt ?? "") >= toSqlDatetime(addSeconds(new Date(), -MERGING_STALE_SECONDS))
   ) {
-    return c.json({ error: "A merge of this candidate is in progress" }, 409);
+    return c.json({ error: "An edit of this candidate is in progress" }, 409);
   }
 
   await db

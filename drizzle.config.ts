@@ -8,6 +8,10 @@ export default defineConfig({
   dialect: "mysql",
   schema: "./db/schema.ts",
   out: "./db/migrations",
+  // Name migrations with a UTC `YYYYMMDDHHMMSS` timestamp prefix instead of the
+  // default sequential `0000` index, so tags sort chronologically and don't
+  // collide when generated on separate branches.
+  migrations: { prefix: "timestamp" },
   dbCredentials: {
     host: process.env.DB_HOST ?? "127.0.0.1",
     port: Number(process.env.DB_PORT ?? 3306),

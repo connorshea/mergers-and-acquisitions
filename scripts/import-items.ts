@@ -10,7 +10,7 @@
 // rebuilt wholesale (delete-then-insert), matching the schema's "rebuilt for an
 // item on each sync" contract. Needs a reachable DB (local MariaDB / Toolforge).
 //
-//   tsx scripts/import-items.ts Q133634 Q10423793
+//   node scripts/import-items.ts Q133634 Q10423793
 //   pnpm run job:hunt          # then score — see if the pair surfaces
 import { eq } from "drizzle-orm";
 import { db, pool } from "../server/db.ts";
@@ -161,7 +161,7 @@ interface WdEntity {
 
 async function main() {
   const qids = process.argv.slice(2).filter((a) => /^Q\d+$/.test(a));
-  if (qids.length === 0) throw new Error("usage: tsx scripts/import-items.ts Qxxx [Qxxx …]");
+  if (qids.length === 0) throw new Error("usage: node scripts/import-items.ts Qxxx [Qxxx …]");
   for (let i = 0; i < qids.length; i++) {
     await importItem(qids[i]);
     if (i < qids.length - 1) await sleep(PAUSE_MS);

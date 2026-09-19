@@ -40,7 +40,8 @@ Layout:
   `actions.ts`, `sync-routes.ts`); the Drizzle handle (`db.ts`) + connection
   config (`db-config.ts`); the shared sync write paths (`*-sync.ts`); and the
   hunt (`hunt.ts`, scan→score→upsert in one pass).
-- `jobs/` — Toolforge scheduled jobs (`hunt.ts`, `sync-*.ts`), run via `tsx`.
+- `jobs/` — Toolforge scheduled jobs (`hunt.ts`, `sync-*.ts`), run via `node`
+  (native TS type-stripping).
   Declared in `jobs.yaml` (`toolforge jobs load`).
 - `db/` — the MySQL-dialect schema (`schema.ts`), the seed script (`seed.ts`),
   and drizzle-kit migrations (`migrations/`, generated via `pnpm db:generate`).

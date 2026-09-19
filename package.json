@@ -4,23 +4,23 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "concurrently -k -n server,client \"tsx watch server/index.ts\" \"vp dev\"",
-    "dev:server": "tsx watch server/index.ts",
+    "dev": "concurrently -k -n server,client \"node --watch server/index.ts\" \"vp dev\"",
+    "dev:server": "node --watch server/index.ts",
     "dev:client": "vp dev",
     "build": "vp build",
-    "start": "tsx server/index.ts",
+    "start": "node server/index.ts",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "tsx scripts/migrate.ts",
+    "db:migrate": "node scripts/migrate.ts",
     "db:push": "drizzle-kit push",
-    "seed": "tsx db/seed.ts",
-    "import-items": "tsx scripts/import-items.ts",
-    "job:hunt": "tsx jobs/hunt.ts",
-    "job:sync-properties": "tsx jobs/sync-properties.ts",
-    "job:sync-entity-labels": "tsx jobs/sync-entity-labels.ts",
-    "job:sync-descriptions": "tsx jobs/sync-descriptions.ts",
-    "eval:fetch-pairs": "tsx scripts/fetch-merge-pairs.ts",
-    "eval:fetch-nondupes": "tsx scripts/fetch-nondupe-pairs.ts",
-    "eval:score": "tsx scripts/eval-score.ts"
+    "seed": "node db/seed.ts",
+    "import-items": "node scripts/import-items.ts",
+    "job:hunt": "node jobs/hunt.ts",
+    "job:sync-properties": "node jobs/sync-properties.ts",
+    "job:sync-entity-labels": "node jobs/sync-entity-labels.ts",
+    "job:sync-descriptions": "node jobs/sync-descriptions.ts",
+    "eval:fetch-pairs": "node scripts/fetch-merge-pairs.ts",
+    "eval:fetch-nondupes": "node scripts/fetch-nondupe-pairs.ts",
+    "eval:score": "node scripts/eval-score.ts"
   },
   "dependencies": {
     "@hono/node-server": "^2.1.1",
@@ -30,8 +30,7 @@
     "mysql2": "^3.12.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
-    "react-router-dom": "^7.18.4",
-    "tsx": "^4.19.2"
+    "react-router-dom": "^7.18.4"
   },
   "devDependencies": {
     "@types/node": "^24.13.4",
@@ -52,6 +51,6 @@
     }
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22.18"
   }
 }

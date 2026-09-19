@@ -48,8 +48,8 @@ column type, `datetime` handling — live in `CLAUDE.md`.)
 server/        Hono app (index.ts) + routers (candidates, actions, sync-routes);
                the Drizzle handle (db.ts) + connection config (db-config.ts);
                shared sync write paths (*-sync.ts); the hunt (hunt.ts).
-jobs/          Toolforge scheduled jobs (hunt.ts, sync-*.ts), run via tsx and
-               declared in jobs.yaml.
+jobs/          Toolforge scheduled jobs (hunt.ts, sync-*.ts), run via node
+               (native TS type-stripping) and declared in jobs.yaml.
 db/            MySQL-dialect schema (schema.ts), seed script (seed.ts), and
                drizzle-kit migrations (migrations/).
 src/           React SPA — pages/ (CandidatesList, CandidateDetail), the

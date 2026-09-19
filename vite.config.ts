@@ -20,6 +20,9 @@ export default defineConfig({
     // (test-file hygiene: no focused/disabled tests, valid expect usage, …).
     plugins: ["react", "unicorn", "oxc", "typescript", "import", "vitest"],
     options: { typeAware: true, typeCheck: true },
+    // Oxlint enables the correctness category at "warn" by default, and
+    // warnings never fail `vp check`. Deny them so CI actually catches them.
+    categories: { correctness: "error" },
     rules: {
       // Require explicit file extensions on relative imports so the server and
       // jobs can run under `node` type-stripping (no extensionless resolution),

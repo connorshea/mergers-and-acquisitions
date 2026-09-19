@@ -16,8 +16,9 @@ export default defineConfig({
   lint: {
     // `plugins` overwrites Oxlint's default set, so keep the built-ins that are
     // on by default (unicorn, oxc, typescript) and add react (includes
-    // react-hooks) plus import (for the explicit-extension rule below).
-    plugins: ["react", "unicorn", "oxc", "typescript", "import"],
+    // react-hooks), import (for the explicit-extension rule below), and vitest
+    // (test-file hygiene: no focused/disabled tests, valid expect usage, …).
+    plugins: ["react", "unicorn", "oxc", "typescript", "import", "vitest"],
     options: { typeAware: true, typeCheck: true },
     rules: {
       // Require explicit file extensions on relative imports so the server and

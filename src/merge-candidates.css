@@ -1101,6 +1101,13 @@ a.chip-id:hover {
   font-weight: 500;
   white-space: nowrap;
 }
+.auth-user-link {
+  color: inherit;
+  text-decoration: none;
+}
+.auth-user-link:hover {
+  text-decoration: underline;
+}
 .auth-badge {
   font-size: 0.72rem;
   font-weight: 600;

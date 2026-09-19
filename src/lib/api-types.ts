@@ -172,6 +172,8 @@ export interface AuthMeResponse {
   user: AuthUserInfo | null;
   /** False when the server has no OAuth consumer configured (login is unavailable). */
   configured: boolean;
+  /** Origin of the Wikidata instance edits go to, e.g. "https://test.wikidata.org". */
+  wikiBaseUrl: string;
 }
 
 export interface LogoutResponse {

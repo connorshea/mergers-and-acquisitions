@@ -9,6 +9,8 @@ export interface AuthState {
   user: AuthUserInfo | null;
   /** False when the server has no OAuth consumer configured. */
   configured: boolean;
+  /** Origin of the Wikidata instance edits go to, e.g. "https://test.wikidata.org". */
+  wikiBaseUrl: string;
   /** True until the first /api/auth/me response lands. */
   loading: boolean;
   logout: () => Promise<void>;
@@ -17,14 +19,18 @@ export interface AuthState {
 const AuthContext = createContext<AuthState>({
   user: null,
   configured: false,
+  wikiBaseUrl: "",
   loading: true,
   logout: async () => {},
 });
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [state, setState] = useState<Pick<AuthState, "user" | "configured" | "loading">>({
+  const [state, setState] = useState<
+    Pick<AuthState, "user" | "configured" | "wikiBaseUrl" | "loading">
+  >({
     user: null,
     configured: false,
+    wikiBaseUrl: "",
     loading: true,
   });
 
@@ -34,7 +40,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .then((res) => {
         if (cancelled) return;
         const me = res as AuthMeResponse;
-        setState({ user: me.user, configured: me.configured, loading: false });
+        setState({
+          user: me.user,
+          configured: me.configured,
+          wikiBaseUrl: me.wikiBaseUrl,
+          loading: false,
+        });
       })
       .catch(() => {
         if (!cancelled) setState((s) => ({ ...s, loading: false }));

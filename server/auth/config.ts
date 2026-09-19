@@ -80,6 +80,19 @@ export function wikidataApiUrl(): string {
 }
 
 /**
+ * Origin (scheme + host) of the Wikidata instance edits go to, e.g.
+ * `https://test.wikidata.org`. Used to build article/user-page links that point
+ * at the same wiki the app edits, not always www.wikidata.org.
+ */
+export function wikiOrigin(): string {
+  try {
+    return new URL(wikidataApiUrl()).origin;
+  } catch {
+    return new URL(DEFAULT_WIKIDATA_API_URL).origin;
+  }
+}
+
+/**
  * Comma-separated central user ids (ADMIN_USERS) → set. Non-numeric entries are
  * ignored. Admin membership is deliberately not part of `AuthConfig`: the
  * session middleware is its only consumer and memoizes this against the raw

@@ -6,17 +6,28 @@ import { useLocation } from "react-router-dom";
 import { loginUrl, useAuth } from "./lib/auth.tsx";
 
 export default function AuthBar() {
-  const { user, configured, loading, logout } = useAuth();
+  const { user, configured, wikiBaseUrl, loading, logout } = useAuth();
   const location = useLocation();
   const [busy, setBusy] = useState(false);
 
   if (loading) return null;
 
   if (user) {
+    // Link the name to the user's page on the same wiki the app edits (e.g.
+    // test.wikidata.org while developing), not always www.wikidata.org.
+    const userPageUrl = wikiBaseUrl
+      ? `${wikiBaseUrl}/wiki/User:${encodeURIComponent(user.username)}`
+      : undefined;
     return (
       <div className="auth-bar">
         <span className="auth-user" title={`Wikimedia user id ${user.id}`}>
-          {user.username}
+          {userPageUrl ? (
+            <a href={userPageUrl} target="_blank" rel="noreferrer" className="auth-user-link">
+              {user.username}
+            </a>
+          ) : (
+            user.username
+          )}
           {user.isAdmin && <span className="auth-badge">admin</span>}
           {user.blocked && (
             <span className="auth-badge is-blocked" title="This account is blocked on Wikidata">

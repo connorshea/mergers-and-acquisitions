@@ -199,8 +199,8 @@ describe.skipIf(!DB_TEST)("auth", () => {
       const [tok] = await db.select().from(oauthTokens).where(eq(oauthTokens.userId, 7));
       expect(tok.accessToken).not.toContain("access-1");
       expect(tok.refreshToken).not.toContain("refresh-1");
-      expect(decrypt(tok.accessToken)).toBe("access-1");
-      expect(decrypt(tok.refreshToken!)).toBe("refresh-1");
+      expect(decrypt(tok.accessToken, "oauth_tokens:7")).toBe("access-1");
+      expect(decrypt(tok.refreshToken!, "oauth_tokens:7")).toBe("refresh-1");
 
       // The DB holds only the hash of the cookie, and the cookie resolves to the user.
       const [row] = await db.select().from(sessions);
@@ -373,8 +373,8 @@ describe.skipIf(!DB_TEST)("auth", () => {
         client_secret: "shh-client-secret",
       });
       const [row] = await db.select().from(oauthTokens).where(eq(oauthTokens.userId, 7));
-      expect(decrypt(row.accessToken)).toBe("access-2");
-      expect(decrypt(row.refreshToken!)).toBe("refresh-2");
+      expect(decrypt(row.accessToken, "oauth_tokens:7")).toBe("access-2");
+      expect(decrypt(row.refreshToken!, "oauth_tokens:7")).toBe("refresh-2");
       // And now it's fresh: no second refresh.
       expect(await getAccessToken(7)).toBe("access-2");
       expect(tokenCalls).toHaveLength(1);
@@ -385,7 +385,7 @@ describe.skipIf(!DB_TEST)("auth", () => {
       await storeTokens(7, { access_token: "old", refresh_token: "refresh-1", expires_in: 0 });
       await getAccessToken(7);
       const [row] = await db.select().from(oauthTokens).where(eq(oauthTokens.userId, 7));
-      expect(decrypt(row.refreshToken!)).toBe("refresh-1");
+      expect(decrypt(row.refreshToken!, "oauth_tokens:7")).toBe("refresh-1");
     });
 
     it("drops the tokens and reports a revoked grant on invalid_grant", async () => {
@@ -400,6 +400,15 @@ describe.skipIf(!DB_TEST)("auth", () => {
       await storeTokens(7, { access_token: "old", refresh_token: "refresh-1", expires_in: 0 });
       await expect(getAccessToken(7)).rejects.toMatchObject({ code: "refresh-failed" });
       expect(await db.select().from(oauthTokens)).toHaveLength(1);
+    });
+
+    it("rejects a ciphertext copied from another user's row", async () => {
+      await storeTokens(7, { access_token: "alice", refresh_token: "r-alice", expires_in: 3600 });
+      const [alice] = await db.select().from(oauthTokens).where(eq(oauthTokens.userId, 7));
+      await db.insert(users).values({ id: 8, username: "Mallory", groups: [] });
+      await db.insert(oauthTokens).values({ ...alice, userId: 8 });
+      await expect(getAccessToken(8)).rejects.toThrow(/auth/i);
+      expect(await getAccessToken(7)).toBe("alice");
     });
 
     it("errors when the user has no token", async () => {

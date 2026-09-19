@@ -1,7 +1,9 @@
 // Storage and refresh of a user's OAuth tokens. `getAccessToken` is what the
 // Wikidata edit path calls: it returns a token valid for at least a few minutes,
 // refreshing (under a row lock, so concurrent requests can't race the rotating
-// refresh token) when needed. Tokens are encrypted at rest (crypto.ts).
+// refresh token) when needed. Tokens are encrypted at rest (crypto.ts), with
+// the owning user id as authenticated data so a row can't be re-pointed at
+// another user by copying ciphertext around in the database.
 import { eq } from "drizzle-orm";
 import { db } from "../db.ts";
 import { oauthTokens } from "../../db/schema.ts";
@@ -14,6 +16,11 @@ import { addSeconds, fromSqlDatetime, toSqlDatetime } from "./time.ts";
 const REFRESH_MARGIN_SECONDS = 5 * 60;
 /** If the provider omits `expires_in`, assume the extension default (1h). */
 const DEFAULT_EXPIRES_IN = 60 * 60;
+/** Give up on the provider's token endpoint after this long. */
+const FETCH_TIMEOUT_MS = 15_000;
+
+/** The AAD that ties a user's ciphertexts to their row. */
+const tokenAad = (userId: number) => `oauth_tokens:${userId}`;
 
 /** The OAuth 2.0 token endpoint response (RFC 6749 §5.1). */
 export interface TokenResponse {
@@ -38,7 +45,7 @@ export async function storeTokens(
   tokens: TokenResponse,
   now = new Date(),
 ): Promise<void> {
-  const values = tokenRow(tokens, now);
+  const values = tokenRow(userId, tokens, now);
   await db
     .insert(oauthTokens)
     .values({ userId, ...values })
@@ -49,10 +56,11 @@ export async function deleteTokens(userId: number): Promise<void> {
   await db.delete(oauthTokens).where(eq(oauthTokens.userId, userId));
 }
 
-function tokenRow(tokens: TokenResponse, now: Date) {
+function tokenRow(userId: number, tokens: TokenResponse, now: Date) {
+  const aad = tokenAad(userId);
   return {
-    accessToken: encrypt(tokens.access_token),
-    refreshToken: tokens.refresh_token ? encrypt(tokens.refresh_token) : null,
+    accessToken: encrypt(tokens.access_token, aad),
+    refreshToken: tokens.refresh_token ? encrypt(tokens.refresh_token, aad) : null,
     accessExpiresAt: toSqlDatetime(addSeconds(now, tokens.expires_in ?? DEFAULT_EXPIRES_IN)),
     updatedAt: toSqlDatetime(now),
   };
@@ -72,15 +80,16 @@ export async function getAccessToken(userId: number, now = new Date()): Promise<
       .where(eq(oauthTokens.userId, userId))
       .for("update");
     if (!row) throw new TokenError("no-token", "No OAuth token stored for this user");
+    const aad = tokenAad(userId);
 
     if (fromSqlDatetime(row.accessExpiresAt) > addSeconds(now, REFRESH_MARGIN_SECONDS)) {
-      return { token: decrypt(row.accessToken) };
+      return { token: decrypt(row.accessToken, aad) };
     }
     if (!row.refreshToken) {
       throw new TokenError("revoked", "Access token expired and no refresh token is available");
     }
 
-    const refreshed = await refreshTokens(decrypt(row.refreshToken));
+    const refreshed = await refreshTokens(decrypt(row.refreshToken, aad));
     if (!refreshed.ok) {
       if (refreshed.revoked) return { revoked: true as const };
       throw new TokenError("refresh-failed", `Token refresh failed: ${refreshed.error}`);
@@ -88,9 +97,12 @@ export async function getAccessToken(userId: number, now = new Date()): Promise<
     // The provider rotates refresh tokens; if it did not return a new one, keep the old.
     const tokens: TokenResponse = {
       ...refreshed.tokens,
-      refresh_token: refreshed.tokens.refresh_token ?? decrypt(row.refreshToken),
+      refresh_token: refreshed.tokens.refresh_token ?? decrypt(row.refreshToken, aad),
     };
-    await tx.update(oauthTokens).set(tokenRow(tokens, now)).where(eq(oauthTokens.userId, userId));
+    await tx
+      .update(oauthTokens)
+      .set(tokenRow(userId, tokens, now))
+      .where(eq(oauthTokens.userId, userId));
     return { token: tokens.access_token };
   });
 
@@ -120,6 +132,7 @@ async function refreshTokens(refreshToken: string): Promise<RefreshResult> {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded", "User-Agent": userAgent() },
       body,
+      signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
     });
   } catch (err) {
     return { ok: false, revoked: false, error: err instanceof Error ? err.message : String(err) };

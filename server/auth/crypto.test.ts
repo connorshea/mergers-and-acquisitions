@@ -40,37 +40,46 @@ describe("safeEqual", () => {
 });
 
 describe("token encryption", () => {
+  const AAD = "oauth_tokens:7";
+
+  it("binds the ciphertext to its context: a different AAD fails to decrypt", () => {
+    const keys = loadEncKeys({ TOKEN_ENC_KEY: keyA });
+    const ct = encrypt("tok", AAD, keys);
+    expect(decrypt(ct, AAD, keys)).toBe("tok");
+    expect(() => decrypt(ct, "oauth_tokens:8", keys)).toThrow(/auth/i);
+  });
+
   it("round-trips and never stores the plaintext", () => {
     const keys = loadEncKeys({ TOKEN_ENC_KEY: keyA });
-    const ct = encrypt("secret-access-token", keys);
+    const ct = encrypt("secret-access-token", AAD, keys);
     expect(ct).not.toContain("secret-access-token");
     expect(ct.startsWith("v1:")).toBe(true);
-    expect(decrypt(ct, keys)).toBe("secret-access-token");
+    expect(decrypt(ct, AAD, keys)).toBe("secret-access-token");
   });
 
   it("uses a fresh IV each time", () => {
     const keys = loadEncKeys({ TOKEN_ENC_KEY: keyA });
-    expect(encrypt("x", keys)).not.toBe(encrypt("x", keys));
+    expect(encrypt("x", AAD, keys)).not.toBe(encrypt("x", AAD, keys));
   });
 
   it("rejects tampering", () => {
     const keys = loadEncKeys({ TOKEN_ENC_KEY: keyA });
-    const [v, kid, iv, ct, tag] = encrypt("payload", keys).split(":");
+    const [v, kid, iv, ct, tag] = encrypt("payload", AAD, keys).split(":");
     const flipped = ct[0] === "A" ? "B" : "A";
-    expect(() => decrypt([v, kid, iv, flipped + ct.slice(1), tag].join(":"), keys)).toThrow(
+    expect(() => decrypt([v, kid, iv, flipped + ct.slice(1), tag].join(":"), AAD, keys)).toThrow(
       /auth/i,
     );
-    expect(() => decrypt("garbage", keys)).toThrow(/format/);
+    expect(() => decrypt("garbage", AAD, keys)).toThrow(/format/);
   });
 
   it("decrypts with the previous key during a rotation, encrypts with the current one", () => {
     const old = loadEncKeys({ TOKEN_ENC_KEY: keyA });
-    const ct = encrypt("tok", old);
+    const ct = encrypt("tok", AAD, old);
     const rotated = loadEncKeys({ TOKEN_ENC_KEY: keyB, TOKEN_ENC_KEY_PREVIOUS: keyA });
-    expect(decrypt(ct, rotated)).toBe("tok");
-    expect(encrypt("tok", rotated).split(":")[1]).toBe(rotated[0].kid);
+    expect(decrypt(ct, AAD, rotated)).toBe("tok");
+    expect(encrypt("tok", AAD, rotated).split(":")[1]).toBe(rotated[0].kid);
     // Without the previous key the old ciphertext is unreadable, with a pointed error.
-    expect(() => decrypt(ct, loadEncKeys({ TOKEN_ENC_KEY: keyB }))).toThrow(
+    expect(() => decrypt(ct, AAD, loadEncKeys({ TOKEN_ENC_KEY: keyB }))).toThrow(
       /TOKEN_ENC_KEY_PREVIOUS/,
     );
   });

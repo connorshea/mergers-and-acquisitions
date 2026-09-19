@@ -25,6 +25,8 @@ import { userAgent } from "./user-agent.ts";
 
 const LOGIN_COOKIE = "mna_oauth";
 const LOGIN_TTL_SECONDS = 10 * 60;
+/** Give up on the provider (token exchange, profile) after this long. */
+const FETCH_TIMEOUT_MS = 15_000;
 
 interface PendingLogin {
   state: string;
@@ -213,6 +215,7 @@ async function exchangeCode(
       client_secret: cfg.clientSecret,
       code_verifier: verifier,
     }),
+    signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
   });
   const json = (await res.json().catch(() => ({}))) as Partial<TokenResponse> & { error?: string };
   if (!res.ok || !json.access_token) {
@@ -227,6 +230,7 @@ async function fetchProfile(
 ): Promise<WikimediaProfile> {
   const res = await fetch(`${cfg.issuer}/resource/profile`, {
     headers: { Authorization: `Bearer ${accessToken}`, "User-Agent": userAgent() },
+    signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
   });
   if (!res.ok) throw new Error(`profile fetch failed: HTTP ${res.status}`);
   const profile = (await res.json()) as Partial<WikimediaProfile>;

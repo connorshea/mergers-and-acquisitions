@@ -36,6 +36,12 @@ export function safeEqual(a: string, b: string): boolean {
 // Ciphertext format: `v1:<kid>:<iv>:<ct>:<tag>` (base64url parts). `kid` is a
 // fingerprint of the key that encrypted it, so a key rotation only needs the
 // old key kept in TOKEN_ENC_KEY_PREVIOUS until every row has been re-written.
+//
+// `aad` (additional authenticated data) binds a ciphertext to its context —
+// the owning user id for OAuth tokens — so a ciphertext copied into another
+// user's row fails to decrypt instead of quietly letting that user act as
+// someone else. It is authenticated, not encrypted, and must be passed
+// identically to `decrypt`.
 
 const ALGO = "aes-256-gcm";
 const IV_BYTES = 12;
@@ -63,10 +69,11 @@ export function loadEncKeys(env: NodeJS.ProcessEnv = process.env): EncKey[] {
   return keys;
 }
 
-export function encrypt(plaintext: string, keys: EncKey[] = loadEncKeys()): string {
+export function encrypt(plaintext: string, aad: string, keys: EncKey[] = loadEncKeys()): string {
   const { kid, key } = keys[0];
   const iv = randomBytes(IV_BYTES);
   const cipher = createCipheriv(ALGO, key, iv);
+  cipher.setAAD(Buffer.from(aad, "utf8"));
   const ct = Buffer.concat([cipher.update(plaintext, "utf8"), cipher.final()]);
   const tag = cipher.getAuthTag();
   return [
@@ -78,7 +85,7 @@ export function encrypt(plaintext: string, keys: EncKey[] = loadEncKeys()): stri
   ].join(":");
 }
 
-export function decrypt(payload: string, keys: EncKey[] = loadEncKeys()): string {
+export function decrypt(payload: string, aad: string, keys: EncKey[] = loadEncKeys()): string {
   const parts = payload.split(":");
   if (parts.length !== 5 || parts[0] !== "v1") throw new Error("Unrecognised ciphertext format");
   const [, kid, ivB64, ctB64, tagB64] = parts;
@@ -88,6 +95,7 @@ export function decrypt(payload: string, keys: EncKey[] = loadEncKeys()): string
       `No encryption key with id ${kid} (was TOKEN_ENC_KEY rotated without TOKEN_ENC_KEY_PREVIOUS?)`,
     );
   const decipher = createDecipheriv(ALGO, entry.key, Buffer.from(ivB64, "base64url"));
+  decipher.setAAD(Buffer.from(aad, "utf8"));
   decipher.setAuthTag(Buffer.from(tagB64, "base64url"));
   return Buffer.concat([
     decipher.update(Buffer.from(ctB64, "base64url")),

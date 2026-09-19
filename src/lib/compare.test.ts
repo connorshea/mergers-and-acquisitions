@@ -14,8 +14,8 @@ import {
   scoreCandidate,
   sharedIdentifierProps,
   stringSimilarity,
-} from "./compare";
-import { EXAMPLES } from "./fixtures";
+} from "./compare.ts";
+import { EXAMPLES } from "./fixtures.ts";
 
 const byName = Object.fromEntries(EXAMPLES.map((e) => [e.name, e]));
 

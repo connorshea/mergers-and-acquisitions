@@ -41,7 +41,7 @@ export const items = mysqlTable(
     qid: varchar("qid", { length: 32 }).primaryKey(), // e.g. "Q42"
     primaryLabel: varchar("primary_label", { length: 255 }), // Item.labels.en ?? mul, nullable
     primaryType: varchar("primary_type", { length: 32 }), // first P31 value QID, e.g. "Q7889"
-    data: json<import("../src/lib/compare").Item>("data").notNull(), // JSON-encoded Item
+    data: json<import("../src/lib/compare.ts").Item>("data").notNull(), // JSON-encoded Item
     lastSyncedAt: datetime("last_synced_at", { mode: "string" })
       .notNull()
       .default(sql`CURRENT_TIMESTAMP`),

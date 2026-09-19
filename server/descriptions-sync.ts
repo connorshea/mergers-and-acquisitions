@@ -2,9 +2,9 @@
 // both the manual route (server/sync-routes.ts) and the scheduled job
 // (jobs/sync-descriptions.ts).
 import { asc, gt, sql } from "drizzle-orm";
-import { db } from "./db";
-import { itemDescriptions, items } from "../db/schema";
-import { fetchDescriptions, type GameDescriptionRow } from "../src/lib/sparql";
+import { db } from "./db.ts";
+import { itemDescriptions, items } from "../db/schema.ts";
+import { fetchDescriptions, type GameDescriptionRow } from "../src/lib/sparql.ts";
 
 const ROWS_PER_STMT = 1000;
 /** Items scanned per DB page when collecting QIDs (keyset-paged over the PK). */

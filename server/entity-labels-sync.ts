@@ -2,11 +2,11 @@
 // the manual route (server/sync-routes.ts) and the scheduled job
 // (jobs/sync-entity-labels.ts).
 import { asc, gt, sql } from "drizzle-orm";
-import { db } from "./db";
-import { entityLabels, items } from "../db/schema";
-import type { Item } from "../src/lib/compare";
-import { referencedItemQids } from "../src/lib/wikidata";
-import { fetchEntityLabels, type EntityLabelRow } from "../src/lib/sparql";
+import { db } from "./db.ts";
+import { entityLabels, items } from "../db/schema.ts";
+import type { Item } from "../src/lib/compare.ts";
+import { referencedItemQids } from "../src/lib/wikidata.ts";
+import { fetchEntityLabels, type EntityLabelRow } from "../src/lib/sparql.ts";
 
 const ROWS_PER_STMT = 1000;
 /** Items scanned per DB page when collecting referenced QIDs (keyset-paged). */

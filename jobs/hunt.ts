@@ -1,7 +1,7 @@
 // Scheduled job: run the duplicate-candidate hunt. Replaces the Void
 // crons/hunt-candidates.ts + queues/hunt-candidates.ts pair — the whole
 // scan→score→upsert now runs in one process (see server/hunt.ts).
-import { runHunt } from "../server/hunt";
+import { runHunt } from "../server/hunt.ts";
 
 runHunt()
   .then((stats) => {

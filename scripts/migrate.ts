@@ -3,7 +3,7 @@
 import mysql from "mysql2/promise";
 import { drizzle } from "drizzle-orm/mysql2";
 import { migrate } from "drizzle-orm/mysql2/migrator";
-import { connConfig } from "../server/db-config";
+import { connConfig } from "../server/db-config.ts";
 
 async function main() {
   const conn = await mysql.createConnection({ ...connConfig(), multipleStatements: true });

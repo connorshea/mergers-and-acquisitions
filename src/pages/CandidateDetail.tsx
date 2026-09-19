@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { fetch, FetchError } from "../lib/client";
-import MergeCandidates from "../MergeCandidates";
+import { fetch, FetchError } from "../lib/client.ts";
+import MergeCandidates from "../MergeCandidates.tsx";
 import type {
   CandidateDetailResponse,
   CandidateDismissResponse,
   CandidateReopenResponse,
-} from "../lib/api-types";
+} from "../lib/api-types.ts";
 
 // Detail view for one candidate: a summary bar (confidence, reasons, dismiss)
 // over the full field-by-field comparison. The API returns the pair already

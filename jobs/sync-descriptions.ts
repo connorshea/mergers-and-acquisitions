@@ -2,7 +2,7 @@
 // name in the comparison view, and used for merge-blocker detection). The dump
 // omits descriptions, so this backfills them from Wikidata. Replaces Void's
 // crons/sync-descriptions.ts.
-import { runDescriptionsSync } from "../server/descriptions-sync";
+import { runDescriptionsSync } from "../server/descriptions-sync.ts";
 
 runDescriptionsSync()
   .then((synced) => {

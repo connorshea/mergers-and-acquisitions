@@ -14,8 +14,8 @@
 // without ?revision= silently follows the redirect and returns TARGET instead.
 //
 // Usage (QIDs may be either side of a merge — the source is auto-detected):
-//   tsx scripts/fetch-merge-pairs.ts Q135453621 Q131619393
-//   tsx scripts/fetch-merge-pairs.ts --out eval-data/merged-pairs Q135453621 …
+//   node scripts/fetch-merge-pairs.ts Q135453621 Q131619393
+//   node scripts/fetch-merge-pairs.ts --out eval-data/merged-pairs Q135453621 …
 
 import { mkdir, writeFile, readFile } from "node:fs/promises";
 import { join } from "node:path";
@@ -160,7 +160,7 @@ async function main() {
     else throw new Error(`unexpected arg: ${args[i]} (want Qxxx or --out DIR)`);
   }
   if (qids.length === 0)
-    throw new Error("usage: tsx scripts/fetch-merge-pairs.ts [--out DIR] Qxxx [Qxxx …]");
+    throw new Error("usage: node scripts/fetch-merge-pairs.ts [--out DIR] Qxxx [Qxxx …]");
 
   await mkdir(outDir, { recursive: true });
   const indexPath = join(outDir, "index.jsonl");

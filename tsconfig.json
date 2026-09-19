@@ -1,7 +1,8 @@
 {
   // Single config covering the React SPA (src), the Node server (server), the
   // batch jobs (jobs), the schema/seed (db), and scripts. Vite builds the client;
-  // tsx runs the server/jobs. No emit — type-checking only (via `vp check`).
+  // node runs the server/jobs via native TS type-stripping. No emit —
+  // type-checking only (via `vp check`).
   "compilerOptions": {
     "target": "ES2022",
     "lib": ["ES2023", "DOM", "DOM.Iterable"],

@@ -8,8 +8,8 @@
 // Those are exactly the pairs a maintainer notices and supplies here.
 //
 // Usage — QIDs are taken pairwise (Q1 Q2  Q3 Q4  → two pairs):
-//   tsx scripts/fetch-nondupe-pairs.ts Q4047343 Q1535818 Q140140365 Q213911
-//   tsx scripts/fetch-nondupe-pairs.ts --out eval-data/non-dupe-pairs Q1 Q2
+//   node scripts/fetch-nondupe-pairs.ts Q4047343 Q1535818 Q140140365 Q213911
+//   node scripts/fetch-nondupe-pairs.ts --out eval-data/non-dupe-pairs Q1 Q2
 
 import { mkdir, writeFile, readFile } from "node:fs/promises";
 import { join } from "node:path";
@@ -79,7 +79,7 @@ async function main() {
   }
   if (qids.length === 0 || qids.length % 2 !== 0)
     throw new Error(
-      "usage: tsx scripts/fetch-nondupe-pairs.ts [--out DIR] Qa Qb [Qc Qd …] (pairs)",
+      "usage: node scripts/fetch-nondupe-pairs.ts [--out DIR] Qa Qb [Qc Qd …] (pairs)",
     );
 
   await mkdir(outDir, { recursive: true });

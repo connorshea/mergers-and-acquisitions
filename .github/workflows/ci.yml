@@ -8,6 +8,11 @@ on:
 permissions:
   contents: read
 
+# Cancel a superseded run of the same PR / branch; runs on main all complete.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   ci:
     runs-on: ubuntu-latest
@@ -35,7 +40,7 @@ jobs:
         run: pnpm exec vp check
 
       - name: Run tests
-        run: pnpm exec vp test --passWithNoTests
+        run: pnpm exec vp test
 
       - name: Type-check project references
         run: pnpm exec tsc -b

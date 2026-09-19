@@ -61,8 +61,24 @@ Formatting, linting, testing, and type-checking go through the `vp` CLI directly
 
 ```sh
 vp check       # format, lint, and type-check in one pass
-vp test        # run tests with Vitest
+vp test        # run tests with Vitest (DB-backed tests are skipped unless DB_TEST=1)
 ```
+
+### DB-backed tests
+
+The `*.db.test.ts` files under `server/` exercise the API routes and the hunt
+against a real MariaDB. They are skipped by default because they **truncate
+every table** between tests. To run them, point them at a dedicated database
+(the name must contain `test`; the migrations are applied automatically):
+
+```sh
+mariadb -e "CREATE DATABASE test_mergers CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"
+DB_TEST=1 DB_NAME=test_mergers vp test
+```
+
+(The `mergers` user created above can already create `test_*` databases.) CI runs
+them against a MariaDB service container, together with a from-scratch migration
+run and a schema-drift check — see `.github/workflows/ci.yml`.
 
 ## Deploying to Toolforge
 

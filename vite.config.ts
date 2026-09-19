@@ -30,6 +30,14 @@ export default defineConfig({
       ],
     },
   },
+  test: {
+    // DB-backed tests (*.db.test.ts) are opt-in via DB_TEST=1; the global setup
+    // migrates the test database when they are on and is a no-op otherwise.
+    globalSetup: ["./test/global-setup.ts"],
+    // The DB tests share one database and truncate it between tests, so files
+    // must not run concurrently when they are enabled.
+    fileParallelism: process.env.DB_TEST !== "1",
+  },
   build: {
     outDir: "dist/client",
     emptyOutDir: true,

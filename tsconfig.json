@@ -26,5 +26,14 @@
     "noFallthroughCasesInSwitch": true,
     "types": ["node"]
   },
-  "include": ["src", "server", "jobs", "db", "scripts", "vite.config.ts", "drizzle.config.ts"]
+  "include": [
+    "src",
+    "server",
+    "jobs",
+    "db",
+    "scripts",
+    "test",
+    "vite.config.ts",
+    "drizzle.config.ts"
+  ]
 }

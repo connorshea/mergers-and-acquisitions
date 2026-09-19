@@ -3,10 +3,12 @@
 // the redirect to meta.wikimedia.org and back works without any client state.
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { loginUrl, useAuth } from "./lib/auth.tsx";
+import { useAuth } from "./lib/auth.tsx";
+import { loginUrl } from "./lib/auth-url.ts";
+import { wikiPageUrl } from "./lib/wiki.ts";
 
 export default function AuthBar() {
-  const { user, configured, wikiBaseUrl, loading, logout } = useAuth();
+  const { user, configured, loading, logout } = useAuth();
   const location = useLocation();
   const [busy, setBusy] = useState(false);
 
@@ -15,19 +17,13 @@ export default function AuthBar() {
   if (user) {
     // Link the name to the user's page on the same wiki the app edits (e.g.
     // test.wikidata.org while developing), not always www.wikidata.org.
-    const userPageUrl = wikiBaseUrl
-      ? `${wikiBaseUrl}/wiki/User:${encodeURIComponent(user.username)}`
-      : undefined;
+    const userPageUrl = wikiPageUrl(`User:${encodeURIComponent(user.username)}`);
     return (
       <div className="auth-bar">
         <span className="auth-user" title={`Wikimedia user id ${user.id}`}>
-          {userPageUrl ? (
-            <a href={userPageUrl} target="_blank" rel="noreferrer" className="auth-user-link">
-              {user.username}
-            </a>
-          ) : (
-            user.username
-          )}
+          <a href={userPageUrl} target="_blank" rel="noreferrer" className="auth-user-link">
+            {user.username}
+          </a>
           {user.isAdmin && <span className="auth-badge">admin</span>}
           {user.blocked && (
             <span className="auth-badge is-blocked" title="This account is blocked on Wikidata">

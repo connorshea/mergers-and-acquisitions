@@ -1,6 +1,6 @@
 // Unit tests for the DOM-free auth helpers.
 import { describe, expect, it } from "vite-plus/test";
-import { loginUrl } from "./auth.tsx";
+import { loginUrl } from "./auth-url.ts";
 
 describe("loginUrl", () => {
   it("encodes the return path", () => {

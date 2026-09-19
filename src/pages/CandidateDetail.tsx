@@ -1,7 +1,8 @@
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { fetch, FetchError } from "../lib/client.ts";
-import { loginUrl, useAuth } from "../lib/auth.tsx";
+import { useAuth } from "../lib/auth.tsx";
+import { loginUrl } from "../lib/auth-url.ts";
 import AuthBar from "../AuthBar.tsx";
 import MergeCandidates from "../MergeCandidates.tsx";
 import {

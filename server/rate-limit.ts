@@ -33,5 +33,23 @@ export function createRateLimiter(max: number, windowMs: number): RateLimiter {
   };
 }
 
+const DEFAULT_EDIT_RATE_LIMIT = 10;
+
+/**
+ * `EDIT_RATE_LIMIT` as a positive integer, or the default when it is unset,
+ * blank, or not a number — `Number("")` is 0 (every edit refused) and
+ * `Number("ten")` is NaN (no limit at all), so neither can be used as-is.
+ */
+export function parseEditRateLimit(
+  raw: string | undefined,
+  fallback = DEFAULT_EDIT_RATE_LIMIT,
+): number {
+  const n = Number(raw?.trim());
+  return raw?.trim() && Number.isInteger(n) && n > 0 ? n : fallback;
+}
+
 /** Edits per user per minute, shared by the merge and "different from" endpoints. */
-export const editLimiter = createRateLimiter(Number(process.env.EDIT_RATE_LIMIT ?? 10), 60 * 1000);
+export const editLimiter = createRateLimiter(
+  parseEditRateLimit(process.env.EDIT_RATE_LIMIT),
+  60 * 1000,
+);

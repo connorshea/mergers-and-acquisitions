@@ -520,6 +520,67 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
     });
   });
 
+  describe("POST /api/candidates/:id/merge after a mirror cleanup failure", () => {
+    it("keeps the audit row and the merged status when the cleanup transaction fails", async () => {
+      stubWikidata(() => mergeOk(101, 102));
+      // The first transaction records the merge; the second cleans the mirror.
+      const real = db.transaction.bind(db);
+      const spy = vi.spyOn(db, "transaction");
+      spy.mockImplementationOnce(real as typeof db.transaction).mockImplementationOnce(() => {
+        throw new Error("Deadlock found when trying to get lock");
+      });
+      try {
+        const { status, body } = await post<CandidateMergeResponse>(
+          `/api/candidates/${alpha}/merge`,
+          editor,
+          {},
+        );
+        expect(status).toBe(200);
+        expect(body.candidate).toMatchObject({ id: alpha, status: "merged" });
+      } finally {
+        spy.mockRestore();
+      }
+
+      expect(await candidateRow(alpha)).toMatchObject({
+        status: "merged",
+        resolution: "merged into Q10 (rev 102)",
+      });
+      const audits = await db.select().from(wikidataEdits);
+      expect(audits).toHaveLength(1);
+      expect(audits[0]).toMatchObject({ ok: true, fromRevid: 101, intoRevid: 102 });
+      // The cleanup didn't happen: the mirror still holds Q20 and beta is open.
+      expect(await itemQids()).toEqual(["Q10", "Q20", "Q30", "Q40"]);
+      expect((await candidateRow(beta)).status).toBe("open");
+    });
+  });
+
+  describe("POST /api/candidates/:id/dismiss guards", () => {
+    it("never dismisses a merged candidate, and dismisses a merging one only once stale", async () => {
+      await db
+        .update(mergeCandidates)
+        .set({ status: "merged" })
+        .where(eq(mergeCandidates.id, alpha));
+      expect((await post(`/api/candidates/${alpha}/dismiss`, editor)).status).toBe(409);
+      expect((await candidateRow(alpha)).status).toBe("merged");
+      // …so dismiss → reopen can't revive it either.
+      expect((await post(`/api/candidates/${alpha}/reopen`, editor)).status).toBe(409);
+
+      await db
+        .update(mergeCandidates)
+        .set({ status: "merging", resolvedAt: toSqlDatetime(new Date()) })
+        .where(eq(mergeCandidates.id, beta));
+      expect((await post(`/api/candidates/${beta}/dismiss`, editor)).status).toBe(409);
+      expect((await candidateRow(beta)).status).toBe("merging");
+
+      await db
+        .update(mergeCandidates)
+        .set({ resolvedAt: toSqlDatetime(addSeconds(new Date(), -MERGING_STALE_SECONDS - 60)) })
+        .where(and(eq(mergeCandidates.id, beta), eq(mergeCandidates.status, "merging")));
+      expect((await post(`/api/candidates/${beta}/dismiss`, editor)).status).toBe(200);
+      expect((await candidateRow(beta)).status).toBe("dismissed");
+    });
+  });
+
   describe("POST /api/candidates/:id/reopen guards", () => {
     it("never reopens a merged candidate, and reopens a merging one only once stale", async () => {
       await db

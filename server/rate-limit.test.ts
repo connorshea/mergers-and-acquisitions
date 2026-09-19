@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vite-plus/test";
-import { createRateLimiter } from "./rate-limit.ts";
+import { createRateLimiter, parseEditRateLimit } from "./rate-limit.ts";
 
 describe("createRateLimiter", () => {
   it("allows up to `max` hits per window, then rejects with a retry hint", () => {
@@ -21,5 +21,23 @@ describe("createRateLimiter", () => {
     expect(limiter.hit(2, t0)).toEqual({ ok: true });
     expect(limiter.hit(1, t0 + 100).ok).toBe(false);
     expect(limiter.hit(1, t0 + 60_001)).toEqual({ ok: true });
+  });
+});
+
+describe("parseEditRateLimit", () => {
+  it("accepts a positive integer", () => {
+    expect(parseEditRateLimit("25")).toBe(25);
+    expect(parseEditRateLimit(" 3 ")).toBe(3);
+  });
+
+  it("falls back to the default when unset, blank, or not a positive integer", () => {
+    expect(parseEditRateLimit(undefined)).toBe(10);
+    expect(parseEditRateLimit("")).toBe(10);
+    expect(parseEditRateLimit("   ")).toBe(10);
+    expect(parseEditRateLimit("ten")).toBe(10);
+    expect(parseEditRateLimit("0")).toBe(10);
+    expect(parseEditRateLimit("-5")).toBe(10);
+    expect(parseEditRateLimit("2.5")).toBe(10);
+    expect(parseEditRateLimit("", 4)).toBe(4);
   });
 });

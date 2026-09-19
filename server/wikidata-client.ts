@@ -118,14 +118,18 @@ const AUTH_FAILURE_CODES = new Set([
   "assertnameduserfailed",
 ]);
 
+const MERGE_CONFLICT_TEXT = /conflict|links? to the other/i;
+
 function kindOf(err: ApiError): EditErrorKind {
   if (AUTH_FAILURE_CODES.has(err.code)) return "login-required";
   if (err.code === "blocked" || err.code === "autoblocked") return "blocked";
   if (err.code === "permissiondenied" || err.code === "protectedpage") return "permission-denied";
   if (err.code === "ratelimited" || err.code === "http-429") return "rate-limited";
-  // Wikibase reports merge conflicts as `failed-modify` with a "Conflicting …"
-  // text; the same code also covers other save failures.
-  if (err.code === "failed-modify" && /conflict/i.test(err.text)) return "conflict";
+  // Wikibase reports merge conflicts as `failed-modify`: "Conflicting …" for
+  // labels/descriptions/sitelinks, and "… cannot be merged because one of them
+  // links to the other …" for a statement link between the pair (the
+  // `statement` override). The same code also covers other save failures.
+  if (err.code === "failed-modify" && MERGE_CONFLICT_TEXT.test(err.text)) return "conflict";
   if (err.code.startsWith("http-5") || err.code === "network") return "network";
   return "wikidata-error";
 }

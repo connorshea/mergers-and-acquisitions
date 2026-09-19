@@ -257,6 +257,12 @@ edits.post("/:id/merge", async (c) => {
     return failedEdit(c, await auditFailure(audit, err));
   }
 
+  // The merge is done on Wikidata, so record that first — the audit row and
+  // the `merged` status together, in their own short transaction — before the
+  // mirror cleanup below. If the cleanup fails (a deadlock on `items` against a
+  // sync job, a dropped connection) the DB still says what already happened,
+  // and the candidate can't be re-taken as a stale `merging` claim and merged
+  // again into a redirect.
   const stamp = toSqlDatetime(new Date());
   await db.transaction(async (tx) => {
     await tx.insert(wikidataEdits).values({
@@ -277,27 +283,36 @@ edits.post("/:id/merge", async (c) => {
         }`,
       })
       .where(eq(mergeCandidates.id, id));
-    // The mirror now holds a redirect (or a stub) where fromQid was: drop its
-    // rows so the hunt stops pairing it, and settle every other open candidate
-    // that referenced it — those pairs no longer exist as such.
-    await tx.delete(externalIds).where(eq(externalIds.qid, fromQid));
-    await tx.delete(itemDescriptions).where(eq(itemDescriptions.qid, fromQid));
-    await tx.delete(items).where(eq(items.qid, fromQid));
-    await tx
-      .update(mergeCandidates)
-      .set({
-        status: "merged",
-        resolvedAt: stamp,
-        resolvedBy: user.id,
-        resolution: `${fromQid} merged into ${intoQid} elsewhere`,
-      })
-      .where(
-        and(
-          or(eq(mergeCandidates.fromQid, fromQid), eq(mergeCandidates.intoQid, fromQid)),
-          eq(mergeCandidates.status, "open"),
-        ),
-      );
   });
+
+  // The mirror now holds a redirect (or a stub) where fromQid was: drop its
+  // rows so the hunt stops pairing it, and settle every other open candidate
+  // that referenced it — those pairs no longer exist as such. A failure here
+  // is logged rather than reported as a failed merge: the next sync drops the
+  // redirect anyway, and the hunt would only re-pair it until then.
+  try {
+    await db.transaction(async (tx) => {
+      await tx.delete(externalIds).where(eq(externalIds.qid, fromQid));
+      await tx.delete(itemDescriptions).where(eq(itemDescriptions.qid, fromQid));
+      await tx.delete(items).where(eq(items.qid, fromQid));
+      await tx
+        .update(mergeCandidates)
+        .set({
+          status: "merged",
+          resolvedAt: stamp,
+          resolvedBy: user.id,
+          resolution: `${fromQid} merged into ${intoQid} elsewhere`,
+        })
+        .where(
+          and(
+            or(eq(mergeCandidates.fromQid, fromQid), eq(mergeCandidates.intoQid, fromQid)),
+            eq(mergeCandidates.status, "open"),
+          ),
+        );
+    });
+  } catch (err) {
+    console.error(`merge: ${fromQid} → ${intoQid} succeeded but the mirror cleanup failed`, err);
+  }
 
   const payload: CandidateMergeResponse = {
     candidate: (await summaryFor(id))!,

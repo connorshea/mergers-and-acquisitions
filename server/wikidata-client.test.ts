@@ -230,6 +230,14 @@ describe("mergeItems", () => {
         "Conflicting descriptions for language en",
       ],
       [
+        apiError(
+          "failed-modify",
+          "The two items cannot be merged because one of them links to the other using property P1889",
+        ),
+        "conflict",
+        "The two items cannot be merged because one of them links to the other using property P1889",
+      ],
+      [
         apiError("failed-modify", "Item Q20 is a redirect"),
         "wikidata-error",
         "Item Q20 is a redirect",

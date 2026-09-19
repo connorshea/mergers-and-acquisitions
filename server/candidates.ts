@@ -270,28 +270,52 @@ candidates.get("/:id", async (c) => {
 });
 
 // POST /api/candidates/:id/dismiss — mark dismissed, stamp resolvedAt.
+// A merged candidate stays merged (dismiss → reopen would otherwise revive a
+// pair whose source item is already a redirect), and one being merged right
+// now keeps its claim until it goes stale. The status check lives in the
+// UPDATE itself so a concurrent merge claim can't slip in between.
 candidates.post("/:id/dismiss", async (c) => {
   const id = Number(c.req.param("id"));
   if (!Number.isInteger(id)) {
     return c.json({ error: "Invalid candidate id" }, 404);
   }
 
-  // MariaDB has no UPDATE … RETURNING, so update then re-select the summary.
-  await db
+  const staleBefore = toSqlDatetime(addSeconds(new Date(), -MERGING_STALE_SECONDS));
+  const [result] = await db
     .update(mergeCandidates)
     .set({
       status: "dismissed",
       resolvedAt: sql`CURRENT_TIMESTAMP`,
       resolvedBy: c.get("user")?.id ?? null,
     })
-    .where(eq(mergeCandidates.id, id));
+    .where(
+      and(
+        eq(mergeCandidates.id, id),
+        or(
+          inArray(mergeCandidates.status, ["open", "dismissed"]),
+          and(eq(mergeCandidates.status, "merging"), lt(mergeCandidates.resolvedAt, staleBefore)),
+        ),
+      ),
+    );
 
+  // MariaDB has no UPDATE … RETURNING, so re-select the summary either way.
   const [row] = await db
     .select(summaryColumns)
     .from(mergeCandidates)
     .where(eq(mergeCandidates.id, id));
   if (!row) {
     return c.json({ error: "Candidate not found" }, 404);
+  }
+  if (result.affectedRows === 0) {
+    return c.json(
+      {
+        error:
+          row.status === "merging"
+            ? "A merge of this candidate is in progress"
+            : "A merged candidate can't be dismissed",
+      },
+      409,
+    );
   }
 
   const labels = await loadLabels([row.fromQid, row.intoQid]);

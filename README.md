@@ -116,3 +116,10 @@ jobs.yaml` (set the image name in `jobs.yaml` first). The DB is a ToolsDB MariaD
 database, created with `CHARACTER SET utf8mb4 COLLATE utf8mb4_bin` (see the
 collation note above); connection details come from the tool's credentials via
 the `DB_*` env vars.
+
+The server checks the schema before it binds its port (`server/preflight.ts`):
+if the database has fewer migrations applied than `db/migrations` contains, it
+logs `DB schema is behind: N migrations in db/migrations, M applied.` and exits
+with status 1, so run the migrate job before (re)starting the web service after a
+deploy that adds a migration. An unreachable database is retried a few times and
+then also exits, leaving the restart to Kubernetes.

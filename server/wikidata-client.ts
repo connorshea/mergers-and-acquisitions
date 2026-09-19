@@ -1,0 +1,349 @@
+// The Wikidata Action API client used for edits on a logged-in user's behalf.
+// Every edit goes through `editRequest`, which:
+//
+//   1. loads the user's OAuth access token (refreshing it when it is about to
+//      expire — see server/auth/tokens.ts);
+//   2. fetches a CSRF token with `assert=user&assertuser=<name>`, so a stale or
+//      swapped token fails loudly instead of editing as someone else;
+//   3. POSTs the edit with `maxlag=5`, our User-Agent, `formatversion=2` and
+//      `errorformat=plaintext`, never `bot=1`;
+//   4. retries once on `badtoken` (fresh CSRF token) and once on `maxlag`
+//      (after the Retry-After delay), and maps everything else to a
+//      `WikidataEditError` whose `kind` the route turns into a status code.
+//
+// A revoked or invalid OAuth grant (`mwoauth-invalid-authorization`, a failed
+// user assertion) drops the stored tokens so the user is asked to log in again.
+// The network / token / clock dependencies are injectable for the unit tests;
+// production callers use the defaults.
+import { DEFAULT_WIKIDATA_API_URL, wikidataApiUrl } from "./auth/config.ts";
+import { deleteTokens, getAccessToken, TokenError } from "./auth/tokens.ts";
+import { userAgent } from "./auth/user-agent.ts";
+import type { MergeConflictType } from "../src/lib/api-types.ts";
+
+/** Give up on one API request after this long; merges of big items are slow. */
+export const EDIT_TIMEOUT_MS = 30_000;
+/** Longest we will honour a `maxlag` Retry-After for before giving up. */
+const MAX_LAG_WAIT_MS = 10_000;
+const DEFAULT_LAG_WAIT_MS = 5_000;
+/** Ask the API to refuse edits while replication lag exceeds this many seconds. */
+const MAXLAG = "5";
+
+export interface EditUser {
+  id: number;
+  username: string;
+}
+
+export type EditErrorKind =
+  | "login-required"
+  | "blocked"
+  | "permission-denied"
+  | "rate-limited"
+  | "conflict"
+  | "wikidata-error"
+  | "network";
+
+/**
+ * A failed edit. `code` is MediaWiki's error code (or `network` / `http-<n>`)
+ * and `message` its text verbatim, so the UI can show exactly what Wikidata
+ * said (`permissiondenied`, `blocked`, a Wikibase conflict, …).
+ */
+export class WikidataEditError extends Error {
+  code: string;
+  kind: EditErrorKind;
+  constructor(kind: EditErrorKind, code: string, message: string) {
+    super(message);
+    this.name = "WikidataEditError";
+    this.kind = kind;
+    this.code = code;
+  }
+}
+
+export interface WikidataClientDeps {
+  fetch: typeof globalThis.fetch;
+  getAccessToken: (userId: number) => Promise<string>;
+  deleteTokens: (userId: number) => Promise<void>;
+  apiUrl: () => string;
+  sleep: (ms: number) => Promise<void>;
+}
+
+const defaultDeps: WikidataClientDeps = {
+  // Resolved per call so a test's stubbed global fetch is picked up.
+  fetch: (input, init) => globalThis.fetch(input, init),
+  getAccessToken,
+  deleteTokens,
+  apiUrl: wikidataApiUrl,
+  sleep: (ms) => new Promise((resolve) => setTimeout(resolve, ms)),
+};
+
+/** Parameters every request carries. */
+const COMMON_PARAMS = { format: "json", formatversion: "2", errorformat: "plaintext" };
+
+/** One error out of the API's `errors` (plaintext format) or legacy `error` shape. */
+interface ApiError {
+  code: string;
+  text: string;
+}
+
+interface ApiResponse {
+  status: number;
+  headers: Headers;
+  body: Record<string, unknown>;
+}
+
+function apiError(res: ApiResponse): ApiError | null {
+  const { body } = res;
+  const errors = body.errors;
+  if (Array.isArray(errors) && errors.length > 0) {
+    const first = errors[0] as { code?: string; text?: string; "*"?: string };
+    return { code: first.code ?? "unknown", text: first.text ?? first["*"] ?? "" };
+  }
+  const legacy = body.error as { code?: string; info?: string } | undefined;
+  if (legacy && typeof legacy === "object") {
+    return { code: legacy.code ?? "unknown", text: legacy.info ?? "" };
+  }
+  if (res.status >= 400) {
+    return {
+      code: `http-${res.status}`,
+      text: res.status === 429 ? "Too many requests; try again shortly" : `HTTP ${res.status}`,
+    };
+  }
+  return null;
+}
+
+/** Codes that mean the OAuth grant no longer identifies this user. */
+const AUTH_FAILURE_CODES = new Set([
+  "mwoauth-invalid-authorization",
+  "mwoauth-invalid-authorization-invalid-user",
+  "assertuserfailed",
+  "assertnameduserfailed",
+]);
+
+function kindOf(err: ApiError): EditErrorKind {
+  if (AUTH_FAILURE_CODES.has(err.code)) return "login-required";
+  if (err.code === "blocked" || err.code === "autoblocked") return "blocked";
+  if (err.code === "permissiondenied" || err.code === "protectedpage") return "permission-denied";
+  if (err.code === "ratelimited" || err.code === "http-429") return "rate-limited";
+  // Wikibase reports merge conflicts as `failed-modify` with a "Conflicting …"
+  // text; the same code also covers other save failures.
+  if (err.code === "failed-modify" && /conflict/i.test(err.text)) return "conflict";
+  if (err.code.startsWith("http-5") || err.code === "network") return "network";
+  return "wikidata-error";
+}
+
+async function call(
+  deps: WikidataClientDeps,
+  accessToken: string,
+  method: "GET" | "POST",
+  params: Record<string, string>,
+): Promise<ApiResponse> {
+  const all = { ...COMMON_PARAMS, ...params };
+  const query = new URLSearchParams(all);
+  let res: Response;
+  try {
+    res = await deps.fetch(method === "GET" ? `${deps.apiUrl()}?${query}` : deps.apiUrl(), {
+      method,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "User-Agent": userAgent(),
+        ...(method === "POST" ? { "Content-Type": "application/x-www-form-urlencoded" } : {}),
+      },
+      body: method === "POST" ? query : undefined,
+      signal: AbortSignal.timeout(EDIT_TIMEOUT_MS),
+    });
+  } catch (err) {
+    throw new WikidataEditError(
+      "network",
+      "network",
+      `Could not reach Wikidata: ${err instanceof Error ? err.message : String(err)}`,
+    );
+  }
+  const body = (await res.json().catch(() => ({}))) as Record<string, unknown>;
+  return { status: res.status, headers: res.headers, body };
+}
+
+async function loadAccessToken(user: EditUser, deps: WikidataClientDeps): Promise<string> {
+  try {
+    return await deps.getAccessToken(user.id);
+  } catch (err) {
+    if (err instanceof TokenError) {
+      throw new WikidataEditError(
+        "login-required",
+        err.code,
+        "Your Wikimedia login has expired or was revoked; log in again to edit.",
+      );
+    }
+    throw err;
+  }
+}
+
+async function fail(user: EditUser, err: ApiError, deps: WikidataClientDeps): Promise<never> {
+  const kind = kindOf(err);
+  if (kind === "login-required") {
+    // The grant is gone (revoked on meta, or it no longer maps to this user):
+    // keeping the tokens would just fail again. Log-in refreshes everything.
+    await deps.deleteTokens(user.id);
+    throw new WikidataEditError(
+      kind,
+      err.code,
+      "Wikidata no longer accepts this app's authorization for your account; log in again.",
+    );
+  }
+  throw new WikidataEditError(kind, err.code, err.text || err.code);
+}
+
+async function fetchCsrfToken(
+  user: EditUser,
+  accessToken: string,
+  deps: WikidataClientDeps,
+): Promise<string> {
+  const res = await call(deps, accessToken, "GET", {
+    action: "query",
+    meta: "tokens",
+    type: "csrf",
+    assert: "user",
+    assertuser: user.username,
+  });
+  const err = apiError(res);
+  if (err) await fail(user, err, deps);
+  const token = (res.body.query as { tokens?: { csrftoken?: string } } | undefined)?.tokens
+    ?.csrftoken;
+  // "+\\" is the anonymous token: the request was not authenticated at all.
+  if (!token || token === "+\\") {
+    throw new WikidataEditError("wikidata-error", "notoken", "Wikidata returned no CSRF token");
+  }
+  return token;
+}
+
+function retryAfterMs(headers: Headers): number {
+  const seconds = Number(headers.get("retry-after"));
+  const ms = Number.isFinite(seconds) && seconds > 0 ? seconds * 1000 : DEFAULT_LAG_WAIT_MS;
+  return Math.min(ms, MAX_LAG_WAIT_MS);
+}
+
+/**
+ * Perform one write action as `user`. `params` is the action and its own
+ * parameters; the token, assertion, lag guard and format parameters are added
+ * here. Resolves to the API's JSON body on success; throws `WikidataEditError`
+ * otherwise (or whatever the DB threw while loading the token).
+ */
+export async function editRequest(
+  user: EditUser,
+  params: Record<string, string>,
+  deps: WikidataClientDeps = defaultDeps,
+): Promise<Record<string, unknown>> {
+  const accessToken = await loadAccessToken(user, deps);
+  let csrf = await fetchCsrfToken(user, accessToken, deps);
+  let retriedToken = false;
+  let retriedLag = false;
+  for (;;) {
+    const res = await call(deps, accessToken, "POST", {
+      ...params,
+      token: csrf,
+      assert: "user",
+      assertuser: user.username,
+      maxlag: MAXLAG,
+    });
+    const err = apiError(res);
+    if (!err) return res.body;
+    if (err.code === "badtoken" && !retriedToken) {
+      retriedToken = true;
+      csrf = await fetchCsrfToken(user, accessToken, deps);
+      continue;
+    }
+    if (err.code === "maxlag" && !retriedLag) {
+      retriedLag = true;
+      await deps.sleep(retryAfterMs(res.headers));
+      continue;
+    }
+    await fail(user, err, deps);
+  }
+}
+
+export interface MergeResult {
+  fromRevid: number;
+  intoRevid: number;
+  /** Whether the source became a redirect (false when ignored sitelink conflicts kept it alive). */
+  redirected: boolean;
+}
+
+/**
+ * `wbmergeitems`: merge `fromQid` into `intoQid` (the app's order — the higher
+ * QID into the lower). `ignoreConflicts` must come straight from the user's
+ * explicit choices; nothing here adds to it.
+ */
+export async function mergeItems(
+  user: EditUser,
+  opts: {
+    fromQid: string;
+    intoQid: string;
+    ignoreConflicts: readonly MergeConflictType[];
+    summary: string;
+  },
+  deps: WikidataClientDeps = defaultDeps,
+): Promise<MergeResult> {
+  const params: Record<string, string> = {
+    action: "wbmergeitems",
+    fromid: opts.fromQid,
+    toid: opts.intoQid,
+    summary: opts.summary,
+  };
+  if (opts.ignoreConflicts.length > 0) params.ignoreconflicts = opts.ignoreConflicts.join("|");
+  const body = await editRequest(user, params, deps);
+  const from = body.from as { lastrevid?: number } | undefined;
+  const to = body.to as { lastrevid?: number } | undefined;
+  if (typeof from?.lastrevid !== "number" || typeof to?.lastrevid !== "number") {
+    throw new WikidataEditError(
+      "wikidata-error",
+      "unexpected-response",
+      "Wikidata reported success but returned no revision ids",
+    );
+  }
+  return {
+    fromRevid: from.lastrevid,
+    intoRevid: to.lastrevid,
+    redirected: Boolean(body.redirected),
+  };
+}
+
+/**
+ * `wbcreateclaim`: add an item-valued statement `qid` → `property` → `target`.
+ * Used for "different from" (P1889) in each direction.
+ */
+export async function addItemClaim(
+  user: EditUser,
+  opts: { qid: string; property: string; target: string; summary: string },
+  deps: WikidataClientDeps = defaultDeps,
+): Promise<{ revid: number }> {
+  const body = await editRequest(
+    user,
+    {
+      action: "wbcreateclaim",
+      entity: opts.qid,
+      property: opts.property,
+      snaktype: "value",
+      value: JSON.stringify({ "entity-type": "item", id: opts.target }),
+      summary: opts.summary,
+    },
+    deps,
+  );
+  const revid = (body.pageinfo as { lastrevid?: number } | undefined)?.lastrevid;
+  if (typeof revid !== "number") {
+    throw new WikidataEditError(
+      "wikidata-error",
+      "unexpected-response",
+      "Wikidata reported success but returned no revision id",
+    );
+  }
+  return { revid };
+}
+
+/** A link to view revision `revid` (as a diff against its parent) on the wiki the API belongs to. */
+export function revisionUrl(revid: number, apiUrl = wikidataApiUrl()): string {
+  let origin: string;
+  try {
+    origin = new URL(apiUrl).origin;
+  } catch {
+    origin = new URL(DEFAULT_WIKIDATA_API_URL).origin;
+  }
+  return `${origin}/w/index.php?diff=prev&oldid=${revid}`;
+}

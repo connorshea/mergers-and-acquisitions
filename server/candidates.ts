@@ -1,11 +1,14 @@
 // Router for /api/candidates — the list, one candidate's full detail, and the
-// dismiss/reopen actions. Shared helpers (summaryColumns, loadLabels, toSummary)
-// live here and are used across all four handlers so the wire shapes stay in
-// sync.
+// dismiss/reopen actions. The Wikidata edit routes on the same prefix live in
+// server/edits.ts; both build their responses with server/candidate-summary.ts
+// so the wire shapes stay in sync.
 import { Hono } from "hono";
 import { and, asc, count, desc, eq, gt, gte, inArray, lt, or, sql } from "drizzle-orm";
 import { db } from "./db.ts";
 import { type AuthEnv, requireUser } from "./auth/session.ts";
+import { addSeconds, toSqlDatetime } from "./auth/time.ts";
+import { MERGING_STALE_SECONDS } from "./edits.ts";
+import { loadLabels, summaryColumns, toSummary } from "./candidate-summary.ts";
 import {
   entityLabels,
   itemDescriptions,
@@ -22,7 +25,6 @@ import {
   type CandidateDismissResponse,
   type CandidateListResponse,
   type CandidateReopenResponse,
-  type CandidateSummary,
 } from "../src/lib/api-types.ts";
 
 const STATUSES = CANDIDATE_STATUSES;
@@ -31,62 +33,6 @@ const DEFAULT_PAGE_SIZE = 25;
 const MAX_PAGE_SIZE = 100;
 // Qids/pids loaded per IN list. MariaDB has no tight bound-param cap.
 const ID_CHUNK = 1000;
-
-/** Column set selected for a CandidateSummary; reused across all handlers. */
-const summaryColumns = {
-  id: mergeCandidates.id,
-  fromQid: mergeCandidates.fromQid,
-  intoQid: mergeCandidates.intoQid,
-  confidence: mergeCandidates.confidence,
-  status: mergeCandidates.status,
-  hasBlocker: mergeCandidates.hasBlocker,
-  reasons: mergeCandidates.reasons,
-  detectedAt: mergeCandidates.detectedAt,
-};
-
-type CandidateRow = {
-  id: number;
-  fromQid: string;
-  intoQid: string;
-  confidence: number;
-  status: string;
-  hasBlocker: boolean;
-  reasons: unknown;
-  detectedAt: string;
-};
-
-/**
- * Look up `items.primaryLabel` for a set of qids in one query. Returns a map so
- * callers can attach fromLabel/intoLabel without an N+1 lookup. Missing qids are
- * simply absent from the map.
- */
-async function loadLabels(qids: string[]): Promise<Map<string, string | null>> {
-  const map = new Map<string, string | null>();
-  const unique = [...new Set(qids)].filter(Boolean);
-  if (unique.length === 0) return map;
-  const rows = await db
-    .select({ qid: items.qid, primaryLabel: items.primaryLabel })
-    .from(items)
-    .where(inArray(items.qid, unique));
-  for (const r of rows) map.set(r.qid, r.primaryLabel);
-  return map;
-}
-
-/** Flatten a candidate row + resolved labels into the wire shape. */
-function toSummary(row: CandidateRow, labels: Map<string, string | null>): CandidateSummary {
-  return {
-    id: row.id,
-    fromQid: row.fromQid,
-    intoQid: row.intoQid,
-    fromLabel: labels.get(row.fromQid) ?? null,
-    intoLabel: labels.get(row.intoQid) ?? null,
-    confidence: row.confidence,
-    status: row.status,
-    hasBlocker: row.hasBlocker,
-    reasons: Array.isArray(row.reasons) ? (row.reasons as string[]) : [],
-    detectedAt: row.detectedAt,
-  };
-}
 
 function parseIntParam(value: string | undefined, fallback: number): number {
   const n = Number(value);
@@ -235,12 +181,14 @@ candidates.get("/:id", async (c) => {
   const from = dataByQid.get(row.fromQid);
   const into = dataByQid.get(row.intoQid);
 
-  // A candidate can outlive one of its item rows (e.g. an item was deleted or
-  // never synced). We can't render a comparison without both, so 404 naming the
-  // absent qid.
+  // A candidate can outlive one of its item rows: a merge drops the
+  // merged-away item from the mirror (server/edits.ts), or an item was deleted
+  // or never synced. We can't render a comparison without both, so 404 naming
+  // the absent qid (and the reason, when it is a merge).
   if (!from || !into) {
     const missing = [!from && row.fromQid, !into && row.intoQid].filter(Boolean).join(", ");
-    return c.json({ error: `Item data missing for: ${missing}` }, 404);
+    const why = row.status === "merged" ? " (merged away; the mirror no longer holds it)" : "";
+    return c.json({ error: `Item data missing for: ${missing}${why}` }, 404);
   }
 
   // Resolve human labels for just the property ids present on this pair.
@@ -331,7 +279,11 @@ candidates.post("/:id/dismiss", async (c) => {
   // MariaDB has no UPDATE … RETURNING, so update then re-select the summary.
   await db
     .update(mergeCandidates)
-    .set({ status: "dismissed", resolvedAt: sql`CURRENT_TIMESTAMP` })
+    .set({
+      status: "dismissed",
+      resolvedAt: sql`CURRENT_TIMESTAMP`,
+      resolvedBy: c.get("user")?.id ?? null,
+    })
     .where(eq(mergeCandidates.id, id));
 
   const [row] = await db
@@ -348,15 +300,35 @@ candidates.post("/:id/dismiss", async (c) => {
 });
 
 // POST /api/candidates/:id/reopen — un-dismiss back to `open`, clear stamps.
+// A merged candidate stays merged (the merge already happened on Wikidata and
+// the merged-away item is gone from the mirror), and one that is being merged
+// right now can only be reopened once its claim has gone stale.
 candidates.post("/:id/reopen", async (c) => {
   const id = Number(c.req.param("id"));
   if (!Number.isInteger(id)) {
     return c.json({ error: "Invalid candidate id" }, 404);
   }
 
+  const [current] = await db
+    .select({ status: mergeCandidates.status, resolvedAt: mergeCandidates.resolvedAt })
+    .from(mergeCandidates)
+    .where(eq(mergeCandidates.id, id));
+  if (!current) {
+    return c.json({ error: "Candidate not found" }, 404);
+  }
+  if (current.status === "merged") {
+    return c.json({ error: "A merged candidate can't be reopened" }, 409);
+  }
+  if (
+    current.status === "merging" &&
+    (current.resolvedAt ?? "") >= toSqlDatetime(addSeconds(new Date(), -MERGING_STALE_SECONDS))
+  ) {
+    return c.json({ error: "A merge of this candidate is in progress" }, 409);
+  }
+
   await db
     .update(mergeCandidates)
-    .set({ status: "open", resolvedAt: null, resolution: null })
+    .set({ status: "open", resolvedAt: null, resolution: null, resolvedBy: null })
     .where(eq(mergeCandidates.id, id));
 
   const [row] = await db

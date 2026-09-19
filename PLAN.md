@@ -45,9 +45,11 @@ column type, `datetime` handling — live in `CLAUDE.md`.)
 ## Repository layout
 
 ```
-server/        Hono app (index.ts) + routers (candidates, actions, sync-routes);
-               the Drizzle handle (db.ts) + connection config (db-config.ts);
-               shared sync write paths (*-sync.ts); the hunt (hunt.ts).
+server/        Hono app (app.ts, index.ts) + routers (candidates, edits,
+               actions, sync-routes); auth/ (OAuth login, sessions, tokens);
+               the Wikidata edit client (wikidata-client.ts); the Drizzle
+               handle (db.ts) + connection config (db-config.ts); shared sync
+               write paths (*-sync.ts); the hunt (hunt.ts).
 jobs/          Toolforge scheduled jobs (hunt.ts, sync-*.ts), run via node
                (native TS type-stripping) and declared in jobs.yaml.
 db/            MySQL-dialect schema (schema.ts), seed script (seed.ts), and
@@ -83,25 +85,30 @@ src/           React SPA — pages/ (CandidatesList, CandidateDetail), the
    upsert in a single pass: group items into blocking buckets (shared external
    ids, matching labels/types), score each candidate pair with the heuristics in
    `src/lib/compare.ts`, and upsert into `merge_candidates`. A guard leaves
-   human-resolved rows (`dismissed` / `merged`) untouched on re-run.
+   human-resolved rows (`dismissed` / `merged`, or one mid-`merging`) untouched
+   on re-run.
 4. **Review** (the SPA) — browse/filter/sort candidates, open a pair to compare,
    dismiss false positives (dismissals persist across re-hunts).
-5. **Apply** (future — see below) — perform the actual merge on Wikidata on the
-   logged-in editor's behalf.
+5. **Apply** — perform the actual merge (`wbmergeitems`), or record a
+   "different from" (P1889) claim, on Wikidata on the logged-in editor's
+   behalf (`server/edits.ts` over `server/wikidata-client.ts`), with an audit
+   row per attempt in `wikidata_edits`.
 
-## Authentication — Wikimedia OAuth (planned)
+## Authentication — Wikimedia OAuth
 
-Log in to the service **through Wikimedia OAuth**, so that:
+Login is **through Wikimedia OAuth 2.0**, so that:
 
-- only authenticated Wikimedia editors can review candidates, and
+- only authenticated Wikimedia editors can resolve candidates, and
 - **merge actions are performed on the logged-in user's behalf**, under their own
   account and edit history — never a shared bot/service account.
 
-This is the gate for step 5 of the pipeline (applying merges): the app holds each
-user's OAuth grant and uses it to call the Wikidata Action API (e.g.
-`wbmergeitems`) as that user. Toolforge is a supported OAuth consumer environment,
-which is part of why it's the deployment target. Until this lands the app is
-review-only (find / rank / compare / dismiss); nothing writes back to Wikidata.
+This is the gate for step 5 of the pipeline: the app holds each user's OAuth
+grant (encrypted at rest) and uses it to call the Wikidata Action API
+(`wbmergeitems`, `wbcreateclaim`) as that user. Toolforge is a supported OAuth
+consumer environment, which is part of why it's the deployment target. See
+README "Authentication" and "Editing Wikidata" for the consumer setup, the
+merge semantics (conflict overrides are opt-in per kind, the candidate takes a
+`merging` claim so it can't be submitted twice), and the audit trail.
 
 ## ML / LLM-assisted evaluation (planned, advisory-only)
 
@@ -193,7 +200,7 @@ dismissed candidates).
       Node/Hono/Drizzle+MariaDB and verified locally.
 - [ ] Deploy to Toolforge (build service, ToolsDB, load `jobs.yaml`, one-off seed).
 - [x] **Wikimedia OAuth** login (sessions, encrypted token storage, gated routes).
-- [ ] Apply-merge / "different from" edits on the user's behalf (issue #5).
+- [x] Apply-merge / "different from" edits on the user's behalf (issue #5).
 - [ ] Widen the item scope beyond video games toward all non-scholarly items.
 - [ ] **ML/LLM-assisted, advisory-only** candidate evaluation (re-rank + auto-drop
       obvious false positives); prototype on LiftWing's free hosted LLMs first.

@@ -6,10 +6,13 @@
 
 export class FetchError extends Error {
   status: number;
-  constructor(status: number, message?: string) {
+  /** The server's machine-readable `code`, when its JSON error body had one. */
+  code?: string;
+  constructor(status: number, message?: string, code?: string) {
     super(message ?? `Request failed (${status})`);
     this.name = "FetchError";
     this.status = status;
+    this.code = code;
   }
 }
 
@@ -48,8 +51,20 @@ export async function fetch(path: string, opts: FetchOptions = {}): Promise<unkn
     body: hasBody ? JSON.stringify(opts.body) : undefined,
   });
 
-  if (!res.ok) throw new FetchError(res.status);
-
   const text = await res.text();
+  if (!res.ok) {
+    // API errors are `{ error, code? }`; carry the message so the UI can show
+    // what the server (or Wikidata, verbatim) said rather than just a status.
+    let message: string | undefined;
+    let code: string | undefined;
+    try {
+      const body = JSON.parse(text) as { error?: unknown; code?: unknown };
+      if (typeof body.error === "string") message = body.error;
+      if (typeof body.code === "string") code = body.code;
+    } catch {
+      // not JSON
+    }
+    throw new FetchError(res.status, message, code);
+  }
   return text ? (JSON.parse(text) as unknown) : undefined;
 }

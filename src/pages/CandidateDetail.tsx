@@ -1,30 +1,38 @@
-import { useEffect, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { fetch, FetchError } from "../lib/client.ts";
 import { loginUrl, useAuth } from "../lib/auth.tsx";
 import AuthBar from "../AuthBar.tsx";
 import MergeCandidates from "../MergeCandidates.tsx";
-import type {
-  CandidateDetailResponse,
-  CandidateDismissResponse,
-  CandidateReopenResponse,
+import { type Item, type MergeConflict, mergeConflicts } from "../lib/compare.ts";
+import {
+  type CandidateDetailResponse,
+  type CandidateDifferentResponse,
+  type CandidateDismissResponse,
+  type CandidateMergeRequest,
+  type CandidateMergeResponse,
+  type CandidateReopenResponse,
+  type CandidateSummary,
+  MERGE_CONFLICT_TYPES,
 } from "../lib/api-types.ts";
 
-// Detail view for one candidate: a summary bar (confidence, reasons, dismiss)
+// Detail view for one candidate: a summary bar (confidence, reasons, actions)
 // over the full field-by-field comparison. The API returns the pair already
 // ordered (from = merged away, into = survivor), so it feeds straight into
-// MergeCandidates without re-ordering.
+// MergeCandidates without re-ordering. Merge and "different from" go to
+// Wikidata through the server, under the logged-in user's account.
 export default function CandidateDetail() {
   const { id } = useParams();
   const { user, configured } = useAuth();
   const [data, setData] = useState<CandidateDetailResponse | null>(null);
   const [status, setStatus] = useState<string | null>(null);
+  const [resolution, setResolution] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [dismissing, setDismissing] = useState(false);
-  // Which "not implemented yet" dialog is open, if any. Merge and
-  // "mark as different from" are placeholders until those flows are built.
   const [dialog, setDialog] = useState<"merge" | "different" | null>(null);
+  // The outcome of an edit made from this page, shown until navigation.
+  const [outcome, setOutcome] = useState<EditOutcome | null>(null);
 
   useEffect(() => {
     if (!id) return;
@@ -38,6 +46,8 @@ export default function CandidateDetail() {
         const detail = res as CandidateDetailResponse;
         setData(detail);
         setStatus(detail.candidate.status);
+        setResolution(detail.candidate.resolution);
+        setOutcome(null);
       } catch (e: unknown) {
         if (cancelled) return;
         setError(
@@ -62,7 +72,7 @@ export default function CandidateDetail() {
     setDismissing(true);
     try {
       const res = await fetch("/api/candidates/:id/dismiss", { method: "POST", params: { id } });
-      setStatus((res as CandidateDismissResponse).candidate.status);
+      applyCandidate((res as CandidateDismissResponse).candidate);
     } catch (e: unknown) {
       setError(e instanceof FetchError ? `Dismiss failed (${e.status}).` : "Dismiss failed.");
     } finally {
@@ -75,20 +85,31 @@ export default function CandidateDetail() {
     setDismissing(true);
     try {
       const res = await fetch("/api/candidates/:id/reopen", { method: "POST", params: { id } });
-      setStatus((res as CandidateReopenResponse).candidate.status);
+      applyCandidate((res as CandidateReopenResponse).candidate);
+      setOutcome(null);
     } catch (e: unknown) {
-      setError(e instanceof FetchError ? `Reopen failed (${e.status}).` : "Reopen failed.");
+      setError(e instanceof FetchError ? `Reopen failed: ${e.message}` : "Reopen failed.");
     } finally {
       setDismissing(false);
     }
   }
+
+  function applyCandidate(candidate: CandidateSummary) {
+    setStatus(candidate.status);
+    setResolution(candidate.resolution);
+  }
+
+  // Which ignoreconflicts kinds the mirror suggests the merge will need.
+  const detectedConflicts = useMemo(
+    () => (data ? mergeConflicts(data.from, data.into) : []),
+    [data],
+  );
 
   const candidate = data?.candidate;
 
   // Per-route <title>: the pair once loaded (e.g. "Foo (Q200) → Bar (Q100)"),
   // the candidate id while loading, and "Not found" on a 404. "Merge
   // candidates" is the shared suffix; React 19 hoists this into <head>.
-  const side = (label: string | null, qid: string) => (label ? `${label} (${qid})` : qid);
   const titleLead = candidate
     ? `${side(candidate.fromLabel, candidate.fromQid)} → ${side(candidate.intoLabel, candidate.intoQid)}`
     : error === "Candidate not found."
@@ -190,7 +211,11 @@ export default function CandidateDetail() {
               {status && status !== "open" ? (
                 <>
                   <span className="flag flag-status">{status}</span>
-                  {status === "dismissed" && (
+                  {resolution && <span className="detail-resolution">{resolution}</span>}
+                  {/* A merged pair stays merged (it happened on Wikidata); a
+                      dismissed one, or a merge claim that was abandoned, can
+                      come back. */}
+                  {(status === "dismissed" || status === "merging") && (
                     <button
                       type="button"
                       className="btn-dismiss"
@@ -198,7 +223,7 @@ export default function CandidateDetail() {
                       disabled={dismissing || !user}
                       title={user ? undefined : "Log in to reopen"}
                     >
-                      {dismissing ? "Reopening…" : "Un-dismiss"}
+                      {dismissing ? "Reopening…" : status === "dismissed" ? "Un-dismiss" : "Reopen"}
                     </button>
                   )}
                 </>
@@ -214,6 +239,7 @@ export default function CandidateDetail() {
                 </button>
               )}
             </div>
+            {outcome && <EditOutcomePanel outcome={outcome} />}
           </div>
         )}
       </div>
@@ -229,18 +255,280 @@ export default function CandidateDetail() {
         />
       )}
 
-      {dialog && (
-        <NotImplementedDialog
-          title={dialog === "merge" ? "Merge items" : "Mark as different from"}
-          body={
-            dialog === "merge"
-              ? "Applying merges via Wikidata (wbmergeitems) isn't implemented yet."
-              : "Recording a “different from” (P1889) statement isn't implemented yet."
-          }
+      {dialog === "merge" && data && candidate && id && (
+        <MergeDialog
+          id={id}
+          candidate={candidate}
+          from={data.from}
+          into={data.into}
+          detected={detectedConflicts}
+          username={user?.username ?? ""}
           onClose={() => setDialog(null)}
+          onDone={(res) => {
+            applyCandidate(res.candidate);
+            setOutcome({ kind: "merge", res });
+            setDialog(null);
+          }}
+        />
+      )}
+      {dialog === "different" && candidate && id && (
+        <DifferentDialog
+          id={id}
+          candidate={candidate}
+          username={user?.username ?? ""}
+          onClose={() => setDialog(null)}
+          onDone={(res) => {
+            applyCandidate(res.candidate);
+            setOutcome({ kind: "different", res });
+            setDialog(null);
+          }}
         />
       )}
     </>
+  );
+}
+
+type EditOutcome =
+  | { kind: "merge"; res: CandidateMergeResponse }
+  | { kind: "different"; res: CandidateDifferentResponse };
+
+/** What an edit made from this page did on Wikidata, with links to the revisions. */
+function EditOutcomePanel({ outcome }: { outcome: EditOutcome }) {
+  if (outcome.kind === "merge") {
+    const { from, into, redirected } = outcome.res;
+    return (
+      <div className={`edit-result${redirected ? "" : " is-partial"}`} role="status">
+        Merged {from.qid} into {into.qid}:{" "}
+        <a href={into.url} target="_blank" rel="noreferrer">
+          revision {into.revid}
+        </a>{" "}
+        on {into.qid},{" "}
+        <a href={from.url} target="_blank" rel="noreferrer">
+          revision {from.revid}
+        </a>{" "}
+        on {from.qid}.
+        {!redirected &&
+          ` ${from.qid} was not turned into a redirect (it kept conflicting sitelinks); finish it by hand on Wikidata.`}
+      </div>
+    );
+  }
+  const { edits } = outcome.res;
+  const partial = edits.some((e) => e.error);
+  return (
+    <div className={`edit-result${partial ? " is-partial" : ""}`} role="status">
+      Marked as different from each other and dismissed.
+      <ul>
+        {edits.map((e) => (
+          <li key={e.qid}>
+            {e.qid} → {e.target}:{" "}
+            {e.revision ? (
+              <a href={e.revision.url} target="_blank" rel="noreferrer">
+                revision {e.revision.revid}
+              </a>
+            ) : e.skipped ? (
+              "already had the statement"
+            ) : (
+              `failed — ${e.error}`
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+const side = (label: string | null, qid: string) => (label ? `${label} (${qid})` : qid);
+
+/** The error from a failed edit, with a re-login link when that is the fix. */
+function EditErrorNote({ error, id }: { error: FetchError | Error; id: string }) {
+  const code = error instanceof FetchError ? error.code : undefined;
+  return (
+    <p className="modal-error" role="alert">
+      {error.message}
+      {code === "login-required" && (
+        <>
+          {" "}
+          <a href={loginUrl(`/candidates/${id}`)}>Log in again</a>.
+        </>
+      )}
+      {code === "conflict" && " Tick the matching override above to proceed anyway."}
+    </p>
+  );
+}
+
+const CONFLICT_COPY: Record<MergeConflict, (from: string, into: string) => ReactNode> = {
+  description: (from, into) => (
+    <>
+      Descriptions differ
+      <span className="conflict-hint">
+        Keep {into}'s description and drop {from}'s.
+      </span>
+    </>
+  ),
+  sitelink: (from, into) => (
+    <>
+      Sitelinks clash
+      <span className="conflict-hint">
+        Keep {into}'s pages. {from} keeps its conflicting links, so it will not become a redirect.
+      </span>
+    </>
+  ),
+  statement: (from, into) => (
+    <>
+      The items link to each other
+      <span className="conflict-hint">
+        Drop the statements on {from} or {into} whose value is the other item.
+      </span>
+    </>
+  ),
+};
+
+// Confirm-and-merge dialog: names the pair, offers one override checkbox per
+// `ignoreconflicts` kind (marking the ones the mirror predicts), and submits.
+// Nothing is ever pre-ticked: an override is sent only because the user chose it.
+function MergeDialog({
+  id,
+  candidate,
+  from,
+  into,
+  detected,
+  username,
+  onClose,
+  onDone,
+}: {
+  id: string;
+  candidate: CandidateSummary;
+  from: Item;
+  into: Item;
+  detected: MergeConflict[];
+  username: string;
+  onClose: () => void;
+  onDone: (res: CandidateMergeResponse) => void;
+}) {
+  const [ignore, setIgnore] = useState<MergeConflict[]>([]);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+
+  async function submit() {
+    setBusy(true);
+    setError(null);
+    try {
+      const body: CandidateMergeRequest = { ignoreConflicts: ignore };
+      const res = await fetch("/api/candidates/:id/merge", {
+        method: "POST",
+        params: { id },
+        body,
+      });
+      onDone(res as CandidateMergeResponse);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e : new Error("Merge failed."));
+      setBusy(false);
+    }
+  }
+
+  return (
+    <Dialog title="Merge on Wikidata" onClose={busy ? () => {} : onClose} wide>
+      <div className="modal-body">
+        <p>
+          Merge <b>{side(candidate.fromLabel, from.id)}</b> into{" "}
+          <b>{side(candidate.intoLabel, into.id)}</b>. {from.id} becomes a redirect and its labels,
+          aliases, sitelinks and statements move to {into.id}. The edit is made under your account
+          {username ? ` (${username})` : ""} and credits this tool in its summary.
+        </p>
+        <div className="modal-section">
+          <p className="modal-section-title">Overrides (leave unticked unless you are sure)</p>
+          <ul className="conflict-list">
+            {MERGE_CONFLICT_TYPES.map((kind) => (
+              <li key={kind}>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={ignore.includes(kind)}
+                    disabled={busy}
+                    onChange={(e) =>
+                      setIgnore((cur) =>
+                        e.target.checked ? [...cur, kind] : cur.filter((k) => k !== kind),
+                      )
+                    }
+                  />
+                  <span>
+                    {CONFLICT_COPY[kind](from.id, into.id)}
+                    {detected.includes(kind) && (
+                      <span className="conflict-detected" title="Seen in the mirrored data">
+                        detected
+                      </span>
+                    )}
+                  </span>
+                </label>
+              </li>
+            ))}
+          </ul>
+        </div>
+        {error && <EditErrorNote error={error} id={id} />}
+      </div>
+      <div className="modal-actions">
+        <button type="button" className="btn-secondary" onClick={onClose} disabled={busy}>
+          Cancel
+        </button>
+        <button type="button" className="btn-primary" onClick={submit} disabled={busy}>
+          {busy ? "Merging…" : "Merge on Wikidata"}
+        </button>
+      </div>
+    </Dialog>
+  );
+}
+
+// Confirm dialog for "different from": one P1889 statement in each direction,
+// then the candidate is dismissed.
+function DifferentDialog({
+  id,
+  candidate,
+  username,
+  onClose,
+  onDone,
+}: {
+  id: string;
+  candidate: CandidateSummary;
+  username: string;
+  onClose: () => void;
+  onDone: (res: CandidateDifferentResponse) => void;
+}) {
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+
+  async function submit() {
+    setBusy(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/candidates/:id/different", { method: "POST", params: { id } });
+      onDone(res as CandidateDifferentResponse);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e : new Error("Edit failed."));
+      setBusy(false);
+    }
+  }
+
+  return (
+    <Dialog title="Mark as different from" onClose={busy ? () => {} : onClose}>
+      <div className="modal-body">
+        <p>
+          Add a <b>different from</b> (P1889) statement on{" "}
+          <b>{side(candidate.fromLabel, candidate.fromQid)}</b> pointing at{" "}
+          <b>{side(candidate.intoLabel, candidate.intoQid)}</b>, and the reverse, under your account
+          {username ? ` (${username})` : ""}. This candidate is then dismissed, and the hunt will
+          not pair these two again.
+        </p>
+        {error && <EditErrorNote error={error} id={id} />}
+      </div>
+      <div className="modal-actions">
+        <button type="button" className="btn-secondary" onClick={onClose} disabled={busy}>
+          Cancel
+        </button>
+        <button type="button" className="btn-primary" onClick={submit} disabled={busy}>
+          {busy ? "Saving…" : "Add statements"}
+        </button>
+      </div>
+    </Dialog>
   );
 }
 
@@ -274,16 +562,18 @@ function ReasonText({
   );
 }
 
-// A minimal modal used for the not-yet-built merge / "different from" actions.
-// Closes on backdrop click, the Close button, or Escape.
-function NotImplementedDialog({
+// A minimal modal shell. Closes on backdrop click or Escape (callers pass a
+// no-op `onClose` while a request is in flight).
+function Dialog({
   title,
-  body,
+  wide,
   onClose,
+  children,
 }: {
   title: string;
-  body: string;
+  wide?: boolean;
   onClose: () => void;
+  children: ReactNode;
 }) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -296,19 +586,14 @@ function NotImplementedDialog({
   return (
     <div className="modal-backdrop" onClick={onClose}>
       <div
-        className="modal"
+        className={`modal${wide ? " is-wide" : ""}`}
         role="dialog"
         aria-modal="true"
         aria-label={title}
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="modal-title">{title}</h2>
-        <p className="modal-body">{body}</p>
-        <div className="modal-actions">
-          <button type="button" className="btn-secondary" onClick={onClose}>
-            Close
-          </button>
-        </div>
+        {children}
       </div>
     </div>
   );

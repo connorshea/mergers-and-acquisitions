@@ -17,7 +17,7 @@
 // schedule and is also fired (unawaited) by POST /api/hunt.
 //
 // All writes are idempotent upserts, so re-running is always safe, and a pair a
-// human already resolved (dismissed/merged) is never rescored or resurrected
+// human already resolved (dismissed/merged, or mid-merge) is never rescored or resurrected
 // (see the conditional upsert in `score`).
 import mysql from "mysql2/promise";
 import { drizzle, type MySql2Database } from "drizzle-orm/mysql2";
@@ -28,6 +28,7 @@ import { connConfig } from "./db-config.ts";
 import type { Item, ScoreOptions } from "../src/lib/compare.ts";
 import { blockingLabelKey, orderByAge, scoreCandidate } from "../src/lib/compare.ts";
 import { chunk } from "../src/lib/chunk.ts";
+import { PROTECTED_STATUSES } from "../src/lib/api-types.ts";
 
 // Accepts both the pool-backed handle and a dedicated-connection one (the hunt
 // opens its own connection), so avoid the `$client` intersection the `drizzle()`
@@ -217,7 +218,7 @@ async function score(db: Db, pairs: [string, string][]): Promise<HuntStats> {
             and(
               eq(mergeCandidates.fromQid, from.id),
               eq(mergeCandidates.intoQid, into.id),
-              notInArray(mergeCandidates.status, ["dismissed", "merged"]),
+              notInArray(mergeCandidates.status, [...PROTECTED_STATUSES]),
             ),
           );
         stats.deleted++;
@@ -228,7 +229,7 @@ async function score(db: Db, pairs: [string, string][]): Promise<HuntStats> {
       // updated column: if the existing row was resolved by a human, keep its
       // stored values untouched; otherwise take the freshly scored ones. `status`
       // is omitted from the SET entirely, so a resolved status never changes.
-      const resolved = sql`${mergeCandidates.status} IN ('dismissed', 'merged')`;
+      const resolved = inArray(mergeCandidates.status, [...PROTECTED_STATUSES]);
       await db
         .insert(mergeCandidates)
         .values({

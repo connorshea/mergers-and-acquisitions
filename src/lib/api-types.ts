@@ -2,10 +2,17 @@
 // server routes (routes/api/candidates/*) and the client pages so the shapes
 // stay in sync from one definition.
 
-import type { Item } from "./compare.ts";
+import type { Item, MergeConflict } from "./compare.ts";
 
-export const CANDIDATE_STATUSES = ["open", "dismissed", "merged"] as const;
+export const CANDIDATE_STATUSES = ["open", "merging", "dismissed", "merged"] as const;
 export type CandidateStatus = (typeof CANDIDATE_STATUSES)[number];
+
+/**
+ * Statuses a human (or an in-flight merge) owns: the hunt never rescores,
+ * resurrects, or drops a candidate in one of these, and the list's default
+ * view excludes them.
+ */
+export const PROTECTED_STATUSES = ["merging", "dismissed", "merged"] as const;
 
 export const CANDIDATE_SORTS = ["confidence", "detectedAt"] as const;
 export type CandidateSort = (typeof CANDIDATE_SORTS)[number];
@@ -23,6 +30,8 @@ export interface CandidateSummary {
   hasBlocker: boolean;
   reasons: string[];
   detectedAt: string;
+  /** How a non-open candidate got that way (e.g. the merge's revision, "merged elsewhere"). */
+  resolution: string | null;
 }
 
 export interface CandidateListResponse {
@@ -58,6 +67,72 @@ export interface CandidateDismissResponse {
 /** Response for reopening (un-dismissing) a candidate back to `open`. */
 export interface CandidateReopenResponse {
   candidate: CandidateSummary;
+}
+
+// --- Wikidata edits (merge / "different from") ---
+
+/**
+ * The conflict kinds wbmergeitems can be told to ignore. Each is only ever sent
+ * because the user ticked its checkbox in the confirm dialog.
+ */
+export const MERGE_CONFLICT_TYPES = [
+  "description",
+  "sitelink",
+  "statement",
+] as const satisfies readonly MergeConflict[];
+export type MergeConflictType = MergeConflict;
+
+export interface CandidateMergeRequest {
+  ignoreConflicts: MergeConflictType[];
+}
+
+/** One saved revision on Wikidata, with a link to view it. */
+export interface WikidataRevision {
+  qid: string;
+  revid: number;
+  url: string;
+}
+
+export interface CandidateMergeResponse {
+  candidate: CandidateSummary;
+  from: WikidataRevision;
+  into: WikidataRevision;
+  /** False when the merge left the source item non-empty (ignored sitelink conflicts), so no redirect was made. */
+  redirected: boolean;
+}
+
+/** The outcome of one direction of a "different from" claim. */
+export interface DifferentFromEdit {
+  /** The item the claim was added to. */
+  qid: string;
+  /** The item it points at. */
+  target: string;
+  /** Set when the claim already existed on our mirror and nothing was sent. */
+  skipped?: boolean;
+  revision?: WikidataRevision;
+  error?: string;
+}
+
+export interface CandidateDifferentResponse {
+  candidate: CandidateSummary;
+  edits: DifferentFromEdit[];
+}
+
+/**
+ * Error body for the edit endpoints. `code` lets the client react (offer a
+ * re-login, reveal the conflict overrides) without parsing the message, which
+ * is Wikidata's own text where it came from there.
+ */
+export interface EditErrorResponse {
+  error: string;
+  code?:
+    | "login-required"
+    | "blocked"
+    | "rate-limited"
+    | "not-open"
+    | "conflict"
+    | "permission-denied"
+    | "wikidata-error";
 }
 
 export interface HuntTriggerResponse {

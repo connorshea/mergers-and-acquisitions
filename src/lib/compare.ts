@@ -396,6 +396,32 @@ export function buildRows(
   return rows;
 }
 
+/** The conflict kinds `wbmergeitems` refuses on unless told to `ignoreconflicts` them. */
+export type MergeConflict = "description" | "sitelink" | "statement";
+
+/**
+ * Which `ignoreconflicts` kinds a merge of this pair would need, judged from
+ * the mirror: differing descriptions in a shared language, two different pages
+ * on one wiki, or a statement on either item whose value is the other item
+ * (Wikibase refuses to merge items that link to each other). The mirror can be
+ * stale, so this is a hint for the confirm dialog, never a substitute for
+ * Wikidata's own answer.
+ */
+export function mergeConflicts(a: Item, b: Item): MergeConflict[] {
+  const out = new Set<MergeConflict>();
+  for (const row of buildRows(a, b)) {
+    if (!row.blocker) continue;
+    if (row.key.startsWith("description:")) out.add("description");
+    else if (row.kind === "sitelink") out.add("sitelink");
+  }
+  const linksTo = (from: Item, toId: string) =>
+    Object.values(from.statements).some((values) =>
+      values.some((v) => v.type === "item" && v.value === toId),
+    );
+  if (linksTo(a, b.id) || linksTo(b, a.id)) out.add("statement");
+  return [...out];
+}
+
 /** Wikidata convention: the newer (higher-numbered) item is merged into the older one. */
 export function orderByAge(x: Item, y: Item): [from: Item, into: Item] {
   const n = (id: string) => parseInt(id.replace(/^Q/, ""), 10);

@@ -9,6 +9,7 @@ import {
   type Item,
   isDeclaredDifferent,
   isSeriesSequelPair,
+  mergeConflicts,
   normalize,
   orderByAge,
   scoreCandidate,
@@ -174,6 +175,54 @@ describe("buildRows (behavior-preserving extraction)", () => {
     expect(genre?.a.find((v) => v.value === "Q23916")?.label).toBe("action game");
     const platform = rows.find((r) => r.key === "P400");
     expect(platform?.a.find((v) => v.value === "Q10676")?.label).toBe("Existing Label");
+  });
+});
+
+describe("mergeConflicts", () => {
+  const base = { descriptions: {}, aliases: {}, sitelinks: {} };
+  const game = (id: string, extra: Partial<Item> = {}): Item => ({
+    id,
+    labels: { en: "Same Game" },
+    ...base,
+    statements: { P31: [{ type: "item", value: "Q7889" }] },
+    ...extra,
+  });
+
+  it("is empty for a pair wbmergeitems would accept as-is", () => {
+    expect(mergeConflicts(game("Q2"), game("Q1"))).toEqual([]);
+    // A description on one side only, or the same one on both, is fine.
+    expect(mergeConflicts(game("Q2", { descriptions: { en: "x" } }), game("Q1"))).toEqual([]);
+    expect(
+      mergeConflicts(
+        game("Q2", { descriptions: { en: "x" } }),
+        game("Q1", { descriptions: { en: "x" } }),
+      ),
+    ).toEqual([]);
+  });
+
+  it("reports differing descriptions and clashing sitelinks from the fixture pair", () => {
+    const ex = byName["Game with conflicts"];
+    const [from, into] = orderByAge(ex.a, ex.b);
+    expect(mergeConflicts(from, into)).toEqual(["description", "sitelink"]);
+  });
+
+  it("reports a statement on either item that points at the other", () => {
+    const a = game("Q2", {
+      statements: {
+        P31: [{ type: "item", value: "Q7889" }],
+        P1889: [{ type: "item", value: "Q1" }],
+      },
+    });
+    expect(mergeConflicts(a, game("Q1"))).toEqual(["statement"]);
+    expect(mergeConflicts(game("Q1"), a)).toEqual(["statement"]);
+    // Linking to some third item is not a conflict.
+    const c = game("Q2", {
+      statements: {
+        P31: [{ type: "item", value: "Q7889" }],
+        P155: [{ type: "item", value: "Q9" }],
+      },
+    });
+    expect(mergeConflicts(c, game("Q1"))).toEqual([]);
   });
 });
 

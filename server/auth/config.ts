@@ -70,8 +70,13 @@ export function authConfig(): AuthConfig {
     issuer: (env.OAUTH_ISSUER ?? DEFAULT_ISSUER).replace(/\/+$/, ""),
     baseUrl: baseUrl(),
     sessionSecret,
-    wikidataApiUrl: env.WIKIDATA_API_URL ?? DEFAULT_WIKIDATA_API_URL,
+    wikidataApiUrl: wikidataApiUrl(),
   };
+}
+
+/** The Wikidata Action API endpoint edits go to (test.wikidata.org while developing). */
+export function wikidataApiUrl(): string {
+  return process.env.WIKIDATA_API_URL ?? DEFAULT_WIKIDATA_API_URL;
 }
 
 /**

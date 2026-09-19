@@ -231,7 +231,7 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
         maxlag: "5",
         token: "csrf",
       });
-      expect(edit.params.get("summary")).toContain("mergers-and-acquisitions");
+      expect(edit.params.get("summary")).toContain("M&A merge assistant");
       expect(edit.params.get("summary")!.length).toBeLessThan(260);
       expect(edit.params.has("bot")).toBe(false);
 

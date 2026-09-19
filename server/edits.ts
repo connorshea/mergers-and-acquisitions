@@ -46,8 +46,7 @@ import {
 } from "../src/lib/api-types.ts";
 
 /** Appended to every edit summary so the edits are traceable to this tool. */
-export const TOOL_CREDIT =
-  "M&A merge assistant (https://github.com/connorshea/mergers-and-acquisitions)";
+export const TOOL_CREDIT = "M&A merge assistant";
 /** A `merging` claim older than this is presumed abandoned and can be re-taken. */
 export const MERGING_STALE_SECONDS = 10 * 60;
 

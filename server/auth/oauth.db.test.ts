@@ -19,7 +19,7 @@ import { oauthTokens, sessions, users } from "../../db/schema.ts";
 import type { AuthMeResponse } from "../../src/lib/api-types.ts";
 import { DB_TEST, loginAs, truncateAll } from "../../test/db-helpers.ts";
 import { decrypt, randomToken, sha256Hex } from "./crypto.ts";
-import { safeReturnTo } from "./oauth.ts";
+import { MAX_RETURN_TO_LENGTH, safeReturnTo } from "./oauth.ts";
 import { pruneExpiredSessions, SESSION_COOKIE, SESSION_TTL_SECONDS } from "./session.ts";
 import { addSeconds, fromSqlDatetime, toSqlDatetime } from "./time.ts";
 import { getAccessToken, storeTokens, TokenError } from "./tokens.ts";
@@ -287,6 +287,20 @@ describe.skipIf(!DB_TEST)("auth", () => {
       expect(safeReturnTo("/foo\x00bar")).toBe("/");
     });
 
+    it("falls back to the home page when returnTo would overflow the login cookie", async () => {
+      const atLimit = `/?q=${"a".repeat(MAX_RETURN_TO_LENGTH - 4)}`;
+      expect(safeReturnTo(atLimit)).toBe(atLimit);
+      expect(safeReturnTo(`${atLimit}a`)).toBe("/");
+
+      stubProvider();
+      const { state, loginCookie } = await startLogin(`/?q=${"a".repeat(5000)}`);
+      // The cookie stayed well under the browser's limit, so the callback still works.
+      expect(loginCookie.length).toBeLessThan(4096);
+      const res = await callback(`code=abc&state=${state}`, loginCookie);
+      expect(res.status).toBe(303);
+      expect(res.headers.get("location")).toBe("/");
+    });
+
     it("sends the user home with a note when they decline on Wikimedia", async () => {
       const { stub } = stubProvider();
       const { loginCookie } = await startLogin();
@@ -420,9 +434,68 @@ describe.skipIf(!DB_TEST)("auth", () => {
         lastSeenAt: toSqlDatetime(new Date()),
         expiresAt: toSqlDatetime(addSeconds(new Date(), -1)),
       });
-      expect(await pruneExpiredSessions()).toBe(1);
+      expect(await pruneExpiredSessions()).toEqual({ sessions: 1, tokens: 0 });
       expect(await db.select().from(sessions)).toHaveLength(1);
       expect((await me(live.Cookie.split("=")[1])).user?.id).toBe(7);
+    });
+
+    it("prunes the tokens of anyone left with no session, keeping everyone else's", async () => {
+      await db.insert(users).values({ id: 7, username: "Alice", groups: [] });
+      await db.insert(sessions).values({
+        id: sha256Hex(randomToken(32)),
+        userId: 7,
+        lastSeenAt: toSqlDatetime(new Date()),
+        expiresAt: toSqlDatetime(addSeconds(new Date(), -1)),
+      });
+      await storeTokens(7, { access_token: "a", refresh_token: "r", expires_in: 3600 });
+      await loginAs(8, "Bob");
+      await storeTokens(8, { access_token: "b", refresh_token: "s", expires_in: 3600 });
+      // A user whose session already idled out (and was never pruned) is caught too.
+      await db.insert(users).values({ id: 9, username: "Carol", groups: [] });
+      await storeTokens(9, { access_token: "c", refresh_token: "t", expires_in: 3600 });
+
+      expect(await pruneExpiredSessions()).toEqual({ sessions: 1, tokens: 2 });
+      const left = await db.select({ userId: oauthTokens.userId }).from(oauthTokens);
+      expect(left).toEqual([{ userId: 8 }]);
+    });
+
+    it("drops the tokens along with an expired session when its cookie shows up", async () => {
+      const token = randomToken(32);
+      await db.insert(users).values({ id: 7, username: "Alice", groups: [] });
+      await db.insert(sessions).values({
+        id: sha256Hex(token),
+        userId: 7,
+        lastSeenAt: toSqlDatetime(new Date()),
+        expiresAt: toSqlDatetime(addSeconds(new Date(), -1)),
+      });
+      await storeTokens(7, { access_token: "a", refresh_token: "r", expires_in: 3600 });
+      expect((await me(token)).user).toBeNull();
+      expect(await db.select().from(sessions)).toHaveLength(0);
+      expect(await db.select().from(oauthTokens)).toHaveLength(0);
+    });
+
+    it("keeps the tokens when the expired session wasn't the user's last", async () => {
+      const stale = randomToken(32);
+      const live = await loginAs(7, "Alice");
+      await db.insert(sessions).values({
+        id: sha256Hex(stale),
+        userId: 7,
+        lastSeenAt: toSqlDatetime(new Date()),
+        expiresAt: toSqlDatetime(addSeconds(new Date(), -1)),
+      });
+      await storeTokens(7, { access_token: "a", refresh_token: "r", expires_in: 3600 });
+      expect((await me(stale)).user).toBeNull();
+      expect((await me(live.Cookie.split("=")[1])).user?.id).toBe(7);
+      expect(await db.select().from(oauthTokens)).toHaveLength(1);
+    });
+
+    it("clears an unknown session cookie without touching the database", async () => {
+      const res = await app.request("/api/auth/me", {
+        headers: { Cookie: `${SESSION_COOKIE}=${randomToken(32)}` },
+      });
+      expect(res.status).toBe(200);
+      expect(((await res.json()) as AuthMeResponse).user).toBeNull();
+      expect(cookieLine(res, SESSION_COOKIE)).toMatch(/Max-Age=0/);
     });
 
     it("logs out: drops the session and, with no other session left, the tokens", async () => {

@@ -55,7 +55,15 @@ export default function CandidatesList() {
   const { user } = useAuth();
   const q = params.get("q") ?? "";
   // Set by the OAuth callback when the login didn't complete (?auth=denied|failed).
-  const authOutcome = params.get("auth");
+  // Read once into state and then stripped from the URL, so the alert doesn't
+  // survive every filter change and a retried login doesn't return to it.
+  const [authOutcome] = useState(() => params.get("auth"));
+  useEffect(() => {
+    if (!params.has("auth")) return;
+    const next = new URLSearchParams(params);
+    next.delete("auth");
+    setParams(next, { replace: true });
+  }, [params, setParams]);
   const status = oneOf<CandidateStatus>(CANDIDATE_STATUSES, params.get("status"), "open");
   const sort = oneOf<CandidateSort>(CANDIDATE_SORTS, params.get("sort"), "confidence");
   const type = params.get("type") ?? "";

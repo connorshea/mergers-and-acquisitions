@@ -4,9 +4,9 @@
 // `c.get("user")`; `requireUser` / `requireAdmin` gate individual routes.
 import type { Context, MiddlewareHandler } from "hono";
 import { deleteCookie, getCookie, setCookie } from "hono/cookie";
-import { eq, lt } from "drizzle-orm";
+import { and, eq, lt, notExists } from "drizzle-orm";
 import { db } from "../db.ts";
-import { sessions, users } from "../../db/schema.ts";
+import { oauthTokens, sessions, users } from "../../db/schema.ts";
 import { cookiesSecure, parseAdminIds } from "./config.ts";
 import { randomToken, sha256Hex } from "./crypto.ts";
 import { addSeconds, fromSqlDatetime, toSqlDatetime } from "./time.ts";
@@ -61,10 +61,43 @@ export async function destroySession(c: Context, id: string): Promise<void> {
   deleteCookie(c, SESSION_COOKIE, cookieOptions());
 }
 
-/** Remove every session past its absolute expiry. Returns the count. */
-export async function pruneExpiredSessions(now = new Date()): Promise<number> {
-  const [result] = await db.delete(sessions).where(lt(sessions.expiresAt, toSqlDatetime(now)));
-  return result.affectedRows;
+/**
+ * Once a user has no session left anywhere, don't keep their OAuth tokens
+ * around: the refresh token is long-lived and only useful to an attacker who
+ * gets hold of the database. Every path that ends a session goes through this
+ * (logout, a stale cookie, the prune job) so tokens can't outlive the login.
+ */
+export async function deleteTokensIfLoggedOut(userId: number): Promise<void> {
+  await db
+    .delete(oauthTokens)
+    .where(
+      and(
+        eq(oauthTokens.userId, userId),
+        notExists(db.select({ id: sessions.id }).from(sessions).where(eq(sessions.userId, userId))),
+      ),
+    );
+}
+
+/**
+ * Remove every session past its absolute expiry, then every OAuth token row
+ * whose user has no session left (which also catches sessions that idled out
+ * without their cookie ever coming back). Returns the counts.
+ */
+export async function pruneExpiredSessions(
+  now = new Date(),
+): Promise<{ sessions: number; tokens: number }> {
+  const [pruned] = await db.delete(sessions).where(lt(sessions.expiresAt, toSqlDatetime(now)));
+  const [orphaned] = await db
+    .delete(oauthTokens)
+    .where(
+      notExists(
+        db
+          .select({ id: sessions.id })
+          .from(sessions)
+          .where(eq(sessions.userId, oauthTokens.userId)),
+      ),
+    );
+  return { sessions: pruned.affectedRows, tokens: orphaned.affectedRows };
 }
 
 /**
@@ -98,8 +131,15 @@ export const sessionMiddleware: MiddlewareHandler<AuthEnv> = async (c, next) => 
       addSeconds(fromSqlDatetime(row.lastSeenAt), SESSION_IDLE_SECONDS) > now;
 
     if (!alive) {
-      // Stale cookie: drop the row (if any) so it can't be revived, clear the cookie.
-      await destroySession(c, id);
+      // Stale cookie: clear it, and if it named a real (expired) session drop
+      // the row so it can't be revived, plus the user's tokens if that was
+      // their last one. An unknown id gets no DB write at all.
+      if (row) {
+        await destroySession(c, id);
+        await deleteTokensIfLoggedOut(row.userId);
+      } else {
+        deleteCookie(c, SESSION_COOKIE, cookieOptions());
+      }
     } else {
       if (addSeconds(fromSqlDatetime(row.lastSeenAt), TOUCH_INTERVAL_SECONDS) < now) {
         await db

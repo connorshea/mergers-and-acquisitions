@@ -3,6 +3,7 @@
 // config. Nothing here is required for the read-only parts of the app: when the
 // OAuth consumer isn't configured, login returns 503 and everything else works.
 import "dotenv/config";
+import { loadEncKeys } from "./crypto.ts";
 
 export interface AuthConfig {
   clientId: string;
@@ -13,8 +14,6 @@ export interface AuthConfig {
   baseUrl: string;
   /** HMAC key for the short-lived login-state cookie. */
   sessionSecret: string;
-  /** Wikimedia central user ids allowed to run maintenance actions. */
-  adminUserIds: Set<number>;
   /** Wikidata Action API endpoint the edits go to (test.wikidata.org in dev). */
   wikidataApiUrl: string;
 }
@@ -23,28 +22,32 @@ export const DEFAULT_ISSUER = "https://meta.wikimedia.org/w/rest.php/oauth2";
 export const DEFAULT_WIKIDATA_API_URL = "https://www.wikidata.org/w/api.php";
 
 const MIN_SECRET_LENGTH = 32;
+const DEFAULT_BASE_URL = "http://localhost:5173";
+
+/** Public base URL of this app (scheme + host[:port][/prefix]), trailing slashes trimmed. */
+export function baseUrl(): string {
+  return (process.env.BASE_URL ?? DEFAULT_BASE_URL).replace(/\/+$/, "");
+}
 
 /**
- * True when the variables needed to start an OAuth login are all present and
- * usable. Mirrors the checks `authConfig()` enforces (including the minimum
- * secret length) so a misconfiguration degrades to a 503 rather than throwing a
- * 500 from inside the login route.
+ * True when the auth config is complete and usable. Defined as "`authConfig()`
+ * doesn't throw" so the two can't drift: any check added there automatically
+ * makes a misconfiguration degrade to a 503 rather than throwing a 500 from
+ * inside the login route.
  */
 export function authConfigured(): boolean {
-  const env = process.env;
-  return Boolean(
-    env.OAUTH_CLIENT_ID &&
-    env.OAUTH_CLIENT_SECRET &&
-    env.SESSION_SECRET &&
-    env.SESSION_SECRET.length >= MIN_SECRET_LENGTH &&
-    env.TOKEN_ENC_KEY,
-  );
+  try {
+    authConfig();
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 /**
  * Read and validate the auth config. Throws with a pointed message on a
- * missing/short secret; callers that can degrade (the login route) check
- * `authConfigured()` first.
+ * missing/short secret or a malformed encryption key; callers that can degrade
+ * (the login route) check `authConfigured()` first.
  */
 export function authConfig(): AuthConfig {
   const env = process.env;
@@ -57,19 +60,26 @@ export function authConfig(): AuthConfig {
   if (sessionSecret.length < MIN_SECRET_LENGTH) {
     throw new Error(`SESSION_SECRET must be at least ${MIN_SECRET_LENGTH} characters`);
   }
-  const baseUrl = (env.BASE_URL ?? "http://localhost:5173").replace(/\/+$/, "");
+  // Parse the token-encryption key(s) up front: a malformed TOKEN_ENC_KEY would
+  // otherwise only surface from `encrypt()` mid-callback, after the user row
+  // has already been written.
+  loadEncKeys(env);
   return {
     clientId: need("OAUTH_CLIENT_ID"),
     clientSecret: need("OAUTH_CLIENT_SECRET"),
     issuer: (env.OAUTH_ISSUER ?? DEFAULT_ISSUER).replace(/\/+$/, ""),
-    baseUrl,
+    baseUrl: baseUrl(),
     sessionSecret,
-    adminUserIds: parseAdminIds(env.ADMIN_USERS),
     wikidataApiUrl: env.WIKIDATA_API_URL ?? DEFAULT_WIKIDATA_API_URL,
   };
 }
 
-/** Comma-separated central user ids → set. Non-numeric entries are ignored. */
+/**
+ * Comma-separated central user ids (ADMIN_USERS) → set. Non-numeric entries are
+ * ignored. Admin membership is deliberately not part of `AuthConfig`: the
+ * session middleware is its only consumer and memoizes this against the raw
+ * env value, so there is exactly one place that decides who is an admin.
+ */
 export function parseAdminIds(raw: string | undefined): Set<number> {
   const ids = new Set<number>();
   for (const part of (raw ?? "").split(",")) {
@@ -81,15 +91,15 @@ export function parseAdminIds(raw: string | undefined): Set<number> {
 
 /** Cookies are `Secure` exactly when the app is served over https. */
 export function cookiesSecure(): boolean {
-  return (process.env.BASE_URL ?? "http://localhost:5173").startsWith("https://");
+  return baseUrl().startsWith("https://");
 }
 
 /** Origin (scheme + host[:port]) of BASE_URL, for the same-origin check. */
 export function baseOrigin(): string {
-  return new URL(process.env.BASE_URL ?? "http://localhost:5173").origin;
+  return new URL(baseUrl()).origin;
 }
 
 /** The exact redirect URI registered with the OAuth consumer. */
 export function callbackUrl(): string {
-  return `${(process.env.BASE_URL ?? "http://localhost:5173").replace(/\/+$/, "")}/api/auth/callback`;
+  return `${baseUrl()}/api/auth/callback`;
 }

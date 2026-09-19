@@ -9,7 +9,7 @@
 import { eq } from "drizzle-orm";
 import { db } from "../db.ts";
 import { oauthTokens } from "../../db/schema.ts";
-import { authConfig } from "./config.ts";
+import { type AuthConfig, authConfig } from "./config.ts";
 import { decrypt, encrypt } from "./crypto.ts";
 import { userAgent } from "./user-agent.ts";
 import { addSeconds, fromSqlDatetime, toSqlDatetime } from "./time.ts";
@@ -18,8 +18,8 @@ import { addSeconds, fromSqlDatetime, toSqlDatetime } from "./time.ts";
 const REFRESH_MARGIN_SECONDS = 5 * 60;
 /** If the provider omits `expires_in`, assume the extension default (1h). */
 const DEFAULT_EXPIRES_IN = 60 * 60;
-/** Give up on the provider's token endpoint after this long. */
-const FETCH_TIMEOUT_MS = 15_000;
+/** Give up on a request to the OAuth provider after this long. */
+export const FETCH_TIMEOUT_MS = 15_000;
 
 /** The AAD that ties a user's ciphertexts to their row. */
 const tokenAad = (userId: number) => `oauth_tokens:${userId}`;
@@ -30,6 +30,48 @@ export interface TokenResponse {
   token_type?: string;
   expires_in?: number;
   refresh_token?: string;
+}
+
+export type TokenResult =
+  | { ok: true; tokens: TokenResponse }
+  | {
+      ok: false;
+      error: string;
+      /** The RFC 6749 §5.2 error code, when the provider returned one (vs. a network failure). */
+      code?: string;
+    };
+
+/**
+ * POST the provider's token endpoint (RFC 6749 §4.1.3 / §6) with `grant`
+ * (the grant_type and its parameters); the client credentials are added here.
+ * This is the one place that knows how to talk to it — the authorization-code
+ * exchange and the refresh both go through it. Never throws: a network
+ * failure or timeout is an `ok: false` result without a `code`.
+ */
+export async function tokenRequest(
+  cfg: AuthConfig,
+  grant: Record<string, string>,
+): Promise<TokenResult> {
+  let res: Response;
+  try {
+    res = await fetch(`${cfg.issuer}/access_token`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded", "User-Agent": userAgent() },
+      body: new URLSearchParams({
+        ...grant,
+        client_id: cfg.clientId,
+        client_secret: cfg.clientSecret,
+      }),
+      signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
+    });
+  } catch (err) {
+    return { ok: false, error: err instanceof Error ? err.message : String(err) };
+  }
+  const json = (await res.json().catch(() => ({}))) as Partial<TokenResponse> & { error?: string };
+  if (!res.ok || !json.access_token) {
+    return { ok: false, error: json.error ?? `HTTP ${res.status}`, code: json.error };
+  }
+  return { ok: true, tokens: json as TokenResponse };
 }
 
 export class TokenError extends Error {
@@ -168,32 +210,11 @@ type RefreshResult =
   | { ok: false; revoked: boolean; error: string };
 
 async function refreshTokens(refreshToken: string): Promise<RefreshResult> {
-  const cfg = authConfig();
-  const body = new URLSearchParams({
+  const result = await tokenRequest(authConfig(), {
     grant_type: "refresh_token",
     refresh_token: refreshToken,
-    client_id: cfg.clientId,
-    client_secret: cfg.clientSecret,
   });
-  let res: Response;
-  try {
-    res = await fetch(`${cfg.issuer}/access_token`, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded", "User-Agent": userAgent() },
-      body,
-      signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
-    });
-  } catch (err) {
-    return { ok: false, revoked: false, error: err instanceof Error ? err.message : String(err) };
-  }
-  const json = (await res.json().catch(() => ({}))) as Partial<TokenResponse> & { error?: string };
-  if (!res.ok || !json.access_token) {
-    // RFC 6749 §5.2: invalid_grant = the refresh token is expired/revoked/unknown.
-    return {
-      ok: false,
-      revoked: json.error === "invalid_grant",
-      error: json.error ?? `HTTP ${res.status}`,
-    };
-  }
-  return { ok: true, tokens: json as TokenResponse };
+  if (result.ok) return result;
+  // RFC 6749 §5.2: invalid_grant = the refresh token is expired/revoked/unknown.
+  return { ok: false, revoked: result.code === "invalid_grant", error: result.error };
 }

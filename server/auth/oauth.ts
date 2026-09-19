@@ -12,21 +12,19 @@
 // which is exactly the callback request.
 import { Hono } from "hono";
 import { deleteCookie, getSignedCookie, setSignedCookie } from "hono/cookie";
-import { eq, sql } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { db } from "../db.ts";
 import { sessions, users } from "../../db/schema.ts";
 import type { AuthMeResponse, LogoutResponse } from "../../src/lib/api-types.ts";
 import { authConfig, authConfigured, callbackUrl, cookiesSecure } from "./config.ts";
 import { pkceChallenge, randomToken, safeEqual } from "./crypto.ts";
-import { type AuthEnv, createSession, destroySession } from "./session.ts";
+import { type AuthEnv, createSession, deleteTokensIfLoggedOut, destroySession } from "./session.ts";
 import { toSqlDatetime } from "./time.ts";
-import { deleteTokens, storeTokens, type TokenResponse } from "./tokens.ts";
+import { FETCH_TIMEOUT_MS, storeTokens, tokenRequest, type TokenResponse } from "./tokens.ts";
 import { userAgent } from "./user-agent.ts";
 
 const LOGIN_COOKIE = "mna_oauth";
 const LOGIN_TTL_SECONDS = 10 * 60;
-/** Give up on the provider (token exchange, profile) after this long. */
-const FETCH_TIMEOUT_MS = 15_000;
 
 interface PendingLogin {
   state: string;
@@ -60,13 +58,23 @@ function loginCookieOptions() {
 }
 
 /**
+ * Longest `returnTo` we'll carry through the login. It rides in the signed
+ * login cookie alongside the state and PKCE verifier, and browsers silently
+ * drop cookies over ~4096 bytes (which would make the callback fail with
+ * "cookie missing"), so anything longer falls back to the home page.
+ */
+export const MAX_RETURN_TO_LENGTH = 1024;
+
+/**
  * Only ever send the user back to a path on this site. Anything with a scheme,
  * a host, or a protocol-relative `//` prefix is an open-redirect vector, and any
  * control character (notably CR/LF) would poison the `Location` header on the
  * eventual redirect — Node rejects such a header with ERR_INVALID_CHAR (a 500).
+ * Over-long values fall back to `/` rather than overflowing the login cookie.
  */
 export function safeReturnTo(raw: string | undefined): string {
   if (!raw || !raw.startsWith("/") || raw.startsWith("//") || raw.startsWith("/\\")) return "/";
+  if (raw.length > MAX_RETURN_TO_LENGTH) return "/";
   // eslint-disable-next-line no-control-regex -- deliberately matching control chars
   if (/[\u0000-\u001f\u007f]/.test(raw)) return "/";
   return raw;
@@ -168,12 +176,7 @@ authRoutes.post("/logout", async (c) => {
   const sessionId = c.get("sessionId");
   if (user && sessionId) {
     await destroySession(c, sessionId);
-    // Once the user has no session left anywhere, don't keep their tokens around.
-    const [{ n }] = await db
-      .select({ n: sql<number>`count(*)` })
-      .from(sessions)
-      .where(eq(sessions.userId, user.id));
-    if (Number(n) === 0) await deleteTokens(user.id);
+    await deleteTokensIfLoggedOut(user.id);
   }
   const payload: LogoutResponse = { ok: true };
   return c.json(payload);
@@ -208,24 +211,14 @@ async function exchangeCode(
   code: string,
   verifier: string,
 ): Promise<TokenResponse> {
-  const res = await fetch(`${cfg.issuer}/access_token`, {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded", "User-Agent": userAgent() },
-    body: new URLSearchParams({
-      grant_type: "authorization_code",
-      code,
-      redirect_uri: callbackUrl(),
-      client_id: cfg.clientId,
-      client_secret: cfg.clientSecret,
-      code_verifier: verifier,
-    }),
-    signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
+  const result = await tokenRequest(cfg, {
+    grant_type: "authorization_code",
+    code,
+    redirect_uri: callbackUrl(),
+    code_verifier: verifier,
   });
-  const json = (await res.json().catch(() => ({}))) as Partial<TokenResponse> & { error?: string };
-  if (!res.ok || !json.access_token) {
-    throw new Error(`token exchange failed: ${json.error ?? `HTTP ${res.status}`}`);
-  }
-  return json as TokenResponse;
+  if (!result.ok) throw new Error(`token exchange failed: ${result.error}`);
+  return result.tokens;
 }
 
 async function fetchProfile(

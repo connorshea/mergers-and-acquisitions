@@ -1,12 +1,15 @@
-// Toolforge scheduled job: delete sessions past their absolute expiry. The
-// session middleware already ignores (and drops) an expired session when its
-// cookie shows up, but abandoned ones would otherwise accumulate forever.
+// Toolforge scheduled job: delete sessions past their absolute expiry, and the
+// OAuth tokens of anyone left with no session. The session middleware already
+// ignores (and drops) an expired session when its cookie shows up, but
+// abandoned ones would otherwise accumulate forever, tokens included.
 import { pruneExpiredSessions } from "../server/auth/session.ts";
 import { pool } from "../server/db.ts";
 
 async function main() {
-  const deleted = await pruneExpiredSessions();
-  console.log(`prune-sessions: deleted ${deleted} expired session(s)`);
+  const { sessions, tokens } = await pruneExpiredSessions();
+  console.log(
+    `prune-sessions: deleted ${sessions} expired session(s) and ${tokens} orphaned token row(s)`,
+  );
 }
 
 main()

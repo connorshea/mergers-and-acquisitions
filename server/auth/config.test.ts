@@ -16,6 +16,7 @@ const VARS = [
   "BASE_URL",
   "SESSION_SECRET",
   "TOKEN_ENC_KEY",
+  "TOKEN_ENC_KEY_PREVIOUS",
   "ADMIN_USERS",
 ] as const;
 const saved = Object.fromEntries(VARS.map((k) => [k, process.env[k]]));
@@ -31,7 +32,7 @@ const COMPLETE = {
   OAUTH_CLIENT_ID: "id",
   OAUTH_CLIENT_SECRET: "secret",
   SESSION_SECRET: "x".repeat(32),
-  TOKEN_ENC_KEY: "k",
+  TOKEN_ENC_KEY: Buffer.alloc(32, 1).toString("base64"),
 };
 
 afterEach(() => setEnv(saved));
@@ -58,6 +59,17 @@ describe("authConfigured / authConfig", () => {
     expect(authConfigured()).toBe(false);
   });
 
+  it("treats a malformed TOKEN_ENC_KEY as unconfigured rather than failing mid-callback", () => {
+    // 64 hex chars (`openssl rand -hex 32`) base64-decodes to 48 bytes, not 32.
+    setEnv({ ...COMPLETE, TOKEN_ENC_KEY: "ab".repeat(32) });
+    expect(authConfigured()).toBe(false);
+    expect(() => authConfig()).toThrow(/TOKEN_ENC_KEY must be 32 bytes/);
+
+    setEnv({ ...COMPLETE, TOKEN_ENC_KEY_PREVIOUS: "not-a-key" });
+    expect(authConfigured()).toBe(false);
+    expect(() => authConfig()).toThrow(/TOKEN_ENC_KEY_PREVIOUS must be 32 bytes/);
+  });
+
   it("refuses a short SESSION_SECRET and names a missing variable", () => {
     setEnv({ ...COMPLETE, SESSION_SECRET: "too-short" });
     expect(() => authConfig()).toThrow(/SESSION_SECRET must be at least 32/);
@@ -78,9 +90,8 @@ describe("authConfigured / authConfig", () => {
     expect(baseOrigin()).toBe("https://mna.example");
     expect(cookiesSecure()).toBe(true);
 
-    setEnv({ ...COMPLETE, ADMIN_USERS: "1,2" });
+    setEnv(COMPLETE);
     expect(authConfig().issuer).toBe("https://meta.wikimedia.org/w/rest.php/oauth2");
-    expect(authConfig().adminUserIds).toEqual(new Set([1, 2]));
     expect(callbackUrl()).toBe("http://localhost:5173/api/auth/callback");
     expect(cookiesSecure()).toBe(false);
   });

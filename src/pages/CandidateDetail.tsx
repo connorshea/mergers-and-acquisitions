@@ -82,8 +82,20 @@ export default function CandidateDetail() {
 
   const candidate = data?.candidate;
 
+  // Per-route <title>: the pair once loaded (e.g. "Foo (Q200) → Bar (Q100)"),
+  // the candidate id while loading, and "Not found" on a 404. "Merge
+  // candidates" is the shared suffix; React 19 hoists this into <head>.
+  const side = (label: string | null, qid: string) => (label ? `${label} (${qid})` : qid);
+  const titleLead = candidate
+    ? `${side(candidate.fromLabel, candidate.fromQid)} → ${side(candidate.intoLabel, candidate.intoQid)}`
+    : error === "Candidate not found."
+      ? "Not found"
+      : `Candidate ${id ?? ""}`.trim();
+  const pageTitle = `${titleLead} · Merge candidates`;
+
   return (
     <>
+      <title>{pageTitle}</title>
       <div className="detail-top">
         <nav className="detail-nav">
           <Link className="detail-back" to="/">

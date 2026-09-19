@@ -28,6 +28,7 @@ class ErrorBoundary extends Component<Props, State> {
     if (!error) return this.props.children;
     return (
       <main className="mc">
+        <title>Error · Merge candidates</title>
         <p className="list-msg is-error" role="alert">
           Something went wrong: {error.message || String(error)}
         </p>

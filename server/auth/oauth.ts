@@ -229,7 +229,10 @@ async function fetchProfile(
     headers: { Authorization: `Bearer ${accessToken}`, "User-Agent": userAgent() },
     signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
   });
-  if (!res.ok) throw new Error(`profile fetch failed: HTTP ${res.status}`);
+  if (!res.ok) {
+    const body = await res.text().catch(() => "");
+    throw new Error(`profile fetch failed: HTTP ${res.status} ${body.slice(0, 500)}`);
+  }
   const profile = (await res.json()) as Partial<WikimediaProfile>;
   if (typeof profile.sub !== "number" || typeof profile.username !== "string") {
     throw new Error("profile response is missing sub/username");

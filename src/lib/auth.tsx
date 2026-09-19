@@ -1,26 +1,11 @@
 // Client-side view of the login session: who is logged in (from
 // /api/auth/me), whether login is even configured on this server, and a logout
 // action. Tokens never reach the client; this only knows the user's name/id.
-import { createContext, type ReactNode, useCallback, useContext, useEffect, useState } from "react";
+import { type ReactNode, useCallback, useEffect, useState } from "react";
 import { fetch } from "./client.ts";
 import { setWikiBaseUrl } from "./wiki.ts";
-import type { AuthMeResponse, AuthUserInfo } from "./api-types.ts";
-
-export interface AuthState {
-  user: AuthUserInfo | null;
-  /** False when the server has no OAuth consumer configured. */
-  configured: boolean;
-  /** True until the first /api/auth/me response lands. */
-  loading: boolean;
-  logout: () => Promise<void>;
-}
-
-const AuthContext = createContext<AuthState>({
-  user: null,
-  configured: false,
-  loading: true,
-  logout: async () => {},
-});
+import { type AuthState, AuthContext } from "./auth-context.ts";
+import type { AuthMeResponse } from "./api-types.ts";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<Pick<AuthState, "user" | "configured" | "loading">>({
@@ -54,8 +39,4 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return <AuthContext value={{ ...state, logout }}>{children}</AuthContext>;
-}
-
-export function useAuth(): AuthState {
-  return useContext(AuthContext);
 }

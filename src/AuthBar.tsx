@@ -3,7 +3,7 @@
 // the redirect to meta.wikimedia.org and back works without any client state.
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { useAuth } from "./lib/auth.tsx";
+import { useAuth } from "./lib/auth-context.ts";
 import { loginUrl } from "./lib/auth-url.ts";
 import { wikiPageUrl } from "./lib/wiki.ts";
 

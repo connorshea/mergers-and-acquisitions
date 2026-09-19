@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { fetch, FetchError } from "../lib/client.ts";
-import { useAuth } from "../lib/auth.tsx";
+import { useAuth } from "../lib/auth-context.ts";
 import AuthBar from "../AuthBar.tsx";
 import {
   CANDIDATE_SORTS,

@@ -387,7 +387,9 @@ export default function CandidatesList() {
         <label className="field">
           <span>Status</span>
           <select value={status} onChange={(e) => update({ status: e.target.value })}>
-            {CANDIDATE_STATUSES.map((s) => (
+            {/* "merging" is a transient in-flight state that's almost never
+                populated, so it's left out of the filter to keep it uncluttered. */}
+            {CANDIDATE_STATUSES.filter((s) => s !== "merging").map((s) => (
               <option key={s} value={s}>
                 {s[0].toUpperCase() + s.slice(1)}
               </option>

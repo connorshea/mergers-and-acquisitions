@@ -12,7 +12,7 @@ describe("parseSparqlResults", () => {
   it("recovers from a raw control character inside a string literal (QLever quirk)", () => {
     // A raw newline (0x0A) inside the value — invalid JSON that JSON.parse rejects.
     const body = '{"results":{"bindings":[{"v":{"type":"literal","value":"a\nb"}}]}}';
-    expect(() => JSON.parse(body)).toThrow();
+    expect(() => JSON.parse(body)).toThrow(SyntaxError);
     const rows = parseSparqlResults(body);
     expect(rows[0].v?.value).toBe("a b"); // control char replaced with a space
   });

@@ -24,6 +24,6 @@ describe("chunk", () => {
   });
 
   it("rejects a non-positive size", () => {
-    expect(() => chunk([1], 0)).toThrow();
+    expect(() => chunk([1], 0)).toThrow("chunk size must be >= 1, got 0");
   });
 });

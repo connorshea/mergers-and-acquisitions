@@ -16,9 +16,13 @@ export default defineConfig({
   lint: {
     // `plugins` overwrites Oxlint's default set, so keep the built-ins that are
     // on by default (unicorn, oxc, typescript) and add react (includes
-    // react-hooks) plus import (for the explicit-extension rule below).
-    plugins: ["react", "unicorn", "oxc", "typescript", "import"],
+    // react-hooks), import (for the explicit-extension rule below), and vitest
+    // (test-file hygiene: no focused/disabled tests, valid expect usage, …).
+    plugins: ["react", "unicorn", "oxc", "typescript", "import", "vitest"],
     options: { typeAware: true, typeCheck: true },
+    // Oxlint enables the correctness category at "warn" by default, and
+    // warnings never fail `vp check`. Deny them so CI actually catches them.
+    categories: { correctness: "error" },
     rules: {
       // Require explicit file extensions on relative imports so the server and
       // jobs can run under `node` type-stripping (no extensionless resolution),
@@ -29,6 +33,14 @@ export default defineConfig({
         { ts: "always", tsx: "always", js: "always", jsx: "always" },
       ],
     },
+  },
+  test: {
+    // DB-backed tests (*.db.test.ts) are opt-in via DB_TEST=1; the global setup
+    // migrates the test database when they are on and is a no-op otherwise.
+    globalSetup: ["./test/global-setup.ts"],
+    // The DB tests share one database and truncate it between tests, so files
+    // must not run concurrently when they are enabled.
+    fileParallelism: process.env.DB_TEST !== "1",
   },
   build: {
     outDir: "dist/client",

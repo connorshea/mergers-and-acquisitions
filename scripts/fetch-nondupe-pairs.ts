@@ -37,6 +37,10 @@ async function fetchEntity(qid: string): Promise<Record<string, unknown>> {
   return entity;
 }
 
+/** The entity's current revision id, when the API supplied one. */
+const revid = (entity: Record<string, unknown>): number | null =>
+  typeof entity.lastrevid === "number" ? entity.lastrevid : null;
+
 const enLabel = (entity: Record<string, unknown>): string | null => {
   const labels = entity.labels as Record<string, { value: string }> | undefined;
   return labels?.en?.value ?? labels?.mul?.value ?? null;
@@ -114,7 +118,7 @@ async function main() {
       [ea, eb] = await Promise.all([fetchEntity(a), fetchEntity(b)]);
     } catch (err) {
       failed++;
-      console.warn(`${key}: skipped — ${err instanceof Error ? err.message : err}`);
+      console.warn(`${key}: skipped — ${err instanceof Error ? err.message : String(err)}`);
       continue;
     }
 
@@ -129,8 +133,8 @@ async function main() {
       b,
       aLabel: enLabel(ea),
       bLabel: enLabel(eb),
-      aRevid: ea.lastrevid ?? null,
-      bRevid: eb.lastrevid ?? null,
+      aRevid: revid(ea),
+      bRevid: revid(eb),
       provenance,
     };
     await writeFile(join(dir, "meta.json"), JSON.stringify(record, null, 2));

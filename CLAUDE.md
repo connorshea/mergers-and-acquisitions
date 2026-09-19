@@ -92,10 +92,17 @@ notes:
 - `vp dev` / `pnpm dev` and `/usr/bin/time -l` do **not** work in-sandbox (Vite's
   dev watcher exhausts FSEvents; `sysctl` is blocked). They work on the user's
   machine; don't hand them to the user as a sandbox verification step.
-- Anything that touches **MariaDB** (`pnpm db:migrate`, `pnpm seed`, `pnpm db:push`,
-  running a job) needs a reachable DB, which the sandbox has none of — those run
-  on the user's machine (local Homebrew MariaDB) or on Toolforge.
+- The user's local Homebrew MariaDB **is reachable from the sandbox** over TCP:
+  pass `allowed_domains: ["127.0.0.1:3306"]` on the Bash call (unix sockets are
+  blocked, and so is starting a sandbox-local `mariadbd`). Never run anything
+  destructive against the `mergers` dev DB (the seed is expensive). For the
+  DB-backed tests use the dedicated `test_mergers` database — the `mergers`
+  user may create `test_*` databases itself — via
+  `DB_TEST=1 DB_NAME=test_mergers node_modules/.bin/vp test --run`.
+  `pnpm seed` / jobs / `db:migrate` against the real dev DB stay on the user's
+  machine or Toolforge.
 - `drizzle-kit generate` is offline (diffs the schema against `db/migrations/meta`),
-  so it _does_ run in-sandbox; `migrate`/`push`/`studio` do not.
+  so it runs in-sandbox with no DB at all; `migrate`/`push`/`studio` need the
+  DB (reachable as above, but only ever point them at `test_mergers`).
 - macOS has no `timeout`; use `perl -e 'alarm N; exec @ARGV' <cmd>` and redirect
   `< /dev/null` for anything that might prompt.

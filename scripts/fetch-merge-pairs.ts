@@ -177,7 +177,7 @@ async function main() {
       pair = await resolvePair(qid);
     } catch (err) {
       failed++;
-      console.warn(`${qid}: skipped — ${err instanceof Error ? err.message : err}`);
+      console.warn(`${qid}: skipped — ${err instanceof Error ? err.message : String(err)}`);
       continue;
     }
     const key = pairKey(pair.source, pair.target);

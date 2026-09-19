@@ -3,6 +3,7 @@
 // scheduled job (jobs/sync-*.ts), exposed for a manual/dev trigger. The heavy
 // lifting is in the shared server/*-sync.ts write paths.
 import { Hono } from "hono";
+import { type AuthEnv, requireAdmin } from "./auth/session.ts";
 import { fetchAllProperties } from "../src/lib/sparql.ts";
 import { syncProperties } from "./properties-sync.ts";
 import { runEntityLabelsSync } from "./entity-labels-sync.ts";
@@ -13,7 +14,13 @@ import type {
   PropertiesSyncResponse,
 } from "../src/lib/api-types.ts";
 
-export const syncRoutes = new Hono();
+export const syncRoutes = new Hono<AuthEnv>();
+
+// The manual sync triggers are admin-only (ADMIN_USERS). Guard the exact paths:
+// a `/*` guard here would also intercept the API's unknown-route fallthrough.
+syncRoutes.use("/properties/sync", requireAdmin);
+syncRoutes.use("/entity-labels/sync", requireAdmin);
+syncRoutes.use("/descriptions/sync", requireAdmin);
 
 syncRoutes.post("/properties/sync", async (c) => {
   try {

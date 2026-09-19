@@ -156,3 +156,65 @@ export const syncState = mysqlTable("sync_state", {
   cursor: int("cursor").notNull().default(0),
   lastRunAt: datetime("last_run_at", { mode: "string" }),
 });
+
+// ---------------------------------------------------------------------------
+// Authentication (Wikimedia OAuth 2.0) — see server/auth/.
+// ---------------------------------------------------------------------------
+
+// One row per Wikimedia account that has logged in. Keyed on the *central*
+// (SUL) user id from the OAuth profile endpoint's `sub`, never the username —
+// accounts get renamed, ids don't. `groups`/`blocked` are a snapshot from the
+// last login, kept for display and gating (Wikidata enforces the real rights on
+// every edit regardless).
+export const users = mysqlTable("users", {
+  id: int("id").primaryKey(), // Wikimedia central user id (OAuth profile `sub`)
+  username: varchar("username", { length: 255 }).notNull(),
+  groups: json<string[]>("groups").notNull(), // e.g. ["*", "user", "autoconfirmed"]
+  blocked: boolean("blocked").notNull().default(false),
+  createdAt: datetime("created_at", { mode: "string" })
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
+  lastLoginAt: datetime("last_login_at", { mode: "string" })
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
+});
+
+// Server-side sessions. The browser cookie holds a random 256-bit token; this
+// table stores only its SHA-256, so a leaked ToolsDB dump does not yield live
+// sessions. `expiresAt` is the absolute lifetime; the idle timeout is enforced
+// against `lastSeenAt` in server/auth/session.ts.
+export const sessions = mysqlTable(
+  "sessions",
+  {
+    id: varchar("id", { length: 64 }).primaryKey(), // hex SHA-256 of the cookie token
+    userId: int("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    createdAt: datetime("created_at", { mode: "string" })
+      .notNull()
+      .default(sql`CURRENT_TIMESTAMP`),
+    lastSeenAt: datetime("last_seen_at", { mode: "string" })
+      .notNull()
+      .default(sql`CURRENT_TIMESTAMP`),
+    expiresAt: datetime("expires_at", { mode: "string" }).notNull(),
+  },
+  (t) => [
+    index("idx_sessions_user_id").on(t.userId),
+    index("idx_sessions_expires_at").on(t.expiresAt),
+  ],
+);
+
+// The user's OAuth access/refresh tokens, one row per user. Both are encrypted
+// at rest (AES-256-GCM, key from the environment — see server/auth/crypto.ts)
+// because ToolsDB is a shared server. They never leave the server process.
+export const oauthTokens = mysqlTable("oauth_tokens", {
+  userId: int("user_id")
+    .primaryKey()
+    .references(() => users.id, { onDelete: "cascade" }),
+  accessToken: text("access_token").notNull(), // encrypted
+  refreshToken: text("refresh_token"), // encrypted; null if the provider issued none
+  accessExpiresAt: datetime("access_expires_at", { mode: "string" }).notNull(),
+  updatedAt: datetime("updated_at", { mode: "string" })
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
+});

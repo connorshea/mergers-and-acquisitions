@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { fetch, FetchError } from "../lib/client.ts";
+import { useAuth } from "../lib/auth.tsx";
+import AuthBar from "../AuthBar.tsx";
 import {
   CANDIDATE_SORTS,
   CANDIDATE_STATUSES,
@@ -50,7 +52,18 @@ function oneOf<T extends string>(options: readonly T[], value: string | null, fa
 
 export default function CandidatesList() {
   const [params, setParams] = useSearchParams();
+  const { user } = useAuth();
   const q = params.get("q") ?? "";
+  // Set by the OAuth callback when the login didn't complete (?auth=denied|failed).
+  // Read once into state and then stripped from the URL, so the alert doesn't
+  // survive every filter change and a retried login doesn't return to it.
+  const [authOutcome] = useState(() => params.get("auth"));
+  useEffect(() => {
+    if (!params.has("auth")) return;
+    const next = new URLSearchParams(params);
+    next.delete("auth");
+    setParams(next, { replace: true });
+  }, [params, setParams]);
   const status = oneOf<CandidateStatus>(CANDIDATE_STATUSES, params.get("status"), "open");
   const sort = oneOf<CandidateSort>(CANDIDATE_SORTS, params.get("sort"), "confidence");
   const type = params.get("type") ?? "";
@@ -275,13 +288,14 @@ export default function CandidatesList() {
         <div className="list-head-row">
           <h1>Merge candidates</h1>
           <div className="head-actions">
-            <button type="button" className="btn-hunt" onClick={runHunt} disabled={hunt.running}>
-              {hunt.running ? "Starting hunt…" : "Run hunt"}
-            </button>
-            {/* Maintenance actions (sync/reset) are dev-only conveniences — the
-                endpoints still exist, but hide the controls outside `vp dev` so
-                they aren't exposed in the deployed app. */}
-            {import.meta.env.DEV && (
+            {/* The hunt and the maintenance actions (sync/reset) are admin-only
+                on the server (ADMIN_USERS); only offer the controls to admins. */}
+            {user?.isAdmin && (
+              <button type="button" className="btn-hunt" onClick={runHunt} disabled={hunt.running}>
+                {hunt.running ? "Starting hunt…" : "Run hunt"}
+              </button>
+            )}
+            {user?.isAdmin && (
               <details className="menu" ref={menuRef}>
                 <summary className="btn-secondary" aria-label="Maintenance actions">
                   Manage ▾
@@ -327,6 +341,7 @@ export default function CandidatesList() {
                 </div>
               </details>
             )}
+            <AuthBar />
           </div>
         </div>
         <p className="list-sub">
@@ -334,6 +349,17 @@ export default function CandidatesList() {
           always review before merging.
         </p>
         {hunt.note && <p className="list-msg hunt-note">{hunt.note}</p>}
+        {authOutcome === "denied" && (
+          <p className="list-msg is-error" role="alert">
+            Login cancelled: the authorization request was declined on Wikimedia.
+          </p>
+        )}
+        {authOutcome === "failed" && (
+          <p className="list-msg is-error" role="alert">
+            Login failed while talking to Wikimedia. Try again; if it keeps failing, the OAuth
+            consumer may be misconfigured.
+          </p>
+        )}
       </header>
 
       <div className="list-controls">
@@ -427,7 +453,12 @@ export default function CandidatesList() {
               </thead>
               <tbody>
                 {visible.map((c) => (
-                  <CandidateRowView key={c.id} candidate={c} onDismiss={dismissCandidate} />
+                  <CandidateRowView
+                    key={c.id}
+                    candidate={c}
+                    onDismiss={dismissCandidate}
+                    canDismiss={user !== null}
+                  />
                 ))}
               </tbody>
             </table>
@@ -461,9 +492,12 @@ export default function CandidatesList() {
 function CandidateRowView({
   candidate: c,
   onDismiss,
+  canDismiss,
 }: {
   candidate: CandidateSummary;
   onDismiss: (id: number) => Promise<void>;
+  /** False when logged out: dismissing needs an account. */
+  canDismiss: boolean;
 }) {
   const pct = Math.round(c.confidence * 100);
   // "same instance of (P31)" is true of nearly every in-scope pair (all video
@@ -525,8 +559,8 @@ function CandidateRowView({
             type="button"
             className="btn-row-dismiss"
             onClick={dismiss}
-            disabled={busy}
-            title="Mark this pair as not a duplicate"
+            disabled={busy || !canDismiss}
+            title={canDismiss ? "Mark this pair as not a duplicate" : "Log in to dismiss"}
           >
             {busy ? "…" : failed ? "Retry" : "Dismiss"}
           </button>

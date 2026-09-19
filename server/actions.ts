@@ -5,6 +5,7 @@ import { count } from "drizzle-orm";
 import { db } from "./db.ts";
 import { mergeCandidates } from "../db/schema.ts";
 import { runHunt } from "./hunt.ts";
+import { type AuthEnv, requireAdmin } from "./auth/session.ts";
 import type { HuntTriggerResponse, ResetResponse } from "../src/lib/api-types.ts";
 
 // The Void version enqueued a Cloudflare-Queues message and returned at once.
@@ -13,7 +14,11 @@ import type { HuntTriggerResponse, ResetResponse } from "../src/lib/api-types.ts
 // a double-click from launching two concurrent full scans.
 let huntRunning = false;
 
-export const actions = new Hono();
+export const actions = new Hono<AuthEnv>();
+
+// Maintenance actions are admin-only (ADMIN_USERS).
+actions.use("/hunt", requireAdmin);
+actions.use("/reset", requireAdmin);
 
 actions.post("/hunt", (c) => {
   const alreadyRunning = huntRunning;

@@ -40,6 +40,10 @@ Layout:
   `actions.ts`, `sync-routes.ts`); the Drizzle handle (`db.ts`) + connection
   config (`db-config.ts`); the shared sync write paths (`*-sync.ts`); and the
   hunt (`hunt.ts`, scan→score→upsert in one pass).
+- `server/auth/` — Wikimedia OAuth 2.0 login (`oauth.ts` routes), cookie
+  sessions + `requireUser`/`requireAdmin` (`session.ts`), encrypted token
+  storage + refresh (`tokens.ts`, `crypto.ts`), and the same-origin CSRF guard.
+  Config is read from env on each call (`config.ts`); see `.env.example`.
 - `jobs/` — Toolforge scheduled jobs (`hunt.ts`, `sync-*.ts`), run via `node`
   (native TS type-stripping).
   Declared in `jobs.yaml` (`toolforge jobs load`).

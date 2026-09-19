@@ -563,6 +563,104 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
     });
   });
 
+  describe("POST /api/candidates/:id/merge when the request times out", () => {
+    /**
+     * Stub where the merge POST never answers (the fetch rejects like an
+     * aborted request) and the follow-up GETs come from `probe`.
+     */
+    function stubTimedOutMerge(probe: (params: URLSearchParams) => object | Error) {
+      const calls: Call[] = [];
+      vi.stubGlobal(
+        "fetch",
+        vi.fn<typeof fetch>(async (input, init) => {
+          const url = String(input instanceof Request ? input.url : input);
+          const method = init?.method ?? "GET";
+          const params =
+            method === "POST"
+              ? new URLSearchParams(String(init?.body as URLSearchParams))
+              : new URL(url).searchParams;
+          calls.push({ method, params });
+          if (method === "POST") throw new DOMException("The operation timed out", "TimeoutError");
+          if (params.get("meta") === "tokens") {
+            return Response.json({ query: { tokens: { csrftoken: "csrf" } } });
+          }
+          const r = probe(params);
+          if (r instanceof Error) throw r;
+          return Response.json(r);
+        }),
+      );
+      return calls;
+    }
+    const pageInfo = (fromRedirect: boolean) => ({
+      query: {
+        pages: [
+          { title: "Q20", lastrevid: 601, ...(fromRedirect ? { redirect: true } : {}) },
+          { title: "Q10", lastrevid: 602 },
+        ],
+      },
+    });
+
+    it("settles the merge when Wikidata turns out to have applied it", async () => {
+      stubTimedOutMerge((p) =>
+        p.get("redirects")
+          ? { query: { redirects: [{ from: "Q20", to: "Q10" }] } }
+          : pageInfo(true),
+      );
+      const { status, body } = await post<CandidateMergeResponse>(
+        `/api/candidates/${alpha}/merge`,
+        editor,
+        {},
+      );
+      expect(status).toBe(200);
+      expect(body.candidate).toMatchObject({ id: alpha, status: "merged" });
+      expect(body.from).toMatchObject({ qid: "Q20", revid: 601 });
+      expect(body.into).toMatchObject({ qid: "Q10", revid: 602 });
+      expect(body.redirected).toBe(true);
+      expect(await itemQids()).toEqual(["Q10", "Q30", "Q40"]);
+      const [audit] = await db.select().from(wikidataEdits);
+      expect(audit).toMatchObject({
+        ok: true,
+        fromRevid: 601,
+        intoRevid: 602,
+        params: { ignoreConflicts: ["description"], confirmedAfterTimeout: true },
+      });
+    });
+
+    it("reverts to open when the merge turns out not to have happened", async () => {
+      stubTimedOutMerge(() => pageInfo(false));
+      const { status, body } = await post<EditErrorResponse>(
+        `/api/candidates/${alpha}/merge`,
+        editor,
+        {},
+      );
+      expect(status).toBe(502);
+      expect(body.code).toBe("wikidata-error");
+      expect((await candidateRow(alpha)).status).toBe("open");
+      expect(await itemQids()).toEqual(["Q10", "Q20", "Q30", "Q40"]);
+      const [audit] = await db.select().from(wikidataEdits);
+      expect(audit).toMatchObject({ ok: false, errorCode: "network" });
+    });
+
+    it("keeps the claim when the outcome can't be checked either", async () => {
+      stubTimedOutMerge(() => new TypeError("fetch failed"));
+      const { status, body } = await post<EditErrorResponse>(
+        `/api/candidates/${alpha}/merge`,
+        editor,
+        {},
+      );
+      expect(status).toBe(502);
+      expect(body.error).toMatch(/may still have gone through/);
+      const row = await candidateRow(alpha);
+      expect(row.status).toBe("merging");
+      expect(row.resolvedAt).not.toBeNull();
+      // …so a retry is refused until the claim goes stale.
+      expect((await post(`/api/candidates/${alpha}/merge`, editor, {})).status).toBe(409);
+      const audits = await db.select().from(wikidataEdits);
+      expect(audits).toHaveLength(1);
+      expect(audits[0]).toMatchObject({ ok: false, errorCode: "network" });
+    });
+  });
+
   describe("POST /api/candidates/:id/merge after a mirror cleanup failure", () => {
     it("keeps the audit row and the merged status when the cleanup transaction fails", async () => {
       stubWikidata(() => mergeOk(101, 102));

@@ -32,6 +32,8 @@ import {
   addItemClaim,
   type EditErrorKind,
   mergeItems,
+  type MergeResult,
+  probeMerge,
   revisionUrl,
   WikidataEditError,
 } from "./wikidata-client.ts";
@@ -267,7 +269,7 @@ edits.post("/:id/merge", async (c) => {
     params: { ignoreConflicts: effectiveIgnore },
   };
 
-  let result;
+  let result: MergeResult;
   try {
     result = await mergeItems(user, {
       fromQid,
@@ -276,9 +278,34 @@ edits.post("/:id/merge", async (c) => {
       summary: `Merge duplicate items ${fromQid} → ${intoQid} — ${TOOL_CREDIT}`,
     });
   } catch (err) {
-    // Give the claim back before anything else.
-    await releaseClaim(id);
-    return failedEdit(c, await auditFailure(audit, err));
+    // A network failure — the request timeout included — says nothing about
+    // whether Wikidata applied the merge, so look before assuming it didn't.
+    const outcome =
+      err instanceof WikidataEditError && err.kind === "network"
+        ? await mergeOutcome(user, fromQid, intoQid)
+        : "not-merged";
+    if (outcome === "unknown") {
+      // Still unreachable: keep the claim rather than hand the candidate back
+      // as `open` for a retry that would merge into a redirect. It goes stale
+      // after MERGING_STALE_SECONDS, and reopen/merge are allowed again then.
+      const known = await auditFailure(audit, err);
+      return failedEdit(
+        c,
+        new WikidataEditError(
+          known.kind,
+          known.code,
+          `${known.message} The merge may still have gone through on Wikidata; ` +
+            `this candidate stays locked for ${Math.round(MERGING_STALE_SECONDS / 60)} minutes.`,
+        ),
+      );
+    }
+    if (outcome === "not-merged") {
+      // Give the claim back before anything else.
+      await releaseClaim(id);
+      return failedEdit(c, await auditFailure(audit, err));
+    }
+    result = outcome;
+    audit.params = { ...audit.params, confirmedAfterTimeout: true };
   }
 
   // The merge is done on Wikidata, so record that first — the audit row and
@@ -346,6 +373,29 @@ edits.post("/:id/merge", async (c) => {
   };
   return c.json(payload);
 });
+
+/**
+ * After a merge request whose answer never came: did it happen? A merged
+ * source is a redirect to the target; anything else means the merge didn't
+ * happen (a redirect elsewhere is someone else's merge, and the retry will get
+ * Wikidata's own "is a redirect" refusal). `unknown` when the check itself
+ * can't reach Wikidata either.
+ */
+async function mergeOutcome(
+  user: AuthUser,
+  fromQid: string,
+  intoQid: string,
+): Promise<MergeResult | "not-merged" | "unknown"> {
+  let probe;
+  try {
+    probe = await probeMerge(user, fromQid, intoQid);
+  } catch (err) {
+    console.error(`merge: could not confirm the outcome of ${fromQid} → ${intoQid}`, err);
+    return "unknown";
+  }
+  if (probe.redirectedTo !== intoQid) return "not-merged";
+  return { fromRevid: probe.fromRevid, intoRevid: probe.intoRevid, redirected: true };
+}
 
 /** True when `item` already carries `different from` (P1889) → `target`. */
 function hasDifferentFrom(item: Item, target: string): boolean {

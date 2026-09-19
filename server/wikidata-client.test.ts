@@ -6,6 +6,7 @@ import {
   addItemClaim,
   editRequest,
   mergeItems,
+  probeMerge,
   revisionUrl,
   WikidataEditError,
   type WikidataClientDeps,
@@ -317,6 +318,51 @@ describe("addItemClaim", () => {
       token: "csrf-1",
       maxlag: "5",
     });
+  });
+});
+
+describe("probeMerge", () => {
+  const info = (fromRedirect: boolean) => ({
+    query: {
+      pages: [
+        { title: "Q20", lastrevid: 501, ...(fromRedirect ? { redirect: true } : {}) },
+        { title: "Q10", lastrevid: 502 },
+      ],
+    },
+  });
+
+  it("reports a source that now redirects to the target, with both revisions", async () => {
+    const { deps, calls } = makeDeps([], {
+      csrf: [info(true), { query: { redirects: [{ from: "Q20", to: "Q10" }] } }],
+    });
+    expect(await probeMerge(USER, "Q20", "Q10", deps)).toEqual({
+      redirectedTo: "Q10",
+      fromRevid: 501,
+      intoRevid: 502,
+    });
+    expect(calls.map((c) => c.method)).toEqual(["GET", "GET"]);
+    expect(calls[0].params.get("titles")).toBe("Q20|Q10");
+    expect(calls[1].params.get("redirects")).toBe("1");
+  });
+
+  it("reports no redirect without a second query, and a redirect elsewhere as-is", async () => {
+    const plain = makeDeps([], { csrf: [info(false)] });
+    expect((await probeMerge(USER, "Q20", "Q10", plain.deps)).redirectedTo).toBeNull();
+    expect(plain.calls).toHaveLength(1);
+
+    const elsewhere = makeDeps([], {
+      csrf: [info(true), { query: { redirects: [{ from: "Q20", to: "Q99" }] } }],
+    });
+    expect((await probeMerge(USER, "Q20", "Q10", elsewhere.deps)).redirectedTo).toBe("Q99");
+  });
+
+  it("fails as a network problem when Wikidata is still unreachable", async () => {
+    const down = makeDeps([]);
+    down.deps.fetch = vi.fn<WikidataClientDeps["fetch"]>(async () => {
+      throw new TypeError("fetch failed");
+    });
+    const err = await failure(probeMerge(USER, "Q20", "Q10", down.deps));
+    expect(err.kind).toBe("network");
   });
 });
 

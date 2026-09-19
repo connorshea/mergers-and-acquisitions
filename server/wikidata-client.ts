@@ -341,6 +341,67 @@ export async function addItemClaim(
   return { revid };
 }
 
+export interface MergeProbe {
+  /** Where `fromQid` redirects now, or null when it is still a real item. */
+  redirectedTo: string | null;
+  fromRevid: number;
+  intoRevid: number;
+}
+
+/**
+ * Look at whether `fromQid` has become a redirect (to `intoQid` or elsewhere)
+ * and report both items' current revisions. Used after a merge request whose
+ * answer never arrived — a timed-out POST may still have been applied — so the
+ * outcome is checked rather than assumed. Throws `WikidataEditError` when
+ * Wikidata is still unreachable or answers with an error.
+ */
+export async function probeMerge(
+  user: EditUser,
+  fromQid: string,
+  intoQid: string,
+  deps: WikidataClientDeps = defaultDeps,
+): Promise<MergeProbe> {
+  const accessToken = await loadAccessToken(user, deps);
+  const info = await call(deps, accessToken, "GET", {
+    action: "query",
+    prop: "info",
+    titles: `${fromQid}|${intoQid}`,
+  });
+  const infoErr = apiError(info);
+  if (infoErr) await fail(user, infoErr, deps);
+  const pages = (info.body.query as { pages?: unknown[] } | undefined)?.pages ?? [];
+  const byTitle = new Map(
+    (pages as { title?: string; lastrevid?: number; redirect?: boolean }[]).map((p) => [
+      p.title,
+      p,
+    ]),
+  );
+  const from = byTitle.get(fromQid);
+  const into = byTitle.get(intoQid);
+  if (typeof from?.lastrevid !== "number" || typeof into?.lastrevid !== "number") {
+    throw new WikidataEditError(
+      "wikidata-error",
+      "unexpected-response",
+      `Wikidata returned no page info for ${fromQid} / ${intoQid}`,
+    );
+  }
+  let redirectedTo: string | null = null;
+  if (from.redirect) {
+    // `prop=info` only flags the redirect; a second query follows it.
+    const target = await call(deps, accessToken, "GET", {
+      action: "query",
+      titles: fromQid,
+      redirects: "1",
+    });
+    const targetErr = apiError(target);
+    if (targetErr) await fail(user, targetErr, deps);
+    const redirects = (target.body.query as { redirects?: { from?: string; to?: string }[] })
+      ?.redirects;
+    redirectedTo = redirects?.find((r) => r.from === fromQid)?.to ?? null;
+  }
+  return { redirectedTo, fromRevid: from.lastrevid, intoRevid: into.lastrevid };
+}
+
 /** A link to view revision `revid` (as a diff against its parent) on the wiki the API belongs to. */
 export function revisionUrl(revid: number, apiUrl = wikidataApiUrl()): string {
   let origin: string;

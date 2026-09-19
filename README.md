@@ -124,10 +124,14 @@ front for accounts its profile snapshot says are blocked.
   any other open candidate that referenced it is settled as "merged elsewhere".
   A merge takes a short `merging` claim on the row first, so a double click or a
   second tab can't submit it twice; a claim abandoned by a crash goes stale
-  after ten minutes.
+  after ten minutes. If the request times out, the app checks whether the
+  source became a redirect before deciding: a merge that did go through is
+  settled as usual, and one that can't be checked keeps its claim until it
+  goes stale rather than inviting a retry against a redirect.
 - **Mark as different** (`POST /api/candidates/:id/different`) adds a
   `different from` (P1889) statement in each direction via `wbcreateclaim`,
-  mirrors it locally, and dismisses the candidate.
+  mirrors it locally, and dismisses the candidate. It takes the same claim as
+  a merge, so two submits can't each add their own copy of the statements.
 
 Requests carry `maxlag=5` and an `assert=user&assertuser=` check; the client
 retries once on `badtoken` and once on `maxlag`, drops the stored tokens and

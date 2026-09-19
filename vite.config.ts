@@ -32,6 +32,11 @@ export default defineConfig({
         "ignorePackages",
         { ts: "always", tsx: "always", js: "always", jsx: "always" },
       ],
+      // Fast Refresh (react-refresh) only updates a module in place when it
+      // exports components and nothing else; a mixed export forces a full
+      // reload and loses component state. Enforce it so we never silently
+      // break HMR in `vp dev`.
+      "react/only-export-components": "error",
     },
   },
   test: {

@@ -547,6 +547,53 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       expect(calls.filter((x) => x.method === "POST")).toHaveLength(2);
     });
 
+    it("still reports a saved statement and dismisses when recording it fails", async () => {
+      const calls = stubWikidata((_p, n) => claimOk(600 + n));
+      // Leg 1: the audit insert deadlocks. Leg 2: the mirror update does. The
+      // UPDATEs in order are the claim, leg 1's mirror, leg 2's mirror, dismiss.
+      const insertSpy = vi.spyOn(db, "insert").mockImplementationOnce(() => {
+        throw new Error("Deadlock found when trying to get lock");
+      });
+      const realUpdate = db.update.bind(db) as typeof db.update;
+      const updateSpy = vi
+        .spyOn(db, "update")
+        .mockImplementationOnce(realUpdate)
+        .mockImplementationOnce(realUpdate)
+        .mockImplementationOnce(() => {
+          throw new Error("Deadlock found when trying to get lock");
+        });
+      const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+      let response;
+      let logged = 0;
+      try {
+        response = await post<CandidateDifferentResponse>(
+          `/api/candidates/${alpha}/different`,
+          editor,
+        );
+        logged = errorSpy.mock.calls.length;
+      } finally {
+        insertSpy.mockRestore();
+        updateSpy.mockRestore();
+        errorSpy.mockRestore();
+      }
+      expect(response.status).toBe(200);
+      expect(response.body.candidate).toMatchObject({ id: alpha, status: "dismissed" });
+      expect(response.body.edits.map((e) => e.revision?.revid)).toEqual([601, 602]);
+      expect(logged).toBe(2);
+      // Each statement was created exactly once on Wikidata…
+      expect(calls.filter((x) => x.method === "POST")).toHaveLength(2);
+      // …the audit row that could be written was, marked ok…
+      const audits = await db.select().from(wikidataEdits);
+      expect(audits.map((a) => [a.fromQid, a.ok, a.fromRevid])).toEqual([["Q10", true, 602]]);
+      // …and the mirror carries the statement whose update went through.
+      const rows = await db.select({ qid: items.qid, data: items.data }).from(items);
+      const byQid = new Map(rows.map((r) => [r.qid, r.data]));
+      expect(byQid.get("Q20")!.statements.P1889).toEqual([
+        { type: "item", value: "Q10", label: "Alpha Quest" },
+      ]);
+      expect(byQid.get("Q10")!.statements.P1889).toBeUndefined();
+    });
+
     it("refuses a non-open candidate and an unknown one", async () => {
       stubWikidata(() => claimOk(1));
       await db

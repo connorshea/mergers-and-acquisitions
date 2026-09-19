@@ -453,37 +453,18 @@ edits.post("/:id/different", async (c) => {
       fromQid: item.qid,
       intoQid: target.qid,
     };
+    // Only the Wikidata call decides whether this leg failed. Once the
+    // statement is saved, a DB error while recording it must not be reported
+    // as a failed edit: the claim would be released and a retry would add a
+    // second copy of the statement (wbcreateclaim doesn't dedupe).
+    let revid: number;
     try {
-      const { revid } = await addItemClaim(user, {
+      ({ revid } = await addItemClaim(user, {
         qid: item.qid,
         property: DIFFERENT_FROM,
         target: target.qid,
         summary: `Not a duplicate of ${target.qid} — ${TOOL_CREDIT}`,
-      });
-      await db.insert(wikidataEdits).values({ ...audit, ok: true, fromRevid: revid });
-      // Reflect the new statement in the mirror so the comparison view shows it
-      // and a later re-hunt sees the pair as declared different.
-      const data: Item = {
-        ...item.data,
-        statements: {
-          ...item.data.statements,
-          [DIFFERENT_FROM]: [
-            ...(item.data.statements[DIFFERENT_FROM] ?? []),
-            {
-              type: "item",
-              value: target.qid,
-              ...(target.primaryLabel ? { label: target.primaryLabel } : {}),
-            },
-          ],
-        },
-      };
-      await db.update(items).set({ data }).where(eq(items.qid, item.qid));
-      results.push({
-        qid: item.qid,
-        target: target.qid,
-        revision: { qid: item.qid, revid, url: revisionUrl(revid) },
-      });
-      succeeded++;
+      }));
     } catch (err) {
       if (succeeded === 0 && results.every((r) => r.skipped)) {
         // Nothing has been written on Wikidata by this request: plain failure.
@@ -494,6 +475,47 @@ edits.post("/:id/different", async (c) => {
       }
       const known = await auditFailure(audit, err);
       results.push({ qid: item.qid, target: target.qid, error: known.message });
+      continue;
+    }
+    results.push({
+      qid: item.qid,
+      target: target.qid,
+      revision: { qid: item.qid, revid, url: revisionUrl(revid) },
+    });
+    succeeded++;
+
+    try {
+      await db.insert(wikidataEdits).values({ ...audit, ok: true, fromRevid: revid });
+    } catch (err) {
+      console.error(
+        `different-from: ${item.qid} → ${target.qid} saved as rev ${revid} but the audit row failed`,
+        err,
+      );
+    }
+    // Reflect the new statement in the mirror so the comparison view shows it
+    // and a later re-hunt sees the pair as declared different. The next sync
+    // brings it in anyway, so a failure here is logged, not reported.
+    const data: Item = {
+      ...item.data,
+      statements: {
+        ...item.data.statements,
+        [DIFFERENT_FROM]: [
+          ...(item.data.statements[DIFFERENT_FROM] ?? []),
+          {
+            type: "item",
+            value: target.qid,
+            ...(target.primaryLabel ? { label: target.primaryLabel } : {}),
+          },
+        ],
+      },
+    };
+    try {
+      await db.update(items).set({ data }).where(eq(items.qid, item.qid));
+    } catch (err) {
+      console.error(
+        `different-from: ${item.qid} → ${target.qid} saved as rev ${revid} but the mirror update failed`,
+        err,
+      );
     }
   }
 

@@ -24,7 +24,10 @@
 # become {"type":"literal","value":"440","datatype":"...","lang":"en"} (datatype
 # and lang present only when Wikidata returns them). "Unknown value" blank nodes
 # are skipped. Values are de-duplicated and left otherwise exactly as the
-# endpoint returns them — this is a faithful dump, no normalization.
+# endpoint returns them — this is a faithful dump, no normalization. The one
+# qualifier carried is "identifier shared with" (P4070): a value whose statement
+# has it gains "shared_with":["Q123", ...] listing the other items the same id
+# is declared to cover, so downstream scoring can discount such a match.
 #
 # Output:
 #   A single JSON blob (default tmp/wikidata_games.json) shaped as:
@@ -90,9 +93,15 @@ module DumpWikidataGames
   PREFIXES = <<~SPARQL
     PREFIX wd: <http://www.wikidata.org/entity/>
     PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+    PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
     PREFIX wikibase: <http://wikiba.se/ontology#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
   SPARQL
+
+  # "identifier shared with" — the one statement qualifier the dump carries (see
+  # the header). It marks an external id whose value legitimately covers other
+  # items too, which matters for duplicate detection.
+  SHARED_WITH_QUALIFIER = 'P4070'
 
   # Pace SPARQL requests to stay under QLever's rate limit, and back off on 429.
   # Mirrors lib/wikidata_sparql.rb's approach.
@@ -284,8 +293,9 @@ module DumpWikidataGames
   # Every truthy (`wdt:`) statement for a chunk of games, in a single query.
   # Restricting to predicates that are the `directClaim` of some property keeps
   # us to real Wikidata properties (Pxxx) and drops rdfs:label, schema:*,
-  # owl:sameAs, and other non-property triples. Returns
-  # { wikidata_id => { "P123" => [value_object, ...] } }.
+  # owl:sameAs, and other non-property triples. A second, much smaller query
+  # attaches "identifier shared with" (P4070) qualifiers to the matching values.
+  # Returns { wikidata_id => { "P123" => [value_object, ...] } }.
   def fetch_all_properties(wikidata_ids)
     query = <<~SPARQL
       SELECT ?item ?prop ?value WHERE {
@@ -310,7 +320,60 @@ module DumpWikidataGames
     end
 
     result.each_value { |props| props.each_value(&:uniq!) }
+    attach_shared_with(result, fetch_shared_with(wikidata_ids))
     result
+  end
+
+  # The "identifier shared with" (P4070) qualifiers on a chunk's statements:
+  # { wikidata_id => { "P436" => { "<value string>" => ["Q123", ...] } } }. Walks
+  # the full statement nodes (`p:` → statement → `ps:` value + `pq:P4070`),
+  # since qualifiers aren't reachable from the truthy `wdt:` triples. Only
+  # statements that actually carry the qualifier are returned, so this is tiny
+  # compared to fetch_all_properties. Statement rank isn't filtered here; a
+  # qualifier only ever lands on a value that fetch_all_properties already
+  # emitted (i.e. a truthy one), so a deprecated statement's qualifier attaches
+  # only if the same value is also asserted truthily.
+  def fetch_shared_with(wikidata_ids)
+    query = <<~SPARQL
+      SELECT ?item ?prop ?value ?sharedWith WHERE {
+        #{values_clause(wikidata_ids)}
+        ?item ?claim ?statement.
+        ?statement pq:#{SHARED_WITH_QUALIFIER} ?sharedWith.
+        ?prop wikibase:claim ?claim;
+              wikibase:statementProperty ?statementProperty.
+        ?statement ?statementProperty ?value.
+      }
+    SPARQL
+
+    result = {}
+    sparql_query(query).dig('results', 'bindings').each do |binding|
+      wikidata_id = qid_to_int(binding.dig('item', 'value'))
+      property = property_id(binding.dig('prop', 'value'))
+      shared_with = binding.dig('sharedWith', 'value').to_s[%r{/entity/(Q\d+)\z}, 1]
+      next unless wikidata_id && property && shared_with
+
+      parsed = parse_value(binding['value'])
+      next if parsed.nil?
+
+      by_value = (result[wikidata_id] ||= {})[property] ||= {}
+      (by_value[parsed['value']] ||= []) << shared_with
+    end
+    result
+  end
+
+  # Merge fetch_shared_with's qualifiers onto the matching value objects (same
+  # item, property and value string) as a sorted, de-duplicated "shared_with".
+  def attach_shared_with(props_by_item, shared_by_item)
+    shared_by_item.each do |wikidata_id, by_property|
+      by_property.each do |property, by_value|
+        (props_by_item[wikidata_id][property] || []).each do |value_object|
+          shared = by_value[value_object['value']]
+          next if shared.nil? || shared.empty?
+
+          value_object['shared_with'] = shared.uniq.sort_by { |qid| qid.delete_prefix('Q').to_i }
+        end
+      end
+    end
   end
 
   # Turn a SPARQL result value node into a compact, faithful value object.

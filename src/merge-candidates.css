@@ -14,6 +14,8 @@
   --focus: #3b6fd6;
   --mirror: #5a53a6;
   --mirror-bg: #edecf8;
+  --shared: #1f7a8c;
+  --shared-bg: #e2f2f5;
   --font: "IBM Plex Sans", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 @media (prefers-color-scheme: dark) {
@@ -33,6 +35,8 @@
     --focus: #7ea2ee;
     --mirror: #b3aef0;
     --mirror-bg: #262445;
+    --shared: #7fcbd9;
+    --shared-bg: #1c3a42;
   }
 }
 :root[data-theme="dark"] {
@@ -51,6 +55,8 @@
   --focus: #7ea2ee;
   --mirror: #b3aef0;
   --mirror-bg: #262445;
+  --shared: #7fcbd9;
+  --shared-bg: #1c3a42;
 }
 
 * {
@@ -348,9 +354,10 @@ body {
 .ledger tr:last-child td {
   border-bottom: none;
 }
-/* Wikidata-sourced (mirrored) identifier rows are weak evidence either way, so
+/* Discounted identifier rows — Wikidata-sourced (mirrored) ids and ids Wikidata
+   declares shared between the two items (P4070) — are evidence neither way, so
    de-emphasize them with a subtle darkening overlay (theme-agnostic). */
-.ledger tr.is-mirror td {
+.ledger tr.is-discounted td {
   background: rgba(0, 0, 0, 0.03);
 }
 .col-a,
@@ -370,7 +377,8 @@ body {
 /* Marker for identifiers Wikidata itself is the source of (mirrored ids like
    vglist or GamerProfiles): a shared value is circular and a differing one only
    means one side is out of sync, so it's evidence neither way. */
-.prop-mirror {
+.prop-mirror,
+.prop-shared {
   display: inline-block;
   margin-left: 0.4rem;
   padding: 0.02rem 0.4rem;
@@ -380,9 +388,17 @@ body {
   line-height: 1.5;
   white-space: nowrap;
   vertical-align: middle;
+  cursor: help;
+}
+.prop-mirror {
   color: var(--mirror);
   background: var(--mirror-bg);
-  cursor: help;
+}
+/* Marker for an identifier one item declares "shared with" (P4070) the other:
+   Wikidata itself says one id covers both, so a match on it means nothing. */
+.prop-shared {
+  color: var(--shared);
+  background: var(--shared-bg);
 }
 .prop-key {
   display: flex;
@@ -390,10 +406,14 @@ body {
   font-size: 0.78rem;
   color: var(--muted);
 }
-/* Push the Wikidata-sourced marker to the bottom-right of the cell, past the
-   property id. */
-.prop-key .prop-mirror {
+/* Push the markers to the bottom-right of the cell, past the property id. When
+   both apply, only the first takes the slack; the second sits beside it. */
+.prop-key .prop-mirror,
+.prop-key .prop-shared {
   margin-left: auto;
+}
+.prop-key .prop-mirror + .prop-shared {
+  margin-left: 0.4rem;
 }
 .prop-key a {
   color: inherit;

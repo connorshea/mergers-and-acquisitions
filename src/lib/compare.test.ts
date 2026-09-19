@@ -12,6 +12,7 @@ import {
   normalize,
   orderByAge,
   scoreCandidate,
+  sharedIdentifierProps,
   stringSimilarity,
 } from "./compare";
 import { EXAMPLES } from "./fixtures";
@@ -130,6 +131,25 @@ describe("buildRows (behavior-preserving extraction)", () => {
     expect(
       [...(label?.a ?? []), ...(label?.b ?? [])].some((v) => v.note?.startsWith("matches ")),
     ).toBe(true);
+  });
+
+  it("annotates a statement row whose id is declared shared with the other item (P4070)", () => {
+    const mk = (id: string, sharedWith?: string[]): Item => ({
+      id,
+      labels: { en: "Same Disc" },
+      descriptions: {},
+      aliases: {},
+      sitelinks: {},
+      statements: {
+        P436: [{ type: "external-id", value: "mbrg-1", ...(sharedWith && { sharedWith }) }],
+        P1733: [{ type: "external-id", value: "440" }],
+      },
+    });
+    const rows = buildRows(mk("Q10", ["Q11"]), mk("Q11"));
+    const p436 = rows.find((r) => r.key === "P436")!;
+    expect(p436.status).toBe("identical"); // the values still agree…
+    expect(p436.note).toContain("P4070"); // …but the row says why that means nothing
+    expect(rows.find((r) => r.key === "P1733")!.note).toBeUndefined();
   });
 
   it("backfills item-value display labels from valueLabels, leaving existing ones", () => {
@@ -737,6 +757,80 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(result.reasons[0]).toContain("different from");
     // Symmetric: the declaration counts from whichever side holds it.
     expect(scoreCandidate(b, a).confidence).toBe(0);
+  });
+
+  it('ignores an identifier one item declares "shared with" the other (P4070) as match evidence', () => {
+    // Two distinct items (e.g. a game and its soundtrack release, or two
+    // regional editions) can legitimately carry the same MusicBrainz release
+    // group id, and an editor records that with the P4070 qualifier. Identical
+    // label + P31 + that shared id would otherwise read as a strong per-title
+    // id match; with the qualifier, the id must count for nothing.
+    const mk = (id: string, sharedWith?: string[]): Item => ({
+      ...base,
+      id,
+      labels: { en: "Chrono Echo" },
+      statements: stmt({
+        P436: [{ type: "external-id", value: "8f1c2a9e-mbrg", ...(sharedWith && { sharedWith }) }],
+      }),
+    });
+    const isId = (pid: string) => pid === "P436";
+
+    const unqualified = scoreCandidate(mk("Q200"), mk("Q201"), { isIdentifierProp: isId });
+    expect(unqualified.reasons.some((r) => r.startsWith("shares external identifier"))).toBe(true);
+
+    const a = mk("Q200", ["Q201"]);
+    const b = mk("Q201");
+    expect(sharedIdentifierProps(a, b)).toEqual(new Set(["P436"]));
+    const qualified = scoreCandidate(a, b, { isIdentifierProp: isId });
+    expect(qualified.reasons.some((r) => r.startsWith("shares external identifier"))).toBe(false);
+    expect(qualified.reasons.some((r) => r.includes("shared between the two items (P4070)"))).toBe(
+      true,
+    );
+    expect(qualified.confidence).toBeLessThan(unqualified.confidence);
+    // The ignored id must not inflate the statement-agreement term either.
+    expect(qualified.reasons.some((r) => r.includes("shared statements agree"))).toBe(false);
+
+    // Symmetric: the qualifier counts from whichever side carries it.
+    expect(scoreCandidate(b, a, { isIdentifierProp: isId }).confidence).toBe(qualified.confidence);
+
+    // A qualifier pointing at some *third* item says nothing about this pair,
+    // so the id keeps its full weight.
+    const third = scoreCandidate(mk("Q200", ["Q999"]), mk("Q201"), { isIdentifierProp: isId });
+    expect(third.confidence).toBe(unqualified.confidence);
+    expect(sharedIdentifierProps(mk("Q200", ["Q999"]), mk("Q201")).size).toBe(0);
+  });
+
+  it("does not count a declared-shared id toward the differing-identifiers disqualifier", () => {
+    // Seven ids present on both items and all differing would trip the >6
+    // disqualifier; one of them is declared shared with the other item (a stale
+    // qualifier on a since-corrected value), so only six count.
+    const pids = ["P436", "P9101", "P9102", "P9103", "P9104", "P9105", "P9106"];
+    const mk = (id: string, prefix: string, sharedWith?: string[]): Item => ({
+      ...base,
+      id,
+      labels: { en: "Seven Ways" },
+      statements: stmt(
+        Object.fromEntries(
+          pids.map((p, i) => [
+            p,
+            [
+              {
+                type: "external-id" as const,
+                value: `${prefix}${i}`,
+                ...(p === "P436" && sharedWith && { sharedWith }),
+              },
+            ],
+          ]),
+        ),
+      ),
+    });
+    const isId = (pid: string) => pids.includes(pid);
+    const plain = scoreCandidate(mk("Q300", "a"), mk("Q301", "b"), { isIdentifierProp: isId });
+    expect(plain.reasons.some((r) => r.includes("external identifiers differ"))).toBe(true);
+    const shared = scoreCandidate(mk("Q300", "a", ["Q301"]), mk("Q301", "b"), {
+      isIdentifierProp: isId,
+    });
+    expect(shared.reasons.some((r) => r.includes("external identifiers differ"))).toBe(false);
   });
 
   it("reaches near-certain (1.0) for a well-corroborated identical pair, with no 'held below' reason", () => {

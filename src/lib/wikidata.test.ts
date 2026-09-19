@@ -69,6 +69,20 @@ describe("classifyValue", () => {
     ).toEqual({ type: "url", value: "https://store.steampowered.com/app/400/" });
   });
 
+  it("carries a value's 'identifier shared with' (P4070) QIDs through as sharedWith", () => {
+    expect(
+      classifyValue(
+        { type: "literal", value: "8f1c2a9e-mbrg", shared_with: ["Q10423793"] },
+        "P436",
+      ),
+    ).toEqual({ type: "external-id", value: "8f1c2a9e-mbrg", sharedWith: ["Q10423793"] });
+    // Absent or empty qualifiers leave the value untouched (no empty array).
+    expect(classifyValue({ type: "literal", value: "440", shared_with: [] }, "P1733")).toEqual({
+      type: "external-id",
+      value: "440",
+    });
+  });
+
   it("keeps a known plain-string property (P348 version) as a string, not an id", () => {
     // Without the property id the value shape is indistinguishable from an id.
     expect(classifyValue({ type: "literal", value: "1.9" })).toEqual({
@@ -105,6 +119,7 @@ const game: DumpGame = {
     P10248: [{ type: "literal", value: "pikmin-3-deluxe" }],
     P1476: [{ type: "literal", value: "Pikmin 3 Deluxe", lang: "en" }],
     P348: [{ type: "literal", value: "1.0" }],
+    P436: [{ type: "literal", value: "8f1c2a9e-mbrg", shared_with: ["Q10423793"] }],
   },
 };
 
@@ -132,6 +147,12 @@ describe("mapDumpGame", () => {
     expect(item.statements.P348[0].type).toBe("string"); // version, not an id
   });
 
+  it("keeps the P4070 shared-with QIDs on the mapped value", () => {
+    expect(item.statements.P436).toEqual([
+      { type: "external-id", value: "8f1c2a9e-mbrg", sharedWith: ["Q10423793"] },
+    ]);
+  });
+
   it("omits en/mul labels when the dump has none", () => {
     const bare = mapDumpGame({ ...game, en_label: null, mul_label: null });
     expect(bare.labels).toEqual({});
@@ -153,6 +174,7 @@ describe("derived DB fields", () => {
     expect(externalIdRows(item)).toEqual([
       { property: "P1733", value: "1385730" },
       { property: "P10248", value: "pikmin-3-deluxe" },
+      { property: "P436", value: "8f1c2a9e-mbrg" },
     ]);
   });
 });

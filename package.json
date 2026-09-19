@@ -13,6 +13,7 @@
     "db:migrate": "tsx scripts/migrate.ts",
     "db:push": "drizzle-kit push",
     "seed": "tsx db/seed.ts",
+    "import-items": "tsx scripts/import-items.ts",
     "job:hunt": "tsx jobs/hunt.ts",
     "job:sync-properties": "tsx jobs/sync-properties.ts",
     "job:sync-entity-labels": "tsx jobs/sync-entity-labels.ts",

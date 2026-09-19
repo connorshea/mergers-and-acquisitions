@@ -7,6 +7,7 @@ import {
   formatIdUrl,
   installment,
   type Item,
+  isAutoIgnoredConflict,
   isDeclaredDifferent,
   isSeriesSequelPair,
   mergeConflicts,
@@ -264,6 +265,42 @@ describe("scoreCandidate", () => {
     for (const e of EXAMPLES) {
       expect(scoreCandidate(e.a, e.b).confidence).toBeCloseTo(scoreCandidate(e.b, e.a).confidence);
     }
+  });
+
+  it("does not treat an auto-ignored (description) conflict as a blocker", () => {
+    const base = {
+      aliases: {},
+      sitelinks: {},
+      statements: { P31: [{ type: "item" as const, value: "Q7889" }] },
+    };
+    const a: Item = {
+      id: "Q2",
+      labels: { en: "Same Game" },
+      descriptions: { en: "2019 video game" },
+      ...base,
+    };
+    const b: Item = {
+      id: "Q1",
+      labels: { en: "Same Game" },
+      descriptions: { en: "an action RPG" },
+      ...base,
+    };
+
+    // The differing description is a real wbmergeitems conflict...
+    expect(mergeConflicts(a, b)).toEqual(["description"]);
+    // ...but the merge flow auto-ignores it, so it is not surfaced as a blocker
+    // and does not add a "would block the merge" reason.
+    const score = scoreCandidate(a, b);
+    expect(score.hasBlocker).toBe(false);
+    expect(score.reasons.some((r) => r.includes("would block the merge"))).toBe(false);
+  });
+});
+
+describe("isAutoIgnoredConflict", () => {
+  it("matches description rows only", () => {
+    expect(isAutoIgnoredConflict("description:en")).toBe(true);
+    expect(isAutoIgnoredConflict("sitelink:enwiki")).toBe(false);
+    expect(isAutoIgnoredConflict("P31")).toBe(false);
   });
 });
 

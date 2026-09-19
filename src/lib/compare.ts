@@ -400,6 +400,26 @@ export function buildRows(
 export type MergeConflict = "description" | "sitelink" | "statement";
 
 /**
+ * Conflict kinds the merge flow always passes to `ignoreconflicts`, so the user
+ * never has to resolve them and they don't count as blockers. A differing
+ * description is dropped from the source item — which is becoming a redirect —
+ * and the survivor keeps its own; for a genuine duplicate that is always safe,
+ * and real duplicates routinely disagree on wording. The server unions this into
+ * every merge request (see server/edits.ts) and the UI treats these rows as
+ * auto-handled rather than as blockers.
+ */
+export const AUTO_IGNORED_CONFLICTS: readonly MergeConflict[] = ["description"];
+
+/**
+ * Whether a comparison `Row` is an auto-ignored conflict (see
+ * `AUTO_IGNORED_CONFLICTS`). Keyed off the row key so both the scorer and the UI
+ * exclude it from the blocker set identically.
+ */
+export function isAutoIgnoredConflict(rowKey: string): boolean {
+  return rowKey.startsWith("description:");
+}
+
+/**
  * Which `ignoreconflicts` kinds a merge of this pair would need, judged from
  * the mirror: differing descriptions in a shared language, two different pages
  * on one wiki, or a statement on either item whose value is the other item
@@ -882,7 +902,10 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     }
   }
 
-  const blockers = rows.filter((r) => r.blocker);
+  // Auto-ignored conflicts (a differing description) don't count: the merge flow
+  // always passes them to `ignoreconflicts`, so they never block a merge the tool
+  // performs and shouldn't be surfaced as blockers or flagged on the candidate.
+  const blockers = rows.filter((r) => r.blocker && !isAutoIgnoredConflict(r.key));
   if (blockers.length > 0) {
     reasons.push(
       `${blockers.length} conflict${blockers.length > 1 ? "s" : ""} would block the merge`,

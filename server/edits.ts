@@ -35,7 +35,7 @@ import {
   revisionUrl,
   WikidataEditError,
 } from "./wikidata-client.ts";
-import { DIFFERENT_FROM, type Item } from "../src/lib/compare.ts";
+import { AUTO_IGNORED_CONFLICTS, DIFFERENT_FROM, type Item } from "../src/lib/compare.ts";
 import {
   type CandidateDifferentResponse,
   type CandidateMergeResponse,
@@ -190,6 +190,9 @@ edits.post("/:id/merge", async (c) => {
       400,
     );
   }
+  // Always ignore the auto-handled conflicts (a differing description) on top of
+  // the user's explicit choices, so the user never has to resolve them by hand.
+  const effectiveIgnore = [...new Set([...ignoreConflicts, ...AUTO_IGNORED_CONFLICTS])];
 
   // Take the claim. Only an open candidate — or one whose earlier claim went
   // stale — can be merged, and only by whoever's UPDATE lands first.
@@ -234,7 +237,7 @@ edits.post("/:id/merge", async (c) => {
     action: "merge",
     fromQid,
     intoQid,
-    params: { ignoreConflicts },
+    params: { ignoreConflicts: effectiveIgnore },
   };
 
   let result;
@@ -242,7 +245,7 @@ edits.post("/:id/merge", async (c) => {
     result = await mergeItems(user, {
       fromQid,
       intoQid,
-      ignoreConflicts,
+      ignoreConflicts: effectiveIgnore,
       summary: `Merge duplicate items ${fromQid} → ${intoQid} — ${TOOL_CREDIT}`,
     });
   } catch (err) {

@@ -3,6 +3,7 @@ import type { AnnotatedValue, Item, RowStatus } from "./lib/compare.ts";
 import {
   buildRows,
   formatIdUrl,
+  isAutoIgnoredConflict,
   isHardcodedMirrorProp,
   sharedIdentifierProps,
 } from "./lib/compare.ts";
@@ -169,7 +170,9 @@ export default function MergeCandidates({
       ),
     [from, into, propertyLabels, valueLabels],
   );
-  const blockers = rows.filter((r) => r.blocker);
+  // Auto-ignored conflicts (a differing description) are handled by the merge
+  // flow, so they aren't shown as blockers the user must resolve.
+  const blockers = rows.filter((r) => r.blocker && !isAutoIgnoredConflict(r.key));
   const counts = rows.reduce((acc, r) => ({ ...acc, [r.status]: acc[r.status] + 1 }), {
     identical: 0,
     similar: 0,
@@ -284,7 +287,10 @@ export default function MergeCandidates({
                         <tr
                           key={r.key}
                           className={
-                            [r.blocker ? "is-blocker" : "", isDiscounted(r) ? "is-discounted" : ""]
+                            [
+                              r.blocker && !isAutoIgnoredConflict(r.key) ? "is-blocker" : "",
+                              isDiscounted(r) ? "is-discounted" : "",
+                            ]
                               .filter(Boolean)
                               .join(" ") || undefined
                           }

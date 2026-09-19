@@ -4,7 +4,12 @@ import { fetch, FetchError } from "../lib/client.ts";
 import { loginUrl, useAuth } from "../lib/auth.tsx";
 import AuthBar from "../AuthBar.tsx";
 import MergeCandidates from "../MergeCandidates.tsx";
-import { type Item, type MergeConflict, mergeConflicts } from "../lib/compare.ts";
+import {
+  AUTO_IGNORED_CONFLICTS,
+  type Item,
+  type MergeConflict,
+  mergeConflicts,
+} from "../lib/compare.ts";
 import {
   type CandidateDetailResponse,
   type CandidateDifferentResponse,
@@ -384,8 +389,10 @@ const CONFLICT_COPY: Record<MergeConflict, (from: string, into: string) => React
 };
 
 // Confirm-and-merge dialog: names the pair, offers one override checkbox per
-// `ignoreconflicts` kind (marking the ones the mirror predicts), and submits.
-// Nothing is ever pre-ticked: an override is sent only because the user chose it.
+// user-resolvable `ignoreconflicts` kind (marking the ones the mirror predicts),
+// and submits. Nothing is ever pre-ticked: an override is sent only because the
+// user chose it. Auto-ignored kinds (a differing description) aren't shown as
+// overrides — the server always ignores them — but are noted when detected.
 function MergeDialog({
   id,
   candidate,
@@ -408,6 +415,11 @@ function MergeDialog({
   const [ignore, setIgnore] = useState<MergeConflict[]>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+
+  // The user only resolves conflicts the tool doesn't auto-ignore; a detected
+  // auto-ignored conflict (a differing description) is surfaced as a note.
+  const manualKinds = MERGE_CONFLICT_TYPES.filter((k) => !AUTO_IGNORED_CONFLICTS.includes(k));
+  const autoHandled = detected.filter((k) => AUTO_IGNORED_CONFLICTS.includes(k));
 
   async function submit() {
     setBusy(true);
@@ -435,10 +447,16 @@ function MergeDialog({
           aliases, sitelinks and statements move to {into.id}. The edit is made under your account
           {username ? ` (${username})` : ""} and credits this tool in its summary.
         </p>
+        {autoHandled.includes("description") && (
+          <p className="modal-note">
+            The items have different descriptions; this is handled automatically — {into.id} keeps
+            its description and {from.id}'s is dropped.
+          </p>
+        )}
         <div className="modal-section">
           <p className="modal-section-title">Overrides (leave unticked unless you are sure)</p>
           <ul className="conflict-list">
-            {MERGE_CONFLICT_TYPES.map((kind) => (
+            {manualKinds.map((kind) => (
               <li key={kind}>
                 <label>
                   <input

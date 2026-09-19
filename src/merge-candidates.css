@@ -981,6 +981,14 @@ a.chip-id:hover {
 .modal-body p {
   margin: 0 0 0.6rem;
 }
+.modal-note {
+  font-size: 0.88rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: 6px;
+  border-left: 3px solid var(--accent, #4b7bec);
+  background: color-mix(in srgb, var(--accent, #4b7bec) 8%, transparent);
+  margin: 0.9rem 0;
+}
 .modal-section {
   margin: 0.9rem 0;
 }

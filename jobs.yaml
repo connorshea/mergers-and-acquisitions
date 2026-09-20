@@ -9,21 +9,25 @@
 #   crons/ + queues/ hunt  -> the single scheduled `hunt` job (server/hunt.ts)
 # The initial dump load is `import-dump` run once by hand (see README); the same
 # job then runs weekly to pick up the new dump.
+#
+# Commands call `node` directly rather than `npm run job:*`: the launch image
+# has npm but not pnpm, and npm 11 refuses to run scripts when package.json's
+# devEngines.packageManager (set for Vite+) names pnpm (EBADDEVENGINES).
 
 - name: sync-properties
-  command: npm run job:sync-properties
+  command: node jobs/sync-properties.ts
   image: tool-mna/tool-mna:latest
   schedule: "0 2 * * 0" # Sundays 02:00 UTC
   emails: onfailure
 
 - name: sync-entity-labels
-  command: npm run job:sync-entity-labels
+  command: node jobs/sync-entity-labels.ts
   image: tool-mna/tool-mna:latest
   schedule: "15 2 * * 0" # Sundays 02:15 UTC
   emails: onfailure
 
 - name: prune-sessions
-  command: npm run job:prune-sessions
+  command: node jobs/prune-sessions.ts
   image: tool-mna/tool-mna:latest
   schedule: "45 2 * * *" # nightly 02:45 UTC
   emails: onfailure
@@ -33,7 +37,7 @@
 # lands on Tuesdays, and a full pass takes a few hours on one CPU. Needs the
 # per-job maximum (1 CPU / 4Gi under the default tool quota).
 - name: import-dump
-  command: npm run job:import-dump
+  command: node jobs/import-dump.ts
   image: tool-mna/tool-mna:latest
   schedule: "0 6 * * 3" # Wednesdays 06:00 UTC
   mount: all
@@ -42,7 +46,7 @@
   emails: onfailure
 
 - name: hunt
-  command: npm run job:hunt
+  command: node jobs/hunt.ts
   image: tool-mna/tool-mna:latest
   schedule: "0 3 * * *" # nightly 03:00 UTC, after the syncs settle
   # Defaults (512Mi / 0.1 CPU) are tiny; the in-memory label+type blocking and

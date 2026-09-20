@@ -2,8 +2,8 @@
 // dump on Toolforge's NFS mount (see server/dump-import.ts). Needs `mount: all`
 // in jobs.yaml so /public/dumps is visible, and ~1 CPU / 4Gi for a few hours.
 //
-//   npm run job:import-dump                      # full pass + prune
-//   DUMP_LIMIT=2000 npm run job:import-dump      # stop after 2000 games (timing check)
+//   node jobs/import-dump.ts                     # full pass + prune
+//   DUMP_LIMIT=2000 node jobs/import-dump.ts     # stop after 2000 games (timing check)
 //   WIKIDATA_JSON_DUMP=/path/to/dump.json.gz …   # another dump (plain .json works too)
 //   DUMP_PRUNE=0 …                               # keep items missing from the dump
 //   DUMP_PRUNE_FORCE=1 …                         # prune past the 20% safety cap

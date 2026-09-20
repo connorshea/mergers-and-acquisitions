@@ -162,11 +162,11 @@ only sees with `--mount all`:
 # quick timing/validation run: stop after 2000 games, no pruning
 toolforge envvars create DUMP_LIMIT 2000
 toolforge jobs run import-dump-test --image tool-mna/tool-mna:latest \
-  --command "npm run job:import-dump" --mount all --mem 4Gi --cpu 1 --emails onfinish
+  --command "node jobs/import-dump.ts" --mount all --mem 4Gi --cpu 1 --emails onfinish
 toolforge envvars delete DUMP_LIMIT
 # full pass (a few hours; 156 GB gzip, ~1.6 TB inflated, one CPU)
 toolforge jobs run import-dump --image tool-mna/tool-mna:latest \
-  --command "npm run job:import-dump" --mount all --mem 4Gi --cpu 1 --emails onfinish
+  --command "node jobs/import-dump.ts" --mount all --mem 4Gi --cpu 1 --emails onfinish
 ```
 
 `jobs.yaml` also schedules it weekly (Wednesdays, after the Tuesday dump).
@@ -180,7 +180,18 @@ Build the image (`toolforge build`), apply migrations as a one-off job, load the
 mirror with the `import-dump` job above, start the web service
 (`toolforge webservice buildservice start`; runs the `Procfile` `web` process),
 and load the schedule with `toolforge jobs load jobs.yaml` (set the image name
-in `jobs.yaml` first). The DB is a ToolsDB MariaDB database, created with
+in `jobs.yaml` first):
+
+```sh
+toolforge jobs run migrate --image tool-mna/tool-mna:latest \
+  --command "node scripts/migrate.ts" --wait
+```
+
+Job and Procfile commands call `node` directly rather than `npm run …`: the
+launch image has npm but not pnpm, and npm 11 refuses to run scripts because
+`devEngines.packageManager` (set for Vite+) names pnpm.
+
+The DB is a ToolsDB MariaDB database, created with
 `CHARACTER SET utf8mb4 COLLATE utf8mb4_bin` (see the collation note above);
 connection details come from the tool's credentials via the `DB_*` env vars.
 

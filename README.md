@@ -178,7 +178,8 @@ older `pnpm seed` path (the vglist SPARQL blob) still works for a quick dev DB.
 
 Build the image (`toolforge build`), apply migrations as a one-off job, load the
 mirror with the `import-dump` job above, start the web service
-(`toolforge webservice buildservice start`; runs the `Procfile` `web` process),
+(`toolforge webservice buildservice start --mount none`; the build service
+requires an explicit mount flag, and the web process needs no NFS),
 and load the schedule with `toolforge jobs load jobs.yaml` (set the image name
 in `jobs.yaml` first):
 

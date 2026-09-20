@@ -41,7 +41,7 @@
   image: tool-mna/tool-mna:latest
   schedule: "0 6 * * 3" # Wednesdays 06:00 UTC
   mount: all
-  memory: 4Gi
+  mem: 4Gi
   cpu: 1
   emails: onfailure
 
@@ -51,6 +51,6 @@
   schedule: "0 3 * * *" # nightly 03:00 UTC, after the syncs settle
   # Defaults (512Mi / 0.1 CPU) are tiny; the in-memory label+type blocking and
   # scoring want more headroom as the item count grows.
-  memory: 2Gi
+  mem: 2Gi
   cpu: 1
   emails: onfailure

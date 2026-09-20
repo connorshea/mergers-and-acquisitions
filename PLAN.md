@@ -186,7 +186,7 @@ dismissed candidates).
 ## Deployment (Toolforge)
 
 - **Web service:** the Build Service (Cloud Native Buildpacks, Node) —
-  `toolforge webservice buildservice start`. Serves at `<tool>.toolforge.org`.
+  `toolforge webservice buildservice start`. Serves at `mna.toolforge.org`.
 - **Jobs:** `jobs.yaml` (`toolforge jobs load`) declares the scheduled
   `sync-properties` / `sync-entity-labels` / `sync-descriptions` (weekly) and
   `hunt` (nightly, with extra memory/CPU), plus a one-off seed/initial-load job.

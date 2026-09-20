@@ -54,7 +54,7 @@ pnpm db:migrate        # apply pending migrations
 pnpm seed              # load the dump into the DB
 
 pnpm job:hunt          # run the duplicate-candidate hunt once
-pnpm job:sync-properties / :sync-entity-labels / :sync-descriptions
+pnpm job:sync-properties / :sync-entity-labels
 pnpm job:prune-sessions # delete expired login sessions
 ```
 
@@ -143,15 +143,46 @@ revision ids, and any error. Edits are rate limited per user
 `https://test.wikidata.org/w/api.php` to develop against Test Wikidata (the
 consumer must list `testwikidatawiki`; QIDs there won't match the mirror).
 
+## Loading the mirror from the Wikidata dump
+
+`pnpm job:import-dump` (`jobs/import-dump.ts` → `server/dump-import.ts`) streams
+the Wikidata **entity JSON dump** once and upserts every item whose `instance of`
+(best rank) is _video game_ (Q7889), together with its external ids and the
+`properties` table (labels, datatypes, formatter URLs). Items carry their
+descriptions, aliases and sitelinks (so there is no separate description sync:
+until the first full pass has run, the comparison view shows no descriptions),
+and time values keep their precision. It never talks to QLever. After a complete pass it deletes items the dump no longer
+contains (merged away, deleted, retyped) and settles their open candidates; it
+refuses to drop more than 20% of the mirror at once unless `DUMP_PRUNE_FORCE=1`.
+
+On Toolforge the dump is on the read-only NFS mount, which a build-service job
+only sees with `--mount all`:
+
+```sh
+# quick timing/validation run: stop after 2000 games, no pruning
+toolforge envvars create DUMP_LIMIT 2000
+toolforge jobs run import-dump-test --image tool-mna/tool-mna:latest \
+  --command "npm run job:import-dump" --mount all --mem 4Gi --cpu 1 --emails onfinish
+toolforge envvars delete DUMP_LIMIT
+# full pass (a few hours; 156 GB gzip, ~1.6 TB inflated, one CPU)
+toolforge jobs run import-dump --image tool-mna/tool-mna:latest \
+  --command "npm run job:import-dump" --mount all --mem 4Gi --cpu 1 --emails onfinish
+```
+
+`jobs.yaml` also schedules it weekly (Wednesdays, after the Tuesday dump).
+Locally, point `WIKIDATA_JSON_DUMP` at any `.json.gz` / `.json` in the same
+format (one entity per line; the `.bz2` dump is refused as far too slow). The
+older `pnpm seed` path (the vglist SPARQL blob) still works for a quick dev DB.
+
 ## Deploying to Toolforge
 
-Build the image (`toolforge build`), apply migrations and seed as one-off jobs,
-start the web service (`toolforge webservice buildservice start`; runs the
-`Procfile` `web` process), and load the schedule with `toolforge jobs load
-jobs.yaml` (set the image name in `jobs.yaml` first). The DB is a ToolsDB MariaDB
-database, created with `CHARACTER SET utf8mb4 COLLATE utf8mb4_bin` (see the
-collation note above); connection details come from the tool's credentials via
-the `DB_*` env vars.
+Build the image (`toolforge build`), apply migrations as a one-off job, load the
+mirror with the `import-dump` job above, start the web service
+(`toolforge webservice buildservice start`; runs the `Procfile` `web` process),
+and load the schedule with `toolforge jobs load jobs.yaml` (set the image name
+in `jobs.yaml` first). The DB is a ToolsDB MariaDB database, created with
+`CHARACTER SET utf8mb4 COLLATE utf8mb4_bin` (see the collation note above);
+connection details come from the tool's credentials via the `DB_*` env vars.
 
 The server checks the schema before it binds its port (`server/preflight.ts`):
 if the database has fewer migrations applied than `db/migrations` contains, it

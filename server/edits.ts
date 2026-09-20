@@ -19,13 +19,7 @@ import { and, eq, inArray, lt, or } from "drizzle-orm";
 import { db } from "./db.ts";
 import { type AuthEnv, type AuthUser, requireUser } from "./auth/session.ts";
 import { addSeconds, toSqlDatetime } from "./auth/time.ts";
-import {
-  externalIds,
-  itemDescriptions,
-  items,
-  mergeCandidates,
-  wikidataEdits,
-} from "../db/schema.ts";
+import { externalIds, items, mergeCandidates, wikidataEdits } from "../db/schema.ts";
 import { loadLabels, summaryColumns, toSummary } from "./candidate-summary.ts";
 import { editLimiter } from "./rate-limit.ts";
 import {
@@ -344,7 +338,6 @@ edits.post("/:id/merge", async (c) => {
   try {
     await db.transaction(async (tx) => {
       await tx.delete(externalIds).where(eq(externalIds.qid, fromQid));
-      await tx.delete(itemDescriptions).where(eq(itemDescriptions.qid, fromQid));
       await tx.delete(items).where(eq(items.qid, fromQid));
       await tx
         .update(mergeCandidates)

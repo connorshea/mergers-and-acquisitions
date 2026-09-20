@@ -32,7 +32,8 @@ function displayValue(v: AnnotatedValue): string {
   if (v.type === "item") return v.label ?? v.value;
   if (v.type === "time") {
     const m = /^([+-]?\d{4}-\d{2}-\d{2})T00:00:00Z$/.exec(v.value);
-    if (m) return m[1].replace(/^\+/, "");
+    // Year/month precision arrives as "00" parts (+1987-00-00 → 1987).
+    if (m) return m[1].replace(/^\+/, "").replace(/-00$/, "").replace(/-00$/, "");
   }
   return v.value;
 }

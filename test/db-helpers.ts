@@ -18,7 +18,6 @@ const TABLES = [
   "items",
   "properties",
   "entity_labels",
-  "item_descriptions",
   "sync_state",
 ];
 

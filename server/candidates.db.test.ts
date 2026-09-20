@@ -5,7 +5,7 @@ import { afterAll, beforeEach, describe, expect, it } from "vite-plus/test";
 import { eq } from "drizzle-orm";
 import { app } from "./app.ts";
 import { db, pool } from "./db.ts";
-import { entityLabels, itemDescriptions, mergeCandidates, properties } from "../db/schema.ts";
+import { entityLabels, mergeCandidates, properties } from "../db/schema.ts";
 import type { Value } from "../src/lib/compare.ts";
 import type {
   CandidateDetailResponse,
@@ -66,7 +66,12 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
     editor = await loginAs(EDITOR_ID, "Editor");
     admin = await loginAs(ADMIN_ID, "Admin");
     await insertItem(
-      makeItem("Q10", "Alpha Quest", { P136: [{ type: "item", value: "Q744038" }] }),
+      makeItem(
+        "Q10",
+        "Alpha Quest",
+        { P136: [{ type: "item", value: "Q744038" }] },
+        { descriptions: { en: "2019 video game" } },
+      ),
     );
     await insertItem(makeItem("Q20", "Alpha Quest"));
     await insertItem(makeItem("Q30", "Beta Blast", { P31: MOD }));
@@ -106,7 +111,6 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       { pid: "P1733", label: "Steam application ID", datatype: "ExternalId" },
     ]);
     await db.insert(entityLabels).values({ qid: "Q744038", label: "role-playing video game" });
-    await db.insert(itemDescriptions).values({ qid: "Q10", description: "2019 video game" });
   });
 
   afterAll(() => pool.end());

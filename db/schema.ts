@@ -145,19 +145,6 @@ export const entityLabels = mysqlTable("entity_labels", {
     .default(sql`CURRENT_TIMESTAMP`),
 });
 
-// English descriptions for in-scope game items, synced from Wikidata (see
-// jobs/sync-descriptions.ts). The dump carries only labels + statements, so
-// descriptions are absent from items.data; this table backfills them for the
-// comparison view (shown under each item's name, and used for merge-blocker
-// detection on conflicting descriptions).
-export const itemDescriptions = mysqlTable("item_descriptions", {
-  qid: varchar("qid", { length: 32 }).primaryKey(), // e.g. "Q16571916"
-  description: text("description").notNull(), // English description
-  syncedAt: datetime("synced_at", { mode: "string" })
-    .notNull()
-    .default(sql`CURRENT_TIMESTAMP`),
-});
-
 // Cursor bookkeeping for the paged Wikidata sync. One row per scope (e.g. the
 // video-game population); `cursor` is the SPARQL OFFSET reached so far.
 export const syncState = mysqlTable("sync_state", {

@@ -54,7 +54,7 @@ pnpm db:migrate        # apply pending migrations
 pnpm seed              # load the dump into the DB
 
 pnpm job:hunt          # run the duplicate-candidate hunt once
-pnpm job:sync-properties / :sync-entity-labels / :sync-descriptions
+pnpm job:sync-properties / :sync-entity-labels
 pnpm job:prune-sessions # delete expired login sessions
 ```
 
@@ -149,8 +149,9 @@ consumer must list `testwikidatawiki`; QIDs there won't match the mirror).
 the Wikidata **entity JSON dump** once and upserts every item whose `instance of`
 (best rank) is _video game_ (Q7889), together with its external ids and the
 `properties` table (labels, datatypes, formatter URLs). Items carry their
-descriptions, aliases and sitelinks, and time values keep their precision. It
-never talks to QLever. After a complete pass it deletes items the dump no longer
+descriptions, aliases and sitelinks (so there is no separate description sync:
+until the first full pass has run, the comparison view shows no descriptions),
+and time values keep their precision. It never talks to QLever. After a complete pass it deletes items the dump no longer
 contains (merged away, deleted, retyped) and settles their open candidates; it
 refuses to drop more than 20% of the mirror at once unless `DUMP_PRUNE_FORCE=1`.
 

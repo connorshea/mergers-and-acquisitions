@@ -9,13 +9,7 @@ import { type AuthEnv, requireUser } from "./auth/session.ts";
 import { addSeconds, toSqlDatetime } from "./auth/time.ts";
 import { MERGING_STALE_SECONDS } from "./edits.ts";
 import { loadLabels, summaryColumns, toSummary } from "./candidate-summary.ts";
-import {
-  entityLabels,
-  itemDescriptions,
-  items,
-  mergeCandidates,
-  properties,
-} from "../db/schema.ts";
+import { entityLabels, items, mergeCandidates, properties } from "../db/schema.ts";
 import type { Item } from "../src/lib/compare.ts";
 import { chunk } from "../src/lib/chunk.ts";
 import {
@@ -204,7 +198,7 @@ candidates.get("/:id", async (c) => {
     }
   }
 
-  const [propertyChunks, valueChunks, descRows] = await Promise.all([
+  const [propertyChunks, valueChunks] = await Promise.all([
     Promise.all(
       chunk(pids, ID_CHUNK).map((ids) =>
         db
@@ -226,10 +220,6 @@ candidates.get("/:id", async (c) => {
           .where(inArray(entityLabels.qid, ids)),
       ),
     ),
-    db
-      .select({ qid: itemDescriptions.qid, description: itemDescriptions.description })
-      .from(itemDescriptions)
-      .where(inArray(itemDescriptions.qid, [...new Set([row.fromQid, row.intoQid])])),
   ]);
 
   const propertyLabels: Record<string, string> = {};
@@ -245,15 +235,6 @@ candidates.get("/:id", async (c) => {
   }
   const valueLabels: Record<string, string> = {};
   for (const r of valueChunks.flat()) valueLabels[r.qid] = r.label;
-
-  // The dump omits descriptions; backfill the synced English description onto
-  // each item so the comparison view shows it and treats a conflicting
-  // description as a merge blocker. Never overwrite one already set.
-  const descByQid = new Map(descRows.map((r) => [r.qid, r.description]));
-  for (const item of [from, into]) {
-    const desc = descByQid.get(item.id);
-    if (desc && !item.descriptions.en) item.descriptions = { ...item.descriptions, en: desc };
-  }
 
   const payload: CandidateDetailResponse = {
     candidate: toSummary(row, labels),

@@ -22,12 +22,6 @@
   schedule: "15 2 * * 0" # Sundays 02:15 UTC
   emails: onfailure
 
-- name: sync-descriptions
-  command: npm run job:sync-descriptions
-  image: tool-mna/tool-mna:latest
-  schedule: "30 2 * * 0" # Sundays 02:30 UTC
-  emails: onfailure
-
 - name: prune-sessions
   command: npm run job:prune-sessions
   image: tool-mna/tool-mna:latest

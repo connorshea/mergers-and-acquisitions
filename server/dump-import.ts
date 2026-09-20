@@ -29,7 +29,7 @@ import type { Readable } from "node:stream";
 import { createGunzip } from "node:zlib";
 import { and, asc, eq, gt, inArray, or, sql } from "drizzle-orm";
 import { db } from "./db.ts";
-import { externalIds, itemDescriptions, items, mergeCandidates } from "../db/schema.ts";
+import { externalIds, items, mergeCandidates } from "../db/schema.ts";
 import { syncProperties } from "./properties-sync.ts";
 import { toSqlDatetime } from "./auth/time.ts";
 import type { Item } from "../src/lib/compare.ts";
@@ -323,8 +323,8 @@ export interface ImportStats extends ScanStats {
 }
 
 /**
- * Delete every item not in `keep`, with its external ids and description, and
- * settle the open candidates that referenced it. Returns [items, candidates].
+ * Delete every item not in `keep`, with its external ids, and settle the open
+ * candidates that referenced it. Returns [items, candidates].
  */
 async function pruneMissing(
   keep: Set<string>,
@@ -361,7 +361,6 @@ async function pruneMissing(
     const qids = gone.slice(i, i + ID_BATCH);
     await db.transaction(async (tx) => {
       await tx.delete(externalIds).where(inArray(externalIds.qid, qids));
-      await tx.delete(itemDescriptions).where(inArray(itemDescriptions.qid, qids));
       await tx.delete(items).where(inArray(items.qid, qids));
       const [result] = await tx
         .update(mergeCandidates)

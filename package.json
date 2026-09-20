@@ -47,12 +47,12 @@
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
-      "version": "12.4.2",
+      "version": "11.27.0",
       "onFail": "download"
     }
   },
   "engines": {
     "node": "24.x"
   },
-  "packageManager": "pnpm@12.4.2"
+  "packageManager": "pnpm@11.27.0"
 }

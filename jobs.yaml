@@ -7,7 +7,8 @@
 # These replace the Void crons/ + queues/ pipeline:
 #   crons/sync-*.ts        -> the scheduled sync-* jobs
 #   crons/ + queues/ hunt  -> the single scheduled `hunt` job (server/hunt.ts)
-# The initial dump load is a one-off job (see README) rather than a scheduled one.
+# The initial dump load is `import-dump` run once by hand (see README); the same
+# job then runs weekly to pick up the new dump.
 
 - name: sync-properties
   command: npm run job:sync-properties
@@ -31,6 +32,19 @@
   command: npm run job:prune-sessions
   image: tool-mna/tool-mna:latest
   schedule: "45 2 * * *" # nightly 02:45 UTC
+  emails: onfailure
+
+# Rebuild the item mirror from the weekly Wikidata JSON dump. The dump is only
+# visible with `mount: all` (build-service images get no NFS by default); it
+# lands on Tuesdays, and a full pass takes a few hours on one CPU. Needs the
+# per-job maximum (1 CPU / 4Gi under the default tool quota).
+- name: import-dump
+  command: npm run job:import-dump
+  image: tool-mna/tool-mna:latest
+  schedule: "0 6 * * 3" # Wednesdays 06:00 UTC
+  mount: all
+  memory: 4Gi
+  cpu: 1
   emails: onfailure
 
 - name: hunt

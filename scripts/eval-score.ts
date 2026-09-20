@@ -34,131 +34,13 @@
 
 import { readFile, readdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import type { Item, Value, ValueType, ScoreOptions } from "../src/lib/compare.ts";
-import { IDENTIFIER_SHARED_WITH, orderByAge, scoreCandidate } from "../src/lib/compare.ts";
+import type { Item, ScoreOptions } from "../src/lib/compare.ts";
+import { orderByAge, scoreCandidate } from "../src/lib/compare.ts";
+import { type Entity, entityToItem } from "../src/lib/wikibase.ts";
 
 const EVAL_DIR = "eval-data";
 const BASELINE_PATH = join(EVAL_DIR, "score-baseline.json");
 const DEFAULT_THRESHOLD = 0.4; // mirrors hunt.ts MIN_CONFIDENCE
-
-// ---------- Wikibase entity JSON -> Item ----------
-
-interface Snak {
-  snaktype: "value" | "novalue" | "somevalue";
-  property: string;
-  datatype?: string;
-  datavalue?: { type: string; value: unknown };
-}
-interface Statement {
-  mainsnak: Snak;
-  rank: "preferred" | "normal" | "deprecated";
-  qualifiers?: Record<string, Snak[]>;
-}
-interface Entity {
-  id: string;
-  labels?: Record<string, { value: string }>;
-  descriptions?: Record<string, { value: string }>;
-  aliases?: Record<string, { value: string }[]>;
-  sitelinks?: Record<string, { title: string }>;
-  claims?: Record<string, Statement[]>;
-}
-
-const termMap = (o?: Record<string, { value: string }>): Record<string, string> => {
-  const out: Record<string, string> = {};
-  for (const [k, v] of Object.entries(o ?? {})) out[k] = v.value;
-  return out;
-};
-
-/** Convert one mainsnak into a scorer Value. Preserves Wikidata's special snak
- * types: "somevalue" (unknown value) and "novalue" (explicit no value). */
-function snakValue(snak: Snak): Value | null {
-  if (snak.snaktype === "somevalue") return { type: "somevalue", value: "" };
-  if (snak.snaktype === "novalue") return { type: "novalue", value: "" };
-  if (snak.snaktype !== "value" || !snak.datavalue) return null;
-  const { type, value } = snak.datavalue;
-  switch (type) {
-    case "wikibase-entityid":
-      return { type: "item", value: (value as { id: string }).id };
-    case "time":
-      return { type: "time", value: (value as { time: string }).time };
-    case "quantity":
-      return { type: "quantity", value: (value as { amount: string }).amount };
-    case "monolingualtext":
-      return { type: "string", value: (value as { text: string }).text };
-    case "globecoordinate": {
-      const c = value as { latitude: number; longitude: number };
-      return { type: "string", value: `${c.latitude},${c.longitude}` };
-    }
-    case "string": {
-      // The one case where the property datatype disambiguates the literal.
-      const t: ValueType =
-        snak.datatype === "external-id"
-          ? "external-id"
-          : snak.datatype === "url"
-            ? "url"
-            : "string";
-      return { type: t, value: value as string };
-    }
-    default:
-      return { type: "string", value: String(value) };
-  }
-}
-
-/**
- * Keep only best-rank statements per property, matching the `wdt:` truthy
- * semantics the production dump path sees: deprecated ranks are dropped, and if
- * any preferred-rank statement exists only those are kept, else the normals.
- */
-function bestRank(statements: Statement[]): Statement[] {
-  const live = statements.filter((s) => s.rank !== "deprecated");
-  const preferred = live.filter((s) => s.rank === "preferred");
-  return preferred.length > 0 ? preferred : live;
-}
-
-/**
- * Convert one statement into a scorer Value, carrying the QIDs of its
- * "identifier shared with" (P4070) qualifiers as `sharedWith` — the same shape
- * the dump path emits (see script/dump_wikidata_games.rb), so the scorer's
- * shared-identifier handling is exercised here too.
- */
-function statementValue(statement: Statement): Value | null {
-  const value = snakValue(statement.mainsnak);
-  if (!value) return null;
-  const sharedWith = (statement.qualifiers?.[IDENTIFIER_SHARED_WITH] ?? [])
-    .map((q) => snakValue(q))
-    .filter((q): q is Value => q !== null && q.type === "item")
-    .map((q) => q.value);
-  return sharedWith.length > 0 ? { ...value, sharedWith } : value;
-}
-
-function entityToItem(entity: Entity): Item {
-  const statements: Record<string, Value[]> = {};
-  for (const [pid, sts] of Object.entries(entity.claims ?? {})) {
-    const values = bestRank(sts)
-      .map(statementValue)
-      .filter((v): v is Value => v !== null);
-    if (values.length > 0) statements[pid] = values;
-  }
-
-  const aliases: Record<string, string[]> = {};
-  for (const [lang, list] of Object.entries(entity.aliases ?? {})) {
-    aliases[lang] = list.map((a) => a.value);
-  }
-
-  const sitelinks: Record<string, string> = {};
-  for (const [site, link] of Object.entries(entity.sitelinks ?? {})) {
-    sitelinks[site] = link.title;
-  }
-
-  return {
-    id: entity.id,
-    labels: termMap(entity.labels),
-    descriptions: termMap(entity.descriptions),
-    aliases,
-    sitelinks,
-    statements,
-  };
-}
 
 /** Property ids classified as genuine external identifiers across both items. */
 function identifierProps(...items: Item[]): Set<string> {

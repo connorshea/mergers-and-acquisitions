@@ -15,6 +15,7 @@
     "seed": "node db/seed.ts",
     "import-items": "node scripts/import-items.ts",
     "job:hunt": "node jobs/hunt.ts",
+    "job:import-dump": "node jobs/import-dump.ts",
     "job:sync-properties": "node jobs/sync-properties.ts",
     "job:sync-entity-labels": "node jobs/sync-entity-labels.ts",
     "job:sync-descriptions": "node jobs/sync-descriptions.ts",

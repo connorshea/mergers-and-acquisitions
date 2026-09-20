@@ -43,15 +43,21 @@ Layout:
   (`wikidata-client.ts`: token refresh, asserted CSRF token, `maxlag`/`badtoken`
   retries, error mapping) and the per-user edit `rate-limit.ts`; the Drizzle
   handle (`db.ts`) + connection config (`db-config.ts`); the shared sync write
-  paths (`*-sync.ts`); and the hunt (`hunt.ts`, scan→score→upsert in one pass).
+  paths (`*-sync.ts`); the hunt (`hunt.ts`, scan→score→upsert in one pass); and
+  the dump import (`dump-import.ts`: streams the Wikidata entity JSON dump from
+  Toolforge's `/public/dumps` NFS mount, pre-filters on `"numeric-id":7889`,
+  upserts items + external ids + properties, prunes what left the dump).
 - `server/auth/` — Wikimedia OAuth 2.0 login (`oauth.ts` routes), cookie
   sessions + `requireUser`/`requireAdmin` (`session.ts`), encrypted token
   storage + refresh (`tokens.ts`, `crypto.ts`), and the same-origin CSRF guard.
   Config is read from env on each call (`config.ts`); see `.env.example`.
   Every Wikidata edit attempt lands in the `wikidata_edits` audit table.
-- `jobs/` — Toolforge scheduled jobs (`hunt.ts`, `sync-*.ts`), run via `node`
-  (native TS type-stripping).
-  Declared in `jobs.yaml` (`toolforge jobs load`).
+- `jobs/` — Toolforge scheduled jobs (`hunt.ts`, `import-dump.ts`, `sync-*.ts`),
+  run via `node` (native TS type-stripping). Declared in `jobs.yaml`
+  (`toolforge jobs load`); `import-dump` needs `mount: all` to see the dump.
+- `src/lib/wikibase.ts` — the Wikibase entity-JSON → `Item` adapter shared by
+  the dump import, `scripts/import-items.ts`, and the eval script (datatype-exact
+  ids, time precision kept, descriptions/aliases/sitelinks carried).
 - `db/` — the MySQL-dialect schema (`schema.ts`), the seed script (`seed.ts`),
   and drizzle-kit migrations (`migrations/`, generated via `pnpm db:generate`).
 - `src/` — the React SPA; DOM-free heuristics (comparison + `scoreCandidate`) in

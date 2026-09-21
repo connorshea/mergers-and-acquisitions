@@ -457,17 +457,18 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
     onProgress: (s) => {
       const now = mbps(s.bytes - last.bytes, s.seconds - last.seconds);
       const read = file?.read() ?? 0;
-      let done = "";
+      let pct = "";
+      let eta = "";
       if (file && file.size > 0) {
+        pct = `[${((100 * read) / file.size).toFixed(1)}%] `;
         const rate = (read - last.read) / (s.seconds - last.seconds); // compressed B/s
-        const eta = rate > 0 ? formatDuration((file.size - read) / rate) : "?";
-        done = `${((100 * read) / file.size).toFixed(1)}% done, ETA ${eta}, `;
+        eta = `ETA ${rate > 0 ? formatDuration((file.size - read) / rate) : "?"}, `;
       }
       last = { bytes: s.bytes, seconds: s.seconds, read };
       log(
-        `import-dump: ${(s.bytes / 1e9).toFixed(0)} GB inflated, ${s.lines} lines, ` +
+        `import-dump: ${pct}${(s.bytes / 1e9).toFixed(0)} GB inflated, ${s.lines} lines, ` +
           `${s.matched} matched, ${s.properties} properties, ` +
-          `${now} MB/s now (${mbps(s.bytes, s.seconds)} avg), ${done}` +
+          `${now} MB/s now (${mbps(s.bytes, s.seconds)} avg), ${eta}` +
           `rss ${Math.round(process.memoryUsage().rss / 1e6)} MB`,
       );
     },

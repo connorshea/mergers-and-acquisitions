@@ -107,8 +107,9 @@ grant (encrypted at rest) and uses it to call the Wikidata Action API
 (`wbmergeitems`, `wbcreateclaim`) as that user. Toolforge is a supported OAuth
 consumer environment, which is part of why it's the deployment target. See
 README "Authentication" and "Editing Wikidata" for the consumer setup, the
-merge semantics (conflict overrides are opt-in per kind, the candidate takes a
-`merging` claim so it can't be submitted twice), and the audit trail.
+merge semantics (only a differing description is ever auto-ignored; sitelink and
+statement conflicts must be fixed by hand on Wikidata first; the candidate takes
+a `merging` claim so it can't be submitted twice), and the audit trail.
 
 ## ML / LLM-assisted evaluation (planned, advisory-only)
 

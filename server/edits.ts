@@ -1,6 +1,6 @@
 // Router for the Wikidata edits made on a logged-in user's behalf:
 //
-//   POST /api/candidates/:id/merge      { ignoreConflicts: [...] }
+//   POST /api/candidates/:id/merge
 //   POST /api/candidates/:id/different
 //
 // Both go through server/wikidata-client.ts under the user's own OAuth grant
@@ -32,13 +32,11 @@ import {
   WikidataEditError,
 } from "./wikidata-client.ts";
 import { AUTO_IGNORED_CONFLICTS, DIFFERENT_FROM, type Item } from "../src/lib/compare.ts";
-import {
-  type CandidateDifferentResponse,
-  type CandidateMergeResponse,
-  type DifferentFromEdit,
-  type EditErrorResponse,
-  MERGE_CONFLICT_TYPES,
-  type MergeConflictType,
+import type {
+  CandidateDifferentResponse,
+  CandidateMergeResponse,
+  DifferentFromEdit,
+  EditErrorResponse,
 } from "../src/lib/api-types.ts";
 
 /** Appended to every edit summary so the edits are traceable to this tool. */
@@ -91,21 +89,6 @@ function editGate(c: EditContext, user: AuthUser): Response | null {
 function parseId(raw: string): number | null {
   const id = Number(raw);
   return Number.isInteger(id) ? id : null;
-}
-
-/** `{ ignoreConflicts?: string[] }` → the validated list, or null on a malformed body. */
-function parseIgnoreConflicts(body: unknown): MergeConflictType[] | null {
-  if (body === undefined || body === null) return [];
-  if (typeof body !== "object") return null;
-  const raw = (body as { ignoreConflicts?: unknown }).ignoreConflicts;
-  if (raw === undefined) return [];
-  if (!Array.isArray(raw)) return null;
-  const out: MergeConflictType[] = [];
-  for (const v of raw) {
-    if (!MERGE_CONFLICT_TYPES.includes(v as MergeConflictType)) return null;
-    if (!out.includes(v as MergeConflictType)) out.push(v as MergeConflictType);
-  }
-  return out;
 }
 
 const STATUS_FOR_KIND: Record<EditErrorKind, 401 | 403 | 409 | 429 | 502> = {
@@ -224,28 +207,33 @@ edits.post("/:id/merge", async (c) => {
   const id = parseId(c.req.param("id"));
   if (id === null) return c.json({ error: "Invalid candidate id" }, 404);
 
-  // No body at all means "no overrides"; a body that isn't JSON is a client
-  // bug and must not quietly become a merge with none.
+  // The route takes no options. The only conflict kind ever passed to
+  // `ignoreconflicts` is the auto-handled description (see
+  // AUTO_IGNORED_CONFLICTS); sitelink and statement conflicts are never
+  // overridden from here — Wikidata refuses the merge, and the user resolves
+  // them on the items by hand first. A client still sending `ignoreConflicts`
+  // gets a clear refusal rather than a merge that quietly drops its choices.
   const text = await c.req.text();
-  let body: unknown = null;
   if (text.trim() !== "") {
+    let body: unknown;
     try {
       body = JSON.parse(text);
     } catch {
       return errorResponse(c, { error: "Request body must be JSON" }, 400);
     }
+    if (body !== null && typeof body === "object" && "ignoreConflicts" in body) {
+      return errorResponse(
+        c,
+        {
+          error:
+            "Conflict overrides are not supported; resolve sitelink and statement " +
+            "conflicts on Wikidata by hand, then merge.",
+        },
+        400,
+      );
+    }
   }
-  const ignoreConflicts = parseIgnoreConflicts(body);
-  if (!ignoreConflicts) {
-    return errorResponse(
-      c,
-      { error: `ignoreConflicts must be an array of: ${MERGE_CONFLICT_TYPES.join(", ")}` },
-      400,
-    );
-  }
-  // Always ignore the auto-handled conflicts (a differing description) on top of
-  // the user's explicit choices, so the user never has to resolve them by hand.
-  const effectiveIgnore = [...new Set([...ignoreConflicts, ...AUTO_IGNORED_CONFLICTS])];
+  const ignoreConflicts = [...AUTO_IGNORED_CONFLICTS];
 
   if (!(await claimCandidate(id, new Date()))) return claimRefused(c, id, "merged");
 
@@ -260,7 +248,7 @@ edits.post("/:id/merge", async (c) => {
     action: "merge",
     fromQid,
     intoQid,
-    params: { ignoreConflicts: effectiveIgnore },
+    params: { ignoreConflicts },
   };
 
   let result: MergeResult;
@@ -268,7 +256,7 @@ edits.post("/:id/merge", async (c) => {
     result = await mergeItems(user, {
       fromQid,
       intoQid,
-      ignoreConflicts: effectiveIgnore,
+      ignoreConflicts,
       summary: `Merge duplicate items ${fromQid} → ${intoQid} — ${TOOL_CREDIT}`,
     });
   } catch (err) {

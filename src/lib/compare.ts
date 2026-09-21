@@ -400,13 +400,15 @@ export function buildRows(
 export type MergeConflict = "description" | "sitelink" | "statement";
 
 /**
- * Conflict kinds the merge flow always passes to `ignoreconflicts`, so the user
- * never has to resolve them and they don't count as blockers. A differing
+ * The only conflict kinds the merge flow passes to `ignoreconflicts`, so the
+ * user never has to resolve them and they don't count as blockers. A differing
  * description is dropped from the source item — which is becoming a redirect —
  * and the survivor keeps its own; for a genuine duplicate that is always safe,
- * and real duplicates routinely disagree on wording. The server unions this into
- * every merge request (see server/edits.ts) and the UI treats these rows as
- * auto-handled rather than as blockers.
+ * and real duplicates routinely disagree on wording. The server sends exactly
+ * this list on every merge (see server/edits.ts); every other kind (clashing
+ * sitelinks, the items linking to each other) is left for Wikidata to refuse,
+ * and the user fixes it on the items by hand before merging. The UI treats
+ * these rows as auto-handled rather than as blockers.
  */
 export const AUTO_IGNORED_CONFLICTS: readonly MergeConflict[] = ["description"];
 
@@ -420,12 +422,13 @@ export function isAutoIgnoredConflict(rowKey: string): boolean {
 }
 
 /**
- * Which `ignoreconflicts` kinds a merge of this pair would need, judged from
- * the mirror: differing descriptions in a shared language, two different pages
- * on one wiki, or a statement on either item whose value is the other item
- * (Wikibase refuses to merge items that link to each other). The mirror can be
- * stale, so this is a hint for the confirm dialog, never a substitute for
- * Wikidata's own answer.
+ * Which conflict kinds `wbmergeitems` would hit on this pair, judged from the
+ * mirror: differing descriptions in a shared language, two different pages on
+ * one wiki, or a statement on either item whose value is the other item
+ * (Wikibase refuses to merge items that link to each other). The confirm
+ * dialog uses it to warn about the kinds the tool won't override (everything
+ * but AUTO_IGNORED_CONFLICTS). The mirror can be stale, so this is a hint,
+ * never a substitute for Wikidata's own answer.
  */
 export function mergeConflicts(a: Item, b: Item): MergeConflict[] {
   const out = new Set<MergeConflict>();

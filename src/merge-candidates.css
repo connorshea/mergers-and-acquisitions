@@ -997,40 +997,30 @@ a.chip-id:hover {
   font-size: 0.9rem;
   margin: 0 0 0.35rem;
 }
+.modal-blockers {
+  padding: 0.55rem 0.7rem;
+  border-radius: 6px;
+  border-left: 3px solid var(--distinct);
+  background: var(--distinct-bg);
+}
+.modal-blockers .modal-section-title {
+  color: var(--distinct);
+}
 .conflict-list {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
   gap: 0.45rem;
-}
-.conflict-list label {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 0.5rem;
-  align-items: start;
   font-size: 0.9rem;
-  cursor: pointer;
-}
-.conflict-list input {
-  margin-top: 0.2rem;
 }
 .conflict-hint {
   display: block;
   color: var(--muted);
   font-size: 0.82rem;
 }
-.conflict-detected {
-  font-size: 0.72rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  padding: 0.05rem 0.4rem;
-  border-radius: 999px;
-  background: var(--distinct-bg);
-  color: var(--distinct);
-  margin-left: 0.35rem;
-  vertical-align: middle;
+.modal-blockers > .conflict-hint {
+  margin: 0.55rem 0 0;
 }
 .modal-error {
   margin: 0.6rem 0 0;

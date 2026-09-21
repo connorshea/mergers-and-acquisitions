@@ -2,7 +2,7 @@
 // server routes (routes/api/candidates/*) and the client pages so the shapes
 // stay in sync from one definition.
 
-import type { Item, MergeConflict } from "./compare.ts";
+import type { Item } from "./compare.ts";
 
 export const CANDIDATE_STATUSES = ["open", "merging", "dismissed", "merged"] as const;
 export type CandidateStatus = (typeof CANDIDATE_STATUSES)[number];
@@ -71,21 +71,6 @@ export interface CandidateReopenResponse {
 
 // --- Wikidata edits (merge / "different from") ---
 
-/**
- * The conflict kinds wbmergeitems can be told to ignore. Each is only ever sent
- * because the user ticked its checkbox in the confirm dialog.
- */
-export const MERGE_CONFLICT_TYPES = [
-  "description",
-  "sitelink",
-  "statement",
-] as const satisfies readonly MergeConflict[];
-export type MergeConflictType = MergeConflict;
-
-export interface CandidateMergeRequest {
-  ignoreConflicts: MergeConflictType[];
-}
-
 /** One saved revision on Wikidata, with a link to view it. */
 export interface WikidataRevision {
   qid: string;
@@ -97,7 +82,12 @@ export interface CandidateMergeResponse {
   candidate: CandidateSummary;
   from: WikidataRevision;
   into: WikidataRevision;
-  /** False when the merge left the source item non-empty (ignored sitelink conflicts), so no redirect was made. */
+  /**
+   * Whether the source item became a redirect. The app never ignores sitelink
+   * conflicts (the one thing that leaves a merged item alive), so this is
+   * expected to be true; false means Wikidata left it standing and it needs a
+   * look by hand.
+   */
   redirected: boolean;
 }
 
@@ -120,7 +110,7 @@ export interface CandidateDifferentResponse {
 
 /**
  * Error body for the edit endpoints. `code` lets the client react (offer a
- * re-login, reveal the conflict overrides) without parsing the message, which
+ * re-login, explain a merge conflict) without parsing the message, which
  * is Wikidata's own text where it came from there.
  */
 export interface EditErrorResponse {

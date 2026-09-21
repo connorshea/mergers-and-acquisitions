@@ -154,6 +154,18 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
     expect(await allItems()).toHaveLength(7);
   });
 
+  it("logs the interval rate and the cumulative average on each progress line", async () => {
+    const lines: string[] = [];
+    await run([game("Q100", "Alpha"), game("Q200", "Beta"), game("Q300", "Gamma")], {
+      progressEveryBytes: 1,
+      log: (m) => void lines.push(m),
+    });
+    const progress = lines.filter((l) => l.includes(" MB/s now ("));
+    expect(progress.length).toBeGreaterThan(0);
+    for (const line of progress)
+      expect(line).toMatch(/(\d+|\?) MB\/s now \((\d+|\?) avg\), rss \d+ MB$/);
+  });
+
   it("never prunes after a capped run, an empty match, or with prune off", async () => {
     await insertItem(makeItem("Q100", "Alpha"));
     await insertItem(makeItem("Q200", "Beta"));

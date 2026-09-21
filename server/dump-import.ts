@@ -406,6 +406,13 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
     batch = [];
   };
 
+  // The progress line shows both the rate over the last interval (what the job
+  // is doing now) and the cumulative average (which a slow first minute drags
+  // down for hours, so on its own it looks like the job keeps speeding up).
+  let last = { bytes: 0, seconds: 0 };
+  const mbps = (bytes: number, seconds: number): string =>
+    seconds > 0 ? (bytes / 1e6 / seconds).toFixed(0) : "?";
+
   const scan = await scanDump(source, {
     classQid,
     limit: opts.limit,
@@ -419,12 +426,16 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
       const row = propertyRowFromEntity(entity);
       if (row) propertyRows.push(row);
     },
-    onProgress: (s) =>
+    onProgress: (s) => {
+      const now = mbps(s.bytes - last.bytes, s.seconds - last.seconds);
+      last = { bytes: s.bytes, seconds: s.seconds };
       log(
         `import-dump: ${(s.bytes / 1e9).toFixed(0)} GB inflated, ${s.lines} lines, ` +
-          `${s.matched} matched, ${s.properties} properties, ${(s.bytes / 1e6 / s.seconds).toFixed(0)} MB/s, ` +
+          `${s.matched} matched, ${s.properties} properties, ` +
+          `${now} MB/s now (${mbps(s.bytes, s.seconds)} avg), ` +
           `rss ${Math.round(process.memoryUsage().rss / 1e6)} MB`,
-      ),
+      );
+    },
   });
   await flush();
 

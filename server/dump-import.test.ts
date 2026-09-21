@@ -8,7 +8,7 @@ import { gzipSync } from "node:zlib";
 import { describe, expect, it } from "vite-plus/test";
 import type { Item } from "../src/lib/compare.ts";
 import type { Entity, Statement } from "../src/lib/wikibase.ts";
-import { openDump, scanDump, VIDEO_GAME } from "./dump-import.ts";
+import { formatDuration, openDump, openDumpFile, scanDump, VIDEO_GAME } from "./dump-import.ts";
 
 const itemRef = (qid: string) => ({
   type: "wikibase-entityid",
@@ -148,7 +148,41 @@ describe("openDump", () => {
     expect(() => openDump("/x/latest-all.json.bz2")).toThrow("use the .gz dump");
   });
 
-  it("fails the scan when the file is missing", async () => {
-    await expect(collect(openDump("/nonexistent/dump.json.gz"))).rejects.toThrow("ENOENT");
+  it("reports the size on disk and the bytes read so far", async () => {
+    const dir = await mkdtemp(join(tmpdir(), "dump-import-"));
+    const text = dumpText(ENTITIES);
+    const gz = gzipSync(text);
+    await writeFile(join(dir, "dump.json.gz"), gz);
+    await writeFile(join(dir, "dump.json"), text);
+    for (const [name, size] of [
+      ["dump.json.gz", gz.length],
+      ["dump.json", Buffer.byteLength(text)],
+    ] as const) {
+      const file = openDumpFile(join(dir, name));
+      expect(file.size).toBe(size);
+      expect(file.read()).toBe(0);
+      const { stats } = await collect(file.source);
+      expect(stats.bytes).toBe(Buffer.byteLength(text));
+      expect(file.read()).toBe(size);
+    }
+  });
+
+  it("fails up front when the file is missing", () => {
+    // stat() runs on open, so a bad path fails before any scan starts.
+    expect(() => openDump("/nonexistent/dump.json.gz")).toThrow("ENOENT");
+  });
+});
+
+describe("formatDuration", () => {
+  it("rounds to minutes and splits hours", () => {
+    expect(formatDuration(0)).toBe("<1m");
+    expect(formatDuration(29)).toBe("<1m");
+    expect(formatDuration(31)).toBe("1m");
+    expect(formatDuration(12 * 60)).toBe("12m");
+    expect(formatDuration(3 * 3600 + 41 * 60)).toBe("3h 41m");
+    expect(formatDuration(3600 + 5 * 60)).toBe("1h 05m");
+    expect(formatDuration(Number.NaN)).toBe("?");
+    expect(formatDuration(Number.POSITIVE_INFINITY)).toBe("?");
+    expect(formatDuration(-5)).toBe("?");
   });
 });

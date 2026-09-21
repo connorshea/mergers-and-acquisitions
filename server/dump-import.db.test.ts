@@ -2,7 +2,11 @@
 // against a real MariaDB: upsert + external-id rebuild, property sync, and the
 // prune of items that left the dump. Opt-in via DB_TEST=1 — see
 // test/global-setup.ts.
+import { mkdtemp, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { Readable } from "node:stream";
+import { gzipSync } from "node:zlib";
 import { afterAll, beforeEach, describe, expect, it } from "vite-plus/test";
 import { asc, eq } from "drizzle-orm";
 import { db, pool } from "./db.ts";
@@ -164,6 +168,32 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
     expect(progress.length).toBeGreaterThan(0);
     for (const line of progress)
       expect(line).toMatch(/(\d+|\?) MB\/s now \((\d+|\?) avg\), rss \d+ MB$/);
+  });
+
+  it("adds percent done and an ETA when reading from a file on disk", async () => {
+    const dir = await mkdtemp(join(tmpdir(), "dump-import-db-"));
+    const path = join(dir, "dump.json.gz");
+    const entities = [game("Q100", "Alpha"), game("Q200", "Beta"), game("Q300", "Gamma")];
+    await writeFile(
+      path,
+      gzipSync(`[\n${entities.map((e) => `${JSON.stringify(e)},\n`).join("")}]\n`),
+    );
+    const lines: string[] = [];
+    const stats = await runDumpImport({
+      path,
+      progressEveryBytes: 1,
+      prune: false,
+      log: (m) => void lines.push(m),
+    });
+    expect(stats.matched).toBe(3);
+    const progress = lines.filter((l) => l.includes(" MB/s now ("));
+    expect(progress.length).toBeGreaterThan(0);
+    for (const line of progress) {
+      expect(line).toMatch(/^import-dump: \[\d+\.\d%\] \d+ GB inflated, /);
+      expect(line).toMatch(/ avg\), ETA (\d+h \d\dm|\d+m|<1m|\?), rss \d+ MB$/);
+    }
+    // The whole (tiny) file is read by the time the last line is logged.
+    expect(progress.at(-1)).toMatch(/^import-dump: \[100\.0%\] /);
   });
 
   it("never prunes after a capped run, an empty match, or with prune off", async () => {

@@ -11,16 +11,15 @@ import {
   type MergeConflict,
   mergeConflicts,
 } from "../lib/compare.ts";
-import {
-  type CandidateDetailResponse,
-  type CandidateDifferentResponse,
-  type CandidateDismissResponse,
-  type CandidateMergeRequest,
-  type CandidateMergeResponse,
-  type CandidateReopenResponse,
-  type CandidateSummary,
-  MERGE_CONFLICT_TYPES,
+import type {
+  CandidateDetailResponse,
+  CandidateDifferentResponse,
+  CandidateDismissResponse,
+  CandidateMergeResponse,
+  CandidateReopenResponse,
+  CandidateSummary,
 } from "../lib/api-types.ts";
+import { wikiPageUrl } from "../lib/wiki.ts";
 
 // Detail view for one candidate: a summary bar (confidence, reasons, actions)
 // over the full field-by-field comparison. The API returns the pair already
@@ -105,7 +104,7 @@ export default function CandidateDetail() {
     setResolution(candidate.resolution);
   }
 
-  // Which ignoreconflicts kinds the mirror suggests the merge will need.
+  // Which merge conflicts the mirror predicts for this pair (see MergeDialog).
   const detectedConflicts = useMemo(
     () => (data ? mergeConflicts(data.from, data.into) : []),
     [data],
@@ -314,7 +313,7 @@ function EditOutcomePanel({ outcome }: { outcome: EditOutcome }) {
         </a>{" "}
         on {from.qid}.
         {!redirected &&
-          ` ${from.qid} was not turned into a redirect (it kept conflicting sitelinks); finish it by hand on Wikidata.`}
+          ` ${from.qid} was not turned into a redirect; check it on Wikidata and finish it by hand.`}
       </div>
     );
   }
@@ -357,25 +356,25 @@ function EditErrorNote({ error, id }: { error: FetchError | Error; id: string })
           <a href={loginUrl(`/candidates/${id}`)}>Log in again</a>.
         </>
       )}
-      {code === "conflict" && " Tick the matching override above to proceed anyway."}
+      {code === "conflict" && " Resolve this on the items on Wikidata by hand, then try again."}
     </p>
   );
 }
 
-const CONFLICT_COPY: Record<MergeConflict, (from: string, into: string) => ReactNode> = {
-  description: (from, into) => (
-    <>
-      Descriptions differ
-      <span className="conflict-hint">
-        Keep {into}'s description and drop {from}'s.
-      </span>
-    </>
-  ),
+/**
+ * How to fix, by hand on Wikidata, each conflict kind the tool refuses to
+ * override. Keyed by the kinds outside AUTO_IGNORED_CONFLICTS.
+ */
+const BLOCKER_COPY: Record<
+  Exclude<MergeConflict, "description">,
+  (from: string, into: string) => ReactNode
+> = {
   sitelink: (from, into) => (
     <>
-      Sitelinks clash
+      The items have different pages on the same wiki
       <span className="conflict-hint">
-        Keep {into}'s pages. {from} keeps its conflicting links, so it will not become a redirect.
+        Wikidata refuses to merge two items that each link a different page on one wiki. Remove or
+        move the sitelink on {from} or {into} first.
       </span>
     </>
   ),
@@ -383,17 +382,19 @@ const CONFLICT_COPY: Record<MergeConflict, (from: string, into: string) => React
     <>
       The items link to each other
       <span className="conflict-hint">
-        Drop the statements on {from} or {into} whose value is the other item.
+        Remove the statements on {from} or {into} whose value is the other item first.
       </span>
     </>
   ),
 };
 
-// Confirm-and-merge dialog: names the pair, offers one override checkbox per
-// user-resolvable `ignoreconflicts` kind (marking the ones the mirror predicts),
-// and submits. Nothing is ever pre-ticked: an override is sent only because the
-// user chose it. Auto-ignored kinds (a differing description) aren't shown as
-// overrides — the server always ignores them — but are noted when detected.
+// Confirm-and-merge dialog: names the pair and submits. There are no conflict
+// overrides: the server ignores only the auto-handled kinds (a differing
+// description) and never tells Wikidata to ignore clashing sitelinks or
+// statements. When the mirror predicts one of those, the dialog says so and
+// explains the manual fix; the merge button stays available because the
+// mirror may be behind a fix already made on Wikidata, and Wikidata itself is
+// the gate either way.
 function MergeDialog({
   id,
   candidate,
@@ -413,25 +414,19 @@ function MergeDialog({
   onClose: () => void;
   onDone: (res: CandidateMergeResponse) => void;
 }) {
-  const [ignore, setIgnore] = useState<MergeConflict[]>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  // The user only resolves conflicts the tool doesn't auto-ignore; a detected
-  // auto-ignored conflict (a differing description) is surfaced as a note.
-  const manualKinds = MERGE_CONFLICT_TYPES.filter((k) => !AUTO_IGNORED_CONFLICTS.includes(k));
   const autoHandled = detected.filter((k) => AUTO_IGNORED_CONFLICTS.includes(k));
+  const blockers = detected.filter(
+    (k): k is Exclude<MergeConflict, "description"> => !AUTO_IGNORED_CONFLICTS.includes(k),
+  );
 
   async function submit() {
     setBusy(true);
     setError(null);
     try {
-      const body: CandidateMergeRequest = { ignoreConflicts: ignore };
-      const res = await fetch("/api/candidates/:id/merge", {
-        method: "POST",
-        params: { id },
-        body,
-      });
+      const res = await fetch("/api/candidates/:id/merge", { method: "POST", params: { id } });
       onDone(res as CandidateMergeResponse);
     } catch (e: unknown) {
       setError(e instanceof Error ? e : new Error("Merge failed."));
@@ -454,35 +449,30 @@ function MergeDialog({
             its description and {from.id}'s is dropped.
           </p>
         )}
-        <div className="modal-section">
-          <p className="modal-section-title">Overrides (leave unticked unless you are sure)</p>
-          <ul className="conflict-list">
-            {manualKinds.map((kind) => (
-              <li key={kind}>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={ignore.includes(kind)}
-                    disabled={busy}
-                    onChange={(e) =>
-                      setIgnore((cur) =>
-                        e.target.checked ? [...cur, kind] : cur.filter((k) => k !== kind),
-                      )
-                    }
-                  />
-                  <span>
-                    {CONFLICT_COPY[kind](from.id, into.id)}
-                    {detected.includes(kind) && (
-                      <span className="conflict-detected" title="Seen in the mirrored data">
-                        detected
-                      </span>
-                    )}
-                  </span>
-                </label>
-              </li>
-            ))}
-          </ul>
-        </div>
+        {blockers.length > 0 && (
+          <div className="modal-section modal-blockers" role="alert">
+            <p className="modal-section-title">
+              Wikidata will refuse this merge until fixed by hand
+            </p>
+            <ul className="conflict-list">
+              {blockers.map((kind) => (
+                <li key={kind}>{BLOCKER_COPY[kind](from.id, into.id)}</li>
+              ))}
+            </ul>
+            <p className="conflict-hint">
+              Edit{" "}
+              <a href={wikiPageUrl(from.id)} target="_blank" rel="noreferrer">
+                {from.id}
+              </a>{" "}
+              or{" "}
+              <a href={wikiPageUrl(into.id)} target="_blank" rel="noreferrer">
+                {into.id}
+              </a>{" "}
+              on Wikidata, then merge. This tool never overrides these conflicts. If you have
+              already fixed them there, the mirrored data is just out of date and you can go ahead.
+            </p>
+          </div>
+        )}
         {error && <EditErrorNote error={error} id={id} />}
       </div>
       <div className="modal-actions">

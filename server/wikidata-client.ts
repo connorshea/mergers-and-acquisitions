@@ -18,7 +18,7 @@
 import { DEFAULT_WIKIDATA_API_URL, wikidataApiUrl } from "./auth/config.ts";
 import { deleteTokens, getAccessToken, TokenError } from "./auth/tokens.ts";
 import { userAgent } from "./auth/user-agent.ts";
-import type { MergeConflictType } from "../src/lib/api-types.ts";
+import type { MergeConflict } from "../src/lib/compare.ts";
 
 /** Give up on one API request after this long; merges of big items are slow. */
 export const EDIT_TIMEOUT_MS = 30_000;
@@ -266,21 +266,25 @@ export async function editRequest(
 export interface MergeResult {
   fromRevid: number;
   intoRevid: number;
-  /** Whether the source became a redirect (false when ignored sitelink conflicts kept it alive). */
+  /**
+   * Whether the source became a redirect. Wikibase leaves it alive when
+   * ignored sitelink conflicts kept content on it; the app never ignores those,
+   * so this is expected to be true, and is reported rather than assumed.
+   */
   redirected: boolean;
 }
 
 /**
  * `wbmergeitems`: merge `fromQid` into `intoQid` (the app's order — the higher
- * QID into the lower). `ignoreConflicts` must come straight from the user's
- * explicit choices; nothing here adds to it.
+ * QID into the lower). `ignoreConflicts` is sent verbatim; nothing here adds to
+ * it. The caller (server/edits.ts) passes only the auto-handled kinds.
  */
 export async function mergeItems(
   user: EditUser,
   opts: {
     fromQid: string;
     intoQid: string;
-    ignoreConflicts: readonly MergeConflictType[];
+    ignoreConflicts: readonly MergeConflict[];
     summary: string;
   },
   deps: WikidataClientDeps = defaultDeps,

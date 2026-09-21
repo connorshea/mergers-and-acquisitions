@@ -116,9 +116,11 @@ front for accounts its profile snapshot says are blocked.
 
 - **Merge** (`POST /api/candidates/:id/merge`) runs `wbmergeitems` in the
   app's order — the higher QID into the lower — with an edit summary crediting
-  the tool. The confirm dialog offers one checkbox per `ignoreconflicts` kind
-  (description / sitelink / statement), marking the ones the mirror predicts;
-  an override is only ever sent because the user ticked it. On success the
+  the tool. The only `ignoreconflicts` kind ever sent is `description` (the
+  survivor keeps its description, the merged-away item's is dropped). Clashing
+  sitelinks and items that link to each other are never overridden: the
+  confirm dialog warns when the mirror predicts one, Wikidata refuses the
+  merge, and the user fixes the items by hand first. On success the
   candidate becomes `merged` (with both revision ids linked from the page), the
   merged-away item is dropped from the mirror so the hunt stops pairing it, and
   any other open candidate that referenced it is settled as "merged elsewhere".

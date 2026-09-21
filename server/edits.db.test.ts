@@ -185,15 +185,23 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       expect((await candidateRow(alpha)).status).toBe("open");
     });
 
-    it("rejects a malformed ignoreConflicts", async () => {
-      const { status } = await post(`/api/candidates/${alpha}/merge`, editor, {
-        ignoreConflicts: ["bogus"],
-      });
-      expect(status).toBe(400);
+    it("refuses conflict overrides from the client instead of merging with them", async () => {
+      const calls = stubWikidata(() => mergeOk(101, 102));
+      for (const ignoreConflicts of [["sitelink"], ["statement"], ["description"], []]) {
+        const { status, body } = await post<EditErrorResponse>(
+          `/api/candidates/${alpha}/merge`,
+          editor,
+          { ignoreConflicts },
+        );
+        expect(status).toBe(400);
+        expect(body.error).toMatch(/overrides are not supported/);
+      }
+      expect(calls).toHaveLength(0);
       expect((await candidateRow(alpha)).status).toBe("open");
+      expect(await db.select().from(wikidataEdits)).toEqual([]);
     });
 
-    it("rejects a body that is not JSON instead of merging without overrides", async () => {
+    it("rejects a body that is not JSON", async () => {
       stubWikidata(() => mergeOk(101, 102));
       const res = await app.request(`/api/candidates/${alpha}/merge`, {
         method: "POST",
@@ -210,9 +218,6 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       const { status, body } = await post<CandidateMergeResponse>(
         `/api/candidates/${alpha}/merge`,
         editor,
-        {
-          ignoreConflicts: ["description"],
-        },
       );
       expect(status).toBe(200);
       expect(body.candidate).toMatchObject({
@@ -232,7 +237,9 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       });
       expect(body.redirected).toBe(true);
 
-      // The edit went out as this user, with the guards, in the app's order.
+      // The edit went out as this user, with the guards, in the app's order,
+      // ignoring only the auto-handled description conflict — never sitelinks
+      // or statements, which the user resolves on Wikidata by hand.
       const edit = calls.find((c) => c.method === "POST")!;
       expect(Object.fromEntries(edit.params)).toMatchObject({
         action: "wbmergeitems",
@@ -281,13 +288,7 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
 
     it("notes when the source item was not redirected", async () => {
       stubWikidata(() => mergeOk(101, 102, 0));
-      const { body } = await post<CandidateMergeResponse>(
-        `/api/candidates/${alpha}/merge`,
-        editor,
-        {
-          ignoreConflicts: ["sitelink"],
-        },
-      );
+      const { body } = await post<CandidateMergeResponse>(`/api/candidates/${alpha}/merge`, editor);
       expect(body.redirected).toBe(false);
       expect(body.candidate.resolution).toBe(
         "merged into Q10 (rev 102); source item not redirected",

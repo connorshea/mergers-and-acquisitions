@@ -1,7 +1,7 @@
 // The Wikimedia OAuth 2.0 login flow (authorization code + PKCE, confidential
 // client) and the session endpoints:
 //
-//   GET  /api/auth/login?returnTo=/path  → redirect to meta.wikimedia.org
+//   GET  /api/auth/login?returnTo=/path  → redirect to www.wikidata.org
 //   GET  /api/auth/callback?code&state   → exchange, upsert user, start session
 //   POST /api/auth/logout
 //   GET  /api/auth/me
@@ -34,7 +34,7 @@ interface PendingLogin {
   startedAt: number;
 }
 
-/** What meta.wikimedia.org's `oauth2/resource/profile` returns (identification grant). */
+/** What the issuer's `oauth2/resource/profile` returns (identification grant). */
 export interface WikimediaProfile {
   sub: number;
   username: string;

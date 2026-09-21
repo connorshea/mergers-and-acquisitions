@@ -1,6 +1,6 @@
 // The login/logout control shown in each page's header. Login is a plain link
 // to the server's OAuth start route (a full-page navigation, not a fetch), so
-// the redirect to meta.wikimedia.org and back works without any client state.
+// the redirect to www.wikidata.org and back works without any client state.
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "./lib/auth-context.ts";

@@ -7,10 +7,21 @@
 //   WIKIDATA_JSON_DUMP=/path/to/dump.json.gz …   # another dump (plain .json works too)
 //   DUMP_PRUNE=0 …                               # keep items missing from the dump
 //   DUMP_PRUNE_FORCE=1 …                         # prune past the 20% safety cap
+import { realpathSync } from "node:fs";
 import { pool } from "../server/db.ts";
 import { DEFAULT_DUMP_PATH, runDumpImport } from "../server/dump-import.ts";
 
-const path = process.env.WIKIDATA_JSON_DUMP ?? DEFAULT_DUMP_PATH;
+const configured = process.env.WIKIDATA_JSON_DUMP ?? DEFAULT_DUMP_PATH;
+// `latest-all.json.gz` is a symlink to a dated file (e.g. `20260914/wikidata-20260914-all.json.gz`).
+// Resolve it up front so the log says which dump this run read, and open the
+// dated file itself so a pointer swap mid-run can't make the two differ.
+// A missing file is left for runDumpImport to report (ENOENT on open).
+let path = configured;
+try {
+  path = realpathSync(configured);
+} catch {
+  // fall through with the configured path
+}
 const limit = process.env.DUMP_LIMIT ? Number(process.env.DUMP_LIMIT) : undefined;
 if (limit !== undefined && !(Number.isInteger(limit) && limit > 0)) {
   console.error(
@@ -19,7 +30,10 @@ if (limit !== undefined && !(Number.isInteger(limit) && limit > 0)) {
   process.exit(2);
 }
 
-console.log(`import-dump: reading ${path}${limit ? ` (limit ${limit})` : ""}`);
+console.log(
+  `import-dump: reading ${configured}${path !== configured ? ` -> ${path}` : ""}` +
+    (limit ? ` (limit ${limit})` : ""),
+);
 
 runDumpImport({
   path,

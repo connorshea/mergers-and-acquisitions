@@ -8,7 +8,7 @@ import { loadEncKeys } from "./crypto.ts";
 export interface AuthConfig {
   clientId: string;
   clientSecret: string;
-  /** Base of the OAuth 2.0 REST endpoints, e.g. https://meta.wikimedia.org/w/rest.php/oauth2 */
+  /** Base of the OAuth 2.0 REST endpoints, e.g. https://www.wikidata.org/w/rest.php/oauth2 */
   issuer: string;
   /** Public origin of this app (scheme + host), used for the callback URL and cookie flags. */
   baseUrl: string;
@@ -18,7 +18,11 @@ export interface AuthConfig {
   wikidataApiUrl: string;
 }
 
-export const DEFAULT_ISSUER = "https://meta.wikimedia.org/w/rest.php/oauth2";
+// The consumer is registered on Meta but its OAuth 2.0 endpoints are served by
+// every wiki in the farm; this one must be Wikidata. Keep the `www.`: the bare
+// wikidata.org host 301s everything to www, and fetch re-issues the token POST
+// as a GET after a 301, which the endpoint rejects with 405.
+export const DEFAULT_ISSUER = "https://www.wikidata.org/w/rest.php/oauth2";
 export const DEFAULT_WIKIDATA_API_URL = "https://www.wikidata.org/w/api.php";
 
 const MIN_SECRET_LENGTH = 32;

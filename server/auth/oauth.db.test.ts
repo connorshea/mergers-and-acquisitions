@@ -1,5 +1,5 @@
 // Integration tests for the OAuth login flow, sessions, and token refresh
-// against a real MariaDB, with meta.wikimedia.org replaced by a stubbed
+// against a real MariaDB, with www.wikidata.org replaced by a stubbed
 // `fetch`. Opt-in via DB_TEST=1 — see test/global-setup.ts.
 import {
   afterAll,

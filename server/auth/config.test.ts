@@ -91,7 +91,7 @@ describe("authConfigured / authConfig", () => {
     expect(cookiesSecure()).toBe(true);
 
     setEnv(COMPLETE);
-    expect(authConfig().issuer).toBe("https://meta.wikimedia.org/w/rest.php/oauth2");
+    expect(authConfig().issuer).toBe("https://www.wikidata.org/w/rest.php/oauth2");
     expect(callbackUrl()).toBe("http://localhost:5173/api/auth/callback");
     expect(cookiesSecure()).toBe(false);
   });

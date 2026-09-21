@@ -206,7 +206,8 @@ export default function MergeCandidates({
       {blockers.length > 0 && (
         <div className="blockers" role="status">
           <strong>
-            {blockers.length} conflict{blockers.length > 1 ? "s" : ""} block merge
+            {blockers.length === 1 ? "1 conflict blocks" : `${blockers.length} conflicts block`} the
+            merge
           </strong>
           <ul className="blocker-list">
             {blockers.map((r) => (

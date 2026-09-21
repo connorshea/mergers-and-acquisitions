@@ -43,6 +43,12 @@
   mount: all
   mem: 4Gi
   cpu: 1
+  # A full pass is ~6-7 h at ~80 MB/s inflated on one CPU. Retry once so a run
+  # killed by a node drain restarts rather than waiting a week (the import is
+  # idempotent and never prunes on an incomplete pass); the timeout catches a
+  # stuck run before it collides with the next nightly hunt.
+  retry: 1
+  timeout: 36000 # 10 h
   emails: onfailure
 
 - name: hunt

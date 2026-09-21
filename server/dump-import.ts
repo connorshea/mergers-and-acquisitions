@@ -24,7 +24,7 @@
 //
 // Everything is an idempotent upsert, so a job killed mid-way (a node drain,
 // say) is simply re-run.
-import { createReadStream } from "node:fs";
+import { createReadStream, statSync } from "node:fs";
 import type { Readable } from "node:stream";
 import { createGunzip } from "node:zlib";
 import { and, asc, eq, gt, inArray, or, sql } from "drizzle-orm";
@@ -96,15 +96,39 @@ export interface ScanOptions {
  * too slowly for a one-CPU job.
  */
 export function openDump(path: string): Readable {
+  return openDumpFile(path).source;
+}
+
+/** An open dump: the inflated stream plus what is known about the file on disk. */
+export interface DumpFile {
+  source: Readable;
+  /** Size of the file on disk (compressed, for a .gz). */
+  size: number;
+  /** Bytes read from the file so far (compressed, for a .gz); equals `size` at the end. */
+  read: () => number;
+}
+
+export function openDumpFile(path: string): DumpFile {
   if (path.endsWith(".bz2")) {
     throw new Error(`${path}: use the .gz dump (bzip2 is ~10x slower to inflate)`);
   }
+  const size = statSync(path).size;
   const file = createReadStream(path, { highWaterMark: CHUNK_SIZE });
-  if (!path.endsWith(".gz")) return file;
+  const read = () => file.bytesRead;
+  if (!path.endsWith(".gz")) return { source: file, size, read };
   const gunzip = createGunzip({ chunkSize: CHUNK_SIZE });
   // pipe() does not forward errors; a vanished NFS file must fail the job.
   file.on("error", (err) => gunzip.destroy(err));
-  return file.pipe(gunzip);
+  return { source: file.pipe(gunzip), size, read };
+}
+
+/** "3h 41m", "12m", or "<1m" (for the progress ETA). */
+export function formatDuration(seconds: number): string {
+  if (!Number.isFinite(seconds) || seconds < 0) return "?";
+  const minutes = Math.round(seconds / 60);
+  if (minutes < 1) return "<1m";
+  if (minutes < 60) return `${minutes}m`;
+  return `${Math.floor(minutes / 60)}h ${String(minutes % 60).padStart(2, "0")}m`;
 }
 
 /**
@@ -389,7 +413,8 @@ async function pruneMissing(
 export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportStats> {
   const log = opts.log ?? ((m: string) => console.log(m));
   const classQid = opts.classQid ?? VIDEO_GAME;
-  const source = opts.source ?? openDump(opts.path ?? DEFAULT_DUMP_PATH);
+  const file = opts.source ? undefined : openDumpFile(opts.path ?? DEFAULT_DUMP_PATH);
+  const source = opts.source ?? file!.source;
   const prune = opts.prune ?? opts.limit === undefined;
   const stamp = toSqlDatetime(new Date());
 
@@ -409,7 +434,10 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
   // The progress line shows both the rate over the last interval (what the job
   // is doing now) and the cumulative average (which a slow first minute drags
   // down for hours, so on its own it looks like the job keeps speeding up).
-  let last = { bytes: 0, seconds: 0 };
+  // With a file on disk, its size and the compressed bytes read so far also
+  // give the fraction done and an ETA from the compressed rate over the last
+  // interval (inflated bytes can't be compared to the size on disk).
+  let last = { bytes: 0, seconds: 0, read: 0 };
   const mbps = (bytes: number, seconds: number): string =>
     seconds > 0 ? (bytes / 1e6 / seconds).toFixed(0) : "?";
 
@@ -428,11 +456,18 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
     },
     onProgress: (s) => {
       const now = mbps(s.bytes - last.bytes, s.seconds - last.seconds);
-      last = { bytes: s.bytes, seconds: s.seconds };
+      const read = file?.read() ?? 0;
+      let done = "";
+      if (file && file.size > 0) {
+        const rate = (read - last.read) / (s.seconds - last.seconds); // compressed B/s
+        const eta = rate > 0 ? formatDuration((file.size - read) / rate) : "?";
+        done = `${((100 * read) / file.size).toFixed(1)}% done, ETA ${eta}, `;
+      }
+      last = { bytes: s.bytes, seconds: s.seconds, read };
       log(
         `import-dump: ${(s.bytes / 1e9).toFixed(0)} GB inflated, ${s.lines} lines, ` +
           `${s.matched} matched, ${s.properties} properties, ` +
-          `${now} MB/s now (${mbps(s.bytes, s.seconds)} avg), ` +
+          `${now} MB/s now (${mbps(s.bytes, s.seconds)} avg), ${done}` +
           `rss ${Math.round(process.memoryUsage().rss / 1e6)} MB`,
       );
     },

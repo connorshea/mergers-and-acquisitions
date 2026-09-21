@@ -8,7 +8,17 @@ import { gzipSync } from "node:zlib";
 import { describe, expect, it } from "vite-plus/test";
 import type { Item } from "../src/lib/compare.ts";
 import type { Entity, Statement } from "../src/lib/wikibase.ts";
-import { formatDuration, openDump, openDumpFile, scanDump, VIDEO_GAME } from "./dump-import.ts";
+import { dumpGz } from "../test/dump-gz.ts";
+import {
+  dumpIdFor,
+  dumpSlice,
+  findMemberStart,
+  formatDuration,
+  openDump,
+  openDumpFile,
+  scanDump,
+  VIDEO_GAME,
+} from "./dump-import.ts";
 
 const itemRef = (qid: string) => ({
   type: "wikibase-entityid",
@@ -170,6 +180,101 @@ describe("openDump", () => {
   it("fails up front when the file is missing", () => {
     // stat() runs on open, so a bad path fails before any scan starts.
     expect(() => openDump("/nonexistent/dump.json.gz")).toThrow("ENOENT");
+  });
+});
+
+describe("dump shards", () => {
+  // Three batches, like the real dump's per-batch members, plus one stored
+  // (uncompressed) member whose content contains a fake gzip header followed
+  // by bytes that are not valid deflate data.
+  const FAKE_HEADER = Buffer.from([0x1f, 0x8b, 0x08, 0, 0, 0, 0, 0, 0, 3, 7, 7, 7, 7, 7, 7, 7, 7]);
+  const decoy = Buffer.concat([
+    Buffer.from('{"type":"item","id":"Q7","labels":{"en":{"value":"'),
+    FAKE_HEADER,
+    Buffer.from('"}},"claims":{}}'),
+  ]);
+  const fixture = dumpGz([ENTITIES.slice(0, 3), ENTITIES.slice(3, 5), decoy, ENTITIES.slice(5)]);
+
+  async function writeFixture(): Promise<{ dir: string; gz: string; json: string }> {
+    const dir = await mkdtemp(join(tmpdir(), "dump-shards-"));
+    const gz = join(dir, "dump.json.gz");
+    const json = join(dir, "dump.json");
+    await writeFile(gz, fixture.gz);
+    await writeFile(json, fixture.text);
+    return { dir, gz, json };
+  }
+
+  it("finds member starts, skipping a header-like byte run inside a member", async () => {
+    const { gz } = await writeFixture();
+    expect(fixture.members[0]).toBe(0);
+    for (let i = 0; i < fixture.members.length; i++) {
+      const at = fixture.members[i];
+      expect(findMemberStart(gz, at)).toBe(at);
+      // Anywhere inside a member, the search lands on the next member.
+      const next = fixture.members[i + 1] ?? fixture.gz.length;
+      expect(findMemberStart(gz, at + 1)).toBe(next);
+    }
+    const fake = fixture.gz.indexOf(FAKE_HEADER);
+    expect(fake).toBeGreaterThan(0);
+    expect(fixture.members).not.toContain(fake);
+    expect(findMemberStart(gz, fake)).not.toBe(fake);
+    expect(findMemberStart(gz, fixture.gz.length)).toBe(fixture.gz.length);
+  });
+
+  it("partitions a .gz into whole members and a plain dump into whole lines", async () => {
+    const { gz, json } = await writeFixture();
+    for (const [path, size, isBoundary] of [
+      [gz, fixture.gz.length, (at: number) => fixture.members.includes(at)],
+      [json, fixture.text.length, (at: number) => fixture.text[at - 1] === 0x0a],
+    ] as const) {
+      for (const count of [1, 2, 3, 5, 40]) {
+        const slices = Array.from({ length: count }, (_, index) =>
+          dumpSlice(path, { index, count }),
+        );
+        expect(slices[0].start).toBe(0);
+        expect(slices[count - 1].end).toBe(size);
+        for (let i = 0; i < count; i++) {
+          const { start, end } = slices[i];
+          expect(end).toBeGreaterThanOrEqual(start);
+          expect(i === 0 ? 0 : slices[i - 1].end).toBe(start);
+          expect(start === 0 || start === size || isBoundary(start)).toBe(true);
+        }
+        // Read every shard: together they see the whole dump exactly once.
+        const ids: string[] = [];
+        let bytes = 0;
+        let lines = 0;
+        for (let index = 0; index < count; index++) {
+          const file = openDumpFile(path, { index, count });
+          expect(file.size).toBe(slices[index].end - slices[index].start);
+          const { matched, stats } = await collect(file.source);
+          expect(file.read()).toBe(file.size);
+          ids.push(...matched.map((m) => m.id));
+          bytes += stats.bytes;
+          lines += stats.lines;
+        }
+        expect(ids).toEqual(["Q1", "Q6"]);
+        expect(bytes).toBe(fixture.text.length);
+        // A slice that ends mid-line (at a `,` member) counts its last line
+        // itself, and the next slice counts the `,` — at most one extra per cut.
+        expect(lines).toBeGreaterThanOrEqual(ENTITIES.length + 3);
+        expect(lines).toBeLessThanOrEqual(ENTITIES.length + 3 + count - 1);
+      }
+    }
+  });
+
+  it("rejects a shard outside its count", async () => {
+    const { gz } = await writeFixture();
+    expect(() => dumpSlice(gz, { index: 2, count: 2 })).toThrow("out of range");
+    expect(() => dumpSlice(gz, { index: 0, count: 0 })).toThrow("bad shard");
+  });
+
+  it("names a dump by the date in its file name, else by mtime and size", async () => {
+    const { dir, gz } = await writeFixture();
+    expect(dumpIdFor("/public/dumps/x/20260914/wikidata-20260914-all.json.gz")).toBe("20260914");
+    expect(dumpIdFor(join(dir, "wikidata-20260921-lexemes.json.gz"))).toBe("20260921");
+    const id = dumpIdFor(gz);
+    expect(id).toMatch(/^\d+-\d+$/);
+    expect(dumpIdFor(gz)).toBe(id);
   });
 });
 

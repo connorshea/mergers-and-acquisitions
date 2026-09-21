@@ -174,6 +174,30 @@ Locally, point `WIKIDATA_JSON_DUMP` at any `.json.gz` / `.json` in the same
 format (one entity per line; the `.bz2` dump is refused as far too slow). The
 older `pnpm seed` path (the vglist SPARQL blob) still works for a quick dev DB.
 
+### Splitting the pass across jobs
+
+The pass is CPU-bound on one core (inflate plus the line scan), and a job can't
+have more than one CPU, but the dump's `.gz` is a concatenation of ~2,000
+independent gzip members (the generator gzips each 65k-entity batch on its own
+and `cat`s them together), so the file can be read in slices. `--shard i/N`
+reads the N-th of the compressed bytes, widened to whole members, so N jobs
+with the same N cover the file exactly once:
+
+```sh
+for i in 1 2 3 4; do
+  toolforge jobs run import-dump-$i --image tool-mna/tool-mna:latest \
+    --command "node jobs/import-dump.ts --shard $i/4" --mount all --mem 1Gi --cpu 1 --emails onfailure
+done
+```
+
+Each slice upserts on its own and stamps its items with the dump (the date in
+the file name); the pruning happens once, by whichever job completes the set
+for that dump (`dump_import_runs`). A retried slice just re-records itself.
+Wall time is about 1/N of a single pass, but the default tool quota is 2 CPUs
+in total (shared with the web service), so running several slices at once
+needs a [quota increase](https://wikitech.wikimedia.org/wiki/Help:Toolforge/Kubernetes#Quotas).
+Without `--shard` the job reads the whole file, which is `--shard 1/1`.
+
 ## Deploying to Toolforge
 
 Build the image (`toolforge build`), apply migrations as a one-off job, load the

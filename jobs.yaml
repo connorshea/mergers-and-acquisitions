@@ -36,6 +36,10 @@
 # visible with `mount: all` (build-service images get no NFS by default); it
 # lands on Tuesdays, and a full pass takes a few hours on one CPU. Needs the
 # per-job maximum (1 CPU / 4Gi under the default tool quota).
+#
+# To split the pass across N jobs (needs a CPU quota increase, see the README),
+# replace this job with N copies named import-dump-1..N whose commands are
+# `node jobs/import-dump.ts --shard 1/N` … `--shard N/N`, on the same schedule.
 - name: import-dump
   command: node jobs/import-dump.ts
   image: tool-mna/tool-mna:latest

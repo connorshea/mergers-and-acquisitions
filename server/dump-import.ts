@@ -24,12 +24,24 @@
 //
 // Everything is an idempotent upsert, so a job killed mid-way (a node drain,
 // say) is simply re-run.
-import { createReadStream, statSync } from "node:fs";
-import type { Readable } from "node:stream";
-import { createGunzip } from "node:zlib";
-import { and, asc, eq, gt, inArray, or, sql } from "drizzle-orm";
+//
+// The pass can be split across N jobs ("shards"). The dump's .gz is not one
+// stream: the generator (operations/dumps, dumpwikibasejson.sh) gzips each
+// 65k-entity batch on its own and `cat`s them together with tiny `[`, `,` and
+// `]` members between, ~2,000 independent members that each start on a line
+// boundary. Shard i/N takes the N-th of the compressed bytes starting at the
+// first member header at or past i*size/N and ending at the first one at or
+// past (i+1)*size/N, so every byte is read by exactly one shard and no index
+// pass is needed. Each shard upserts on its own; items are stamped with the
+// dump they were seen in, and the shard that completes the set for a dump
+// (see `dump_import_runs`) prunes the rows the dump no longer contains.
+import { closeSync, createReadStream, openSync, readSync, statSync } from "node:fs";
+import { basename } from "node:path";
+import { Readable } from "node:stream";
+import { constants as zlibConstants, createGunzip, inflateRawSync } from "node:zlib";
+import { and, asc, count, eq, gt, inArray, isNull, ne, or, sql } from "drizzle-orm";
 import { db } from "./db.ts";
-import { externalIds, items, mergeCandidates } from "../db/schema.ts";
+import { dumpImportRuns, externalIds, items, mergeCandidates } from "../db/schema.ts";
 import { syncProperties } from "./properties-sync.ts";
 import { toSqlDatetime } from "./auth/time.ts";
 import type { Item } from "../src/lib/compare.ts";
@@ -99,27 +111,161 @@ export function openDump(path: string): Readable {
   return openDumpFile(path).source;
 }
 
-/** An open dump: the inflated stream plus what is known about the file on disk. */
+/** Which N-th of a dump to read: `index` is 0-based. `{ index: 0, count: 1 }` is the whole file. */
+export interface DumpShard {
+  index: number;
+  count: number;
+}
+
+export const WHOLE_DUMP: DumpShard = { index: 0, count: 1 };
+
+/** An open dump (or one shard of it): the inflated stream plus its place in the file on disk. */
 export interface DumpFile {
   source: Readable;
-  /** Size of the file on disk (compressed, for a .gz). */
+  /** First byte of this shard's slice of the file. */
+  start: number;
+  /** One past the last byte of the slice; `end - start === size`. */
+  end: number;
+  /** Bytes on disk in this slice (compressed, for a .gz). The whole file for one shard. */
   size: number;
-  /** Bytes read from the file so far (compressed, for a .gz); equals `size` at the end. */
+  /** Bytes read from the slice so far (compressed, for a .gz); equals `size` at the end. */
   read: () => number;
 }
 
-export function openDumpFile(path: string): DumpFile {
+const GZIP_MAGIC = Buffer.from([0x1f, 0x8b, 0x08]);
+const SEARCH_CHUNK = 4 << 20;
+/** Deflate bytes to trial-inflate when deciding whether a magic hit is a real member. */
+const PROBE_BYTES = 4096;
+
+/**
+ * Length of the gzip header starting at `buf[0]`, or -1 when the bytes are not
+ * a well-formed header (RFC 1952: magic, CM=8, no reserved flags, then the
+ * optional FEXTRA / FNAME / FCOMMENT / FHCRC fields).
+ */
+function gzipHeaderLength(buf: Buffer): number {
+  if (buf.length < 10 || buf[0] !== 0x1f || buf[1] !== 0x8b || buf[2] !== 0x08) return -1;
+  const flags = buf[3];
+  if (flags & 0xe0) return -1;
+  let n = 10;
+  if (flags & 0x04) {
+    if (buf.length < n + 2) return -1;
+    n += 2 + buf.readUInt16LE(n);
+  }
+  for (const bit of [0x08, 0x10]) {
+    if (!(flags & bit)) continue;
+    const nul = buf.indexOf(0, n);
+    if (nul === -1) return -1;
+    n = nul + 1;
+  }
+  if (flags & 0x02) n += 2;
+  return n <= buf.length ? n : -1;
+}
+
+/** True when a gzip member really starts at `offset`: valid header, and its first deflate bytes inflate. */
+function isMemberStart(fd: number, offset: number): boolean {
+  const buf = Buffer.alloc(PROBE_BYTES + 1024);
+  const n = readSync(fd, buf, 0, buf.length, offset);
+  const header = gzipHeaderLength(buf.subarray(0, n));
+  if (header === -1) return false;
+  try {
+    // A truncated valid stream inflates to a prefix; the pseudo-random deflate
+    // bytes that follow a chance `1f 8b 08` inside a member fail within bytes.
+    inflateRawSync(buf.subarray(header, n), { finishFlush: zlibConstants.Z_SYNC_FLUSH });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * The first gzip member boundary at or after `from` (`size` when there is none
+ * before the end of the file). Scans the compressed bytes for the magic, which
+ * runs at memory speed; each hit is verified with a trial inflate. The dump's
+ * members are ~70 MB, so a search reads ~35 MB on average.
+ */
+export function findMemberStart(path: string, from: number): number {
+  const fd = openSync(path, "r");
+  try {
+    const size = statSync(path).size;
+    const buf = Buffer.alloc(SEARCH_CHUNK);
+    let pos = from;
+    while (pos < size) {
+      const n = readSync(fd, buf, 0, SEARCH_CHUNK, pos);
+      if (n === 0) break;
+      const chunk = buf.subarray(0, n);
+      let at = -1;
+      while ((at = chunk.indexOf(GZIP_MAGIC, at + 1)) !== -1) {
+        if (isMemberStart(fd, pos + at)) return pos + at;
+      }
+      // Step back so a magic split across two reads is still seen whole.
+      pos += Math.max(1, n - (GZIP_MAGIC.length - 1));
+    }
+    return size;
+  } finally {
+    closeSync(fd);
+  }
+}
+
+/** The first line start at or after `from` in a plain-text dump (`size` when there is none). */
+function findLineStart(path: string, from: number): number {
+  const fd = openSync(path, "r");
+  try {
+    const size = statSync(path).size;
+    if (from === 0) return 0;
+    const buf = Buffer.alloc(SEARCH_CHUNK);
+    let pos = from;
+    while (pos < size) {
+      const n = readSync(fd, buf, 0, SEARCH_CHUNK, pos);
+      if (n === 0) break;
+      const nl = buf.subarray(0, n).indexOf(NL);
+      if (nl !== -1) return Math.min(pos + nl + 1, size);
+      pos += n;
+    }
+    return size;
+  } finally {
+    closeSync(fd);
+  }
+}
+
+/**
+ * The byte range shard `index` of `count` reads: the N-th of the file, widened
+ * to whole gzip members (or whole lines for a plain dump) so that the shards
+ * partition the file exactly. Both ends are found by the same forward search
+ * from the same nominal offsets, so shard i's end is shard i+1's start.
+ */
+export function dumpSlice(path: string, shard: DumpShard): { start: number; end: number } {
+  const { index, count } = shard;
+  if (!(Number.isInteger(count) && count >= 1 && Number.isInteger(index) && index >= 0)) {
+    throw new Error(`bad shard ${index}/${count}`);
+  }
+  if (index >= count) throw new Error(`shard index ${index} is out of range for ${count} shards`);
+  const size = statSync(path).size;
+  if (count === 1) return { start: 0, end: size };
+  const boundary = path.endsWith(".gz") ? findMemberStart : findLineStart;
+  const nominal = (i: number) => Math.floor((size * i) / count);
+  const start = index === 0 ? 0 : boundary(path, nominal(index));
+  const end = index === count - 1 ? size : boundary(path, nominal(index + 1));
+  return { start, end: Math.max(start, end) };
+}
+
+export function openDumpFile(path: string, shard: DumpShard = WHOLE_DUMP): DumpFile {
   if (path.endsWith(".bz2")) {
     throw new Error(`${path}: use the .gz dump (bzip2 is ~10x slower to inflate)`);
   }
-  const size = statSync(path).size;
-  const file = createReadStream(path, { highWaterMark: CHUNK_SIZE });
+  const { start, end } = dumpSlice(path, shard);
+  const size = end - start;
+  if (size === 0) {
+    // More shards than members (or lines): this one has nothing to read.
+    return { source: Readable.from([]), start, end, size, read: () => 0 };
+  }
+  const file = createReadStream(path, { start, end: end - 1, highWaterMark: CHUNK_SIZE });
   const read = () => file.bytesRead;
-  if (!path.endsWith(".gz")) return { source: file, size, read };
+  if (!path.endsWith(".gz")) return { source: file, start, end, size, read };
+  // One Gunzip inflates the whole slice: it carries on across member boundaries.
   const gunzip = createGunzip({ chunkSize: CHUNK_SIZE });
   // pipe() does not forward errors; a vanished NFS file must fail the job.
   file.on("error", (err) => gunzip.destroy(err));
-  return { source: file.pipe(gunzip), size, read };
+  return { source: file.pipe(gunzip), start, end, size, read };
 }
 
 /** "3h 41m", "12m", or "<1m" (for the progress ETA). */
@@ -270,11 +416,14 @@ export const MAX_PRUNE_FRACTION = 0.2;
 /**
  * Upsert items and rebuild their external ids — the one write path shared by
  * the dump import and the single-item importer, so both store the same shape.
- * Returns the number of external-id rows written.
+ * `dump` stamps the rows as seen in that dump; without it (the single-item
+ * importer) an existing row keeps its stamp. Returns the number of external-id
+ * rows written.
  */
 export async function upsertItems(
   batch: Item[],
   stamp = toSqlDatetime(new Date()),
+  dump?: string,
 ): Promise<number> {
   if (batch.length === 0) return 0;
   const rows = batch.map((item) => ({
@@ -283,6 +432,7 @@ export async function upsertItems(
     primaryType: primaryType(item) ?? null,
     data: item,
     lastSyncedAt: stamp,
+    lastDump: dump ?? null,
   }));
   for (let i = 0; i < rows.length; i += ITEM_BATCH) {
     await db
@@ -294,6 +444,7 @@ export async function upsertItems(
           primaryType: sql`values(${items.primaryType})`,
           data: sql`values(${items.data})`,
           lastSyncedAt: sql`values(${items.lastSyncedAt})`,
+          lastDump: sql`coalesce(values(${items.lastDump}), ${items.lastDump})`,
         },
       });
   }
@@ -320,6 +471,13 @@ export async function upsertItems(
 export interface ImportOptions {
   /** Dump file to read (DEFAULT_DUMP_PATH on Toolforge). Ignored with `source`. */
   path?: string;
+  /** Read only this N-th of the file (see the header comment); the whole file by default. */
+  shard?: DumpShard;
+  /**
+   * Identifies the dump for the seen-stamp and the shard bookkeeping. Derived
+   * from the file (`wikidata-20260914-all.json.gz` → "20260914") when not given.
+   */
+  dump?: string;
   /** An already-open stream of inflated dump bytes (tests). */
   source?: Readable;
   classQid?: string;
@@ -347,26 +505,67 @@ export interface ImportStats extends ScanStats {
 }
 
 /**
- * Delete every item not in `keep`, with its external ids, and settle the open
- * candidates that referenced it. Returns [items, candidates].
+ * The identifier a dump file is stamped with: the date in its name
+ * (`wikidata-20260914-all.json.gz` → "20260914"), else its mtime and size,
+ * which every shard of the same file agrees on.
+ */
+export function dumpIdFor(path: string): string {
+  const dated = /\d{8}/.exec(basename(path));
+  if (dated) return dated[0];
+  const st = statSync(path);
+  return `${Math.floor(st.mtimeMs)}-${st.size}`;
+}
+
+/**
+ * Record that shard `index` of `count` finished a complete pass over `dump`,
+ * and report whether that completes the set. Two shards finishing together
+ * could both see the set complete and both prune; the second prune finds
+ * nothing to do, so no lock is needed.
+ */
+async function recordShardDone(
+  dump: string,
+  shard: DumpShard,
+  matched: number,
+): Promise<{ complete: boolean; matched: number }> {
+  await db
+    .insert(dumpImportRuns)
+    .values({ dump, shard: shard.index, shards: shard.count, matched })
+    .onDuplicateKeyUpdate({
+      // A retry, or the same dump re-run with another shard count.
+      set: { shards: shard.count, matched, finishedAt: sql`current_timestamp` },
+    });
+  const [row] = await db
+    .select({ shards: count(), matched: sql<number>`coalesce(sum(${dumpImportRuns.matched}), 0)` })
+    .from(dumpImportRuns)
+    .where(and(eq(dumpImportRuns.dump, dump), eq(dumpImportRuns.shards, shard.count)));
+  return { complete: row.shards >= shard.count, matched: Number(row.matched) };
+}
+
+/**
+ * Delete every item not stamped as seen in `dump`, with its external ids, and
+ * settle the open candidates that referenced it. Returns [items, candidates].
  */
 async function pruneMissing(
-  keep: Set<string>,
+  dump: string,
   opts: { force: boolean; log: (m: string) => void },
 ): Promise<[number, number]> {
+  const [{ total }] = await db.select({ total: count() }).from(items);
   const gone: string[] = [];
-  let total = 0;
   let after = "";
   for (;;) {
     const page = await db
       .select({ qid: items.qid })
       .from(items)
-      .where(after ? gt(items.qid, after) : sql`1 = 1`)
+      .where(
+        and(
+          or(isNull(items.lastDump), ne(items.lastDump, dump)),
+          after ? gt(items.qid, after) : sql`1 = 1`,
+        ),
+      )
       .orderBy(asc(items.qid))
       .limit(READ_PAGE);
     if (page.length === 0) break;
-    total += page.length;
-    for (const r of page) if (!keep.has(r.qid)) gone.push(r.qid);
+    for (const r of page) gone.push(r.qid);
     after = page[page.length - 1].qid;
     if (page.length < READ_PAGE) break;
   }
@@ -413,12 +612,25 @@ async function pruneMissing(
 export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportStats> {
   const log = opts.log ?? ((m: string) => console.log(m));
   const classQid = opts.classQid ?? VIDEO_GAME;
-  const file = opts.source ? undefined : openDumpFile(opts.path ?? DEFAULT_DUMP_PATH);
+  const shard = opts.shard ?? WHOLE_DUMP;
+  const path = opts.path ?? DEFAULT_DUMP_PATH;
+  const file = opts.source ? undefined : openDumpFile(path, shard);
   const source = opts.source ?? file!.source;
   const prune = opts.prune ?? opts.limit === undefined;
   const stamp = toSqlDatetime(new Date());
+  // A stream has no file to derive the id from: stamp with the moment instead,
+  // which still tells this pass apart from every earlier one for the prune.
+  const dump = opts.dump ?? (file ? dumpIdFor(path) : stamp);
+  // "import-dump:" for the usual single shard; "import-dump 3/8:" otherwise.
+  const tag = shard.count === 1 ? "import-dump:" : `import-dump ${shard.index + 1}/${shard.count}:`;
+  if (file && shard.count > 1) {
+    log(
+      `${tag} bytes ${file.start}-${file.end} of ${statSync(path).size} ` +
+        `(${(file.size / 1e9).toFixed(2)} GB compressed)` +
+        (file.size === 0 ? " — empty slice, more shards than members?" : ""),
+    );
+  }
 
-  const seen = new Set<string>();
   const propertyRows: PropertyRow[] = [];
   let batch: Item[] = [];
   let upserted = 0;
@@ -426,7 +638,7 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
 
   const flush = async (): Promise<void> => {
     if (batch.length === 0) return;
-    idRows += await upsertItems(batch, stamp);
+    idRows += await upsertItems(batch, stamp, dump);
     upserted += batch.length;
     batch = [];
   };
@@ -446,7 +658,6 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
     limit: opts.limit,
     progressEveryBytes: opts.progressEveryBytes,
     onItem: async (item) => {
-      seen.add(item.id);
       batch.push(item);
       if (batch.length >= ITEM_BATCH) await flush();
     },
@@ -466,7 +677,7 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
       }
       last = { bytes: s.bytes, seconds: s.seconds, read };
       log(
-        `import-dump: ${pct}${(s.bytes / 1e9).toFixed(0)} GB inflated, ${s.lines} lines, ` +
+        `${tag} ${pct}${(s.bytes / 1e9).toFixed(0)} GB inflated, ${s.lines} lines, ` +
           `${s.matched} matched, ${s.properties} properties, ` +
           `${now} MB/s now (${mbps(s.bytes, s.seconds)} avg), ${eta}` +
           `rss ${Math.round(process.memoryUsage().rss / 1e6)} MB`,
@@ -477,16 +688,22 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
 
   const propertyCount = await syncProperties(propertyRows);
   if (scan.stopped) {
-    log(`import-dump: stopped at limit ${opts.limit}; properties synced so far only`);
+    log(`${tag} stopped at limit ${opts.limit}; properties synced so far only`);
   }
 
   let pruned = 0;
   let settled = 0;
-  if (prune && !scan.stopped) {
-    if (scan.matched === 0) {
-      log("import-dump: matched nothing — not pruning (wrong file?)");
-    } else {
-      [pruned, settled] = await pruneMissing(seen, { force: opts.forcePrune ?? false, log });
+  if (!scan.stopped) {
+    // Only a complete pass counts towards the dump's shard set.
+    const set = await recordShardDone(dump, shard, scan.matched);
+    if (prune) {
+      if (!set.complete) {
+        log(`${tag} done; the prune waits for the other shards of dump ${dump}`);
+      } else if (set.matched === 0) {
+        log(`${tag} matched nothing — not pruning (wrong file?)`);
+      } else {
+        [pruned, settled] = await pruneMissing(dump, { force: opts.forcePrune ?? false, log });
+      }
     }
   }
 

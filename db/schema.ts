@@ -7,6 +7,7 @@ import {
   index,
   int,
   mysqlTable,
+  primaryKey,
   text,
   uniqueIndex,
   varchar,
@@ -46,6 +47,10 @@ export const items = mysqlTable(
     lastSyncedAt: datetime("last_synced_at", { mode: "string" })
       .notNull()
       .default(sql`CURRENT_TIMESTAMP`),
+    // The dump this row was last seen in (e.g. "20260914"), stamped by the dump
+    // import. Lets the prune of a sharded import work across jobs: once every
+    // shard of a dump has finished, rows not stamped with it have left the dump.
+    lastDump: varchar("last_dump", { length: 32 }),
   },
   (t) => [
     index("idx_items_primary_label").on(t.primaryLabel),
@@ -152,6 +157,24 @@ export const syncState = mysqlTable("sync_state", {
   cursor: int("cursor").notNull().default(0),
   lastRunAt: datetime("last_run_at", { mode: "string" }),
 });
+
+// One row per finished shard of a dump import (server/dump-import.ts). The dump
+// can be split across N jobs, each reading a byte range of the .gz; the shard
+// that completes the set for a dump is the one that prunes. One shard (the
+// default) is simply the `1/1` row.
+export const dumpImportRuns = mysqlTable(
+  "dump_import_runs",
+  {
+    dump: varchar("dump", { length: 32 }).notNull(), // e.g. "20260914"
+    shard: int("shard").notNull(), // 0-based
+    shards: int("shards").notNull(),
+    matched: int("matched").notNull(),
+    finishedAt: datetime("finished_at", { mode: "string" })
+      .notNull()
+      .default(sql`CURRENT_TIMESTAMP`),
+  },
+  (t) => [primaryKey({ columns: [t.dump, t.shard] })],
+);
 
 // ---------------------------------------------------------------------------
 // Authentication (Wikimedia OAuth 2.0) — see server/auth/.

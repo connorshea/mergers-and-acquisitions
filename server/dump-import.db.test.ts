@@ -10,10 +10,11 @@ import { gzipSync } from "node:zlib";
 import { afterAll, beforeEach, describe, expect, it } from "vite-plus/test";
 import { asc, eq } from "drizzle-orm";
 import { db, pool } from "./db.ts";
-import { externalIds, items, mergeCandidates, properties } from "../db/schema.ts";
-import { MAX_PRUNE_FRACTION, runDumpImport } from "./dump-import.ts";
+import { dumpImportRuns, externalIds, items, mergeCandidates, properties } from "../db/schema.ts";
+import { MAX_PRUNE_FRACTION, runDumpImport, upsertItems } from "./dump-import.ts";
 import type { Entity, Statement } from "../src/lib/wikibase.ts";
 import { DB_TEST, insertItem, makeItem, truncateAll } from "../test/db-helpers.ts";
+import { dumpGz } from "../test/dump-gz.ts";
 
 const itemRef = (qid: string) => ({
   type: "wikibase-entityid",
@@ -194,6 +195,66 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
     }
     // The whole (tiny) file is read by the time the last line is logged.
     expect(progress.at(-1)).toMatch(/^import-dump: \[100\.0%\] /);
+  });
+
+  it("prunes a sharded import only once every shard of the dump has finished", async () => {
+    await insertItem(makeItem("Q900", "Left the dump"));
+    const dir = await mkdtemp(join(tmpdir(), "dump-import-db-"));
+    const path = join(dir, "wikidata-20260914-all.json.gz");
+    const games = [game("Q100", "Alpha"), game("Q200", "Beta"), game("Q300", "Gamma")];
+    await writeFile(path, dumpGz([[games[0]], [games[1]], [games[2], STEAM_PROP]]).gz);
+    const lines: string[] = [];
+    const log = (m: string) => void lines.push(m);
+    const opts = { path, forcePrune: true, log }; // 1 of 4 gone is past the 20% cap
+
+    const first = await runDumpImport({ ...opts, shard: { index: 0, count: 2 } });
+    expect(first.pruned).toBe(0);
+    expect(lines.some((l) => l.startsWith("import-dump 1/2: ") && l.includes("waits for"))).toBe(
+      true,
+    );
+    expect((await allItems()).map((r) => r.qid)).toContain("Q900");
+    expect(await db.select().from(dumpImportRuns)).toMatchObject([
+      { dump: "20260914", shard: 0, shards: 2 },
+    ]);
+
+    // A retried shard re-records itself rather than tripping the primary key.
+    await runDumpImport({ ...opts, shard: { index: 0, count: 2 } });
+
+    const second = await runDumpImport({ ...opts, shard: { index: 1, count: 2 } });
+    expect(second.pruned).toBe(1);
+    expect(first.matched + second.matched).toBe(3);
+    const rows = await allItems();
+    expect(rows.map((r) => r.qid)).toEqual(["Q100", "Q200", "Q300"]);
+    expect(rows.map((r) => r.lastDump)).toEqual(["20260914", "20260914", "20260914"]);
+    expect(await db.select().from(properties)).toHaveLength(1);
+    const runs = await db.select().from(dumpImportRuns).orderBy(asc(dumpImportRuns.shard));
+    expect(runs.map((r) => [r.shard, r.shards])).toEqual([
+      [0, 2],
+      [1, 2],
+    ]);
+    expect(runs.reduce((n, r) => n + r.matched, 0)).toBe(3);
+
+    // The same dump re-run with another shard count starts a new set: the
+    // re-recorded shard 0 now counts towards 3, not 2.
+    const again = await runDumpImport({ ...opts, shard: { index: 0, count: 3 } });
+    expect(again.pruned).toBe(0);
+    expect(await db.select().from(dumpImportRuns).orderBy(asc(dumpImportRuns.shard))).toMatchObject(
+      [
+        { shard: 0, shards: 3 },
+        { shard: 1, shards: 2 },
+      ],
+    );
+  });
+
+  it("keeps an item's dump stamp when the single-item importer rewrites it", async () => {
+    await run([game("Q100", "Alpha")], { dump: "20260914" });
+    await upsertItems([makeItem("Q100", "Alpha (renamed)")]);
+    await upsertItems([makeItem("Q101", "Never in a dump")]);
+    const rows = await allItems();
+    expect(rows.map((r) => [r.qid, r.primaryLabel, r.lastDump])).toEqual([
+      ["Q100", "Alpha (renamed)", "20260914"],
+      ["Q101", "Never in a dump", null],
+    ]);
   });
 
   it("never prunes after a capped run, an empty match, or with prune off", async () => {

@@ -254,7 +254,7 @@ export default function CandidatesList() {
   // <head>.
   const titleTail =
     status === "open"
-      ? "Merge candidates"
+      ? "M&A: A Merge Assistant"
       : `${status[0].toUpperCase() + status.slice(1)} candidates`;
   const titleParts = q ? [`“${q}”`] : status === "open" ? ["Open candidates"] : [];
   const pageTitle = [...titleParts, titleTail].join(" · ");
@@ -264,7 +264,7 @@ export default function CandidatesList() {
       <title>{pageTitle}</title>
       <header className="list-head">
         <div className="list-head-row">
-          <h1>Merge candidates</h1>
+          <h1>M&A: A Merge Assistant</h1>
           <div className="head-actions">
             {/* The hunt and the maintenance actions (sync/reset) are admin-only
                 on the server (ADMIN_USERS); only offer the controls to admins. */}
@@ -455,6 +455,16 @@ export default function CandidatesList() {
           </nav>
         </>
       )}
+
+      <footer className="site-footer">
+        <a
+          href="https://github.com/connorshea/mergers-and-acquisitions"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Source code on GitHub
+        </a>
+      </footer>
     </main>
   );
 }

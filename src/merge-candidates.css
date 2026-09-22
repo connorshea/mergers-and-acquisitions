@@ -646,6 +646,22 @@ a.chip-id:hover {
   margin: 0.35rem 0 0;
   max-width: 60ch;
 }
+.site-footer {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.site-footer a {
+  color: var(--muted);
+  text-decoration: none;
+}
+.site-footer a:hover {
+  color: var(--ink);
+  text-decoration: underline;
+}
 .list-controls {
   display: flex;
   flex-wrap: wrap;

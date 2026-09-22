@@ -306,13 +306,55 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       });
     });
 
-    it("notes when the source item was not redirected", async () => {
-      stubWikidata(() => mergeOk(101, 102, 0));
+    it("finishes the redirect by hand when wbmergeitems leaves the source alive", async () => {
+      // A merge that ignored a description conflict comes back redirected=0; the
+      // app clears the source and redirects it rather than leaving a half-merge.
+      const calls = stubWikidata((params) => {
+        switch (params.get("action")) {
+          case "wbmergeitems":
+            return mergeOk(101, 102, 0);
+          case "wbeditentity":
+            return { success: 1, entity: { id: "Q20", type: "item", lastrevid: 103 } };
+          case "wbcreateredirect":
+            return { success: 1, redirect: "Q10" };
+          default:
+            throw new Error(`unexpected action ${params.get("action")}`);
+        }
+      });
+      const { body } = await post<CandidateMergeResponse>(`/api/candidates/${alpha}/merge`, editor);
+      expect(body.redirected).toBe(true);
+      expect(body.candidate.resolution).toBe("merged into Q10 (rev 102)");
+
+      // The source was cleared against the merge revision, then redirected.
+      const clear = calls.find((c) => c.params.get("action") === "wbeditentity")!;
+      expect(Object.fromEntries(clear.params)).toMatchObject({
+        id: "Q20",
+        baserevid: "101",
+        clear: "1",
+        data: "{}",
+      });
+      const redirect = calls.find((c) => c.params.get("action") === "wbcreateredirect")!;
+      expect(Object.fromEntries(redirect.params)).toMatchObject({ from: "Q20", to: "Q10" });
+
+      const audits = await db.select().from(wikidataEdits);
+      expect(audits[0]).toMatchObject({ redirected: true, params: { autoRedirected: true } });
+    });
+
+    it("notes when the source is not redirected and finishing it also fails", async () => {
+      // The merge is done and recorded regardless; only the clean-up failed.
+      const calls = stubWikidata((params) =>
+        params.get("action") === "wbmergeitems"
+          ? mergeOk(101, 102, 0)
+          : apiError("failed-save", "could not clear the item"),
+      );
       const { body } = await post<CandidateMergeResponse>(`/api/candidates/${alpha}/merge`, editor);
       expect(body.redirected).toBe(false);
       expect(body.candidate.resolution).toBe(
         "merged into Q10 (rev 102); source item not redirected",
       );
+      expect(body.candidate.status).toBe("merged");
+      // It tried once (the clear) and gave up without a redirect attempt.
+      expect(calls.filter((c) => c.params.get("action") === "wbcreateredirect")).toHaveLength(0);
     });
 
     it("refuses before merging when the live items clash on a sitelink", async () => {

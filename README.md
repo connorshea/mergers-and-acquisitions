@@ -117,10 +117,15 @@ front for accounts its profile snapshot says are blocked.
 - **Merge** (`POST /api/candidates/:id/merge`) runs `wbmergeitems` in the
   app's order — the higher QID into the lower — with an edit summary crediting
   the tool. The only `ignoreconflicts` kind ever sent is `description` (the
-  survivor keeps its description, the merged-away item's is dropped). Clashing
-  sitelinks and items that link to each other are never overridden: the
-  confirm dialog warns when the mirror predicts one, Wikidata refuses the
-  merge, and the user fixes the items by hand first. On success the
+  survivor keeps its description, the merged-away item's is dropped). Because
+  that leaves the ignored description on the source, `wbmergeitems` won't empty
+  it and so won't redirect it; the app then finishes the job the way a human
+  does — clears the source (against the merge revision, so a concurrent edit
+  fails rather than being wiped) and redirects it to the survivor. This is best
+  effort: if it fails the merge still stands, its resolution noting that the
+  source item was not redirected. Clashing sitelinks and items that link to each
+  other are never overridden: the confirm dialog warns when the mirror predicts one, Wikidata
+  refuses the merge, and the user fixes the items by hand first. On success the
   candidate becomes `merged` (with both revision ids linked from the page), the
   merged-away item is dropped from the mirror so the hunt stops pairing it, and
   any other open candidate that referenced it is settled as "merged elsewhere".

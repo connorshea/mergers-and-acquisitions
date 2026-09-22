@@ -6,6 +6,7 @@ import {
   addItemClaim,
   editRequest,
   fetchItemsForMergeCheck,
+  finishRedirect,
   mergeItems,
   probeMerge,
   revisionUrl,
@@ -295,6 +296,70 @@ describe("mergeItems", () => {
       mergeItems(USER, { fromQid: "Q20", intoQid: "Q10", ignoreConflicts: [], summary: "s" }, deps),
     );
     expect(err.code).toBe("unexpected-response");
+  });
+});
+
+describe("finishRedirect", () => {
+  const CLEAR_OK = { success: 1, entity: { id: "Q20", type: "item", lastrevid: 3000000003 } };
+  const REDIRECT_OK = { success: 1, redirect: "Q10" };
+
+  it("clears the source with baserevid, then redirects it to the target", async () => {
+    const { deps, calls } = makeDeps([CLEAR_OK, REDIRECT_OK]);
+    const result = await finishRedirect(
+      USER,
+      { fromQid: "Q20", intoQid: "Q10", baseRevid: 3000000001, summary: "s" },
+      deps,
+    );
+    expect(result).toEqual({ clearRevid: 3000000003 });
+
+    // Two edits, each with its own asserted CSRF token: clear then redirect.
+    const posts = calls.filter((call) => call.method === "POST");
+    expect(posts).toHaveLength(2);
+    expect(Object.fromEntries(posts[0].params)).toMatchObject({
+      action: "wbeditentity",
+      id: "Q20",
+      baserevid: "3000000001",
+      clear: "1",
+      data: "{}",
+      summary: "s",
+      assert: "user",
+      assertuser: "Alice",
+      maxlag: "5",
+    });
+    expect(Object.fromEntries(posts[1].params)).toMatchObject({
+      action: "wbcreateredirect",
+      from: "Q20",
+      to: "Q10",
+      assert: "user",
+      assertuser: "Alice",
+    });
+  });
+
+  it("fails without attempting the redirect when the clear returns no revision id", async () => {
+    const { deps, calls } = makeDeps([{ success: 1, entity: { id: "Q20" } }]);
+    const err = await failure(
+      finishRedirect(USER, { fromQid: "Q20", intoQid: "Q10", baseRevid: 1, summary: "s" }, deps),
+    );
+    expect(err.code).toBe("unexpected-response");
+    expect(calls.filter((call) => call.method === "POST")).toHaveLength(1);
+  });
+
+  it("surfaces a failed clear as a WikidataEditError and never redirects", async () => {
+    const { deps, calls } = makeDeps([apiError("editconflict", "edit conflict")]);
+    const err = await failure(
+      finishRedirect(USER, { fromQid: "Q20", intoQid: "Q10", baseRevid: 1, summary: "s" }, deps),
+    );
+    expect(err.code).toBe("editconflict");
+    expect(calls.filter((call) => call.method === "POST")).toHaveLength(1);
+  });
+
+  it("surfaces a failed redirect after the clear already happened", async () => {
+    const { deps, calls } = makeDeps([CLEAR_OK, apiError("no-such-entity")]);
+    const err = await failure(
+      finishRedirect(USER, { fromQid: "Q20", intoQid: "Q10", baseRevid: 1, summary: "s" }, deps),
+    );
+    expect(err.code).toBe("no-such-entity");
+    expect(calls.filter((call) => call.method === "POST")).toHaveLength(2);
   });
 });
 

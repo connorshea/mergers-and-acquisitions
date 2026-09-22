@@ -202,12 +202,22 @@ Without `--shard` the job reads the whole file, which is `--shard 1/1`.
 
 ## Deploying to Toolforge
 
-Build the image (`toolforge build`), apply migrations as a one-off job, load the
-mirror with the `import-dump` job above, start the web service
-(`toolforge webservice buildservice start --mount none`; the build service
-requires an explicit mount flag, and the web process needs no NFS),
-and load the schedule with `toolforge jobs load jobs.yaml` (set the image name
-in `jobs.yaml` first):
+The Build Service builds the image from the GitHub repo directly — it clones the
+repo itself, so there is no checkout on the bastion to `git pull`; each build
+pulls the latest default branch (pass `--ref <branch>` to build another). Watch
+it with `toolforge build show`; when it succeeds `toolforge images` lists the
+`tool-mna/tool-mna:latest` image the jobs and web service reference:
+
+```sh
+toolforge build start https://github.com/connorshea/mergers-and-acquisitions
+```
+
+Then apply migrations as a one-off job, load the mirror with the `import-dump`
+job above, start the web service (`toolforge webservice buildservice start
+--mount none`; the build service requires an explicit mount flag, and the web
+process needs no NFS), and load the schedule with `toolforge jobs load
+jobs.yaml` (set the image name in `jobs.yaml` first). One-off jobs keep their
+name after finishing, so `toolforge jobs delete migrate` before rerunning:
 
 ```sh
 toolforge jobs run migrate --image tool-mna/tool-mna:latest \

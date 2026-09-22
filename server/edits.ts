@@ -25,13 +25,20 @@ import { editLimiter } from "./rate-limit.ts";
 import {
   addItemClaim,
   type EditErrorKind,
+  fetchItemsForMergeCheck,
   mergeItems,
   type MergeResult,
   probeMerge,
   revisionUrl,
   WikidataEditError,
 } from "./wikidata-client.ts";
-import { AUTO_IGNORED_CONFLICTS, DIFFERENT_FROM, type Item } from "../src/lib/compare.ts";
+import {
+  AUTO_IGNORED_CONFLICTS,
+  DIFFERENT_FROM,
+  type Item,
+  type MergeConflict,
+  mergeConflicts,
+} from "../src/lib/compare.ts";
 import type {
   CandidateDifferentResponse,
   CandidateMergeResponse,
@@ -132,6 +139,24 @@ async function auditFailure(base: AuditBase, err: unknown): Promise<WikidataEdit
   if (known) return err;
   // Not a Wikidata outcome (a DB error, a bug): let Hono turn it into a 500.
   throw err;
+}
+
+/** Why the tool won't merge through each conflict kind it never overrides. */
+const CONFLICT_REASON: Record<Exclude<MergeConflict, "description">, string> = {
+  sitelink: "they link different pages on the same wiki",
+  statement: "one item has a statement whose value is the other",
+};
+
+/** The message for a merge refused because the live items still conflict. */
+function conflictMessage(
+  kinds: readonly MergeConflict[],
+  fromQid: string,
+  intoQid: string,
+): string {
+  const reasons = kinds
+    .filter((k): k is Exclude<MergeConflict, "description"> => k !== "description")
+    .map((k) => CONFLICT_REASON[k]);
+  return `Wikidata won't merge ${fromQid} into ${intoQid}: ${reasons.join("; ")}.`;
 }
 
 /** The JSON error for a failed edit, with the status its kind implies. */
@@ -250,6 +275,41 @@ edits.post("/:id/merge", async (c) => {
     intoQid,
     params: { ignoreConflicts },
   };
+
+  // Re-check for unresolvable conflicts against live Wikidata, not the mirror.
+  // The confirm dialog's warning is computed from the last-synced data, which
+  // can miss a sitelink or mutual link added since; merging through one leaves
+  // the source un-redirected (a half-merge — the very thing this guards
+  // against). Only the auto-handled description is ever passed to
+  // `ignoreconflicts`; any real sitelink or statement conflict is refused here,
+  // to be fixed by hand on the items first.
+  let liveConflicts: MergeConflict[];
+  try {
+    const [freshFrom, freshInto] = await fetchItemsForMergeCheck(user, [fromQid, intoQid]);
+    liveConflicts = mergeConflicts(freshFrom, freshInto).filter(
+      (k) => !AUTO_IGNORED_CONFLICTS.includes(k),
+    );
+  } catch (err) {
+    // Couldn't reach Wikidata to check: hand the claim back rather than merge
+    // blind. This read touched no edit endpoint, so nothing was applied.
+    await releaseClaim(id);
+    return failedEdit(c, await auditFailure(audit, err));
+  }
+  if (liveConflicts.length > 0) {
+    await releaseClaim(id);
+    audit.params = { ...audit.params, blockedBy: liveConflicts };
+    return failedEdit(
+      c,
+      await auditFailure(
+        audit,
+        new WikidataEditError(
+          "conflict",
+          "merge-conflict",
+          conflictMessage(liveConflicts, fromQid, intoQid),
+        ),
+      ),
+    );
+  }
 
   let result: MergeResult;
   try {

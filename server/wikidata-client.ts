@@ -268,9 +268,13 @@ export interface MergeResult {
   fromRevid: number;
   intoRevid: number;
   /**
-   * Whether the source became a redirect. Wikibase leaves it alive when
-   * ignored sitelink conflicts kept content on it; the app never ignores those,
-   * so this is expected to be true, and is reported rather than assumed.
+   * Whether the source became a redirect. Wikibase only redirects the source
+   * when the merge leaves it empty; anything the merge could not move stays
+   * behind and keeps the item alive. For this app that is the conflicting
+   * descriptions it tells the merge to ignore (`AUTO_IGNORED_CONFLICTS`) — a
+   * survivor and a source with different descriptions in a shared language is
+   * common — so this is often false. `finishRedirect` cleans that up rather
+   * than leaving the merge half-done.
    */
   redirected: boolean;
 }
@@ -312,6 +316,63 @@ export async function mergeItems(
     intoRevid: to.lastrevid,
     redirected: Boolean(body.redirected),
   };
+}
+
+/** The edit that emptied the source before it was turned into a redirect. */
+export interface FinishRedirectResult {
+  clearRevid: number;
+}
+
+/**
+ * Finish a merge that `wbmergeitems` left half-done. Wikibase only turns the
+ * source into a redirect when the merge empties it; whatever it could not move
+ * stays behind and keeps the item alive — for this app the conflicting
+ * descriptions it tells the merge to ignore (`AUTO_IGNORED_CONFLICTS`). This
+ * makes the same two edits a human makes by hand: clear the source, then point
+ * it at `intoQid` with `wbcreateredirect` (which refuses a non-empty item, so
+ * the order matters). It drops that residual content, which is consistent with
+ * the merge already discarding the merged-away item's descriptions.
+ *
+ * `baseRevid` is the merge's own revision of the source: the clear passes it as
+ * `baserevid` so an edit that landed on the source between the merge and here
+ * fails as a conflict rather than being silently wiped. Throws
+ * `WikidataEditError` on any failure; the caller treats it as best-effort,
+ * since the merge itself is already done.
+ */
+export async function finishRedirect(
+  user: EditUser,
+  opts: { fromQid: string; intoQid: string; baseRevid: number; summary: string },
+  deps: WikidataClientDeps = defaultDeps,
+): Promise<FinishRedirectResult> {
+  const cleared = await editRequest(
+    user,
+    {
+      action: "wbeditentity",
+      id: opts.fromQid,
+      baserevid: String(opts.baseRevid),
+      clear: "1",
+      data: "{}",
+      summary: opts.summary,
+    },
+    deps,
+  );
+  const clearRevid = (cleared.entity as { lastrevid?: number } | undefined)?.lastrevid;
+  if (typeof clearRevid !== "number") {
+    throw new WikidataEditError(
+      "wikidata-error",
+      "unexpected-response",
+      "Wikidata cleared the item but returned no revision id",
+    );
+  }
+  // `wbcreateredirect` answers with `{ success: 1 }` and no revision id, so
+  // there is nothing more to read; `editRequest` has already thrown on any
+  // API error (e.g. the item still not being empty).
+  await editRequest(
+    user,
+    { action: "wbcreateredirect", from: opts.fromQid, to: opts.intoQid },
+    deps,
+  );
+  return { clearRevid };
 }
 
 /**

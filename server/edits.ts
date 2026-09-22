@@ -26,6 +26,7 @@ import {
   addItemClaim,
   type EditErrorKind,
   fetchItemsForMergeCheck,
+  finishRedirect,
   mergeItems,
   type MergeResult,
   probeMerge,
@@ -348,6 +349,28 @@ edits.post("/:id/merge", async (c) => {
     }
     result = outcome;
     audit.params = { ...audit.params, confirmedAfterTimeout: true };
+  }
+
+  // `wbmergeitems` only redirects the source when the merge empties it; the
+  // descriptions we tell it to ignore stay behind and keep it alive, so a
+  // merge often lands with `redirected: false`. Finish it the way a human
+  // would — clear the source, then redirect it — so the candidate doesn't need
+  // hand-finishing. Best effort: the merge itself is done and recorded below,
+  // so a failure here just leaves the source un-redirected (reported as before)
+  // rather than failing the merge.
+  if (!result.redirected) {
+    try {
+      await finishRedirect(user, {
+        fromQid,
+        intoQid,
+        baseRevid: result.fromRevid,
+        summary: `Redirect ${fromQid} to ${intoQid} after merge — ${TOOL_CREDIT}`,
+      });
+      result = { ...result, redirected: true };
+      audit.params = { ...audit.params, autoRedirected: true };
+    } catch (err) {
+      console.error(`merge: ${fromQid} → ${intoQid} merged but auto-redirect failed`, err);
+    }
   }
 
   // The merge is done on Wikidata, so record that first — the audit row and

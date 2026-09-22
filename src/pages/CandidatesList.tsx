@@ -254,7 +254,7 @@ export default function CandidatesList() {
   // <head>.
   const titleTail =
     status === "open"
-      ? "Merge candidates"
+      ? "M&A: A Merge Assistant"
       : `${status[0].toUpperCase() + status.slice(1)} candidates`;
   const titleParts = q ? [`“${q}”`] : status === "open" ? ["Open candidates"] : [];
   const pageTitle = [...titleParts, titleTail].join(" · ");

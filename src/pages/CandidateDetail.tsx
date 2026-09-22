@@ -120,7 +120,7 @@ export default function CandidateDetail() {
     : error === "Candidate not found."
       ? "Not found"
       : `Candidate ${id ?? ""}`.trim();
-  const pageTitle = `${titleLead} · Merge candidates`;
+  const pageTitle = `${titleLead} · M&A: A Merge Assistant`;
 
   return (
     <>

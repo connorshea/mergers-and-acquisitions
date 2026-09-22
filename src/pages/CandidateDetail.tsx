@@ -391,10 +391,12 @@ const BLOCKER_COPY: Record<
 // Confirm-and-merge dialog: names the pair and submits. There are no conflict
 // overrides: the server ignores only the auto-handled kinds (a differing
 // description) and never tells Wikidata to ignore clashing sitelinks or
-// statements. When the mirror predicts one of those, the dialog says so and
-// explains the manual fix; the merge button stays available because the
-// mirror may be behind a fix already made on Wikidata, and Wikidata itself is
-// the gate either way.
+// statements. When the mirror predicts one of those, the dialog says so,
+// explains the manual fix, and disables the merge button — the tool never
+// merges through such a conflict. The server also re-checks the live items
+// before merging (the mirror can be stale), so it is the authoritative gate;
+// this button gate just keeps the user from attempting a merge that would be
+// refused.
 function MergeDialog({
   id,
   candidate,
@@ -451,16 +453,14 @@ function MergeDialog({
         )}
         {blockers.length > 0 && (
           <div className="modal-section modal-blockers" role="alert">
-            <p className="modal-section-title">
-              Wikidata will refuse this merge until fixed by hand
-            </p>
+            <p className="modal-section-title">This merge is blocked until you fix it by hand</p>
             <ul className="conflict-list">
               {blockers.map((kind) => (
                 <li key={kind}>{BLOCKER_COPY[kind](from.id, into.id)}</li>
               ))}
             </ul>
             <p className="conflict-hint">
-              Edit{" "}
+              Resolve it on{" "}
               <a href={wikiPageUrl(from.id)} target="_blank" rel="noreferrer">
                 {from.id}
               </a>{" "}
@@ -468,8 +468,8 @@ function MergeDialog({
               <a href={wikiPageUrl(into.id)} target="_blank" rel="noreferrer">
                 {into.id}
               </a>{" "}
-              on Wikidata, then merge. This tool never overrides these conflicts. If you have
-              already fixed them there, the mirrored data is just out of date and you can go ahead.
+              on Wikidata, then merge. This tool never merges through a sitelink or statement
+              conflict — do it by hand.
             </p>
           </div>
         )}
@@ -479,7 +479,13 @@ function MergeDialog({
         <button type="button" className="btn-secondary" onClick={onClose} disabled={busy}>
           Cancel
         </button>
-        <button type="button" className="btn-primary" onClick={submit} disabled={busy}>
+        <button
+          type="button"
+          className="btn-primary"
+          onClick={submit}
+          disabled={busy || blockers.length > 0}
+          title={blockers.length > 0 ? "Resolve the conflict on Wikidata first" : undefined}
+        >
           {busy ? "Merging…" : "Merge on Wikidata"}
         </button>
       </div>

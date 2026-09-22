@@ -5,6 +5,7 @@ import { TokenError } from "./auth/tokens.ts";
 import {
   addItemClaim,
   editRequest,
+  fetchItemsForMergeCheck,
   mergeItems,
   probeMerge,
   revisionUrl,
@@ -363,6 +364,47 @@ describe("probeMerge", () => {
     });
     const err = await failure(probeMerge(USER, "Q20", "Q10", down.deps));
     expect(err.kind).toBe("network");
+  });
+});
+
+describe("fetchItemsForMergeCheck", () => {
+  const entities = {
+    entities: {
+      Q20: {
+        id: "Q20",
+        type: "item",
+        sitelinks: { enwiki: { title: "Foo (video game)" } },
+        claims: {},
+      },
+      Q10: { id: "Q10", type: "item", sitelinks: { enwiki: { title: "Foo" } }, claims: {} },
+    },
+  };
+
+  it("asks only for sitelinks and claims and maps both items", async () => {
+    const { deps, calls } = makeDeps([], { csrf: [entities] });
+    const [from, into] = await fetchItemsForMergeCheck(USER, ["Q20", "Q10"], deps);
+    expect(from.sitelinks).toEqual({ enwiki: "Foo (video game)" });
+    expect(into.sitelinks).toEqual({ enwiki: "Foo" });
+    expect(calls.map((c) => c.method)).toEqual(["GET"]);
+    expect(Object.fromEntries(calls[0].params)).toMatchObject({
+      action: "wbgetentities",
+      ids: "Q20|Q10",
+      props: "sitelinks|claims",
+    });
+  });
+
+  it("throws when Wikidata returns no data for one of the items", async () => {
+    const { deps } = makeDeps([], {
+      csrf: [{ entities: { Q10: { id: "Q10", type: "item" } } }],
+    });
+    const err = await failure(fetchItemsForMergeCheck(USER, ["Q20", "Q10"], deps));
+    expect(err.message).toContain("Q20");
+  });
+
+  it("maps an API error to a WikidataEditError", async () => {
+    const { deps } = makeDeps([], { csrf: [apiError("internal_api_error")] });
+    const err = await failure(fetchItemsForMergeCheck(USER, ["Q20", "Q10"], deps));
+    expect(err).toBeInstanceOf(WikidataEditError);
   });
 });
 

@@ -59,11 +59,21 @@ interface Call {
   params: URLSearchParams;
 }
 
+/** An entity JSON blob for the pre-merge conflict re-check (wbgetentities). */
+type EntityStub = { sitelinks?: Record<string, { title: string }>; claims?: object };
+/** No sitelinks and no statements — the pre-merge check finds no conflict. */
+const noConflict: EntityStub = { sitelinks: {}, claims: {} };
+
 /**
- * Stub the Wikidata API: the CSRF query always succeeds; each POST is answered
- * by `reply(params)`. Records every call.
+ * Stub the Wikidata API: the CSRF query always succeeds; the pre-merge
+ * `wbgetentities` re-check returns `entities[id]` (default: no conflict) for
+ * each requested id; each POST is answered by `reply(params)`. Records every
+ * call.
  */
-function stubWikidata(reply: (params: URLSearchParams, n: number) => object | Response) {
+function stubWikidata(
+  reply: (params: URLSearchParams, n: number) => object | Response,
+  entities: Record<string, EntityStub> = {},
+) {
   const calls: Call[] = [];
   let posts = 0;
   vi.stubGlobal(
@@ -77,7 +87,17 @@ function stubWikidata(reply: (params: URLSearchParams, n: number) => object | Re
           ? new URLSearchParams(String(init?.body as URLSearchParams))
           : new URL(url).searchParams;
       calls.push({ method, params });
-      if (method === "GET") return Response.json({ query: { tokens: { csrftoken: "csrf" } } });
+      if (method === "GET") {
+        if (params.get("action") === "wbgetentities") {
+          const ids = (params.get("ids") ?? "").split("|").filter(Boolean);
+          return Response.json({
+            entities: Object.fromEntries(
+              ids.map((id) => [id, { id, type: "item", ...noConflict, ...entities[id] }]),
+            ),
+          });
+        }
+        return Response.json({ query: { tokens: { csrftoken: "csrf" } } });
+      }
       const r = reply(params, ++posts);
       return r instanceof Response ? r : Response.json(r);
     }),
@@ -293,6 +313,69 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       expect(body.candidate.resolution).toBe(
         "merged into Q10 (rev 102); source item not redirected",
       );
+    });
+
+    it("refuses before merging when the live items clash on a sitelink", async () => {
+      // The mirror shows no conflict, but Wikidata has a same-wiki sitelink on
+      // each item now: merging would leave the source un-redirected, so the
+      // pre-merge re-check refuses and never posts the merge.
+      const calls = stubWikidata(() => mergeOk(), {
+        Q20: { sitelinks: { enwiki: { title: "Alpha Quest (1990 video game)" } } },
+        Q10: { sitelinks: { enwiki: { title: "Alpha Quest" } } },
+      });
+      const { status, body } = await post<EditErrorResponse>(
+        `/api/candidates/${alpha}/merge`,
+        editor,
+        {},
+      );
+      expect(status).toBe(409);
+      expect(body.code).toBe("conflict");
+      expect(body.error).toContain("different pages on the same wiki");
+      // No merge was posted, and the candidate is handed back open.
+      expect(calls.some((c) => c.method === "POST")).toBe(false);
+      const row = await candidateRow(alpha);
+      expect(row.status).toBe("open");
+      expect(row.resolvedAt).toBeNull();
+      expect(await itemQids()).toEqual(["Q10", "Q20", "Q30", "Q40"]);
+
+      const [audit] = await db.select().from(wikidataEdits);
+      expect(audit).toMatchObject({
+        action: "merge",
+        ok: false,
+        errorCode: "merge-conflict",
+        params: { blockedBy: ["sitelink"] },
+        fromRevid: null,
+      });
+    });
+
+    it("refuses before merging when one live item links to the other", async () => {
+      const calls = stubWikidata(() => mergeOk(), {
+        Q20: {
+          claims: {
+            P1889: [
+              {
+                mainsnak: {
+                  snaktype: "value",
+                  property: "P1889",
+                  datatype: "wikibase-item",
+                  datavalue: { type: "wikibase-entityid", value: { id: "Q10" } },
+                },
+                rank: "normal",
+              },
+            ],
+          },
+        },
+      });
+      const { status, body } = await post<EditErrorResponse>(
+        `/api/candidates/${alpha}/merge`,
+        editor,
+        {},
+      );
+      expect(status).toBe(409);
+      expect(body.code).toBe("conflict");
+      expect(body.error).toContain("statement whose value is the other");
+      expect(calls.some((c) => c.method === "POST")).toBe(false);
+      expect((await candidateRow(alpha)).status).toBe("open");
     });
 
     it("reverts to open and audits the failure when Wikidata refuses", async () => {
@@ -629,6 +712,14 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
               : new URL(url).searchParams;
           calls.push({ method, params });
           if (method === "POST") throw new DOMException("The operation timed out", "TimeoutError");
+          if (params.get("action") === "wbgetentities") {
+            const ids = (params.get("ids") ?? "").split("|").filter(Boolean);
+            return Response.json({
+              entities: Object.fromEntries(
+                ids.map((id) => [id, { id, type: "item", ...noConflict }]),
+              ),
+            });
+          }
           if (params.get("meta") === "tokens") {
             return Response.json({ query: { tokens: { csrftoken: "csrf" } } });
           }

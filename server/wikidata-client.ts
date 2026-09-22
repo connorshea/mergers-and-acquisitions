@@ -18,7 +18,8 @@
 import { DEFAULT_WIKIDATA_API_URL, wikidataApiUrl } from "./auth/config.ts";
 import { deleteTokens, getAccessToken, TokenError } from "./auth/tokens.ts";
 import { userAgent } from "./auth/user-agent.ts";
-import type { MergeConflict } from "../src/lib/compare.ts";
+import type { Item, MergeConflict } from "../src/lib/compare.ts";
+import { entityToItem, type Entity } from "../src/lib/wikibase.ts";
 
 /** Give up on one API request after this long; merges of big items are slow. */
 export const EDIT_TIMEOUT_MS = 30_000;
@@ -404,6 +405,41 @@ export async function probeMerge(
     redirectedTo = redirects?.find((r) => r.from === fromQid)?.to ?? null;
   }
   return { redirectedTo, fromRevid: from.lastrevid, intoRevid: into.lastrevid };
+}
+
+/**
+ * Fetch both items' current sitelinks and statements straight from Wikidata and
+ * return them as `Item`s, for re-checking merge conflicts against live data
+ * rather than the possibly-stale mirror just before a merge. Only the props the
+ * blocker kinds need are requested: sitelinks for the same-wiki clash, claims
+ * for the "items link to each other" case. Throws `WikidataEditError` when
+ * Wikidata can't be reached or answers with an error.
+ */
+export async function fetchItemsForMergeCheck(
+  user: EditUser,
+  qids: readonly [string, string],
+  deps: WikidataClientDeps = defaultDeps,
+): Promise<[Item, Item]> {
+  const accessToken = await loadAccessToken(user, deps);
+  const res = await call(deps, accessToken, "GET", {
+    action: "wbgetentities",
+    ids: qids.join("|"),
+    props: "sitelinks|claims",
+  });
+  const err = apiError(res);
+  if (err) await fail(user, err, deps);
+  const entities = (res.body.entities as Record<string, Entity> | undefined) ?? {};
+  return qids.map((qid) => {
+    const entity = entities[qid];
+    if (!entity) {
+      throw new WikidataEditError(
+        "wikidata-error",
+        "unexpected-response",
+        `Wikidata returned no entity data for ${qid}`,
+      );
+    }
+    return entityToItem(entity);
+  }) as [Item, Item];
 }
 
 /** A link to view revision `revid` (as a diff against its parent) on the wiki the API belongs to. */

@@ -10,12 +10,12 @@
 //
 //   1. Inflate (in-process zlib) into ~1 MB chunks; only complete lines are
 //      handled, the tail is carried into the next chunk.
-//   2. Cheap pre-filter: a Buffer search for `"numeric-id":7889` (video game,
-//      followed by a non-digit) and for lines that start `{"type":"property"`.
-//      Everything else — ~99.7% of the bytes — is never decoded or parsed.
+//   2. Cheap pre-filter: a Buffer search for `"numeric-id":<n>` (each imported
+//      class in IMPORT_CLASSES, followed by a non-digit) and for lines that
+//      start `{"type":"property"`. Everything else is never decoded or parsed.
 //   3. Hit lines are JSON.parsed, converted with the shared entityToItem, and
-//      kept if a best-rank P31 really is the class (a mention of Q7889 in any
-//      other statement is discarded here).
+//      kept if a best-rank P31 really is one of the classes (a mention of a
+//      class QID in any other statement is discarded here).
 //   4. Items are upserted in batches; each item's external ids are rebuilt
 //      wholesale (the schema's "rebuilt for an item on each sync" contract).
 //      Property entities become `properties` rows via the existing sync path.
@@ -50,12 +50,31 @@ import { externalIdRows, primaryLabel, primaryType } from "../src/lib/wikidata.t
 import {
   type Entity,
   entityToItem,
-  isInstanceOf,
+  isInstanceOfAny,
   propertyRowFromEntity,
 } from "../src/lib/wikibase.ts";
 
-/** "video game" — the class whose instances the mirror holds. */
+/** "video game" — the first class the mirror held; kept for callers and tests. */
 export const VIDEO_GAME = "Q7889";
+
+/**
+ * The classes whose instances the mirror holds: an item is imported when a
+ * best-rank `instance of` (P31) names any of these. Only these exact QIDs match
+ * — subclasses are not expanded — so add a QID here to widen the mirror; the
+ * pre-filter needles and the P31 check both read this list.
+ */
+export const IMPORT_CLASSES: readonly string[] = [
+  VIDEO_GAME, // "Q7889" video game
+  "Q7058673", // video game series
+  "Q11424", // film (movies)
+  "Q5398426", // television series (TV shows)
+  "Q63952888", // anime television series
+  "Q783794", // company
+  "Q210167", // video game developer
+  "Q1137109", // video game publisher
+  "Q482994", // album (music albums)
+  "Q7366", // song
+];
 
 /** Where Toolforge mounts the latest weekly JSON dump (needs `mount: all`). */
 export const DEFAULT_DUMP_PATH = "/public/dumps/public/wikidatawiki/entities/latest-all.json.gz";
@@ -88,8 +107,8 @@ export interface ScanStats {
 }
 
 export interface ScanOptions {
-  /** Class QID an item's best-rank P31 must include (VIDEO_GAME). */
-  classQid: string;
+  /** Class QIDs an item's best-rank P31 must include one of (IMPORT_CLASSES). */
+  classQids: readonly string[];
   /** Called with every matching item, in dump order, awaited (backpressure). */
   onItem: (item: Item, entity: Entity) => void | Promise<void>;
   /** Called with every property entity (there are ~13k, interleaved). */
@@ -314,11 +333,15 @@ function parseLine(line: Buffer): Entity | null {
 }
 
 /**
- * Stream a Wikidata entity JSON dump and hand every item of `classQid` (and
- * every property entity) to the callbacks. Resolves with the scan statistics.
+ * Stream a Wikidata entity JSON dump and hand every item whose best-rank P31 is
+ * one of `classQids` (and every property entity) to the callbacks. Resolves with
+ * the scan statistics.
  */
 export async function scanDump(source: Readable, opts: ScanOptions): Promise<ScanStats> {
-  const classNeedle = Buffer.from(`"numeric-id":${opts.classQid.replace(/^Q/, "")}`);
+  const classNeedles = opts.classQids.map((qid) =>
+    Buffer.from(`"numeric-id":${qid.replace(/^Q/, "")}`),
+  );
+  const classSet = new Set(opts.classQids);
   const progressEvery = opts.progressEveryBytes ?? 5e9;
   const started = Date.now();
   const stats: ScanStats = {
@@ -345,7 +368,7 @@ export async function scanDump(source: Readable, opts: ScanOptions): Promise<Sca
     }
     if (entity.type !== "item") return;
     const item = entityToItem(entity);
-    if (!isInstanceOf(item, opts.classQid)) return;
+    if (!isInstanceOfAny(item, classSet)) return;
     stats.matched++;
     await opts.onItem(item, entity);
   };
@@ -356,7 +379,7 @@ export async function scanDump(source: Readable, opts: ScanOptions): Promise<Sca
     while ((nl = region.indexOf(NL, nl + 1)) !== -1) stats.lines++;
 
     hits.clear();
-    hitLines(region, classNeedle, { wordBoundary: true }, hits);
+    for (const needle of classNeedles) hitLines(region, needle, { wordBoundary: true }, hits);
     if (opts.onProperty) hitLines(region, PROPERTY_NEEDLE, { atLineStart: true }, hits);
     if (hits.size === 0) return false;
     // Dump order matters for nothing, but keep it anyway.
@@ -480,7 +503,8 @@ export interface ImportOptions {
   dump?: string;
   /** An already-open stream of inflated dump bytes (tests). */
   source?: Readable;
-  classQid?: string;
+  /** Class QIDs whose instances to import (defaults to IMPORT_CLASSES). */
+  classQids?: readonly string[];
   /** Stop after this many matching items; implies no pruning. */
   limit?: number;
   /** Delete items absent from a complete pass (default true without `limit`). */
@@ -611,7 +635,7 @@ async function pruneMissing(
  */
 export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportStats> {
   const log = opts.log ?? ((m: string) => console.log(m));
-  const classQid = opts.classQid ?? VIDEO_GAME;
+  const classQids = opts.classQids ?? IMPORT_CLASSES;
   const shard = opts.shard ?? WHOLE_DUMP;
   const path = opts.path ?? DEFAULT_DUMP_PATH;
   const file = opts.source ? undefined : openDumpFile(path, shard);
@@ -654,7 +678,7 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
     seconds > 0 ? (bytes / 1e6 / seconds).toFixed(0) : "?";
 
   const scan = await scanDump(source, {
-    classQid,
+    classQids,
     limit: opts.limit,
     progressEveryBytes: opts.progressEveryBytes,
     onItem: async (item) => {

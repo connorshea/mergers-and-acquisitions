@@ -154,6 +154,11 @@ export function isInstanceOf(item: Item, classQid: string): boolean {
   return (item.statements.P31 ?? []).some((v) => v.type === "item" && v.value === classQid);
 }
 
+/** True when one of the item's (best-rank) `instance of` values is any of `classQids`. */
+export function isInstanceOfAny(item: Item, classQids: ReadonlySet<string>): boolean {
+  return (item.statements.P31 ?? []).some((v) => v.type === "item" && classQids.has(v.value));
+}
+
 // ---------- property entity -> PropertyRow ----------
 
 /**

@@ -73,7 +73,7 @@ async function collect(source: Readable, opts: { limit?: number } = {}) {
   const matched: Item[] = [];
   const properties: string[] = [];
   const stats = await scanDump(source, {
-    classQid: VIDEO_GAME,
+    classQids: [VIDEO_GAME],
     limit: opts.limit,
     onItem: (i) => {
       matched.push(i);
@@ -131,7 +131,7 @@ describe("scanDump", () => {
   it("skips property entities without a handler", async () => {
     const seen: string[] = [];
     const stats = await scanDump(Readable.from([Buffer.from(dumpText(ENTITIES))]), {
-      classQid: VIDEO_GAME,
+      classQids: [VIDEO_GAME],
       onItem: (i) => {
         seen.push(i.id);
       },

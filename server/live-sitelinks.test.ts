@@ -38,6 +38,18 @@ describe("attachLiveSitelinkRedirects", () => {
     expect(b.sitelinkRedirects).toEqual({ enwiki: "Foo" });
   });
 
+  it("keeps the section a redirect points at", async () => {
+    const a = makeItem("Q1", "Halo 3", {}, { sitelinks: { enwiki: "Halo 3" } });
+    const b = makeItem("Q2", "Halo 3: ODST", {}, { sitelinks: { enwiki: "Halo 3: ODST" } });
+    const fetchImpl = vi.fn<typeof fetch>(async () =>
+      Response.json({
+        query: { redirects: [{ from: "Halo 3: ODST", to: "Halo 3", tofragment: "ODST" }] },
+      }),
+    );
+    await attachLiveSitelinkRedirects(a, b, fetchImpl);
+    expect(b.sitelinkRedirects).toEqual({ enwiki: "Halo 3#ODST" });
+  });
+
   it("throws when a wiki can't be read", async () => {
     const a = makeItem("Q1", "Foo", {}, { sitelinks: { enwiki: "Foo" } });
     const b = makeItem("Q2", "Foo", {}, { sitelinks: { enwiki: "Bar" } });

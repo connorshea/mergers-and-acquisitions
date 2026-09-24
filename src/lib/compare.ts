@@ -51,7 +51,10 @@ export interface Item {
   sitelinkBadges?: Record<string, string[]>;
   /**
    * Sitelinks whose page the Wiki Replicas show is a redirect (wiki → target
-   * page title, null when the target is unknown or off-wiki). Not part of the
+   * page title, null when the target is unknown or off-wiki). A redirect to a
+   * section keeps it as "Title#Section" (sitelinkRedirectTarget), so it never
+   * equals a partner's page: the wiki is treating the subject as part of that
+   * article, not as the same subject. Not part of the
    * stored item: the server overlays it from `sitelink_pages`, which only covers
    * pages behind a same-wiki clash on an open candidate (see
    * server/sitelink-redirects.ts).
@@ -81,15 +84,38 @@ export function isRedirectSitelink(item: Item, wiki: string): boolean {
   );
 }
 
-/** The page the item's sitelink on `wiki` redirects to, when resolved. */
+/**
+ * The page the item's sitelink on `wiki` redirects to, when resolved — with
+ * "#Section" appended when the redirect points at a section of that page.
+ */
 export function sitelinkRedirectTarget(item: Item, wiki: string): string | undefined {
   return item.sitelinkRedirects?.[wiki] ?? undefined;
 }
 
-/** Whether `item`'s page on `wiki` is resolved as a redirect to `other`'s page there. */
+/**
+ * Whether `item`'s page on `wiki` is resolved as a redirect to `other`'s page
+ * there — the whole page, not a section of it.
+ */
 export function redirectsToPartner(item: Item, other: Item, wiki: string): boolean {
   const target = sitelinkRedirectTarget(item, wiki);
   return target !== undefined && target === other.sitelinks[wiki];
+}
+
+/** The redirect target with its section, MediaWiki-style ("Title#Section"). */
+export function withFragment(target: string, fragment: string | null | undefined): string {
+  return fragment ? `${target}#${fragment}` : target;
+}
+
+/**
+ * Whether a clash on `wiki` is plausibly one page redirecting to the other: a
+ * side is a redirect whose target is unknown (badge only) or is the partner's
+ * page. A redirect known to point elsewhere leaves two distinct pages.
+ */
+function clashExplainedByRedirect(a: Item, b: Item, wiki: string): boolean {
+  const explains = (item: Item, other: Item) =>
+    isRedirectSitelink(item, wiki) &&
+    (sitelinkRedirectTarget(item, wiki) === undefined || redirectsToPartner(item, other, wiki));
+  return explains(a, b) || explains(b, a);
 }
 
 export type Status = "identical" | "similar" | "distinct";
@@ -1130,9 +1156,10 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // other item's page, the classic duplicate shape. Redirects are only known
   // from badges (often missing) and, for pairs the resolve-sitelinks job has
   // already seen, from the wiki itself; so this is only a modest penalty, not
-  // near-conclusive evidence.
+  // near-conclusive evidence. A redirect known to point at some third page (or
+  // a section) still leaves two distinct pages, so it keeps the penalty.
   const sitelinkClash = blockers.some(
-    (r) => r.kind === "sitelink" && !r.a.some((v) => v.redirect) && !r.b.some((v) => v.redirect),
+    (r) => r.kind === "sitelink" && !clashExplainedByRedirect(a, b, r.label),
   );
   if (sitelinkClash) score -= 0.1;
 

@@ -13,6 +13,7 @@ import {
   isSeriesSequelPair,
   mergeConflicts,
   redirectSitelinkFixes,
+  withFragment,
   normalize,
   orderByAge,
   scoreCandidate,
@@ -213,6 +214,12 @@ describe("buildRows (behavior-preserving extraction)", () => {
       // Points elsewhere.
       const elsewhere = { ...redirect, sitelinkRedirects: { enwiki: "Loud (album)" } };
       expect(redirectSitelinkFixes(article, elsewhere)).toBeNull();
+      // Points at a section of the other page: part of that subject, not it.
+      const section = {
+        ...redirect,
+        sitelinkRedirects: { enwiki: withFragment(article.sitelinks.enwiki, "Encore") },
+      };
+      expect(redirectSitelinkFixes(article, section)).toBeNull();
       // A second, unfixable clash sinks the plan.
       const twoWikis = { ...toArticle, sitelinks: { ...toArticle.sitelinks, dewiki: "Loud" } };
       expect(
@@ -606,6 +613,31 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       expect(score(a, elsewhere).reasons.some((r) => r.startsWith("sitelink redirects"))).toBe(
         false,
       );
+    });
+
+    it("keeps the clash penalty unless a redirect could explain the clash", () => {
+      // Label-only pair, so the score sits below the strong-signal cap.
+      const lone = (extra: Pick<Item, "sitelinkBadges" | "sitelinkRedirects">): Item => ({
+        ...base,
+        id: "Q2",
+        labels: { en: "Harvest Moon" },
+        sitelinks: { enwiki: "Harvest Moon (video game)" },
+        statements: {},
+        ...extra,
+      });
+      const a = { ...lone({}), id: "Q1", sitelinks: { enwiki: "Harvest Moon" } };
+      const plain = score(a, lone({})).confidence;
+      // Badge only, target unknown: likely a redirect to the other page.
+      expect(
+        score(a, lone({ sitelinkBadges: { enwiki: ["Q70893996"] } })).confidence,
+      ).toBeGreaterThan(plain);
+      // Known to point at a third page, or at a section of the other page:
+      // still two distinct pages.
+      for (const target of ["Harvest Moon (series)", "Harvest Moon#Sequel"]) {
+        const r = score(a, lone({ sitelinkRedirects: { enwiki: target } }));
+        expect(r.confidence).toBe(plain);
+        expect(r.reasons.some((x) => x.startsWith("sitelink redirects"))).toBe(false);
+      }
     });
   });
 

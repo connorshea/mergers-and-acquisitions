@@ -6,7 +6,7 @@ import type { MySql2Database } from "drizzle-orm/mysql2";
 import { and, eq, sql } from "drizzle-orm";
 import type * as schema from "../db/schema.ts";
 import { sitelinkPages } from "../db/schema.ts";
-import type { Item } from "../src/lib/compare.ts";
+import { type Item, withFragment } from "../src/lib/compare.ts";
 import { chunk } from "../src/lib/chunk.ts";
 
 /** (wiki, title) tuples per `IN` lookup. */
@@ -55,6 +55,7 @@ export async function attachSitelinkRedirects(
         wiki: sitelinkPages.wiki,
         title: sitelinkPages.title,
         target: sitelinkPages.redirectTarget,
+        fragment: sitelinkPages.redirectFragment,
       })
       .from(sitelinkPages)
       .where(
@@ -65,7 +66,8 @@ export async function attachSitelinkRedirects(
       );
     for (const row of rows) {
       for (const item of owners.get(`${row.wiki}\t${row.title}`) ?? []) {
-        item.sitelinkRedirects = { ...item.sitelinkRedirects, [row.wiki]: row.target };
+        const target = row.target === null ? null : withFragment(row.target, row.fragment);
+        item.sitelinkRedirects = { ...item.sitelinkRedirects, [row.wiki]: target };
       }
     }
   }

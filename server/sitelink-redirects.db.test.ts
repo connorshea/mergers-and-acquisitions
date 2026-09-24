@@ -183,6 +183,14 @@ describe.skipIf(!DB_TEST)("sitelink redirects", () => {
       },
       { wiki: "enwiki", title: "Foo", missing: false, isRedirect: false },
       { wiki: "dewiki", title: "Foo", missing: false, isRedirect: true, redirectTarget: null },
+      {
+        wiki: "eswiki",
+        title: "Foo 2",
+        missing: false,
+        isRedirect: true,
+        redirectTarget: "Foo",
+        redirectFragment: "Secuela",
+      },
       // Not a clash for this pair (both link it): ignored.
       { wiki: "frwiki", title: "Foo", missing: false, isRedirect: true, redirectTarget: "Bar" },
     ]);
@@ -190,18 +198,23 @@ describe.skipIf(!DB_TEST)("sitelink redirects", () => {
       "Q1",
       "Foo",
       {},
-      { sitelinks: { enwiki: "Foo", dewiki: "Foo", frwiki: "Foo" } },
+      { sitelinks: { enwiki: "Foo", dewiki: "Foo", eswiki: "Foo", frwiki: "Foo" } },
     );
     const b = makeItem(
       "Q2",
       "Foo",
       {},
       {
-        sitelinks: { enwiki: "Foo (video game)", dewiki: "Foo (Spiel)", frwiki: "Foo" },
+        sitelinks: {
+          enwiki: "Foo (video game)",
+          dewiki: "Foo (Spiel)",
+          eswiki: "Foo 2",
+          frwiki: "Foo",
+        },
       },
     );
     await attachSitelinkRedirects(db, [[a, b]]);
     expect(a.sitelinkRedirects).toEqual({ dewiki: null });
-    expect(b.sitelinkRedirects).toEqual({ enwiki: "Foo" });
+    expect(b.sitelinkRedirects).toEqual({ enwiki: "Foo", eswiki: "Foo#Secuela" });
   });
 });

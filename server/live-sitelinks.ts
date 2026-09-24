@@ -3,7 +3,7 @@
 // `sitelink_pages` answer (server/sitelink-redirects.ts) is good enough to show
 // and score, but removing a sitelink from Wikidata is an edit, so the merge flow
 // only acts on what the wiki says now.
-import type { Item } from "../src/lib/compare.ts";
+import { type Item, withFragment } from "../src/lib/compare.ts";
 import { sitelinkHost } from "../src/lib/wiki.ts";
 import { sitelinkClashes } from "./sitelink-overlay.ts";
 import { userAgent } from "./auth/user-agent.ts";
@@ -13,7 +13,7 @@ const TIMEOUT_MS = 10_000;
 
 interface QueryResponse {
   query?: {
-    redirects?: { from: string; to: string; tointerwiki?: string }[];
+    redirects?: { from: string; to: string; tofragment?: string; tointerwiki?: string }[];
   };
 }
 
@@ -21,7 +21,7 @@ interface QueryResponse {
  * Resolve the clashing sitelinks of `a` and `b` against their wikis and set
  * each item's `sitelinkRedirects` to what the wikis said (replacing whatever
  * was there): wiki → target for every page that is a redirect, null when it
- * points off-wiki. Throws when a wiki can't be reached or read; the caller
+ * points off-wiki ("Title#Section" for a section). Throws when a wiki can't be reached or read; the caller
  * treats that as "not known to be fixable".
  */
 export async function attachLiveSitelinkRedirects(
@@ -54,7 +54,7 @@ export async function attachLiveSitelinkRedirects(
     if (!res.ok) throw new Error(`${host} answered HTTP ${res.status}`);
     const body = (await res.json()) as QueryResponse;
     for (const r of body.query?.redirects ?? []) {
-      const target = r.tointerwiki ? null : r.to;
+      const target = r.tointerwiki ? null : withFragment(r.to, r.tofragment);
       for (const [item, redirects] of found) {
         if (item.sitelinks[wiki] === r.from) redirects[wiki] = target;
       }

@@ -20,6 +20,7 @@ const TABLES = [
   "entity_labels",
   "sync_state",
   "dump_import_runs",
+  "sitelink_pages",
 ];
 
 // The auth tables are linked by foreign keys, which MariaDB refuses to

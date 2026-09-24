@@ -205,6 +205,27 @@ in total (shared with the web service), so running several slices at once
 needs a [quota increase](https://wikitech.wikimedia.org/wiki/Help:Toolforge/Kubernetes#Quotas).
 Without `--shard` the job reads the whole file, which is `--shard 1/1`.
 
+## Resolving sitelink redirects
+
+When two items link different pages on the same wiki, Wikidata refuses to merge
+them — but often one page is only a redirect to the other. The dump's "sitelink
+to redirect" badges don't say where a redirect points, and they're missing on
+pages that became redirects after being linked. So `pnpm job:resolve-sitelinks`
+(`jobs/resolve-sitelinks.ts` → `server/sitelink-redirects.ts`, nightly after the
+hunt) looks up every clashing sitelink on an open candidate in that wiki's
+`page` / `redirect` tables on the [Wiki
+Replicas](https://wikitech.wikimedia.org/wiki/Help:Toolforge/Database) and
+stores the answer in `sitelink_pages`. It connects to
+`<wiki>.analytics.db.svc.wikimedia.cloud` (database `<wiki>_p`) with the tool's
+`TOOL_REPLICA_USER` / `TOOL_REPLICA_PASSWORD`, one wiki at a time. Pages are
+re-checked after a week.
+
+The replicas are only reachable from Toolforge. To run the job from a dev
+machine, tunnel through the bastion and point `REPLICA_HOST` / `REPLICA_PORT` /
+`REPLICA_DB` at the tunnel (`{wiki}` is replaced with the site id), with the
+replica credentials from the tool's `replica.my.cnf` in the `TOOL_REPLICA_*`
+variables.
+
 ## Deploying to Toolforge
 
 The Build Service builds the image from the GitHub repo directly — it clones the

@@ -112,6 +112,12 @@ export const mergeCandidates = mysqlTable(
   (t) => [
     uniqueIndex("idx_merge_candidates_pair").on(t.fromQid, t.intoQid),
     index("idx_merge_candidates_status_confidence").on(t.status, t.confidence),
+    // Backs the list's "newest" sort (status filter + ORDER BY detected_at),
+    // which otherwise filesorts every row of the status.
+    index("idx_merge_candidates_status_detected").on(t.status, t.detectedAt),
+    // The list's q/type filters look candidates up by either side's qid; the
+    // pair index above covers from_qid, this covers into_qid.
+    index("idx_merge_candidates_into").on(t.intoQid),
   ],
 );
 

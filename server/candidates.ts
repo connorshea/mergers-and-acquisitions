@@ -3,7 +3,7 @@
 // server/edits.ts; both build their responses with server/candidate-summary.ts
 // so the wire shapes stay in sync.
 import { Hono } from "hono";
-import { and, asc, count, desc, eq, gt, gte, inArray, lt, or, sql } from "drizzle-orm";
+import { and, asc, count, desc, eq, gt, gte, inArray, lt, or, type SQL, sql } from "drizzle-orm";
 import { db } from "./db.ts";
 import { type AuthEnv, requireUser } from "./auth/session.ts";
 import { addSeconds, toSqlDatetime } from "./auth/time.ts";
@@ -31,6 +31,26 @@ const ID_CHUNK = 1000;
 function parseIntParam(value: string | undefined, fallback: number): number {
   const n = Number(value);
   return Number.isFinite(n) ? n : fallback;
+}
+
+/**
+ * Ids of candidates where either item satisfies `filter` (an SQL condition on
+ * the items table aliased as `i`), as a parenthesized derived table.
+ *
+ * Driven from `items` via a UNION of the two sides, so the cost follows the
+ * number of matching items: a rare type or label resolves in a few ms, where
+ * the correlated `exists (… from_qid …) or exists (… into_qid …)` form scans
+ * every candidate of the status and, for a type covering nearly every item
+ * (Q7889 today), degenerates into materialized semi-joins plus a full table
+ * scan — seconds rather than a few hundred ms. Needs the pair index (from_qid
+ * prefix) and idx_merge_candidates_into.
+ */
+function eitherItemMatches(filter: SQL): SQL {
+  return sql`(
+    select c.id from merge_candidates c join items i on i.qid = c.from_qid where ${filter}
+    union
+    select c.id from merge_candidates c join items i on i.qid = c.into_qid where ${filter}
+  )`;
 }
 
 export const candidates = new Hono<AuthEnv>();
@@ -69,48 +89,50 @@ candidates.get("/", async (c) => {
     }
   }
 
+  // Item-side filters. Each keeps pairs where *either* item matches (the hunt's
+  // label+type path pairs items of the same type, but the shared-id path can
+  // pair across types), and each becomes a derived table of matching candidate
+  // ids joined onto the query, so `total`/pagination stay in SQL.
+  const itemFilters: SQL[] = [];
+
   if (q) {
     // Case-insensitive substring match against either item's primaryLabel.
-    // MariaDB's default collation is case-insensitive, so LIKE already folds
-    // case; lower() is belt-and-braces. Correlated subqueries keep the filter
-    // (and thus `total`/pagination) in SQL.
-    const pattern = `%${q.toLowerCase()}%`;
-    conditions.push(
-      sql`(
-        exists (select 1 from items where items.qid = ${mergeCandidates.fromQid} and lower(items.primary_label) like ${pattern})
-        or exists (select 1 from items where items.qid = ${mergeCandidates.intoQid} and lower(items.primary_label) like ${pattern})
-      )`,
-    );
+    // The database collation is utf8mb4_bin (case-sensitive), so fold both
+    // sides with lower().
+    itemFilters.push(sql`lower(i.primary_label) like ${`%${q.toLowerCase()}%`}`);
   }
 
-  // Instance-of (P31) filter: keep pairs where *either* item's denormalized
-  // primaryType matches the given QID (the hunt's label+type path pairs items of
-  // the same type, but the shared-id path can pair across types, so match either
-  // side — same shape as the `q` search above). Ignored unless it's a valid QID.
+  // Instance-of (P31) filter on either item's denormalized primaryType.
+  // Ignored unless it's a valid QID.
   const typeParam = req.query("type")?.trim();
   if (typeParam && /^Q\d+$/.test(typeParam)) {
-    conditions.push(
-      sql`(
-        exists (select 1 from items where items.qid = ${mergeCandidates.fromQid} and items.primary_type = ${typeParam})
-        or exists (select 1 from items where items.qid = ${mergeCandidates.intoQid} and items.primary_type = ${typeParam})
-      )`,
-    );
+    itemFilters.push(sql`i.primary_type = ${typeParam}`);
   }
 
   const where = and(...conditions);
   const sortColumn =
     sort === "confidence" ? mergeCandidates.confidence : mergeCandidates.detectedAt;
 
-  const [{ total }] = await db.select({ total: count() }).from(mergeCandidates).where(where);
-
-  const rows = await db
-    .select(summaryColumns)
-    .from(mergeCandidates)
-    .where(where)
-    // Always descending; id as a stable tiebreaker for deterministic paging.
-    .orderBy(desc(sortColumn), desc(mergeCandidates.id))
-    .limit(pageSize)
-    .offset((page - 1) * pageSize);
+  // The count and the page are independent; run them concurrently (each takes
+  // its own pool connection).
+  const countQuery = db.select({ total: count() }).from(mergeCandidates).$dynamic();
+  const pageQuery = db.select(summaryColumns).from(mergeCandidates).$dynamic();
+  itemFilters.forEach((filter, n) => {
+    const alias = sql.identifier(`f${n}`);
+    const matches = sql`${eitherItemMatches(filter)} as ${alias}`;
+    const on = sql`${alias}.id = ${mergeCandidates.id}`;
+    countQuery.innerJoin(matches, on);
+    pageQuery.innerJoin(matches, on);
+  });
+  const [[{ total }], rows] = await Promise.all([
+    countQuery.where(where),
+    pageQuery
+      .where(where)
+      // Always descending; id as a stable tiebreaker for deterministic paging.
+      .orderBy(desc(sortColumn), desc(mergeCandidates.id))
+      .limit(pageSize)
+      .offset((page - 1) * pageSize),
+  ]);
 
   const labels = await loadLabels(rows.flatMap((r) => [r.fromQid, r.intoQid]));
   const candidateList = rows.map((r) => toSummary(r, labels));

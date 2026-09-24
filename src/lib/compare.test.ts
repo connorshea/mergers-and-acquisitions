@@ -281,8 +281,23 @@ describe("scoreCandidate", () => {
   });
 
   it("gives strong signals to same-subject pairs", () => {
-    expect(scored["Game with conflicts"].confidence).toBeGreaterThan(0.4);
+    // The conflicted game differs on a Steam id and on its enwiki page (the
+    // likely-redirect "… (video game)" shape), each docked a little, so it sits
+    // below the clean pair but well above clearly-distinct items.
+    expect(scored["Game with conflicts"].confidence).toBeGreaterThan(0.3);
     expect(scored["Clean merge (author)"].confidence).toBeGreaterThan(0.4);
+  });
+
+  it("docks, but does not sink, a pair linking different pages on the same wiki", () => {
+    const e = EXAMPLES.find((x) => x.name === "Clean merge (author)")!;
+    const clash = scoreCandidate(e.a, {
+      ...e.b,
+      sitelinks: { ...e.b.sitelinks, enwiki: "Miriam Okafor (novelist)" },
+    });
+    const clean = scored["Clean merge (author)"];
+    expect(clash.hasBlocker).toBe(true);
+    expect(clash.confidence).toBeLessThan(clean.confidence);
+    expect(clash.confidence).toBeGreaterThan(0.4);
   });
 
   it("explains its reasoning", () => {
@@ -650,7 +665,9 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     const far = scoreCandidate(mk("Q3", "2002-01-01"), mk("Q4", "2020-01-01")); // 18y apart
     expect(far.confidence).toBeLessThan(near.confidence);
     expect(far.confidence).toBeLessThan(0.4); // dropped below the persistence floor
-    expect(far.reasons.some((r) => r.startsWith("publication years differ"))).toBe(true);
+    expect(far.reasons.some((r) => r.startsWith("publication/inception/birth years differ"))).toBe(
+      true,
+    );
   });
 
   it("does not apply a small year penalty when a strong shared id vouches for the pair", () => {
@@ -669,12 +686,16 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       isIdentifierProp: (pid) => pid === "P1733",
     });
     expect(result.confidence).toBeGreaterThan(0.6);
-    expect(result.reasons.some((r) => r.startsWith("publication years differ"))).toBe(false);
+    expect(
+      result.reasons.some((r) => r.startsWith("publication/inception/birth years differ")),
+    ).toBe(false);
   });
 
-  it("caps a large publication-year gap even when a strong id is shared (Meltdown)", () => {
+  it("penalises a large publication-year gap even when a strong id is shared (Meltdown)", () => {
     // Two unrelated "Meltdown" games — 1986 and 2014 — that collide on a shared
-    // external id must not score as a match: a 28-year gap overrides the id.
+    // external id. The id keeps the gap from being conclusive (a real duplicate
+    // can carry an original and a re-release date), but the pair is docked hard
+    // and held well off near-certain.
     const mk = (id: string, year: string): Item => ({
       ...base,
       id,
@@ -686,14 +707,45 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       }),
     });
     const result = scoreCandidate(
-      mk("Q15036797", "1986-01-01T00:00:00Z"),
-      mk("Q122202962", "2014-06-05T00:00:00Z"),
-      {
-        isIdentifierProp: (pid) => pid === "P8229",
-      },
+      mk("Q15036797", "+1986-01-01T00:00:00Z"),
+      mk("Q122202962", "+2014-06-05T00:00:00Z"),
+      { isIdentifierProp: (pid) => pid === "P8229" },
     );
-    expect(result.confidence).toBeLessThanOrEqual(0.1);
-    expect(result.reasons.some((r) => r.includes("almost certainly different games"))).toBe(true);
+    expect(result.confidence).toBeLessThanOrEqual(0.6);
+    expect(result.reasons).toContain("publication/inception/birth years differ by 28");
+  });
+
+  it("reads signed Wikibase years and compares inception and birth dates", () => {
+    // Signed times (`+2014-…`) must parse as 2014, not 201; inception (P571)
+    // and date of birth (P569) feed the same gap check as publication date.
+    for (const pid of ["P577", "P571", "P569"]) {
+      const mk = (id: string, time: string): Item => ({
+        ...base,
+        id,
+        labels: { en: "Halo" },
+        statements: stmt({ [pid]: [{ type: "time" as const, value: time }] }),
+      });
+      const result = scoreCandidate(
+        mk("Q17504487", "+2014-01-01T00:00:00Z"),
+        mk("Q5643301", "+1980-00-00T00:00:00Z"),
+      );
+      expect(result.confidence).toBeLessThanOrEqual(0.1);
+      expect(result.reasons[0]).toBe(
+        "publication/inception/birth years differ by 34 — almost certainly different subjects",
+      );
+    }
+  });
+
+  it('does not count a shared "different from" (P1889) target as agreement', () => {
+    // Two unrelated bands both marked different from a third "Halo".
+    const mk = (id: string): Item => ({
+      ...base,
+      id,
+      labels: { en: "Halo" },
+      statements: stmt({ P1889: [{ type: "item" as const, value: "Q55623" }] }),
+    });
+    const result = scoreCandidate(mk("Q17504487"), mk("Q5643301"));
+    expect(result.reasons.some((r) => r.includes("shared statements agree"))).toBe(false);
   });
 
   it("ignores Wikidata-mirrored ids (vglist, GamerProfiles) as match or distinction evidence", () => {

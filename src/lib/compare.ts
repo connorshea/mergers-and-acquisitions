@@ -578,6 +578,9 @@ export function isHardcodedMirrorProp(pid: string): boolean {
  */
 const LARGE_YEAR_GAP = 10;
 
+/** Date properties compared for the release/founding/birth year gap. */
+const YEAR_GAP_PROPS = ["P577", "P571", "P569"] as const;
+
 /**
  * Same-wiki sitelink clashes (two different, non-redirect pages on one wiki) at
  * or beyond this are treated as near-conclusive that the items are different
@@ -901,10 +904,14 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // How much of the shared statement set agrees, over *discriminative* properties
   // only (P31 counted above; low-entropy props like genre/game mode/country
   // excluded, since agreeing on "single-player" says nothing about sameness).
+  // "Different from" (P1889) is excluded too: both items naming the same third
+  // item as distinct only says editors confused each with it, not that the pair
+  // is one subject (two unrelated bands called Halo both point at a third Halo).
   const stmtRows = rows.filter(
     (r) =>
       r.kind === "statement" &&
       r.key !== "P31" &&
+      r.key !== "P1889" &&
       !LOW_ENTROPY_PROPS.has(r.key) &&
       !sharedWithOther.has(r.key),
   );
@@ -916,10 +923,14 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
 
   // Publication-year disagreement. Take the closest pair of release years across
   // the two items, so a re-release date listed on one side doesn't trip it.
+  // Inception (P571) and date of birth (P569) count alongside publication date
+  // (P577): they are the equivalent date for bands, companies and people.
+  // Wikibase times are signed (`+1993-08-31T00:00:00Z`), so read the year up to
+  // its first dash rather than a fixed four characters.
   const years = (item: Item): number[] =>
-    (item.statements.P577 ?? [])
+    YEAR_GAP_PROPS.flatMap((pid) => item.statements[pid] ?? [])
       .filter((v) => v.type === "time")
-      .map((v) => parseInt(v.value.slice(0, 4), 10))
+      .map((v) => parseInt(/^[+-]?\d+/.exec(v.value)?.[0] ?? "", 10))
       .filter((n) => Number.isFinite(n));
   const ya = years(a);
   const yb = years(b);
@@ -928,13 +939,22 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     for (const x of ya) for (const y of yb) yearGap = Math.min(yearGap, Math.abs(x - y));
   }
 
-  // A large gap is near-conclusive evidence of different games/editions and
-  // overrides even a shared identifier — a shared id across a decade-plus gap is
-  // far more likely stale/mis-entered data than a real match (e.g. two unrelated
-  // "Meltdown" games, 1986 vs. 2014, that happen to collide on a catalogue id).
-  // Cap below the persistence floor so the pair never surfaces.
-  if (Number.isFinite(yearGap) && yearGap >= LARGE_YEAR_GAP) {
-    reasons.unshift(`publication years differ by ${yearGap} — almost certainly different games`);
+  // A large gap is strong evidence of different subjects. Without a shared
+  // strong identifier it is near-conclusive: cap below the persistence floor so
+  // the pair never surfaces. A shared id makes it a genuine contest — the id may
+  // be stale or mis-entered (two unrelated "Meltdown" games, 1986 vs. 2014,
+  // colliding on a catalogue id), or the pair may be a real duplicate whose
+  // items carry an original and a re-release date (Blade & Sword, 2004 / 2022) —
+  // so it is a heavy penalty plus a ceiling (below) that keeps the pair well
+  // off near-certain, rather than a cap.
+  const largeYearGap = Number.isFinite(yearGap) && yearGap >= LARGE_YEAR_GAP;
+  if (largeYearGap && strongIds.length > 0) {
+    score -= 0.3;
+    reasons.push(`publication/inception/birth years differ by ${yearGap}`);
+  } else if (largeYearGap) {
+    reasons.unshift(
+      `publication/inception/birth years differ by ${yearGap} — almost certainly different subjects`,
+    );
     score = Math.min(score, 0.1);
   }
 
@@ -963,7 +983,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     if (modestYearGap) {
       const penalty = Math.min(0.35, 0.25 + (yearGap - 2) / 30);
       score -= penalty;
-      reasons.push(`publication years differ by ${yearGap}`);
+      reasons.push(`publication/inception/birth years differ by ${yearGap}`);
     }
     if (diffDeveloper) {
       score -= 0.25;
@@ -984,6 +1004,16 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
       `${blockers.length} conflict${blockers.length > 1 ? "s" : ""} would block the merge`,
     );
   }
+
+  // Two different pages on the same wiki usually means two subjects — a wiki
+  // has one article per subject — but often one of them is an unbadged redirect
+  // to the other item's page, the classic duplicate shape. Until redirects are
+  // detected reliably (the redirect badge is often missing), this is only a
+  // modest penalty, not near-conclusive evidence.
+  const sitelinkClash = blockers.some(
+    (r) => r.kind === "sitelink" && !r.a.some((v) => v.redirect) && !r.b.some((v) => v.redirect),
+  );
+  if (sitelinkClash) score -= 0.1;
 
   // Many external identifiers held by *both* items with entirely different
   // values are near-conclusive evidence of two distinct subjects: a single game
@@ -1107,10 +1137,12 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     diffDeveloper ||
     diffPublisher ||
     modestYearGap ||
+    largeYearGap ||
     distinctPerTitleIds.length > 0 ||
     distinctExtIdRows.length > 0;
   if (hasConcreteDifference) ceiling = Math.min(ceiling, 0.9);
   if (distinctPerTitleIds.length === 1) ceiling = Math.min(ceiling, 0.8);
+  if (largeYearGap) ceiling = Math.min(ceiling, 0.6);
   if (score > ceiling) {
     score = ceiling;
     // Only explain the clamp when the ceiling actually held the pair *below*

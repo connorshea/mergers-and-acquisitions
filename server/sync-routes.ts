@@ -29,8 +29,7 @@ syncRoutes.post("/properties/sync", async (c) => {
 
 syncRoutes.post("/entity-labels/sync", async (c) => {
   try {
-    const synced = await runEntityLabelsSync();
-    const payload: EntityLabelsSyncResponse = { synced };
+    const payload: EntityLabelsSyncResponse = await runEntityLabelsSync();
     return c.json(payload);
   } catch (err) {
     console.error("entity-labels sync failed", err);

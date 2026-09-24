@@ -6,7 +6,7 @@ import { eq } from "drizzle-orm";
 import { app } from "./app.ts";
 import { db, pool } from "./db.ts";
 import { refreshCandidateItemInfo } from "./candidate-item-info.ts";
-import { entityLabels, items, mergeCandidates, properties } from "../db/schema.ts";
+import { entityLabels, itemCreations, items, mergeCandidates, properties } from "../db/schema.ts";
 import type { Value } from "../src/lib/compare.ts";
 import type {
   CandidateDetailResponse,
@@ -190,6 +190,36 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       // The sides no longer share a type, so the pair has none to show.
       expect((await list("?type=Q7889")).candidates[0].sharedType).toBeNull();
       expect(await refreshCandidateItemInfo(db)).toBe(0);
+    });
+
+    it("filters by either item's creator", async () => {
+      const created = (qid: string, userName: string | null) => ({
+        qid,
+        revId: Number(qid.slice(1)),
+        createdAt: "2020-01-01 00:00:00",
+        userName,
+        tags: [],
+      });
+      await db.insert(itemCreations).values([
+        created("Q10", "Some user"),
+        created("Q20", "Other"),
+        created("Q30", "Other"),
+        created("Q40", null),
+        created("Q50", "Some user"), // on the dismissed pair
+      ]);
+      expect((await list("?creator=Some user")).candidates.map((c) => c.id)).toEqual([alpha]);
+      // Normalized like a MediaWiki username; still exact otherwise.
+      expect((await list("?creator=some_user")).candidates.map((c) => c.id)).toEqual([alpha]);
+      expect((await list("?creator=SOME USER")).total).toBe(0);
+      expect((await list("?creator=Other")).candidates.map((c) => c.id)).toEqual([alpha, beta]);
+      expect((await list("?creator=Other&type=Q865493")).candidates.map((c) => c.id)).toEqual([
+        beta,
+      ]);
+      expect(
+        (await list("?creator=Some user&status=dismissed")).candidates.map((c) => c.id),
+      ).toEqual([orphan]);
+      expect((await list("?creator=Nobody")).total).toBe(0);
+      expect((await list("?creator=")).total).toBe(2);
     });
 
     it("applies minConfidence", async () => {

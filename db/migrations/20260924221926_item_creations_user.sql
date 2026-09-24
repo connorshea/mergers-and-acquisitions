@@ -1,0 +1,1 @@
+CREATE INDEX `idx_item_creations_user` ON `item_creations` (`user_name`);

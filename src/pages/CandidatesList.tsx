@@ -138,6 +138,8 @@ export default function CandidatesList() {
   const [params, setParams] = useSearchParams();
   const { user } = useAuth();
   const q = params.get("q") ?? "";
+  // Username of either item's creator (see item_creations); empty means anyone.
+  const creator = params.get("creator") ?? "";
   // Set by the OAuth callback when the login didn't complete (?auth=denied|failed).
   // Read once into state and then stripped from the URL, so the alert doesn't
   // survive every filter change and a retried login doesn't return to it.
@@ -154,7 +156,7 @@ export default function CandidatesList() {
   const typeParam = params.get("type") ?? "";
   const types = typeParam.split(",").filter(Boolean);
   const page = Math.max(1, Number(params.get("page")) || 1);
-  const hasFilters = q !== "" || status !== "open" || types.length > 0;
+  const hasFilters = q !== "" || creator !== "" || status !== "open" || types.length > 0;
 
   // Remember the current view so the detail page's "Back to candidates" link
   // returns here. The one-shot `auth` param is stripped (and re-recorded) above.
@@ -199,6 +201,7 @@ export default function CandidatesList() {
       };
       if (q) query.q = q;
       if (typeParam) query.type = typeParam;
+      if (creator) query.creator = creator;
       try {
         const res = await fetch("/api/candidates", { query });
         if (!cancelled) setData(res as CandidateListResponse);
@@ -214,7 +217,7 @@ export default function CandidatesList() {
     return () => {
       cancelled = true;
     };
-  }, [q, status, sort, typeParam, page, reloadKey]);
+  }, [q, creator, status, sort, typeParam, page, reloadKey]);
 
   async function runHunt() {
     setHunt({ running: true, note: null });
@@ -337,7 +340,8 @@ export default function CandidatesList() {
     status === "open"
       ? "M&A: A Merge Assistant"
       : `${status[0].toUpperCase() + status.slice(1)} candidates`;
-  const titleParts = q ? [`“${q}”`] : status === "open" ? ["Open candidates"] : [];
+  const titleParts = [...(q ? [`“${q}”`] : []), ...(creator ? [`by ${creator}`] : [])];
+  if (titleParts.length === 0 && status === "open") titleParts.push("Open candidates");
   const pageTitle = [...titleParts, titleTail].join(" · ");
 
   return (
@@ -415,8 +419,12 @@ export default function CandidatesList() {
         className="list-controls"
         onSubmit={(e) => {
           e.preventDefault();
-          const value = new FormData(e.currentTarget).get("q");
-          update({ q: (typeof value === "string" ? value : "").trim() });
+          const form = new FormData(e.currentTarget);
+          const text = (name: string) => {
+            const value = form.get(name);
+            return (typeof value === "string" ? value : "").trim();
+          };
+          update({ q: text("q"), creator: text("creator") });
         }}
       >
         <input
@@ -431,6 +439,19 @@ export default function CandidatesList() {
           placeholder="Search by label…"
           aria-label="Search candidates by label"
         />
+        <label className="field">
+          <span>Created by</span>
+          <input
+            // Uncontrolled and re-mounted on URL changes, like the search box.
+            key={creator}
+            className="creator-input"
+            type="search"
+            name="creator"
+            defaultValue={creator}
+            placeholder="Username"
+            title="Pairs where either item was created by this Wikidata user"
+          />
+        </label>
         <label className="field">
           <span>Status</span>
           <select value={status} onChange={(e) => update({ status: e.target.value })}>
@@ -461,12 +482,14 @@ export default function CandidatesList() {
           {/* Shown while a refetch is in flight; the stale rows stay visible
               (dimmed) underneath instead of blanking the table. */}
           {loading && data && <Spinner label="Updating…" />}
-          {/* Clears the filters (search, status, type) but keeps the sort. */}
+          {/* Clears the filters (search, creator, status, type) but keeps the sort. */}
           {hasFilters && (
             <button
               type="button"
               className="btn-clear"
-              onClick={() => update({ q: undefined, status: undefined, type: undefined })}
+              onClick={() =>
+                update({ q: undefined, creator: undefined, status: undefined, type: undefined })
+              }
             >
               Clear filters
             </button>
@@ -488,8 +511,9 @@ export default function CandidatesList() {
       {data && visible.length === 0 && !loading && (
         <p className="list-msg">
           No {status} candidates{q ? ` matching “${q}”` : ""}
-          {types.length > 0 ? ` of type ${types.map(typeLabel).join(" or ")}` : ""}. They appear
-          here once the hunt job has scored some pairs.
+          {types.length > 0 ? ` of type ${types.map(typeLabel).join(" or ")}` : ""}
+          {creator ? ` with an item created by ${creator}` : ""}. They appear here once the hunt job
+          has scored some pairs.
         </p>
       )}
 

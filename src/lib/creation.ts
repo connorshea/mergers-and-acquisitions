@@ -108,3 +108,13 @@ export function historyUrl(qid: string): string {
 export function creationDate(c: Pick<ItemCreation, "createdAt">): Date {
   return new Date(`${c.createdAt.replace(" ", "T")}Z`);
 }
+
+/**
+ * A username as MediaWiki stores it: trimmed, underscores as spaces, runs of
+ * spaces collapsed, first letter upper-cased. So "some_user" matches the stored
+ * "Some user". IP addresses and temporary accounts ("~2025-…") pass through.
+ */
+export function normalizeUserName(name: string): string {
+  const s = name.replace(/_/g, " ").replace(/\s+/g, " ").trim();
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}

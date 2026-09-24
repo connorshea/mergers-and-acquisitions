@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vite-plus/test";
-import { creationTool, creatorUrl, isTemporaryAccount, looksLikeBot } from "./creation.ts";
+import {
+  creationTool,
+  creatorUrl,
+  isTemporaryAccount,
+  looksLikeBot,
+  normalizeUserName,
+} from "./creation.ts";
 
 const tool = (comment: string | null, tags: string[] = []) => creationTool({ comment, tags });
 
@@ -92,5 +98,14 @@ describe("creator links", () => {
     expect(creatorUrl({ userName: null, userId: null })).toBeNull();
     expect(isTemporaryAccount("~2026-46215-53")).toBe(true);
     expect(isTemporaryAccount("Andre Engels")).toBe(false);
+  });
+});
+
+describe("normalizeUserName", () => {
+  it("matches MediaWiki's stored form", () => {
+    expect(normalizeUserName("  some_user  name ")).toBe("Some user name");
+    expect(normalizeUserName("Andre Engels")).toBe("Andre Engels");
+    expect(normalizeUserName("192.0.2.1")).toBe("192.0.2.1");
+    expect(normalizeUserName("~2026-46215-53")).toBe("~2026-46215-53");
   });
 });

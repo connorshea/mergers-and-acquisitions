@@ -539,6 +539,32 @@ const LOW_ENTROPY_PROPS = new Set<string>([
   "P495", // country of origin
   "P407", // language of work or name
   "P179", // part of the series (a whole franchise shares it; weak match evidence)
+  // Storefront boilerplate: most games are "Steam / digital download", so two
+  // unrelated same-named Steam games otherwise "agree" on both. Shares measured
+  // across ~171k mirrored video games — a random pair collides on P750 87%,
+  // P437 82% (genre is 30%). Platform (P400) stays discriminative: sharing
+  // Windows says little, but sharing a console is real evidence.
+  "P750", // distributed by (Steam on 93%)
+  "P437", // distribution format (digital distribution on 90%)
+  "P306", // operating system
+  "P8956", // compatible with
+  "P479", // input device
+  // Near-constant tags and business/legal boilerplate.
+  "P1552", // has characteristic
+  "P7936", // business model
+  "P6216", // copyright status
+  "P275", // copyright license
+  "P6195", // funding scheme
+  "P195", // collection
+  "P1872", // minimum number of players
+  "P1873", // maximum number of players
+  // Age ratings: a handful of buckets each, so shared by ~25% of random pairs.
+  "P852", // ESRB rating
+  "P853", // CERO rating
+  "P908", // PEGI rating
+  "P914", // USK rating
+  "P3156", // Australian Classification
+  "P9897", // App Store age rating
 ]);
 
 /**

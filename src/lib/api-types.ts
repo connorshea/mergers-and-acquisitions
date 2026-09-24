@@ -25,6 +25,11 @@ export interface CandidateSummary {
   /** items.primaryLabel for the respective qid; null if the item row is absent. */
   fromLabel: string | null;
   intoLabel: string | null;
+  /**
+   * The pair's `instance of` (each item's primary P31) when both sides share
+   * it, else null. `label` is null when no name has been synced for the class.
+   */
+  sharedType: { qid: string; label: string | null } | null;
   confidence: number;
   status: string;
   hasBlocker: boolean;

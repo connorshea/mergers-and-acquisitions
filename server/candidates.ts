@@ -112,7 +112,7 @@ candidates.get("/", async (c) => {
       .offset((page - 1) * pageSize),
   ]);
 
-  const labels = await loadLabels(rows.flatMap((r) => [r.fromQid, r.intoQid]));
+  const labels = await loadLabels(rows);
   const candidateList = rows.map((r) => toSummary(r, labels));
 
   const payload: CandidateListResponse = {
@@ -152,7 +152,7 @@ candidates.get("/:id", async (c) => {
   );
 
   const [labels, itemRows, nextRows, prevRows] = await Promise.all([
-    loadLabels([row.fromQid, row.intoQid]),
+    loadLabels([row]),
     db
       .select({ qid: items.qid, data: items.data })
       .from(items)
@@ -299,7 +299,7 @@ candidates.post("/:id/dismiss", async (c) => {
     );
   }
 
-  const labels = await loadLabels([row.fromQid, row.intoQid]);
+  const labels = await loadLabels([row]);
   const payload: CandidateDismissResponse = { candidate: toSummary(row, labels) };
   return c.json(payload);
 });
@@ -344,7 +344,7 @@ candidates.post("/:id/reopen", async (c) => {
     return c.json({ error: "Candidate not found" }, 404);
   }
 
-  const labels = await loadLabels([row.fromQid, row.intoQid]);
+  const labels = await loadLabels([row]);
   const payload: CandidateReopenResponse = { candidate: toSummary(row, labels) };
   return c.json(payload);
 });

@@ -134,6 +134,10 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
         reasons: ["identical label"],
       });
       expect(body.candidates[1].hasBlocker).toBe(true);
+      // A shared type is named from the import-class presets, else entity_labels
+      // (none synced for the mod class here, so its label is null).
+      expect(body.candidates[0].sharedType).toEqual({ qid: "Q7889", label: "video game" });
+      expect(body.candidates[1].sharedType).toEqual({ qid: "Q865493", label: null });
       expect(body.candidates[0].detectedAt).toMatch(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/);
     });
 
@@ -144,6 +148,7 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
         id: orphan,
         fromLabel: null,
         intoLabel: null,
+        sharedType: null,
         status: "dismissed",
       });
     });
@@ -175,6 +180,8 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       expect((await list("?type=Q11424")).candidates.map((c) => c.id)).toEqual([alpha]);
       // Q20 is still a video game, so the pair still matches that type too.
       expect((await list("?type=Q7889")).candidates.map((c) => c.id)).toEqual([alpha]);
+      // The sides no longer share a type, so the pair has none to show.
+      expect((await list("?type=Q7889")).candidates[0].sharedType).toBeNull();
       expect(await refreshCandidateItemInfo(db)).toBe(0);
     });
 

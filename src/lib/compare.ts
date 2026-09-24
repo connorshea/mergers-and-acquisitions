@@ -630,6 +630,20 @@ export function isAutoIgnoredConflict(rowKey: string): boolean {
 }
 
 /**
+ * Whether a comparison `Row` of `a` vs `b` is a conflict the user has to
+ * resolve before merging. Not the ones the merge flow handles itself: an
+ * auto-ignored conflict (isAutoIgnoredConflict), or a sitelink clash where one
+ * page redirects to the other's (its sitelink is removed first — see
+ * redirectSitelinkFixes).
+ */
+export function isMergeBlocker(row: Row, a: Item, b: Item): boolean {
+  if (!row.blocker || isAutoIgnoredConflict(row.key)) return false;
+  if (row.kind !== "sitelink") return true;
+  const wiki = row.key.slice("sitelink:".length);
+  return !redirectsToPartner(a, b, wiki) && !redirectsToPartner(b, a, wiki);
+}
+
+/**
  * Which conflict kinds `wbmergeitems` would hit on this pair, judged from the
  * mirror: differing descriptions in a shared language, two different pages on
  * one wiki, or a statement on either item whose value is the other item
@@ -1214,10 +1228,10 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     }
   }
 
-  // Auto-ignored conflicts (a differing description) don't count: the merge flow
-  // always passes them to `ignoreconflicts`, so they never block a merge the tool
-  // performs and shouldn't be surfaced as blockers or flagged on the candidate.
-  const blockers = rows.filter((r) => r.blocker && !isAutoIgnoredConflict(r.key));
+  // Conflicts the merge flow handles itself (a differing description, a
+  // redirect sitelink to the partner's page) don't count: they never block a
+  // merge the tool performs, so they aren't surfaced or flagged on the candidate.
+  const blockers = rows.filter((r) => isMergeBlocker(r, a, b));
   if (blockers.length > 0) {
     reasons.push(
       `${blockers.length} conflict${blockers.length > 1 ? "s" : ""} would block the merge`,

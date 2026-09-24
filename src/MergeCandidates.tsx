@@ -4,8 +4,8 @@ import {
   buildRows,
   collapseLabelRows,
   formatIdUrl,
-  isAutoIgnoredConflict,
   isHardcodedMirrorProp,
+  isMergeBlocker,
   safeHttpUrl,
   sharedIdentifierProps,
 } from "./lib/compare.ts";
@@ -212,9 +212,11 @@ export default function MergeCandidates({
       ),
     [from, into, propertyLabels, valueLabels],
   );
-  // Auto-ignored conflicts (a differing description) are handled by the merge
-  // flow, so they aren't shown as blockers the user must resolve.
-  const blockers = rows.filter((r) => r.blocker && !isAutoIgnoredConflict(r.key));
+  // Conflicts the merge flow handles itself (a differing description, a
+  // redirect sitelink to the partner's page) aren't shown as blockers the user
+  // must resolve.
+  const isBlocker = (r: Row): boolean => isMergeBlocker(r, from, into);
+  const blockers = rows.filter(isBlocker);
   const counts = rows.reduce((acc, r) => ({ ...acc, [r.status]: acc[r.status] + 1 }), {
     identical: 0,
     similar: 0,
@@ -331,7 +333,7 @@ export default function MergeCandidates({
                           key={r.key}
                           className={
                             [
-                              r.blocker && !isAutoIgnoredConflict(r.key) ? "is-blocker" : "",
+                              isBlocker(r) ? "is-blocker" : "",
                               isDiscounted(r) ? "is-discounted" : "",
                             ]
                               .filter(Boolean)

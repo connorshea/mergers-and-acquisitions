@@ -797,7 +797,8 @@ a.chip-id:hover {
   border-right: none;
 }
 .pair-type {
-  display: table;
+  display: block;
+  width: fit-content;
   margin-bottom: 0.3rem;
   padding: 0.05rem 0.65rem;
   border-radius: 4px;

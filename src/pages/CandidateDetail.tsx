@@ -316,6 +316,14 @@ function EditOutcomePanel({ outcome }: { outcome: EditOutcome }) {
         on {from.qid}.
         {!redirected &&
           ` ${from.qid} was not turned into a redirect; check it on Wikidata and finish it by hand.`}
+        <div>
+          <strong>
+            View merge result:{" "}
+            <a href={wikiPageUrl(into.qid)} target="_blank" rel="noreferrer">
+              {into.qid}
+            </a>
+          </strong>
+        </div>
         {removedSitelinks?.map((r) => (
           <div key={`${r.qid}:${r.wiki}`}>
             Removed {r.qid}'s {r.wiki} sitelink “{r.title}”, a redirect to “{r.target}”:{" "}

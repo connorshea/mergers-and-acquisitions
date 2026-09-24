@@ -267,9 +267,10 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
         toid: "Q10",
         ignoreconflicts: "description",
         assertuser: "Alice",
-        maxlag: "5",
         token: "csrf",
       });
+      // The user is waiting on it, so the merge skips the lag guard.
+      expect(edit.params.has("maxlag")).toBe(false);
       expect(edit.params.get("summary")).toContain("M&A merge assistant");
       expect(edit.params.get("summary")!.length).toBeLessThan(260);
       expect(edit.params.has("bot")).toBe(false);
@@ -446,29 +447,6 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       });
     });
 
-    it("explains a maxlag refusal instead of echoing Wikidata's text", async () => {
-      const lagText = "Waiting for wdqs1014: 320.76666666667 seconds lagged.";
-      // Retry-After: 1 keeps the client's one lag retry short.
-      stubWikidata(() =>
-        Response.json(apiError("maxlag", lagText), { headers: { "Retry-After": "1" } }),
-      );
-      const { status, body } = await post<EditErrorResponse>(
-        `/api/candidates/${alpha}/merge`,
-        editor,
-        {},
-      );
-      expect(status).toBe(502);
-      expect(body.code).toBe("wikidata-error");
-      expect(body.error).toMatch(
-        /replication lag is too high.*try again later.*manually on Wikidata/,
-      );
-      expect((await candidateRow(alpha)).status).toBe("open");
-
-      // The audit row keeps what Wikidata actually said.
-      const [audit] = await db.select().from(wikidataEdits);
-      expect(audit).toMatchObject({ ok: false, errorCode: "maxlag", errorText: lagText });
-    });
-
     it("maps a revoked grant to a re-login and drops the stored tokens", async () => {
       stubWikidata(() =>
         apiError(
@@ -589,6 +567,8 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
         entity: "Q10",
         value: JSON.stringify({ "entity-type": "item", id: "Q20" }),
       });
+      // The user is waiting on them, so neither claim carries the lag guard.
+      expect(calls.every((c) => !c.params.has("maxlag"))).toBe(true);
 
       // The mirror carries the new statements (with the target's label).
       const rows = await db.select({ qid: items.qid, data: items.data }).from(items);

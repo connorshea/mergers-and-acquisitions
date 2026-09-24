@@ -126,12 +126,13 @@ describe("mergeItems", () => {
       token: "csrf-1",
       assert: "user",
       assertuser: "Alice",
-      maxlag: "5",
       format: "json",
       formatversion: "2",
       errorformat: "plaintext",
     });
     expect(edit.params.has("bot")).toBe(false);
+    // A merge is interactive, so it skips the lag guard.
+    expect(edit.params.has("maxlag")).toBe(false);
   });
 
   it("omits ignoreconflicts entirely when nothing is overridden, and reads redirected=0", async () => {
@@ -168,16 +169,22 @@ describe("mergeItems", () => {
     expect(twice.calls).toHaveLength(4);
   });
 
+  it("sends maxlag by default and omits it when the caller opts out", async () => {
+    const { deps, calls } = makeDeps([{ success: 1 }, { success: 1 }]);
+    await editRequest(USER, { action: "x" }, deps);
+    await editRequest(USER, { action: "x" }, deps, { maxlag: false });
+    const posts = calls.filter((call) => call.method === "POST");
+    expect(posts[0].params.get("maxlag")).toBe("5");
+    expect(posts[1].params.has("maxlag")).toBe(false);
+  });
+
   it("waits out Retry-After (capped) and retries once on maxlag", async () => {
     const lagged = Response.json(apiError("maxlag", "Waiting for a replica"), {
       headers: { "Retry-After": "3" },
     });
-    const { deps, calls } = makeDeps([lagged, MERGE_OK]);
-    await mergeItems(
-      USER,
-      { fromQid: "Q20", intoQid: "Q10", ignoreConflicts: [], summary: "s" },
-      deps,
-    );
+    const { deps, calls } = makeDeps([lagged, { success: 1 }]);
+    await editRequest(USER, { action: "x" }, deps);
+    expect(calls[1].params.get("maxlag")).toBe("5");
     expect(deps.sleep).toHaveBeenCalledWith(3000);
     // The CSRF token is still good; only the edit is re-sent.
     expect(calls.map((c) => c.method)).toEqual(["GET", "POST", "POST"]);
@@ -186,13 +193,7 @@ describe("mergeItems", () => {
       Response.json(apiError("maxlag"), { headers: { "Retry-After": "60" } }),
       Response.json(apiError("maxlag")),
     ]);
-    const err = await failure(
-      mergeItems(
-        USER,
-        { fromQid: "Q20", intoQid: "Q10", ignoreConflicts: [], summary: "s" },
-        capped.deps,
-      ),
-    );
+    const err = await failure(editRequest(USER, { action: "x" }, capped.deps));
     expect(capped.deps.sleep).toHaveBeenCalledTimes(1);
     expect(capped.deps.sleep).toHaveBeenCalledWith(10_000);
     expect(err.code).toBe("maxlag");
@@ -324,7 +325,6 @@ describe("finishRedirect", () => {
       summary: "s",
       assert: "user",
       assertuser: "Alice",
-      maxlag: "5",
     });
     expect(Object.fromEntries(posts[1].params)).toMatchObject({
       action: "wbcreateredirect",
@@ -333,6 +333,8 @@ describe("finishRedirect", () => {
       assert: "user",
       assertuser: "Alice",
     });
+    // Part of the user's merge, so neither edit carries the lag guard.
+    expect(posts.every((post) => !post.params.has("maxlag"))).toBe(true);
   });
 
   it("fails without attempting the redirect when the clear returns no revision id", async () => {
@@ -382,8 +384,9 @@ describe("addItemClaim", () => {
       value: JSON.stringify({ "entity-type": "item", id: "Q10" }),
       summary: "s",
       token: "csrf-1",
-      maxlag: "5",
     });
+    // The user is waiting on it, so it skips the lag guard.
+    expect(calls[1].params.has("maxlag")).toBe(false);
   });
 });
 

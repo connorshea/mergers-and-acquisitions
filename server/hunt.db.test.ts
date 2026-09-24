@@ -39,6 +39,11 @@ describe.skipIf(!DB_TEST)("runHunt", () => {
       intoQid: "Q100",
       status: "open",
       hasBlocker: false,
+      // Copies of each item's type/label, for the list's filters.
+      fromType: "Q7889",
+      intoType: "Q7889",
+      fromLabel: "Starfall Drift",
+      intoLabel: "Starfall Drift",
     });
     expect(rows[0].confidence).toBeGreaterThanOrEqual(MIN_CONFIDENCE);
     expect(rows[0].reasons.some((r) => r.startsWith("shares external identifier"))).toBe(true);

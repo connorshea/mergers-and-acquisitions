@@ -5,7 +5,8 @@ import { afterAll, beforeEach, describe, expect, it } from "vite-plus/test";
 import { eq } from "drizzle-orm";
 import { app } from "./app.ts";
 import { db, pool } from "./db.ts";
-import { entityLabels, mergeCandidates, properties } from "../db/schema.ts";
+import { refreshCandidateItemInfo } from "./candidate-item-info.ts";
+import { entityLabels, items, mergeCandidates, properties } from "../db/schema.ts";
 import type { Value } from "../src/lib/compare.ts";
 import type {
   CandidateDetailResponse,
@@ -98,6 +99,8 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       status: "dismissed",
       resolvedAt: "2026-01-01 00:00:00",
     });
+    // Copy the items' type/label onto the pairs, as the hunt's upsert would.
+    await refreshCandidateItemInfo(db);
 
     await db.insert(properties).values([
       { pid: "P31", label: "instance of", datatype: "WikibaseItem" },
@@ -158,6 +161,21 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
     it("filters by instance-of type and ignores a malformed one", async () => {
       expect((await list("?type=Q865493")).candidates.map((c) => c.id)).toEqual([beta]);
       expect((await list("?type=not-a-qid")).total).toBe(2);
+    });
+
+    it("follows an item's relabel/retype once the copies are refreshed", async () => {
+      await db
+        .update(items)
+        .set({ primaryLabel: "Gamma Grove", primaryType: "Q11424" })
+        .where(eq(items.qid, "Q10"));
+      // Stale until refreshed; then only the changed side moves.
+      expect((await list("?q=gamma")).total).toBe(0);
+      expect(await refreshCandidateItemInfo(db)).toBe(1);
+      expect((await list("?q=gamma")).candidates.map((c) => c.id)).toEqual([alpha]);
+      expect((await list("?type=Q11424")).candidates.map((c) => c.id)).toEqual([alpha]);
+      // Q20 is still a video game, so the pair still matches that type too.
+      expect((await list("?type=Q7889")).candidates.map((c) => c.id)).toEqual([alpha]);
+      expect(await refreshCandidateItemInfo(db)).toBe(0);
     });
 
     it("applies minConfidence", async () => {

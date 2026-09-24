@@ -27,6 +27,8 @@ import { externalIds, items, mergeCandidates, properties } from "../db/schema.ts
 import { connConfig } from "./db-config.ts";
 import type { Item, ScoreOptions } from "../src/lib/compare.ts";
 import { blockingLabelKey, orderByAge, scoreCandidate } from "../src/lib/compare.ts";
+import { primaryLabel, primaryType } from "../src/lib/wikidata.ts";
+import { refreshCandidateItemInfo } from "./candidate-item-info.ts";
 import { chunk } from "../src/lib/chunk.ts";
 import { PROTECTED_STATUSES } from "../src/lib/api-types.ts";
 
@@ -192,6 +194,11 @@ async function upsertCandidates(db: Db, rows: CandidateRow[]): Promise<void> {
         reasons: sql`IF(${resolved}, ${mergeCandidates.reasons}, values(${mergeCandidates.reasons}))`,
         hasBlocker: sql`IF(${resolved}, ${mergeCandidates.hasBlocker}, values(${mergeCandidates.hasBlocker}))`,
         detectedAt: sql`IF(${resolved}, ${mergeCandidates.detectedAt}, CURRENT_TIMESTAMP)`,
+        // Descriptive copies of the items, not review state: always refresh.
+        fromType: sql`values(${mergeCandidates.fromType})`,
+        intoType: sql`values(${mergeCandidates.intoType})`,
+        fromLabel: sql`values(${mergeCandidates.fromLabel})`,
+        intoLabel: sql`values(${mergeCandidates.intoLabel})`,
       },
     });
 }
@@ -279,6 +286,10 @@ async function score(db: Db, pairs: [string, string][]): Promise<HuntStats> {
           confidence: result.confidence,
           reasons: result.reasons,
           hasBlocker: result.hasBlocker,
+          fromType: primaryType(from) ?? null,
+          intoType: primaryType(into) ?? null,
+          fromLabel: primaryLabel(from) ?? null,
+          intoLabel: primaryLabel(into) ?? null,
         });
       } catch (err) {
         console.error(`hunt score: pair ${qa}/${qb} failed`, err);
@@ -335,7 +346,12 @@ export async function runHunt(): Promise<HuntStats> {
     await conn.query("SET SESSION group_concat_max_len = 1048576");
     const db = drizzle(conn, { schema, mode: "default" });
     const pairs = await scan(db);
-    return await score(db, pairs);
+    const stats = await score(db, pairs);
+    // Pairs the hunt didn't rescore (resolved ones, or ones whose blocking
+    // group changed) still need their item copies kept current.
+    const refreshed = await refreshCandidateItemInfo(db);
+    console.log(`hunt: refreshed item type/label on ${refreshed} candidate rows`);
+    return stats;
   } finally {
     await conn.end();
   }

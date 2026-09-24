@@ -23,15 +23,15 @@ export const app = new Hono<AuthEnv>();
 
 // The CSP only applies to the production build this server serves (Vite serves
 // the page in dev, with its own inline HMR scripts). The built SPA is all
-// same-origin module scripts; the one third party is Google Fonts (stylesheet
-// from fonts.googleapis.com, font files from fonts.gstatic.com — see
-// index.html). Inline `style={…}` props are set through the CSSOM, which CSP
+// same-origin module scripts, stylesheets, and fonts (IBM Plex Sans is
+// self-hosted via @fontsource rather than Google Fonts, so visitors' IPs aren't
+// sent to a third party, per the Toolforge terms of use). Inline `style={…}` props are set through the CSSOM, which CSP
 // doesn't restrict, so no 'unsafe-inline' is needed.
 export const CONTENT_SECURITY_POLICY = {
   defaultSrc: ["'self'"],
   scriptSrc: ["'self'"],
-  styleSrc: ["'self'", "https://fonts.googleapis.com"],
-  fontSrc: ["'self'", "https://fonts.gstatic.com"],
+  styleSrc: ["'self'"],
+  fontSrc: ["'self'"],
   imgSrc: ["'self'", "data:"],
   connectSrc: ["'self'"],
   objectSrc: ["'none'"],

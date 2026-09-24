@@ -26,6 +26,7 @@
     "eval:resolve-redirects": "node scripts/resolve-eval-redirects.ts"
   },
   "dependencies": {
+    "@fontsource/ibm-plex-sans": "^5.3.0",
     "@hono/node-server": "^2.1.1",
     "dotenv": "^17.4.2",
     "drizzle-orm": "^0.45.2",

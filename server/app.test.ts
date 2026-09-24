@@ -8,6 +8,10 @@ describe("security headers", () => {
     const csp = res.headers.get("content-security-policy") ?? "";
     expect(csp).toContain("default-src 'self'");
     expect(csp).toContain("script-src 'self'");
+    expect(csp).toContain("style-src 'self';");
+    expect(csp).toContain("font-src 'self';");
+    expect(csp).not.toContain("fonts.googleapis.com");
+    expect(csp).not.toContain("fonts.gstatic.com");
     expect(csp).toContain("object-src 'none'");
     expect(csp).toContain("base-uri 'none'");
     expect(csp).toContain("frame-ancestors 'none'");

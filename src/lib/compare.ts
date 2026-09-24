@@ -85,6 +85,17 @@ export function isRedirectSitelink(item: Item, wiki: string): boolean {
 }
 
 /**
+ * Whether the item's sitelink on `wiki` carries the "intentional sitelink to
+ * redirect" badge: editors linked the redirect on purpose because the item is a
+ * separate subject from the page it redirects to (an enhanced edition, a port,
+ * one platform's version of a combined article). So it is never evidence of a
+ * duplicate, and never a sitelink to remove so the pair can merge.
+ */
+export function isIntentionalRedirect(item: Item, wiki: string): boolean {
+  return (item.sitelinkBadges?.[wiki] ?? []).includes(INTENTIONAL_SITELINK_TO_REDIRECT);
+}
+
+/**
  * The page the item's sitelink on `wiki` redirects to, when resolved — with
  * "#Section" appended when the redirect points at a section of that page.
  */
@@ -94,11 +105,14 @@ export function sitelinkRedirectTarget(item: Item, wiki: string): string | undef
 
 /**
  * Whether `item`'s page on `wiki` is resolved as a redirect to `other`'s page
- * there — the whole page, not a section of it.
+ * there — the whole page, not a section of it — and not an intentional one
+ * (isIntentionalRedirect).
  */
 export function redirectsToPartner(item: Item, other: Item, wiki: string): boolean {
   const target = sitelinkRedirectTarget(item, wiki);
-  return target !== undefined && target === other.sitelinks[wiki];
+  return (
+    target !== undefined && target === other.sitelinks[wiki] && !isIntentionalRedirect(item, wiki)
+  );
 }
 
 /** The redirect target with its section, MediaWiki-style ("Title#Section"). */
@@ -109,11 +123,13 @@ export function withFragment(target: string, fragment: string | null | undefined
 /**
  * Whether a clash on `wiki` is plausibly one page redirecting to the other: a
  * side is a redirect whose target is unknown (badge only) or is the partner's
- * page. A redirect known to point elsewhere leaves two distinct pages.
+ * page. A redirect known to point elsewhere leaves two distinct pages, and an
+ * intentional one marks a separate subject.
  */
 function clashExplainedByRedirect(a: Item, b: Item, wiki: string): boolean {
   const explains = (item: Item, other: Item) =>
     isRedirectSitelink(item, wiki) &&
+    !isIntentionalRedirect(item, wiki) &&
     (sitelinkRedirectTarget(item, wiki) === undefined || redirectsToPartner(item, other, wiki));
   return explains(a, b) || explains(b, a);
 }
@@ -446,8 +462,13 @@ export function buildRows(
     // redirect usually points at the other item's page. Wikidata still refuses
     // the merge until that sitelink is removed, so it stays a blocker — only
     // the explanation changes, and it's definite when the target is known.
+    // An intentional redirect is the opposite: editors saying the item is its
+    // own subject, even when the page it points at is the other item's.
+    const intentional = [a, b].find((it) => isIntentionalRedirect(it, wiki));
     let note: string | undefined;
-    if (clash && redirectsToPartner(a, b, wiki))
+    if (clash && intentional)
+      note = `${intentional.id}'s sitelink is badged as an intentional redirect — editors keep it as a separate subject from the page it points at`;
+    else if (clash && redirectsToPartner(a, b, wiki))
       note = `${a.id}'s page redirects to ${b.id}'s page — remove ${a.id}'s sitelink before merging`;
     else if (clash && redirectsToPartner(b, a, wiki))
       note = `${b.id}'s page redirects to ${a.id}'s page — remove ${b.id}'s sitelink before merging`;

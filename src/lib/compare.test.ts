@@ -157,6 +157,21 @@ describe("buildRows (behavior-preserving extraction)", () => {
       expect(row(intentional, article).a[0].redirect).toBe(true);
     });
 
+    it("never treats an intentional redirect as the other item's page", () => {
+      // Resolved to the other page, but badged as deliberately linked: a
+      // separate subject (e.g. an enhanced edition redirecting to the original).
+      const intentional: Item = {
+        ...redirect,
+        sitelinkBadges: { enwiki: ["Q70894304"] },
+        sitelinkRedirects: { enwiki: article.sitelinks.enwiki },
+      };
+      const r = row(article, intentional);
+      expect(r.blocker).toBe(true);
+      expect(r.note).toMatch(/^Q1145650's sitelink is badged as an intentional redirect/);
+      expect(redirectSitelinkFixes(article, intentional)).toBeNull();
+      expect(redirectSitelinkFixes(intentional, article)).toBeNull();
+    });
+
     it("says so when both pages are redirects", () => {
       const other = { ...article, sitelinkBadges: { enwiki: ["Q70893996"] } };
       expect(row(other, redirect).note).toMatch(/^both pages are redirects/);
@@ -635,6 +650,19 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       // still two distinct pages.
       for (const target of ["Harvest Moon (series)", "Harvest Moon#Sequel"]) {
         const r = score(a, lone({ sitelinkRedirects: { enwiki: target } }));
+        expect(r.confidence).toBe(plain);
+        expect(r.reasons.some((x) => x.startsWith("sitelink redirects"))).toBe(false);
+      }
+      // Intentional redirect to the other page: a separate subject, so no
+      // reward and the penalty stays — with or without a resolved target.
+      for (const extra of [
+        { sitelinkBadges: { enwiki: ["Q70894304"] } },
+        {
+          sitelinkBadges: { enwiki: ["Q70894304"] },
+          sitelinkRedirects: { enwiki: "Harvest Moon" },
+        },
+      ]) {
+        const r = score(a, lone(extra));
         expect(r.confidence).toBe(plain);
         expect(r.reasons.some((x) => x.startsWith("sitelink redirects"))).toBe(false);
       }

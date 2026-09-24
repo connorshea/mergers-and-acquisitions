@@ -1,20 +1,25 @@
 {
   "threshold": 0.4,
-  "generatedAt": "2026-09-24T16:17:01.471Z",
+  "generatedAt": "2026-09-24T17:11:54.233Z",
   "summary": {
-    "pairs": 98,
-    "duplicate": 44,
+    "pairs": 99,
+    "duplicate": 45,
     "distinct": 54,
-    "accuracy": 0.9082,
+    "accuracy": 0.9091,
     "precision": 1,
-    "recall": 0.7955,
-    "f1": 0.8861
+    "recall": 0.8,
+    "f1": 0.8889
   },
   "pairs": {
     "Q100436886_into_Q85872424": {
       "label": "duplicate",
       "correct": false,
       "confidence": 0.1944
+    },
+    "Q10379091_into_Q3982545": {
+      "label": "duplicate",
+      "correct": true,
+      "confidence": 1
     },
     "Q10381682_into_Q582679": {
       "label": "duplicate",

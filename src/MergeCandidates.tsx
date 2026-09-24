@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import type { AnnotatedValue, Item, Row, RowStatus } from "./lib/compare.ts";
 import {
   buildRows,
+  collapseLabelRows,
   formatIdUrl,
   isAutoIgnoredConflict,
   isHardcodedMirrorProp,
@@ -196,10 +197,13 @@ export default function MergeCandidates({
   const rows = useMemo(
     // Descriptions are shown directly under each item's name (see ItemPlate), so
     // drop them from the compared-properties groups rather than listing them
-    // again as identical/similar/distinct rows.
+    // again as identical/similar/distinct rows. Label rows repeating the same
+    // values across languages collapse into one multi-language row.
     () =>
-      buildRows(from, into, propertyLabels, valueLabels).filter(
-        (r) => !r.key.startsWith("description:"),
+      collapseLabelRows(
+        buildRows(from, into, propertyLabels, valueLabels).filter(
+          (r) => !r.key.startsWith("description:"),
+        ),
       ),
     [from, into, propertyLabels, valueLabels],
   );

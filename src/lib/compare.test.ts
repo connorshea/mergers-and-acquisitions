@@ -472,6 +472,45 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(result.reasons[0]).toContain("sequel");
   });
 
+  describe("separate articles on many wikis", () => {
+    // Same label, same P31, shared per-title id — a strong candidate on its own.
+    const mk = (id: string, sitelinks: Record<string, string>, badges?: string[]): Item => ({
+      ...base,
+      id,
+      labels: { en: "Harvest Moon" },
+      sitelinks,
+      ...(badges && {
+        sitelinkBadges: Object.fromEntries(Object.keys(sitelinks).map((w) => [w, badges])),
+      }),
+      statements: stmt({ P5794: [{ type: "external-id", value: "harvest-moon" }] }),
+    });
+    const pages = (suffix: string, wikis: string[]) =>
+      Object.fromEntries(wikis.map((w) => [w, `Harvest Moon${suffix}`]));
+    const score = (a: Item, b: Item) =>
+      scoreCandidate(a, b, { isIdentifierProp: (pid) => pid === "P5794" });
+
+    it("caps the pair when three or more wikis keep a separate article for each", () => {
+      const wikis = ["enwiki", "kowiki", "ptwiki"];
+      const result = score(mk("Q1", pages("", wikis)), mk("Q2", pages(" (series)", wikis)));
+      expect(result.confidence).toBeLessThanOrEqual(0.1);
+      expect(result.reasons[0]).toMatch(/^3 wikis have a separate article/);
+    });
+
+    it("tolerates one or two clashes", () => {
+      const wikis = ["enwiki", "kowiki"];
+      const result = score(mk("Q1", pages("", wikis)), mk("Q2", pages(" (series)", wikis)));
+      expect(result.confidence).toBeGreaterThan(0.4);
+      expect(result.reasons.some((r) => r.includes("separate article"))).toBe(false);
+    });
+
+    it("doesn't count clashes where one side is a badged redirect", () => {
+      const wikis = ["enwiki", "kowiki", "ptwiki"];
+      const redirects = mk("Q2", pages(" (series)", wikis), ["Q70893996"]);
+      const result = score(mk("Q1", pages("", wikis)), redirects);
+      expect(result.confidence).toBeGreaterThan(0.4);
+    });
+  });
+
   it("weights a shared account/social id far below a per-title id", () => {
     // Distinct labels so the shared id is the dominant signal and neither score
     // saturates at the 1.0 cap, exposing the full weighting gap.

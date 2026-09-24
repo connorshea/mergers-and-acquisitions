@@ -1,0 +1,586 @@
+{
+  "pageid": 23280431,
+  "ns": 0,
+  "title": "Q21233492",
+  "lastrevid": 2470005041,
+  "modified": "2026-03-07T00:06:42Z",
+  "type": "item",
+  "id": "Q21233492",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Harvest Moon"
+    },
+    "de": {
+      "language": "de",
+      "value": "Harvest Moon"
+    },
+    "vi": {
+      "language": "vi",
+      "value": "Harvest Moon (loạt trò chơi điện tử năm 2007)"
+    },
+    "ru": {
+      "language": "ru",
+      "value": "Harvest Moon"
+    },
+    "ko": {
+      "language": "ko",
+      "value": "하베스트 문"
+    },
+    "zh-cn": {
+      "language": "zh-cn",
+      "value": "丰饶之月系列"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "丰饶之月系列"
+    },
+    "id": {
+      "language": "id",
+      "value": "Harvest Moon (seri video game 2014)"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "Harvest Moon (série de 2014)"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Harvest Moon"
+    }
+  },
+  "descriptions": {
+    "de": {
+      "language": "de",
+      "value": "Spielereihe aus dem Jahre 2007"
+    },
+    "en": {
+      "language": "en",
+      "value": "video game series"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "серія відеоігор"
+    },
+    "ko": {
+      "language": "ko",
+      "value": "2007년 비디오 게임 시리즈"
+    }
+  },
+  "aliases": {
+    "zh": [
+      {
+        "language": "zh",
+        "value": "丰收之月系列"
+      },
+      {
+        "language": "zh",
+        "value": "丰饶之月"
+      },
+      {
+        "language": "zh",
+        "value": "丰收之月"
+      },
+      {
+        "language": "zh",
+        "value": "牧场物语系列"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "28e85ae78b1fad0af0f87f70f08c5f9c3dbbc52f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7058673,
+              "id": "Q7058673"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q21233492$4F372A52-B36A-4827-865D-D49006EA29B7",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "a721e4ea14f050ed95868bca9ad2c2c7e7619aec",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 16070115,
+              "id": "Q16070115"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q21233492$db8452b8-4ad4-5f20-fa4c-4ea602e4b1d8",
+        "rank": "normal"
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "040e982cbdb71526f1f1d8be034b0f690ba05e7f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 744038,
+              "id": "Q744038"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q21233492$DC664845-1B6F-4785-A071-BF1425ACD419",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9bc3f89a586b7e67a6ca87a3152dbc06df145cc3",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "d5a200edbe21f05d86dc0e0a92a55cd783ce960b",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-01-29T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "13ad01aa146cfe9a8859bba5e12daa43afd9114b",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Harvest_Moon_(2007_video_game_series)&oldid=998312520",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P813", "P4656"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "e2fefc373f68297a45f8b37bc80d0656fd51138a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1036289,
+              "id": "Q1036289"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q21233492$907ED659-6B3A-4D66-8EF7-101F50638390",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9bc3f89a586b7e67a6ca87a3152dbc06df145cc3",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "d5a200edbe21f05d86dc0e0a92a55cd783ce960b",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-01-29T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "13ad01aa146cfe9a8859bba5e12daa43afd9114b",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Harvest_Moon_(2007_video_game_series)&oldid=998312520",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P813", "P4656"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "d8d3d5d2649d5f34f7d025667c146043b03f6e57",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1610017,
+              "id": "Q1610017"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q21233492$ef33e2e1-49b8-504c-720e-99264bcf0d11",
+        "rank": "normal"
+      }
+    ],
+    "P8345": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8345",
+          "hash": "18da09398b4ae410f4540158976c4206529c6a51",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1195594,
+              "id": "Q1195594"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q21233492$40168F67-4186-4AD8-B8B3-BC82C7D4EEC3",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9bc3f89a586b7e67a6ca87a3152dbc06df145cc3",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "d5a200edbe21f05d86dc0e0a92a55cd783ce960b",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-01-29T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "13ad01aa146cfe9a8859bba5e12daa43afd9114b",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Harvest_Moon_(2007_video_game_series)&oldid=998312520",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P813", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "65bc07f52a27bf9b972656e6bccafa9c81381f48",
+          "datavalue": {
+            "value": "/g/11btw_qsd_",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q21233492$77E98ECD-1587-43A2-9B9D-6EA68B63337E",
+        "rank": "normal"
+      }
+    ],
+    "P10586": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10586",
+          "hash": "0050059d4ea7544e859f975fd42fffb8f1bfab2d",
+          "datavalue": {
+            "value": "HarvestMoon",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q21233492$04637929-5655-47EA-BB5B-AE5A5CAA1AB4",
+        "rank": "normal"
+      }
+    ],
+    "P7562": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7562",
+          "hash": "3affe7cd865825d062d2efad11acbb58849925c7",
+          "datavalue": {
+            "value": "harvestmoon",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q21233492$1DEA14A3-1B5A-43AA-BB9B-388AAE598AAB",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "68b78332a00f4b6f0a1969862a07d934252e6774",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1195594,
+              "id": "Q1195594"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q21233492$8ee77a2e-421f-e646-0d98-54c66e744e1d",
+        "rank": "normal"
+      }
+    ],
+    "P11320": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11320",
+          "hash": "da0c6aa4f23df4b5d4c2eab45123de13bdf7f335",
+          "datavalue": {
+            "value": "harvest-moon",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q21233492$90A2F01D-654D-4820-BD65-E9EA73FED43C",
+        "rank": "normal"
+      }
+    ],
+    "P11891": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11891",
+          "hash": "90227bac4551db2c113eb67c91773489e6d7525b",
+          "datavalue": {
+            "value": "harvest-moon-serie",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q21233492$2F73FCEB-7D1F-4F1B-8C73-EF302F71E24E",
+        "rank": "normal"
+      }
+    ],
+    "P12082": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12082",
+          "hash": "832368ad36e04be9946a50b3d07eef000f10cbe5",
+          "datavalue": {
+            "value": "354",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q21233492$83E198BD-4F09-4915-BA0D-BCAF9C816F07",
+        "rank": "normal"
+      }
+    ],
+    "P13062": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P13062",
+          "hash": "a74a7b41d7b6e9fd203cf3357fd34e845a1c73ef",
+          "datavalue": {
+            "value": "harvest-moon",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q21233492$E196DB9C-C6B4-4054-9716-8B969450C2C2",
+        "rank": "normal"
+      }
+    ],
+    "P5794": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5794",
+          "hash": "183e2b6971c0857ac5d346317836aa0d8639deed",
+          "datavalue": {
+            "value": "harvest-moon",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9043": [
+            {
+              "snaktype": "value",
+              "property": "P9043",
+              "hash": "560eb1f55bbfc0522da071d46f4592b505f4037f",
+              "datavalue": {
+                "value": "3376",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9043"],
+        "id": "Q21233492$E7A203C7-1C5B-4199-8A29-3D6451587565",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "viwiki": {
+      "site": "viwiki",
+      "title": "Harvest Moon (loạt trò chơi điện tử năm 2007)",
+      "badges": [],
+      "url": "https://vi.wikipedia.org/wiki/Harvest_Moon_(lo%E1%BA%A1t_tr%C3%B2_ch%C6%A1i_%C4%91i%E1%BB%87n_t%E1%BB%AD_n%C4%83m_2007)"
+    },
+    "kowiki": {
+      "site": "kowiki",
+      "title": "하베스트 문",
+      "badges": [],
+      "url": "https://ko.wikipedia.org/wiki/%ED%95%98%EB%B2%A0%EC%8A%A4%ED%8A%B8_%EB%AC%B8"
+    },
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Harvest Moon (2014 video game series)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Harvest_Moon_(2014_video_game_series)"
+    },
+    "dewiki": {
+      "site": "dewiki",
+      "title": "Harvest Moon (Computerspielreihe, 2007)",
+      "badges": [],
+      "url": "https://de.wikipedia.org/wiki/Harvest_Moon_(Computerspielreihe,_2007)"
+    },
+    "idwiki": {
+      "site": "idwiki",
+      "title": "Harvest Moon (seri permainan video 2014)",
+      "badges": [],
+      "url": "https://id.wikipedia.org/wiki/Harvest_Moon_(seri_permainan_video_2014)"
+    },
+    "ptwiki": {
+      "site": "ptwiki",
+      "title": "Harvest Moon (série de 2014)",
+      "badges": [],
+      "url": "https://pt.wikipedia.org/wiki/Harvest_Moon_(s%C3%A9rie_de_2014)"
+    }
+  }
+}

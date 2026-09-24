@@ -665,8 +665,10 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       const after = score(a, redirecting);
       expect(after.confidence).toBeGreaterThan(before.confidence);
       expect(after.reasons).toContain("sitelink redirects to the other item's page on enwiki");
-      // Still a blocker until the sitelink is removed.
-      expect(after.hasBlocker).toBe(true);
+      // Not a blocker: the merge flow removes the redirect sitelink first.
+      expect(before.hasBlocker).toBe(true);
+      expect(after.hasBlocker).toBe(false);
+      expect(after.reasons.some((r) => r.includes("would block the merge"))).toBe(false);
       // A redirect somewhere else is no evidence either way.
       const elsewhere = { ...plain, sitelinkRedirects: { enwiki: "Harvest Moon (series)" } };
       expect(score(a, elsewhere).reasons.some((r) => r.startsWith("sitelink redirects"))).toBe(

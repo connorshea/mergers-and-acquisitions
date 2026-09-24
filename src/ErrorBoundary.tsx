@@ -1,5 +1,6 @@
 import { Component, type ErrorInfo, type ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { listHref } from "./lib/list-state.ts";
 
 // React still has no hook equivalent of componentDidCatch, so the boundary
 // itself is a class. It catches render/lifecycle errors below it and shows a
@@ -40,7 +41,7 @@ class ErrorBoundary extends Component<Props, State> {
           >
             Try again
           </button>{" "}
-          <Link className="detail-back" to="/">
+          <Link className="detail-back" to={listHref()}>
             ← Back to candidates
           </Link>
         </p>

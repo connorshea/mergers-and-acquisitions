@@ -34,7 +34,7 @@ describe("attachLiveSitelinkRedirects", () => {
     expect(urls.find((u) => u.host === "en.wikipedia.org")!.searchParams.get("titles")).toBe(
       "Foo|Foo (video game)",
     );
-    expect(a.sitelinkRedirects).toEqual({ dewiki: null });
+    expect(a.sitelinkRedirects).toEqual({ dewiki: "en:Foo" });
     expect(b.sitelinkRedirects).toEqual({ enwiki: "Foo" });
   });
 

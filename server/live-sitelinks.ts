@@ -20,8 +20,8 @@ interface QueryResponse {
 /**
  * Resolve the clashing sitelinks of `a` and `b` against their wikis and set
  * each item's `sitelinkRedirects` to what the wikis said (replacing whatever
- * was there): wiki → target for every page that is a redirect, null when it
- * points off-wiki ("Title#Section" for a section). Throws when a wiki can't be reached or read; the caller
+ * was there): wiki → target for every page that is a redirect ("Title#Section" for a
+ * section, "prefix:Title" off-wiki). Throws when a wiki can't be reached or read; the caller
  * treats that as "not known to be fixable".
  */
 export async function attachLiveSitelinkRedirects(
@@ -54,7 +54,10 @@ export async function attachLiveSitelinkRedirects(
     if (!res.ok) throw new Error(`${host} answered HTTP ${res.status}`);
     const body = (await res.json()) as QueryResponse;
     for (const r of body.query?.redirects ?? []) {
-      const target = r.tointerwiki ? null : withFragment(r.to, r.tofragment);
+      // An off-wiki target keeps its interwiki prefix ("wikt:Foo"), so it reads
+      // as a redirect known to point elsewhere, not an unknown one.
+      const to = r.tointerwiki ? `${r.tointerwiki}:${r.to}` : r.to;
+      const target = withFragment(to, r.tofragment);
       for (const [item, redirects] of found) {
         if (item.sitelinks[wiki] === r.from) redirects[wiki] = target;
       }

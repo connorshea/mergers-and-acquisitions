@@ -34,11 +34,15 @@ describe.skipIf(!DB_TEST)("sitelink redirects", () => {
       (2, 0, 'Starfall_Drift_(video_game)', 1),
       (3, 0, 'Halo:_Reach_(beta)', 1),
       (4, 0, 'Orphan_redirect', 1),
-      (5, 0, 'Sectioned', 1)`);
+      (5, 0, 'Sectioned', 1),
+      (6, 0, 'Wikt_redirect', 1),
+      (7, 0, 'Portal_redirect', 1)`);
     await db.execute(sql`INSERT INTO redirect VALUES
       (2, 0, 'Starfall_Drift', '', NULL),
       (3, 4, 'Halo', '', NULL),
-      (5, 0, 'Starfall_Drift', '', 'Sequel')`);
+      (5, 0, 'Starfall_Drift', '', 'Sequel'),
+      (6, 0, 'Starfall_drift', 'wikt', 'English'),
+      (7, 100, 'Starfall_Drift', '', NULL)`);
   });
   beforeEach(truncateAll);
   afterAll(async () => {
@@ -63,14 +67,17 @@ describe.skipIf(!DB_TEST)("sitelink redirects", () => {
     await insertItem(makeItem("Q5", "X", {}, { sitelinks: { enwiki: "Sectioned" } }));
     await insertItem(makeItem("Q6", "X", {}, { sitelinks: { enwiki: "Gone: Page" } }));
     await insertItem(makeItem("Q7", "X", {}, { sitelinks: { enwiki: "Gone" } }));
+    await insertItem(makeItem("Q8", "X", {}, { sitelinks: { enwiki: "Wikt redirect" } }));
+    await insertItem(makeItem("Q9", "X", {}, { sitelinks: { enwiki: "Portal redirect" } }));
     await candidate("Q2", "Q1");
     await candidate("Q4", "Q3");
     await candidate("Q6", "Q5");
     await candidate("Q7", "Q6");
+    await candidate("Q9", "Q8");
 
     const stats = await runSitelinkRedirectSync({ connect });
     // "Gone: Page" isn't found and has a colon: maybe another namespace, so unknown.
-    expect(stats).toMatchObject({ titles: 7, checked: 6, redirects: 4, failedWikis: [] });
+    expect(stats).toMatchObject({ titles: 9, checked: 8, redirects: 6, failedWikis: [] });
 
     const rows = await db
       .select({
@@ -90,17 +97,25 @@ describe.skipIf(!DB_TEST)("sitelink redirects", () => {
         redirectTarget: null,
         redirectFragment: null,
       },
-      // Redirect into another namespace: flagged, target not kept.
+      // Redirect into another namespace: target kept with its canonical prefix.
       {
         title: "Halo: Reach (beta)",
         missing: false,
         isRedirect: true,
-        redirectTarget: null,
+        redirectTarget: "Project:Halo",
         redirectFragment: null,
       },
       // Flagged as a redirect with no `redirect` row.
       {
         title: "Orphan redirect",
+        missing: false,
+        isRedirect: true,
+        redirectTarget: null,
+        redirectFragment: null,
+      },
+      // A namespace with no canonical name: flagged, target unknown.
+      {
+        title: "Portal redirect",
         missing: false,
         isRedirect: true,
         redirectTarget: null,
@@ -126,6 +141,14 @@ describe.skipIf(!DB_TEST)("sitelink redirects", () => {
         isRedirect: true,
         redirectTarget: "Starfall Drift",
         redirectFragment: null,
+      },
+      // Off-wiki: kept with its interwiki prefix.
+      {
+        title: "Wikt redirect",
+        missing: false,
+        isRedirect: true,
+        redirectTarget: "wikt:Starfall drift",
+        redirectFragment: "English",
       },
     ]);
   });

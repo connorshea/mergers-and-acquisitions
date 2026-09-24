@@ -25,7 +25,7 @@ export const REDIRECTS_FILE = "sitelink-redirects.json";
 interface RedirectsFile {
   /** When an entry was last added (existing entries keep their values). */
   checkedAt: string;
-  /** QID → (wiki → target, "Title#Section" for a section, null off-wiki). */
+  /** QID → (wiki → target, "Title#Section" for a section, "prefix:Title" off-wiki). */
   redirects: Record<string, Record<string, string | null>>;
 }
 

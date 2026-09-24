@@ -51,7 +51,9 @@ export interface Item {
   sitelinkBadges?: Record<string, string[]>;
   /**
    * Sitelinks whose page the Wiki Replicas show is a redirect (wiki → target
-   * page title, null when the target is unknown or off-wiki). A redirect to a
+   * page title, null when the target is unknown). A target that isn't a
+   * main-namespace page on the same wiki keeps its prefix ("Category:Foo",
+   * "wikt:Foo"), so it never equals a partner's page. A redirect to a
    * section keeps it as "Title#Section" (sitelinkRedirectTarget), so it never
    * equals a partner's page: the wiki is treating the subject as part of that
    * article, not as the same subject. Not part of the

@@ -185,9 +185,11 @@ export const sitelinkPages = mysqlTable(
     // The page doesn't exist (deleted since the dump, or not yet replicated).
     missing: boolean("missing").notNull(),
     isRedirect: boolean("is_redirect").notNull(),
-    // Target page title (spaces) and section, for a redirect into the main
-    // namespace on the same wiki; null for any other redirect, or when the
-    // replica has the page flagged as a redirect but no `redirect` row for it.
+    // Target page title (spaces) and section. Prefixed MediaWiki-style when the
+    // target isn't a main-namespace page on this wiki ("Category:Foo",
+    // "wikt:Foo"); null when it can't be named (a namespace with no canonical
+    // name) or the replica has the page flagged as a redirect but no `redirect`
+    // row for it.
     redirectTarget: varchar("redirect_target", { length: 255 }),
     redirectFragment: varchar("redirect_fragment", { length: 255 }),
     checkedAt: datetime("checked_at", { mode: "string" })

@@ -674,9 +674,14 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       expect(
         score(a, lone({ sitelinkBadges: { enwiki: ["Q70893996"] } })).confidence,
       ).toBeGreaterThan(plain);
-      // Known to point at a third page, or at a section of the other page:
-      // still two distinct pages.
-      for (const target of ["Harvest Moon (series)", "Harvest Moon#Sequel"]) {
+      // Known to point at a third page, a section of the other page, another
+      // namespace, or another wiki: still two distinct pages.
+      for (const target of [
+        "Harvest Moon (series)",
+        "Harvest Moon#Sequel",
+        "Project:Harvest Moon",
+        "wikt:Harvest Moon",
+      ]) {
         const r = score(a, lone({ sitelinkRedirects: { enwiki: target } }));
         expect(r.confidence).toBe(plain);
         expect(r.reasons.some((x) => x.startsWith("sitelink redirects"))).toBe(false);

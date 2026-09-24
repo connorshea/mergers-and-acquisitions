@@ -107,6 +107,49 @@ const toDb = (title: string) => title.replaceAll(" ", "_");
 const fromDb = (title: string) => title.replaceAll("_", " ");
 
 /**
+ * MediaWiki's canonical (English) namespace names, which every wiki accepts.
+ * The replicas only carry namespace numbers; local names are per-wiki config.
+ */
+const CANONICAL_NAMESPACES: Record<number, string> = {
+  1: "Talk",
+  2: "User",
+  3: "User talk",
+  4: "Project",
+  5: "Project talk",
+  6: "File",
+  7: "File talk",
+  8: "MediaWiki",
+  9: "MediaWiki talk",
+  10: "Template",
+  11: "Template talk",
+  12: "Help",
+  13: "Help talk",
+  14: "Category",
+  15: "Category talk",
+};
+
+/** `redirect_target` is a VARCHAR(255); a longer prefixed title isn't kept. */
+const MAX_TARGET = 255;
+
+/**
+ * A redirect's target as MediaWiki would link it: the bare title in the main
+ * namespace, "Category:Foo" in another namespace, "wikt:Foo" on another wiki.
+ * Only a bare title can equal another item's (main-namespace) sitelink, so a
+ * prefixed one records a redirect known to point elsewhere rather than leaving
+ * it unknown. Null when the target can't be named: no `redirect` row, or a
+ * namespace without a canonical name.
+ */
+function redirectTargetTitle(r: RowDataPacket): string | null {
+  if (r.target == null) return null;
+  const title = fromDb(String(r.target));
+  const ns = Number(r.ns);
+  const prefix = r.interwiki ? String(r.interwiki) : ns === 0 ? "" : CANONICAL_NAMESPACES[ns];
+  if (prefix === undefined) return null;
+  const full = prefix ? `${prefix}:${title}` : title;
+  return full.length <= MAX_TARGET ? full : null;
+}
+
+/**
  * Look sitelink titles up in one wiki's `page` / `redirect` tables. Only
  * main-namespace pages are searched: the namespace prefix of a title like
  * "Category:Foo" is per-wiki config the replicas don't carry. So a title that
@@ -145,15 +188,13 @@ export async function lookUpPages(conn: Connection, titles: string[]): Promise<P
         continue;
       }
       const isRedirect = Number(r.isRedirect) === 1;
-      // A target is only kept when it's a main-namespace page on this wiki —
-      // the only kind that can equal another item's sitelink here.
-      const local = isRedirect && r.target != null && Number(r.ns) === 0 && !r.interwiki;
+      const target = isRedirect ? redirectTargetTitle(r) : null;
       out.push({
         title,
         missing: false,
         isRedirect,
-        redirectTarget: local ? fromDb(String(r.target)) : null,
-        redirectFragment: local && r.fragment ? String(r.fragment) : null,
+        redirectTarget: target,
+        redirectFragment: target !== null && r.fragment ? String(r.fragment) : null,
       });
     }
   }

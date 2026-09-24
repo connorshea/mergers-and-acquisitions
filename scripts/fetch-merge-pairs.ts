@@ -16,6 +16,12 @@
 // Usage (QIDs may be either side of a merge — the source is auto-detected):
 //   node scripts/fetch-merge-pairs.ts Q135453621 Q131619393
 //   node scripts/fetch-merge-pairs.ts --out eval-data/merged-pairs Q135453621 …
+//
+// `--unmerged` adds hand-confirmed duplicates that have NOT been merged yet.
+// QIDs are then taken pairwise as SOURCE TARGET; both items are pinned at their
+// current revision (there is no merge trail), `targetPostRevid`/`mergedAt` are
+// null, and the record's provenance is `hand-curated`:
+//   node scripts/fetch-merge-pairs.ts --unmerged Q5467137 Q5467133
 
 import { mkdir, writeFile, readFile } from "node:fs/promises";
 import { join } from "node:path";
@@ -78,8 +84,8 @@ interface Pair {
   target: string;
   sourcePreRevid: number;
   targetPreRevid: number;
-  targetPostRevid: number;
-  mergedAt: string;
+  targetPostRevid: number | null;
+  mergedAt: string | null;
 }
 
 /**
@@ -125,6 +131,26 @@ async function resolvePair(qid: string): Promise<Pair> {
   };
 }
 
+/**
+ * An unmerged, hand-confirmed pair: pin both items at their current revision.
+ * Fetching via the pinned revision (rather than HEAD) also rejects a QID that is
+ * already a redirect, since EntityData then keys the response by the target.
+ */
+async function resolveUnmergedPair(source: string, target: string): Promise<Pair> {
+  const [sourceHead] = await fetchRevisions(source);
+  await sleep(PAUSE_MS);
+  const [targetHead] = await fetchRevisions(target);
+  if (!sourceHead || !targetHead) throw new Error(`${source}/${target}: no revisions found`);
+  return {
+    source,
+    target,
+    sourcePreRevid: sourceHead.revid,
+    targetPreRevid: targetHead.revid,
+    targetPostRevid: null,
+    mergedAt: null,
+  };
+}
+
 const pairKey = (source: string, target: string): string => `${source}_into_${target}`;
 
 /**
@@ -153,14 +179,24 @@ async function upsertIndex(indexPath: string, records: { source: string; target:
 async function main() {
   const args = process.argv.slice(2);
   let outDir = "eval-data/merged-pairs";
+  let unmerged = false;
   const qids: string[] = [];
   for (let i = 0; i < args.length; i++) {
     if (args[i] === "--out") outDir = args[++i];
+    else if (args[i] === "--unmerged") unmerged = true;
     else if (/^Q\d+$/.test(args[i])) qids.push(args[i]);
-    else throw new Error(`unexpected arg: ${args[i]} (want Qxxx or --out DIR)`);
+    else throw new Error(`unexpected arg: ${args[i]} (want Qxxx, --unmerged or --out DIR)`);
   }
   if (qids.length === 0)
-    throw new Error("usage: node scripts/fetch-merge-pairs.ts [--out DIR] Qxxx [Qxxx …]");
+    throw new Error(
+      "usage: node scripts/fetch-merge-pairs.ts [--out DIR] [--unmerged] Qxxx [Qxxx …]",
+    );
+  if (unmerged && qids.length % 2 !== 0)
+    throw new Error("--unmerged takes QIDs pairwise (SOURCE TARGET …); got an odd count");
+  // Each job is one QID to resolve from its merge trail, or one unmerged pair.
+  const jobs: string[][] = unmerged
+    ? Array.from({ length: qids.length / 2 }, (_, i) => qids.slice(2 * i, 2 * i + 2))
+    : qids.map((q) => [q]);
 
   await mkdir(outDir, { recursive: true });
   const indexPath = join(outDir, "index.jsonl");
@@ -168,13 +204,14 @@ async function main() {
   const records: { source: string; target: string }[] = [];
   const seen = new Set<string>();
   let failed = 0;
-  for (const qid of qids) {
+  for (const job of jobs) {
+    const qid = job.join("/");
     // One un-resolvable QID (a redirect that isn't a merge, an API hiccup) must
     // not abort a whole batch — log it and move on. Useful when the input is a
     // bulk redirect list (Special:ListRedirects) rather than known merges.
     let pair: Pair;
     try {
-      pair = await resolvePair(qid);
+      pair = job.length === 2 ? await resolveUnmergedPair(job[0], job[1]) : await resolvePair(qid);
     } catch (err) {
       failed++;
       console.warn(`${qid}: skipped — ${err instanceof Error ? err.message : String(err)}`);
@@ -209,14 +246,14 @@ async function main() {
       targetPreRevid: pair.targetPreRevid,
       targetPostRevid: pair.targetPostRevid,
       mergedAt: pair.mergedAt,
-      provenance: "wikidata-merge-redirect",
+      provenance: unmerged ? "hand-curated" : "wikidata-merge-redirect",
     };
     await writeFile(join(dir, "meta.json"), JSON.stringify(record, null, 2));
     records.push(record);
 
     console.log(
       `${pair.source} (${record.sourceLabel}) -> ${pair.target} (${record.targetLabel})  ` +
-        `pre-revs ${pair.sourcePreRevid}/${pair.targetPreRevid}  merged ${pair.mergedAt}`,
+        `pre-revs ${pair.sourcePreRevid}/${pair.targetPreRevid}  merged ${pair.mergedAt ?? "(not yet)"}`,
     );
     await sleep(PAUSE_MS);
   }

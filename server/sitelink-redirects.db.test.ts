@@ -9,6 +9,7 @@ import { db, pool } from "./db.ts";
 import { connConfig } from "./db-config.ts";
 import { mergeCandidates, sitelinkPages } from "../db/schema.ts";
 import { runSitelinkRedirectSync } from "./sitelink-redirects.ts";
+import { attachSitelinkRedirects } from "./sitelink-overlay.ts";
 import { DB_TEST, insertItem, makeItem, truncateAll } from "../test/db-helpers.ts";
 
 const connect = () => mysql.createConnection(connConfig());
@@ -19,7 +20,7 @@ async function candidate(fromQid: string, intoQid: string, status = "open") {
     .values({ fromQid, intoQid, confidence: 0.9, reasons: [], status });
 }
 
-describe.skipIf(!DB_TEST)("runSitelinkRedirectSync", () => {
+describe.skipIf(!DB_TEST)("sitelink redirects", () => {
   beforeAll(async () => {
     await db.execute(sql`DROP TABLE IF EXISTS page, redirect`);
     await db.execute(sql`CREATE TABLE page (
@@ -169,5 +170,38 @@ describe.skipIf(!DB_TEST)("runSitelinkRedirectSync", () => {
     await expect(
       runSitelinkRedirectSync({ connect: () => Promise.reject(new Error("down")) }),
     ).rejects.toThrow(/all 1 wikis/);
+  });
+
+  it("overlays only the redirects behind the pair's clashes", async () => {
+    await db.insert(sitelinkPages).values([
+      {
+        wiki: "enwiki",
+        title: "Foo (video game)",
+        missing: false,
+        isRedirect: true,
+        redirectTarget: "Foo",
+      },
+      { wiki: "enwiki", title: "Foo", missing: false, isRedirect: false },
+      { wiki: "dewiki", title: "Foo", missing: false, isRedirect: true, redirectTarget: null },
+      // Not a clash for this pair (both link it): ignored.
+      { wiki: "frwiki", title: "Foo", missing: false, isRedirect: true, redirectTarget: "Bar" },
+    ]);
+    const a = makeItem(
+      "Q1",
+      "Foo",
+      {},
+      { sitelinks: { enwiki: "Foo", dewiki: "Foo", frwiki: "Foo" } },
+    );
+    const b = makeItem(
+      "Q2",
+      "Foo",
+      {},
+      {
+        sitelinks: { enwiki: "Foo (video game)", dewiki: "Foo (Spiel)", frwiki: "Foo" },
+      },
+    );
+    await attachSitelinkRedirects(db, [[a, b]]);
+    expect(a.sitelinkRedirects).toEqual({ dewiki: null });
+    expect(b.sitelinkRedirects).toEqual({ enwiki: "Foo" });
   });
 });

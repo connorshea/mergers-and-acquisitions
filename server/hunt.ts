@@ -29,6 +29,7 @@ import type { Item, ScoreOptions } from "../src/lib/compare.ts";
 import { blockingLabelKey, orderByAge, scoreCandidate } from "../src/lib/compare.ts";
 import { primaryLabel, primaryType } from "../src/lib/wikidata.ts";
 import { refreshCandidateItemInfo } from "./candidate-item-info.ts";
+import { attachSitelinkRedirects } from "./sitelink-overlay.ts";
 import { chunk } from "../src/lib/chunk.ts";
 import { PROTECTED_STATUSES } from "../src/lib/api-types.ts";
 
@@ -324,6 +325,16 @@ async function score(db: Db, pairs: [string, string][]): Promise<HuntStats> {
         .where(inArray(items.qid, ids));
       for (const row of rows) byQid.set(row.qid, row.data as Item);
     }
+    // Redirects resolved by the previous resolve-sitelinks run, so a clash
+    // that's one page redirecting to the other scores as duplicate evidence.
+    await attachSitelinkRedirects(
+      db,
+      window.flatMap(([qa, qb]) => {
+        const a = byQid.get(qa);
+        const b = byQid.get(qb);
+        return a && b ? [[a, b] as [Item, Item]] : [];
+      }),
+    );
 
     const survivors: CandidateRow[] = [];
     for (const [qa, qb] of window) {

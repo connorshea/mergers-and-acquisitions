@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
-import { replicaConnConfig, sitelinkClashes } from "./sitelink-redirects.ts";
+import { replicaConnConfig } from "./sitelink-redirects.ts";
+import { sitelinkClashes } from "./sitelink-overlay.ts";
 import { makeItem } from "../test/db-helpers.ts";
 
 describe("sitelinkClashes", () => {

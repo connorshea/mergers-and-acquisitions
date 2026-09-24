@@ -49,6 +49,14 @@ export interface Item {
    * the SPARQL path, which never sees them.
    */
   sitelinkBadges?: Record<string, string[]>;
+  /**
+   * Sitelinks whose page the Wiki Replicas show is a redirect (wiki → target
+   * page title, null when the target is unknown or off-wiki). Not part of the
+   * stored item: the server overlays it from `sitelink_pages`, which only covers
+   * pages behind a same-wiki clash on an open candidate (see
+   * server/sitelink-redirects.ts).
+   */
+  sitelinkRedirects?: Record<string, string | null>;
   statements: Record<string, Value[]>;
 }
 
@@ -58,15 +66,30 @@ export const SITELINK_TO_REDIRECT = "Q70893996";
 export const INTENTIONAL_SITELINK_TO_REDIRECT = "Q70894304";
 
 /**
- * Whether the item's sitelink on `wiki` is badged as pointing at a redirect.
- * Wikidata only accepts a sitelink to a redirect with one of these badges, but
- * a linked page that *later* became a redirect carries no badge, so false does
+ * Whether the item's sitelink on `wiki` points at a redirect: badged as one, or
+ * resolved as one against the wiki (sitelinkRedirects). Wikidata only accepts a
+ * sitelink to a redirect with a badge, but a linked page that *later* became a
+ * redirect carries none, and only clashing pages are resolved — so false does
  * not prove the page is a real article.
  */
 export function isRedirectSitelink(item: Item, wiki: string): boolean {
-  return (item.sitelinkBadges?.[wiki] ?? []).some(
-    (b) => b === SITELINK_TO_REDIRECT || b === INTENTIONAL_SITELINK_TO_REDIRECT,
+  return (
+    (item.sitelinkRedirects !== undefined && wiki in item.sitelinkRedirects) ||
+    (item.sitelinkBadges?.[wiki] ?? []).some(
+      (b) => b === SITELINK_TO_REDIRECT || b === INTENTIONAL_SITELINK_TO_REDIRECT,
+    )
   );
+}
+
+/** The page the item's sitelink on `wiki` redirects to, when resolved. */
+export function sitelinkRedirectTarget(item: Item, wiki: string): string | undefined {
+  return item.sitelinkRedirects?.[wiki] ?? undefined;
+}
+
+/** Whether `item`'s page on `wiki` is resolved as a redirect to `other`'s page there. */
+export function redirectsToPartner(item: Item, other: Item, wiki: string): boolean {
+  const target = sitelinkRedirectTarget(item, wiki);
+  return target !== undefined && target === other.sitelinks[wiki];
 }
 
 export type Status = "identical" | "similar" | "distinct";
@@ -76,8 +99,10 @@ export type RowStatus = Status | "one-sided";
 export interface AnnotatedValue extends Value {
   status: Status; // how this value relates to the other side
   note?: string;
-  /** Sitelink values only: the page is badged as a redirect (isRedirectSitelink). */
+  /** Sitelink values only: the page is a redirect (isRedirectSitelink). */
   redirect?: boolean;
+  /** Sitelink values only: the page it redirects to, when resolved. */
+  redirectTarget?: string;
 }
 
 export interface Row {
@@ -385,18 +410,31 @@ export function buildRows(
     const clash = !oneSided && cmp.status !== "identical";
     const redirectA = isRedirectSitelink(a, wiki);
     const redirectB = isRedirectSitelink(b, wiki);
-    const mark = (vs: AnnotatedValue[], redirect: boolean) =>
-      redirect ? vs.map((v) => ({ ...v, redirect })) : vs;
-    // A clash where one side is a badged redirect is the classic duplicate
-    // shape: the redirect usually points at the other item's page. Wikidata
-    // still refuses the merge until that sitelink is removed, so it stays a
-    // blocker — only the explanation changes.
+    const targetA = sitelinkRedirectTarget(a, wiki);
+    const targetB = sitelinkRedirectTarget(b, wiki);
+    const mark = (vs: AnnotatedValue[], redirect: boolean, redirectTarget?: string) =>
+      redirect
+        ? vs.map((v) => ({ ...v, redirect, ...(redirectTarget ? { redirectTarget } : {}) }))
+        : vs;
+    // A clash where one side is a redirect is the classic duplicate shape: the
+    // redirect usually points at the other item's page. Wikidata still refuses
+    // the merge until that sitelink is removed, so it stays a blocker — only
+    // the explanation changes, and it's definite when the target is known.
     let note: string | undefined;
-    if (clash && redirectA && redirectB)
+    if (clash && redirectsToPartner(a, b, wiki))
+      note = `${a.id}'s page redirects to ${b.id}'s page — remove ${a.id}'s sitelink before merging`;
+    else if (clash && redirectsToPartner(b, a, wiki))
+      note = `${b.id}'s page redirects to ${a.id}'s page — remove ${b.id}'s sitelink before merging`;
+    else if (clash && targetA !== undefined && targetA === targetB)
+      note = `both pages redirect to “${targetA}” — a real merge would need one removed first`;
+    else if (clash && redirectA && redirectB)
       note = "both pages are redirects — a real merge would need one removed first";
-    else if (clash && (redirectA || redirectB))
-      note = `${redirectA ? a.id : b.id}'s page is a redirect (likely to the other page) — remove that sitelink before merging`;
-    else if (clash)
+    else if (clash && (redirectA || redirectB)) {
+      const [id, target] = redirectA ? [a.id, targetA] : [b.id, targetB];
+      note = target
+        ? `${id}'s page redirects to “${target}”, not the other item's page — a real merge would need one removed first`
+        : `${id}'s page is a redirect (likely to the other page) — remove that sitelink before merging`;
+    } else if (clash)
       note = "two different pages on the same wiki — a real merge would need one removed first";
     rows.push({
       key: `sitelink:${wiki}`,
@@ -404,8 +442,8 @@ export function buildRows(
       kind: "sitelink",
       status: oneSided ? "one-sided" : cmp.status,
       blocker: clash,
-      a: mark(cmp.a, redirectA),
-      b: mark(cmp.b, redirectB),
+      a: mark(cmp.a, redirectA, targetA),
+      b: mark(cmp.b, redirectB, targetB),
       note,
     });
   }
@@ -1056,14 +1094,30 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   }
 
   // Two different pages on the same wiki usually means two subjects — a wiki
-  // has one article per subject — but often one of them is an unbadged redirect
-  // to the other item's page, the classic duplicate shape. Until redirects are
-  // detected reliably (the redirect badge is often missing), this is only a
-  // modest penalty, not near-conclusive evidence.
+  // has one article per subject — but often one of them is a redirect to the
+  // other item's page, the classic duplicate shape. Redirects are only known
+  // from badges (often missing) and, for pairs the resolve-sitelinks job has
+  // already seen, from the wiki itself; so this is only a modest penalty, not
+  // near-conclusive evidence.
   const sitelinkClash = blockers.some(
     (r) => r.kind === "sitelink" && !r.a.some((v) => v.redirect) && !r.b.some((v) => v.redirect),
   );
   if (sitelinkClash) score -= 0.1;
+
+  // The reverse: a wiki whose page for one item redirects to its page for the
+  // other is that wiki's editors saying the two are one subject.
+  const redirectWikis = rows.filter(
+    (r) =>
+      r.kind === "sitelink" &&
+      r.blocker &&
+      (redirectsToPartner(a, b, r.label) || redirectsToPartner(b, a, r.label)),
+  );
+  if (redirectWikis.length > 0) {
+    score += 0.2;
+    reasons.push(
+      `sitelink redirects to the other item's page on ${redirectWikis.map((r) => r.label).join(", ")}`,
+    );
+  }
 
   // Many external identifiers held by *both* items with entirely different
   // values are near-conclusive evidence of two distinct subjects: a single game
@@ -1175,12 +1229,12 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // any concrete disagreement — a differing developer/publisher, a release-year
   // gap, or a conflicting per-title id — caps it further. Corroborating signals
   // are the shared strong ids plus the discriminative statements (non-id) that
-  // agree. This clamp only ever lowers a score; it cannot make a non-duplicate
-  // look like one.
+  // agree, plus a wiki redirecting one item's page to the other's. This clamp
+  // only ever lowers a score; it cannot make a non-duplicate look like one.
   const propAgreement = stmtRows.filter(
     (r) => r.status === "identical" && !r.a.some((v) => v.type === "external-id"),
   ).length;
-  const strongSignals = strongIds.length + propAgreement;
+  const strongSignals = strongIds.length + propAgreement + (redirectWikis.length > 0 ? 1 : 0);
   let ceiling = 1;
   if (nameSim >= 0.75) {
     if (strongSignals >= 3) ceiling = 1;

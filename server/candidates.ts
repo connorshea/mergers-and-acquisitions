@@ -9,6 +9,7 @@ import { type AuthEnv, requireUser } from "./auth/session.ts";
 import { addSeconds, toSqlDatetime } from "./auth/time.ts";
 import { MERGING_STALE_SECONDS } from "./edits.ts";
 import { loadLabels, summaryColumns, toSummary } from "./candidate-summary.ts";
+import { attachSitelinkRedirects } from "./sitelink-overlay.ts";
 import { entityLabels, items, mergeCandidates, properties } from "../db/schema.ts";
 import type { Item } from "../src/lib/compare.ts";
 import { chunk } from "../src/lib/chunk.ts";
@@ -184,6 +185,7 @@ candidates.get("/:id", async (c) => {
     const why = row.status === "merged" ? " (merged away; the mirror no longer holds it)" : "";
     return c.json({ error: `Item data missing for: ${missing}${why}` }, 404);
   }
+  await attachSitelinkRedirects(db, [[from, into]]);
 
   // Resolve human labels for just the property ids present on this pair.
   const pids = [...new Set([...Object.keys(from.statements), ...Object.keys(into.statements)])];

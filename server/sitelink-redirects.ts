@@ -21,6 +21,7 @@ import { db } from "./db.ts";
 import { items, mergeCandidates, sitelinkPages } from "../db/schema.ts";
 import type { Item } from "../src/lib/compare.ts";
 import { chunk } from "../src/lib/chunk.ts";
+import { sitelinkClashes } from "./sitelink-overlay.ts";
 
 /** Open candidates read per keyset page when collecting clashes. */
 const READ_PAGE = 1000;
@@ -39,20 +40,6 @@ export interface PageInfo {
   isRedirect: boolean;
   redirectTarget: string | null;
   redirectFragment: string | null;
-}
-
-/**
- * The sitelinks two items clash on: same wiki, different page. Both titles of
- * each clash are returned, since either page may be the redirect.
- */
-export function sitelinkClashes(a: Item, b: Item): { wiki: string; title: string }[] {
-  const out: { wiki: string; title: string }[] = [];
-  for (const [wiki, titleA] of Object.entries(a.sitelinks)) {
-    const titleB = b.sitelinks[wiki];
-    if (titleB === undefined || titleB === titleA) continue;
-    out.push({ wiki, title: titleA }, { wiki, title: titleB });
-  }
-  return out;
 }
 
 /** Every clashing sitelink across the open candidates, grouped by wiki. */

@@ -121,6 +121,54 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
     expect(await idsOf("Q100")).toEqual([{ property: "P1733", value: "812340" }]);
   });
 
+  it("skips an item the database refuses and keeps the rest of its batch", async () => {
+    // A property id longer than external_ids.property (varchar 16) makes the
+    // item's write fail; its batch-mates are retried one by one and land.
+    const bad: Entity = {
+      ...game("Q200", "Broken"),
+      claims: {
+        P31: [p31("Q7889")],
+        P12345678901234567890: [
+          {
+            mainsnak: {
+              snaktype: "value",
+              property: "P12345678901234567890",
+              datatype: "external-id",
+              datavalue: { type: "string", value: "x" },
+            },
+            rank: "normal",
+          },
+        ],
+      },
+    };
+    // Q200 was imported cleanly from an earlier dump.
+    await insertItem(makeItem("Q200", "Broken (old)"));
+    const logs: string[] = [];
+    const stats = await run([game("Q100", "Alpha", [steam("1")]), bad, game("Q300", "Gamma")], {
+      forcePrune: true,
+      log: (m) => logs.push(m),
+    });
+    expect(stats).toMatchObject({ matched: 3, upserted: 2, failed: 1, pruned: 0 });
+    // The old row survives untouched rather than being pruned as "gone".
+    expect((await allItems()).map((r) => [r.qid, r.primaryLabel])).toEqual([
+      ["Q100", "Alpha"],
+      ["Q200", "Broken (old)"],
+      ["Q300", "Gamma"],
+    ]);
+    expect(await idsOf("Q100")).toEqual([{ property: "P1733", value: "1" }]);
+    expect(logs.some((m) => /skipped Q200: ER_DATA_TOO_LONG/.test(m))).toBe(true);
+  });
+
+  it("aborts once more than maxSkipped entities were skipped", async () => {
+    const bad = (id: string): Entity => ({
+      ...game(id, id),
+      claims: { P31: [p31("Q7889")], P12345678901234567890: [steam("x")] },
+    });
+    await expect(run([bad("Q100"), bad("Q200")], { maxSkipped: 1 })).rejects.toThrow(
+      /more than 1 entities skipped/,
+    );
+  });
+
   it("prunes items that left the dump and settles their open candidates", async () => {
     await insertItem(makeItem("Q100", "Alpha"));
     await insertItem(makeItem("Q200", "Beta"));

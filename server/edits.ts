@@ -160,11 +160,31 @@ function conflictMessage(
   return `Wikidata won't merge ${fromQid} into ${intoQid}: ${reasons.join("; ")}.`;
 }
 
+/**
+ * What to tell the user when Wikidata refused the edit for replication lag
+ * (`maxlag`, after the client's one retry). Its own text ("Waiting for
+ * wdqs1014: 320 seconds lagged") means nothing to most users; the audit row
+ * keeps it verbatim.
+ */
+const MAXLAG_MESSAGE: Record<AuditBase["action"], string> = {
+  merge:
+    "The merge can't be completed right now because Wikidata's replication lag is too high. " +
+    "Please try again later, or perform the merge manually on Wikidata instead.",
+  "different-from":
+    "The \"different from\" statements can't be added right now because Wikidata's replication lag is too high. " +
+    "Please try again later, or add them manually on Wikidata instead.",
+};
+
+/** The message shown to the user for a failed edit. */
+function userMessage(action: AuditBase["action"], err: WikidataEditError): string {
+  return err.code === "maxlag" ? MAXLAG_MESSAGE[action] : err.message;
+}
+
 /** The JSON error for a failed edit, with the status its kind implies. */
-function failedEdit(c: EditContext, err: WikidataEditError) {
+function failedEdit(c: EditContext, action: AuditBase["action"], err: WikidataEditError) {
   return errorResponse(
     c,
-    { error: err.message, code: CODE_FOR_KIND[err.kind] },
+    { error: userMessage(action, err), code: CODE_FOR_KIND[err.kind] },
     STATUS_FOR_KIND[err.kind],
   );
 }
@@ -294,13 +314,14 @@ edits.post("/:id/merge", async (c) => {
     // Couldn't reach Wikidata to check: hand the claim back rather than merge
     // blind. This read touched no edit endpoint, so nothing was applied.
     await releaseClaim(id);
-    return failedEdit(c, await auditFailure(audit, err));
+    return failedEdit(c, audit.action, await auditFailure(audit, err));
   }
   if (liveConflicts.length > 0) {
     await releaseClaim(id);
     audit.params = { ...audit.params, blockedBy: liveConflicts };
     return failedEdit(
       c,
+      audit.action,
       await auditFailure(
         audit,
         new WikidataEditError(
@@ -334,6 +355,7 @@ edits.post("/:id/merge", async (c) => {
       const known = await auditFailure(audit, err);
       return failedEdit(
         c,
+        audit.action,
         new WikidataEditError(
           known.kind,
           known.code,
@@ -345,7 +367,7 @@ edits.post("/:id/merge", async (c) => {
     if (outcome === "not-merged") {
       // Give the claim back before anything else.
       await releaseClaim(id);
-      return failedEdit(c, await auditFailure(audit, err));
+      return failedEdit(c, audit.action, await auditFailure(audit, err));
     }
     result = outcome;
     audit.params = { ...audit.params, confirmedAfterTimeout: true };
@@ -535,10 +557,10 @@ edits.post("/:id/different", async (c) => {
         // Release first — auditFailure rethrows anything that isn't a Wikidata
         // outcome, and that must not leave the claim held.
         await releaseClaim(id);
-        return failedEdit(c, await auditFailure(audit, err));
+        return failedEdit(c, audit.action, await auditFailure(audit, err));
       }
       const known = await auditFailure(audit, err);
-      results.push({ qid: item.qid, target: target.qid, error: known.message });
+      results.push({ qid: item.qid, target: target.qid, error: userMessage(audit.action, known) });
       continue;
     }
     results.push({

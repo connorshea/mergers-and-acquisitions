@@ -53,35 +53,11 @@ import {
   isInstanceOfAny,
   propertyRowFromEntity,
 } from "../src/lib/wikibase.ts";
+import { IMPORT_CLASSES } from "../src/lib/import-classes.ts";
 
-/** "video game" — the first class the mirror held; kept for callers and tests. */
-export const VIDEO_GAME = "Q7889";
-
-/**
- * The classes whose instances the mirror holds: an item is imported when a
- * best-rank `instance of` (P31) names any of these. Only these exact QIDs match
- * — subclasses are not expanded — so add a QID here to widen the mirror; the
- * pre-filter needles and the P31 check both read this list.
- */
-export const IMPORT_CLASSES: readonly string[] = [
-  VIDEO_GAME, // "Q7889" video game
-  "Q7058673", // video game series
-  "Q11424", // film (movies)
-  "Q5398426", // television series (TV shows)
-  "Q63952888", // anime television series
-  "Q783794", // company
-  "Q210167", // video game developer
-  "Q1137109", // video game publisher
-  "Q134556", // single
-  "Q169930", // extended play
-  "Q482994", // album
-  "Q18127", // record label
-  "Q2442401", // record company
-  "Q215380", // musical group
-  "Q7302866", // audio track
-  "Q55850593", // music track with vocals
-  "Q55850643", // music track without lyrics
-];
+// The class list lives in src/lib so the candidates list's type filter can
+// share it; re-exported here for the jobs and tests that import it from here.
+export { IMPORT_CLASSES, VIDEO_GAME } from "../src/lib/import-classes.ts";
 
 /** Where Toolforge mounts the latest weekly JSON dump (needs `mount: all`). */
 export const DEFAULT_DUMP_PATH = "/public/dumps/public/wikidatawiki/entities/latest-all.json.gz";

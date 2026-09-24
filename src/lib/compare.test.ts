@@ -7,6 +7,7 @@ import {
   formatIdUrl,
   installment,
   type Item,
+  crossReferenceProps,
   isAutoIgnoredConflict,
   isDeclaredDifferent,
   isSeriesSequelPair,
@@ -843,6 +844,25 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(result.reasons[0]).toContain("different from");
     // Symmetric: the declaration counts from whichever side holds it.
     expect(scoreCandidate(b, a).confidence).toBe(0);
+  });
+
+  it("docks 0.25 when one item references the other (e.g. a game's series)", () => {
+    // A game and the series it belongs to share a label and developer; the
+    // game's "part of the series" (P179) pointing at the series gives it away.
+    const series: Item = { ...base, id: "Q301", labels: { en: "The Fall" }, statements: stmt({}) };
+    const plain: Item = { ...base, id: "Q300", labels: { en: "The Fall" }, statements: stmt({}) };
+    const inSeries: Item = {
+      ...plain,
+      statements: stmt({ P179: [{ type: "item", value: "Q301" }] }),
+    };
+    expect(crossReferenceProps(inSeries, series)).toEqual(new Set(["P179"]));
+    expect(crossReferenceProps(series, inSeries)).toEqual(new Set(["P179"]));
+    expect(crossReferenceProps(plain, series).size).toBe(0);
+
+    const without = scoreCandidate(plain, series);
+    const withRef = scoreCandidate(inSeries, series);
+    expect(withRef.confidence).toBeCloseTo(without.confidence - 0.25, 5);
+    expect(withRef.reasons.some((r) => r.startsWith("one item references the other"))).toBe(true);
   });
 
   it('ignores an identifier one item declares "shared with" the other (P4070) as match evidence', () => {

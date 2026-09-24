@@ -653,6 +653,27 @@ export function isDeclaredDifferent(a: Item, b: Item): boolean {
 }
 
 /**
+ * Property ids on which either item has a statement whose value *is* the other
+ * item — e.g. a game's "part of the series" (P179) naming the series it is being
+ * compared against, or "based on" / "followed by" pointing across the pair. An
+ * item doesn't reference itself, so any such link means the two are related but
+ * distinct subjects. (P1889 is excluded: it is handled, more strongly, by
+ * isDeclaredDifferent.)
+ */
+export function crossReferenceProps(a: Item, b: Item): Set<string> {
+  const out = new Set<string>();
+  const collect = (from: Item, toId: string) => {
+    for (const [pid, values] of Object.entries(from.statements)) {
+      if (pid === DIFFERENT_FROM) continue;
+      if (values.some((v) => v.type === "item" && v.value === toId)) out.add(pid);
+    }
+  };
+  collect(a, b.id);
+  collect(b, a.id);
+  return out;
+}
+
+/**
  * Wikidata "identifier shared with" — a qualifier on an external-identifier
  * statement naming other items the same id value also covers.
  */
@@ -963,6 +984,16 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     reasons.push(
       `a per-title identifier differs (${distinctPerTitleIds[0].label}) — points at a different store/database page`,
     );
+  }
+
+  // One item referencing the other (a game's "part of the series" naming the
+  // series it's paired with, "based on", "followed by", …) means the two are
+  // related but distinct subjects — an item never points at itself.
+  const crossRefs = crossReferenceProps(a, b);
+  if (crossRefs.size > 0) {
+    score -= 0.25;
+    const labels = rows.filter((r) => crossRefs.has(r.key)).map((r) => r.label);
+    reasons.push(`one item references the other (${labels.join(", ")})`);
   }
 
   // A sequel is not a duplicate. Different entries in the same series share a

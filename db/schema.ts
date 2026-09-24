@@ -73,7 +73,10 @@ export const externalIds = mysqlTable(
     value: varchar("value", { length: 512 }).notNull(),
   },
   (t) => [
-    index("idx_external_ids_property_value").on(t.property, t.value),
+    // `qid` is included so the hunt's GROUP BY (property, value) →
+    // group_concat(qid) is answered from the index alone; without it every one
+    // of the ~2M rows costs a primary-key lookup (~10x slower).
+    index("idx_external_ids_property_value_qid").on(t.property, t.value, t.qid),
     index("idx_external_ids_qid").on(t.qid),
     uniqueIndex("idx_external_ids_unique").on(t.qid, t.property, t.value),
   ],

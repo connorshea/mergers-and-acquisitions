@@ -1,0 +1,568 @@
+{
+  "pageid": 7736315,
+  "ns": 0,
+  "title": "Q7804738",
+  "lastrevid": 2429674504,
+  "modified": "2025-11-14T20:43:08Z",
+  "type": "item",
+  "id": "Q7804738",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Timbiriche VII"
+    },
+    "es": {
+      "language": "es",
+      "value": "Timbiriche VII"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Timbiriche VII"
+    },
+    "de": {
+      "language": "de",
+      "value": "Timbiriche VII"
+    },
+    "pt-br": {
+      "language": "pt-br",
+      "value": "Timbiriche VII"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "Timbiriche VII"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Timbiriche VII"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "Timbiriche VII"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "Timbiriche VII"
+    }
+  },
+  "descriptions": {
+    "de": {
+      "language": "de",
+      "value": "Album von Timbiriche"
+    },
+    "pt-br": {
+      "language": "pt-br",
+      "value": "Álbum de Timbiriche"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "muziekalbum van Timbiriche"
+    },
+    "en": {
+      "language": "en",
+      "value": "album by Timbiriche"
+    },
+    "es": {
+      "language": "es",
+      "value": "álbum de Timbiriche"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "album de Timbiriche"
+    },
+    "ro": {
+      "language": "ro",
+      "value": "album de Timbiriche"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "ألبوم"
+    }
+  },
+  "aliases": {
+    "es": [
+      {
+        "language": "es",
+        "value": "Timbiriche VII (álbum)"
+      }
+    ]
+  },
+  "claims": {
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "1084adc3387f30200ab0a3d39b30a87488ff3e86",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 939151,
+              "id": "Q939151"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q7804738$FBA0820C-1D66-477B-8435-0F287531F4EE",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "dc16d32b615bf1c6edf1919941065eedccacb8e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 482994,
+              "id": "Q482994"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q7804738$F504F90F-C747-4B9B-9F7E-D8130254A95A",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "63f9b478d987da2e4e469476e371cb83bb3d6193",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 37073,
+              "id": "Q37073"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7804738$6E34F14A-9FFD-408E-9C2A-BA20D37B48A9",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "00fafd5a6f19b92448863316ac2641c8c20530a7",
+          "datavalue": {
+            "value": {
+              "time": "+1987-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q7804738$4C05DE0A-776A-4108-9AD8-E2FB13276332",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "c456dc5cd2117249948c288206ff3f8b1bf574f0",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e17507043402fe54ae6c4d65cc51f46cec987de9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8449,
+                      "id": "Q8449"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "96a9bdf35fff8802d6a6616ce19b3d39be4dffb4",
+          "datavalue": {
+            "value": {
+              "text": "Timbiriche VII",
+              "language": "es"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q7804738$8FE18F3D-9B66-47B4-A428-B57FC2A8084E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "c456dc5cd2117249948c288206ff3f8b1bf574f0",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e17507043402fe54ae6c4d65cc51f46cec987de9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8449,
+                      "id": "Q8449"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P155": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P155",
+          "hash": "a3648300a4033039c19a8591df38ddf5c0c3e60f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 10954309,
+              "id": "Q10954309"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7804738$C68D5458-6FCD-4231-A914-8B4CA3413F85",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "3f8d327fcc027023c08e173c0a489c79409b3ffa",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "220216f109fc1c918c5261abde967eb1470dc232",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Timbiriche_VII&oldid=848302834",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P156": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P156",
+          "hash": "755f16a035349b5d683f5049f617082e2c4751e3",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6146997,
+              "id": "Q6146997"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7804738$170B060F-F388-4498-BD88-C39CF4CC5961",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "3f8d327fcc027023c08e173c0a489c79409b3ffa",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "220216f109fc1c918c5261abde967eb1470dc232",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Timbiriche_VII&oldid=848302834",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P264",
+          "hash": "d43869b57dad95eb3cddde04a53a03bcc7eeffae",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 427326,
+              "id": "Q427326"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7804738$5874A051-745F-40E7-AB7B-FE9EFB650F46",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "c79c38f812b5918f2556c5b906f6815bac2e2c4c",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e17507043402fe54ae6c4d65cc51f46cec987de9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8449,
+                      "id": "Q8449"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "2a4cf1add5e957e496813a4571ffbd9396f9c195",
+                  "datavalue": {
+                    "value": "https://es.wikipedia.org/w/index.php?title=Timbiriche_VII&oldid=119691913",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "3e96fa61a061c8b7ebf9b5e9866a0a5dad158dce",
+          "datavalue": {
+            "value": "/m/04n2nh2",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q7804738$EDEFCB16-06D2-49A9-8FE2-641924949915",
+        "rank": "normal"
+      }
+    ],
+    "P291": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P291",
+          "hash": "c447ecbf60adcd930d5ee86dda07c2819d50ab3d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 96,
+              "id": "Q96"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7804738$17F8541C-88D1-4F13-A5DB-73A552F27C8F",
+        "rank": "normal"
+      }
+    ],
+    "P407": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P407",
+          "hash": "ffe70325d10cfc55f0dca807ed80ca0b5b97c472",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1321,
+              "id": "Q1321"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7804738$268A198F-01FE-4258-8780-80D531DFADFD",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Timbiriche VII",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Timbiriche_VII"
+    },
+    "eswiki": {
+      "site": "eswiki",
+      "title": "Timbiriche VII",
+      "badges": [],
+      "url": "https://es.wikipedia.org/wiki/Timbiriche_VII"
+    },
+    "ptwiki": {
+      "site": "ptwiki",
+      "title": "Timbiriche VII",
+      "badges": [],
+      "url": "https://pt.wikipedia.org/wiki/Timbiriche_VII"
+    }
+  }
+}

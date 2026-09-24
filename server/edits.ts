@@ -195,7 +195,7 @@ async function summaryFor(id: number) {
     .from(mergeCandidates)
     .where(eq(mergeCandidates.id, id));
   if (!row) return null;
-  return toSummary(row, await loadLabels([row.fromQid, row.intoQid]));
+  return toSummary(row, await loadLabels([row]));
 }
 
 /**

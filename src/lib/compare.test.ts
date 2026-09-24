@@ -3,6 +3,7 @@ import {
   bestNameSimilarity,
   blockingLabelKey,
   buildRows,
+  collapseLabelRows,
   compareValues,
   formatIdUrl,
   installment,
@@ -304,6 +305,33 @@ describe("buildRows (behavior-preserving extraction)", () => {
     expect(genre?.a.find((v) => v.value === "Q23916")?.label).toBe("action game");
     const platform = rows.find((r) => r.key === "P400");
     expect(platform?.a.find((v) => v.value === "Q10676")?.label).toBe("Existing Label");
+  });
+});
+
+describe("collapseLabelRows", () => {
+  const base = { descriptions: {}, aliases: {}, statements: {}, sitelinks: {} };
+  const a: Item = {
+    ...base,
+    id: "Q10379091",
+    labels: { de: "Teen Angels - La Despedida", en: "Teen Angels - La Despedida", it: "Other" },
+  };
+  const b: Item = {
+    ...base,
+    id: "Q3982545",
+    labels: { de: "Teen Angels: La Despedida", en: "Teen Angels: La Despedida", it: "Else" },
+  };
+
+  it("merges label rows with identical values into one multi-language row", () => {
+    const rows = collapseLabelRows(buildRows(a, b));
+    const labels = rows.filter((r) => r.kind === "term").map((r) => r.label);
+    expect(labels).toEqual(["label (de, en)", "label (it)"]);
+    expect(rows[0].key).toBe("label:de,en");
+    expect(rows[0].status).toBe("similar");
+  });
+
+  it("leaves rows with no repeated values untouched", () => {
+    const rows = buildRows({ ...a, labels: { en: "X" } }, { ...b, labels: { en: "Y" } });
+    expect(collapseLabelRows(rows)).toEqual(rows);
   });
 });
 

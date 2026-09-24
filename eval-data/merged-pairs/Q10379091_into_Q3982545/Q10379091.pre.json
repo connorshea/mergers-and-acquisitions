@@ -1,0 +1,293 @@
+{
+  "pageid": 11683637,
+  "ns": 0,
+  "title": "Q10379091",
+  "lastrevid": 2429674404,
+  "modified": "2025-11-14T20:42:56Z",
+  "type": "item",
+  "id": "Q10379091",
+  "labels": {
+    "pt": {
+      "language": "pt",
+      "value": "Teen Angels - La Despedida"
+    },
+    "de": {
+      "language": "de",
+      "value": "Teen Angels - La Despedida"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Teen Angels - La Despedida"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Teen Angels - La Despedida"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "Teen Angels - La Despedida"
+    },
+    "en": {
+      "language": "en",
+      "value": "Teen Angels - La Despedida"
+    },
+    "es": {
+      "language": "es",
+      "value": "Teen Angels - La Despedida"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "Teen Angels - La Despedida"
+    }
+  },
+  "descriptions": {
+    "nl": {
+      "language": "nl",
+      "value": "muziekalbum van Teen Angels"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "ألبوم"
+    },
+    "en": {
+      "language": "en",
+      "value": "album by Teen Angels"
+    },
+    "hy": {
+      "language": "hy",
+      "value": "երաժշտական ալբոմ"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "dc16d32b615bf1c6edf1919941065eedccacb8e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 482994,
+              "id": "Q482994"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q10379091$D49B6AC2-36D4-43B8-BD79-B6C75E79BE56",
+        "rank": "normal"
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "e65372cf39f868dd8f2040ca874cd9632f1e02aa",
+          "datavalue": {
+            "value": {
+              "time": "+2012-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q10379091$3B1C08A1-7727-481D-8196-318B11914566",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9424852ca7d9d48269148c57acbefacca1899882",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "b7f8bea3bb10c237323eb448dc4798948923bd5c",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11921,
+                      "id": "Q11921"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P264",
+          "hash": "8995939b6e61a8f3c5b7dc7c1fb2c9d335c63bce",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 56760250,
+              "id": "Q56760250"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q10379091$BF9DDF4D-9BC7-4162-ADA9-60CD510D130A",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "01939ebc1a65f67e80ef0e55f2b7280d8d8d9df5",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "b7f8bea3bb10c237323eb448dc4798948923bd5c",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11921,
+                      "id": "Q11921"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "46ae5dc93f4531a434232a48504d8f56ec1a3ac9",
+                  "datavalue": {
+                    "value": "https://pt.wikipedia.org/w/index.php?title=Teen_Angels_-_La_Despedida&oldid=55267576",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "3f5216cded9d116d7e022014de249e9ff5db3503",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 641550,
+              "id": "Q641550"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q10379091$6611B959-D0A9-42B6-8265-E0727539D105",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "01939ebc1a65f67e80ef0e55f2b7280d8d8d9df5",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "b7f8bea3bb10c237323eb448dc4798948923bd5c",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11921,
+                      "id": "Q11921"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "46ae5dc93f4531a434232a48504d8f56ec1a3ac9",
+                  "datavalue": {
+                    "value": "https://pt.wikipedia.org/w/index.php?title=Teen_Angels_-_La_Despedida&oldid=55267576",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "fdaf7e2e15d0d8e38833ee8e25f1ddf019fd69a0",
+          "datavalue": {
+            "value": "/g/1hc0g6nfj",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q10379091$E6A5F15D-56C8-4BA3-A09F-69411A37B18C",
+        "rank": "normal"
+      }
+    ],
+    "P407": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P407",
+          "hash": "ffe70325d10cfc55f0dca807ed80ca0b5b97c472",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1321,
+              "id": "Q1321"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q10379091$F6B7881C-6E83-4568-AC06-BCA1CECDF08D",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "ptwiki": {
+      "site": "ptwiki",
+      "title": "Teen Angels - La Despedida",
+      "badges": [],
+      "url": "https://pt.wikipedia.org/wiki/Teen_Angels_-_La_Despedida"
+    }
+  }
+}

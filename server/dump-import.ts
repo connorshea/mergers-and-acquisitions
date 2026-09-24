@@ -411,6 +411,14 @@ export async function scanDump(source: Readable, opts: ScanOptions): Promise<Sca
 // Item rows carry a JSON blob each, so keep those batches modest.
 const ITEM_BATCH = 500;
 const ID_BATCH = 2000;
+/**
+ * `external_ids.value` is varchar(512). Longer values are junk (e.g. prose
+ * pasted into an identifier property) that no identifier match would use, so
+ * they're skipped instead of failing the whole batch with ER_DATA_TOO_LONG.
+ * UTF-16 length is never under MariaDB's code-point count, so nothing too long
+ * gets through (a rare astral-heavy value near the cap is dropped early).
+ */
+const MAX_ID_VALUE_CHARS = 512;
 /** Items paged per read when pruning (keyset over the PK). */
 const READ_PAGE = 10000;
 /**
@@ -462,6 +470,7 @@ export async function upsertItems(
   const seen = new Set<string>();
   for (const item of batch) {
     for (const r of externalIdRows(item)) {
+      if (r.value.length > MAX_ID_VALUE_CHARS) continue;
       const key = `${item.id} ${r.property} ${r.value}`;
       if (seen.has(key)) continue;
       seen.add(key);

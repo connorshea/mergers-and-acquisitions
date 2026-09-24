@@ -113,6 +113,14 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
     expect(await idsOf("Q100")).toEqual([{ property: "P1733", value: "999" }]);
   });
 
+  it("skips external id values too long for the column", async () => {
+    const stats = await run([
+      game("Q100", "Starfall Drift", [steam("812340"), steam("x".repeat(513))]),
+    ]);
+    expect(stats).toMatchObject({ upserted: 1, externalIds: 1 });
+    expect(await idsOf("Q100")).toEqual([{ property: "P1733", value: "812340" }]);
+  });
+
   it("prunes items that left the dump and settles their open candidates", async () => {
     await insertItem(makeItem("Q100", "Alpha"));
     await insertItem(makeItem("Q200", "Beta"));

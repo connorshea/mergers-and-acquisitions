@@ -139,6 +139,26 @@ describe("scanDump", () => {
     expect(seen).toEqual(["Q1", "Q6"]);
     expect(stats.properties).toBe(0);
   });
+
+  it("skips a hit line that doesn't parse when onSkip is given, and throws without it", async () => {
+    const [first, ...rest] = dumpText(ENTITIES).split("\n");
+    const text = [first, '{"type":"item","id":"Q9","claims":{"numeric-id":7889 oops', ...rest].join(
+      "\n",
+    );
+    const skipped: string[] = [];
+    const stats = await scanDump(Readable.from([Buffer.from(text)]), {
+      classQids: [VIDEO_GAME],
+      onItem: () => {},
+      onSkip: (what) => {
+        skipped.push(what);
+      },
+    });
+    expect(stats).toMatchObject({ matched: 2, skipped: 1 });
+    expect(skipped).toHaveLength(1);
+    expect(skipped[0]).toMatch(/^unparseable line .*Q9/);
+
+    await expect(collect(Readable.from([Buffer.from(text)]))).rejects.toThrow(SyntaxError);
+  });
 });
 
 describe("openDump", () => {

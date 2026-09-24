@@ -23,7 +23,10 @@
 //      away, deleted, retyped) are pruned and their open candidates settled.
 //
 // Everything is an idempotent upsert, so a job killed mid-way (a node drain,
-// say) is simply re-run.
+// say) is simply re-run. One bad entity doesn't stop the pass: an unparseable
+// line, or an item the database refuses (a batch that fails is retried item by
+// item), is logged and skipped. Past `maxSkipped` of those the run aborts,
+// since that many points at an outage or a bug rather than bad data.
 //
 // The pass can be split across N jobs ("shards"). The dump's .gz is not one
 // stream: the generator (operations/dumps, dumpwikibasejson.sh) gzips each
@@ -81,6 +84,8 @@ export interface ScanStats {
   parsed: number;
   /** Items whose best-rank P31 is the class. */
   matched: number;
+  /** Pre-filter hits that couldn't be parsed or converted (see `onSkip`). */
+  skipped: number;
   /** Property entities handed to onProperty. */
   properties: number;
   /** True when the scan stopped at `limit` rather than at the end of the dump. */
@@ -96,6 +101,11 @@ export interface ScanOptions {
   onItem: (item: Item, entity: Entity) => void | Promise<void>;
   /** Called with every property entity (there are ~13k, interleaved). */
   onProperty?: (entity: Entity) => void | Promise<void>;
+  /**
+   * Called for a hit line that fails to parse or convert, which is then
+   * skipped; it may throw to abort the scan. Without it the error is thrown.
+   */
+  onSkip?: (what: string, err: unknown) => void;
   /** Stop after this many matching items (a quick validation run). */
   limit?: number;
   /** Progress callback, invoked every `progressEveryBytes` inflated bytes. */
@@ -332,6 +342,7 @@ export async function scanDump(source: Readable, opts: ScanOptions): Promise<Sca
     lines: 0,
     parsed: 0,
     matched: 0,
+    skipped: 0,
     properties: 0,
     stopped: false,
     seconds: 0,
@@ -340,8 +351,20 @@ export async function scanDump(source: Readable, opts: ScanOptions): Promise<Sca
   let carry: Buffer = Buffer.alloc(0);
   const hits = new Map<number, number>();
 
+  const skip = (what: string, err: unknown): void => {
+    if (!opts.onSkip) throw err;
+    stats.skipped++;
+    opts.onSkip(what, err);
+  };
+
   const handleLine = async (line: Buffer): Promise<void> => {
-    const entity = parseLine(line);
+    let entity: Entity | null;
+    try {
+      entity = parseLine(line);
+    } catch (err) {
+      skip(`unparseable line ${JSON.stringify(line.subarray(0, 80).toString("utf8"))}…`, err);
+      return;
+    }
     if (!entity) return;
     stats.parsed++;
     if (entity.type === "property") {
@@ -350,7 +373,13 @@ export async function scanDump(source: Readable, opts: ScanOptions): Promise<Sca
       return;
     }
     if (entity.type !== "item") return;
-    const item = entityToItem(entity);
+    let item: Item;
+    try {
+      item = entityToItem(entity);
+    } catch (err) {
+      skip(`${entity.id} (unconvertible)`, err);
+      return;
+    }
     if (!isInstanceOfAny(item, classSet)) return;
     stats.matched++;
     await opts.onItem(item, entity);
@@ -419,6 +448,8 @@ const ID_BATCH = 2000;
  * gets through (a rare astral-heavy value near the cap is dropped early).
  */
 const MAX_ID_VALUE_CHARS = 512;
+/** Default cap on skipped entities (bad lines + unwritable items) per run. */
+export const MAX_SKIPPED = 100;
 /** Items paged per read when pruning (keyset over the PK). */
 const READ_PAGE = 10000;
 /**
@@ -440,47 +471,51 @@ export async function upsertItems(
   dump?: string,
 ): Promise<number> {
   if (batch.length === 0) return 0;
-  const rows = batch.map((item) => ({
-    qid: item.id,
-    primaryLabel: primaryLabel(item) ?? null,
-    primaryType: primaryType(item) ?? null,
-    data: item,
-    lastSyncedAt: stamp,
-    lastDump: dump ?? null,
-  }));
-  for (let i = 0; i < rows.length; i += ITEM_BATCH) {
-    await db
-      .insert(items)
-      .values(rows.slice(i, i + ITEM_BATCH))
-      .onDuplicateKeyUpdate({
-        set: {
-          primaryLabel: sql`values(${items.primaryLabel})`,
-          primaryType: sql`values(${items.primaryType})`,
-          data: sql`values(${items.data})`,
-          lastSyncedAt: sql`values(${items.lastSyncedAt})`,
-          lastDump: sql`coalesce(values(${items.lastDump}), ${items.lastDump})`,
-        },
-      });
-  }
-
-  // Rebuild external ids wholesale, deduped on the (qid, property, value) key.
-  const qids = batch.map((item) => item.id);
-  await db.delete(externalIds).where(inArray(externalIds.qid, qids));
-  const idRows: (typeof externalIds.$inferInsert)[] = [];
-  const seen = new Set<string>();
-  for (const item of batch) {
-    for (const r of externalIdRows(item)) {
-      if (r.value.length > MAX_ID_VALUE_CHARS) continue;
-      const key = `${item.id} ${r.property} ${r.value}`;
-      if (seen.has(key)) continue;
-      seen.add(key);
-      idRows.push({ qid: item.id, property: r.property, value: r.value });
+  // One transaction, so a batch that fails leaves every item as it was (not,
+  // say, updated with its external ids already deleted) and can be retried.
+  return db.transaction(async (tx) => {
+    const rows = batch.map((item) => ({
+      qid: item.id,
+      primaryLabel: primaryLabel(item) ?? null,
+      primaryType: primaryType(item) ?? null,
+      data: item,
+      lastSyncedAt: stamp,
+      lastDump: dump ?? null,
+    }));
+    for (let i = 0; i < rows.length; i += ITEM_BATCH) {
+      await tx
+        .insert(items)
+        .values(rows.slice(i, i + ITEM_BATCH))
+        .onDuplicateKeyUpdate({
+          set: {
+            primaryLabel: sql`values(${items.primaryLabel})`,
+            primaryType: sql`values(${items.primaryType})`,
+            data: sql`values(${items.data})`,
+            lastSyncedAt: sql`values(${items.lastSyncedAt})`,
+            lastDump: sql`coalesce(values(${items.lastDump}), ${items.lastDump})`,
+          },
+        });
     }
-  }
-  for (let i = 0; i < idRows.length; i += ID_BATCH) {
-    await db.insert(externalIds).values(idRows.slice(i, i + ID_BATCH));
-  }
-  return idRows.length;
+
+    // Rebuild external ids wholesale, deduped on the (qid, property, value) key.
+    const qids = batch.map((item) => item.id);
+    await tx.delete(externalIds).where(inArray(externalIds.qid, qids));
+    const idRows: (typeof externalIds.$inferInsert)[] = [];
+    const seen = new Set<string>();
+    for (const item of batch) {
+      for (const r of externalIdRows(item)) {
+        if (r.value.length > MAX_ID_VALUE_CHARS) continue;
+        const key = `${item.id} ${r.property} ${r.value}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        idRows.push({ qid: item.id, property: r.property, value: r.value });
+      }
+    }
+    for (let i = 0; i < idRows.length; i += ID_BATCH) {
+      await tx.insert(externalIds).values(idRows.slice(i, i + ID_BATCH));
+    }
+    return idRows.length;
+  });
 }
 
 export interface ImportOptions {
@@ -503,6 +538,8 @@ export interface ImportOptions {
   prune?: boolean;
   /** Prune even past MAX_PRUNE_FRACTION. */
   forcePrune?: boolean;
+  /** Abort once more than this many entities were skipped (MAX_SKIPPED). */
+  maxSkipped?: number;
   log?: (message: string) => void;
   progressEveryBytes?: number;
 }
@@ -512,6 +549,8 @@ export interface ImportStats extends ScanStats {
   upserted: number;
   /** External-id rows written. */
   externalIds: number;
+  /** Matched items the database refused, skipped (their QIDs are logged). */
+  failed: number;
   /** Property rows synced. */
   propertyRows: number;
   /** Items deleted because they were no longer in the dump. */
@@ -621,6 +660,30 @@ async function pruneMissing(
 }
 
 /**
+ * Stamp items that failed to write as seen in `dump` anyway, so the prune
+ * keeps their existing (previous-dump) rows instead of deleting items that are
+ * still in the dump. A refused item that isn't in the mirror yet stays absent.
+ */
+async function keepSeen(qids: string[], dump: string): Promise<void> {
+  if (qids.length === 0) return;
+  await db.update(items).set({ lastDump: dump }).where(inArray(items.qid, qids));
+}
+
+/**
+ * A one-line reason for the log. A DrizzleQueryError's own message embeds the
+ * whole statement and its parameters (thousands of placeholders), so prefer
+ * the driver error it wraps.
+ */
+function errorSummary(err: unknown): string {
+  const e = (err instanceof Error && err.cause instanceof Error ? err.cause : err) as {
+    code?: string;
+    message?: string;
+  };
+  const text = `${e.code ? `${e.code}: ` : ""}${e.message ?? String(err)}`;
+  return text.length > 300 ? `${text.slice(0, 300)}…` : text;
+}
+
+/**
  * Full import: scan the dump, upsert every matching item in batches, sync the
  * property entities, then (after a complete, uncapped pass) prune the items
  * the dump no longer contains.
@@ -652,11 +715,41 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
   let upserted = 0;
   let idRows = 0;
 
+  let failed = 0;
+  let skipped = 0;
+  const maxSkipped = opts.maxSkipped ?? MAX_SKIPPED;
+  // Shared by the scan (bad lines) and the write path (refused items).
+  const onSkip = (what: string, err: unknown): void => {
+    log(`${tag} skipped ${what}: ${errorSummary(err)}`);
+    if (++skipped > maxSkipped) {
+      throw new Error(`${tag} more than ${maxSkipped} entities skipped; aborting`, { cause: err });
+    }
+  };
+
   const flush = async (): Promise<void> => {
     if (batch.length === 0) return;
-    idRows += await upsertItems(batch, stamp, dump);
-    upserted += batch.length;
+    const pending = batch;
     batch = [];
+    try {
+      idRows += await upsertItems(pending, stamp, dump);
+      upserted += pending.length;
+      return;
+    } catch (err) {
+      // Find the item(s) at fault; the rest of the batch still lands.
+      log(`${tag} batch of ${pending.length} failed (${errorSummary(err)}); retrying one by one`);
+    }
+    const refused: string[] = [];
+    for (const item of pending) {
+      try {
+        idRows += await upsertItems([item], stamp, dump);
+        upserted++;
+      } catch (err) {
+        failed++;
+        refused.push(item.id);
+        onSkip(item.id, err);
+      }
+    }
+    await keepSeen(refused, dump);
   };
 
   // The progress line shows both the rate over the last interval (what the job
@@ -673,6 +766,7 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
     classQids,
     limit: opts.limit,
     progressEveryBytes: opts.progressEveryBytes,
+    onSkip,
     onItem: async (item) => {
       batch.push(item);
       if (batch.length >= ITEM_BATCH) await flush();
@@ -723,5 +817,13 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
     }
   }
 
-  return { ...scan, upserted, externalIds: idRows, propertyRows: propertyCount, pruned, settled };
+  return {
+    ...scan,
+    upserted,
+    externalIds: idRows,
+    failed,
+    propertyRows: propertyCount,
+    pruned,
+    settled,
+  };
 }

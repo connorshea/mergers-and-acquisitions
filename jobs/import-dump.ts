@@ -70,6 +70,9 @@ runDumpImport({
         `done in ${(stats.seconds / 60).toFixed(1)} min — ` +
         `${(stats.bytes / 1e9).toFixed(1)} GB inflated, ${stats.lines} lines, ${stats.parsed} parsed, ` +
         `${stats.matched} matched, ${stats.upserted} items upserted, ${stats.externalIds} external ids, ` +
+        (stats.skipped + stats.failed > 0
+          ? `${stats.skipped} bad lines + ${stats.failed} failed items skipped, `
+          : "") +
         `${stats.propertyRows} properties, ${stats.pruned} pruned, ${stats.settled} candidates settled` +
         (stats.stopped ? " (stopped at limit)" : ""),
     );

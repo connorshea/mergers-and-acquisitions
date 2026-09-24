@@ -792,11 +792,6 @@ a.chip-id:hover {
 .col-flags {
   width: 8rem;
 }
-.col-when {
-  width: 7rem;
-  color: var(--muted);
-  font-size: 0.9rem;
-}
 .ledger.candidates .col-a,
 .ledger.candidates .col-prop {
   border-right: none;

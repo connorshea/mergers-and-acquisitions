@@ -18,7 +18,7 @@
 //
 // All writes are idempotent upserts, so re-running is always safe, and a pair a
 // human already resolved (dismissed/merged, or mid-merge) is never rescored or resurrected
-// (see the conditional upsert in `score`).
+// (see `upsertCandidates`).
 import mysql from "mysql2/promise";
 import { drizzle, type MySql2Database } from "drizzle-orm/mysql2";
 import { and, eq, inArray, isNotNull, notInArray, sql } from "drizzle-orm";
@@ -49,10 +49,14 @@ const MAX_BLOCK_GROUP = 100;
 /** Qids loaded per `inArray` item read. MariaDB has no tight bound-param cap. */
 const ID_CHUNK = 1000;
 
+/** Candidate rows per multi-row upsert / ids per stale-row DELETE. */
+const WRITE_CHUNK = 500;
+
 export interface HuntStats {
   pairs: number;
   scored: number;
   upserted: number;
+  /** Stale open rows actually removed (pairs that fell below MIN_CONFIDENCE). */
   deleted: number;
   failed: number;
 }
@@ -167,7 +171,37 @@ async function scan(db: Db): Promise<[string, string][]> {
   return Array.from(pairs, (key) => key.split("|") as [string, string]);
 }
 
-/** Score every pair and upsert the survivors. */
+type CandidateRow = typeof mergeCandidates.$inferInsert;
+
+/**
+ * Upsert a batch of scored candidates in one multi-row statement.
+ *
+ * MariaDB has no `ON CONFLICT … WHERE` (SQLite's `setWhere`), so guard each
+ * updated column: if the existing row was resolved by a human, keep its stored
+ * values untouched; otherwise take the freshly scored ones. `status` is omitted
+ * from the SET entirely, so a resolved status never changes.
+ */
+async function upsertCandidates(db: Db, rows: CandidateRow[]): Promise<void> {
+  const resolved = inArray(mergeCandidates.status, [...PROTECTED_STATUSES]);
+  await db
+    .insert(mergeCandidates)
+    .values(rows)
+    .onDuplicateKeyUpdate({
+      set: {
+        confidence: sql`IF(${resolved}, ${mergeCandidates.confidence}, values(${mergeCandidates.confidence}))`,
+        reasons: sql`IF(${resolved}, ${mergeCandidates.reasons}, values(${mergeCandidates.reasons}))`,
+        hasBlocker: sql`IF(${resolved}, ${mergeCandidates.hasBlocker}, values(${mergeCandidates.hasBlocker}))`,
+        detectedAt: sql`IF(${resolved}, ${mergeCandidates.detectedAt}, CURRENT_TIMESTAMP)`,
+      },
+    });
+}
+
+/**
+ * Score every pair in memory, then write the results in batches: survivors are
+ * upserted `WRITE_CHUNK` rows per statement, and open rows for pairs that fell
+ * below the floor are deleted by id. (One round-trip per pair made the writes
+ * the bulk of the run — scoring itself is well under a second.)
+ */
 async function score(db: Db, pairs: [string, string][]): Promise<HuntStats> {
   const stats: HuntStats = { pairs: pairs.length, scored: 0, upserted: 0, deleted: 0, failed: 0 };
   if (pairs.length === 0) return stats;
@@ -198,6 +232,8 @@ async function score(db: Db, pairs: [string, string][]): Promise<HuntStats> {
   if (idProps.size > 0) scoreOpts.isIdentifierProp = (pid) => idProps.has(pid);
   if (mirroredProps.size > 0) scoreOpts.isMirroredIdProp = (pid) => mirroredProps.has(pid);
 
+  const survivors: CandidateRow[] = [];
+  const belowFloor = new Set<string>(); // `${from}|${into}` of pairs under MIN_CONFIDENCE
   for (const [qa, qb] of pairs) {
     const a = byQid.get(qa);
     const b = byQid.get(qb);
@@ -208,49 +244,66 @@ async function score(db: Db, pairs: [string, string][]): Promise<HuntStats> {
       const [from, into] = orderByAge(a, b);
       const result = scoreCandidate(from, into, scoreOpts);
       if (result.confidence < MIN_CONFIDENCE) {
-        // A pair that no longer clears the floor (e.g. after a heuristic change
-        // that exposed it as a false positive) must not linger with a stale
-        // higher score, so drop any open row for it. Never touch one a human
-        // resolved.
-        await db
-          .delete(mergeCandidates)
-          .where(
-            and(
-              eq(mergeCandidates.fromQid, from.id),
-              eq(mergeCandidates.intoQid, into.id),
-              notInArray(mergeCandidates.status, [...PROTECTED_STATUSES]),
-            ),
-          );
-        stats.deleted++;
+        belowFloor.add(`${from.id}|${into.id}`);
         continue;
       }
-
-      // MariaDB has no `ON CONFLICT … WHERE` (SQLite's `setWhere`), so guard each
-      // updated column: if the existing row was resolved by a human, keep its
-      // stored values untouched; otherwise take the freshly scored ones. `status`
-      // is omitted from the SET entirely, so a resolved status never changes.
-      const resolved = inArray(mergeCandidates.status, [...PROTECTED_STATUSES]);
-      await db
-        .insert(mergeCandidates)
-        .values({
-          fromQid: from.id,
-          intoQid: into.id,
-          confidence: result.confidence,
-          reasons: result.reasons,
-          hasBlocker: result.hasBlocker,
-        })
-        .onDuplicateKeyUpdate({
-          set: {
-            confidence: sql`IF(${resolved}, ${mergeCandidates.confidence}, values(${mergeCandidates.confidence}))`,
-            reasons: sql`IF(${resolved}, ${mergeCandidates.reasons}, values(${mergeCandidates.reasons}))`,
-            hasBlocker: sql`IF(${resolved}, ${mergeCandidates.hasBlocker}, values(${mergeCandidates.hasBlocker}))`,
-            detectedAt: sql`IF(${resolved}, ${mergeCandidates.detectedAt}, CURRENT_TIMESTAMP)`,
-          },
-        });
-      stats.upserted++;
+      survivors.push({
+        fromQid: from.id,
+        intoQid: into.id,
+        confidence: result.confidence,
+        reasons: result.reasons,
+        hasBlocker: result.hasBlocker,
+      });
     } catch (err) {
       console.error(`hunt score: pair ${qa}/${qb} failed`, err);
       stats.failed++;
+    }
+  }
+
+  for (const batch of chunk(survivors, WRITE_CHUNK)) {
+    try {
+      await upsertCandidates(db, batch);
+      stats.upserted += batch.length;
+    } catch (batchErr) {
+      // Retry row by row so one bad row doesn't cost the whole batch, and the
+      // failure is attributed to the pair that caused it.
+      console.warn(`hunt score: batch upsert failed, retrying rows individually`, batchErr);
+      for (const row of batch) {
+        try {
+          await upsertCandidates(db, [row]);
+          stats.upserted++;
+        } catch (err) {
+          console.error(`hunt score: pair ${row.fromQid}/${row.intoQid} failed`, err);
+          stats.failed++;
+        }
+      }
+    }
+  }
+
+  // A pair that no longer clears the floor (e.g. after a heuristic change that
+  // exposed it as a false positive) must not linger with a stale higher score,
+  // so drop any open row for it. Never touch one a human resolved. Most
+  // below-floor pairs have no row at all, so find the ones that do from the
+  // (comparatively small) set of unresolved candidates rather than issuing a
+  // DELETE per pair.
+  if (belowFloor.size > 0) {
+    const unresolved = notInArray(mergeCandidates.status, [...PROTECTED_STATUSES]);
+    const open = await db
+      .select({
+        id: mergeCandidates.id,
+        fromQid: mergeCandidates.fromQid,
+        intoQid: mergeCandidates.intoQid,
+      })
+      .from(mergeCandidates)
+      .where(unresolved);
+    const stale = open.filter((r) => belowFloor.has(`${r.fromQid}|${r.intoQid}`)).map((r) => r.id);
+    for (const ids of chunk(stale, WRITE_CHUNK)) {
+      // Re-check the status in the DELETE itself in case a reviewer resolved
+      // the row since the SELECT above.
+      const [res] = await db
+        .delete(mergeCandidates)
+        .where(and(inArray(mergeCandidates.id, ids), unresolved));
+      stats.deleted += res.affectedRows;
     }
   }
 

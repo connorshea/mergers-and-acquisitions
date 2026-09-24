@@ -179,10 +179,27 @@ export function blockingLabelKey(label: string): string {
  * ("https://store.steampowered.com/app/$1/", "268220") →
  * "https://store.steampowered.com/app/268220/". Returns null when there is no
  * template or it has no placeholder, so callers can fall back to plain text.
+ * P1630 is a plain string anyone can edit, so the result must pass
+ * `safeHttpUrl` too.
  */
 export function formatIdUrl(template: string | undefined, value: string): string | null {
   if (!template || !template.includes("$1")) return null;
-  return template.split("$1").join(value);
+  return safeHttpUrl(template.split("$1").join(value));
+}
+
+/**
+ * `raw` when it is an absolute http(s) URL, else null. Values from Wikidata
+ * (formatter URLs, `url` statements) become link targets; this keeps a
+ * `javascript:`/`data:` value from ever reaching an `href`.
+ */
+export function safeHttpUrl(raw: string): string | null {
+  let url: URL;
+  try {
+    url = new URL(raw);
+  } catch {
+    return null;
+  }
+  return url.protocol === "http:" || url.protocol === "https:" ? raw : null;
 }
 
 /** Returns [status, note] for a pair of values of the same property. */

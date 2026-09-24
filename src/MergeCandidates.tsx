@@ -6,6 +6,7 @@ import {
   formatIdUrl,
   isAutoIgnoredConflict,
   isHardcodedMirrorProp,
+  safeHttpUrl,
   sharedIdentifierProps,
 } from "./lib/compare.ts";
 import { sitelinkUrl, wikiPageUrl } from "./lib/wiki.ts";
@@ -62,7 +63,7 @@ function ValueChip({
     : site
       ? sitelinkUrl(site, v.value)
       : v.type === "url"
-        ? v.value
+        ? safeHttpUrl(v.value)
         : v.type === "external-id"
           ? formatIdUrl(formatter, v.value)
           : null;

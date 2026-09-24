@@ -15,6 +15,7 @@ import {
   mergeConflicts,
   normalize,
   orderByAge,
+  safeHttpUrl,
   scoreCandidate,
   sharedIdentifierProps,
   stringSimilarity,
@@ -413,6 +414,21 @@ describe("blockingLabelKey / punctuation-insensitive blocking", () => {
     expect(formatIdUrl("https://tvtropes.org/pmwiki/pmwiki.php/$1", "VideoGame/Portal")).toBe(
       "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/Portal",
     );
+    // A vandalised formatter URL with a non-http(s) scheme never becomes a link.
+    expect(formatIdUrl("javascript:alert(1)//$1", "268220")).toBeNull();
+    expect(formatIdUrl(" JavaScript:alert(1)//$1", "268220")).toBeNull();
+    expect(formatIdUrl("data:text/html,$1", "<script>")).toBeNull();
+  });
+
+  it("only passes absolute http(s) URLs through safeHttpUrl", () => {
+    expect(safeHttpUrl("https://example.com/a")).toBe("https://example.com/a");
+    expect(safeHttpUrl("http://example.com")).toBe("http://example.com");
+    expect(safeHttpUrl("javascript:alert(1)")).toBeNull();
+    expect(safeHttpUrl("\tjava\nscript:alert(1)")).toBeNull();
+    expect(safeHttpUrl("data:text/html,hi")).toBeNull();
+    expect(safeHttpUrl("ftp://example.com")).toBeNull();
+    expect(safeHttpUrl("//example.com")).toBeNull();
+    expect(safeHttpUrl("not a url")).toBeNull();
   });
 
   it("keeps accented letters and digits so distinct titles stay distinct", () => {

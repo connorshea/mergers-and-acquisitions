@@ -63,6 +63,16 @@ export interface HuntStats {
   failed: number;
 }
 
+/** Seconds since `start` (a `performance.now()` reading), for progress logs. */
+function secondsSince(start: number): string {
+  return `${((performance.now() - start) / 1000).toFixed(1)}s`;
+}
+
+/** Current V8 heap use, for progress logs (the job runs close to its heap cap). */
+function heapMb(): string {
+  return `${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)} MB heap`;
+}
+
 const qidNum = (id: string): number => parseInt(id.replace(/^Q/, ""), 10);
 
 /** Canonical key for an unordered qid pair (lower QID number first). */
@@ -116,6 +126,7 @@ async function loadMirroredIdProps(db: Db): Promise<Set<string>> {
 
 /** Blocking: collect the deduped set of candidate pairs to score. */
 async function scan(db: Db): Promise<[string, string][]> {
+  const start = performance.now();
   const pairs = new Set<string>();
 
   // 1. Shared external id: same (property, value) held by more than one qid.
@@ -125,6 +136,11 @@ async function scan(db: Db): Promise<[string, string][]> {
   // GROUP_CONCAT is safe here: the caller raised group_concat_max_len, and
   // blocks are capped at MAX_BLOCK_GROUP anyway.
   const idProps = await loadIdentifierProps(db);
+  console.log(
+    idProps.size > 0
+      ? `hunt scan: querying shared-id groups over ${idProps.size} identifier properties`
+      : "hunt scan: property table not synced; querying shared-id groups over all properties",
+  );
   const identifierFilter =
     idProps.size > 0
       ? sql`${externalIds.property} IN (SELECT ${properties.pid} FROM ${properties} WHERE ${properties.datatype} = 'ExternalId')`
@@ -141,6 +157,10 @@ async function scan(db: Db): Promise<[string, string][]> {
   for (const group of extGroups) {
     if (group.qids) addGroupPairs(group.qids.split(","), pairs, "shared-external-id");
   }
+  const extPairs = pairs.size;
+  console.log(
+    `hunt scan: ${extGroups.length} shared-id groups -> ${extPairs} pairs (${secondsSince(start)})`,
+  );
 
   // 2. Label + type: same blockingLabelKey(primaryLabel) AND same primaryType.
   // Keying is a JS helper, so bucket in memory over a small projection
@@ -153,6 +173,7 @@ async function scan(db: Db): Promise<[string, string][]> {
     })
     .from(items)
     .where(and(isNotNull(items.primaryLabel), isNotNull(items.primaryType)));
+  console.log(`hunt scan: loaded ${labeled.length} labeled+typed items (${secondsSince(start)})`);
 
   const byLabelType = new Map<string, string[]>();
   for (const row of labeled) {
@@ -167,8 +188,8 @@ async function scan(db: Db): Promise<[string, string][]> {
   }
 
   console.log(
-    `hunt scan: ${extGroups.length} shared-id groups, ${byLabelType.size} label+type groups ` +
-      `-> ${pairs.size} unique pairs`,
+    `hunt scan: ${byLabelType.size} label+type groups -> ${pairs.size - extPairs} new pairs; ` +
+      `${pairs.size} unique pairs total (${secondsSince(start)}, ${heapMb()})`,
   );
   return Array.from(pairs, (key) => key.split("|") as [string, string]);
 }
@@ -220,6 +241,7 @@ const SCORE_WINDOW = 5000;
 async function score(db: Db, pairs: [string, string][]): Promise<HuntStats> {
   const stats: HuntStats = { pairs: pairs.length, scored: 0, upserted: 0, deleted: 0, failed: 0 };
   if (pairs.length === 0) return stats;
+  const start = performance.now();
 
   const [idProps, mirroredProps] = await Promise.all([
     loadIdentifierProps(db),
@@ -249,8 +271,16 @@ async function score(db: Db, pairs: [string, string][]): Promise<HuntStats> {
     .where(unresolved);
   const openIds = new Map(openRows.map((r) => [`${r.fromQid}|${r.intoQid}`, r.id]));
   const stale: number[] = [];
+  const windowCount = Math.ceil(pairs.length / SCORE_WINDOW);
+  console.log(
+    `hunt score: ${openRows.length} open candidate rows; scoring ${pairs.length} pairs ` +
+      `in ${windowCount} windows of ${SCORE_WINDOW}`,
+  );
 
+  let windowIndex = 0;
+  let pairsDone = 0;
   for (const window of chunk(pairs, SCORE_WINDOW)) {
+    windowIndex++;
     const wanted = new Set<string>();
     for (const [a, b] of window) {
       wanted.add(a);
@@ -316,6 +346,23 @@ async function score(db: Db, pairs: [string, string][]): Promise<HuntStats> {
         }
       }
     }
+
+    pairsDone += window.length;
+    const elapsedSec = (performance.now() - start) / 1000;
+    const rate = elapsedSec > 0 ? Math.round(pairsDone / elapsedSec) : 0;
+    const etaSec = rate > 0 ? Math.round((pairs.length - pairsDone) / rate) : 0;
+    console.log(
+      `hunt score: window ${windowIndex}/${windowCount}: ${pairsDone}/${pairs.length} pairs ` +
+        `(${((pairsDone / pairs.length) * 100).toFixed(1)}%), ${byQid.size} items loaded, ` +
+        `${survivors.length} survivors; totals scored ${stats.scored}, upserted ${stats.upserted}, ` +
+        `stale ${stale.length}` +
+        (stats.failed > 0 ? `, ${stats.failed} failed` : "") +
+        ` (${secondsSince(start)}, ${rate} pairs/s, ~${etaSec}s left, ${heapMb()})`,
+    );
+  }
+
+  if (stale.length > 0) {
+    console.log(`hunt score: deleting ${stale.length} stale open rows below ${MIN_CONFIDENCE}`);
   }
 
   for (const ids of chunk(stale, WRITE_CHUNK)) {
@@ -329,7 +376,8 @@ async function score(db: Db, pairs: [string, string][]): Promise<HuntStats> {
 
   console.log(
     `hunt score: scored ${stats.scored}, upserted ${stats.upserted}, deleted ${stats.deleted}` +
-      (stats.failed > 0 ? `, ${stats.failed} failed` : ""),
+      (stats.failed > 0 ? `, ${stats.failed} failed` : "") +
+      ` (${secondsSince(start)})`,
   );
   return stats;
 }
@@ -341,6 +389,8 @@ async function score(db: Db, pairs: [string, string][]): Promise<HuntStats> {
  * `split(",")` — and keeps the heavy scan off the web pool.
  */
 export async function runHunt(): Promise<HuntStats> {
+  const start = performance.now();
+  console.log("hunt: starting");
   const conn = await mysql.createConnection(connConfig());
   try {
     await conn.query("SET SESSION group_concat_max_len = 1048576");
@@ -349,8 +399,13 @@ export async function runHunt(): Promise<HuntStats> {
     const stats = await score(db, pairs);
     // Pairs the hunt didn't rescore (resolved ones, or ones whose blocking
     // group changed) still need their item copies kept current.
+    const refreshStart = performance.now();
+    console.log("hunt: refreshing candidate item type/label copies");
     const refreshed = await refreshCandidateItemInfo(db);
-    console.log(`hunt: refreshed item type/label on ${refreshed} candidate rows`);
+    console.log(
+      `hunt: refreshed item type/label on ${refreshed} candidate rows (${secondsSince(refreshStart)})`,
+    );
+    console.log(`hunt: finished in ${secondsSince(start)}`);
     return stats;
   } finally {
     await conn.end();

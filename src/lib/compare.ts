@@ -561,6 +561,11 @@ const LOW_ENTROPY_PROPS = new Set<string>([
   "P914", // USK rating
   "P3156", // Australian Classification
   "P9897", // App Store age rating
+  // Two-bucket film/media attribute: "black-and-white" or "color".
+  "P462", // color
+  // Time-varying snapshot: a count captured on some date, so real duplicates
+  // rarely match exactly and a match is coincidence, not evidence.
+  "P8687", // social media followers
 ]);
 
 /**

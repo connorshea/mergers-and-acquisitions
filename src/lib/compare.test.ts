@@ -176,7 +176,7 @@ describe("buildRows (behavior-preserving extraction)", () => {
 
     it("says so when both pages are redirects", () => {
       const other = { ...article, sitelinkBadges: { enwiki: ["Q70893996"] } };
-      expect(row(other, redirect).note).toMatch(/^both pages are redirects/);
+      expect(row(other, redirect).note).toMatch(/^Both pages are redirects/);
     });
 
     it("names a resolved redirect's target, and is definite when it's the other page", () => {
@@ -191,7 +191,7 @@ describe("buildRows (behavior-preserving extraction)", () => {
         [true, "Loud & Dangerous: Live from Hollywood"],
       ]);
       expect(r.note).toBe(
-        "Q1145650's page redirects to Q65117434's page — remove Q1145650's sitelink before merging",
+        "Q1145650's page redirects to Q65117434's page. Merging will remove Q1145650's sitelink for you.",
       );
     });
 
@@ -201,7 +201,7 @@ describe("buildRows (behavior-preserving extraction)", () => {
         /^Q1145650's page redirects to “Loud \(album\)”, not/,
       );
       const both = { ...article, sitelinkRedirects: { enwiki: "Loud (album)" } };
-      expect(row(both, elsewhere).note).toMatch(/^both pages redirect to “Loud \(album\)”/);
+      expect(row(both, elsewhere).note).toMatch(/^Both pages redirect to “Loud \(album\)”/);
     });
 
     it("counts a resolved redirect with an unknown target as a redirect", () => {
@@ -251,7 +251,7 @@ describe("buildRows (behavior-preserving extraction)", () => {
 
     it("keeps the generic note when neither side is badged", () => {
       const plain = { ...redirect, sitelinkBadges: { enwiki: ["Q17437796"] } }; // featured article
-      expect(row(article, plain).note).toMatch(/^two different pages/);
+      expect(row(article, plain).note).toMatch(/^Two different pages/);
     });
   });
 

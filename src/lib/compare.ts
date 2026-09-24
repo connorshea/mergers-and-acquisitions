@@ -486,22 +486,22 @@ export function buildRows(
     const intentional = [a, b].find((it) => isIntentionalRedirect(it, wiki));
     let note: string | undefined;
     if (clash && intentional)
-      note = `${intentional.id}'s sitelink is badged as an intentional redirect — editors keep it as a separate subject from the page it points at`;
+      note = `${intentional.id}'s sitelink is badged as an intentional redirect. Editors keep it as a separate subject from the page it points at.`;
     else if (clash && redirectsToPartner(a, b, wiki))
-      note = `${a.id}'s page redirects to ${b.id}'s page — remove ${a.id}'s sitelink before merging`;
+      note = `${a.id}'s page redirects to ${b.id}'s page. Merging will remove ${a.id}'s sitelink for you.`;
     else if (clash && redirectsToPartner(b, a, wiki))
-      note = `${b.id}'s page redirects to ${a.id}'s page — remove ${b.id}'s sitelink before merging`;
+      note = `${b.id}'s page redirects to ${a.id}'s page. Merging will remove ${b.id}'s sitelink for you.`;
     else if (clash && targetA !== undefined && targetA === targetB)
-      note = `both pages redirect to “${targetA}” — a real merge would need one removed first`;
+      note = `Both pages redirect to “${targetA}”. A real merge would need one removed first.`;
     else if (clash && redirectA && redirectB)
-      note = "both pages are redirects — a real merge would need one removed first";
+      note = "Both pages are redirects. A real merge would need one removed first.";
     else if (clash && (redirectA || redirectB)) {
       const [id, target] = redirectA ? [a.id, targetA] : [b.id, targetB];
       note = target
-        ? `${id}'s page redirects to “${target}”, not the other item's page — a real merge would need one removed first`
-        : `${id}'s page is a redirect (likely to the other page) — remove that sitelink before merging`;
+        ? `${id}'s page redirects to “${target}”, not the other item's page. A real merge would need one removed first.`
+        : `${id}'s page is a redirect (likely to the other page). Remove that sitelink before merging.`;
     } else if (clash)
-      note = "two different pages on the same wiki — a real merge would need one removed first";
+      note = "Two different pages on the same wiki. A real merge would need one removed first.";
     rows.push({
       key: `sitelink:${wiki}`,
       label: wiki,

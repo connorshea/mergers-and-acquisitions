@@ -486,22 +486,22 @@ export function buildRows(
     const intentional = [a, b].find((it) => isIntentionalRedirect(it, wiki));
     let note: string | undefined;
     if (clash && intentional)
-      note = `${intentional.id}'s sitelink is badged as an intentional redirect — editors keep it as a separate subject from the page it points at`;
+      note = `${intentional.id}'s sitelink is badged as an intentional redirect. Editors keep it as a separate subject from the page it points at.`;
     else if (clash && redirectsToPartner(a, b, wiki))
-      note = `${a.id}'s page redirects to ${b.id}'s page — remove ${a.id}'s sitelink before merging`;
+      note = `${a.id}'s page redirects to ${b.id}'s page. Merging will remove ${a.id}'s sitelink for you.`;
     else if (clash && redirectsToPartner(b, a, wiki))
-      note = `${b.id}'s page redirects to ${a.id}'s page — remove ${b.id}'s sitelink before merging`;
+      note = `${b.id}'s page redirects to ${a.id}'s page. Merging will remove ${b.id}'s sitelink for you.`;
     else if (clash && targetA !== undefined && targetA === targetB)
-      note = `both pages redirect to “${targetA}” — a real merge would need one removed first`;
+      note = `Both pages redirect to “${targetA}”. A real merge would need one removed first.`;
     else if (clash && redirectA && redirectB)
-      note = "both pages are redirects — a real merge would need one removed first";
+      note = "Both pages are redirects. A real merge would need one removed first.";
     else if (clash && (redirectA || redirectB)) {
       const [id, target] = redirectA ? [a.id, targetA] : [b.id, targetB];
       note = target
-        ? `${id}'s page redirects to “${target}”, not the other item's page — a real merge would need one removed first`
-        : `${id}'s page is a redirect (likely to the other page) — remove that sitelink before merging`;
+        ? `${id}'s page redirects to “${target}”, not the other item's page. A real merge would need one removed first.`
+        : `${id}'s page is a redirect (likely to the other page). Remove that sitelink before merging.`;
     } else if (clash)
-      note = "two different pages on the same wiki — a real merge would need one removed first";
+      note = "Two different pages on the same wiki. A real merge would need one removed first.";
     rows.push({
       key: `sitelink:${wiki}`,
       label: wiki,
@@ -531,7 +531,7 @@ export function buildRows(
       a: cmp.a,
       b: cmp.b,
       note: sharedProps.has(pid)
-        ? "declared shared between these two items (P4070) — agreeing on it is not evidence of a duplicate"
+        ? "declared shared between these two items (P4070), so agreeing on it is not evidence of a duplicate"
         : undefined,
     });
   }
@@ -1186,7 +1186,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     reasons.push(`publication/inception/birth years differ by ${yearGap}`);
   } else if (largeYearGap) {
     reasons.unshift(
-      `publication/inception/birth years differ by ${yearGap} — almost certainly different subjects`,
+      `publication/inception/birth years differ by ${yearGap}, almost certainly different subjects`,
     );
     score = Math.min(score, 0.1);
   }
@@ -1282,7 +1282,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   );
   if (distinctExtIdRows.length > 6) {
     reasons.unshift(
-      `${distinctExtIdRows.length} external identifiers differ across the pair — almost certainly different subjects`,
+      `${distinctExtIdRows.length} external identifiers differ across the pair, almost certainly different subjects`,
     );
     score = Math.min(score, 0.05);
   }
@@ -1301,7 +1301,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   );
   if (separateArticleWikis.length >= MANY_SITELINK_CLASHES) {
     reasons.unshift(
-      `${separateArticleWikis.length} wikis have a separate article for each item — almost certainly different subjects`,
+      `${separateArticleWikis.length} wikis have a separate article for each item, almost certainly different subjects`,
     );
     score = Math.min(score, 0.1);
   }
@@ -1324,7 +1324,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     reasons.unshift(
       `${distinctPerTitleIds.length} per-title identifiers differ (${distinctPerTitleIds
         .map((r) => r.label)
-        .join(", ")}) — almost certainly different subjects`,
+        .join(", ")}), almost certainly different subjects`,
     );
     score = Math.min(score, 0.1);
   } else if (distinctPerTitleIds.length === 1) {
@@ -1335,7 +1335,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     // small so a genuine duplicate with one mis-entered id stays a candidate.
     score -= 0.1;
     reasons.push(
-      `a per-title identifier differs (${distinctPerTitleIds[0].label}) — points at a different store/database page`,
+      `a per-title identifier differs (${distinctPerTitleIds[0].label}), so it points at a different store/database page`,
     );
   }
 
@@ -1408,8 +1408,8 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     if (ceiling < 1) {
       reasons.push(
         strongSignals <= 1 && !hasConcreteDifference
-          ? "held below near-certain — only one strong corroborating signal"
-          : "held below near-certain — a difference remains or corroboration is thin",
+          ? "held below near-certain: only one strong corroborating signal"
+          : "held below near-certain: a difference remains or corroboration is thin",
       );
     }
   }

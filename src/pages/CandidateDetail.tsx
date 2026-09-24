@@ -352,7 +352,7 @@ function EditOutcomePanel({ outcome }: { outcome: EditOutcome }) {
             ) : e.skipped ? (
               "already had the statement"
             ) : (
-              `failed — ${e.error}`
+              `failed: ${e.error}`
             )}
           </li>
         ))}
@@ -471,7 +471,7 @@ function MergeDialog({
         </p>
         {autoHandled.includes("description") && (
           <p className="modal-note">
-            The items have different descriptions; this is handled automatically — {into.id} keeps
+            The items have different descriptions; this is handled automatically: {into.id} keeps
             its description and {from.id}'s is dropped.
           </p>
         )}
@@ -507,7 +507,7 @@ function MergeDialog({
                 {into.id}
               </a>{" "}
               on Wikidata, then merge. This tool never merges through a sitelink or statement
-              conflict — do it by hand.
+              conflict. Do it by hand.
             </p>
           </div>
         )}

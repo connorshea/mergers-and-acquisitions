@@ -7,7 +7,7 @@ runHunt()
   .then((stats) => {
     console.log(
       `hunt: ${stats.pairs} pairs, ${stats.scored} scored, ${stats.upserted} upserted, ` +
-        `${stats.deleted} deleted, ${stats.failed} failed`,
+        `${stats.deleted} deleted, ${stats.pruned} pruned, ${stats.failed} failed`,
     );
     process.exit(0);
   })

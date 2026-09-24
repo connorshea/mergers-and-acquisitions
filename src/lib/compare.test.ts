@@ -126,6 +126,46 @@ describe("buildRows (behavior-preserving extraction)", () => {
     expect(rows.filter((r) => r.kind === "statement").every((r) => !r.blocker)).toBe(true);
   });
 
+  describe("sitelink to a redirect", () => {
+    const base = { labels: {}, descriptions: {}, aliases: {}, statements: {} };
+    const article: Item = {
+      ...base,
+      id: "Q65117434",
+      sitelinks: { enwiki: "Loud & Dangerous: Live from Hollywood" },
+    };
+    const redirect: Item = {
+      ...base,
+      id: "Q1145650",
+      sitelinks: { enwiki: "Loud and Dangerous: Live from Hollywood" },
+      sitelinkBadges: { enwiki: ["Q70893996"] },
+    };
+    const row = (a: Item, b: Item) => buildRows(a, b).find((r) => r.key === "sitelink:enwiki")!;
+
+    it("marks the badged side and names it in the note, still as a blocker", () => {
+      const r = row(article, redirect);
+      expect(r.blocker).toBe(true);
+      expect(r.a.map((v) => v.redirect)).toEqual([undefined]);
+      expect(r.b.map((v) => v.redirect)).toEqual([true]);
+      expect(r.note).toMatch(/^Q1145650's page is a redirect/);
+      expect(mergeConflicts(article, redirect)).toContain("sitelink");
+    });
+
+    it("accepts the intentional-redirect badge too", () => {
+      const intentional = { ...redirect, sitelinkBadges: { enwiki: ["Q70894304"] } };
+      expect(row(intentional, article).a[0].redirect).toBe(true);
+    });
+
+    it("says so when both pages are redirects", () => {
+      const other = { ...article, sitelinkBadges: { enwiki: ["Q70893996"] } };
+      expect(row(other, redirect).note).toMatch(/^both pages are redirects/);
+    });
+
+    it("keeps the generic note when neither side is badged", () => {
+      const plain = { ...redirect, sitelinkBadges: { enwiki: ["Q17437796"] } }; // featured article
+      expect(row(article, plain).note).toMatch(/^two different pages/);
+    });
+  });
+
   it("cross-matches a renamed label against the other item's alias", () => {
     const ex = byName["Company renamed"];
     const rows = buildRows(ex.a, ex.b);

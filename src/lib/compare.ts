@@ -42,7 +42,31 @@ export interface Item {
   descriptions: Record<string, string>;
   aliases: Record<string, string[]>;
   sitelinks: Record<string, string>;
+  /**
+   * Badges on the item's sitelinks (wiki → badge QIDs), only for sitelinks that
+   * carry any — e.g. featured article, or the "sitelink to redirect" badges (see
+   * isRedirectSitelink). Absent on items stored before badges were kept, and on
+   * the SPARQL path, which never sees them.
+   */
+  sitelinkBadges?: Record<string, string[]>;
   statements: Record<string, Value[]>;
+}
+
+/** Sitelink badge: the linked page is a redirect. */
+export const SITELINK_TO_REDIRECT = "Q70893996";
+/** Sitelink badge: the linked page is a redirect, deliberately linked. */
+export const INTENTIONAL_SITELINK_TO_REDIRECT = "Q70894304";
+
+/**
+ * Whether the item's sitelink on `wiki` is badged as pointing at a redirect.
+ * Wikidata only accepts a sitelink to a redirect with one of these badges, but
+ * a linked page that *later* became a redirect carries no badge, so false does
+ * not prove the page is a real article.
+ */
+export function isRedirectSitelink(item: Item, wiki: string): boolean {
+  return (item.sitelinkBadges?.[wiki] ?? []).some(
+    (b) => b === SITELINK_TO_REDIRECT || b === INTENTIONAL_SITELINK_TO_REDIRECT,
+  );
 }
 
 export type Status = "identical" | "similar" | "distinct";
@@ -52,6 +76,8 @@ export type RowStatus = Status | "one-sided";
 export interface AnnotatedValue extends Value {
   status: Status; // how this value relates to the other side
   note?: string;
+  /** Sitelink values only: the page is badged as a redirect (isRedirectSitelink). */
+  redirect?: boolean;
 }
 
 export interface Row {
@@ -356,18 +382,31 @@ export function buildRows(
     const vb = b.sitelinks[wiki] ? [{ type: "string" as const, value: b.sitelinks[wiki] }] : [];
     const cmp = compareSets(va, vb);
     const oneSided = va.length === 0 || vb.length === 0;
+    const clash = !oneSided && cmp.status !== "identical";
+    const redirectA = isRedirectSitelink(a, wiki);
+    const redirectB = isRedirectSitelink(b, wiki);
+    const mark = (vs: AnnotatedValue[], redirect: boolean) =>
+      redirect ? vs.map((v) => ({ ...v, redirect })) : vs;
+    // A clash where one side is a badged redirect is the classic duplicate
+    // shape: the redirect usually points at the other item's page. Wikidata
+    // still refuses the merge until that sitelink is removed, so it stays a
+    // blocker — only the explanation changes.
+    let note: string | undefined;
+    if (clash && redirectA && redirectB)
+      note = "both pages are redirects — a real merge would need one removed first";
+    else if (clash && (redirectA || redirectB))
+      note = `${redirectA ? a.id : b.id}'s page is a redirect (likely to the other page) — remove that sitelink before merging`;
+    else if (clash)
+      note = "two different pages on the same wiki — a real merge would need one removed first";
     rows.push({
       key: `sitelink:${wiki}`,
       label: wiki,
       kind: "sitelink",
       status: oneSided ? "one-sided" : cmp.status,
-      blocker: !oneSided && cmp.status !== "identical",
-      a: cmp.a,
-      b: cmp.b,
-      note:
-        !oneSided && cmp.status !== "identical"
-          ? "two different pages on the same wiki — a real merge would need one removed first"
-          : undefined,
+      blocker: clash,
+      a: mark(cmp.a, redirectA),
+      b: mark(cmp.b, redirectB),
+      note,
     });
   }
 

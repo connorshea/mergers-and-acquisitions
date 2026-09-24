@@ -21,7 +21,26 @@ const INDEX_HTML = `${CLIENT_DIR}/index.html`;
 
 export const app = new Hono<AuthEnv>();
 
-app.use("*", secureHeaders());
+// The CSP only applies to the production build this server serves (Vite serves
+// the page in dev, with its own inline HMR scripts). The built SPA is all
+// same-origin module scripts; the one third party is Google Fonts (stylesheet
+// from fonts.googleapis.com, font files from fonts.gstatic.com — see
+// index.html). Inline `style={…}` props are set through the CSSOM, which CSP
+// doesn't restrict, so no 'unsafe-inline' is needed.
+export const CONTENT_SECURITY_POLICY = {
+  defaultSrc: ["'self'"],
+  scriptSrc: ["'self'"],
+  styleSrc: ["'self'", "https://fonts.googleapis.com"],
+  fontSrc: ["'self'", "https://fonts.gstatic.com"],
+  imgSrc: ["'self'", "data:"],
+  connectSrc: ["'self'"],
+  objectSrc: ["'none'"],
+  baseUri: ["'none'"],
+  formAction: ["'self'"],
+  frameAncestors: ["'none'"],
+};
+
+app.use("*", secureHeaders({ contentSecurityPolicy: CONTENT_SECURITY_POLICY }));
 
 // --- API ---
 // Every API request gets the session resolved (c.get("user")) and, if it is

@@ -182,8 +182,10 @@ export default function CandidatesList() {
     setHunt({ running: false, note: null });
     try {
       const res = await fetch("/api/entity-labels/sync", { method: "POST" });
-      const { synced } = res as EntityLabelsSyncResponse;
-      setHunt({ running: false, note: `Synced ${synced.toLocaleString()} value names.` });
+      const { synced, failed } = res as EntityLabelsSyncResponse;
+      const skipped =
+        failed > 0 ? ` Skipped ${failed.toLocaleString()} after repeated failures.` : "";
+      setHunt({ running: false, note: `Synced ${synced.toLocaleString()} value names.${skipped}` });
     } catch (e: unknown) {
       setHunt({
         running: false,

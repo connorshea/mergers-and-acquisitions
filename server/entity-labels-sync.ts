@@ -58,13 +58,52 @@ export async function syncEntityLabels(rows: EntityLabelRow[]): Promise<number> 
   return rows.length;
 }
 
+export interface EntityLabelsSyncResult {
+  /** Labels upserted. */
+  synced: number;
+  /** Referenced QIDs whose lookup failed even after retries (left as they were). */
+  failed: number;
+}
+
 /**
  * Full entity-label sync: enumerate the referenced value-QIDs from our items,
- * look their en/mul labels up on QLever, and upsert. Returns the number of
- * labels written.
+ * look their en/mul labels up on QLever, and upsert each chunk as it arrives —
+ * so a run that dies partway keeps what it fetched, and QIDs QLever keeps
+ * failing on are skipped (reported in `failed`) instead of sinking the run.
+ * Throws only when nothing could be fetched at all, or on a DB error.
  */
-export async function runEntityLabelsSync(): Promise<number> {
+export async function runEntityLabelsSync(): Promise<EntityLabelsSyncResult> {
+  const started = Date.now();
   const qids = await collectReferencedItemQids();
-  const rows = await fetchEntityLabels(qids);
-  return syncEntityLabels(rows);
+  console.log(`entity labels: ${qids.length} referenced QIDs collected in ${elapsed(started)}`);
+
+  const lookupStarted = Date.now();
+  let synced = 0;
+  const { failedQids } = await fetchEntityLabels(
+    qids,
+    async (rows) => {
+      synced += await syncEntityLabels(rows);
+    },
+    {
+      onProgress: ({ done, total, fetched, failed }) => {
+        const pct = ((done / total) * 100).toFixed(1);
+        const ms = Date.now() - lookupStarted;
+        const eta = done < total ? `, ~${seconds((ms / done) * (total - done))} left` : "";
+        const skipped = failed > 0 ? `, ${failed} skipped` : "";
+        console.log(
+          `entity labels: ${done}/${total} QIDs (${pct}%), ${fetched} labels written${skipped}, ${seconds(ms)} elapsed${eta}`,
+        );
+      },
+    },
+  );
+  if (failedQids.length > 0 && synced === 0) {
+    throw new Error(`Entity-label lookup failed for all ${failedQids.length} referenced QIDs`);
+  }
+  console.log(
+    `entity labels: done in ${elapsed(started)}: ${synced} labels written, ${failedQids.length} QIDs skipped`,
+  );
+  return { synced, failed: failedQids.length };
 }
+
+const seconds = (ms: number): string => `${Math.round(ms / 1000)}s`;
+const elapsed = (since: number): string => seconds(Date.now() - since);

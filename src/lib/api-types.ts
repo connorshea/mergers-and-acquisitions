@@ -138,6 +138,8 @@ export interface PropertiesSyncResponse {
 export interface EntityLabelsSyncResponse {
   /** Number of item/value labels fetched and upserted. */
   synced: number;
+  /** Referenced QIDs skipped after repeated lookup failures. */
+  failed: number;
 }
 
 export interface ResetResponse {

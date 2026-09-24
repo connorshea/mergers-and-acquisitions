@@ -156,9 +156,22 @@ export function primaryType(item: Item): string | undefined {
   return item.statements.P31?.find((v) => v.type === "item")?.value;
 }
 
+/**
+ * Best display label with the language it came from: English, then `mul`, then
+ * any other language (the first one the item carries).
+ */
+export function displayLabel(item: Item): { text: string; lang: string } | undefined {
+  for (const lang of ["en", "mul"]) {
+    const text = item.labels[lang];
+    if (text) return { text, lang };
+  }
+  const [lang, text] = Object.entries(item.labels).find(([, t]) => t) ?? [];
+  return lang && text ? { text, lang } : undefined;
+}
+
 /** Best display label: English, then `mul`, then any other language. */
 export function primaryLabel(item: Item): string | undefined {
-  return item.labels.en ?? item.labels.mul ?? Object.values(item.labels)[0];
+  return displayLabel(item)?.text;
 }
 
 /** External-id `(property, value)` rows for the `external_ids` blocking table. */

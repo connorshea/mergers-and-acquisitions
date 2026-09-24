@@ -3,6 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { fetch, FetchError } from "../lib/client.ts";
 import { useAuth } from "../lib/auth-context.ts";
 import AuthBar from "../AuthBar.tsx";
+import { IMPORT_CLASS_OPTIONS } from "../lib/import-classes.ts";
 import {
   CANDIDATE_SORTS,
   CANDIDATE_STATUSES,
@@ -24,20 +25,10 @@ const SORT_LABELS: Record<CandidateSort, string> = {
   detectedAt: "Recently found",
 };
 
-// Common instance-of (P31) types to offer as quick filters. Scope is video
-// games, so most pairs are Q7889; the rest surface mod/DLC/series/remake/etc.
-// duplicates. The filter still accepts any QID via the URL `type` param — this
-// is just the prefilled dropdown. QIDs/labels verified against Wikidata.
-const P31_OPTIONS: { qid: string; label: string }[] = [
-  { qid: "Q7889", label: "video game" },
-  { qid: "Q21125433", label: "free and open-source video game" },
-  { qid: "Q865493", label: "video game mod" },
-  { qid: "Q7058673", label: "video game series" },
-  { qid: "Q1066707", label: "downloadable content" },
-  { qid: "Q4393107", label: "video game remake" },
-  { qid: "Q1755420", label: "game demo" },
-  { qid: "Q61475894", label: "cancelled/unreleased video game" },
-];
+// Instance-of (P31) types to offer as quick filters: exactly the classes the
+// dump import brings in. The filter still accepts any QID via the URL `type`
+// param — this is just the prefilled dropdown.
+const P31_OPTIONS = IMPORT_CLASS_OPTIONS;
 
 function confidenceTier(confidence: number): "identical" | "similar" | "distinct" {
   if (confidence >= 0.6) return "identical";

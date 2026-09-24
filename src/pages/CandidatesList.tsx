@@ -392,6 +392,9 @@ export default function CandidatesList() {
         </label>
 
         <div className="list-actions">
+          {/* Shown while a refetch is in flight; the stale rows stay visible
+              (dimmed) underneath instead of blanking the table. */}
+          {loading && data && <Spinner label="Updating…" />}
           {/* Clears the filters (search, status, type) but keeps the sort. */}
           {hasFilters && (
             <button
@@ -411,7 +414,11 @@ export default function CandidatesList() {
           {error}
         </p>
       )}
-      {loading && !data && <p className="list-msg">Loading…</p>}
+      {loading && !data && (
+        <p className="list-msg">
+          <Spinner label="Loading…" />
+        </p>
+      )}
       {data && visible.length === 0 && !loading && (
         <p className="list-msg">
           No {status} candidates{q ? ` matching “${q}”` : ""}
@@ -422,7 +429,7 @@ export default function CandidatesList() {
 
       {data && visible.length > 0 && (
         <>
-          <div className="ledger-wrap">
+          <div className="ledger-wrap" aria-busy={loading} data-stale={loading || undefined}>
             <table className="ledger candidates">
               <thead>
                 <tr>
@@ -478,6 +485,16 @@ export default function CandidatesList() {
         </a>
       </footer>
     </main>
+  );
+}
+
+/** A small inline spinner with a visible label, announced politely to screen readers. */
+function Spinner({ label }: { label: string }) {
+  return (
+    <span className="spinner" role="status">
+      <span className="spinner-ring" aria-hidden="true" />
+      {label}
+    </span>
   );
 }
 

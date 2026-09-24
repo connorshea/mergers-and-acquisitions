@@ -14,12 +14,14 @@ import {
   redirectSitelinkFixes,
 } from "../lib/compare.ts";
 import type {
+  CandidateCreationsResponse,
   CandidateDetailResponse,
   CandidateDifferentResponse,
   CandidateDismissResponse,
   CandidateMergeResponse,
   CandidateReopenResponse,
   CandidateSummary,
+  ItemCreation,
 } from "../lib/api-types.ts";
 import { wikiPageUrl } from "../lib/wiki.ts";
 
@@ -107,6 +109,31 @@ export default function CandidateDetail() {
   }
 
   // Which merge conflicts the mirror predicts for this pair (see MergeDialog).
+  // Who created each item loads separately: it may wait on the Action API for
+  // items the nightly job hasn't reached, and the page is usable without it.
+  // Kept with the id it belongs to, so a previous pair's never shows.
+  const [loadedCreations, setLoadedCreations] = useState<{
+    id: string;
+    creations: Record<string, ItemCreation>;
+  } | null>(null);
+  const creations =
+    loadedCreations && loadedCreations.id === id ? loadedCreations.creations : undefined;
+  useEffect(() => {
+    if (!id) return;
+    let cancelled = false;
+    fetch("/api/candidates/:id/creations", { params: { id } })
+      .then((res) => {
+        if (!cancelled)
+          setLoadedCreations({ id, creations: (res as CandidateCreationsResponse).creations });
+      })
+      .catch(() => {
+        // Optional context; the plates just go without it.
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [id]);
+
   const detectedConflicts = useMemo(
     () => (data ? mergeConflicts(data.from, data.into) : []),
     [data],
@@ -259,6 +286,7 @@ export default function CandidateDetail() {
           propertyFormatters={data.propertyFormatters}
           propertyMirrors={data.propertyMirrors}
           valueLabels={data.valueLabels}
+          creations={creations}
         />
       )}
 

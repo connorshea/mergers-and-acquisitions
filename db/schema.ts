@@ -202,6 +202,35 @@ export const sitelinkPages = mysqlTable(
   ],
 );
 
+// Who created each candidate item, when, and with what edit summary/tags (so
+// the UI can say "QuickStatements batch" or "OpenRefine"): the item's first
+// revision, plus the creator's edit count and bot flag. Reviewers weigh a
+// drive-by or bot creation differently from one by an editor they know. Filled
+// nightly from the wikidatawiki replica for open candidates
+// (jobs/resolve-creations.ts) and on demand from the Action API when a pair
+// is viewed before that (server/item-creations.ts). The revision never
+// changes; the creator's stats are refreshed when the row gets old.
+export const itemCreations = mysqlTable(
+  "item_creations",
+  {
+    qid: varchar("qid", { length: 32 }).primaryKey(),
+    revId: bigint("rev_id", { mode: "number" }).notNull(),
+    createdAt: datetime("created_at", { mode: "string" }).notNull(), // UTC
+    // Null when the revision's user or summary is revision-deleted.
+    userName: varchar("user_name", { length: 255 }),
+    // Null for a logged-out (IP) creation, or a hidden user.
+    userId: int("user_id"),
+    userEditCount: int("user_edit_count"),
+    userIsBot: boolean("user_is_bot").notNull().default(false),
+    comment: text("comment"),
+    tags: json<string[]>("tags").notNull(),
+    checkedAt: datetime("checked_at", { mode: "string" })
+      .notNull()
+      .default(sql`CURRENT_TIMESTAMP`),
+  },
+  (t) => [index("idx_item_creations_checked").on(t.checkedAt)],
+);
+
 // Cursor bookkeeping for the paged Wikidata sync. One row per scope (e.g. the
 // video-game population); `cursor` is the SPARQL OFFSET reached so far.
 export const syncState = mysqlTable("sync_state", {

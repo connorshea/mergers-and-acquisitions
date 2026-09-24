@@ -923,7 +923,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       );
       expect(result.confidence).toBeLessThanOrEqual(0.1);
       expect(result.reasons[0]).toBe(
-        "publication/inception/birth years differ by 34 — almost certainly different subjects",
+        "publication/inception/birth years differ by 34, almost certainly different subjects",
       );
     }
   });
@@ -1336,7 +1336,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(result.confidence).toBeGreaterThan(0.4);
     expect(
       result.reasons.some((r) =>
-        r.includes("held below near-certain — only one strong corroborating signal"),
+        r.includes("held below near-certain: only one strong corroborating signal"),
       ),
     ).toBe(true);
   });

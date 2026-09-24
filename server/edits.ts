@@ -342,7 +342,7 @@ edits.post("/:id/merge", async (c) => {
         wiki: fix.wiki,
         summary:
           `Remove ${fix.wiki} sitelink "${fix.title}", a redirect to ${other}'s page ` +
-          `"${fix.target}", to merge ${fromQid} → ${intoQid} — ${TOOL_CREDIT}`,
+          `"${fix.target}", to merge ${fromQid} → ${intoQid} (${TOOL_CREDIT})`,
       });
       removedSitelinks.push({ ...fix, revid, url: revisionUrl(revid) });
       audit.params = { ...audit.params, removedSitelinks };
@@ -358,7 +358,7 @@ edits.post("/:id/merge", async (c) => {
       fromQid,
       intoQid,
       ignoreConflicts,
-      summary: `Merge duplicate items ${fromQid} → ${intoQid} — ${TOOL_CREDIT}`,
+      summary: `Merge duplicate items ${fromQid} → ${intoQid} (${TOOL_CREDIT})`,
     });
   } catch (err) {
     // A network failure — the request timeout included — says nothing about
@@ -407,7 +407,7 @@ edits.post("/:id/merge", async (c) => {
         fromQid,
         intoQid,
         baseRevid: result.fromRevid,
-        summary: `Redirect ${fromQid} to ${intoQid} after merge — ${TOOL_CREDIT}`,
+        summary: `Redirect ${fromQid} to ${intoQid} after merge (${TOOL_CREDIT})`,
       });
       result = { ...result, redirected: true };
       audit.params = { ...audit.params, autoRedirected: true };
@@ -598,7 +598,7 @@ edits.post("/:id/different", async (c) => {
         qid: item.qid,
         property: DIFFERENT_FROM,
         target: target.qid,
-        summary: `Not a duplicate of ${target.qid} — ${TOOL_CREDIT}`,
+        summary: `Not a duplicate of ${target.qid} (${TOOL_CREDIT})`,
       }));
     } catch (err) {
       if (succeeded === 0 && results.every((r) => r.skipped)) {

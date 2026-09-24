@@ -531,7 +531,7 @@ export function buildRows(
       a: cmp.a,
       b: cmp.b,
       note: sharedProps.has(pid)
-        ? "declared shared between these two items (P4070) — agreeing on it is not evidence of a duplicate"
+        ? "declared shared between these two items (P4070), so agreeing on it is not evidence of a duplicate"
         : undefined,
     });
   }
@@ -1172,7 +1172,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     reasons.push(`publication/inception/birth years differ by ${yearGap}`);
   } else if (largeYearGap) {
     reasons.unshift(
-      `publication/inception/birth years differ by ${yearGap} — almost certainly different subjects`,
+      `publication/inception/birth years differ by ${yearGap}, almost certainly different subjects`,
     );
     score = Math.min(score, 0.1);
   }
@@ -1268,7 +1268,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   );
   if (distinctExtIdRows.length > 6) {
     reasons.unshift(
-      `${distinctExtIdRows.length} external identifiers differ across the pair — almost certainly different subjects`,
+      `${distinctExtIdRows.length} external identifiers differ across the pair, almost certainly different subjects`,
     );
     score = Math.min(score, 0.05);
   }
@@ -1287,7 +1287,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   );
   if (separateArticleWikis.length >= MANY_SITELINK_CLASHES) {
     reasons.unshift(
-      `${separateArticleWikis.length} wikis have a separate article for each item — almost certainly different subjects`,
+      `${separateArticleWikis.length} wikis have a separate article for each item, almost certainly different subjects`,
     );
     score = Math.min(score, 0.1);
   }
@@ -1310,7 +1310,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     reasons.unshift(
       `${distinctPerTitleIds.length} per-title identifiers differ (${distinctPerTitleIds
         .map((r) => r.label)
-        .join(", ")}) — almost certainly different subjects`,
+        .join(", ")}), almost certainly different subjects`,
     );
     score = Math.min(score, 0.1);
   } else if (distinctPerTitleIds.length === 1) {
@@ -1321,7 +1321,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     // small so a genuine duplicate with one mis-entered id stays a candidate.
     score -= 0.1;
     reasons.push(
-      `a per-title identifier differs (${distinctPerTitleIds[0].label}) — points at a different store/database page`,
+      `a per-title identifier differs (${distinctPerTitleIds[0].label}), so it points at a different store/database page`,
     );
   }
 
@@ -1394,8 +1394,8 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     if (ceiling < 1) {
       reasons.push(
         strongSignals <= 1 && !hasConcreteDifference
-          ? "held below near-certain — only one strong corroborating signal"
-          : "held below near-certain — a difference remains or corroboration is thin",
+          ? "held below near-certain: only one strong corroborating signal"
+          : "held below near-certain: a difference remains or corroboration is thin",
       );
     }
   }

@@ -105,6 +105,25 @@ describe("scanDump", () => {
     expect(stats.bytes).toBe(Buffer.byteLength(dumpText(ENTITIES)));
   });
 
+  it("matches any of several classes in one pass, by the whole number", async () => {
+    const entities = [
+      item("Q10", { P31: [p31("Q11424")] }),
+      // A prefix of one class (Q1142) and an extension of another (Q78891).
+      item("Q11", { P31: [p31("Q1142")], P279: [p31("Q78891")] }),
+      item("Q12", { P31: [p31("Q482994")] }),
+    ];
+    const matched: string[] = [];
+    const stats = await scanDump(Readable.from([Buffer.from(dumpText(entities))]), {
+      classQids: [VIDEO_GAME, "Q11424", "Q482994"],
+      onItem: (i) => {
+        matched.push(i.id);
+      },
+    });
+    expect(matched).toEqual(["Q10", "Q12"]);
+    // Q11 never reaches the parser.
+    expect(stats.parsed).toBe(2);
+  });
+
   it("is insensitive to where the chunk boundaries fall", async () => {
     const text = dumpText(ENTITIES);
     for (const size of [1, 7, 64, 1000, text.length + 5]) {

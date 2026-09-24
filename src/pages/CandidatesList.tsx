@@ -4,6 +4,7 @@ import { fetch, FetchError } from "../lib/client.ts";
 import { useAuth } from "../lib/auth-context.ts";
 import AuthBar from "../AuthBar.tsx";
 import { IMPORT_CLASS_OPTIONS } from "../lib/import-classes.ts";
+import { rememberListSearch } from "../lib/list-state.ts";
 import {
   CANDIDATE_SORTS,
   CANDIDATE_STATUSES,
@@ -58,6 +59,14 @@ export default function CandidatesList() {
   const sort = oneOf<CandidateSort>(CANDIDATE_SORTS, params.get("sort"), "confidence");
   const type = params.get("type") ?? "";
   const page = Math.max(1, Number(params.get("page")) || 1);
+  const hasFilters = q !== "" || status !== "open" || type !== "";
+
+  // Remember the current view so the detail page's "Back to candidates" link
+  // returns here. The one-shot `auth` param is stripped (and re-recorded) above.
+  useEffect(() => {
+    if (params.has("auth")) return;
+    rememberListSearch(params.toString());
+  }, [params]);
 
   const [data, setData] = useState<CandidateListResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -321,28 +330,26 @@ export default function CandidatesList() {
         )}
       </header>
 
-      <div className="list-controls">
-        <form
-          className="search"
-          onSubmit={(e) => {
-            e.preventDefault();
-            const value = new FormData(e.currentTarget).get("q");
-            update({ q: (typeof value === "string" ? value : "").trim() });
-          }}
-        >
-          <input
-            // Uncontrolled: `key={q}` re-mounts it when the URL query changes
-            // (e.g. via back/forward) so it stays in sync without a state-sync effect.
-            key={q}
-            type="search"
-            name="q"
-            defaultValue={q}
-            placeholder="Search by label…"
-            aria-label="Search candidates by label"
-          />
-          <button type="submit">Search</button>
-        </form>
-
+      <form
+        className="list-controls"
+        onSubmit={(e) => {
+          e.preventDefault();
+          const value = new FormData(e.currentTarget).get("q");
+          update({ q: (typeof value === "string" ? value : "").trim() });
+        }}
+      >
+        <input
+          // Uncontrolled: `key={q}` re-mounts it when the URL query changes
+          // (e.g. via back/forward or Clear) so it stays in sync without a
+          // state-sync effect.
+          key={q}
+          className="search-input"
+          type="search"
+          name="q"
+          defaultValue={q}
+          placeholder="Search by label…"
+          aria-label="Search candidates by label"
+        />
         <label className="field">
           <span>Status</span>
           <select value={status} onChange={(e) => update({ status: e.target.value })}>
@@ -383,7 +390,21 @@ export default function CandidatesList() {
             ))}
           </select>
         </label>
-      </div>
+
+        <div className="list-actions">
+          {/* Clears the filters (search, status, type) but keeps the sort. */}
+          {hasFilters && (
+            <button
+              type="button"
+              className="btn-clear"
+              onClick={() => update({ q: undefined, status: undefined, type: undefined })}
+            >
+              Clear filters
+            </button>
+          )}
+          <button type="submit">Search</button>
+        </div>
+      </form>
 
       {error && (
         <p className="list-msg is-error" role="alert">

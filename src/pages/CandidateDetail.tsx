@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { fetch, FetchError } from "../lib/client.ts";
 import { useAuth } from "../lib/auth-context.ts";
 import { loginUrl } from "../lib/auth-url.ts";
+import { listHref } from "../lib/list-state.ts";
 import AuthBar from "../AuthBar.tsx";
 import MergeCandidates from "../MergeCandidates.tsx";
 import {
@@ -127,7 +128,7 @@ export default function CandidateDetail() {
       <title>{pageTitle}</title>
       <div className="detail-top">
         <nav className="detail-nav">
-          <Link className="detail-back" to="/">
+          <Link className="detail-back" to={listHref()}>
             ← Back to candidates
           </Link>
           <div className="detail-siblings">

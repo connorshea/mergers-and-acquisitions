@@ -108,6 +108,14 @@ export const mergeCandidates = mysqlTable(
     // foreign key: the row is history and must survive whatever happens to
     // the users table.
     resolvedBy: int("resolved_by"),
+    // Copies of both items' primaryType/primaryLabel, so the list's type filter
+    // and label search are index ranges on this table rather than joins through
+    // `items`. Written by the hunt's upsert, re-synced by
+    // server/candidate-item-info.ts; nullable like the columns they copy.
+    fromType: varchar("from_type", { length: 32 }),
+    intoType: varchar("into_type", { length: 32 }),
+    fromLabel: varchar("from_label", { length: 255 }),
+    intoLabel: varchar("into_label", { length: 255 }),
   },
   (t) => [
     uniqueIndex("idx_merge_candidates_pair").on(t.fromQid, t.intoQid),
@@ -115,9 +123,13 @@ export const mergeCandidates = mysqlTable(
     // Backs the list's "newest" sort (status filter + ORDER BY detected_at),
     // which otherwise filesorts every row of the status.
     index("idx_merge_candidates_status_detected").on(t.status, t.detectedAt),
-    // The list's q/type filters look candidates up by either side's qid; the
+    // Lookups by either side's qid (settling a merged item's other pairs); the
     // pair index above covers from_qid, this covers into_qid.
     index("idx_merge_candidates_into").on(t.intoQid),
+    // The list's type filter, `(from_type = ? or into_type = ?)`: MariaDB
+    // answers it with an index-merge union of these two ranges.
+    index("idx_merge_candidates_status_from_type").on(t.status, t.fromType, t.confidence),
+    index("idx_merge_candidates_status_into_type").on(t.status, t.intoType, t.confidence),
   ],
 );
 

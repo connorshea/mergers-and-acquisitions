@@ -3,7 +3,7 @@
 // server/edits.ts; both build their responses with server/candidate-summary.ts
 // so the wire shapes stay in sync.
 import { Hono } from "hono";
-import { and, asc, count, desc, eq, gt, gte, inArray, lt, or, type SQL, sql } from "drizzle-orm";
+import { and, asc, count, desc, eq, gt, gte, inArray, lt, or, sql } from "drizzle-orm";
 import { db } from "./db.ts";
 import { type AuthEnv, requireUser } from "./auth/session.ts";
 import { addSeconds, toSqlDatetime } from "./auth/time.ts";
@@ -31,26 +31,6 @@ const ID_CHUNK = 1000;
 function parseIntParam(value: string | undefined, fallback: number): number {
   const n = Number(value);
   return Number.isFinite(n) ? n : fallback;
-}
-
-/**
- * Ids of candidates where either item satisfies `filter` (an SQL condition on
- * the items table aliased as `i`), as a parenthesized derived table.
- *
- * Driven from `items` via a UNION of the two sides, so the cost follows the
- * number of matching items: a rare type or label resolves in a few ms, where
- * the correlated `exists (… from_qid …) or exists (… into_qid …)` form scans
- * every candidate of the status and, for a type covering nearly every item
- * (Q7889 today), degenerates into materialized semi-joins plus a full table
- * scan — seconds rather than a few hundred ms. Needs the pair index (from_qid
- * prefix) and idx_merge_candidates_into.
- */
-function eitherItemMatches(filter: SQL): SQL {
-  return sql`(
-    select c.id from merge_candidates c join items i on i.qid = c.from_qid where ${filter}
-    union
-    select c.id from merge_candidates c join items i on i.qid = c.into_qid where ${filter}
-  )`;
 }
 
 export const candidates = new Hono<AuthEnv>();
@@ -89,24 +69,29 @@ candidates.get("/", async (c) => {
     }
   }
 
-  // Item-side filters. Each keeps pairs where *either* item matches (the hunt's
+  // Item-side filters, matching pairs where *either* item matches (the hunt's
   // label+type path pairs items of the same type, but the shared-id path can
-  // pair across types), and each becomes a derived table of matching candidate
-  // ids joined onto the query, so `total`/pagination stay in SQL.
-  const itemFilters: SQL[] = [];
-
+  // pair across types). Both read the pair's own copies of the items'
+  // primaryLabel/primaryType (see server/candidate-item-info.ts), so neither
+  // has to join `items`.
   if (q) {
-    // Case-insensitive substring match against either item's primaryLabel.
-    // The database collation is utf8mb4_bin (case-sensitive), so fold both
-    // sides with lower().
-    itemFilters.push(sql`lower(i.primary_label) like ${`%${q.toLowerCase()}%`}`);
+    // Case-insensitive substring match. The database collation is utf8mb4_bin
+    // (case-sensitive), so fold both sides with lower().
+    const pattern = `%${q.toLowerCase()}%`;
+    conditions.push(
+      or(
+        sql`lower(${mergeCandidates.fromLabel}) like ${pattern}`,
+        sql`lower(${mergeCandidates.intoLabel}) like ${pattern}`,
+      )!,
+    );
   }
 
-  // Instance-of (P31) filter on either item's denormalized primaryType.
-  // Ignored unless it's a valid QID.
+  // Instance-of (P31) filter. Ignored unless it's a valid QID.
   const typeParam = req.query("type")?.trim();
   if (typeParam && /^Q\d+$/.test(typeParam)) {
-    itemFilters.push(sql`i.primary_type = ${typeParam}`);
+    conditions.push(
+      or(eq(mergeCandidates.fromType, typeParam), eq(mergeCandidates.intoType, typeParam))!,
+    );
   }
 
   const where = and(...conditions);
@@ -115,18 +100,11 @@ candidates.get("/", async (c) => {
 
   // The count and the page are independent; run them concurrently (each takes
   // its own pool connection).
-  const countQuery = db.select({ total: count() }).from(mergeCandidates).$dynamic();
-  const pageQuery = db.select(summaryColumns).from(mergeCandidates).$dynamic();
-  itemFilters.forEach((filter, n) => {
-    const alias = sql.identifier(`f${n}`);
-    const matches = sql`${eitherItemMatches(filter)} as ${alias}`;
-    const on = sql`${alias}.id = ${mergeCandidates.id}`;
-    countQuery.innerJoin(matches, on);
-    pageQuery.innerJoin(matches, on);
-  });
   const [[{ total }], rows] = await Promise.all([
-    countQuery.where(where),
-    pageQuery
+    db.select({ total: count() }).from(mergeCandidates).where(where),
+    db
+      .select(summaryColumns)
+      .from(mergeCandidates)
       .where(where)
       // Always descending; id as a stable tiebreaker for deterministic paging.
       .orderBy(desc(sortColumn), desc(mergeCandidates.id))

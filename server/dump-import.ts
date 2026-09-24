@@ -45,6 +45,7 @@ import { Readable } from "node:stream";
 import { constants as zlibConstants, createGunzip, inflateRawSync } from "node:zlib";
 import { and, asc, count, eq, gt, inArray, isNull, ne, or, sql } from "drizzle-orm";
 import { db } from "./db.ts";
+import { refreshCandidateItemInfo } from "./candidate-item-info.ts";
 import { dumpImportRuns, externalIds, items, mergeCandidates } from "../db/schema.ts";
 import { syncProperties } from "./properties-sync.ts";
 import { toSqlDatetime } from "./auth/time.ts";
@@ -823,6 +824,9 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
   await flush();
 
   const propertyCount = await syncProperties(propertyRows);
+  // Items this pass relabelled or retyped: bring the candidates' copies in line.
+  const refreshed = await refreshCandidateItemInfo(db);
+  log(`${tag} refreshed item type/label on ${refreshed} candidate rows`);
   if (scan.stopped) {
     log(`${tag} stopped at limit ${opts.limit}; properties synced so far only`);
   }

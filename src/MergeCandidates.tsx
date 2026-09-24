@@ -8,6 +8,7 @@ import {
   sharedIdentifierProps,
 } from "./lib/compare.ts";
 import { wikiPageUrl } from "./lib/wiki.ts";
+import { displayLabel } from "./lib/wikidata.ts";
 
 // ---------- UI ----------
 
@@ -83,10 +84,21 @@ function ValueChip({ v, formatter }: { v: AnnotatedValue; formatter?: string }) 
 }
 
 function ItemPlate({ item, side }: { item: Item; side: "from" | "into" }) {
+  const label = displayLabel(item);
   return (
     <div className={`plate plate-${side}`}>
       <div className="plate-role">{side === "from" ? "merge from" : "merge into"}</div>
-      <div className="plate-label">{item.labels.en ?? item.id}</div>
+      <div className="plate-label">
+        {label?.text ?? item.id}
+        {label && label.lang !== "en" && label.lang !== "mul" && (
+          <span
+            className="plate-label-lang"
+            title={`No English label; showing the "${label.lang}" label`}
+          >
+            {label.lang}
+          </span>
+        )}
+      </div>
       <div className="plate-meta">
         <a className="plate-id" href={wikiPageUrl(item.id)} target="_blank" rel="noreferrer">
           {item.id}
@@ -146,8 +158,7 @@ export default function MergeCandidates({
 
   // Best display name for a column header, shown de-emphasized next to the QID
   // (e.g. "Q134990310 (HYPER METEOR)"). Omitted when the item carries no label.
-  const nameOf = (item: Item): string | undefined =>
-    item.labels.en ?? item.labels.mul ?? Object.values(item.labels)[0];
+  const nameOf = (item: Item): string | undefined => displayLabel(item)?.text;
   const fromName = nameOf(from);
   const intoName = nameOf(into);
   const [hidden, setHidden] = useState<Record<RowStatus, boolean>>({

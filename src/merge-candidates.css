@@ -142,6 +142,16 @@ body {
   line-height: 1.2;
   margin-top: 0.15rem;
 }
+.plate-label-lang {
+  margin-left: 0.5rem;
+  padding: 0.05rem 0.4rem;
+  border: 1px solid var(--muted);
+  border-radius: 4px;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  vertical-align: middle;
+}
 .plate-meta {
   display: flex;
   flex-wrap: wrap;

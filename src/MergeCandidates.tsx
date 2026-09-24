@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import type { AnnotatedValue, Item, RowStatus } from "./lib/compare.ts";
+import type { AnnotatedValue, Item, Row, RowStatus } from "./lib/compare.ts";
 import {
   buildRows,
   formatIdUrl,
@@ -7,7 +7,7 @@ import {
   isHardcodedMirrorProp,
   sharedIdentifierProps,
 } from "./lib/compare.ts";
-import { wikiPageUrl } from "./lib/wiki.ts";
+import { sitelinkUrl, wikiPageUrl } from "./lib/wiki.ts";
 import { displayLabel } from "./lib/wikidata.ts";
 
 // ---------- UI ----------
@@ -39,20 +39,32 @@ function displayValue(v: AnnotatedValue): string {
   return v.value;
 }
 
-function ValueChip({ v, formatter }: { v: AnnotatedValue; formatter?: string }) {
+function ValueChip({
+  v,
+  formatter,
+  site,
+}: {
+  v: AnnotatedValue;
+  formatter?: string;
+  /** Sitelink rows only: the site id (e.g. "enwiki"), so the title links to its page. */
+  site?: string;
+}) {
   const text = displayValue(v);
   const special = specialValueText(v) != null;
   // Link out where the value points somewhere: a `url` value is itself a URL
   // (e.g. an itch.io page), and an external identifier with a formatter URL
   // (P1630) resolves to its source database, e.g. a Steam app ID → store page.
-  // Special (unknown/no) values are placeholders, never links.
+  // A sitelink title opens its page on that wiki. Special (unknown/no) values
+  // are placeholders, never links.
   const idUrl = special
     ? null
-    : v.type === "url"
-      ? v.value
-      : v.type === "external-id"
-        ? formatIdUrl(formatter, v.value)
-        : null;
+    : site
+      ? sitelinkUrl(site, v.value)
+      : v.type === "url"
+        ? v.value
+        : v.type === "external-id"
+          ? formatIdUrl(formatter, v.value)
+          : null;
   return (
     <span
       className={`chip chip-${v.status}${special ? " chip-special" : ""}`}
@@ -81,6 +93,11 @@ function ValueChip({ v, formatter }: { v: AnnotatedValue; formatter?: string }) 
       )}
     </span>
   );
+}
+
+/** The site id of a sitelink row ("sitelink:enwiki" → "enwiki"); undefined for other rows. */
+function sitelinkSite(r: Row): string | undefined {
+  return r.kind === "sitelink" ? r.key.slice("sitelink:".length) : undefined;
 }
 
 function ItemPlate({ item, side }: { item: Item; side: "from" | "into" }) {
@@ -226,11 +243,11 @@ export default function MergeCandidates({
                 <span className="blocker-prop">{r.label}</span>
                 <span className="blocker-values">
                   {r.a.map((v, i) => (
-                    <ValueChip key={"a" + i} v={v} />
+                    <ValueChip key={"a" + i} v={v} site={sitelinkSite(r)} />
                   ))}
                   <span className="blocker-vs">vs</span>
                   {r.b.map((v, i) => (
-                    <ValueChip key={"b" + i} v={v} />
+                    <ValueChip key={"b" + i} v={v} site={sitelinkSite(r)} />
                   ))}
                 </span>
               </li>
@@ -346,14 +363,28 @@ export default function MergeCandidates({
                             {r.a.length === 0 ? (
                               <span className="none">—</span>
                             ) : (
-                              r.a.map((v, i) => <ValueChip key={i} v={v} formatter={formatter} />)
+                              r.a.map((v, i) => (
+                                <ValueChip
+                                  key={i}
+                                  v={v}
+                                  formatter={formatter}
+                                  site={sitelinkSite(r)}
+                                />
+                              ))
                             )}
                           </td>
                           <td className="col-b">
                             {r.b.length === 0 ? (
                               <span className="none">—</span>
                             ) : (
-                              r.b.map((v, i) => <ValueChip key={i} v={v} formatter={formatter} />)
+                              r.b.map((v, i) => (
+                                <ValueChip
+                                  key={i}
+                                  v={v}
+                                  formatter={formatter}
+                                  site={sitelinkSite(r)}
+                                />
+                              ))
                             )}
                           </td>
                         </tr>

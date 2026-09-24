@@ -27,3 +27,52 @@ export function wikiBaseUrl(): string {
 export function wikiPageUrl(page: string): string {
   return `${base}/wiki/${page}`;
 }
+
+/** Sitelink site ids that don't follow the `{lang}{project}` pattern. */
+const SPECIAL_SITES: Record<string, string> = {
+  commonswiki: "commons.wikimedia.org",
+  specieswiki: "species.wikimedia.org",
+  metawiki: "meta.wikimedia.org",
+  incubatorwiki: "incubator.wikimedia.org",
+  outreachwiki: "outreach.wikimedia.org",
+  wikimaniawiki: "wikimania.wikimedia.org",
+  wikidatawiki: "www.wikidata.org",
+  mediawikiwiki: "www.mediawiki.org",
+  sourceswiki: "wikisource.org",
+  wikifunctionswiki: "www.wikifunctions.org",
+};
+
+/** Project suffix of a `{lang}{project}` site id → the project's domain. */
+const PROJECT_DOMAINS: [suffix: string, domain: string][] = [
+  ["wikiquote", "wikiquote.org"],
+  ["wikisource", "wikisource.org"],
+  ["wikivoyage", "wikivoyage.org"],
+  ["wikibooks", "wikibooks.org"],
+  ["wikinews", "wikinews.org"],
+  ["wikiversity", "wikiversity.org"],
+  ["wiktionary", "wiktionary.org"],
+  ["wiki", "wikipedia.org"],
+];
+
+/**
+ * URL of a sitelink's page, e.g. ("enwiki", "Doom (1993 video game)") →
+ * "https://en.wikipedia.org/wiki/Doom_(1993_video_game)". Sitelinks always point
+ * at the real Wikimedia projects (the mirror comes from the production dump), so
+ * this ignores the edited-instance base. Null for a site id it can't place.
+ */
+export function sitelinkUrl(site: string, title: string): string | null {
+  let host = SPECIAL_SITES[site];
+  if (!host) {
+    for (const [suffix, domain] of PROJECT_DOMAINS) {
+      if (!site.endsWith(suffix)) continue;
+      const lang = site.slice(0, -suffix.length);
+      if (/^[a-z][a-z0-9_]*$/.test(lang)) host = `${lang.replace(/_/g, "-")}.${domain}`;
+      break;
+    }
+  }
+  if (!host) return null;
+  const path = encodeURIComponent(title.replace(/ /g, "_"))
+    .replace(/%2F/g, "/")
+    .replace(/%3A/g, ":");
+  return `https://${host}/wiki/${path}`;
+}

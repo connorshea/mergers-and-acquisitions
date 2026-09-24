@@ -1,11 +1,11 @@
 {
   "threshold": 0.4,
-  "generatedAt": "2026-09-24T04:48:23.727Z",
+  "generatedAt": "2026-09-24T15:21:20.963Z",
   "summary": {
-    "pairs": 94,
+    "pairs": 96,
     "duplicate": 42,
-    "distinct": 52,
-    "accuracy": 0.9043,
+    "distinct": 54,
+    "accuracy": 0.9063,
     "precision": 1,
     "recall": 0.7857,
     "f1": 0.88
@@ -54,12 +54,12 @@
     "Q122311778_into_Q111129630": {
       "label": "duplicate",
       "correct": true,
-      "confidence": 0.9194
+      "confidence": 0.9
     },
     "Q122377708_into_Q110737302": {
       "label": "duplicate",
       "correct": true,
-      "confidence": 0.9
+      "confidence": 0.6
     },
     "Q122383301_into_Q63224918": {
       "label": "duplicate",
@@ -234,7 +234,7 @@
     "Q170489_vs_Q854487": {
       "label": "distinct",
       "correct": true,
-      "confidence": 0.05
+      "confidence": 0
     },
     "Q174496_vs_Q45201240": {
       "label": "distinct",
@@ -254,17 +254,17 @@
     "Q184197_vs_Q15304961": {
       "label": "distinct",
       "correct": true,
-      "confidence": 0.1
+      "confidence": 0
     },
     "Q189784_vs_Q130723192": {
       "label": "distinct",
       "correct": true,
-      "confidence": 0.2052
+      "confidence": 0
     },
     "Q189862_vs_Q2581523": {
       "label": "distinct",
       "correct": true,
-      "confidence": 0
+      "confidence": 0.1
     },
     "Q19759612_vs_Q19759613": {
       "label": "distinct",
@@ -300,6 +300,11 @@
       "label": "distinct",
       "correct": true,
       "confidence": 0
+    },
+    "Q2700058_vs_Q7743167": {
+      "label": "distinct",
+      "correct": true,
+      "confidence": 0.1
     },
     "Q270710_vs_Q1339030": {
       "label": "distinct",
@@ -366,6 +371,11 @@
       "correct": true,
       "confidence": 0
     },
+    "Q3522403_vs_Q7759214": {
+      "label": "distinct",
+      "correct": true,
+      "confidence": 0.1
+    },
     "Q35482204_into_Q283159": {
       "label": "duplicate",
       "correct": false,
@@ -399,7 +409,7 @@
     "Q4676391_vs_Q111621080": {
       "label": "distinct",
       "correct": true,
-      "confidence": 0.2091
+      "confidence": 0.1
     },
     "Q499188_vs_Q104867241": {
       "label": "distinct",
@@ -449,7 +459,7 @@
     "Q81851_vs_Q810662": {
       "label": "distinct",
       "correct": true,
-      "confidence": 0.1
+      "confidence": 0
     },
     "Q86925136_into_Q3099056": {
       "label": "duplicate",

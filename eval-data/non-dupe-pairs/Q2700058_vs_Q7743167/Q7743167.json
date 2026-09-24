@@ -1,0 +1,966 @@
+{
+  "pageid": 7671426,
+  "ns": 0,
+  "title": "Q7743167",
+  "lastrevid": 2500645282,
+  "modified": "2026-06-01T14:37:54Z",
+  "type": "item",
+  "id": "Q7743167",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "The Jets"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "The Jets"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "The Jets"
+    },
+    "it": {
+      "language": "it",
+      "value": "The Jets"
+    },
+    "de": {
+      "language": "de",
+      "value": "The Jets"
+    },
+    "bar": {
+      "language": "bar",
+      "value": "The Jets"
+    },
+    "br": {
+      "language": "br",
+      "value": "The Jets"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "The Jets"
+    },
+    "ceb": {
+      "language": "ceb",
+      "value": "The Jets"
+    },
+    "co": {
+      "language": "co",
+      "value": "The Jets"
+    },
+    "da": {
+      "language": "da",
+      "value": "The Jets"
+    },
+    "es": {
+      "language": "es",
+      "value": "The Jets"
+    },
+    "id": {
+      "language": "id",
+      "value": "The Jets"
+    },
+    "nds": {
+      "language": "nds",
+      "value": "The Jets"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "The Jets"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "The Jets"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "The Jets"
+    },
+    "ro": {
+      "language": "ro",
+      "value": "The Jets"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "The Jets"
+    },
+    "ty": {
+      "language": "ty",
+      "value": "The Jets"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "The Jets"
+    },
+    "an": {
+      "language": "an",
+      "value": "The Jets"
+    },
+    "eu": {
+      "language": "eu",
+      "value": "The Jets"
+    },
+    "gl": {
+      "language": "gl",
+      "value": "The Jets"
+    },
+    "hu": {
+      "language": "hu",
+      "value": "The Jets"
+    },
+    "nb": {
+      "language": "nb",
+      "value": "The Jets"
+    },
+    "nn": {
+      "language": "nn",
+      "value": "The Jets"
+    },
+    "tr": {
+      "language": "tr",
+      "value": "The Jets"
+    }
+  },
+  "descriptions": {
+    "de": {
+      "language": "de",
+      "value": "britische Rockabilly-Band"
+    },
+    "en": {
+      "language": "en",
+      "value": "British rockabilly band"
+    },
+    "it": {
+      "language": "it",
+      "value": "gruppo musicale britannico"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "طاقم موسيقي من المملكة المتحدة"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "muziekgroep uit Verenigd Koninkrijk"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "The Cotton Bros."
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "3c9f9d423bb4b1080c7bbebd83a3f9cce18cb443",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 215380,
+              "id": "Q215380"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7743167$08F6C3E3-7880-492A-A0D4-A4C400848AA3",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "aa3943bcc6056841d2a83e388b0a71cde9422039",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 281643,
+              "id": "Q281643"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7743167$2f4a6358-4115-fd3a-d625-3a99282a0e5a",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "06c4a9b92c2c5c0de3b45d68db57d3ee738d0c6d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 140010193,
+              "id": "Q140010193"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7743167$652b3caf-477f-0bfb-0555-17d0ba543e6d",
+        "rank": "normal"
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "75f601ddbd601b7ccc16c578e462e6b77acc0ccc",
+          "datavalue": {
+            "value": {
+              "time": "+1978-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q7743167$5D9BFAFA-EB20-4CB1-8F38-BF78DC02EE51",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P434": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P434",
+          "hash": "667260d089f110f7aa6374052491667336bc522b",
+          "datavalue": {
+            "value": "fd5a2eea-0507-43b1-920a-a980a9ae6986",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q7743167$420EDAE9-D278-42F0-AFB1-58B876554D72",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "706208b3024200fd0a39ad499808dd0d98d74065",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "623cc8f0e2f65afe4d66b91962d354a2f3aa9a27",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 14005,
+                      "id": "Q14005"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P248"]
+          }
+        ]
+      }
+    ],
+    "P264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P264",
+          "hash": "a9721c37000df365298a1f9b779f4082464791ca",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 183412,
+              "id": "Q183412"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7743167$79002F3B-4A62-475B-9EAD-5B9940CA4969",
+        "rank": "normal"
+      }
+    ],
+    "P3478": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3478",
+          "hash": "c9823cf55e36c567606c6a8d66da3d3d22523f3d",
+          "datavalue": {
+            "value": "116818",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q7743167$EFEEAE94-2E99-4E7A-BF71-CB622090B242",
+        "rank": "normal"
+      }
+    ],
+    "P4208": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4208",
+          "hash": "35c6c5b680d9ed1dabdaad3c69e915c0235159f4",
+          "datavalue": {
+            "value": "the-jets",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q7743167$D81B0DF1-BB2F-43C3-96F2-4B3949D7DEE4",
+        "rank": "normal"
+      }
+    ],
+    "P244": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P244",
+          "hash": "28e65bea895a77f0caed3c5de9afcbf305ba6b04",
+          "datavalue": {
+            "value": "n85247378",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q7743167$5F47AB23-E577-4C21-B69B-FEFD299B0249",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "14fa5898ac764e0660517aa07ea0bbba505f262b",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "6b7d4330c4aac4caec4ede9de0311ce273f88ecd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 54919,
+                      "id": "Q54919"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "e0d08f96012770600b942d5e8563b2a3499cba8e",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2019-03-06T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P1953": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1953",
+          "hash": "17b6c486c9d0d55c92f84d900c9fcc0912a01575",
+          "datavalue": {
+            "value": "284585",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q7743167$d21cdcbb-d52b-410c-98b7-2504c7126c29",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "b1a9c40e0f0004db03c26eb40bce38dd8f7178d5",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "c34208b35b041d6758e6b68814cd263cacdabb10",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 504063,
+                      "id": "Q504063"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "1c6e00532222554d16621a794951abedd776fe14",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2019-08-05T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "7fff5adac725cc34fb5c6dcfe502e2a7bbd045b2",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 145,
+              "id": "Q145"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7743167$594D497D-2FFE-4A66-906C-B5F2BD24FAC6",
+        "rank": "normal"
+      }
+    ],
+    "P1448": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1448",
+          "hash": "c55c787b4c5eb0417193a4e9007a5797f505dd24",
+          "datavalue": {
+            "value": {
+              "text": "The Jets",
+              "language": "en"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q7743167$160b13c3-4634-31f3-2b3d-d29ea8d41bef",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "65741e762fe169a90cfd6030de234414895da84a",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "c6e8491c7a3a1574b84306f9b6366517fe765d72",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2019-09-22T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P813"]
+          }
+        ]
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "a1a49b1a3f7287879e511dcc80e9a47db779c90b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2737772,
+              "id": "Q2737772"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1013": [
+            {
+              "snaktype": "value",
+              "property": "P1013",
+              "hash": "82864c6fc480800281dce215b9daae0539a34ca8",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 55806838,
+                  "id": "Q55806838"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1013"],
+        "id": "Q7743167$7bc60d95-4902-5b11-0188-dfadd12cc88a",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "8f5db28fc5c5e5ea273869c6de963738febf177c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 225807,
+              "id": "Q225807"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1013": [
+            {
+              "snaktype": "value",
+              "property": "P1013",
+              "hash": "82864c6fc480800281dce215b9daae0539a34ca8",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 55806838,
+                  "id": "Q55806838"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1013"],
+        "id": "Q7743167$1405961e-46b9-efe3-64ed-b0f2a35a03d1",
+        "rank": "normal"
+      }
+    ],
+    "P2031": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2031",
+          "hash": "4286de3ad19fbd233f9ac0c94e6116bc8f57b0bf",
+          "datavalue": {
+            "value": {
+              "time": "+1978-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q7743167$97345B28-7F39-4414-9864-D05B55438BED",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f50b876b1f7471a4e5c72ae7412f87fba3bf0850",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "6b9b91190da36ae06b5a2b98126482f20105d684",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=The_Jets_(British_band)&oldid=913006765",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P214": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P214",
+          "hash": "1142d4b174a6fcc93a5a13a688d26916cbcae105",
+          "datavalue": {
+            "value": "147684531",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q7743167$1FF906AE-2CB9-4828-A626-9619A3C3CADA",
+        "rank": "normal"
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "d4a4f6b698887144301691a272820d3512f3f496",
+          "datavalue": {
+            "value": "/m/01tvp3s",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q7743167$D26DAAC4-EA94-4114-BB5C-882AA99354B9",
+        "rank": "normal"
+      }
+    ],
+    "P1728": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1728",
+          "hash": "c8d80ef6dbb1275d4b9fe90af0ea7a7222ecde06",
+          "datavalue": {
+            "value": "mn0002100639",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q7743167$19317df0-0a51-4e6e-b80c-51eadbc330f4",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fdc79aa854a87f7b35fb6eafffe89cd63107721d",
+            "snaks": {
+              "P887": [
+                {
+                  "snaktype": "value",
+                  "property": "P887",
+                  "hash": "0ca41c4135639ebe0e0ddac1f02e9b8648203ca7",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11660,
+                      "id": "Q11660"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "623cc8f0e2f65afe4d66b91962d354a2f3aa9a27",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 14005,
+                      "id": "Q14005"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P434": [
+                {
+                  "snaktype": "value",
+                  "property": "P434",
+                  "hash": "667260d089f110f7aa6374052491667336bc522b",
+                  "datavalue": {
+                    "value": "fd5a2eea-0507-43b1-920a-a980a9ae6986",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "1b81711277e4cb264315bf8d72b023b5ed85534a",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-07-26T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P887", "P248", "P434", "P813"]
+          }
+        ]
+      }
+    ],
+    "P5404": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5404",
+          "hash": "0019b6cf4a728f00ad6947c632b127d1d8d6c5f3",
+          "datavalue": {
+            "value": "jets_f1",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q7743167$9d10bb5f-fd75-4b9e-bc34-184478858bea",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fdc79aa854a87f7b35fb6eafffe89cd63107721d",
+            "snaks": {
+              "P887": [
+                {
+                  "snaktype": "value",
+                  "property": "P887",
+                  "hash": "0ca41c4135639ebe0e0ddac1f02e9b8648203ca7",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11660,
+                      "id": "Q11660"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "623cc8f0e2f65afe4d66b91962d354a2f3aa9a27",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 14005,
+                      "id": "Q14005"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P434": [
+                {
+                  "snaktype": "value",
+                  "property": "P434",
+                  "hash": "667260d089f110f7aa6374052491667336bc522b",
+                  "datavalue": {
+                    "value": "fd5a2eea-0507-43b1-920a-a980a9ae6986",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "1b81711277e4cb264315bf8d72b023b5ed85534a",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-07-26T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P887", "P248", "P434", "P813"]
+          }
+        ]
+      }
+    ],
+    "P5882": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5882",
+          "hash": "a7b48f7e94bfc059d5bebe9ef4dbc24a22940d15",
+          "datavalue": {
+            "value": "M00000064585",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q7743167$1F065E50-B8C6-4E85-BE07-D4C43B42BCB7",
+        "rank": "normal"
+      }
+    ],
+    "P1617": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1617",
+          "hash": "e41f2c131abe9d37fd5bf87c2f4357787e924401",
+          "datavalue": {
+            "value": "0fe5d115-8ffc-4b99-9971-d4a8de0c329a",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q7743167$8AAC041D-5D54-403B-8F50-9AC31A815325",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "8582d8416671f1f2567247201bac753552435ca5",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "ea55dc6ac5c3ab77c77d4ae7979e3276d0d4cd20",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 18336371,
+                      "id": "Q18336371"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P248"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "The Jets (British band)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/The_Jets_(British_band)"
+    },
+    "dewiki": {
+      "site": "dewiki",
+      "title": "The Jets (britische Band)",
+      "badges": [],
+      "url": "https://de.wikipedia.org/wiki/The_Jets_(britische_Band)"
+    }
+  }
+}

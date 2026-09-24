@@ -1,0 +1,671 @@
+{
+  "pageid": 3353725,
+  "ns": 0,
+  "title": "Q3522403",
+  "lastrevid": 2463826728,
+  "modified": "2026-02-16T01:29:52Z",
+  "type": "item",
+  "id": "Q3522403",
+  "labels": {
+    "fr": {
+      "language": "fr",
+      "value": "The Radiators"
+    },
+    "en": {
+      "language": "en",
+      "value": "The Radiators"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "The Radiators"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "The Radiators"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "The Radiators"
+    },
+    "es": {
+      "language": "es",
+      "value": "The Radiators"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "The Radiators"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "ザ・レイディエイターズ"
+    }
+  },
+  "descriptions": {
+    "es": {
+      "language": "es",
+      "value": "grupo musical estadounidense"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "groupe de musique américain"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "muziekgroep uit Verenigde Staten van Amerika"
+    },
+    "en": {
+      "language": "en",
+      "value": "musical group"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "طاقم موسيقي من الولايات المتحدة"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "banna ceoil"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "ニューオーリンズのルーツ・ロック・バンド（1978-2011、その後ときどき再結成）"
+    }
+  },
+  "aliases": {
+    "ja": [
+      {
+        "language": "ja",
+        "value": "ザ・レディエイターズ"
+      }
+    ]
+  },
+  "claims": {
+    "P434": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P434",
+          "hash": "769cbfab84f52120720f872fa45711b92aa435fd",
+          "datavalue": {
+            "value": "4bd3fb40-1c6f-4056-a0ee-8427685586fc",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "q3522403$AA93C575-7005-4247-8FBC-E8C51F9A67DF",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "706208b3024200fd0a39ad499808dd0d98d74065",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "623cc8f0e2f65afe4d66b91962d354a2f3aa9a27",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 14005,
+                      "id": "Q14005"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P248"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "3c9f9d423bb4b1080c7bbebd83a3f9cce18cb443",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 215380,
+              "id": "Q215380"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3522403$9C5F0158-E356-44D0-8BCA-4A36B7AC0EDC",
+        "rank": "normal"
+      }
+    ],
+    "P1953": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1953",
+          "hash": "4c304c727d33c084612a08beb534fe4311d56218",
+          "datavalue": {
+            "value": "292305",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q3522403$E4F55C29-DCB8-413C-9737-11D151886067",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "8350377f390ef18ed7f2dcba1f726b19a31573e1",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "623cc8f0e2f65afe4d66b91962d354a2f3aa9a27",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 14005,
+                      "id": "Q14005"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "90dd15224de75b113810f54078f6c711c765441c",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2015-08-10T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "7f985e15819b74ed189d022e004890e66d2ae42e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 30,
+              "id": "Q30"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3522403$818C344C-FA66-49BA-834C-678CB9F8849D",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "75f601ddbd601b7ccc16c578e462e6b77acc0ccc",
+          "datavalue": {
+            "value": {
+              "time": "+1978-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q3522403$6E28DBDB-9C69-4E13-A894-E064CA0169E0",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P724": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P724",
+          "hash": "debb0c551775382534143ffaf74d64fda1ee2f88",
+          "datavalue": {
+            "value": "Radiators",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q3522403$6b973de0-4c03-5e9d-b35d-6951965bbf8c",
+        "rank": "normal"
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "5a4d4df3a84e2a5e391d95e978675e05b3c96f5d",
+          "datavalue": {
+            "value": "http://www.theradiators.org",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q3522403$FEDF1558-FE59-4633-BB17-8248D02A4C7E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "be9a60c4de4e97e9997c1387749f2daaa9ed4e2d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 675553,
+              "id": "Q675553"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3522403$C6C728CC-8316-4E38-A854-8DE2E937160E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P3478": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3478",
+          "hash": "ffb035168ecb6921ec6c4a36770e8fbf0a4c9f92",
+          "datavalue": {
+            "value": "408999",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q3522403$899EFDA2-B428-426F-8596-840DAA2721BA",
+        "rank": "normal"
+      }
+    ],
+    "P4208": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4208",
+          "hash": "97141497ef3c4a1a7c1c6347dc9a352f4df9b77a",
+          "datavalue": {
+            "value": "the-radiators",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q3522403$48978BC3-F8B2-4C04-919F-559C2524CAC7",
+        "rank": "normal"
+      }
+    ],
+    "P2031": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2031",
+          "hash": "4286de3ad19fbd233f9ac0c94e6116bc8f57b0bf",
+          "datavalue": {
+            "value": {
+              "time": "+1978-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q3522403$82DA2C09-8A55-458D-8DF3-850557C2F413",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "7d5bf46709849ed400aa72d6cbe8125862021b33",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "73291192fe334495731de7376e143049424a3ce9",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=The_Radiators_(American_band)&oldid=918261608",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "f2d7f89c7d731c59225947a2900134115311d772",
+          "datavalue": {
+            "value": "/m/0gq3g1",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q3522403$38B864EE-CB31-4ECA-8ACF-800FD019F6C7",
+        "rank": "normal"
+      }
+    ],
+    "P5882": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5882",
+          "hash": "748d291ab86396cf19a963aa6c25d93cbff73d3c",
+          "datavalue": {
+            "value": "M00000056817",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q3522403$D9DD3D44-FC7A-46BC-B5D7-0005D7A62E41",
+        "rank": "normal"
+      }
+    ],
+    "P213": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P213",
+          "hash": "e1cefb7f5c8b56920dfe9207a071d844c2772b81",
+          "datavalue": {
+            "value": "0000000123750988",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q3522403$EC937988-DB0D-4986-86D9-ECC24715B7DF",
+        "rank": "normal"
+      }
+    ],
+    "P1728": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1728",
+          "hash": "055c51cea3c8bf5f195a5ed65b720c5220d7a06d",
+          "datavalue": {
+            "value": "mn0000411745",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q3522403$035947c1-5231-4d9b-a861-ad6991cfb512",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "aad37296084c1a7bb2a301ae24df15ed6c232e59",
+            "snaks": {
+              "P887": [
+                {
+                  "snaktype": "value",
+                  "property": "P887",
+                  "hash": "0ca41c4135639ebe0e0ddac1f02e9b8648203ca7",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11660,
+                      "id": "Q11660"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "623cc8f0e2f65afe4d66b91962d354a2f3aa9a27",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 14005,
+                      "id": "Q14005"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P434": [
+                {
+                  "snaktype": "value",
+                  "property": "P434",
+                  "hash": "769cbfab84f52120720f872fa45711b92aa435fd",
+                  "datavalue": {
+                    "value": "4bd3fb40-1c6f-4056-a0ee-8427685586fc",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "1b81711277e4cb264315bf8d72b023b5ed85534a",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-07-26T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P887", "P248", "P434", "P813"]
+          }
+        ]
+      }
+    ],
+    "P373": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P373",
+          "hash": "de5a884ddb2cb800cc2a01dcfd4ef631a9e3e78b",
+          "datavalue": {
+            "value": "The Radiators",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q3522403$228e9b0a-4d4d-3581-faba-7d9f56440a4b",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "frwiki": {
+      "site": "frwiki",
+      "title": "The Radiators",
+      "badges": [],
+      "url": "https://fr.wikipedia.org/wiki/The_Radiators"
+    },
+    "enwiki": {
+      "site": "enwiki",
+      "title": "The Radiators (American band)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/The_Radiators_(American_band)"
+    },
+    "commonswiki": {
+      "site": "commonswiki",
+      "title": "Category:The Radiators",
+      "badges": [],
+      "url": "https://commons.wikimedia.org/wiki/Category:The_Radiators"
+    }
+  }
+}

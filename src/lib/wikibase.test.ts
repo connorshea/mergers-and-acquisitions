@@ -80,6 +80,19 @@ describe("entityToItem", () => {
     });
   });
 
+  it("keeps sitelink badges, only for sitelinks that have any", () => {
+    const item = entityToItem({
+      id: "Q1145650",
+      sitelinks: {
+        enwiki: { title: "Loud and Dangerous: Live from Hollywood", badges: ["Q70893996"] },
+        dewiki: { title: "Loud and Dangerous", badges: [] },
+      },
+    });
+    expect(item.sitelinkBadges).toEqual({ enwiki: ["Q70893996"] });
+    // No badges anywhere → no field at all.
+    expect(entityToItem(game)).not.toHaveProperty("sitelinkBadges");
+  });
+
   it("drops properties with no live value", () => {
     const item = entityToItem({
       id: "Q1",

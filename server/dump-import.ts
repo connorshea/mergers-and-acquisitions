@@ -10,9 +10,10 @@
 //
 //   1. Inflate (in-process zlib) into ~1 MB chunks; only complete lines are
 //      handled, the tail is carried into the next chunk.
-//   2. Cheap pre-filter: a Buffer search for `"numeric-id":<n>` (each imported
-//      class in IMPORT_CLASSES, followed by a non-digit) and for lines that
-//      start `{"type":"property"`. Everything else is never decoded or parsed.
+//   2. Cheap pre-filter: one Buffer search for `"numeric-id":`, keeping the
+//      lines where the number that follows is one of IMPORT_CLASSES, and one for
+//      lines that start `{"type":"property"`. Everything else is never decoded
+//      or parsed.
 //   3. Hit lines are JSON.parsed, converted with the shared entityToItem, and
 //      kept if a best-rank P31 really is one of the classes (a mention of a
 //      class QID in any other statement is discarded here).
@@ -291,28 +292,45 @@ export function formatDuration(seconds: number): string {
 
 /**
  * Find the [start, end) byte ranges of the lines in `region` that contain
- * `needle`. With `wordBoundary`, a match directly followed by a digit is
- * skipped (so `"numeric-id":7889` does not hit Q78890); with `atLineStart`,
- * only a match at the start of its line counts. `region` must end with `\n`.
+ * `needle` at the start of the line. `region` must end with `\n`.
  */
-function hitLines(
-  region: Buffer,
-  needle: Buffer,
-  opts: { wordBoundary?: boolean; atLineStart?: boolean },
-  into: Map<number, number>,
-): void {
+function lineStartHits(region: Buffer, needle: Buffer, into: Map<number, number>): void {
   let from = 0;
   while (from < region.length) {
     const idx = region.indexOf(needle, from);
     if (idx === -1) break;
-    const after = idx + needle.length;
-    if (opts.wordBoundary && after < region.length && isDigit(region[after])) {
-      from = after;
+    const start = region.lastIndexOf(NL, idx) + 1;
+    const end = region.indexOf(NL, idx);
+    if (start === idx) into.set(start, end);
+    from = end + 1;
+  }
+}
+
+const NUMERIC_ID_NEEDLE = Buffer.from('"numeric-id":');
+
+/**
+ * Find the [start, end) byte ranges of the lines in `region` that mention an
+ * entity whose numeric id is in `ids` (`"numeric-id":7889`, and not Q78890).
+ * One search for the shared `"numeric-id":` prefix, reading the digits after
+ * each hit, rather than a pass per class: a region is ~1 MB, and with a dozen
+ * classes the per-class passes cost ~7x the single one. `region` must end with `\n`.
+ */
+function classHits(region: Buffer, ids: ReadonlySet<number>, into: Map<number, number>): void {
+  let from = 0;
+  while (from < region.length) {
+    const idx = region.indexOf(NUMERIC_ID_NEEDLE, from);
+    if (idx === -1) break;
+    let at = idx + NUMERIC_ID_NEEDLE.length;
+    let id = 0;
+    // Wikidata ids stay far below 2^53, so the running number is exact.
+    while (at < region.length && isDigit(region[at])) id = id * 10 + (region[at++] - 0x30);
+    if (at === idx + NUMERIC_ID_NEEDLE.length || !ids.has(id)) {
+      from = at;
       continue;
     }
     const start = region.lastIndexOf(NL, idx) + 1;
-    const end = region.indexOf(NL, idx);
-    if (!opts.atLineStart || start === idx) into.set(start, end);
+    const end = region.indexOf(NL, at);
+    into.set(start, end);
     from = end + 1;
   }
 }
@@ -331,9 +349,7 @@ function parseLine(line: Buffer): Entity | null {
  * the scan statistics.
  */
 export async function scanDump(source: Readable, opts: ScanOptions): Promise<ScanStats> {
-  const classNeedles = opts.classQids.map((qid) =>
-    Buffer.from(`"numeric-id":${qid.replace(/^Q/, "")}`),
-  );
+  const classIds = new Set(opts.classQids.map((qid) => Number(qid.replace(/^Q/, ""))));
   const classSet = new Set(opts.classQids);
   const progressEvery = opts.progressEveryBytes ?? 5e9;
   const started = Date.now();
@@ -391,8 +407,8 @@ export async function scanDump(source: Readable, opts: ScanOptions): Promise<Sca
     while ((nl = region.indexOf(NL, nl + 1)) !== -1) stats.lines++;
 
     hits.clear();
-    for (const needle of classNeedles) hitLines(region, needle, { wordBoundary: true }, hits);
-    if (opts.onProperty) hitLines(region, PROPERTY_NEEDLE, { atLineStart: true }, hits);
+    classHits(region, classIds, hits);
+    if (opts.onProperty) lineStartHits(region, PROPERTY_NEEDLE, hits);
     if (hits.size === 0) return false;
     // Dump order matters for nothing, but keep it anyway.
     for (const start of [...hits.keys()].sort((a, b) => a - b)) {
@@ -726,6 +742,7 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
     }
   };
 
+  let writing: Promise<void> = Promise.resolve();
   const flush = async (): Promise<void> => {
     if (batch.length === 0) return;
     const pending = batch;
@@ -769,7 +786,15 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
     onSkip,
     onItem: async (item) => {
       batch.push(item);
-      if (batch.length >= ITEM_BATCH) await flush();
+      if (batch.length < ITEM_BATCH) return;
+      // Write this batch while the scan inflates the next one: wait only for
+      // the previous write, so one batch is in flight at a time and the scan
+      // never waits on a database round-trip it could have overlapped.
+      await writing;
+      writing = flush();
+      // Handled when awaited above or after the scan; this just stops Node
+      // treating a failure in between as an unhandled rejection.
+      writing.catch(() => {});
     },
     onProperty: (entity) => {
       const row = propertyRowFromEntity(entity);
@@ -794,6 +819,7 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
       );
     },
   });
+  await writing;
   await flush();
 
   const propertyCount = await syncProperties(propertyRows);

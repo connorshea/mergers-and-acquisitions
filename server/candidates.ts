@@ -11,9 +11,10 @@ import { MERGING_STALE_SECONDS } from "./edits.ts";
 import { loadLabels, summaryColumns, toSummary } from "./candidate-summary.ts";
 import { attachSitelinkRedirects } from "./sitelink-overlay.ts";
 import { loadCreations } from "./item-creations.ts";
-import { entityLabels, items, mergeCandidates, properties } from "../db/schema.ts";
+import { entityLabels, itemCreations, items, mergeCandidates, properties } from "../db/schema.ts";
 import type { Item } from "../src/lib/compare.ts";
 import { chunk } from "../src/lib/chunk.ts";
+import { normalizeUserName } from "../src/lib/creation.ts";
 import {
   CANDIDATE_SORTS,
   CANDIDATE_STATUSES,
@@ -104,6 +105,21 @@ candidates.get("/", async (c) => {
   if (types.length > 0) {
     conditions.push(
       or(inArray(mergeCandidates.fromType, types), inArray(mergeCandidates.intoType, types))!,
+    );
+  }
+
+  // Creator filter: pairs where either item was created by this user (exact
+  // match on the normalized name, via the item_creations user index). Only
+  // items with an item_creations row can match; the nightly job fills those
+  // for open candidates, and viewing a pair fills its two.
+  const creatorParam = req.query("creator")?.trim();
+  if (creatorParam) {
+    const createdBy = db
+      .select({ qid: itemCreations.qid })
+      .from(itemCreations)
+      .where(eq(itemCreations.userName, normalizeUserName(creatorParam)));
+    conditions.push(
+      or(inArray(mergeCandidates.fromQid, createdBy), inArray(mergeCandidates.intoQid, createdBy))!,
     );
   }
 

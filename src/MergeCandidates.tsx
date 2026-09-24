@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import type { AnnotatedValue, Item, Row, RowStatus } from "./lib/compare.ts";
 import {
   buildRows,
@@ -154,9 +155,17 @@ function CreationLine({ creation }: { creation: ItemCreation }) {
       </a>{" "}
       by{" "}
       {creation.userName && userUrl ? (
-        <a href={userUrl} target="_blank" rel="noreferrer">
-          {creation.userName}
-        </a>
+        <>
+          <a href={userUrl} target="_blank" rel="noreferrer">
+            {creation.userName}
+          </a>{" "}
+          <Link
+            to={`/?${new URLSearchParams({ creator: creation.userName })}`}
+            title="Other candidates with an item created by this user"
+          >
+            (pairs)
+          </Link>
+        </>
       ) : (
         <span className="plate-created-hidden">(hidden user)</span>
       )}

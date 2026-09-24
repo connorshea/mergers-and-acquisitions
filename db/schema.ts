@@ -228,7 +228,11 @@ export const itemCreations = mysqlTable(
       .notNull()
       .default(sql`CURRENT_TIMESTAMP`),
   },
-  (t) => [index("idx_item_creations_checked").on(t.checkedAt)],
+  (t) => [
+    index("idx_item_creations_checked").on(t.checkedAt),
+    // The candidate list's "created by" filter.
+    index("idx_item_creations_user").on(t.userName),
+  ],
 );
 
 // Cursor bookkeeping for the paged Wikidata sync. One row per scope (e.g. the

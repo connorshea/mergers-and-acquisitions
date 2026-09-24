@@ -739,7 +739,8 @@ a.chip-id:hover {
   font-size: 0.8rem;
   color: var(--muted);
 }
-.field select {
+.field select,
+.field .creator-input {
   font: inherit;
   font-size: 0.9rem;
   padding: 0.35rem 0.5rem;
@@ -747,6 +748,9 @@ a.chip-id:hover {
   border-radius: 6px;
   background: var(--surface);
   color: var(--ink);
+}
+.field .creator-input {
+  width: 11rem;
 }
 /* Type filter: a multi-select dropdown of checkboxes, styled like the selects. */
 .type-filter > summary {

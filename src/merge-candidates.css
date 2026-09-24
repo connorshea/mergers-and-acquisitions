@@ -730,6 +730,43 @@ a.chip-id:hover {
   background: var(--surface);
   color: var(--ink);
 }
+/* Loading indicator for the candidates list. It fades in after a beat so a
+   fast response doesn't flash it. */
+.spinner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  align-self: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+  animation: spinner-appear 0s 150ms both;
+}
+.spinner-ring {
+  width: 0.9rem;
+  height: 0.9rem;
+  border: 2px solid var(--rule);
+  border-top-color: var(--muted);
+  border-radius: 50%;
+}
+@keyframes spinner-appear {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes spinner-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .spinner-ring {
+    animation: spinner-turn 0.8s linear infinite;
+  }
+}
+.ledger-wrap[data-stale] {
+  opacity: 0.55;
+  transition: opacity 120ms 150ms;
+}
 .list-msg {
   color: var(--muted);
   padding: 1rem 0;

@@ -125,7 +125,12 @@ front for accounts its profile snapshot says are blocked.
   effort: if it fails the merge still stands, its resolution noting that the
   source item was not redirected. Clashing sitelinks and items that link to each
   other are never overridden: the confirm dialog warns when the mirror predicts one, Wikidata
-  refuses the merge, and the user fixes the items by hand first. On success the
+  refuses the merge, and the user fixes the items by hand first. The one clash
+  the app clears itself is a sitelink to a page that redirects to the other
+  item's page on the same wiki: once nothing else blocks the merge, it asks that
+  wiki's API (live, not the nightly `sitelink_pages` data) and, if the redirect
+  is confirmed, removes that sitelink with `wbsetsitelink` before merging. Each
+  removal is its own edit, listed in the merge's audit row and on the result. On success the
   candidate becomes `merged` (with both revision ids linked from the page), the
   merged-away item is dropped from the mirror so the hunt stops pairing it, and
   any other open candidate that referenced it is settled as "merged elsewhere".

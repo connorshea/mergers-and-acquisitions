@@ -12,6 +12,7 @@ import {
   isDeclaredDifferent,
   isSeriesSequelPair,
   mergeConflicts,
+  redirectSitelinkFixes,
   normalize,
   orderByAge,
   scoreCandidate,
@@ -195,6 +196,33 @@ describe("buildRows (behavior-preserving extraction)", () => {
       expect(r.b[0].redirect).toBe(true);
       expect(r.b[0].redirectTarget).toBeUndefined();
       expect(r.note).toMatch(/^Q1145650's page is a redirect/);
+    });
+
+    it("plans removing the side that redirects to the other page, and only that shape", () => {
+      const toArticle = { ...redirect, sitelinkRedirects: { enwiki: article.sitelinks.enwiki } };
+      const fix = {
+        qid: "Q1145650",
+        wiki: "enwiki",
+        title: "Loud and Dangerous: Live from Hollywood",
+        target: "Loud & Dangerous: Live from Hollywood",
+      };
+      expect(redirectSitelinkFixes(article, toArticle)).toEqual([fix]);
+      expect(redirectSitelinkFixes(toArticle, article)).toEqual([fix]);
+      // Badge only, target unknown: a person has to look.
+      expect(redirectSitelinkFixes(article, redirect)).toBeNull();
+      // Points elsewhere.
+      const elsewhere = { ...redirect, sitelinkRedirects: { enwiki: "Loud (album)" } };
+      expect(redirectSitelinkFixes(article, elsewhere)).toBeNull();
+      // A second, unfixable clash sinks the plan.
+      const twoWikis = { ...toArticle, sitelinks: { ...toArticle.sitelinks, dewiki: "Loud" } };
+      expect(
+        redirectSitelinkFixes(
+          { ...article, sitelinks: { ...article.sitelinks, dewiki: "Laut" } },
+          twoWikis,
+        ),
+      ).toBeNull();
+      // No clash at all: nothing to do.
+      expect(redirectSitelinkFixes(article, article)).toEqual([]);
     });
 
     it("keeps the generic note when neither side is badged", () => {

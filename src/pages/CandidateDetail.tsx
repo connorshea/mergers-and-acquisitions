@@ -11,6 +11,7 @@ import {
   type Item,
   type MergeConflict,
   mergeConflicts,
+  redirectSitelinkFixes,
 } from "../lib/compare.ts";
 import type {
   CandidateDetailResponse,
@@ -301,7 +302,7 @@ type EditOutcome =
 /** What an edit made from this page did on Wikidata, with links to the revisions. */
 function EditOutcomePanel({ outcome }: { outcome: EditOutcome }) {
   if (outcome.kind === "merge") {
-    const { from, into, redirected } = outcome.res;
+    const { from, into, redirected, removedSitelinks } = outcome.res;
     return (
       <div className={`edit-result${redirected ? "" : " is-partial"}`} role="status">
         Merged {from.qid} into {into.qid}:{" "}
@@ -315,6 +316,15 @@ function EditOutcomePanel({ outcome }: { outcome: EditOutcome }) {
         on {from.qid}.
         {!redirected &&
           ` ${from.qid} was not turned into a redirect; check it on Wikidata and finish it by hand.`}
+        {removedSitelinks?.map((r) => (
+          <div key={`${r.qid}:${r.wiki}`}>
+            Removed {r.qid}'s {r.wiki} sitelink “{r.title}”, a redirect to “{r.target}”:{" "}
+            <a href={r.url} target="_blank" rel="noreferrer">
+              revision {r.revid}
+            </a>
+            .
+          </div>
+        ))}
       </div>
     );
   }
@@ -421,8 +431,13 @@ function MergeDialog({
   const [error, setError] = useState<Error | null>(null);
 
   const autoHandled = detected.filter((k) => AUTO_IGNORED_CONFLICTS.includes(k));
+  // Clashes where one page is a redirect to the other item's page (per the
+  // nightly replica check) are removed by the server before merging, after it
+  // re-checks them against the wiki; if that re-check disagrees, it refuses.
+  const sitelinkFixes = useMemo(() => redirectSitelinkFixes(from, into) ?? [], [from, into]);
   const blockers = detected.filter(
-    (k): k is Exclude<MergeConflict, "description"> => !AUTO_IGNORED_CONFLICTS.includes(k),
+    (k): k is Exclude<MergeConflict, "description"> =>
+      !AUTO_IGNORED_CONFLICTS.includes(k) && !(k === "sitelink" && sitelinkFixes.length > 0),
   );
 
   async function submit() {
@@ -451,6 +466,20 @@ function MergeDialog({
             The items have different descriptions; this is handled automatically — {into.id} keeps
             its description and {from.id}'s is dropped.
           </p>
+        )}
+        {sitelinkFixes.length > 0 && (
+          <div className="modal-note">
+            {sitelinkFixes.length === 1 ? "A sitelink links" : "These sitelinks link"} a redirect to
+            the other item's page, so {sitelinkFixes.length === 1 ? "it is" : "they are"} removed
+            first, in a separate edit:
+            <ul className="conflict-list">
+              {sitelinkFixes.map((f) => (
+                <li key={`${f.qid}:${f.wiki}`}>
+                  {f.qid}'s {f.wiki} sitelink “{f.title}” → “{f.target}”
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
         {blockers.length > 0 && (
           <div className="modal-section modal-blockers" role="alert">

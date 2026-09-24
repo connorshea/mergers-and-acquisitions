@@ -489,6 +489,38 @@ export type MergeConflict = "description" | "sitelink" | "statement";
  */
 export const AUTO_IGNORED_CONFLICTS: readonly MergeConflict[] = ["description"];
 
+/** A sitelink the merge flow removes first: a redirect to the partner's page. */
+export interface SitelinkFix {
+  /** The item whose sitelink is removed. */
+  qid: string;
+  wiki: string;
+  /** The redirect page it links. */
+  title: string;
+  /** The partner's page, which the redirect points at. */
+  target: string;
+}
+
+/**
+ * How to clear every same-wiki sitelink clash between `a` and `b` by removing
+ * the side that is a redirect to the other's page (known from
+ * `sitelinkRedirects`) — the shape where one wiki already treats the two as one
+ * subject, so dropping the redirect loses nothing. Empty when they don't clash;
+ * null when some clash isn't that shape and still needs a person.
+ */
+export function redirectSitelinkFixes(a: Item, b: Item): SitelinkFix[] | null {
+  const fixes: SitelinkFix[] = [];
+  for (const [wiki, titleA] of Object.entries(a.sitelinks)) {
+    const titleB = b.sitelinks[wiki];
+    if (titleB === undefined || titleB === titleA) continue;
+    if (redirectsToPartner(a, b, wiki))
+      fixes.push({ qid: a.id, wiki, title: titleA, target: titleB });
+    else if (redirectsToPartner(b, a, wiki))
+      fixes.push({ qid: b.id, wiki, title: titleB, target: titleA });
+    else return null;
+  }
+  return fixes;
+}
+
 /**
  * Whether a comparison `Row` is an auto-ignored conflict (see
  * `AUTO_IGNORED_CONFLICTS`). Keyed off the row key so both the scorer and the UI

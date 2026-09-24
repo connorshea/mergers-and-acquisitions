@@ -94,6 +94,23 @@ export interface CandidateMergeResponse {
    * look by hand.
    */
   redirected: boolean;
+  /**
+   * Sitelinks removed before the merge because each linked a redirect to the
+   * other item's page (the one sitelink clash the merge clears by itself).
+   */
+  removedSitelinks?: RemovedSitelink[];
+}
+
+/** A sitelink to a redirect, removed so the merge could go through. */
+export interface RemovedSitelink {
+  qid: string;
+  wiki: string;
+  /** The redirect page the sitelink pointed at. */
+  title: string;
+  /** The other item's page, which the redirect points at. */
+  target: string;
+  revid: number;
+  url: string;
 }
 
 /** The outcome of one direction of a "different from" claim. */

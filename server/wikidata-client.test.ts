@@ -9,6 +9,7 @@ import {
   finishRedirect,
   mergeItems,
   probeMerge,
+  removeSitelink,
   revisionUrl,
   WikidataEditError,
   type WikidataClientDeps,
@@ -387,6 +388,33 @@ describe("addItemClaim", () => {
     });
     // The user is waiting on it, so it skips the lag guard.
     expect(calls[1].params.has("maxlag")).toBe(false);
+  });
+});
+
+describe("removeSitelink", () => {
+  it("posts a wbsetsitelink with no title and returns the revision", async () => {
+    const { deps, calls } = makeDeps([
+      { success: 1, entity: { id: "Q20", lastrevid: 43, sitelinks: { enwiki: { removed: "" } } } },
+    ]);
+    const result = await removeSitelink(USER, { qid: "Q20", wiki: "enwiki", summary: "s" }, deps);
+    expect(result).toEqual({ revid: 43 });
+    expect(Object.fromEntries(calls[1].params)).toMatchObject({
+      action: "wbsetsitelink",
+      id: "Q20",
+      linksite: "enwiki",
+      summary: "s",
+      token: "csrf-1",
+    });
+    expect(calls[1].params.has("linktitle")).toBe(false);
+    expect(calls[1].params.has("maxlag")).toBe(false);
+  });
+
+  it("maps a refusal to a WikidataEditError", async () => {
+    const { deps } = makeDeps([apiError("protectedpage")]);
+    const err = await failure(
+      removeSitelink(USER, { qid: "Q20", wiki: "enwiki", summary: "s" }, deps),
+    );
+    expect(err.kind).toBe("permission-denied");
   });
 });
 

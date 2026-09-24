@@ -196,29 +196,23 @@ async function upsertCandidates(db: Db, rows: CandidateRow[]): Promise<void> {
     });
 }
 
+/** Pairs scored per window; only the items those pairs reference are loaded. */
+const SCORE_WINDOW = 5000;
+
 /**
- * Score every pair in memory, then write the results in batches: survivors are
- * upserted `WRITE_CHUNK` rows per statement, and open rows for pairs that fell
- * below the floor are deleted by id. (One round-trip per pair made the writes
- * the bulk of the run — scoring itself is well under a second.)
+ * Score the pairs a window at a time and write each window's results before
+ * loading the next. Holding every referenced item at once doesn't fit: a parsed
+ * `Item` is ~5.5 KB of heap, and a full-dump hunt touches hundreds of thousands
+ * of them — past the job's 1.5 GB heap. Pairs arrive grouped by blocking bucket
+ * (see `addGroupPairs`), so a window's items mostly overlap and few are fetched
+ * twice across windows.
+ *
+ * Survivors are upserted `WRITE_CHUNK` rows per statement, and open rows for
+ * pairs that fell below the floor are deleted by id.
  */
 async function score(db: Db, pairs: [string, string][]): Promise<HuntStats> {
   const stats: HuntStats = { pairs: pairs.length, scored: 0, upserted: 0, deleted: 0, failed: 0 };
   if (pairs.length === 0) return stats;
-
-  // Load every referenced item's data in one pass, chunked into IN lists.
-  const wanted = new Set<string>();
-  for (const [a, b] of pairs) {
-    wanted.add(a);
-    wanted.add(b);
-  }
-  const rowChunks = await Promise.all(
-    chunk(Array.from(wanted), ID_CHUNK).map((ids) =>
-      db.select({ qid: items.qid, data: items.data }).from(items).where(inArray(items.qid, ids)),
-    ),
-  );
-  const byQid = new Map<string, Item>();
-  for (const row of rowChunks.flat()) byQid.set(row.qid, row.data as Item);
 
   const [idProps, mirroredProps] = await Promise.all([
     loadIdentifierProps(db),
@@ -232,79 +226,94 @@ async function score(db: Db, pairs: [string, string][]): Promise<HuntStats> {
   if (idProps.size > 0) scoreOpts.isIdentifierProp = (pid) => idProps.has(pid);
   if (mirroredProps.size > 0) scoreOpts.isMirroredIdProp = (pid) => mirroredProps.has(pid);
 
-  const survivors: CandidateRow[] = [];
-  const belowFloor = new Set<string>(); // `${from}|${into}` of pairs under MIN_CONFIDENCE
-  for (const [qa, qb] of pairs) {
-    const a = byQid.get(qa);
-    const b = byQid.get(qb);
-    if (!a || !b) continue; // an item may have been removed since the scan
-    stats.scored++;
+  // A pair that no longer clears the floor (e.g. after a heuristic change that
+  // exposed it as a false positive) must not linger with a stale higher score,
+  // so its open row is dropped. Most below-floor pairs have no row at all, so
+  // look the existing open rows up once (the unresolved set is comparatively
+  // small) instead of issuing a DELETE per pair. Never touch one a human resolved.
+  const unresolved = notInArray(mergeCandidates.status, [...PROTECTED_STATUSES]);
+  const openRows = await db
+    .select({
+      id: mergeCandidates.id,
+      fromQid: mergeCandidates.fromQid,
+      intoQid: mergeCandidates.intoQid,
+    })
+    .from(mergeCandidates)
+    .where(unresolved);
+  const openIds = new Map(openRows.map((r) => [`${r.fromQid}|${r.intoQid}`, r.id]));
+  const stale: number[] = [];
 
-    try {
-      const [from, into] = orderByAge(a, b);
-      const result = scoreCandidate(from, into, scoreOpts);
-      if (result.confidence < MIN_CONFIDENCE) {
-        belowFloor.add(`${from.id}|${into.id}`);
-        continue;
-      }
-      survivors.push({
-        fromQid: from.id,
-        intoQid: into.id,
-        confidence: result.confidence,
-        reasons: result.reasons,
-        hasBlocker: result.hasBlocker,
-      });
-    } catch (err) {
-      console.error(`hunt score: pair ${qa}/${qb} failed`, err);
-      stats.failed++;
+  for (const window of chunk(pairs, SCORE_WINDOW)) {
+    const wanted = new Set<string>();
+    for (const [a, b] of window) {
+      wanted.add(a);
+      wanted.add(b);
     }
-  }
+    const byQid = new Map<string, Item>();
+    for (const ids of chunk(Array.from(wanted), ID_CHUNK)) {
+      const rows = await db
+        .select({ qid: items.qid, data: items.data })
+        .from(items)
+        .where(inArray(items.qid, ids));
+      for (const row of rows) byQid.set(row.qid, row.data as Item);
+    }
 
-  for (const batch of chunk(survivors, WRITE_CHUNK)) {
-    try {
-      await upsertCandidates(db, batch);
-      stats.upserted += batch.length;
-    } catch (batchErr) {
-      // Retry row by row so one bad row doesn't cost the whole batch, and the
-      // failure is attributed to the pair that caused it.
-      console.warn(`hunt score: batch upsert failed, retrying rows individually`, batchErr);
-      for (const row of batch) {
-        try {
-          await upsertCandidates(db, [row]);
-          stats.upserted++;
-        } catch (err) {
-          console.error(`hunt score: pair ${row.fromQid}/${row.intoQid} failed`, err);
-          stats.failed++;
+    const survivors: CandidateRow[] = [];
+    for (const [qa, qb] of window) {
+      const a = byQid.get(qa);
+      const b = byQid.get(qb);
+      if (!a || !b) continue; // an item may have been removed since the scan
+      stats.scored++;
+
+      try {
+        const [from, into] = orderByAge(a, b);
+        const result = scoreCandidate(from, into, scoreOpts);
+        if (result.confidence < MIN_CONFIDENCE) {
+          const id = openIds.get(`${from.id}|${into.id}`);
+          if (id !== undefined) stale.push(id);
+          continue;
+        }
+        survivors.push({
+          fromQid: from.id,
+          intoQid: into.id,
+          confidence: result.confidence,
+          reasons: result.reasons,
+          hasBlocker: result.hasBlocker,
+        });
+      } catch (err) {
+        console.error(`hunt score: pair ${qa}/${qb} failed`, err);
+        stats.failed++;
+      }
+    }
+
+    for (const batch of chunk(survivors, WRITE_CHUNK)) {
+      try {
+        await upsertCandidates(db, batch);
+        stats.upserted += batch.length;
+      } catch (batchErr) {
+        // Retry row by row so one bad row doesn't cost the whole batch, and the
+        // failure is attributed to the pair that caused it.
+        console.warn(`hunt score: batch upsert failed, retrying rows individually`, batchErr);
+        for (const row of batch) {
+          try {
+            await upsertCandidates(db, [row]);
+            stats.upserted++;
+          } catch (err) {
+            console.error(`hunt score: pair ${row.fromQid}/${row.intoQid} failed`, err);
+            stats.failed++;
+          }
         }
       }
     }
   }
 
-  // A pair that no longer clears the floor (e.g. after a heuristic change that
-  // exposed it as a false positive) must not linger with a stale higher score,
-  // so drop any open row for it. Never touch one a human resolved. Most
-  // below-floor pairs have no row at all, so find the ones that do from the
-  // (comparatively small) set of unresolved candidates rather than issuing a
-  // DELETE per pair.
-  if (belowFloor.size > 0) {
-    const unresolved = notInArray(mergeCandidates.status, [...PROTECTED_STATUSES]);
-    const open = await db
-      .select({
-        id: mergeCandidates.id,
-        fromQid: mergeCandidates.fromQid,
-        intoQid: mergeCandidates.intoQid,
-      })
-      .from(mergeCandidates)
-      .where(unresolved);
-    const stale = open.filter((r) => belowFloor.has(`${r.fromQid}|${r.intoQid}`)).map((r) => r.id);
-    for (const ids of chunk(stale, WRITE_CHUNK)) {
-      // Re-check the status in the DELETE itself in case a reviewer resolved
-      // the row since the SELECT above.
-      const [res] = await db
-        .delete(mergeCandidates)
-        .where(and(inArray(mergeCandidates.id, ids), unresolved));
-      stats.deleted += res.affectedRows;
-    }
+  for (const ids of chunk(stale, WRITE_CHUNK)) {
+    // Re-check the status in the DELETE itself in case a reviewer resolved the
+    // row since the SELECT above.
+    const [res] = await db
+      .delete(mergeCandidates)
+      .where(and(inArray(mergeCandidates.id, ids), unresolved));
+    stats.deleted += res.affectedRows;
   }
 
   console.log(

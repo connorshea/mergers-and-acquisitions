@@ -65,6 +65,30 @@ export interface CandidateDetailResponse {
   nextId: number | null;
 }
 
+/** An item's first revision on Wikidata: who created it, when, and how. */
+export interface ItemCreation {
+  qid: string;
+  revId: number;
+  /** UTC, "YYYY-MM-DD HH:MM:SS". */
+  createdAt: string;
+  /** Null when revision-deleted. An IP address for a logged-out creation. */
+  userName: string | null;
+  /** Null for a logged-out (IP) creation or a hidden user. */
+  userId: number | null;
+  userEditCount: number | null;
+  /** In the `bot` user group now (not necessarily when the item was made). */
+  userIsBot: boolean;
+  /** The raw edit summary; null when revision-deleted. */
+  comment: string | null;
+  /** Change tags on the revision, e.g. "openrefine-3.8". */
+  tags: string[];
+}
+
+export interface CandidateCreationsResponse {
+  /** Keyed by qid. A qid that's absent couldn't be looked up (try again later). */
+  creations: Record<string, ItemCreation>;
+}
+
 export interface CandidateDismissResponse {
   candidate: CandidateSummary;
 }

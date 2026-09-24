@@ -10,12 +10,14 @@ import { addSeconds, toSqlDatetime } from "./auth/time.ts";
 import { MERGING_STALE_SECONDS } from "./edits.ts";
 import { loadLabels, summaryColumns, toSummary } from "./candidate-summary.ts";
 import { attachSitelinkRedirects } from "./sitelink-overlay.ts";
+import { loadCreations } from "./item-creations.ts";
 import { entityLabels, items, mergeCandidates, properties } from "../db/schema.ts";
 import type { Item } from "../src/lib/compare.ts";
 import { chunk } from "../src/lib/chunk.ts";
 import {
   CANDIDATE_SORTS,
   CANDIDATE_STATUSES,
+  type CandidateCreationsResponse,
   type CandidateDetailResponse,
   type CandidateDismissResponse,
   type CandidateListResponse,
@@ -258,6 +260,27 @@ candidates.get("/:id", async (c) => {
     valueLabels,
     prevId: prevRows[0]?.id ?? null,
     nextId: nextRows[0]?.id ?? null,
+  };
+  return c.json(payload);
+});
+
+// GET /api/candidates/:id/creations — who created each item, when, and how.
+// Separate from the detail so the comparison renders without waiting on the
+// Action API for items the nightly replica job hasn't reached yet.
+candidates.get("/:id/creations", async (c) => {
+  const id = Number(c.req.param("id"));
+  if (!Number.isInteger(id)) {
+    return c.json({ error: "Invalid candidate id" }, 404);
+  }
+  const [row] = await db
+    .select({ fromQid: mergeCandidates.fromQid, intoQid: mergeCandidates.intoQid })
+    .from(mergeCandidates)
+    .where(eq(mergeCandidates.id, id));
+  if (!row) {
+    return c.json({ error: "Candidate not found" }, 404);
+  }
+  const payload: CandidateCreationsResponse = {
+    creations: await loadCreations([row.fromQid, row.intoQid]),
   };
   return c.json(payload);
 });

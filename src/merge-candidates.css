@@ -170,6 +170,24 @@ body {
 .plate-desc {
   color: var(--muted);
 }
+.plate-created {
+  margin-top: 0.45rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.plate-created a {
+  color: inherit;
+}
+.plate-created a:hover {
+  color: var(--focus);
+}
+.plate-flag {
+  margin-left: 0.4rem;
+  padding: 0 0.35rem;
+  border: 1px solid var(--muted);
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
 .col-id {
   color: inherit;
   text-decoration: none;

@@ -11,6 +11,16 @@ import {
 } from "./lib/compare.ts";
 import { sitelinkUrl, wikiPageUrl } from "./lib/wiki.ts";
 import { displayLabel } from "./lib/wikidata.ts";
+import type { ItemCreation } from "./lib/api-types.ts";
+import {
+  creationDate,
+  creationRevisionUrl,
+  creationTool,
+  creatorUrl,
+  historyUrl,
+  isTemporaryAccount,
+  looksLikeBot,
+} from "./lib/creation.ts";
 
 // ---------- UI ----------
 
@@ -114,7 +124,80 @@ function sitelinkSite(r: Row): string | undefined {
   return r.kind === "sitelink" ? r.key.slice("sitelink:".length) : undefined;
 }
 
-function ItemPlate({ item, side }: { item: Item; side: "from" | "into" }) {
+/**
+ * "Created 19 Mar 2024 by Someone (12,345 edits) · via OpenRefine batch ·
+ * history": who made the item and how, which reviewers weigh when judging
+ * whether a duplicate was an accident.
+ */
+function CreationLine({ creation }: { creation: ItemCreation }) {
+  const date = creationDate(creation);
+  const tool = creationTool(creation);
+  const userUrl = creatorUrl(creation);
+  const temporary = isTemporaryAccount(creation.userName);
+  const loggedOut = creation.userName !== null && creation.userId === null;
+  const summary = creation.comment ? `\nSummary: ${creation.comment}` : "";
+  return (
+    <div className="plate-created">
+      Created{" "}
+      <a
+        href={creationRevisionUrl(creation)}
+        target="_blank"
+        rel="noreferrer"
+        title={`${creation.createdAt} UTC${summary}`}
+      >
+        {date.toLocaleDateString(undefined, {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          timeZone: "UTC",
+        })}
+      </a>{" "}
+      by{" "}
+      {creation.userName && userUrl ? (
+        <a href={userUrl} target="_blank" rel="noreferrer">
+          {creation.userName}
+        </a>
+      ) : (
+        <span className="plate-created-hidden">(hidden user)</span>
+      )}
+      {creation.userEditCount !== null && (
+        <span className="plate-created-stat">
+          {" "}
+          ({creation.userEditCount.toLocaleString()} edits)
+        </span>
+      )}
+      {looksLikeBot(creation) && <span className="plate-flag">bot</span>}
+      {temporary && <span className="plate-flag">temporary account</span>}
+      {loggedOut && !temporary && <span className="plate-flag">logged out</span>}
+      {tool && (
+        <>
+          {" · via "}
+          {tool.url ? (
+            <a href={tool.url} target="_blank" rel="noreferrer">
+              {tool.name}
+            </a>
+          ) : (
+            tool.name
+          )}
+        </>
+      )}
+      {" · "}
+      <a href={historyUrl(creation.qid)} target="_blank" rel="noreferrer">
+        history
+      </a>
+    </div>
+  );
+}
+
+function ItemPlate({
+  item,
+  side,
+  creation,
+}: {
+  item: Item;
+  side: "from" | "into";
+  creation?: ItemCreation;
+}) {
   const label = displayLabel(item);
   return (
     <div className={`plate plate-${side}`}>
@@ -136,6 +219,7 @@ function ItemPlate({ item, side }: { item: Item; side: "from" | "into" }) {
         </a>
         {item.descriptions.en && <span className="plate-desc">{item.descriptions.en}</span>}
       </div>
+      {creation && <CreationLine creation={creation} />}
     </div>
   );
 }
@@ -160,6 +244,7 @@ export default function MergeCandidates({
   propertyFormatters,
   propertyMirrors,
   valueLabels,
+  creations,
 }: {
   from: Item;
   into: Item;
@@ -171,6 +256,8 @@ export default function MergeCandidates({
   propertyMirrors?: string[];
   /** Qxxx → human label, from the DB-backed entity_labels table. */
   valueLabels?: Record<string, string>;
+  /** Qxxx → who created it and how; loaded after the rest, so absent at first. */
+  creations?: Record<string, ItemCreation>;
 }) {
   // A property is Wikidata-sourced if the synced set flags it OR it's in the
   // hardcoded floor (which covers services Wikidata hasn't tagged, e.g.
@@ -227,11 +314,11 @@ export default function MergeCandidates({
   return (
     <div className="mc">
       <header className="mc-head">
-        <ItemPlate item={from} side="from" />
+        <ItemPlate item={from} side="from" creation={creations?.[from.id]} />
         <div className="arrow" aria-hidden="true" title="Higher ID merges into lower ID">
           →
         </div>
-        <ItemPlate item={into} side="into" />
+        <ItemPlate item={into} side="into" creation={creations?.[into.id]} />
       </header>
 
       <div className="mc-toolbar">

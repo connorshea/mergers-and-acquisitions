@@ -80,3 +80,13 @@
   schedule: "30 4 * * *" # nightly 04:30 UTC
   mem: 1Gi
   emails: onfailure
+
+# Record who created each open candidate's items, and when, from the
+# wikidatawiki replica (same TOOL_REPLICA_* credentials). After the hunt; only
+# new items (and month-old rows) are read, so it's quick after the first run.
+- name: resolve-creations
+  command: node jobs/resolve-creations.ts
+  image: tool-mna/tool-mna:latest
+  schedule: "0 5 * * *" # nightly 05:00 UTC
+  mem: 1Gi
+  emails: onfailure

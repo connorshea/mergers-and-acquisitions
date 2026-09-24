@@ -231,6 +231,23 @@ machine, tunnel through the bastion and point `REPLICA_HOST` / `REPLICA_PORT` /
 replica credentials from the tool's `replica.my.cnf` in the `TOOL_REPLICA_*`
 variables.
 
+## Item creators
+
+Reviewers find it useful to know who created each item in a pair, when, and
+how: a duplicate made by a drive-by account or a bulk import is more likely an
+accident than one made by an editor they know. The detail page shows each
+item's creator (with their edit count and bot flag), the creation date, and the
+tool behind it when the edit summary or tags name one (QuickStatements batch,
+OpenRefine / EditGroups batch, Mix'n'match, …).
+
+`pnpm job:resolve-creations` (`jobs/resolve-creations.ts` →
+`server/item-creations.ts`, nightly after the hunt) reads each open candidate's
+items' first revision from the `wikidatawiki` replica into `item_creations`,
+with the same replica settings as above. Only new items are read, plus rows
+older than 30 days, to refresh the creator's stats. A pair viewed before the
+job has reached it is looked up through the Action API instead
+(`GET /api/candidates/:id/creations`) and cached the same way.
+
 ## Deploying to Toolforge
 
 The Build Service builds the image from the GitHub repo directly — it clones the

@@ -13,6 +13,8 @@
 
 import { mkdir, writeFile, readFile } from "node:fs/promises";
 import { join } from "node:path";
+import { type Entity, entityToItem } from "../src/lib/wikibase.ts";
+import { recordRedirects } from "./eval-redirects.ts";
 
 const ENTITYDATA = "https://www.wikidata.org/wiki/Special:EntityData";
 const UA =
@@ -126,6 +128,20 @@ async function main() {
     await mkdir(dir, { recursive: true });
     await writeFile(join(dir, `${a}.json`), JSON.stringify(ea, null, 2));
     await writeFile(join(dir, `${b}.json`), JSON.stringify(eb, null, 2));
+
+    // Where clashing sitelinks redirect, so the scorer sees what production's
+    // replica overlay would. A wiki that can't be read doesn't sink the pair.
+    try {
+      await recordRedirects(
+        dir,
+        entityToItem(ea as unknown as Entity),
+        entityToItem(eb as unknown as Entity),
+      );
+    } catch (err) {
+      console.warn(
+        `${key}: sitelink redirects not recorded — ${err instanceof Error ? err.message : String(err)}`,
+      );
+    }
 
     const record = {
       label: "distinct", // negative example: these two are NOT the same subject

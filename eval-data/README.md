@@ -17,12 +17,14 @@ eval-data/
       <SOURCE>.pre.json         source item's full entity blob, pre-merge
       <TARGET>.pre.json         target item's full entity blob, pre-merge
       meta.json                 the pair's record (same shape as an index line)
+      sitelink-redirects.json   (optional) where clashing sitelinks redirect
   non-dupe-pairs/               negative examples — pairs that are NOT duplicates
     index.jsonl                 one JSON record per pair (the manifest)
     <A>_vs_<B>/                 (A/B ordered by QID number, lower first)
       <A>.json                  item A's full entity blob, current revision
       <B>.json                  item B's full entity blob, current revision
       meta.json                 the pair's record (same shape as an index line)
+      sitelink-redirects.json   (optional) where clashing sitelinks redirect
 ```
 
 Each `*.pre.json` is the **full official Wikibase entity JSON** (labels, aliases,
@@ -47,6 +49,36 @@ to whatever an evaluator needs.
 For a `hand-curated` pair (not merged yet) `source`/`target` are the intended
 merge direction, the two `*PreRevid`s are each item's current revision at fetch
 time, and `targetPostRevid` / `mergedAt` are `null`.
+
+### `sitelink-redirects.json`
+
+The entity blobs carry sitelink badges, but not where a redirect points —
+production learns that from the Wiki Replicas and, before a merge, from the
+wikis' Action API (`Item.sitelinkRedirects`). For a pair whose items link
+different pages on the same wiki, the fetchers ask that wiki which of those
+pages are redirects and record the answer here, so the scorer sees the same
+redirect-to-partner evidence offline:
+
+```json
+{
+  "checkedAt": "2026-09-24",
+  "redirects": { "Q137330193": { "enwiki": "Akai Katana", "jawiki": "赤い刀" } }
+}
+```
+
+A target is `"Title#Section"` for a redirect to a section, and `null` when it
+points off-wiki. The file only exists once some clashing page is a redirect.
+
+It's resolved when the pair is captured, not at the blobs' revisions, and it's
+**append-only**: recorded entries are never overwritten or removed, since a
+merge or a cleanup later changes what the wiki says. A re-check only adds
+redirects not recorded yet. To re-resolve a pair from scratch, delete its file
+and re-run:
+
+```sh
+pnpm eval:resolve-redirects                          # every pair
+pnpm eval:resolve-redirects Q4700160_vs_Q137330193   # named pair dirs
+```
 
 ## Positive examples — how they're built
 

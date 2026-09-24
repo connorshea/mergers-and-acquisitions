@@ -438,7 +438,6 @@ export default function CandidatesList() {
                   <th className="col-pair">Candidate</th>
                   <th className="col-conf">Confidence</th>
                   <th className="col-flags">Flags</th>
-                  <th className="col-when">Found</th>
                   <th className="col-actions" />
                 </tr>
               </thead>
@@ -571,7 +570,6 @@ function CandidateRowView({
         )}
         {c.status !== "open" && <span className="flag flag-status">{c.status}</span>}
       </td>
-      <td className="col-when">{c.detectedAt.slice(0, 10)}</td>
       <td className="col-actions">
         {c.status === "open" && (
           <button

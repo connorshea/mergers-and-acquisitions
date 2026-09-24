@@ -42,7 +42,11 @@ to whatever an evaluator needs.
 | `targetPreRevid`              | revision of `target` used for its blob (last independent state) |
 | `targetPostRevid`             | target's revision right after receiving the merge (the union)   |
 | `mergedAt`                    | merge timestamp (UTC)                                           |
-| `provenance`                  | how the pair was obtained (`wikidata-merge-redirect`)           |
+| `provenance`                  | `wikidata-merge-redirect`, or `hand-curated` (see below)        |
+
+For a `hand-curated` pair (not merged yet) `source`/`target` are the intended
+merge direction, the two `*PreRevid`s are each item's current revision at fetch
+time, and `targetPostRevid` / `mergedAt` are `null`.
 
 ## Positive examples — how they're built
 
@@ -66,6 +70,17 @@ It writes the `<SOURCE>_into_<TARGET>/` directory and appends to
 `merged-pairs/index.jsonl`. Commit the new files. Good sources of positives:
 merges you perform yourself, and any true duplicates you find on live Wikidata
 (merge them, then run the fetcher on either QID).
+
+To record a duplicate you've confirmed but that **hasn't been merged**, pass
+`--unmerged` and give QIDs pairwise as SOURCE TARGET. Both items are pinned at
+their current revision and tagged `provenance: "hand-curated"`:
+
+```sh
+pnpm eval:fetch-pairs -- --unmerged Q5467137 Q5467133
+```
+
+(An example: _For the Sake of the Call_, whose second item's enwiki sitelink is
+a redirect to its partner's article, which the scorer should still catch.)
 
 ## Negative examples
 

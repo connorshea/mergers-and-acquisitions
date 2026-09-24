@@ -1,0 +1,398 @@
+{
+  "pageid": 11686150,
+  "ns": 0,
+  "title": "Q10381682",
+  "lastrevid": 2220302145,
+  "modified": "2024-08-04T02:25:44Z",
+  "type": "item",
+  "id": "Q10381682",
+  "labels": {
+    "pt": {
+      "language": "pt",
+      "value": "The Path of totality"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "The Path of totality"
+    },
+    "es": {
+      "language": "es",
+      "value": "The Path of totality"
+    },
+    "en": {
+      "language": "en",
+      "value": "The Path of totality"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "The Path of totality"
+    }
+  },
+  "descriptions": {
+    "nl": {
+      "language": "nl",
+      "value": "muziekalbum van Korn"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "ألبوم"
+    },
+    "en": {
+      "language": "en",
+      "value": "album by Korn"
+    },
+    "en-gb": {
+      "language": "en-gb",
+      "value": "album by Korn"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "album de Korn"
+    },
+    "en-ca": {
+      "language": "en-ca",
+      "value": "album by Korn"
+    },
+    "hy": {
+      "language": "hy",
+      "value": "երաժշտական ալբոմ"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "dc16d32b615bf1c6edf1919941065eedccacb8e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 482994,
+              "id": "Q482994"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q10381682$F8370723-4379-4320-BA78-999090E32EFE",
+        "rank": "normal"
+      }
+    ],
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "1bd7d2654214c7214d2590a2a68a75df7b8d9705",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 80304,
+              "id": "Q80304"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q10381682$7766c14d-226c-4c16-91ad-46fc2603180c",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9424852ca7d9d48269148c57acbefacca1899882",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "b7f8bea3bb10c237323eb448dc4798948923bd5c",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11921,
+                      "id": "Q11921"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "67d1b75253e0d778a47e2751415aa2f6e348270d",
+          "datavalue": {
+            "value": {
+              "time": "+2011-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q10381682$574fb7c6-f2ed-4dda-8a07-a9eab98a9e0f",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9424852ca7d9d48269148c57acbefacca1899882",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "b7f8bea3bb10c237323eb448dc4798948923bd5c",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11921,
+                      "id": "Q11921"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P1954": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1954",
+          "hash": "f428d4fa6b1403cf4cee500af05da38a9fdd3e4b",
+          "datavalue": {
+            "value": "391214",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q10381682$8216915c-b53b-40f3-8805-3568421a356c",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "dc7ed8692db6ee645a67ce96dbd5ecca768383a1",
+            "snaks": {
+              "P887": [
+                {
+                  "snaktype": "value",
+                  "property": "P887",
+                  "hash": "0ca41c4135639ebe0e0ddac1f02e9b8648203ca7",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11660,
+                      "id": "Q11660"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a450999b51bcabb241de9ae30602e93be3f99075",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2019-10-09T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P887", "P813"]
+          }
+        ]
+      }
+    ],
+    "P264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P264",
+          "hash": "37ac80782fdef71e1a2a7bdd543518e96ae8bb1a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 18628,
+              "id": "Q18628"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q10381682$E254DF23-48A8-489D-AD34-38B0BF01526E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "5c8c844c6dfceb0f0fafb658061519a7faa3ef55",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "b7f8bea3bb10c237323eb448dc4798948923bd5c",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11921,
+                      "id": "Q11921"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "f9386db91dc3e2d2fab90f5175fe418647a42b9a",
+                  "datavalue": {
+                    "value": "https://pt.wikipedia.org/w/index.php?title=The_Path_of_totality&oldid=53054130",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "0389f48223980416b25f4cf282a79577610691f7",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 263734,
+              "id": "Q263734"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q10381682$62EEB283-901B-4BA3-BE7D-94F4245B2A8D",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "6f828cf3c752e34b349ffe5865bc1569cc3232e4",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "b7f8bea3bb10c237323eb448dc4798948923bd5c",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11921,
+                      "id": "Q11921"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "88898c8932b3b2c0baf6ef72e9a1b56fbbd2f6e2",
+                  "datavalue": {
+                    "value": "https://pt.wikipedia.org/w/index.php?title=The_Path_of_totality&oldid=60303792",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "6d6a6cb2cca8aa0bef3feb150cd34c941bb06778",
+          "datavalue": {
+            "value": "/m/0h1gyly",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q10381682$6533CD08-E93D-4399-B4DE-4A7E4C74B204",
+        "rank": "normal"
+      }
+    ],
+    "P291": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P291",
+          "hash": "d030038c836f9ed0d37c69cb8c389d689ebeb05a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 30,
+              "id": "Q30"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q10381682$DDDA4581-47F6-4066-90BC-F9D4492FDCAC",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "ptwiki": {
+      "site": "ptwiki",
+      "title": "The Path of totality",
+      "badges": ["Q70893996"],
+      "url": "https://pt.wikipedia.org/wiki/The_Path_of_totality"
+    }
+  }
+}

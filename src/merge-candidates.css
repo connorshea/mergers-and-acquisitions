@@ -801,6 +801,17 @@ a.chip-id:hover {
 .ledger.candidates .col-prop {
   border-right: none;
 }
+.pair-type {
+  display: table;
+  margin-bottom: 0.3rem;
+  padding: 0.05rem 0.45rem;
+  border-radius: 4px;
+  background: var(--shared-bg);
+  color: var(--shared);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
 .pair-link {
   display: inline-flex;
   flex-wrap: wrap;

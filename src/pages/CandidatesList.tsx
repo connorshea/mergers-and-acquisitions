@@ -511,9 +511,9 @@ function CandidateRowView({
   canDismiss: boolean;
 }) {
   const pct = Math.round(c.confidence * 100);
-  // "same instance of (P31)" is true of nearly every in-scope pair (all video
-  // games), so it's noise in the compact list summary — drop it here. The full
-  // reason list still shows on the detail view.
+  // "same instance of (P31)" is already shown as the type pill (and is true of
+  // nearly every pair), so it's noise in the compact list summary — drop it
+  // here. The full reason list still shows on the detail view.
   const summaryReasons = c.reasons.filter((r) => !r.includes("instance of"));
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -532,6 +532,14 @@ function CandidateRowView({
   return (
     <tr>
       <td className="col-pair">
+        {c.sharedType && (
+          <span
+            className="pair-type"
+            title={`Both items are an instance of ${c.sharedType.label ?? c.sharedType.qid} (${c.sharedType.qid})`}
+          >
+            {c.sharedType.label ?? c.sharedType.qid}
+          </span>
+        )}
         <Link className="pair-link" to={`/candidates/${c.id}`}>
           <span className="pair-side">
             {c.fromLabel ?? c.fromQid} <span className="pair-qid">{c.fromQid}</span>

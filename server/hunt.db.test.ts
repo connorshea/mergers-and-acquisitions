@@ -1,7 +1,7 @@
 // Integration tests for the hunt (server/hunt.ts) against a real MariaDB:
 // blocking, scoring, and the upsert rules. Opt-in via DB_TEST=1 — see
 // test/global-setup.ts.
-import { afterAll, beforeEach, describe, expect, it } from "vite-plus/test";
+import { afterAll, afterEach, beforeEach, describe, expect, it } from "vite-plus/test";
 import { db, pool } from "./db.ts";
 import { mergeCandidates, properties } from "../db/schema.ts";
 import { MIN_CONFIDENCE, runHunt } from "./hunt.ts";
@@ -29,7 +29,14 @@ describe.skipIf(!DB_TEST)("runHunt", () => {
     await insertItem(makeItem("Q200", "Starfall Drift", steam("812340")));
 
     const stats = await runHunt();
-    expect(stats).toEqual({ pairs: 1, scored: 1, upserted: 1, deleted: 0, failed: 0 });
+    expect(stats).toEqual({
+      pairs: 1,
+      scored: 1,
+      upserted: 1,
+      deleted: 0,
+      pruned: 0,
+      failed: 0,
+    });
 
     const rows = await allCandidates();
     expect(rows).toHaveLength(1);
@@ -139,6 +146,81 @@ describe.skipIf(!DB_TEST)("runHunt", () => {
     });
     await runHunt();
     expect(await allCandidates()).toHaveLength(1);
+  });
+
+  it("prunes an open row whose pair the scan no longer produces", async () => {
+    // Q100/Q200 still block (and survive); Q300/Q400 share nothing, so an open
+    // row for them is an orphan of some older blocking rule.
+    await insertItem(makeItem("Q100", "Starfall Drift", steam("812340")));
+    await insertItem(makeItem("Q200", "Starfall Drift", steam("812340")));
+    await insertItem(makeItem("Q300", "Gamma"));
+    await insertItem(makeItem("Q400", "Delta"));
+    await db.insert(mergeCandidates).values([
+      { fromQid: "Q400", intoQid: "Q300", confidence: 0.9, reasons: ["orphan"] },
+      // Items that no longer exist at all.
+      { fromQid: "Q999", intoQid: "Q998", confidence: 0.9, reasons: ["orphan"] },
+    ]);
+
+    const stats = await runHunt();
+    expect(stats).toMatchObject({ pairs: 1, upserted: 1, deleted: 0, pruned: 2 });
+    const rows = await allCandidates();
+    expect(rows.map((r) => [r.fromQid, r.intoQid])).toEqual([["Q200", "Q100"]]);
+  });
+
+  it("keeps a resolved row whose pair the scan no longer produces", async () => {
+    await insertItem(makeItem("Q100", "Starfall Drift", steam("812340")));
+    await insertItem(makeItem("Q200", "Starfall Drift", steam("812340")));
+    await db.insert(mergeCandidates).values({
+      fromQid: "Q400",
+      intoQid: "Q300",
+      confidence: 0.9,
+      reasons: [],
+      status: "merged",
+    });
+    const stats = await runHunt();
+    expect(stats.pruned).toBe(0);
+    expect(await allCandidates()).toHaveLength(2);
+  });
+
+  it("prunes nothing when the scan finds no pairs at all", async () => {
+    await db.insert(mergeCandidates).values({
+      fromQid: "Q400",
+      intoQid: "Q300",
+      confidence: 0.9,
+      reasons: [],
+    });
+    expect((await runHunt()).pruned).toBe(0);
+    expect(await allCandidates()).toHaveLength(1);
+  });
+
+  describe("mass-prune guard", () => {
+    const orphans = Array.from({ length: 150 }, (_, i) => ({
+      fromQid: `Q${20000 + i}`,
+      intoQid: `Q${10000 + i}`,
+      confidence: 0.9,
+      reasons: [],
+    }));
+    const seed = async () => {
+      await insertItem(makeItem("Q100", "Starfall Drift", steam("812340")));
+      await insertItem(makeItem("Q200", "Starfall Drift", steam("812340")));
+      await db.insert(mergeCandidates).values(orphans);
+    };
+    afterEach(() => {
+      delete process.env.HUNT_FORCE_PRUNE;
+    });
+
+    it("skips the prune when most open rows would go", async () => {
+      await seed();
+      expect((await runHunt()).pruned).toBe(0);
+      expect(await allCandidates()).toHaveLength(151);
+    });
+
+    it("prunes anyway with HUNT_FORCE_PRUNE=1", async () => {
+      await seed();
+      process.env.HUNT_FORCE_PRUNE = "1";
+      expect((await runHunt()).pruned).toBe(150);
+      expect(await allCandidates()).toHaveLength(1);
+    });
   });
 
   it("only blocks on real identifier properties once the property table is synced", async () => {

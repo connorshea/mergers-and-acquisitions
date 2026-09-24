@@ -54,12 +54,26 @@ const ID_CHUNK = 1000;
 /** Candidate rows per multi-row upsert / ids per stale-row DELETE. */
 const WRITE_CHUNK = 500;
 
+/**
+ * Safety valve for orphan pruning: if more than this fraction of the open rows
+ * (and more than `PRUNE_GUARD_MIN` of them) would be pruned as orphans, assume
+ * the scan saw a broken or half-imported table and skip the prune. Set
+ * `HUNT_FORCE_PRUNE=1` to prune anyway after an intentional blocking change.
+ */
+const PRUNE_GUARD_FRACTION = 0.5;
+const PRUNE_GUARD_MIN = 100;
+
 export interface HuntStats {
   pairs: number;
   scored: number;
   upserted: number;
   /** Stale open rows actually removed (pairs that fell below MIN_CONFIDENCE). */
   deleted: number;
+  /**
+   * Orphaned open rows actually removed: pairs the scan no longer produces at
+   * all (e.g. after a blocking change), or whose item has left the table.
+   */
+  pruned: number;
   failed: number;
 }
 
@@ -239,7 +253,16 @@ const SCORE_WINDOW = 5000;
  * pairs that fell below the floor are deleted by id.
  */
 async function score(db: Db, pairs: [string, string][]): Promise<HuntStats> {
-  const stats: HuntStats = { pairs: pairs.length, scored: 0, upserted: 0, deleted: 0, failed: 0 };
+  const stats: HuntStats = {
+    pairs: pairs.length,
+    scored: 0,
+    upserted: 0,
+    deleted: 0,
+    pruned: 0,
+    failed: 0,
+  };
+  // An empty scan means empty or broken tables, never "nothing is a candidate
+  // any more", so it must not prune every open row either.
   if (pairs.length === 0) return stats;
   const start = performance.now();
 
@@ -269,8 +292,15 @@ async function score(db: Db, pairs: [string, string][]): Promise<HuntStats> {
     })
     .from(mergeCandidates)
     .where(unresolved);
-  const openIds = new Map(openRows.map((r) => [`${r.fromQid}|${r.intoQid}`, r.id]));
+  // Keyed like the scan's pairs (`pairKey`: lower QID first).
+  const openIds = new Map(openRows.map((r) => [pairKey(r.fromQid, r.intoQid), r.id]));
   const stale: number[] = [];
+
+  // An open row whose pair the scan didn't produce at all is never rescored, so
+  // the stale check below can't reach it: it's an orphan of an older blocking
+  // rule (or of an item that was since removed) and is pruned too.
+  const orphaned = new Map(openIds);
+  for (const [a, b] of pairs) orphaned.delete(`${a}|${b}`);
   const windowCount = Math.ceil(pairs.length / SCORE_WINDOW);
   console.log(
     `hunt score: ${openRows.length} open candidate rows; scoring ${pairs.length} pairs ` +
@@ -299,14 +329,20 @@ async function score(db: Db, pairs: [string, string][]): Promise<HuntStats> {
     for (const [qa, qb] of window) {
       const a = byQid.get(qa);
       const b = byQid.get(qb);
-      if (!a || !b) continue; // an item may have been removed since the scan
+      if (!a || !b) {
+        // An item was removed since the scan (or its external ids outlived
+        // it): the pair can't be a candidate any more.
+        const id = openIds.get(`${qa}|${qb}`);
+        if (id !== undefined) orphaned.set(`${qa}|${qb}`, id);
+        continue;
+      }
       stats.scored++;
 
       try {
         const [from, into] = orderByAge(a, b);
         const result = scoreCandidate(from, into, scoreOpts);
         if (result.confidence < MIN_CONFIDENCE) {
-          const id = openIds.get(`${from.id}|${into.id}`);
+          const id = openIds.get(`${qa}|${qb}`);
           if (id !== undefined) stale.push(id);
           continue;
         }
@@ -374,8 +410,31 @@ async function score(db: Db, pairs: [string, string][]): Promise<HuntStats> {
     stats.deleted += res.affectedRows;
   }
 
+  const orphans = Array.from(orphaned.values());
+  if (
+    orphans.length > PRUNE_GUARD_MIN &&
+    orphans.length > openRows.length * PRUNE_GUARD_FRACTION &&
+    process.env.HUNT_FORCE_PRUNE !== "1"
+  ) {
+    console.warn(
+      `hunt score: NOT pruning ${orphans.length} of ${openRows.length} open rows the scan no ` +
+        `longer produces — too many to be a heuristic change; set HUNT_FORCE_PRUNE=1 if intended`,
+    );
+  } else {
+    if (orphans.length > 0) {
+      console.log(`hunt score: pruning ${orphans.length} open rows the scan no longer produces`);
+    }
+    for (const ids of chunk(orphans, WRITE_CHUNK)) {
+      const [res] = await db
+        .delete(mergeCandidates)
+        .where(and(inArray(mergeCandidates.id, ids), unresolved));
+      stats.pruned += res.affectedRows;
+    }
+  }
+
   console.log(
-    `hunt score: scored ${stats.scored}, upserted ${stats.upserted}, deleted ${stats.deleted}` +
+    `hunt score: scored ${stats.scored}, upserted ${stats.upserted}, deleted ${stats.deleted}, ` +
+      `pruned ${stats.pruned}` +
       (stats.failed > 0 ? `, ${stats.failed} failed` : "") +
       ` (${secondsSince(start)})`,
   );

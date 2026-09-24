@@ -5,8 +5,10 @@
 //      expire — see server/auth/tokens.ts);
 //   2. fetches a CSRF token with `assert=user&assertuser=<name>`, so a stale or
 //      swapped token fails loudly instead of editing as someone else;
-//   3. POSTs the edit with `maxlag=5`, our User-Agent, `formatversion=2` and
-//      `errorformat=plaintext`, never `bot=1`;
+//   3. POSTs the edit with our User-Agent, `formatversion=2` and
+//      `errorformat=plaintext`, never `bot=1`, plus `maxlag=5` unless the
+//      caller opts out (every edit this app makes today does: see
+//      `INTERACTIVE`);
 //   4. retries once on `badtoken` (fresh CSRF token) and once on `maxlag`
 //      (after the Retry-After delay), and maps everything else to a
 //      `WikidataEditError` whose `kind` the route turns into a status code.
@@ -28,6 +30,17 @@ const MAX_LAG_WAIT_MS = 10_000;
 const DEFAULT_LAG_WAIT_MS = 5_000;
 /** Ask the API to refuse edits while replication lag exceeds this many seconds. */
 const MAXLAG = "5";
+
+export interface EditOptions {
+  /**
+   * Send `maxlag` (default true). The Maxlag manual lets interactive tasks —
+   * a user waiting on the result — omit it; noninteractive ones must send it.
+   */
+  maxlag?: boolean;
+}
+
+/** An edit the user clicked and is waiting on: exempt from the lag guard. */
+const INTERACTIVE: EditOptions = { maxlag: false };
 
 export interface EditUser {
   id: number;
@@ -227,14 +240,16 @@ function retryAfterMs(headers: Headers): number {
 
 /**
  * Perform one write action as `user`. `params` is the action and its own
- * parameters; the token, assertion, lag guard and format parameters are added
- * here. Resolves to the API's JSON body on success; throws `WikidataEditError`
- * otherwise (or whatever the DB threw while loading the token).
+ * parameters; the token, assertion, lag guard (unless `options.maxlag` is
+ * false) and format parameters are added here. Resolves to the API's JSON body
+ * on success; throws `WikidataEditError` otherwise (or whatever the DB threw
+ * while loading the token).
  */
 export async function editRequest(
   user: EditUser,
   params: Record<string, string>,
   deps: WikidataClientDeps = defaultDeps,
+  options: EditOptions = {},
 ): Promise<Record<string, unknown>> {
   const accessToken = await loadAccessToken(user, deps);
   let csrf = await fetchCsrfToken(user, accessToken, deps);
@@ -246,7 +261,7 @@ export async function editRequest(
       token: csrf,
       assert: "user",
       assertuser: user.username,
-      maxlag: MAXLAG,
+      ...(options.maxlag === false ? {} : { maxlag: MAXLAG }),
     });
     const err = apiError(res);
     if (!err) return res.body;
@@ -301,7 +316,7 @@ export async function mergeItems(
     summary: opts.summary,
   };
   if (opts.ignoreConflicts.length > 0) params.ignoreconflicts = opts.ignoreConflicts.join("|");
-  const body = await editRequest(user, params, deps);
+  const body = await editRequest(user, params, deps, INTERACTIVE);
   const from = body.from as { lastrevid?: number } | undefined;
   const to = body.to as { lastrevid?: number } | undefined;
   if (typeof from?.lastrevid !== "number" || typeof to?.lastrevid !== "number") {
@@ -355,6 +370,7 @@ export async function finishRedirect(
       summary: opts.summary,
     },
     deps,
+    INTERACTIVE,
   );
   const clearRevid = (cleared.entity as { lastrevid?: number } | undefined)?.lastrevid;
   if (typeof clearRevid !== "number") {
@@ -371,6 +387,7 @@ export async function finishRedirect(
     user,
     { action: "wbcreateredirect", from: opts.fromQid, to: opts.intoQid },
     deps,
+    INTERACTIVE,
   );
   return { clearRevid };
 }
@@ -395,6 +412,7 @@ export async function addItemClaim(
       summary: opts.summary,
     },
     deps,
+    INTERACTIVE,
   );
   const revid = (body.pageinfo as { lastrevid?: number } | undefined)?.lastrevid;
   if (typeof revid !== "number") {

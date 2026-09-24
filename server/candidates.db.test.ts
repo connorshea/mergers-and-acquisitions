@@ -168,6 +168,13 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       expect((await list("?type=not-a-qid")).total).toBe(2);
     });
 
+    it("filters by any of several comma-separated types", async () => {
+      expect((await list("?type=Q865493,Q11424")).candidates.map((c) => c.id)).toEqual([beta]);
+      expect((await list("?type=Q7889,Q865493")).total).toBe(2);
+      // Malformed entries are dropped; the valid ones still apply.
+      expect((await list("?type=bogus,Q865493,")).candidates.map((c) => c.id)).toEqual([beta]);
+    });
+
     it("follows an item's relabel/retype once the copies are refreshed", async () => {
       await db
         .update(items)

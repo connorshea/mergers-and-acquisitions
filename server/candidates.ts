@@ -26,6 +26,8 @@ const STATUSES = CANDIDATE_STATUSES;
 const SORTS = CANDIDATE_SORTS;
 const DEFAULT_PAGE_SIZE = 25;
 const MAX_PAGE_SIZE = 100;
+/** Most instance-of types one list request filters on. */
+const MAX_TYPE_FILTERS = 50;
 // Qids/pids loaded per IN list. MariaDB has no tight bound-param cap.
 const ID_CHUNK = 1000;
 
@@ -87,11 +89,19 @@ candidates.get("/", async (c) => {
     );
   }
 
-  // Instance-of (P31) filter. Ignored unless it's a valid QID.
-  const typeParam = req.query("type")?.trim();
-  if (typeParam && /^Q\d+$/.test(typeParam)) {
+  // Instance-of (P31) filter: a comma-separated list of QIDs, matching a pair
+  // of any of them. Entries that aren't valid QIDs are ignored.
+  const types = [
+    ...new Set(
+      (req.query("type") ?? "")
+        .split(",")
+        .map((t) => t.trim())
+        .filter((t) => /^Q\d+$/.test(t)),
+    ),
+  ].slice(0, MAX_TYPE_FILTERS);
+  if (types.length > 0) {
     conditions.push(
-      or(eq(mergeCandidates.fromType, typeParam), eq(mergeCandidates.intoType, typeParam))!,
+      or(inArray(mergeCandidates.fromType, types), inArray(mergeCandidates.intoType, types))!,
     );
   }
 

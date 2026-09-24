@@ -72,8 +72,15 @@ export const IMPORT_CLASSES: readonly string[] = [
   "Q783794", // company
   "Q210167", // video game developer
   "Q1137109", // video game publisher
-  "Q482994", // album (music albums)
-  "Q7366", // song
+  "Q134556", // single
+  "Q169930", // extended play
+  "Q482994", // album
+  "Q18127", // record label
+  "Q2442401", // record company
+  "Q215380", // musical group
+  "Q7302866", // audio track
+  "Q55850593", // music track with vocals
+  "Q55850643", // music track without lyrics
 ];
 
 /** Where Toolforge mounts the latest weekly JSON dump (needs `mount: all`). */

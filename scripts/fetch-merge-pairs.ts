@@ -25,6 +25,8 @@
 
 import { mkdir, writeFile, readFile } from "node:fs/promises";
 import { join } from "node:path";
+import { type Entity, entityToItem } from "../src/lib/wikibase.ts";
+import { recordRedirects } from "./eval-redirects.ts";
 
 const API = "https://www.wikidata.org/w/api.php";
 const ENTITYDATA = "https://www.wikidata.org/wiki/Special:EntityData";
@@ -235,6 +237,20 @@ async function main() {
     await mkdir(dir, { recursive: true });
     await writeFile(join(dir, `${pair.source}.pre.json`), JSON.stringify(sourcePre, null, 2));
     await writeFile(join(dir, `${pair.target}.pre.json`), JSON.stringify(targetPre, null, 2));
+
+    // Where clashing sitelinks redirect, so the scorer sees what production's
+    // replica overlay would. A wiki that can't be read doesn't sink the pair.
+    try {
+      await recordRedirects(
+        dir,
+        entityToItem(sourcePre as unknown as Entity),
+        entityToItem(targetPre as unknown as Entity),
+      );
+    } catch (err) {
+      console.warn(
+        `${key}: sitelink redirects not recorded — ${err instanceof Error ? err.message : String(err)}`,
+      );
+    }
 
     const record = {
       label: "duplicate", // positive example: these two ARE the same subject

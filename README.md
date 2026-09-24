@@ -125,7 +125,12 @@ front for accounts its profile snapshot says are blocked.
   effort: if it fails the merge still stands, its resolution noting that the
   source item was not redirected. Clashing sitelinks and items that link to each
   other are never overridden: the confirm dialog warns when the mirror predicts one, Wikidata
-  refuses the merge, and the user fixes the items by hand first. On success the
+  refuses the merge, and the user fixes the items by hand first. The one clash
+  the app clears itself is a sitelink to a page that redirects to the other
+  item's page on the same wiki: once nothing else blocks the merge, it asks that
+  wiki's API (live, not the nightly `sitelink_pages` data) and, if the redirect
+  is confirmed, removes that sitelink with `wbsetsitelink` before merging. Each
+  removal is its own edit, listed in the merge's audit row and on the result. On success the
   candidate becomes `merged` (with both revision ids linked from the page), the
   merged-away item is dropped from the mirror so the hunt stops pairing it, and
   any other open candidate that referenced it is settled as "merged elsewhere".
@@ -204,6 +209,27 @@ Wall time is about 1/N of a single pass, but the default tool quota is 2 CPUs
 in total (shared with the web service), so running several slices at once
 needs a [quota increase](https://wikitech.wikimedia.org/wiki/Help:Toolforge/Kubernetes#Quotas).
 Without `--shard` the job reads the whole file, which is `--shard 1/1`.
+
+## Resolving sitelink redirects
+
+When two items link different pages on the same wiki, Wikidata refuses to merge
+them — but often one page is only a redirect to the other. The dump's "sitelink
+to redirect" badges don't say where a redirect points, and they're missing on
+pages that became redirects after being linked. So `pnpm job:resolve-sitelinks`
+(`jobs/resolve-sitelinks.ts` → `server/sitelink-redirects.ts`, nightly after the
+hunt) looks up every clashing sitelink on an open candidate in that wiki's
+`page` / `redirect` tables on the [Wiki
+Replicas](https://wikitech.wikimedia.org/wiki/Help:Toolforge/Database) and
+stores the answer in `sitelink_pages`. It connects to
+`<wiki>.analytics.db.svc.wikimedia.cloud` (database `<wiki>_p`) with the tool's
+`TOOL_REPLICA_USER` / `TOOL_REPLICA_PASSWORD`, one wiki at a time. Pages are
+re-checked after a week.
+
+The replicas are only reachable from Toolforge. To run the job from a dev
+machine, tunnel through the bastion and point `REPLICA_HOST` / `REPLICA_PORT` /
+`REPLICA_DB` at the tunnel (`{wiki}` is replaced with the site id), with the
+replica credentials from the tool's `replica.my.cnf` in the `TOOL_REPLICA_*`
+variables.
 
 ## Deploying to Toolforge
 

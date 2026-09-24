@@ -96,9 +96,13 @@ function ValueChip({
       {v.redirect && (
         <span
           className="chip-id"
-          title="This sitelink carries Wikidata's “sitelink to redirect” badge: the page is a redirect, not an article."
+          title={
+            v.redirectTarget
+              ? `This page is a redirect to “${v.redirectTarget}”, not an article (checked against the wiki).`
+              : "This page is a redirect, not an article (a “sitelink to redirect” badge, or checked against the wiki)."
+          }
         >
-          ↪ redirect
+          {v.redirectTarget ? `↪ ${v.redirectTarget}` : "↪ redirect"}
         </span>
       )}
     </span>

@@ -30,6 +30,7 @@ import {
   mergeItems,
   type MergeResult,
   probeMerge,
+  removeSitelink,
   revisionUrl,
   WikidataEditError,
 } from "./wikidata-client.ts";
@@ -39,13 +40,17 @@ import {
   type Item,
   type MergeConflict,
   mergeConflicts,
+  redirectSitelinkFixes,
+  type SitelinkFix,
 } from "../src/lib/compare.ts";
 import type {
   CandidateDifferentResponse,
   CandidateMergeResponse,
   DifferentFromEdit,
   EditErrorResponse,
+  RemovedSitelink,
 } from "../src/lib/api-types.ts";
+import { attachLiveSitelinkRedirects } from "./live-sitelinks.ts";
 
 /** Appended to every edit summary so the edits are traceable to this tool. */
 export const TOOL_CREDIT = "M&A merge assistant";
@@ -283,13 +288,24 @@ edits.post("/:id/merge", async (c) => {
   // the source un-redirected (a half-merge — the very thing this guards
   // against). Only the auto-handled description is ever passed to
   // `ignoreconflicts`; any real sitelink or statement conflict is refused here,
-  // to be fixed by hand on the items first.
+  // to be fixed by hand on the items first. The one exception is a sitelink
+  // clash where one page is — per its wiki, asked just now — a redirect to the
+  // other item's page: that sitelink is removed first (below), which is what
+  // a human would do and loses nothing.
   let liveConflicts: MergeConflict[];
+  let sitelinkFixes: SitelinkFix[] = [];
   try {
     const [freshFrom, freshInto] = await fetchItemsForMergeCheck(user, [fromQid, intoQid]);
     liveConflicts = mergeConflicts(freshFrom, freshInto).filter(
       (k) => !AUTO_IGNORED_CONFLICTS.includes(k),
     );
+    if (liveConflicts.includes("sitelink")) {
+      const fixes = await liveSitelinkFixes(freshFrom, freshInto);
+      if (fixes) {
+        sitelinkFixes = fixes;
+        liveConflicts = liveConflicts.filter((k) => k !== "sitelink");
+      }
+    }
   } catch (err) {
     // Couldn't reach Wikidata to check: hand the claim back rather than merge
     // blind. This read touched no edit endpoint, so nothing was applied.
@@ -310,6 +326,30 @@ edits.post("/:id/merge", async (c) => {
         ),
       ),
     );
+  }
+
+  // Remove the redirect sitelinks, only now that nothing else blocks the merge.
+  // Each removal is its own edit and is recorded in the merge's audit row. If
+  // one fails, stop before merging; any already removed stay removed (they
+  // were redirects to the other item's page, so nothing is lost) and are named
+  // in the error.
+  const removedSitelinks: RemovedSitelink[] = [];
+  for (const fix of sitelinkFixes) {
+    const other = fix.qid === fromQid ? intoQid : fromQid;
+    try {
+      const { revid } = await removeSitelink(user, {
+        qid: fix.qid,
+        wiki: fix.wiki,
+        summary:
+          `Remove ${fix.wiki} sitelink "${fix.title}", a redirect to ${other}'s page ` +
+          `"${fix.target}", to merge ${fromQid} → ${intoQid} — ${TOOL_CREDIT}`,
+      });
+      removedSitelinks.push({ ...fix, revid, url: revisionUrl(revid) });
+      audit.params = { ...audit.params, removedSitelinks };
+    } catch (err) {
+      await releaseClaim(id);
+      return failedEdit(c, noteRemoved(await auditFailure(audit, err), removedSitelinks));
+    }
   }
 
   let result: MergeResult;
@@ -334,18 +374,21 @@ edits.post("/:id/merge", async (c) => {
       const known = await auditFailure(audit, err);
       return failedEdit(
         c,
-        new WikidataEditError(
-          known.kind,
-          known.code,
-          `${known.message} The merge may still have gone through on Wikidata; ` +
-            `this candidate stays locked for ${Math.round(MERGING_STALE_SECONDS / 60)} minutes.`,
+        noteRemoved(
+          new WikidataEditError(
+            known.kind,
+            known.code,
+            `${known.message} The merge may still have gone through on Wikidata; ` +
+              `this candidate stays locked for ${Math.round(MERGING_STALE_SECONDS / 60)} minutes.`,
+          ),
+          removedSitelinks,
         ),
       );
     }
     if (outcome === "not-merged") {
       // Give the claim back before anything else.
       await releaseClaim(id);
-      return failedEdit(c, await auditFailure(audit, err));
+      return failedEdit(c, noteRemoved(await auditFailure(audit, err), removedSitelinks));
     }
     result = outcome;
     audit.params = { ...audit.params, confirmedAfterTimeout: true };
@@ -434,9 +477,37 @@ edits.post("/:id/merge", async (c) => {
     from: { qid: fromQid, revid: result.fromRevid, url: revisionUrl(result.fromRevid) },
     into: { qid: intoQid, revid: result.intoRevid, url: revisionUrl(result.intoRevid) },
     redirected: result.redirected,
+    ...(removedSitelinks.length > 0 ? { removedSitelinks } : {}),
   };
   return c.json(payload);
 });
+
+/**
+ * The sitelink clashes between the live items that the merge can clear itself
+ * (see redirectSitelinkFixes), judged by asking each linked wiki now; null
+ * when some clash needs a person, or when a wiki couldn't be asked — the merge
+ * is then refused as a plain conflict, as before.
+ */
+async function liveSitelinkFixes(from: Item, into: Item): Promise<SitelinkFix[] | null> {
+  try {
+    await attachLiveSitelinkRedirects(from, into);
+  } catch (err) {
+    console.error(`merge: could not check ${from.id} / ${into.id}'s sitelinks for redirects`, err);
+    return null;
+  }
+  return redirectSitelinkFixes(from, into);
+}
+
+/** `err`, with a note naming the redirect sitelinks already removed before it. */
+function noteRemoved(err: WikidataEditError, removed: RemovedSitelink[]): WikidataEditError {
+  if (removed.length === 0) return err;
+  const list = removed.map((r) => `${r.qid}'s ${r.wiki} sitelink "${r.title}"`).join(", ");
+  return new WikidataEditError(
+    err.kind,
+    err.code,
+    `${err.message} (Already removed, as a redirect to the other item's page: ${list}.)`,
+  );
+}
 
 /**
  * After a merge request whose answer never came: did it happen? A merged

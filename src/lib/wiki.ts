@@ -54,6 +54,18 @@ const PROJECT_DOMAINS: [suffix: string, domain: string][] = [
   ["wiki", "wikipedia.org"],
 ];
 
+/** Host of a sitelink site id, e.g. "enwiki" → "en.wikipedia.org"; null if unknown. */
+export function sitelinkHost(site: string): string | null {
+  const special = SPECIAL_SITES[site];
+  if (special) return special;
+  for (const [suffix, domain] of PROJECT_DOMAINS) {
+    if (!site.endsWith(suffix)) continue;
+    const lang = site.slice(0, -suffix.length);
+    return /^[a-z][a-z0-9_]*$/.test(lang) ? `${lang.replace(/_/g, "-")}.${domain}` : null;
+  }
+  return null;
+}
+
 /**
  * URL of a sitelink's page, e.g. ("enwiki", "Doom (1993 video game)") →
  * "https://en.wikipedia.org/wiki/Doom_(1993_video_game)". Sitelinks always point
@@ -61,15 +73,7 @@ const PROJECT_DOMAINS: [suffix: string, domain: string][] = [
  * this ignores the edited-instance base. Null for a site id it can't place.
  */
 export function sitelinkUrl(site: string, title: string): string | null {
-  let host = SPECIAL_SITES[site];
-  if (!host) {
-    for (const [suffix, domain] of PROJECT_DOMAINS) {
-      if (!site.endsWith(suffix)) continue;
-      const lang = site.slice(0, -suffix.length);
-      if (/^[a-z][a-z0-9_]*$/.test(lang)) host = `${lang.replace(/_/g, "-")}.${domain}`;
-      break;
-    }
-  }
+  const host = sitelinkHost(site);
   if (!host) return null;
   const path = encodeURIComponent(title.replace(/ /g, "_"))
     .replace(/%2F/g, "/")

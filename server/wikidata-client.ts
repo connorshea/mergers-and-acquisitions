@@ -393,6 +393,33 @@ export async function finishRedirect(
 }
 
 /**
+ * `wbsetsitelink` with no title: remove `qid`'s sitelink to `wiki`. Used to
+ * drop a sitelink to a redirect that points at the other item's page, the one
+ * sitelink clash the merge flow clears by itself (see redirectSitelinkFixes).
+ */
+export async function removeSitelink(
+  user: EditUser,
+  opts: { qid: string; wiki: string; summary: string },
+  deps: WikidataClientDeps = defaultDeps,
+): Promise<{ revid: number }> {
+  const body = await editRequest(
+    user,
+    { action: "wbsetsitelink", id: opts.qid, linksite: opts.wiki, summary: opts.summary },
+    deps,
+    INTERACTIVE,
+  );
+  const revid = (body.entity as { lastrevid?: number } | undefined)?.lastrevid;
+  if (typeof revid !== "number") {
+    throw new WikidataEditError(
+      "wikidata-error",
+      "unexpected-response",
+      "Wikidata removed the sitelink but returned no revision id",
+    );
+  }
+  return { revid };
+}
+
+/**
  * `wbcreateclaim`: add an item-valued statement `qid` → `property` → `target`.
  * Used for "different from" (P1889) in each direction.
  */

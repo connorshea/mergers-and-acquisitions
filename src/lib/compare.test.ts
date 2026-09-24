@@ -13,6 +13,8 @@ import {
   isDeclaredDifferent,
   isSeriesSequelPair,
   mergeConflicts,
+  redirectSitelinkFixes,
+  withFragment,
   normalize,
   orderByAge,
   safeHttpUrl,
@@ -157,9 +159,94 @@ describe("buildRows (behavior-preserving extraction)", () => {
       expect(row(intentional, article).a[0].redirect).toBe(true);
     });
 
+    it("never treats an intentional redirect as the other item's page", () => {
+      // Resolved to the other page, but badged as deliberately linked: a
+      // separate subject (e.g. an enhanced edition redirecting to the original).
+      const intentional: Item = {
+        ...redirect,
+        sitelinkBadges: { enwiki: ["Q70894304"] },
+        sitelinkRedirects: { enwiki: article.sitelinks.enwiki },
+      };
+      const r = row(article, intentional);
+      expect(r.blocker).toBe(true);
+      expect(r.note).toMatch(/^Q1145650's sitelink is badged as an intentional redirect/);
+      expect(redirectSitelinkFixes(article, intentional)).toBeNull();
+      expect(redirectSitelinkFixes(intentional, article)).toBeNull();
+    });
+
     it("says so when both pages are redirects", () => {
       const other = { ...article, sitelinkBadges: { enwiki: ["Q70893996"] } };
       expect(row(other, redirect).note).toMatch(/^both pages are redirects/);
+    });
+
+    it("names a resolved redirect's target, and is definite when it's the other page", () => {
+      const resolved: Item = {
+        ...redirect,
+        sitelinkBadges: undefined,
+        sitelinkRedirects: { enwiki: article.sitelinks.enwiki },
+      };
+      const r = row(article, resolved);
+      expect(r.blocker).toBe(true);
+      expect(r.b.map((v) => [v.redirect, v.redirectTarget])).toEqual([
+        [true, "Loud & Dangerous: Live from Hollywood"],
+      ]);
+      expect(r.note).toBe(
+        "Q1145650's page redirects to Q65117434's page — remove Q1145650's sitelink before merging",
+      );
+    });
+
+    it("says where a resolved redirect goes when it isn't the other page", () => {
+      const elsewhere = { ...redirect, sitelinkRedirects: { enwiki: "Loud (album)" } };
+      expect(row(article, elsewhere).note).toMatch(
+        /^Q1145650's page redirects to “Loud \(album\)”, not/,
+      );
+      const both = { ...article, sitelinkRedirects: { enwiki: "Loud (album)" } };
+      expect(row(both, elsewhere).note).toMatch(/^both pages redirect to “Loud \(album\)”/);
+    });
+
+    it("counts a resolved redirect with an unknown target as a redirect", () => {
+      const unknown = {
+        ...redirect,
+        sitelinkBadges: undefined,
+        sitelinkRedirects: { enwiki: null },
+      };
+      const r = row(article, unknown);
+      expect(r.b[0].redirect).toBe(true);
+      expect(r.b[0].redirectTarget).toBeUndefined();
+      expect(r.note).toMatch(/^Q1145650's page is a redirect/);
+    });
+
+    it("plans removing the side that redirects to the other page, and only that shape", () => {
+      const toArticle = { ...redirect, sitelinkRedirects: { enwiki: article.sitelinks.enwiki } };
+      const fix = {
+        qid: "Q1145650",
+        wiki: "enwiki",
+        title: "Loud and Dangerous: Live from Hollywood",
+        target: "Loud & Dangerous: Live from Hollywood",
+      };
+      expect(redirectSitelinkFixes(article, toArticle)).toEqual([fix]);
+      expect(redirectSitelinkFixes(toArticle, article)).toEqual([fix]);
+      // Badge only, target unknown: a person has to look.
+      expect(redirectSitelinkFixes(article, redirect)).toBeNull();
+      // Points elsewhere.
+      const elsewhere = { ...redirect, sitelinkRedirects: { enwiki: "Loud (album)" } };
+      expect(redirectSitelinkFixes(article, elsewhere)).toBeNull();
+      // Points at a section of the other page: part of that subject, not it.
+      const section = {
+        ...redirect,
+        sitelinkRedirects: { enwiki: withFragment(article.sitelinks.enwiki, "Encore") },
+      };
+      expect(redirectSitelinkFixes(article, section)).toBeNull();
+      // A second, unfixable clash sinks the plan.
+      const twoWikis = { ...toArticle, sitelinks: { ...toArticle.sitelinks, dewiki: "Loud" } };
+      expect(
+        redirectSitelinkFixes(
+          { ...article, sitelinks: { ...article.sitelinks, dewiki: "Laut" } },
+          twoWikis,
+        ),
+      ).toBeNull();
+      // No clash at all: nothing to do.
+      expect(redirectSitelinkFixes(article, article)).toEqual([]);
     });
 
     it("keeps the generic note when neither side is badged", () => {
@@ -567,6 +654,67 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       const redirects = mk("Q2", pages(" (series)", wikis), ["Q70893996"]);
       const result = score(mk("Q1", pages("", wikis)), redirects);
       expect(result.confidence).toBeGreaterThan(0.4);
+    });
+
+    it("rewards a page resolved as a redirect to the other item's page", () => {
+      const wikis = ["enwiki"];
+      const a = mk("Q1", pages("", wikis));
+      const plain = mk("Q2", pages(" (video game)", wikis));
+      const redirecting = { ...plain, sitelinkRedirects: { enwiki: "Harvest Moon" } };
+      const before = score(a, plain);
+      const after = score(a, redirecting);
+      expect(after.confidence).toBeGreaterThan(before.confidence);
+      expect(after.reasons).toContain("sitelink redirects to the other item's page on enwiki");
+      // Still a blocker until the sitelink is removed.
+      expect(after.hasBlocker).toBe(true);
+      // A redirect somewhere else is no evidence either way.
+      const elsewhere = { ...plain, sitelinkRedirects: { enwiki: "Harvest Moon (series)" } };
+      expect(score(a, elsewhere).reasons.some((r) => r.startsWith("sitelink redirects"))).toBe(
+        false,
+      );
+    });
+
+    it("keeps the clash penalty unless a redirect could explain the clash", () => {
+      // Label-only pair, so the score sits below the strong-signal cap.
+      const lone = (extra: Pick<Item, "sitelinkBadges" | "sitelinkRedirects">): Item => ({
+        ...base,
+        id: "Q2",
+        labels: { en: "Harvest Moon" },
+        sitelinks: { enwiki: "Harvest Moon (video game)" },
+        statements: {},
+        ...extra,
+      });
+      const a = { ...lone({}), id: "Q1", sitelinks: { enwiki: "Harvest Moon" } };
+      const plain = score(a, lone({})).confidence;
+      // Badge only, target unknown: likely a redirect to the other page.
+      expect(
+        score(a, lone({ sitelinkBadges: { enwiki: ["Q70893996"] } })).confidence,
+      ).toBeGreaterThan(plain);
+      // Known to point at a third page, a section of the other page, another
+      // namespace, or another wiki: still two distinct pages.
+      for (const target of [
+        "Harvest Moon (series)",
+        "Harvest Moon#Sequel",
+        "Project:Harvest Moon",
+        "wikt:Harvest Moon",
+      ]) {
+        const r = score(a, lone({ sitelinkRedirects: { enwiki: target } }));
+        expect(r.confidence).toBe(plain);
+        expect(r.reasons.some((x) => x.startsWith("sitelink redirects"))).toBe(false);
+      }
+      // Intentional redirect to the other page: a separate subject, so no
+      // reward and the penalty stays — with or without a resolved target.
+      for (const extra of [
+        { sitelinkBadges: { enwiki: ["Q70894304"] } },
+        {
+          sitelinkBadges: { enwiki: ["Q70894304"] },
+          sitelinkRedirects: { enwiki: "Harvest Moon" },
+        },
+      ]) {
+        const r = score(a, lone(extra));
+        expect(r.confidence).toBe(plain);
+        expect(r.reasons.some((x) => x.startsWith("sitelink redirects"))).toBe(false);
+      }
     });
   });
 

@@ -29,14 +29,17 @@
 // them. `isMirroredIdProp` (from the synced properties table) is NOT available
 // offline, so only compare.ts's hardcoded MIRRORED_ID_PROPS floor applies here —
 // pairs whose only mirror-Wikidata ids are sync-detected (untagged in the floor)
-// could score marginally differently in production. The threshold mirrors the
-// hunt's MIN_CONFIDENCE (0.4).
+// could score marginally differently in production. Resolved sitelink redirects
+// (Item.sitelinkRedirects) come from each pair's sitelink-redirects.json, when
+// recorded (scripts/eval-redirects.ts). The threshold mirrors the hunt's
+// MIN_CONFIDENCE (0.4).
 
 import { readFile, readdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import type { Item, ScoreOptions } from "../src/lib/compare.ts";
 import { orderByAge, scoreCandidate } from "../src/lib/compare.ts";
 import { type Entity, entityToItem } from "../src/lib/wikibase.ts";
+import { applyRedirects } from "./eval-redirects.ts";
 
 const EVAL_DIR = "eval-data";
 const BASELINE_PATH = join(EVAL_DIR, "score-baseline.json");
@@ -76,9 +79,10 @@ async function loadPositives(): Promise<Pair[]> {
       source: string;
       target: string;
     };
-    const a = await readEntity(join(root, d.name, `${meta.source}.pre.json`));
-    const b = await readEntity(join(root, d.name, `${meta.target}.pre.json`));
-    pairs.push({ name: d.name, label: "duplicate", a: entityToItem(a), b: entityToItem(b) });
+    const a = entityToItem(await readEntity(join(root, d.name, `${meta.source}.pre.json`)));
+    const b = entityToItem(await readEntity(join(root, d.name, `${meta.target}.pre.json`)));
+    await applyRedirects(join(root, d.name), a, b);
+    pairs.push({ name: d.name, label: "duplicate", a, b });
   }
   return pairs;
 }
@@ -93,9 +97,10 @@ async function loadNegatives(): Promise<Pair[]> {
       a: string;
       b: string;
     };
-    const a = await readEntity(join(root, d.name, `${meta.a}.json`));
-    const b = await readEntity(join(root, d.name, `${meta.b}.json`));
-    pairs.push({ name: d.name, label: "distinct", a: entityToItem(a), b: entityToItem(b) });
+    const a = entityToItem(await readEntity(join(root, d.name, `${meta.a}.json`)));
+    const b = entityToItem(await readEntity(join(root, d.name, `${meta.b}.json`)));
+    await applyRedirects(join(root, d.name), a, b);
+    pairs.push({ name: d.name, label: "distinct", a, b });
   }
   return pairs;
 }

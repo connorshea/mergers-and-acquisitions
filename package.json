@@ -19,9 +19,11 @@
     "job:sync-properties": "node jobs/sync-properties.ts",
     "job:sync-entity-labels": "node jobs/sync-entity-labels.ts",
     "job:prune-sessions": "node jobs/prune-sessions.ts",
+    "job:resolve-sitelinks": "node jobs/resolve-sitelinks.ts",
     "eval:fetch-pairs": "node scripts/fetch-merge-pairs.ts",
     "eval:fetch-nondupes": "node scripts/fetch-nondupe-pairs.ts",
-    "eval:score": "node scripts/eval-score.ts"
+    "eval:score": "node scripts/eval-score.ts",
+    "eval:resolve-redirects": "node scripts/resolve-eval-redirects.ts"
   },
   "dependencies": {
     "@hono/node-server": "^2.1.1",

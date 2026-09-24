@@ -171,6 +171,37 @@ export const entityLabels = mysqlTable("entity_labels", {
     .default(sql`CURRENT_TIMESTAMP`),
 });
 
+// Whether a sitelinked page is a redirect, and where it points, resolved from
+// the Wiki Replicas by jobs/resolve-sitelinks.ts (server/sitelink-redirects.ts).
+// Only the pages behind a same-wiki sitelink clash on an open candidate are
+// checked: the dump's "sitelink to redirect" badges say nothing about the
+// target and are missing on pages that became redirects after being linked.
+// Keyed on the sitelink as Wikidata stores it (site id + display title).
+export const sitelinkPages = mysqlTable(
+  "sitelink_pages",
+  {
+    wiki: varchar("wiki", { length: 64 }).notNull(), // site id = replica db name, e.g. "enwiki"
+    title: varchar("title", { length: 255 }).notNull(), // sitelink title, spaces not underscores
+    // The page doesn't exist (deleted since the dump, or not yet replicated).
+    missing: boolean("missing").notNull(),
+    isRedirect: boolean("is_redirect").notNull(),
+    // Target page title (spaces) and section. Prefixed MediaWiki-style when the
+    // target isn't a main-namespace page on this wiki ("Category:Foo",
+    // "wikt:Foo"); null when it can't be named (a namespace with no canonical
+    // name) or the replica has the page flagged as a redirect but no `redirect`
+    // row for it.
+    redirectTarget: varchar("redirect_target", { length: 255 }),
+    redirectFragment: varchar("redirect_fragment", { length: 255 }),
+    checkedAt: datetime("checked_at", { mode: "string" })
+      .notNull()
+      .default(sql`CURRENT_TIMESTAMP`),
+  },
+  (t) => [
+    primaryKey({ columns: [t.wiki, t.title] }),
+    index("idx_sitelink_pages_checked").on(t.checkedAt),
+  ],
+);
+
 // Cursor bookkeeping for the paged Wikidata sync. One row per scope (e.g. the
 // video-game population); `cursor` is the SPARQL OFFSET reached so far.
 export const syncState = mysqlTable("sync_state", {

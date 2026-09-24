@@ -69,3 +69,14 @@
   mem: 2Gi
   cpu: 1
   emails: onfailure
+
+# Resolve the pages behind same-wiki sitelink clashes on open candidates
+# against the Wiki Replicas (<wiki>.analytics.db.svc.wikimedia.cloud, with the
+# tool's TOOL_REPLICA_USER / TOOL_REPLICA_PASSWORD). After the hunt, since the
+# hunt decides which candidates are open.
+- name: resolve-sitelinks
+  command: node jobs/resolve-sitelinks.ts
+  image: tool-mna/tool-mna:latest
+  schedule: "30 4 * * *" # nightly 04:30 UTC
+  mem: 1Gi
+  emails: onfailure

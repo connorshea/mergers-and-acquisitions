@@ -57,7 +57,12 @@ const EDITOR_ID = 7;
 interface Call {
   method: string;
   params: URLSearchParams;
+  /** Set for a request to a client wiki (the live sitelink redirect check). */
+  wiki?: string;
 }
+
+/** The client wiki the tests' sitelinks live on. */
+const ENWIKI_API = "https://en.wikipedia.org/w/api.php";
 
 /** An entity JSON blob for the pre-merge conflict re-check (wbgetentities). */
 type EntityStub = { sitelinks?: Record<string, { title: string }>; claims?: object };
@@ -67,12 +72,14 @@ const noConflict: EntityStub = { sitelinks: {}, claims: {} };
 /**
  * Stub the Wikidata API: the CSRF query always succeeds; the pre-merge
  * `wbgetentities` re-check returns `entities[id]` (default: no conflict) for
- * each requested id; each POST is answered by `reply(params)`. Records every
- * call.
+ * each requested id; each POST is answered by `reply(params)`. English
+ * Wikipedia answers the live redirect check from `enwikiRedirects` (page →
+ * target; everything else is an article). Records every call.
  */
 function stubWikidata(
   reply: (params: URLSearchParams, n: number) => object | Response,
   entities: Record<string, EntityStub> = {},
+  enwikiRedirects: Record<string, string> = {},
 ) {
   const calls: Call[] = [];
   let posts = 0;
@@ -80,6 +87,18 @@ function stubWikidata(
     "fetch",
     vi.fn<typeof fetch>(async (input, init) => {
       const url = String(input instanceof Request ? input.url : input);
+      if (url.startsWith(ENWIKI_API)) {
+        const params = new URL(url).searchParams;
+        calls.push({ method: "GET", params, wiki: "enwiki" });
+        const titles = (params.get("titles") ?? "").split("|");
+        return Response.json({
+          query: {
+            redirects: titles
+              .filter((t) => t in enwikiRedirects)
+              .map((t) => ({ from: t, to: enwikiRedirects[t] })),
+          },
+        });
+      }
       if (!url.startsWith(API)) throw new Error(`unexpected fetch ${url}`);
       const method = init?.method ?? "GET";
       const params =
@@ -388,6 +407,167 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
         errorCode: "merge-conflict",
         params: { blockedBy: ["sitelink"] },
         fromRevid: null,
+      });
+    });
+
+    describe("a sitelink clash where one page redirects to the other", () => {
+      // Live: Q20's enwiki page redirects to Q10's.
+      const clash = {
+        Q20: { sitelinks: { enwiki: { title: "Alpha Quest (1990 video game)" } } },
+        Q10: { sitelinks: { enwiki: { title: "Alpha Quest" } } },
+      };
+      const redirects = { "Alpha Quest (1990 video game)": "Alpha Quest" };
+      const byAction = (merge: () => object) => (params: URLSearchParams) =>
+        params.get("action") === "wbsetsitelink"
+          ? { success: 1, entity: { id: "Q20", lastrevid: 99 } }
+          : merge();
+
+      it("removes the redirect sitelink, then merges", async () => {
+        const calls = stubWikidata(
+          byAction(() => mergeOk(101, 102)),
+          clash,
+          redirects,
+        );
+        const { status, body } = await post<CandidateMergeResponse>(
+          `/api/candidates/${alpha}/merge`,
+          editor,
+        );
+        expect(status).toBe(200);
+        expect(body.candidate.status).toBe("merged");
+        expect(body.removedSitelinks).toEqual([
+          {
+            qid: "Q20",
+            wiki: "enwiki",
+            title: "Alpha Quest (1990 video game)",
+            target: "Alpha Quest",
+            revid: 99,
+            url: "https://wd.test/w/index.php?diff=prev&oldid=99",
+          },
+        ]);
+
+        // Asked the wiki about both pages, then removed before merging.
+        const check = calls.find((c) => c.wiki === "enwiki")!;
+        expect(check.params.get("titles")!.split("|").sort()).toEqual([
+          "Alpha Quest",
+          "Alpha Quest (1990 video game)",
+        ]);
+        const posts = calls.filter((c) => c.method === "POST").map((c) => c.params);
+        expect(posts.map((p) => p.get("action"))).toEqual(["wbsetsitelink", "wbmergeitems"]);
+        expect(posts[0].get("id")).toBe("Q20");
+        expect(posts[0].get("linksite")).toBe("enwiki");
+        // No title: that's what makes wbsetsitelink remove the link.
+        expect(posts[0].has("linktitle")).toBe(false);
+        expect(posts[0].get("summary")).toContain("a redirect to Q10's page");
+        // The sitelink conflict is never passed to ignoreconflicts.
+        expect(posts[1].get("ignoreconflicts")).toBe("description");
+
+        const [audit] = await db.select().from(wikidataEdits);
+        expect(audit).toMatchObject({
+          action: "merge",
+          ok: true,
+          params: { removedSitelinks: [{ qid: "Q20", wiki: "enwiki", revid: 99 }] },
+        });
+      });
+
+      it("refuses as before when the wiki says neither page is a redirect", async () => {
+        // The mirror may think so, but the live answer is what counts.
+        const calls = stubWikidata(
+          byAction(() => mergeOk()),
+          clash,
+          {},
+        );
+        const { status, body } = await post<EditErrorResponse>(
+          `/api/candidates/${alpha}/merge`,
+          editor,
+        );
+        expect(status).toBe(409);
+        expect(body.error).toContain("different pages on the same wiki");
+        expect(calls.some((c) => c.method === "POST")).toBe(false);
+        expect((await candidateRow(alpha)).status).toBe("open");
+      });
+
+      it("refuses as before when the redirect points somewhere else", async () => {
+        const calls = stubWikidata(
+          byAction(() => mergeOk()),
+          clash,
+          {
+            "Alpha Quest (1990 video game)": "Alpha Quest (series)",
+          },
+        );
+        const { status } = await post(`/api/candidates/${alpha}/merge`, editor);
+        expect(status).toBe(409);
+        expect(calls.some((c) => c.method === "POST")).toBe(false);
+      });
+
+      it("doesn't remove anything while another conflict still blocks", async () => {
+        const linked = {
+          Q20: {
+            ...clash.Q20,
+            claims: {
+              P1889: [
+                {
+                  mainsnak: {
+                    snaktype: "value",
+                    property: "P1889",
+                    datatype: "wikibase-item",
+                    datavalue: { type: "wikibase-entityid", value: { id: "Q10" } },
+                  },
+                  rank: "normal",
+                },
+              ],
+            },
+          },
+          Q10: clash.Q10,
+        };
+        const calls = stubWikidata(
+          byAction(() => mergeOk()),
+          linked,
+          redirects,
+        );
+        const { status, body } = await post<EditErrorResponse>(
+          `/api/candidates/${alpha}/merge`,
+          editor,
+        );
+        expect(status).toBe(409);
+        expect(body.error).toContain("statement whose value is the other");
+        expect(body.error).not.toContain("different pages");
+        expect(calls.some((c) => c.method === "POST")).toBe(false);
+      });
+
+      it("stops before merging when the removal fails", async () => {
+        const calls = stubWikidata(
+          (params) =>
+            params.get("action") === "wbsetsitelink"
+              ? apiError("protectedpage", "This page is protected")
+              : mergeOk(),
+          clash,
+          redirects,
+        );
+        const { status } = await post(`/api/candidates/${alpha}/merge`, editor);
+        expect(status).toBe(403);
+        expect(calls.filter((c) => c.method === "POST").map((c) => c.params.get("action"))).toEqual(
+          ["wbsetsitelink"],
+        );
+        expect((await candidateRow(alpha)).status).toBe("open");
+      });
+
+      it("names the removed sitelink when the merge then fails", async () => {
+        stubWikidata(
+          byAction(() => apiError("failed-modify", "Conflicting descriptions for language en")),
+          clash,
+          redirects,
+        );
+        const { status, body } = await post<EditErrorResponse>(
+          `/api/candidates/${alpha}/merge`,
+          editor,
+        );
+        expect(status).toBe(409);
+        expect(body.error).toContain(
+          "Already removed, as a redirect to the other item's page: Q20's enwiki sitelink \"Alpha Quest (1990 video game)\"",
+        );
+        expect((await candidateRow(alpha)).status).toBe("open");
+        const [audit] = await db.select().from(wikidataEdits);
+        expect(audit).toMatchObject({ ok: false, params: { removedSitelinks: [{ revid: 99 }] } });
       });
     });
 

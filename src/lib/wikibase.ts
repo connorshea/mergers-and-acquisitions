@@ -37,7 +37,7 @@ export interface Entity {
   labels?: Record<string, { value: string }>;
   descriptions?: Record<string, { value: string }>;
   aliases?: Record<string, { value: string }[]>;
-  sitelinks?: Record<string, { title: string }>;
+  sitelinks?: Record<string, { title: string; badges?: string[] }>;
   claims?: Record<string, Statement[]>;
 }
 
@@ -120,7 +120,8 @@ export function propertyValues(entity: Entity, pid: string): Value[] {
 
 // ---------- entity -> Item ----------
 
-/** Map one entity into an `Item`: every label/description/alias/sitelink, and
+/** Map one entity into an `Item`: every label/description/alias/sitelink (with
+ * its badges), and
  * the best-rank value(s) of every property. */
 export function entityToItem(entity: Entity): Item {
   const statements: Record<string, Value[]> = {};
@@ -135,8 +136,10 @@ export function entityToItem(entity: Entity): Item {
   }
 
   const sitelinks: Record<string, string> = {};
+  const sitelinkBadges: Record<string, string[]> = {};
   for (const [site, link] of Object.entries(entity.sitelinks ?? {})) {
     sitelinks[site] = link.title;
+    if (link.badges && link.badges.length > 0) sitelinkBadges[site] = link.badges;
   }
 
   return {
@@ -145,6 +148,8 @@ export function entityToItem(entity: Entity): Item {
     descriptions: termMap(entity.descriptions),
     aliases,
     sitelinks,
+    // Only present when some sitelink has a badge, keeping `items.data` lean.
+    ...(Object.keys(sitelinkBadges).length > 0 ? { sitelinkBadges } : {}),
     statements,
   };
 }

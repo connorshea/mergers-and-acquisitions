@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { type RefObject, useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { fetch, FetchError } from "../lib/client.ts";
 import { useAuth } from "../lib/auth-context.ts";
@@ -27,8 +27,8 @@ const SORT_LABELS: Record<CandidateSort, string> = {
 };
 
 // Instance-of (P31) types to offer as quick filters: exactly the classes the
-// dump import brings in. The filter still accepts any QID via the URL `type`
-// param — this is just the prefilled dropdown.
+// dump import brings in. The filter still accepts any QIDs via the URL `type`
+// param (comma-separated) — this is just the prefilled dropdown.
 const P31_OPTIONS = IMPORT_CLASS_OPTIONS;
 
 function confidenceTier(confidence: number): "identical" | "similar" | "distinct" {
@@ -39,6 +39,99 @@ function confidenceTier(confidence: number): "identical" | "similar" | "distinct
 
 function oneOf<T extends string>(options: readonly T[], value: string | null, fallback: T): T {
   return options.includes(value as T) ? (value as T) : fallback;
+}
+
+/**
+ * A native <details> menu doesn't dismiss on an outside click or Escape the way
+ * a real dropdown should — wire both up. Handlers read `ref.current` live so
+ * they stay correct across re-renders; they no-op when the menu is closed or
+ * not rendered.
+ */
+function useDismissableMenu(ref: RefObject<HTMLDetailsElement | null>) {
+  useEffect(() => {
+    function onPointerDown(e: PointerEvent) {
+      const menu = ref.current;
+      if (menu?.open && !menu.contains(e.target as Node)) menu.open = false;
+    }
+    function onKeyDown(e: KeyboardEvent) {
+      const menu = ref.current;
+      if (e.key === "Escape" && menu?.open) {
+        menu.open = false;
+        menu.querySelector<HTMLElement>("summary")?.focus();
+      }
+    }
+    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [ref]);
+}
+
+/** A type's display name: its preset label, or the bare QID. */
+function typeLabel(qid: string): string {
+  return P31_OPTIONS.find((o) => o.qid === qid)?.label ?? qid;
+}
+
+/**
+ * Multi-select for the instance-of filter: a dropdown of checkboxes. None
+ * checked means all types. QIDs from the URL that aren't presets are listed
+ * too, so they can be seen and unchecked.
+ */
+function TypeFilter({
+  selected,
+  onChange,
+}: {
+  selected: string[];
+  onChange: (types: string[]) => void;
+}) {
+  const ref = useRef<HTMLDetailsElement>(null);
+  useDismissableMenu(ref);
+  const options = [
+    ...P31_OPTIONS,
+    ...selected
+      .filter((qid) => !P31_OPTIONS.some((o) => o.qid === qid))
+      .map((qid) => ({ qid, label: qid })),
+  ];
+  // Keep the list in option order so the URL doesn't depend on click order.
+  const toggle = (qid: string) =>
+    onChange(
+      options
+        .map((o) => o.qid)
+        .filter((q) => (q === qid ? !selected.includes(q) : selected.includes(q))),
+    );
+  const summary =
+    selected.length === 0
+      ? "All types"
+      : selected.length === 1
+        ? typeLabel(selected[0])
+        : `${selected.length} types`;
+  return (
+    <div className="field">
+      <span id="type-filter-label">Type</span>
+      <details className="menu type-filter" ref={ref}>
+        <summary aria-labelledby="type-filter-label type-filter-value">
+          <span id="type-filter-value">{summary}</span> ▾
+        </summary>
+        <div className="menu-panel type-filter-panel">
+          <button type="button" onClick={() => onChange([])} disabled={selected.length === 0}>
+            All types
+          </button>
+          {options.map((o) => (
+            <label key={o.qid}>
+              <input
+                type="checkbox"
+                checked={selected.includes(o.qid)}
+                onChange={() => toggle(o.qid)}
+              />
+              {o.label}
+            </label>
+          ))}
+        </div>
+      </details>
+    </div>
+  );
 }
 
 export default function CandidatesList() {
@@ -57,9 +150,11 @@ export default function CandidatesList() {
   }, [params, setParams]);
   const status = oneOf<CandidateStatus>(CANDIDATE_STATUSES, params.get("status"), "open");
   const sort = oneOf<CandidateSort>(CANDIDATE_SORTS, params.get("sort"), "confidence");
-  const type = params.get("type") ?? "";
+  // Comma-separated instance-of QIDs; empty means every type.
+  const typeParam = params.get("type") ?? "";
+  const types = typeParam.split(",").filter(Boolean);
   const page = Math.max(1, Number(params.get("page")) || 1);
-  const hasFilters = q !== "" || status !== "open" || type !== "";
+  const hasFilters = q !== "" || status !== "open" || types.length > 0;
 
   // Remember the current view so the detail page's "Back to candidates" link
   // returns here. The one-shot `auth` param is stripped (and re-recorded) above.
@@ -88,29 +183,7 @@ export default function CandidatesList() {
     if (menuRef.current) menuRef.current.open = false;
   };
 
-  // A native <details> menu doesn't dismiss on an outside click or Escape the way
-  // a real dropdown should — wire both up. Handlers read menuRef.current live so
-  // they stay correct across re-renders; they no-op when the menu is closed or
-  // (outside dev) never rendered.
-  useEffect(() => {
-    function onPointerDown(e: PointerEvent) {
-      const menu = menuRef.current;
-      if (menu?.open && !menu.contains(e.target as Node)) menu.open = false;
-    }
-    function onKeyDown(e: KeyboardEvent) {
-      const menu = menuRef.current;
-      if (e.key === "Escape" && menu?.open) {
-        menu.open = false;
-        menu.querySelector<HTMLElement>("summary")?.focus();
-      }
-    }
-    document.addEventListener("pointerdown", onPointerDown);
-    document.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.removeEventListener("pointerdown", onPointerDown);
-      document.removeEventListener("keydown", onKeyDown);
-    };
-  }, []);
+  useDismissableMenu(menuRef);
 
   useEffect(() => {
     let cancelled = false;
@@ -125,7 +198,7 @@ export default function CandidatesList() {
         pageSize: String(PAGE_SIZE),
       };
       if (q) query.q = q;
-      if (type) query.type = type;
+      if (typeParam) query.type = typeParam;
       try {
         const res = await fetch("/api/candidates", { query });
         if (!cancelled) setData(res as CandidateListResponse);
@@ -141,7 +214,7 @@ export default function CandidatesList() {
     return () => {
       cancelled = true;
     };
-  }, [q, status, sort, type, page, reloadKey]);
+  }, [q, status, sort, typeParam, page, reloadKey]);
 
   async function runHunt() {
     setHunt({ running: true, note: null });
@@ -371,22 +444,7 @@ export default function CandidatesList() {
           </select>
         </label>
 
-        <label className="field">
-          <span>Type</span>
-          <select value={type} onChange={(e) => update({ type: e.target.value })}>
-            <option value="">All types</option>
-            {P31_OPTIONS.map((o) => (
-              <option key={o.qid} value={o.qid}>
-                {o.label}
-              </option>
-            ))}
-            {/* A `type` from the URL that isn't one of the presets still needs a
-                selectable option so the control reflects it. */}
-            {type && !P31_OPTIONS.some((o) => o.qid === type) && (
-              <option value={type}>{type}</option>
-            )}
-          </select>
-        </label>
+        <TypeFilter selected={types} onChange={(next) => update({ type: next.join(",") })} />
 
         <label className="field">
           <span>Sort</span>
@@ -430,8 +488,8 @@ export default function CandidatesList() {
       {data && visible.length === 0 && !loading && (
         <p className="list-msg">
           No {status} candidates{q ? ` matching “${q}”` : ""}
-          {type ? ` of type ${P31_OPTIONS.find((o) => o.qid === type)?.label ?? type}` : ""}. They
-          appear here once the hunt job has scored some pairs.
+          {types.length > 0 ? ` of type ${types.map(typeLabel).join(" or ")}` : ""}. They appear
+          here once the hunt job has scored some pairs.
         </p>
       )}
 

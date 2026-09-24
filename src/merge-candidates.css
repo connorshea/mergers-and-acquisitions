@@ -730,6 +730,40 @@ a.chip-id:hover {
   background: var(--surface);
   color: var(--ink);
 }
+/* Type filter: a multi-select dropdown of checkboxes, styled like the selects. */
+.type-filter > summary {
+  font-size: 0.9rem;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.type-filter-panel {
+  left: 0;
+  right: auto;
+  max-height: 22rem;
+  overflow-y: auto;
+  font-size: 0.9rem;
+}
+.type-filter-panel label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  color: var(--ink);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.type-filter-panel label:hover {
+  background: var(--bg);
+}
+.type-filter-panel button {
+  color: var(--muted);
+}
 /* Loading indicator for the candidates list. It fades in after a beat so a
    fast response doesn't flash it. */
 .spinner {

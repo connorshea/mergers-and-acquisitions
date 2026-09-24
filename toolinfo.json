@@ -1,0 +1,23 @@
+{
+  "_schema": "/toolinfo/1.2.2",
+  "_language": "en",
+  "name": "toolforge-mna",
+  "title": "M&A: A Wikidata Merge Assistant",
+  "subtitle": "Find, review, and merge duplicate items on Wikidata",
+  "description": "Finds likely duplicate items on Wikidata, ranks them by how confident a merge would be, and shows each pair side by side. Logged-in users can merge a pair, or mark it as \"different from\", directly from the review screen.",
+  "url": "https://mna.toolforge.org/",
+  "author": [
+    {
+      "name": "Connor Shea",
+      "url": "https://github.com/connorshea"
+    }
+  ],
+  "repository": "https://github.com/connorshea/mergers-and-acquisitions",
+  "bugtracker_url": "https://github.com/connorshea/mergers-and-acquisitions/issues",
+  "license": "MIT",
+  "tool_type": "web app",
+  "for_wikis": "www.wikidata.org",
+  "available_ui_languages": "en",
+  "technology_used": ["TypeScript", "React", "Node.js", "Hono", "MariaDB", "Toolforge"],
+  "experimental": true
+}

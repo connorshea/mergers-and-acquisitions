@@ -244,6 +244,12 @@ export default function CandidatesList() {
     setParams(merged, { replace: true });
   }
 
+  // Pager buttons sit below the table, so jump back to the top of the new page.
+  function goToPage(target: number) {
+    update({ page: String(target) });
+    window.scrollTo({ top: 0 });
+  }
+
   const visible = (data?.candidates ?? []).filter((c) => !dismissedIds.has(c.id));
   const total = data?.total ?? 0;
   const lastPage = Math.max(1, Math.ceil(total / PAGE_SIZE));
@@ -455,21 +461,13 @@ export default function CandidatesList() {
           </div>
 
           <nav className="pager" aria-label="Pagination">
-            <button
-              type="button"
-              disabled={page <= 1}
-              onClick={() => update({ page: String(page - 1) })}
-            >
+            <button type="button" disabled={page <= 1} onClick={() => goToPage(page - 1)}>
               ← Prev
             </button>
             <span className="pager-info">
               {firstRow}–{lastRow} of {total}
             </span>
-            <button
-              type="button"
-              disabled={page >= lastPage}
-              onClick={() => update({ page: String(page + 1) })}
-            >
+            <button type="button" disabled={page >= lastPage} onClick={() => goToPage(page + 1)}>
               Next →
             </button>
           </nav>

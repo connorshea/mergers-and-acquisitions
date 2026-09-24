@@ -517,6 +517,10 @@ const WEAK_ID_PROPS = new Set<string>([
   // and its sequel share a TV Tropes or speedrun.com page).
   "P6839", // TV Tropes ID
   "P6783", // speedrun.com game ID
+  // Name-derived slugs: the id is the name itself, so two different acts with
+  // the same name get the same one (e.g. both bands called The Radiators are
+  // Billboard "the-radiators").
+  "P4208", // Billboard artist ID
 ]);
 
 /**
@@ -592,23 +596,38 @@ const YEAR_GAP_PROPS = ["P577", "P571", "P569"] as const;
 const MANY_SITELINK_CLASHES = 3;
 
 /**
- * Per-title identifiers where each distinct game has exactly one page: a
- * specific store or database entry for one title. If two items each carry their
- * *own differing* value for two or more of these, they point at two different
- * store/database pages — near-conclusive that they are different games, even if
- * some other id happens to collide (a shared id across differing store pages is
- * far more likely stale/mis-entered than a real match). A single differing id
- * can be a data-entry slip; two or more is a pattern. One-sided ids — present on
- * only one item — never count. (itch.io URL is a `url` datatype, not an
- * ExternalId, so this set is matched by property id rather than value shape.)
+ * Per-title identifiers where each distinct subject has exactly one page: a
+ * specific store or database entry for one game, artist, release, or film. If
+ * two items each carry their *own differing* value for two or more of these,
+ * they point at two different store/database pages — near-conclusive that they
+ * are different subjects, even if some other id happens to collide (a shared id
+ * across differing store pages is far more likely stale/mis-entered than a real
+ * match). A single differing id can be a data-entry slip; two or more is a
+ * pattern. One-sided ids — present on only one item — never count. (itch.io URL
+ * is a `url` datatype, not an ExternalId, so this set is matched by property id
+ * rather than value shape.)
+ *
+ * None of the eval set's real merges differ on any of the non-game ids here;
+ * library authority files (VIAF, LoC, GND, ISNI) are left out, since their own
+ * duplicate records are common enough to split a real duplicate.
  */
 const PER_TITLE_ID_PROPS = new Set<string>([
+  // Video games
   "P1733", // Steam application ID
   "P6337", // PCGamingWiki ID
   "P11688", // MobyGames game ID
   "P5794", // IGDB game ID
   "P7294", // itch.io URL
   "P5247", // Giant Bomb ID
+  // Music. Not MusicBrainz: it's sourced from Wikidata (tagged P31=Q24075706,
+  // so the synced mirror set already makes it non-evidence either way).
+  "P1953", // Discogs artist ID
+  "P1954", // Discogs master ID
+  "P1728", // AllMusic artist ID
+  "P1729", // AllMusic album ID
+  // Film/TV and general
+  "P345", // IMDb ID
+  "P646", // Freebase ID
 ]);
 
 const ROMAN_RE = /^m{0,3}(cm|cd|d?c{0,3})(xc|xl|l?x{0,3})(ix|iv|v?i{0,3})$/i;
@@ -1056,20 +1075,25 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     score = Math.min(score, 0.1);
   }
 
-  // Two or more *per-title* identifiers (Steam, PCGamingWiki, MobyGames, IGDB,
-  // itch.io, Giant Bomb) present on both items with differing values means the
+  // Two or more *per-title* identifiers (Steam, MobyGames, Discogs, IMDb, …; see
+  // PER_TITLE_ID_PROPS) present on both items with differing values means the
   // pair points at two distinct store/database pages — near-conclusive that they
-  // are different games. Cap hard, below the persistence floor, overriding even a
-  // shared id. (Ids present on only one side are "one-sided", not "distinct", and
-  // don't count.)
+  // are different subjects. Ids that mirror Wikidata are skipped: a differing
+  // value there only means one side hasn't been re-synced. Cap hard, below the
+  // persistence floor, overriding even a shared id. (Ids present on only one side
+  // are "one-sided", not "distinct", and don't count.)
   const distinctPerTitleIds = rows.filter(
-    (r) => r.kind === "statement" && r.status === "distinct" && PER_TITLE_ID_PROPS.has(r.key),
+    (r) =>
+      r.kind === "statement" &&
+      r.status === "distinct" &&
+      PER_TITLE_ID_PROPS.has(r.key) &&
+      !isNonEvidence(r.key),
   );
   if (distinctPerTitleIds.length >= 2) {
     reasons.unshift(
       `${distinctPerTitleIds.length} per-title identifiers differ (${distinctPerTitleIds
         .map((r) => r.label)
-        .join(", ")}) — almost certainly different games`,
+        .join(", ")}) — almost certainly different subjects`,
     );
     score = Math.min(score, 0.1);
   } else if (distinctPerTitleIds.length === 1) {

@@ -869,6 +869,42 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(result.reasons[0]).toContain("per-title identifiers differ");
   });
 
+  it("caps two same-named bands whose Discogs and Freebase ids differ", () => {
+    // Two different bands called "The Radiators" (Q7759214, Q3522403): identical
+    // label and P31, and a shared Billboard artist id — but that id is just the
+    // name as a slug, so it is only weak evidence, and the per-artist database
+    // pages (Discogs, Freebase) differ. Their MusicBrainz ids differ too, but
+    // MusicBrainz mirrors Wikidata (the synced `mirrors_wikidata` flag, passed
+    // in production as isMirroredIdProp), so that is no evidence either way.
+    const band = (id: string, mb: string, discogs: string, freebase: string): Item => ({
+      ...base,
+      id,
+      labels: { en: "The Radiators" },
+      statements: stmt({
+        P31: [{ type: "item", value: "Q215380" }],
+        P4208: [{ type: "external-id", value: "the-radiators" }],
+        P434: [{ type: "external-id", value: mb }],
+        P1953: [{ type: "external-id", value: discogs }],
+        P646: [{ type: "external-id", value: freebase }],
+      }),
+    });
+    const a = band("Q7759214", "e944add4-f012-4c9c-93fd-013347a4bc25", "359054", "/m/01p3n92");
+    const b = band("Q3522403", "4bd3fb40-1c6f-4056-a0ee-8427685586fc", "292305", "/m/0gq3g1");
+    const isId = (pid: string) => ["P4208", "P434", "P1953", "P646"].includes(pid);
+    const result = scoreCandidate(a, b, {
+      isIdentifierProp: isId,
+      isMirroredIdProp: (pid) => pid === "P434",
+    });
+    expect(result.confidence).toBeLessThanOrEqual(0.1);
+    expect(result.reasons[0]).toContain("2 per-title identifiers differ");
+    expect(result.reasons[0]).not.toContain("P434");
+    expect(
+      result.reasons.some(
+        (r) => r.startsWith("shares account/social identifier") && r.includes("P4208"),
+      ),
+    ).toBe(true);
+  });
+
   it("does not trip the per-title rule on a single differing id or one-sided ids", () => {
     // One differing per-title id (Steam) plus a MobyGames id present on only one
     // side: exactly one prop is "distinct", so the pair is not capped.

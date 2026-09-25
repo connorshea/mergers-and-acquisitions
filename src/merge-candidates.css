@@ -786,6 +786,19 @@ a.chip-id:hover {
 .type-filter-panel button {
   color: var(--muted);
 }
+.type-filter-group {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--rule);
+  padding-top: 0.2rem;
+  margin-top: 0.2rem;
+}
+.type-filter-panel .type-filter-group-label {
+  font-weight: 600;
+}
+.type-filter-panel .type-filter-type {
+  padding-left: 1.8rem;
+}
 /* Loading indicator for the candidates list. It fades in after a beat so a
    fast response doesn't flash it. */
 .spinner {

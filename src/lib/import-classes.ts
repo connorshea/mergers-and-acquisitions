@@ -13,8 +13,7 @@ export interface ImportClassGroup {
 
 /**
  * The classes whose instances the mirror holds, grouped by the Wikidata
- * WikiProject that covers them (plus a catch-all for classes no listed
- * WikiProject owns). An item is imported when a best-rank `instance of` (P31)
+ * WikiProject that covers them. An item is imported when a best-rank `instance of` (P31)
  * names any of these. Only these exact QIDs match — subclasses are not
  * expanded — so add a class here to widen the mirror; the importer's
  * pre-filter needles, its P31 check, and the candidates list's type filter all
@@ -56,7 +55,7 @@ export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
     ],
   },
   {
-    name: "Other",
+    name: "WikiProject Companies",
     classes: [{ qid: "Q783794", label: "company" }],
   },
 ];

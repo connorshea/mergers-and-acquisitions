@@ -21,17 +21,19 @@ export interface ImportClassGroup {
  */
 export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
   {
-    name: "WikiProject Video Games",
-    classes: [
-      { qid: VIDEO_GAME, label: "video game" },
-      { qid: "Q7058673", label: "video game series" },
-      { qid: "Q210167", label: "video game developer" },
-      { qid: "Q1137109", label: "video game publisher" },
-    ],
-  },
-  {
     name: "WikiProject Anime and Manga",
     classes: [{ qid: "Q63952888", label: "anime television series" }],
+  },
+  {
+    name: "WikiProject Companies",
+    classes: [{ qid: "Q783794", label: "company" }],
+  },
+  {
+    name: "WikiProject Movies",
+    classes: [
+      { qid: "Q11424", label: "film" },
+      { qid: "Q5398426", label: "television series" },
+    ],
   },
   {
     name: "WikiProject Music",
@@ -48,15 +50,13 @@ export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
     ],
   },
   {
-    name: "WikiProject Movies",
+    name: "WikiProject Video Games",
     classes: [
-      { qid: "Q11424", label: "film" },
-      { qid: "Q5398426", label: "television series" },
+      { qid: VIDEO_GAME, label: "video game" },
+      { qid: "Q7058673", label: "video game series" },
+      { qid: "Q210167", label: "video game developer" },
+      { qid: "Q1137109", label: "video game publisher" },
     ],
-  },
-  {
-    name: "WikiProject Companies",
-    classes: [{ qid: "Q783794", label: "company" }],
   },
 ];
 

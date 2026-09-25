@@ -3,7 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { fetch, FetchError } from "../lib/client.ts";
 import { useAuth } from "../lib/auth-context.ts";
 import AuthBar from "../AuthBar.tsx";
-import { IMPORT_CLASS_OPTIONS } from "../lib/import-classes.ts";
+import { IMPORT_CLASS_GROUPS, IMPORT_CLASS_OPTIONS } from "../lib/import-classes.ts";
 import { rememberListSearch } from "../lib/list-state.ts";
 import {
   CANDIDATE_SORTS,
@@ -27,8 +27,9 @@ const SORT_LABELS: Record<CandidateSort, string> = {
 };
 
 // Instance-of (P31) types to offer as quick filters: exactly the classes the
-// dump import brings in. The filter still accepts any QIDs via the URL `type`
-// param (comma-separated) — this is just the prefilled dropdown.
+// dump import brings in, grouped by WikiProject. The filter still accepts any
+// QIDs via the URL `type` param (comma-separated) — this is just the prefilled
+// dropdown. Picking a WikiProject just checks all of its types.
 const P31_OPTIONS = IMPORT_CLASS_OPTIONS;
 
 function confidenceTier(confidence: number): "identical" | "similar" | "distinct" {
@@ -74,10 +75,24 @@ function typeLabel(qid: string): string {
   return P31_OPTIONS.find((o) => o.qid === qid)?.label ?? qid;
 }
 
+/** The filter's closed-state text: a WikiProject's name when exactly its types are picked. */
+function typeSummary(selected: string[]): string {
+  if (selected.length === 0) return "All types";
+  const group = IMPORT_CLASS_GROUPS.find(
+    (g) =>
+      g.classes.length > 1 &&
+      g.classes.length === selected.length &&
+      g.classes.every((c) => selected.includes(c.qid)),
+  );
+  if (group) return group.name;
+  return selected.length === 1 ? typeLabel(selected[0]) : `${selected.length} types`;
+}
+
 /**
- * Multi-select for the instance-of filter: a dropdown of checkboxes. None
- * checked means all types. QIDs from the URL that aren't presets are listed
- * too, so they can be seen and unchecked.
+ * Multi-select for the instance-of filter: a dropdown of checkboxes, grouped
+ * by WikiProject. A group's own checkbox (indeterminate when partly picked)
+ * toggles all of its types. None checked means all types. QIDs from the URL
+ * that aren't presets are listed too, so they can be seen and unchecked.
  */
 function TypeFilter({
   selected,
@@ -88,46 +103,58 @@ function TypeFilter({
 }) {
   const ref = useRef<HTMLDetailsElement>(null);
   useDismissableMenu(ref);
-  const options = [
-    ...P31_OPTIONS,
-    ...selected
-      .filter((qid) => !P31_OPTIONS.some((o) => o.qid === qid))
-      .map((qid) => ({ qid, label: qid })),
-  ];
+  const custom = selected
+    .filter((qid) => !P31_OPTIONS.some((o) => o.qid === qid))
+    .map((qid) => ({ qid, label: qid }));
+  const groups =
+    custom.length > 0
+      ? [...IMPORT_CLASS_GROUPS, { name: "Custom", classes: custom }]
+      : IMPORT_CLASS_GROUPS;
+  const order = groups.flatMap((g) => g.classes.map((c) => c.qid));
   // Keep the list in option order so the URL doesn't depend on click order.
-  const toggle = (qid: string) =>
-    onChange(
-      options
-        .map((o) => o.qid)
-        .filter((q) => (q === qid ? !selected.includes(q) : selected.includes(q))),
-    );
-  const summary =
-    selected.length === 0
-      ? "All types"
-      : selected.length === 1
-        ? typeLabel(selected[0])
-        : `${selected.length} types`;
+  const set = (qids: readonly string[], on: boolean) =>
+    onChange(order.filter((q) => (qids.includes(q) ? on : selected.includes(q))));
   return (
     <div className="field">
       <span id="type-filter-label">Type</span>
       <details className="menu type-filter" ref={ref}>
         <summary aria-labelledby="type-filter-label type-filter-value">
-          <span id="type-filter-value">{summary}</span> ▾
+          <span id="type-filter-value">{typeSummary(selected)}</span> ▾
         </summary>
         <div className="menu-panel type-filter-panel">
           <button type="button" onClick={() => onChange([])} disabled={selected.length === 0}>
             All types
           </button>
-          {options.map((o) => (
-            <label key={o.qid}>
-              <input
-                type="checkbox"
-                checked={selected.includes(o.qid)}
-                onChange={() => toggle(o.qid)}
-              />
-              {o.label}
-            </label>
-          ))}
+          {groups.map((g) => {
+            const qids = g.classes.map((c) => c.qid);
+            const picked = qids.filter((q) => selected.includes(q)).length;
+            const all = picked === qids.length;
+            return (
+              <div key={g.name} className="type-filter-group" role="group" aria-label={g.name}>
+                <label className="type-filter-group-label">
+                  <input
+                    type="checkbox"
+                    checked={all}
+                    ref={(el) => {
+                      if (el) el.indeterminate = picked > 0 && !all;
+                    }}
+                    onChange={() => set(qids, !all)}
+                  />
+                  {g.name}
+                </label>
+                {g.classes.map((c) => (
+                  <label key={c.qid} className="type-filter-type">
+                    <input
+                      type="checkbox"
+                      checked={selected.includes(c.qid)}
+                      onChange={() => set([c.qid], !selected.includes(c.qid))}
+                    />
+                    {c.label}
+                  </label>
+                ))}
+              </div>
+            );
+          })}
         </div>
       </details>
     </div>

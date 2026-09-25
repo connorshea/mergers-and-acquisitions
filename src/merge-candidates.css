@@ -697,8 +697,11 @@ a.chip-id:hover {
   gap: 0.75rem;
   margin-bottom: 1rem;
 }
+/* A small basis so the extra "Clear filters" button (and a longer type-filter
+   summary) fit on one row; it still grows to fill whatever space is left. */
 .search-input {
-  flex: 1 1 16rem;
+  flex: 1 1 7rem;
+  min-width: 0;
   font: inherit;
   padding: 0.4rem 0.6rem;
   border: 1px solid var(--rule);
@@ -766,7 +769,8 @@ a.chip-id:hover {
 .type-filter-panel {
   left: 0;
   right: auto;
-  max-height: 22rem;
+  min-width: 20rem;
+  max-height: min(34rem, 75vh);
   overflow-y: auto;
   font-size: 0.9rem;
 }
@@ -785,6 +789,19 @@ a.chip-id:hover {
 }
 .type-filter-panel button {
   color: var(--muted);
+}
+.type-filter-group {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--rule);
+  padding-top: 0.2rem;
+  margin-top: 0.2rem;
+}
+.type-filter-panel .type-filter-group-label {
+  font-weight: 600;
+}
+.type-filter-panel .type-filter-type {
+  padding-left: 1.8rem;
 }
 /* Loading indicator for the candidates list. It fades in after a beat so a
    fast response doesn't flash it. */

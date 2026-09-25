@@ -3,7 +3,7 @@ import {
   bestNameSimilarity,
   blockingLabelKey,
   buildRows,
-  collapseLabelRows,
+  collapseRepeatedRows,
   compareRowRank,
   compareValues,
   formatIdUrl,
@@ -311,7 +311,7 @@ describe("buildRows (behavior-preserving extraction)", () => {
   });
 });
 
-describe("collapseLabelRows", () => {
+describe("collapseRepeatedRows", () => {
   const base = { descriptions: {}, aliases: {}, statements: {}, sitelinks: {} };
   const a: Item = {
     ...base,
@@ -325,7 +325,7 @@ describe("collapseLabelRows", () => {
   };
 
   it("merges label rows with identical values into one multi-language row", () => {
-    const rows = collapseLabelRows(buildRows(a, b));
+    const rows = collapseRepeatedRows(buildRows(a, b));
     const labels = rows.filter((r) => r.kind === "term").map((r) => r.label);
     expect(labels).toEqual(["label (de, en)", "label (it)"]);
     expect(rows[0].key).toBe("label:de,en");
@@ -334,7 +334,37 @@ describe("collapseLabelRows", () => {
 
   it("leaves rows with no repeated values untouched", () => {
     const rows = buildRows({ ...a, labels: { en: "X" } }, { ...b, labels: { en: "Y" } });
-    expect(collapseLabelRows(rows)).toEqual(rows);
+    expect(collapseRepeatedRows(rows)).toEqual(rows);
+  });
+
+  it("merges one-sided sitelinks sharing a title, keeping redirects and clashes apart", () => {
+    const rows = collapseRepeatedRows(
+      buildRows(
+        { ...a, labels: {}, sitelinks: { enwiki: "Other", dewiki: "Andere" } },
+        {
+          ...b,
+          labels: {},
+          sitelinks: {
+            enwiki: "Crush 'Em",
+            eswiki: "Crush 'Em",
+            fiwiki: "Crush ’Em",
+            mkwiki: "Crush 'Em",
+            ptwiki: "Crush 'Em",
+            ruwiki: "Crush ’Em",
+            dewiki: "Crush 'Em",
+          },
+          sitelinkBadges: { ptwiki: ["Q70893996"] },
+        },
+      ),
+    );
+    const sitelinks = rows.filter((r) => r.kind === "sitelink");
+    expect(sitelinks.map((r) => [r.label, r.sites])).toEqual([
+      ["dewiki", undefined],
+      ["enwiki", undefined],
+      ["eswiki, mkwiki", ["eswiki", "mkwiki"]],
+      ["fiwiki, ruwiki", ["fiwiki", "ruwiki"]],
+      ["ptwiki", undefined],
+    ]);
   });
 });
 

@@ -50,14 +50,14 @@ export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
   },
   {
     name: "WikiProject Movies",
-    classes: [{ qid: "Q11424", label: "film" }],
+    classes: [
+      { qid: "Q11424", label: "film" },
+      { qid: "Q5398426", label: "television series" },
+    ],
   },
   {
     name: "Other",
-    classes: [
-      { qid: "Q5398426", label: "television series" },
-      { qid: "Q783794", label: "company" },
-    ],
+    classes: [{ qid: "Q783794", label: "company" }],
   },
 ];
 

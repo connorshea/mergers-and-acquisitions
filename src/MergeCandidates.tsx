@@ -1,9 +1,9 @@
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import type { AnnotatedValue, Item, Row, RowStatus } from "./lib/compare.ts";
 import {
   buildRows,
-  collapseLabelRows,
+  collapseRepeatedRows,
   compareRowRank,
   formatIdUrl,
   isHardcodedMirrorProp,
@@ -122,9 +122,39 @@ function ValueChip({
   );
 }
 
-/** The site id of a sitelink row ("sitelink:enwiki" → "enwiki"); undefined for other rows. */
+/**
+ * The site id of a sitelink row ("sitelink:enwiki" → "enwiki"); undefined for
+ * other rows and for collapsed multi-wiki rows, whose single title can't link to
+ * one page (the wiki names in the label cell link to each page instead).
+ */
 function sitelinkSite(r: Row): string | undefined {
-  return r.kind === "sitelink" ? r.key.slice("sitelink:".length) : undefined;
+  return r.kind === "sitelink" && !r.sites ? r.key.slice("sitelink:".length) : undefined;
+}
+
+/**
+ * Label cell of a collapsed sitelink row: each wiki name links to that wiki's
+ * page. Collapsed rows are never clashes, so every value carries the same title.
+ */
+function SiteLinks({ sites, title }: { sites: string[]; title: string | undefined }) {
+  return (
+    <>
+      {sites.map((site, i) => {
+        const url = title ? sitelinkUrl(site, title) : null;
+        return (
+          <Fragment key={site}>
+            {i > 0 && ", "}
+            {url ? (
+              <a href={url} target="_blank" rel="noreferrer">
+                {site}
+              </a>
+            ) : (
+              site
+            )}
+          </Fragment>
+        );
+      })}
+    </>
+  );
 }
 
 /**
@@ -300,10 +330,10 @@ export default function MergeCandidates({
   const rows = useMemo(
     // Descriptions are shown directly under each item's name (see ItemPlate), so
     // drop them from the compared-properties groups rather than listing them
-    // again as identical/similar/distinct rows. Label rows repeating the same
-    // values across languages collapse into one multi-language row.
+    // again as identical/similar/distinct rows. Label and sitelink rows repeating
+    // the same values across languages/wikis collapse into one row.
     () =>
-      collapseLabelRows(
+      collapseRepeatedRows(
         buildRows(from, into, propertyLabels, valueLabels).filter(
           (r) => !r.key.startsWith("description:"),
         ),
@@ -440,7 +470,13 @@ export default function MergeCandidates({
                           }
                         >
                           <td className="col-prop">
-                            <div className="prop-label">{r.label}</div>
+                            <div className="prop-label">
+                              {r.sites ? (
+                                <SiteLinks sites={r.sites} title={r.a.concat(r.b)[0]?.value} />
+                              ) : (
+                                r.label
+                              )}
+                            </div>
                             <div className="prop-key">
                               {r.kind === "statement" ? (
                                 <a

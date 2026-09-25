@@ -158,6 +158,8 @@ export interface Row {
   a: AnnotatedValue[];
   b: AnnotatedValue[];
   note?: string;
+  /** Collapsed sitelink rows only (collapseRepeatedRows): every wiki sharing these values. */
+  sites?: string[];
 }
 
 // ---------- Property labels ----------
@@ -540,34 +542,47 @@ export function buildRows(
 }
 
 /**
- * Collapses label rows that carry exactly the same values (and status/notes)
- * into one row listing every language, e.g. seven "label (de)" … "label (nl)"
- * rows all reading "Teen Angels - La Despedida" vs "Teen Angels: La Despedida"
- * become a single "label (de, en, es, fi, fr, ga, nl)" row. The merged row takes
- * the first row's place; rows that don't share their values are left as-is.
+ * Collapses label and sitelink rows that carry exactly the same values (and
+ * status/notes) into one row listing every language or wiki, e.g. seven
+ * "label (de)" … "label (nl)" rows all reading "Teen Angels - La Despedida" vs
+ * "Teen Angels: La Despedida" become a single "label (de, en, es, fi, fr, ga,
+ * nl)" row, and enwiki/eswiki/mkwiki sitelinks all titled "Crush 'Em" become one
+ * "enwiki, eswiki, mkwiki" row carrying the wikis in `sites`. Blocker rows (two
+ * different pages on one wiki) are never merged, so each clash keeps its own
+ * row and note; redirect sitelinks differ in their values' `redirect` flag and
+ * so only group with other redirects. The merged row takes the first row's
+ * place; rows that don't share their values are left as-is.
  */
-export function collapseLabelRows(rows: Row[]): Row[] {
-  const signature = (r: Row): string => JSON.stringify([r.status, r.blocker, r.note, r.a, r.b]);
-  const langsBySig = new Map<string, string[]>();
+export function collapseRepeatedRows(rows: Row[]): Row[] {
+  const prefix = (r: Row): string | undefined =>
+    r.blocker ? undefined : ["label:", "sitelink:"].find((p) => r.key.startsWith(p));
+  const signature = (r: Row): string => JSON.stringify([prefix(r), r.status, r.note, r.a, r.b]);
+  const namesBySig = new Map<string, string[]>();
   for (const r of rows) {
-    if (!r.key.startsWith("label:")) continue;
+    const p = prefix(r);
+    if (!p) continue;
     const sig = signature(r);
-    const langs = langsBySig.get(sig) ?? [];
-    langs.push(r.key.slice("label:".length));
-    langsBySig.set(sig, langs);
+    const names = namesBySig.get(sig) ?? [];
+    names.push(r.key.slice(p.length));
+    namesBySig.set(sig, names);
   }
   const emitted = new Set<string>();
   const out: Row[] = [];
   for (const r of rows) {
-    const langs = r.key.startsWith("label:") ? langsBySig.get(signature(r)) : undefined;
-    if (!langs || langs.length < 2) {
+    const p = prefix(r);
+    const names = p ? namesBySig.get(signature(r)) : undefined;
+    if (!p || !names || names.length < 2) {
       out.push(r);
       continue;
     }
     const sig = signature(r);
     if (emitted.has(sig)) continue;
     emitted.add(sig);
-    out.push({ ...r, key: `label:${langs.join(",")}`, label: `label (${langs.join(", ")})` });
+    out.push(
+      p === "label:"
+        ? { ...r, key: `label:${names.join(",")}`, label: `label (${names.join(", ")})` }
+        : { ...r, key: `sitelink:${names.join(",")}`, label: names.join(", "), sites: names },
+    );
   }
   return out;
 }

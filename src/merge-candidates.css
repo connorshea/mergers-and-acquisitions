@@ -766,7 +766,8 @@ a.chip-id:hover {
 .type-filter-panel {
   left: 0;
   right: auto;
-  max-height: 22rem;
+  min-width: 20rem;
+  max-height: min(34rem, 75vh);
   overflow-y: auto;
   font-size: 0.9rem;
 }

@@ -54,6 +54,7 @@ export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
     classes: [
       { qid: VIDEO_GAME, label: "video game" },
       { qid: "Q7058673", label: "video game series" },
+      { qid: "Q209163", label: "expansion add-on" },
       { qid: "Q210167", label: "video game developer" },
       { qid: "Q1137109", label: "video game publisher" },
     ],

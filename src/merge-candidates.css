@@ -700,7 +700,7 @@ a.chip-id:hover {
 /* A small basis so the extra "Clear filters" button (and a longer type-filter
    summary) fit on one row; it still grows to fill whatever space is left. */
 .search-input {
-  flex: 1 1 9rem;
+  flex: 1 1 7rem;
   min-width: 0;
   font: inherit;
   padding: 0.4rem 0.6rem;

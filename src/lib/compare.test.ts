@@ -4,6 +4,7 @@ import {
   blockingLabelKey,
   buildRows,
   collapseLabelRows,
+  compareRowRank,
   compareValues,
   formatIdUrl,
   installment,
@@ -14,6 +15,7 @@ import {
   isSeriesSequelPair,
   mergeConflicts,
   redirectSitelinkFixes,
+  rowDisplayRank,
   withFragment,
   normalize,
   orderByAge,
@@ -333,6 +335,44 @@ describe("collapseLabelRows", () => {
   it("leaves rows with no repeated values untouched", () => {
     const rows = buildRows({ ...a, labels: { en: "X" } }, { ...b, labels: { en: "Y" } });
     expect(collapseLabelRows(rows)).toEqual(rows);
+  });
+});
+
+describe("rowDisplayRank", () => {
+  it("orders P31, labels, other terms, sitelinks, non-id statements, then ids, by P-number", () => {
+    const base = { descriptions: {}, statements: {} };
+    const a: Item = {
+      ...base,
+      id: "Q1",
+      labels: { en: "A" },
+      aliases: { en: ["Alpha"] },
+      sitelinks: { enwiki: "A" },
+      statements: {
+        P1733: [{ type: "external-id", value: "1" }],
+        P577: [{ type: "time", value: "2001" }],
+        P31: [{ type: "item", value: "Q7889" }],
+        P214: [{ type: "external-id", value: "9" }],
+        P136: [{ type: "item", value: "Q1" }],
+        P17: [{ type: "item", value: "Q30" }],
+      },
+    };
+    const b: Item = { ...a, id: "Q2", labels: { en: "B" } };
+    const keys = buildRows(a, b)
+      .filter((r) => !r.key.startsWith("description:"))
+      .map((r) => ({ key: r.key, rank: rowDisplayRank(r, r.key === "P214") }))
+      .sort((x, y) => compareRowRank(x.rank, y.rank))
+      .map((r) => r.key);
+    expect(keys).toEqual([
+      "P31",
+      "label:en",
+      "alias:en",
+      "sitelink:enwiki",
+      "P17",
+      "P136",
+      "P577",
+      "P1733",
+      "P214",
+    ]);
   });
 });
 

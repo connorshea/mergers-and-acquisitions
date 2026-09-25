@@ -4,9 +4,11 @@ import type { AnnotatedValue, Item, Row, RowStatus } from "./lib/compare.ts";
 import {
   buildRows,
   collapseLabelRows,
+  compareRowRank,
   formatIdUrl,
   isHardcodedMirrorProp,
   isMergeBlocker,
+  rowDisplayRank,
   safeHttpUrl,
   sharedIdentifierProps,
 } from "./lib/compare.ts";
@@ -372,15 +374,16 @@ export default function MergeCandidates({
       )}
 
       {GROUPS.filter((g) => !hidden[g.status]).map((g) => {
-        // P31 first, then Wikidata-sourced (mirrored) and declared-shared (P4070)
-        // identifiers sink to the bottom — they're weak evidence either way;
-        // everything else keeps its build order (terms, sitelinks, statements).
-        // Array.sort is stable, so rows within a rank stay in build order.
-        const rank = (r: (typeof rows)[number]): number =>
-          r.key === "P31" ? -1 : isDiscounted(r) ? 1 : 0;
+        // P31 first, then labels, aliases and sitelinks, then non-identifier statements
+        // and then external ids, each by P-number. Wikidata-sourced (mirrored)
+        // and declared-shared (P4070) identifiers sink to the bottom — they're
+        // weak evidence either way. Array.sort is stable, so terms and
+        // sitelinks within a tier stay in build order.
         const groupRows = rows
           .filter((r) => r.status === g.status)
-          .sort((x, y) => rank(x) - rank(y));
+          .map((r) => ({ r, rank: rowDisplayRank(r, isDiscounted(r)) }))
+          .sort((x, y) => compareRowRank(x.rank, y.rank))
+          .map(({ r }) => r);
         return (
           <section key={g.status} className={`group group-${g.status}`}>
             <h2>

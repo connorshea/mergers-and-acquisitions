@@ -4,6 +4,7 @@ import {
   type DumpGame,
   externalIdRows,
   mapDumpGame,
+  MAX_LABEL_CHARS,
   primaryLabel,
   primaryType,
 } from "./wikidata.ts";
@@ -168,6 +169,19 @@ describe("derived DB fields", () => {
 
   it("prefers the English primary label", () => {
     expect(primaryLabel(item)).toBe("Pikmin 3 Deluxe");
+  });
+
+  it("cuts a label too long for the label columns to MAX_LABEL_CHARS code points", () => {
+    const withLabel = (text: string) => ({ ...item, labels: { it: text } });
+    const long = "Storia ".repeat(40); // 280 characters
+    const cut = primaryLabel(withLabel(long))!;
+    expect(Array.from(cut)).toHaveLength(MAX_LABEL_CHARS);
+    expect(cut).toBe(`${long.slice(0, MAX_LABEL_CHARS - 1)}…`);
+    // Exactly at the limit, and astral characters counted once (MariaDB counts
+    // code points, not UTF-16 units).
+    expect(primaryLabel(withLabel("x".repeat(MAX_LABEL_CHARS)))).toBe("x".repeat(MAX_LABEL_CHARS));
+    const astral = "𝄞".repeat(MAX_LABEL_CHARS);
+    expect(primaryLabel(withLabel(astral))).toBe(astral);
   });
 
   it("collects external-id rows and nothing else", () => {

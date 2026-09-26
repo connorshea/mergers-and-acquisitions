@@ -171,6 +171,16 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
     expect((await allItems())[0].dataHash).toMatch(/^[0-9a-f]{40}$/);
   });
 
+  it("stores an item whose only label is too long for primary_label", async () => {
+    // Q55094769 in dump 20260922: a 260-character Italian title and no English one.
+    const long: Entity = { ...game("Q100", ""), labels: { it: { value: "t".repeat(260) } } };
+    const stats = await run([long]);
+    expect(stats).toMatchObject({ upserted: 1, failed: 0 });
+    const [row] = await allItems();
+    expect(row.primaryLabel).toBe(`${"t".repeat(254)}…`);
+    expect(row.data.labels.it).toHaveLength(260);
+  });
+
   it("skips external id values too long for the column", async () => {
     const stats = await run([
       game("Q100", "Starfall Drift", [steam("812340"), steam("x".repeat(513))]),

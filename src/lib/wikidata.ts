@@ -169,9 +169,24 @@ export function displayLabel(item: Item): { text: string; lang: string } | undef
   return lang && text ? { text, lang } : undefined;
 }
 
-/** Best display label: English, then `mul`, then any other language. */
+/** Longest label the `primary_label` / `from_label` / `into_label` columns hold (varchar, in characters). */
+export const MAX_LABEL_CHARS = 255;
+
+/**
+ * Best display label: English, then `mul`, then any other language. Cut to
+ * MAX_LABEL_CHARS code points (ending in "…") so it fits the columns it is
+ * stored in: a few items carry longer labels, e.g. a 260-character Italian
+ * book title with no English one.
+ */
 export function primaryLabel(item: Item): string | undefined {
-  return displayLabel(item)?.text;
+  const text = displayLabel(item)?.text;
+  // UTF-16 length is never under the code-point count MariaDB measures.
+  if (text === undefined || text.length <= MAX_LABEL_CHARS) return text;
+  // Code points, deliberately: the column's limit counts them, not graphemes.
+  const chars = Array.from(text);
+  return chars.length <= MAX_LABEL_CHARS
+    ? text
+    : `${chars.slice(0, MAX_LABEL_CHARS - 1).join("")}…`;
 }
 
 /** External-id `(property, value)` rows for the `external_ids` blocking table. */

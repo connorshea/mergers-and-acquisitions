@@ -379,7 +379,7 @@ export default function CandidatesList() {
             <LogoMark />
             <span className="list-title-text">
               Mergers &amp; Acquisitions
-              <span className="list-title-sub">A Merge Assistant</span>
+              <span className="list-title-sub">A Wikidata Merge Assistant</span>
             </span>
           </h1>
           <div className="head-actions">

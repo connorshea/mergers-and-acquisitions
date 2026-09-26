@@ -1,0 +1,403 @@
+{
+  "pageid": 131309842,
+  "ns": 0,
+  "title": "Q137645100",
+  "lastrevid": 2515002724,
+  "modified": "2026-07-08T07:10:32Z",
+  "type": "item",
+  "id": "Q137645100",
+  "labels": {
+    "ca": {
+      "language": "ca",
+      "value": "País Invisible"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "País Invisible"
+    }
+  },
+  "descriptions": {
+    "ca": {
+      "language": "ca",
+      "value": "Pòdcast en català"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "3cad12dc85b7be85a65179c8eb0f833d3c332108",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 24634210,
+              "id": "Q24634210"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137645100$E26B479D-25E9-4F8A-9B81-20C3D70AF7D4",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f8fef94bd85c90d508c6494dd2682d4cc9c07d0d",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "dda2f30ffefb3cf305476f386a68a62bacddc966",
+                  "datavalue": {
+                    "value": "https://www.audio.cat/podcast/pais-invisible",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "5e0d00f4ddbc53bbb6abbde74d7c754bf593369e",
+          "datavalue": {
+            "value": "https://paisinvisible.cat/",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q137645100$4353D778-030E-406B-823D-7E4664B1B49C",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f8fef94bd85c90d508c6494dd2682d4cc9c07d0d",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "dda2f30ffefb3cf305476f386a68a62bacddc966",
+                  "datavalue": {
+                    "value": "https://www.audio.cat/podcast/pais-invisible",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P5916": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5916",
+          "hash": "732860dcfb1c72ab9e5fd6005f1190f3ad8c212e",
+          "datavalue": {
+            "value": "7LXZE1LVwICTqYqFcfciRr",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137645100$60E8251E-DEC3-435D-9F52-91C7A7128948",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f8fef94bd85c90d508c6494dd2682d4cc9c07d0d",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "dda2f30ffefb3cf305476f386a68a62bacddc966",
+                  "datavalue": {
+                    "value": "https://www.audio.cat/podcast/pais-invisible",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P5842": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5842",
+          "hash": "1606d1866d31396723d35fd83ffeaa7b8b0f802f",
+          "datavalue": {
+            "value": "1653158883",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137645100$8FB1672E-5818-4482-B25E-ECDA44649B0E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f8fef94bd85c90d508c6494dd2682d4cc9c07d0d",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "dda2f30ffefb3cf305476f386a68a62bacddc966",
+                  "datavalue": {
+                    "value": "https://www.audio.cat/podcast/pais-invisible",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P11245": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11245",
+          "hash": "cf67a8db7c3144b1f9dd0cf84d582d518dce091c",
+          "datavalue": {
+            "value": "paisinvisible",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137645100$1AA1078A-51A8-4DCB-AF73-53C5EB8AFC9E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f8fef94bd85c90d508c6494dd2682d4cc9c07d0d",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "dda2f30ffefb3cf305476f386a68a62bacddc966",
+                  "datavalue": {
+                    "value": "https://www.audio.cat/podcast/pais-invisible",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P2002": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2002",
+          "hash": "ffc81dd4f879ce09952fb021349aaa849f50b486",
+          "datavalue": {
+            "value": "paisinvisible",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137645100$E0C77F65-D151-4A8D-87DA-7C69534B97DE",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f8fef94bd85c90d508c6494dd2682d4cc9c07d0d",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "dda2f30ffefb3cf305476f386a68a62bacddc966",
+                  "datavalue": {
+                    "value": "https://www.audio.cat/podcast/pais-invisible",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P2013": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2013",
+          "hash": "70fa463ef18df5a6a1c58d902ea1e8e479426b3a",
+          "datavalue": {
+            "value": "paisinvisiblepodcast",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137645100$1A60CBF9-F2B4-410D-BF71-097092FB2C17",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f8fef94bd85c90d508c6494dd2682d4cc9c07d0d",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "dda2f30ffefb3cf305476f386a68a62bacddc966",
+                  "datavalue": {
+                    "value": "https://www.audio.cat/podcast/pais-invisible",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P2003": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2003",
+          "hash": "f1a2f2fbb7cba98fac508bd3e4d8cc2ccf2ac62f",
+          "datavalue": {
+            "value": "paisinvisible",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137645100$404CB6FE-223A-4E55-8EE6-026C1354AB23",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f8fef94bd85c90d508c6494dd2682d4cc9c07d0d",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "dda2f30ffefb3cf305476f386a68a62bacddc966",
+                  "datavalue": {
+                    "value": "https://www.audio.cat/podcast/pais-invisible",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P7085": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7085",
+          "hash": "e14a2f268e950ea19e84e007fa5388569974c424",
+          "datavalue": {
+            "value": "paisinvisible",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137645100$9E68B6E9-807F-4B64-AD62-E01787D8F739",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f8fef94bd85c90d508c6494dd2682d4cc9c07d0d",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "dda2f30ffefb3cf305476f386a68a62bacddc966",
+                  "datavalue": {
+                    "value": "https://www.audio.cat/podcast/pais-invisible",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P5797": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5797",
+          "hash": "08520078b526a40ffcac399d013c9171204472e8",
+          "datavalue": {
+            "value": "paisinvisible/",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137645100$938FA304-C6CD-4F9B-BA06-D253A2308BAF",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f8fef94bd85c90d508c6494dd2682d4cc9c07d0d",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "dda2f30ffefb3cf305476f386a68a62bacddc966",
+                  "datavalue": {
+                    "value": "https://www.audio.cat/podcast/pais-invisible",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {}
+}

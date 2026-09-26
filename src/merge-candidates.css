@@ -1400,6 +1400,14 @@ a.auth-login {
     /* Match the 16px selects beside it (see the iOS focus-zoom rule below). */
     font-size: 16px;
   }
+  /* Dialogs: the buttons stack full-width, the primary action on top (like
+     the detail view's actions) while Cancel stays first in tab order. */
+  .modal-actions {
+    flex-direction: column-reverse;
+  }
+  .modal-actions > button {
+    min-height: 2.75rem;
+  }
   /* Footer: one link per line, without the separator. */
   .site-footer-sep {
     display: none;

@@ -13,6 +13,7 @@ import {
   isAutoIgnoredConflict,
   isDeclaredDifferent,
   isSeriesSequelPair,
+  isWorkEditionPair,
   mergeConflicts,
   redirectSitelinkFixes,
   rowDisplayRank,
@@ -1275,6 +1276,60 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(result.reasons[0]).toContain("different from");
     // Symmetric: the declaration counts from whichever side holds it.
     expect(scoreCandidate(b, a).confidence).toBe(0);
+  });
+
+  it("caps a pair linked as work and edition (P629/P747) below the floor", () => {
+    // Q794722 "Big Hits (High Tide and Green Grass)" and its US edition
+    // Q62589819: identical label, same 1966 date and P31 — scored 74% before.
+    const work: Item = {
+      ...base,
+      id: "Q794722",
+      labels: { en: "Big Hits (High Tide and Green Grass)" },
+      statements: stmt({
+        P31: [{ type: "item", value: "Q482994" }],
+        P577: [{ type: "time", value: "+1966-00-00T00:00:00Z" }],
+      }),
+    };
+    const edition: Item = {
+      ...work,
+      id: "Q62589819",
+      statements: stmt({
+        P31: [
+          { type: "item", value: "Q3331189" },
+          { type: "item", value: "Q482994" },
+        ],
+        P577: [{ type: "time", value: "+1966-03-28T00:00:00Z" }],
+      }),
+    };
+    expect(scoreCandidate(work, edition).confidence).toBeGreaterThan(0.4);
+
+    const editionOf = {
+      ...edition,
+      statements: { ...edition.statements, P629: [{ type: "item" as const, value: "Q794722" }] },
+    };
+    const hasEdition = {
+      ...work,
+      statements: { ...work.statements, P747: [{ type: "item" as const, value: "Q62589819" }] },
+    };
+    for (const [a, b] of [
+      [editionOf, work],
+      [work, editionOf],
+      [hasEdition, edition],
+      [edition, hasEdition],
+    ]) {
+      expect(isWorkEditionPair(a, b)).toBe(true);
+      const result = scoreCandidate(a, b);
+      expect(result.confidence).toBeLessThanOrEqual(0.1);
+      expect(result.reasons[0]).toContain("work and its edition");
+      // Handled by the cap, not double-counted as a generic cross-reference.
+      expect(result.reasons.some((r) => r.startsWith("one item references the other"))).toBe(false);
+    }
+    // An edition of some *third* work says nothing about this pair.
+    const elsewhere = {
+      ...edition,
+      statements: { ...edition.statements, P629: [{ type: "item" as const, value: "Q1" }] },
+    };
+    expect(isWorkEditionPair(elsewhere, work)).toBe(false);
   });
 
   it("docks 0.25 when one item references the other (e.g. a game's series)", () => {

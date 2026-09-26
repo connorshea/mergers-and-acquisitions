@@ -330,6 +330,9 @@ export function compareValues(x: Value, y: Value): [Status, string?] {
     case "external-id":
       return ["distinct"]; // must match exactly
     case "url":
+      // A trailing slash alone ("https://x.cat/" vs "https://x.cat") is the
+      // same page, so count it as an exact match.
+      if (x.value.replace(/\/+$/, "") === y.value.replace(/\/+$/, "")) return ["identical"];
       if (normalize(x.value) === normalize(y.value)) return ["similar", "same host and path"];
       return ["distinct"];
     case "string": {

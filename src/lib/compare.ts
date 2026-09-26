@@ -926,6 +926,9 @@ const PER_TITLE_ID_PROPS = new Set<string>([
   // Film/TV and general
   "P345", // IMDb ID
   "P646", // Freebase ID
+  // Books: one title/work record per literary work.
+  "P1274", // ISFDB title ID
+  "P7439", // FantLab work ID
 ]);
 
 const ROMAN_RE = /^m{0,3}(cm|cd|d?c{0,3})(xc|xl|l?x{0,3})(ix|iv|v?i{0,3})$/i;

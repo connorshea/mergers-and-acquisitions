@@ -950,14 +950,16 @@ function romanToInt(s: string): number | null {
  * "Final Fantasy VII" → { base: "final fantasy", num: 7 }. `num` is null when
  * there's no trailing arabic/Roman number. NFKC folds the Unicode Roman
  * numeral characters ("Ⅱ", U+2161) and fullwidth digits to ASCII first, so
- * "Beneath the Raptor's Wing Ⅰ" vs "… Ⅱ" reads as a sequel pair.
+ * "Beneath the Raptor's Wing Ⅰ" vs "… Ⅱ" reads as a sequel pair. An
+ * apostrophe-abbreviated year counts too ("World of Tennis '74" → 74), so
+ * consecutive annuals and yearbooks read as different entries.
  */
 export function installment(label: string): { base: string; num: number | null } {
   const norm = normalize(label.normalize("NFKC"));
-  const m = norm.match(/^(.+?)[\s:._-]+([0-9]{1,4}|[ivxlcdm]+)$/i);
+  const m = norm.match(/^(.+?)[\s:._-]+(?:['‘’]([0-9]{2})|([0-9]{1,4}|[ivxlcdm]+))$/i);
   if (!m) return { base: norm, num: null };
   const base = m[1].trim();
-  const tok = m[2];
+  const tok = m[2] ?? m[3];
   const num = /^[0-9]+$/.test(tok) ? parseInt(tok, 10) : romanToInt(tok);
   if (num === null || base.length === 0) return { base: norm, num: null };
   return { base, num };

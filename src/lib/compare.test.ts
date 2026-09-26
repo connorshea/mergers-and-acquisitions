@@ -687,6 +687,11 @@ describe("installment / sequel detection", () => {
     });
     expect(installment("Final Fantasy Ⅻ")).toEqual({ base: "final fantasy", num: 12 });
     expect(installment("Portal ２")).toEqual({ base: "portal", num: 2 });
+    // Apostrophe-abbreviated years, straight or curly.
+    expect(installment("World of Tennis '74")).toEqual({ base: "world of tennis", num: 74 });
+    expect(installment("World of Tennis ’75")).toEqual({ base: "world of tennis", num: 75 });
+    // Only a two-digit year takes the apostrophe.
+    expect(installment("Tennis '1974")).toEqual({ base: "tennis '1974", num: null });
   });
 
   it("recognizes same-base / different-number pairs as sequels", () => {
@@ -704,6 +709,11 @@ describe("installment / sequel detection", () => {
     const r1: Item = { ...base, id: "Q54807364", labels: { en: "Beneath the Raptor's Wing Ⅰ" } };
     const r2: Item = { ...base, id: "Q54807365", labels: { en: "Beneath the Raptor's Wing Ⅱ" } };
     expect(isSeriesSequelPair(r1, r2)).toBe(true);
+
+    // Q28914385 / Q28918614: consecutive yearbooks titled with '74 / '75.
+    const y1: Item = { ...base, id: "Q28914385", labels: { en: "World of Tennis '74" } };
+    const y2: Item = { ...base, id: "Q28918614", labels: { en: "World of Tennis '75" } };
+    expect(isSeriesSequelPair(y1, y2)).toBe(true);
   });
 });
 

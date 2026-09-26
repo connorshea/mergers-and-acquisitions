@@ -134,8 +134,8 @@ export const mergeCandidates = mysqlTable(
     // merged or marked "different from": the merge drops the merged-away item
     // from `items`, and later syncs rewrite both, so without this the detail
     // view has nothing (or the wrong thing) to show. Null on open pairs and
-    // plain dismissals; scripts/backfill-snapshots.ts fills it in for edits
-    // made before it existed.
+    // plain dismissals. Pairs resolved before this column existed were filled
+    // in once from Wikidata's revision history.
     snapshot: json<{
       from: import("../src/lib/compare.ts").Item;
       into: import("../src/lib/compare.ts").Item;

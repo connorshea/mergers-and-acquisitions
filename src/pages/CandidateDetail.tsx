@@ -187,6 +187,28 @@ export default function CandidateDetail() {
           </p>
         )}
 
+        {/* Every action below edits state (here or on Wikidata) on the user's
+            behalf, so all of them need a login. */}
+        {candidate && !user && configured && (
+          <div className="login-callout">
+            <svg
+              className="login-callout-icon"
+              viewBox="0 0 16 16"
+              width="14"
+              height="14"
+              aria-hidden="true"
+            >
+              <path
+                fill="currentColor"
+                d="M8 1a3.5 3.5 0 0 0-3.5 3.5V6H4a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-.5V4.5A3.5 3.5 0 0 0 8 1Zm2 5H6V4.5a2 2 0 1 1 4 0V6Z"
+              />
+            </svg>
+            <span>Log in with your Wikimedia account to review this pair.</span>
+            <a className="login-callout-btn" href={loginUrl(`/candidates/${id ?? ""}`)}>
+              Log in
+            </a>
+          </div>
+        )}
         {candidate && (
           <div className="detail-bar">
             <div className="detail-score">
@@ -213,13 +235,6 @@ export default function CandidateDetail() {
               </ul>
             )}
             <div className="detail-actions">
-              {/* Every action edits state (here or on Wikidata) on the user's
-                  behalf, so all of them need a login. */}
-              {!user && configured && (
-                <span className="login-hint">
-                  <a href={loginUrl(`/candidates/${id ?? ""}`)}>Log in</a> to act on this pair
-                </span>
-              )}
               {/* Merge / "different from" only make sense on an open pair; once
                   it's dismissed or merged they're hidden. */}
               {(!status || status === "open") && (

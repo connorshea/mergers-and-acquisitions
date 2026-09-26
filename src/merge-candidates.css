@@ -1379,6 +1379,11 @@ a.chip-id:hover {
 .user-menu > summary:hover {
   border-color: var(--muted);
 }
+/* Items line up under the right-aligned username. */
+.user-menu-panel a,
+.menu-panel.user-menu-panel button {
+  text-align: right;
+}
 .user-menu-panel a {
   font: inherit;
   padding: 0.5rem 0.6rem;

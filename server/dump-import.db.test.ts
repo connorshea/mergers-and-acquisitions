@@ -113,6 +113,23 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
     expect(await idsOf("Q100")).toEqual([{ property: "P1733", value: "999" }]);
   });
 
+  it("only touches the external id rows that changed", async () => {
+    await run([game("Q100", "Alpha", [steam("1"), steam("2")])]);
+    const rowId = async (value: string) =>
+      (
+        await db
+          .select({ id: externalIds.id })
+          .from(externalIds)
+          .where(eq(externalIds.value, value))
+      )[0]?.id;
+    const kept = await rowId("1");
+    const stats = await run([game("Q100", "Alpha II", [steam("1"), steam("3")])]);
+    expect(stats).toMatchObject({ upserted: 1, unchanged: 0, externalIds: 2 });
+    expect(await rowId("1")).toBe(kept);
+    expect(await rowId("2")).toBeUndefined();
+    expect((await idsOf("Q100")).map((r) => r.value).sort()).toEqual(["1", "3"]);
+  });
+
   it("only restamps an item whose converted data is unchanged", async () => {
     await run([game("Q100", "Alpha", [steam("1")]), game("Q200", "Beta", [steam("2")])], {
       dump: "20260914",

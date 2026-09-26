@@ -17,8 +17,9 @@
 //   3. Hit lines are JSON.parsed, converted with the shared entityToItem, and
 //      kept if a best-rank P31 really is one of the classes (a mention of a
 //      class QID in any other statement is discarded here).
-//   4. Items are upserted in batches; each item's external ids are rebuilt
-//      wholesale (the schema's "rebuilt for an item on each sync" contract).
+//   4. Items are upserted in batches; each changed item's external ids are
+//      made to match the dump, deleting and inserting only the rows that
+//      differ.
 //      Property entities become `properties` rows via the existing sync path.
 //   5. After a complete pass, items that were not in the dump any more (merged
 //      away, deleted, retyped) are pruned and their open candidates settled.
@@ -501,6 +502,9 @@ export function itemHash(
     .digest("hex");
 }
 
+/** Plain code-unit order, close to the `utf8mb4_bin` order the indexes use. */
+const compareKeys = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0);
+
 /** What upsertItems did with a batch. */
 export interface UpsertResult {
   /** Items written in full (new, changed, or without a stored hash). */
@@ -556,7 +560,7 @@ export async function upsertItems(
   // One transaction, so a batch that fails leaves every item as it was (not,
   // say, updated with its external ids already deleted) and can be retried.
   // READ COMMITTED drops the gap locks REPEATABLE READ takes on the external-id
-  // delete's index range, which is what concurrent shards deadlocked on.
+  // index ranges, and keeps the reads below lock-free.
   return db.transaction(
     async (tx) => {
       const stored = new Map(
@@ -585,6 +589,9 @@ export async function upsertItems(
       }
       if (changed.length === 0) return { written: 0, unchanged: unchanged.length, externalIds: 0 };
 
+      // Written in key order so concurrent shards take their locks in the same
+      // order.
+      changed.sort((a, b) => compareKeys(a.row.qid, b.row.qid));
       const rows = changed.map((p) => p.row);
       for (let i = 0; i < rows.length; i += ITEM_BATCH) {
         await tx
@@ -602,16 +609,43 @@ export async function upsertItems(
           });
       }
 
-      // Rebuild the changed items' external ids wholesale.
-      await tx.delete(externalIds).where(
-        inArray(
-          externalIds.qid,
-          rows.map((r) => r.qid),
-        ),
-      );
+      // Bring the changed items' external ids in line with the dump, touching
+      // only the rows that differ: most items' ids are the same from one dump
+      // to the next, and deleting and re-inserting all of them is what
+      // concurrent shards deadlocked on. The read takes no locks under READ
+      // COMMITTED and is answered from idx_external_ids_unique alone.
       const idRows = changed.flatMap((p) => p.ids);
-      for (let i = 0; i < idRows.length; i += ID_BATCH) {
-        await tx.insert(externalIds).values(idRows.slice(i, i + ID_BATCH));
+      const idKey = (r: { qid: string; property: string; value: string }) =>
+        `${r.qid}\t${r.property}\t${r.value}`;
+      const wanted = new Set(idRows.map(idKey));
+      const stale: number[] = [];
+      const present = new Set<string>();
+      for (const r of await tx
+        .select({
+          id: externalIds.id,
+          qid: externalIds.qid,
+          property: externalIds.property,
+          value: externalIds.value,
+        })
+        .from(externalIds)
+        .where(
+          inArray(
+            externalIds.qid,
+            rows.map((r) => r.qid),
+          ),
+        )) {
+        if (wanted.has(idKey(r))) present.add(idKey(r));
+        else stale.push(r.id);
+      }
+      stale.sort((a, b) => a - b);
+      for (let i = 0; i < stale.length; i += ID_BATCH) {
+        await tx.delete(externalIds).where(inArray(externalIds.id, stale.slice(i, i + ID_BATCH)));
+      }
+      const added = idRows
+        .filter((r) => !present.has(idKey(r)))
+        .sort((a, b) => compareKeys(idKey(a), idKey(b)));
+      for (let i = 0; i < added.length; i += ID_BATCH) {
+        await tx.insert(externalIds).values(added.slice(i, i + ID_BATCH));
       }
       return { written: changed.length, unchanged: unchanged.length, externalIds: idRows.length };
     },

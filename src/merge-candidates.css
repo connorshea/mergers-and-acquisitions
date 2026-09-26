@@ -1517,6 +1517,16 @@ a.auth-login {
     padding-bottom: 0.1rem;
     border-right: none;
   }
+  /* The property cell spans the row now, so pushing the markers to its right
+     edge would strand them; keep them beside the property id instead. */
+  .ledger:not(.candidates) .prop-key {
+    flex-wrap: wrap;
+    gap: 0.25rem 0.4rem;
+  }
+  .ledger:not(.candidates) .prop-key .prop-mirror,
+  .ledger:not(.candidates) .prop-key .prop-shared {
+    margin-left: 0;
+  }
   .ledger:not(.candidates) .col-name {
     display: block;
     margin-left: 0;

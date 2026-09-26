@@ -36,7 +36,7 @@ describe.skipIf(!DB_TEST)("GET /api/leaderboard", () => {
 
   afterAll(() => pool.end());
 
-  it("ranks users by merges, then pairs marked different, from successful edits only", async () => {
+  it("ranks users by merges plus pairs marked different, from successful edits only", async () => {
     await db.insert(wikidataEdits).values([
       edit(1, 1),
       edit(1, 2),
@@ -47,12 +47,18 @@ describe.skipIf(!DB_TEST)("GET /api/leaderboard", () => {
       edit(2, 6, { action: "different-from" }),
       edit(2, 6, { action: "different-from", fromQid: "Q13", intoQid: "Q12" }),
       edit(3, 7, { action: "different-from", ok: false }),
+      // Weighted equally, three "different from" pairs outrank Alice's two
+      // merges and tie Bob's total of three, where more merges wins.
+      edit(3, 8, { action: "different-from" }),
+      edit(3, 9, { action: "different-from" }),
+      edit(3, 10, { action: "different-from" }),
     ]);
     const { period, entries } = await leaderboard();
     expect(period).toBe("all");
     expect(entries).toEqual([
-      { userId: 2, username: "Bob", merges: 2, differentFrom: 1 },
-      { userId: 1, username: "Alice", merges: 2, differentFrom: 0 },
+      { userId: 2, username: "Bob", merges: 2, differentFrom: 1, total: 3 },
+      { userId: 3, username: "Carol", merges: 0, differentFrom: 3, total: 3 },
+      { userId: 1, username: "Alice", merges: 2, differentFrom: 0, total: 2 },
     ]);
   });
 
@@ -65,7 +71,7 @@ describe.skipIf(!DB_TEST)("GET /api/leaderboard", () => {
         edit(2, 3),
       ]);
     expect((await leaderboard("?period=30d")).entries).toEqual([
-      { userId: 2, username: "Bob", merges: 1, differentFrom: 0 },
+      { userId: 2, username: "Bob", merges: 1, differentFrom: 0, total: 1 },
     ]);
     const all = await leaderboard("?period=bogus");
     expect(all.period).toBe("all");

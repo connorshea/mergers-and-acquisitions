@@ -298,6 +298,11 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       expect(row.status).toBe("merged");
       expect(row.resolvedBy).toBe(EDITOR_ID);
       expect(row.resolvedAt).not.toBeNull();
+      // Both items as the mirror held them, for the detail view.
+      expect(row.snapshot?.from.id).toBe("Q20");
+      expect(row.snapshot?.into.id).toBe("Q10");
+      // Only the reviewed pair gets one, not those the merge settled.
+      expect((await candidateRow(beta)).snapshot).toBeNull();
 
       // The merged-away item is gone from the mirror, ids included.
       expect(await itemQids()).toEqual(["Q10", "Q30", "Q40"]);

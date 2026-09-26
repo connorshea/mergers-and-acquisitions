@@ -282,8 +282,8 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       const { status, body } = await get<CandidateDetailResponse>(`/api/candidates/${alpha}`);
       expect(status).toBe(200);
       expect(body.candidate.id).toBe(alpha);
-      expect(body.from.id).toBe("Q20");
-      expect(body.into.id).toBe("Q10");
+      expect(body.from?.id).toBe("Q20");
+      expect(body.into?.id).toBe("Q10");
       // Neighbours follow the list order within the same status.
       expect(body.prevId).toBeNull();
       expect(body.nextId).toBe(beta);
@@ -293,8 +293,8 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       expect(body.propertyMirrors).toEqual(["P136"]);
       expect(body.valueLabels).toEqual({ Q744038: "role-playing video game" });
       // The synced description is backfilled onto the item.
-      expect(body.into.descriptions.en).toBe("2019 video game");
-      expect(body.from.descriptions.en).toBeUndefined();
+      expect(body.into?.descriptions.en).toBe("2019 video game");
+      expect(body.from?.descriptions.en).toBeUndefined();
     });
 
     it("links the last candidate back to the previous one", async () => {
@@ -311,11 +311,34 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       expect((await get("/api/candidates/abc")).status).toBe(404);
     });
 
-    it("404s naming the missing items when their data is gone", async () => {
-      const { status, body } = await get<{ error: string }>(`/api/candidates/${orphan}`);
-      expect(status).toBe(404);
-      expect(body.error).toContain("Q60");
-      expect(body.error).toContain("Q50");
+    it("still returns a pair whose items are gone, with both sides null", async () => {
+      const { status, body } = await get<CandidateDetailResponse>(`/api/candidates/${orphan}`);
+      expect(status).toBe(200);
+      expect(body.candidate).toMatchObject({ fromQid: "Q60", intoQid: "Q50", status: "dismissed" });
+      expect(body.from).toBeNull();
+      expect(body.into).toBeNull();
+      expect(body.snapshot).toBe(false);
+    });
+
+    it("shows a merged pair from its snapshot, not the mirror", async () => {
+      await db
+        .update(mergeCandidates)
+        .set({
+          status: "merged",
+          snapshot: {
+            from: makeItem("Q20", "Alpha Quest (before)"),
+            into: makeItem("Q10", "Alpha Quest", { P136: [{ type: "item", value: "Q744038" }] }),
+          },
+        })
+        .where(eq(mergeCandidates.id, alpha));
+      // The merge dropped the merged-away item from the mirror.
+      await db.delete(items).where(eq(items.qid, "Q20"));
+      const { status, body } = await get<CandidateDetailResponse>(`/api/candidates/${alpha}`);
+      expect(status).toBe(200);
+      expect(body.snapshot).toBe(true);
+      expect(body.from?.labels.en).toBe("Alpha Quest (before)");
+      expect(body.into?.id).toBe("Q10");
+      expect(body.propertyLabels).toEqual({ P31: "instance of", P136: "genre" });
     });
   });
 

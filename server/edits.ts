@@ -423,6 +423,25 @@ edits.post("/:id/merge", async (c) => {
   // and the candidate can't be re-taken as a stale `merging` claim and merged
   // again into a redirect.
   const stamp = toSqlDatetime(new Date());
+  // The pair as the reviewer saw it, for the detail view: the cleanup below
+  // drops the merged-away item and the next sync rewrites the survivor. Best
+  // effort, like the cleanup: a failed read only costs the detail view.
+  let snapshot: { from: Item; into: Item } | undefined;
+  try {
+    const mirrored = new Map(
+      (
+        await db
+          .select({ qid: items.qid, data: items.data })
+          .from(items)
+          .where(inArray(items.qid, [fromQid, intoQid]))
+      ).map((r) => [r.qid, r.data]),
+    );
+    const from = mirrored.get(fromQid);
+    const into = mirrored.get(intoQid);
+    if (from && into) snapshot = { from, into };
+  } catch (err) {
+    console.error(`merge: ${fromQid} → ${intoQid} merged but its snapshot read failed`, err);
+  }
   await db.transaction(async (tx) => {
     await tx.insert(wikidataEdits).values({
       ...audit,
@@ -437,6 +456,7 @@ edits.post("/:id/merge", async (c) => {
         status: "merged",
         resolvedAt: stamp,
         resolvedBy: user.id,
+        ...(snapshot ? { snapshot } : {}),
         resolution: `merged into ${intoQid} (rev ${result.intoRevid})${
           result.redirected ? "" : "; source item not redirected"
         }`,

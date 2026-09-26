@@ -1144,6 +1144,26 @@ a.chip-id:hover {
   opacity: 0.5;
   cursor: default;
 }
+/* Under the detail bar: the pair is shown from its merge-time snapshot, or
+   can't be shown at all. */
+.detail-note {
+  margin: 0.75rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.detail-note.is-missing {
+  padding: 0.9rem 1.1rem;
+  border: 1px dashed var(--rule);
+  border-radius: 6px;
+  color: inherit;
+}
+.detail-note.is-missing p {
+  margin: 0;
+}
+.detail-note.is-missing p + p {
+  margin-top: 0.4rem;
+  color: var(--muted);
+}
 .detail-bar {
   display: flex;
   flex-wrap: wrap;
@@ -1873,4 +1893,69 @@ a.auth-login {
   .field .creator-input {
     font-size: 16px;
   }
+}
+
+/* ---------- Leaderboard ---------- */
+.head-link {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-right: 0.25rem;
+}
+.head-link:hover {
+  color: inherit;
+}
+.mc.leaderboard {
+  padding-top: 0.5rem;
+}
+.leaderboard-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+.leaderboard h1 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin: 0;
+}
+.period-toggle {
+  display: inline-flex;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.period-toggle a {
+  padding: 0.35rem 0.8rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+  text-decoration: none;
+}
+.period-toggle a + a {
+  border-left: 1px solid var(--rule);
+}
+.period-toggle a[aria-current="page"] {
+  background: var(--surface);
+  color: inherit;
+  font-weight: 500;
+}
+.leaderboard-table {
+  min-width: 0;
+}
+.leaderboard-table .col-rank {
+  width: 3rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.leaderboard-table .col-count {
+  width: 9rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.leaderboard-table tr.is-you td {
+  background: rgba(0, 0, 0, 0.03);
+}
+.leaderboard-table .auth-badge {
+  margin-left: 0.4rem;
 }

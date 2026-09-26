@@ -182,13 +182,14 @@ candidates.get("/:id", async (c) => {
     return c.json({ error: "Invalid candidate id" }, 404);
   }
 
-  const [row] = await db
-    .select(summaryColumns)
+  const [found] = await db
+    .select({ ...summaryColumns, snapshot: mergeCandidates.snapshot })
     .from(mergeCandidates)
     .where(eq(mergeCandidates.id, id));
-  if (!row) {
+  if (!found) {
     return c.json({ error: "Candidate not found" }, 404);
   }
+  const { snapshot, ...row } = found;
 
   // Neighbours for prev/next navigation, within the same status and using the
   // list's default order (confidence desc, then id asc as a stable tiebreak).
@@ -204,10 +205,13 @@ candidates.get("/:id", async (c) => {
 
   const [labels, itemRows, nextRows, prevRows] = await Promise.all([
     loadLabels([row]),
-    db
-      .select({ qid: items.qid, data: items.data })
-      .from(items)
-      .where(inArray(items.qid, [...new Set([row.fromQid, row.intoQid])])),
+    // A merged pair shows the snapshot saved at merge time instead.
+    snapshot
+      ? []
+      : db
+          .select({ qid: items.qid, data: items.data })
+          .from(items)
+          .where(inArray(items.qid, [...new Set([row.fromQid, row.intoQid])])),
     db
       .select({ id: mergeCandidates.id })
       .from(mergeCandidates)
@@ -223,26 +227,23 @@ candidates.get("/:id", async (c) => {
   ]);
 
   const dataByQid = new Map(itemRows.map((r) => [r.qid, r.data as Item]));
-  const from = dataByQid.get(row.fromQid);
-  const into = dataByQid.get(row.intoQid);
+  const from = snapshot?.from ?? dataByQid.get(row.fromQid) ?? null;
+  const into = snapshot?.into ?? dataByQid.get(row.intoQid) ?? null;
 
-  // A candidate can outlive one of its item rows: a merge drops the
-  // merged-away item from the mirror (server/edits.ts), or an item was deleted
-  // or never synced. We can't render a comparison without both, so 404 naming
-  // the absent qid (and the reason, when it is a merge).
-  if (!from || !into) {
-    const missing = [!from && row.fromQid, !into && row.intoQid].filter(Boolean).join(", ");
-    const why = row.status === "merged" ? " (merged away; the mirror no longer holds it)" : "";
-    return c.json({ error: `Item data missing for: ${missing}${why}` }, 404);
-  }
-  await attachSitelinkRedirects(db, [[from, into]]);
+  // A candidate can outlive one of its item rows: a merge made before
+  // snapshots existed dropped the merged-away item from the mirror, another
+  // pair's merge or the dump prune dropped it, or it was never synced. The
+  // candidate still comes back, with the missing side null, so the page can
+  // say what happened instead of failing.
+  if (from && into) await attachSitelinkRedirects(db, [[from, into]]);
+  const present = [from, into].filter((i): i is Item => i !== null);
 
   // Resolve human labels for just the property ids present on this pair.
-  const pids = [...new Set([...Object.keys(from.statements), ...Object.keys(into.statements)])];
+  const pids = [...new Set(present.flatMap((i) => Object.keys(i.statements)))];
   // Item-valued statements reference other Qids that need a display label too
   // (genre, platform, developer, …). Collect them from both items' statements.
   const valueQids = new Set<string>();
-  for (const item of [from, into]) {
+  for (const item of present) {
     for (const values of Object.values(item.statements)) {
       for (const v of values) {
         if (v.type === "item" && !v.label) valueQids.add(v.value);
@@ -292,6 +293,7 @@ candidates.get("/:id", async (c) => {
     candidate: toSummary(row, labels),
     from,
     into,
+    snapshot: snapshot != null,
     propertyLabels,
     propertyFormatters,
     propertyMirrors,

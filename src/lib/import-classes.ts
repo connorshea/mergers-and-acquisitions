@@ -23,7 +23,9 @@ export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
   {
     name: "WikiProject Anime and Manga",
     classes: [
+      { qid: "Q1107", label: "anime" },
       { qid: "Q63952888", label: "anime television series" },
+      { qid: "Q8274", label: "manga" },
       { qid: "Q21198342", label: "manga series" },
       { qid: "Q104213567", label: "light novel series" },
     ],

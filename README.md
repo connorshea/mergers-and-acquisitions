@@ -270,8 +270,7 @@ Then apply migrations as a one-off job, load the mirror with the `import-dump`
 job above, start the web service (`toolforge webservice buildservice start
 --mount none`; the build service requires an explicit mount flag, and the web
 process needs no NFS), and load the schedule with `toolforge jobs load
-jobs.yaml`. One-off jobs keep their
-name after finishing, so `toolforge jobs delete migrate` before rerunning:
+jobs.yaml`. A finished one-off job deletes itself, so the same command reruns it:
 
 ```sh
 toolforge jobs run migrate --image tool-mna/tool-mna:latest \

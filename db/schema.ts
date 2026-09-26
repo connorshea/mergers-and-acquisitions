@@ -131,9 +131,11 @@ export const mergeCandidates = mysqlTable(
     fromLabelLangs: text("from_label_langs"),
     intoLabelLangs: text("into_label_langs"),
     // Both items' mirror data as the reviewer saw it, saved when the pair is
-    // merged: the merge drops the merged-away item from `items` and rewrites
-    // the survivor, so without this the detail view has nothing to show.
-    // Null on open/dismissed pairs and on merges made before it existed.
+    // merged or marked "different from": the merge drops the merged-away item
+    // from `items`, and later syncs rewrite both, so without this the detail
+    // view has nothing (or the wrong thing) to show. Null on open pairs and
+    // plain dismissals; scripts/backfill-snapshots.ts fills it in for edits
+    // made before it existed.
     snapshot: json<{
       from: import("../src/lib/compare.ts").Item;
       into: import("../src/lib/compare.ts").Item;

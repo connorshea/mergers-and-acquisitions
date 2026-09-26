@@ -757,6 +757,12 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       // The user is waiting on them, so neither claim carries the lag guard.
       expect(calls.every((c) => !c.params.has("maxlag"))).toBe(true);
 
+      // The pair is kept as the reviewer saw it, before the new statements.
+      const { snapshot } = await candidateRow(alpha);
+      expect(snapshot?.from.id).toBe("Q20");
+      expect(snapshot?.into.id).toBe("Q10");
+      expect(snapshot?.from.statements.P1889).toBeUndefined();
+
       // The mirror carries the new statements (with the target's label).
       const rows = await db
         .select({ qid: items.qid, data: items.data, dataHash: items.dataHash })

@@ -364,6 +364,11 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
 
       const [row] = await db.select().from(mergeCandidates).where(eq(mergeCandidates.id, alpha));
       expect(row.resolvedAt).not.toBeNull();
+      // As if it had been marked "different from", which saves a snapshot.
+      await db
+        .update(mergeCandidates)
+        .set({ snapshot: { from: makeItem("Q20", "Old"), into: makeItem("Q10", "Old") } })
+        .where(eq(mergeCandidates.id, alpha));
 
       const reopened = await post<CandidateReopenResponse>(
         `/api/candidates/${alpha}/reopen`,
@@ -373,6 +378,11 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       const [after] = await db.select().from(mergeCandidates).where(eq(mergeCandidates.id, alpha));
       expect(after.resolvedAt).toBeNull();
       expect(after.resolution).toBeNull();
+      // Open again, it shows live data rather than the resolved-time snapshot.
+      expect(after.snapshot).toBeNull();
+      const detail = await get<CandidateDetailResponse>(`/api/candidates/${alpha}`);
+      expect(detail.body.snapshot).toBe(false);
+      expect(detail.body.from?.labels.en).toBe("Alpha Quest");
     });
 
     it("404s for an unknown candidate", async () => {

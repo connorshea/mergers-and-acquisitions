@@ -681,6 +681,8 @@ edits.post("/:id/different", async (c) => {
       status: "dismissed",
       resolvedAt: toSqlDatetime(new Date()),
       resolvedBy: user.id,
+      // Both items as the reviewer saw them, before the statements above.
+      snapshot: { from: from.data, into: into.data },
       resolution: "marked as different from (P1889)",
     })
     .where(and(eq(mergeCandidates.id, id), eq(mergeCandidates.status, "merging")));

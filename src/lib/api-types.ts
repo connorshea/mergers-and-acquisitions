@@ -50,13 +50,13 @@ export interface CandidateDetailResponse {
   candidate: CandidateSummary;
   /**
    * Parsed items.data for fromQid / intoQid, ready for the comparison view:
-   * the mirror's current data, or for a merged pair the snapshot taken at
-   * merge time. Null when neither holds that item any more (merged before
+   * the mirror's current data, or for a pair merged or marked "different
+   * from" the snapshot taken then. Null when neither holds that item any more (merged before
    * snapshots existed, merged elsewhere, or dropped from the dump).
    */
   from: Item | null;
   into: Item | null;
-  /** True when `from`/`into` are the snapshot taken when the pair was merged. */
+  /** True when `from`/`into` are the snapshot taken when the pair was resolved. */
   snapshot: boolean;
   /** Pxxx → human label, for the property ids present on this pair. */
   propertyLabels: Record<string, string>;

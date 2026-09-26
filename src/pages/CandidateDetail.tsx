@@ -295,8 +295,9 @@ export default function CandidateDetail() {
         )}
         {data?.snapshot && (
           <p className="detail-note">
-            Showing both items as they were when this pair was merged. Wikidata has changed them
-            since.
+            Showing both items as they were when this pair was{" "}
+            {candidate?.status === "merged" ? "merged" : "marked as different"}. Wikidata may have
+            changed them since.
           </p>
         )}
         {data && candidate && (!data.from || !data.into) && (

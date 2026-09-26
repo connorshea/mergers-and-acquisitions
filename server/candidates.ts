@@ -205,7 +205,7 @@ candidates.get("/:id", async (c) => {
 
   const [labels, itemRows, nextRows, prevRows] = await Promise.all([
     loadLabels([row]),
-    // A merged pair shows the snapshot saved at merge time instead.
+    // A resolved pair shows the snapshot saved when it was resolved instead.
     snapshot
       ? []
       : db
@@ -408,7 +408,8 @@ candidates.post("/:id/reopen", async (c) => {
 
   await db
     .update(mergeCandidates)
-    .set({ status: "open", resolvedAt: null, resolution: null, resolvedBy: null })
+    // The snapshot described the pair when it was resolved; open, it shows live data again.
+    .set({ status: "open", resolvedAt: null, resolution: null, resolvedBy: null, snapshot: null })
     .where(eq(mergeCandidates.id, id));
 
   const [row] = await db

@@ -360,16 +360,14 @@ export default function CandidatesList() {
   const firstRow = total === 0 ? 0 : (page - 1) * PAGE_SIZE + 1;
   const lastRow = Math.min(total, page * PAGE_SIZE);
 
-  // Per-route <title> reflecting the active filters. "Merge candidates" is the
-  // shared suffix for the default (open) view; other statuses carry their own
-  // "<Status> candidates" tail. A search term leads. React 19 hoists this into
-  // <head>.
+  // Per-route <title> reflecting the active filters. The default (open) view is
+  // just the app name; other statuses carry their own "<Status> candidates"
+  // tail. A search term leads. React 19 hoists this into <head>.
   const titleTail =
     status === "open"
       ? "M&A: A Merge Assistant"
       : `${status[0].toUpperCase() + status.slice(1)} candidates`;
   const titleParts = [...(q ? [`“${q}”`] : []), ...(creator ? [`by ${creator}`] : [])];
-  if (titleParts.length === 0 && status === "open") titleParts.push("Open candidates");
   const pageTitle = [...titleParts, titleTail].join(" · ");
 
   return (

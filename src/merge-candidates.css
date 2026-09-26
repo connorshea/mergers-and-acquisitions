@@ -758,7 +758,7 @@ a.chip-id:hover {
 }
 .list-actions button:hover,
 .pager button:not(:disabled):hover,
-.btn-dismiss:hover {
+.btn-dismiss:hover:not(:disabled) {
   border-color: var(--muted);
 }
 .list-actions {
@@ -1176,9 +1176,16 @@ a.chip-id:hover {
   align-items: center;
   gap: 0.5rem;
 }
+/* Disabled detail actions (logged out, or mid-request): flat and grey, Merge
+   included, so they read as unavailable rather than faded. */
+.btn-merge:disabled,
+.btn-different:disabled,
 .btn-dismiss:disabled {
-  opacity: 0.5;
-  cursor: default;
+  background: var(--bg);
+  border-color: var(--rule);
+  color: var(--muted);
+  cursor: not-allowed;
+  filter: none;
 }
 .btn-merge {
   font: inherit;
@@ -1191,7 +1198,7 @@ a.chip-id:hover {
   cursor: pointer;
   white-space: nowrap;
 }
-.btn-merge:hover {
+.btn-merge:hover:not(:disabled) {
   filter: brightness(1.05);
 }
 .btn-different {
@@ -1204,7 +1211,7 @@ a.chip-id:hover {
   cursor: pointer;
   white-space: nowrap;
 }
-.btn-different:hover {
+.btn-different:hover:not(:disabled) {
   border-color: var(--muted);
 }
 
@@ -1407,12 +1414,37 @@ a.auth-login {
   text-decoration: none;
   display: inline-block;
 }
-.login-hint {
-  color: var(--muted);
+/* Shown above the detail bar when logged out: why its actions are disabled,
+   and the way to enable them. */
+.login-callout {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 0.5rem 0.45rem 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--focus) 35%, var(--rule));
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--focus) 8%, var(--surface));
+  color: var(--ink);
   font-size: 0.9rem;
+  margin-bottom: 0.75rem;
 }
-.login-hint a {
+.login-callout-icon {
+  flex: none;
   color: var(--focus);
+}
+.login-callout-btn {
+  margin-left: auto;
+  flex: none;
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  background: var(--focus);
+  color: var(--surface);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.login-callout-btn:hover {
+  filter: brightness(1.08);
 }
 
 /* ---------- Settings ---------- */

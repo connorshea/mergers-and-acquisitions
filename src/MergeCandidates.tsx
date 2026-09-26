@@ -1,4 +1,4 @@
-import { Fragment, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import type { AnnotatedValue, Item, Row, RowStatus } from "./lib/compare.ts";
 import {
@@ -12,6 +12,7 @@ import {
   safeHttpUrl,
   sharedIdentifierProps,
 } from "./lib/compare.ts";
+import { describeDifference } from "./lib/text-difference.ts";
 import { sitelinkUrl, wikiPageUrl } from "./lib/wiki.ts";
 import { displayLabel } from "./lib/wikidata.ts";
 import type { ItemCreation } from "./lib/api-types.ts";
@@ -52,6 +53,20 @@ function displayValue(v: AnnotatedValue): string {
     if (m) return m[1].replace(/^\+/, "").replace(/-00$/, "").replace(/-00$/, "");
   }
   return v.value;
+}
+
+/**
+ * Note for a row pairing one similar text value with one other: what the
+ * difference comes down to ("Punctuation difference only · 92% match"), in place of the
+ * value's bare "92% string match". Rows with several values a side would need
+ * one per pairing, so they keep that note instead.
+ */
+function rowDiffCaption(r: Row): string | null {
+  const [a] = r.a;
+  const [b] = r.b;
+  if (r.a.length !== 1 || r.b.length !== 1) return null;
+  if (a.type !== "string" || b.type !== "string" || a.status !== "similar") return null;
+  return describeDifference(a.value, b.value);
 }
 
 function ValueChip({
@@ -137,23 +152,20 @@ function sitelinkSite(r: Row): string | undefined {
  */
 function SiteLinks({ sites, title }: { sites: string[]; title: string | undefined }) {
   return (
-    <>
-      {sites.map((site, i) => {
+    <span className="site-links">
+      {sites.map((site) => {
         const url = title ? sitelinkUrl(site, title) : null;
-        return (
-          <Fragment key={site}>
-            {i > 0 && ", "}
-            {url ? (
-              <a href={url} target="_blank" rel="noreferrer">
-                {site}
-              </a>
-            ) : (
-              site
-            )}
-          </Fragment>
+        return url ? (
+          <a key={site} className="site-link" href={url} target="_blank" rel="noreferrer">
+            {site}
+          </a>
+        ) : (
+          <span key={site} className="site-link">
+            {site}
+          </span>
         );
       })}
-    </>
+    </span>
   );
 }
 
@@ -457,6 +469,7 @@ export default function MergeCandidates({
                       // formatter URL; other kinds have none.
                       const formatter =
                         r.kind === "statement" ? propertyFormatters?.[r.key] : undefined;
+                      const diffCaption = rowDiffCaption(r);
                       return (
                         <tr
                           key={r.key}
@@ -507,7 +520,10 @@ export default function MergeCandidates({
                               )}
                             </div>
                             {r.note && <div className="prop-note">{r.note}</div>}
-                            {!r.note && r.a.concat(r.b).find((v) => v.note) && (
+                            {!r.note && diffCaption && (
+                              <div className="prop-note">{diffCaption}</div>
+                            )}
+                            {!r.note && !diffCaption && r.a.concat(r.b).find((v) => v.note) && (
                               <div className="prop-note">
                                 {r.a.concat(r.b).find((v) => v.note)!.note}
                               </div>

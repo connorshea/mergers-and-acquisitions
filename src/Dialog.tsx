@@ -1,7 +1,9 @@
 import { type ReactNode, useEffect } from "react";
+import { createPortal } from "react-dom";
 
-// A minimal modal shell. Closes on backdrop click or Escape (callers pass a
-// no-op `onClose` while a request is in flight).
+// A minimal modal shell, portaled to <body> so it can be opened from inside a
+// table row. Closes on backdrop click or Escape (callers pass a no-op
+// `onClose` while a request is in flight).
 export default function Dialog({
   title,
   wide,
@@ -21,7 +23,7 @@ export default function Dialog({
     return () => document.removeEventListener("keydown", onKey);
   }, [onClose]);
 
-  return (
+  return createPortal(
     <div className="modal-backdrop" onClick={onClose}>
       <div
         className={`modal${wide ? " is-wide" : ""}`}
@@ -33,6 +35,7 @@ export default function Dialog({
         <h2 className="modal-title">{title}</h2>
         {children}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

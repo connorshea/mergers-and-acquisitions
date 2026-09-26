@@ -3,6 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { fetch, FetchError } from "../lib/client.ts";
 import { useAuth } from "../lib/auth-context.ts";
 import AuthBar from "../AuthBar.tsx";
+import Dialog from "../Dialog.tsx";
 import { LogoMark } from "../Logo.tsx";
 import { IMPORT_CLASS_GROUPS, IMPORT_CLASS_OPTIONS } from "../lib/import-classes.ts";
 import { rememberListSearch } from "../lib/list-state.ts";
@@ -181,6 +182,16 @@ export default function CandidatesList() {
   const types = typeParam.split(",").filter(Boolean);
   const page = Math.max(1, Number(params.get("page")) || 1);
   const hasFilters = q !== "" || creator !== "" || status !== "open" || types.length > 0;
+  // Phones only: the filter fields fold behind a toggle (CSS hides it on wider screens).
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const filterSummary = [
+    status[0].toUpperCase() + status.slice(1),
+    typeSummary(types),
+    SORT_LABELS[sort],
+    creator && `by ${creator}`,
+  ]
+    .filter(Boolean)
+    .join(" · ");
 
   // Remember the current view so the detail page's "Back to candidates" link
   // returns here. The one-shot `auth` param is stripped (and re-recorded) above.
@@ -264,7 +275,7 @@ export default function CandidatesList() {
   // tail. A search term leads. React 19 hoists this into <head>.
   const titleTail =
     status === "open"
-      ? "M&A: A Merge Assistant"
+      ? "M&A: A Wikidata Merge Assistant"
       : `${status[0].toUpperCase() + status.slice(1)} candidates`;
   const titleParts = [...(q ? [`“${q}”`] : []), ...(creator ? [`by ${creator}`] : [])];
   const pageTitle = [...titleParts, titleTail].join(" · ");
@@ -299,7 +310,7 @@ export default function CandidatesList() {
       </header>
 
       <form
-        className="list-controls"
+        className={filtersOpen ? "list-controls filters-open" : "list-controls"}
         onSubmit={(e) => {
           e.preventDefault();
           const form = new FormData(e.currentTarget);
@@ -322,6 +333,18 @@ export default function CandidatesList() {
           placeholder="Search by label…"
           aria-label="Search candidates by label"
         />
+        <button
+          type="button"
+          className="filters-toggle"
+          aria-expanded={filtersOpen}
+          onClick={() => setFiltersOpen((open) => !open)}
+        >
+          <span className="filters-toggle-label">Filters</span>
+          <span className="filters-toggle-summary">{filterSummary}</span>
+          <span className="filters-toggle-caret" aria-hidden="true">
+            ▾
+          </span>
+        </button>
         <label className="field">
           <span>Created by</span>
           <input
@@ -450,7 +473,9 @@ export default function CandidatesList() {
         >
           Source code on GitHub
         </a>
-        <span aria-hidden="true"> · </span>
+        <span className="site-footer-sep" aria-hidden="true">
+          {" · "}
+        </span>
         <a
           href="https://www.wikidata.org/w/index.php?tagfilter=OAuth+CID%3A+19397&enhanced=1&title=Special%3ARecentChanges&urlversion=2"
           target="_blank"
@@ -490,8 +515,10 @@ function CandidateRowView({
   const summaryReasons = c.reasons.filter((r) => !r.includes("instance of"));
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(false);
+  const [confirming, setConfirming] = useState(false);
 
   async function dismiss() {
+    setConfirming(false);
     setBusy(true);
     setFailed(false);
     try {
@@ -549,12 +576,35 @@ function CandidateRowView({
           <button
             type="button"
             className="btn-row-dismiss"
-            onClick={dismiss}
+            onClick={() => setConfirming(true)}
             disabled={busy || !canDismiss}
             title={canDismiss ? "Mark this pair as not a duplicate" : "Log in to dismiss"}
           >
             {busy ? "…" : failed ? "Retry" : "Dismiss"}
           </button>
+        )}
+        {confirming && (
+          <Dialog title="Dismiss this candidate?" onClose={() => setConfirming(false)}>
+            <p className="modal-body">
+              <strong>
+                {c.fromLabel ?? c.fromQid} ({c.fromQid})
+              </strong>{" "}
+              and{" "}
+              <strong>
+                {c.intoLabel ?? c.intoQid} ({c.intoQid})
+              </strong>{" "}
+              leave the open list. Nothing is changed on Wikidata, and the pair can be reopened from
+              its page.
+            </p>
+            <div className="modal-actions">
+              <button type="button" className="btn-secondary" onClick={() => setConfirming(false)}>
+                Cancel
+              </button>
+              <button type="button" className="btn-primary" onClick={dismiss}>
+                Dismiss
+              </button>
+            </div>
+          </Dialog>
         )}
       </td>
     </tr>

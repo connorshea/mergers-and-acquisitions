@@ -557,8 +557,13 @@ a.chip-id:hover {
   display: flex;
 }
 .logo-lockup {
-  height: 3.5rem;
+  height: 5rem;
   width: auto;
+}
+@media (max-width: 640px) {
+  .logo-lockup {
+    height: 4rem;
+  }
 }
 .logo-mark {
   height: 1.6em;

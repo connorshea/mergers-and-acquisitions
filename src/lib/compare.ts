@@ -1026,6 +1026,25 @@ export function isWorkEditionPair(a: Item, b: Item): boolean {
   return points(a, b.id) || points(b, a.id);
 }
 
+/** Wikidata "has part(s)" — a whole naming its parts. */
+export const HAS_PART = "P527";
+/** Wikidata "part of" — the inverse, a part naming its whole. */
+export const PART_OF = "P361";
+
+/**
+ * True when the pair is explicitly linked as a whole and one of its parts:
+ * either item's "has part(s)" (P527) or "part of" (P361) names the other — e.g.
+ * an album and a same-titled track on it. Nothing is part of itself, so like
+ * P629/P747 the link is an editor stating the two are distinct.
+ */
+export function isPartWholePair(a: Item, b: Item): boolean {
+  const points = (from: Item, toId: string) =>
+    [HAS_PART, PART_OF].some((pid) =>
+      (from.statements[pid] ?? []).some((v) => v.type === "item" && v.value === toId),
+    );
+  return points(a, b.id) || points(b, a.id);
+}
+
 /**
  * Property ids on which either item has a statement whose value *is* the other
  * item — e.g. a game's "part of the series" (P179) naming the series it is being
@@ -1038,7 +1057,14 @@ export function crossReferenceProps(a: Item, b: Item): Set<string> {
   const out = new Set<string>();
   const collect = (from: Item, toId: string) => {
     for (const [pid, values] of Object.entries(from.statements)) {
-      if (pid === DIFFERENT_FROM || pid === EDITION_OF || pid === HAS_EDITION) continue;
+      if (
+        pid === DIFFERENT_FROM ||
+        pid === EDITION_OF ||
+        pid === HAS_EDITION ||
+        pid === HAS_PART ||
+        pid === PART_OF
+      )
+        continue;
       if (values.some((v) => v.type === "item" && v.value === toId)) out.add(pid);
     }
   };
@@ -1454,6 +1480,14 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // floor so the pair never surfaces, overriding even shared ids.
   if (isWorkEditionPair(a, b)) {
     reasons.unshift("linked as a work and its edition on Wikidata (P629/P747), not a duplicate");
+    score = Math.min(score, 0.1);
+  }
+
+  // A whole and one of its parts (P527 / P361 linking the pair) — e.g. an
+  // album and its title track — share a label, date and often an id, but
+  // nothing is part of itself. Cap below the persistence floor, like editions.
+  if (isPartWholePair(a, b)) {
+    reasons.unshift("linked as a whole and its part on Wikidata (P527/P361), not a duplicate");
     score = Math.min(score, 0.1);
   }
 

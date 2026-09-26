@@ -1323,6 +1323,22 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(result.reasons.some((r) => r.startsWith("shares external identifier"))).toBe(false);
   });
 
+  it("scores a Sina Weibo user ID as a weak account id, not a per-title id", () => {
+    // A drama's Weibo account is often the studio's or broadcaster's, shared by
+    // every show it posts about, so a shared value says little about the title.
+    const mk = (id: string, name: string): Item => ({
+      ...base,
+      id,
+      labels: { en: name },
+      statements: stmt({ P3579: [{ type: "external-id" as const, value: "7881845714" }] }),
+    });
+    const result = scoreCandidate(mk("Q1", "Foo"), mk("Q2", "Foo"), {
+      isIdentifierProp: (pid) => pid === "P3579",
+    });
+    expect(result.reasons.some((r) => r.startsWith("shares account/social identifier"))).toBe(true);
+    expect(result.reasons.some((r) => r.startsWith("shares external identifier"))).toBe(false);
+  });
+
   it("ignores agreement on low-entropy props (genre) for the statement term", () => {
     // Two different games that happen to share only a genre must not get
     // statement-agreement credit for it.

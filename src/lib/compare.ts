@@ -748,6 +748,7 @@ const WEAK_ID_PROPS = new Set<string>([
   "P6634", // LinkedIn personal profile ID
   "P1581", // official blog URL
   "P3185", // VK username
+  "P3579", // Sina Weibo user ID
   // Series/franchise-level catalogue IDs — one page often covers a whole series,
   // so a shared value doesn't mean two items are the same *title* (e.g. a game
   // and its sequel share a TV Tropes or speedrun.com page).

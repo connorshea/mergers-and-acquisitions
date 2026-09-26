@@ -76,6 +76,12 @@ candidates.get("/", async (c) => {
     }
   }
 
+  // Hide pairs with a conflict that blocks the merge (the list's "Blocker"
+  // flag). Off unless `noBlockers=1`.
+  if (req.query("noBlockers") === "1") {
+    conditions.push(eq(mergeCandidates.hasBlocker, false));
+  }
+
   // Item-side filters, matching pairs where *either* item matches (the hunt's
   // label+type path pairs items of the same type, but the shared-id path can
   // pair across types). Both read the pair's own copies of the items'

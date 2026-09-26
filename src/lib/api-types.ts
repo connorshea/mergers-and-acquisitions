@@ -222,10 +222,12 @@ export interface LeaderboardEntry {
   merges: number;
   /** Pairs marked "different from" (P1889) through the app. */
   differentFrom: number;
+  /** Pairs resolved: `merges + differentFrom`, the ranking key. */
+  total: number;
 }
 
 export interface LeaderboardResponse {
   period: LeaderboardPeriod;
-  /** Best first: by merges, then "different from". */
+  /** Best first: by total, then merges. */
   entries: LeaderboardEntry[];
 }

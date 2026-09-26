@@ -1963,6 +1963,9 @@ a.auth-login {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
+.leaderboard-table td.col-total {
+  font-weight: 600;
+}
 .leaderboard-table a {
   color: inherit;
   font-weight: 500;

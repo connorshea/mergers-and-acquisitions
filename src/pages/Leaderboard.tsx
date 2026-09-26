@@ -13,8 +13,8 @@ const PERIODS: { value: LeaderboardPeriod; label: string }[] = [
   { value: "30d", label: "Last 30 days" },
 ];
 
-// Who has resolved the most pairs through the app: merges first, then pairs
-// marked "different from". Counted server-side from the edit audit table (see
+// Who has resolved the most pairs through the app: merges plus pairs marked
+// "different from", weighted equally. Counted server-side from the edit audit table (see
 // server/leaderboard.ts). The period lives in the URL so a view can be linked.
 export default function Leaderboard() {
   const { user } = useAuth();
@@ -48,15 +48,11 @@ export default function Leaderboard() {
 
   const current = loaded?.period === period ? loaded : null;
   const entries = current?.data?.entries;
-  // Standard competition ranking: users tied on both counts share a rank.
+  // Standard competition ranking: users with the same total share a rank.
   const ranks: number[] = [];
   entries?.forEach((e, i) => {
     const prev = entries[i - 1];
-    ranks.push(
-      prev && prev.merges === e.merges && prev.differentFrom === e.differentFrom
-        ? ranks[i - 1]
-        : i + 1,
-    );
+    ranks.push(prev && prev.total === e.total ? ranks[i - 1] : i + 1);
   });
 
   return (
@@ -114,6 +110,9 @@ export default function Leaderboard() {
                   <th scope="col" className="col-count">
                     Marked different
                   </th>
+                  <th scope="col" className="col-count col-total">
+                    Total
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -132,6 +131,7 @@ export default function Leaderboard() {
                     </td>
                     <td className="col-count">{e.merges.toLocaleString()}</td>
                     <td className="col-count">{e.differentFrom.toLocaleString()}</td>
+                    <td className="col-count col-total">{e.total.toLocaleString()}</td>
                   </tr>
                 ))}
               </tbody>

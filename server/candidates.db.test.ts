@@ -359,8 +359,19 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
         editor,
       );
       expect(dismissed.status).toBe(200);
-      expect(dismissed.body.candidate).toMatchObject({ id: alpha, status: "dismissed" });
+      expect(dismissed.body.candidate).toMatchObject({
+        id: alpha,
+        status: "dismissed",
+        resolvedBy: "Editor",
+      });
       expect((await list()).candidates.map((c) => c.id)).toEqual([beta]);
+      // The detail and the list name who resolved it too.
+      const resolved = await get<CandidateDetailResponse>(`/api/candidates/${alpha}`);
+      expect(resolved.body.candidate.resolvedBy).toBe("Editor");
+      const dismissedList = await list("?status=dismissed");
+      expect(dismissedList.candidates.find((c) => c.id === alpha)?.resolvedBy).toBe("Editor");
+      // The fixture's dismissed pair was resolved without a user.
+      expect(dismissedList.candidates.find((c) => c.id === orphan)?.resolvedBy).toBeNull();
 
       const [row] = await db.select().from(mergeCandidates).where(eq(mergeCandidates.id, alpha));
       expect(row.resolvedAt).not.toBeNull();
@@ -374,7 +385,11 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
         `/api/candidates/${alpha}/reopen`,
         editor,
       );
-      expect(reopened.body.candidate).toMatchObject({ id: alpha, status: "open" });
+      expect(reopened.body.candidate).toMatchObject({
+        id: alpha,
+        status: "open",
+        resolvedBy: null,
+      });
       const [after] = await db.select().from(mergeCandidates).where(eq(mergeCandidates.id, alpha));
       expect(after.resolvedAt).toBeNull();
       expect(after.resolution).toBeNull();

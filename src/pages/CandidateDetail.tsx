@@ -38,6 +38,7 @@ export default function CandidateDetail() {
   const [data, setData] = useState<CandidateDetailResponse | null>(null);
   const [status, setStatus] = useState<string | null>(null);
   const [resolution, setResolution] = useState<string | null>(null);
+  const [resolvedBy, setResolvedBy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [dismissing, setDismissing] = useState(false);
@@ -58,6 +59,7 @@ export default function CandidateDetail() {
         setData(detail);
         setStatus(detail.candidate.status);
         setResolution(detail.candidate.resolution);
+        setResolvedBy(detail.candidate.resolvedBy);
         setOutcome(null);
       } catch (e: unknown) {
         if (cancelled) return;
@@ -108,6 +110,7 @@ export default function CandidateDetail() {
   function applyCandidate(candidate: CandidateSummary) {
     setStatus(candidate.status);
     setResolution(candidate.resolution);
+    setResolvedBy(candidate.resolvedBy);
   }
 
   // Which merge conflicts the mirror predicts for this pair (see MergeDialog).
@@ -262,7 +265,23 @@ export default function CandidateDetail() {
               {status && status !== "open" ? (
                 <>
                   <span className="flag flag-status">{status}</span>
-                  {resolution && <span className="detail-resolution">{resolution}</span>}
+                  {(resolution || resolvedBy) && (
+                    <span className="detail-resolution">
+                      {resolution}
+                      {resolvedBy && (
+                        <>
+                          {resolution ? " · by " : "by "}
+                          <a
+                            href={wikiPageUrl(`User:${encodeURIComponent(resolvedBy)}`)}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            {resolvedBy}
+                          </a>
+                        </>
+                      )}
+                    </span>
+                  )}
                   {/* A merged pair stays merged (it happened on Wikidata); a
                       dismissed one, or a merge claim that was abandoned, can
                       come back. */}

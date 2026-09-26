@@ -89,8 +89,7 @@ run and a schema-drift check — see `.github/workflows/ci.yml`.
 
 Login is **Wikimedia OAuth 2.0** (authorization code + PKCE, confidential
 client). Anyone can browse candidates; dismissing/reopening and the Wikidata
-edits below need a login, and the hunt / reset / sync triggers are limited to
-the user ids in `ADMIN_USERS`. With none of the `OAUTH_*` variables set the app
+edits below need a login. With none of the `OAUTH_*` variables set the app
 runs read-only and the login link is hidden.
 
 1. Register a consumer at
@@ -104,8 +103,8 @@ runs read-only and the login link is hidden.
    (`.env` locally; `toolforge envvars create` on Toolforge). `SESSION_SECRET`
    signs the login-state cookie; `TOKEN_ENC_KEY` encrypts the stored OAuth
    tokens; `BASE_URL` is the public origin (cookies are `Secure` iff https).
-3. Put your own central user id in `ADMIN_USERS` to see the hunt/maintenance
-   controls.
+3. Optionally, put your own central user id in `ADMIN_USERS`; it only marks you
+   as "admin" in the header.
 
 Session cookies are `HttpOnly; SameSite=Lax`, the DB stores only their hash, and
 state-changing API calls must carry a same-origin `Sec-Fetch-Site`/`Origin`. The

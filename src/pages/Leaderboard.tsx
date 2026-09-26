@@ -86,8 +86,8 @@ export default function Leaderboard() {
           </nav>
         </div>
         <p className="settings-help">
-          Pairs resolved through this tool with an edit on Wikidata: merges, and pairs marked as
-          different from each other.
+          Merges and different-from edits applied on Wikidata for each user. Make sure to always
+          make responsible edits!
         </p>
         {current?.error ? (
           <p className="list-msg is-error" role="alert">

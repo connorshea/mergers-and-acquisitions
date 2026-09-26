@@ -699,6 +699,8 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
 
   describe("POST /api/candidates/:id/different", () => {
     it("adds P1889 both ways, mirrors it, and dismisses", async () => {
+      // As if the dump import had written both items.
+      await db.update(items).set({ dataHash: "a".repeat(40) });
       const calls = stubWikidata((_p, n) => claimOk(200 + n));
       const { status, body } = await post<CandidateDifferentResponse>(
         `/api/candidates/${alpha}/different`,
@@ -751,8 +753,15 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       expect(calls.every((c) => !c.params.has("maxlag"))).toBe(true);
 
       // The mirror carries the new statements (with the target's label).
-      const rows = await db.select({ qid: items.qid, data: items.data }).from(items);
+      const rows = await db
+        .select({ qid: items.qid, data: items.data, dataHash: items.dataHash })
+        .from(items);
       const byQid = new Map(rows.map((r) => [r.qid, r.data]));
+      // The import hash no longer describes the edited items, so the next
+      // import rewrites them; the untouched items keep theirs.
+      for (const r of rows) {
+        expect(r.dataHash).toBe(r.qid === "Q10" || r.qid === "Q20" ? null : "a".repeat(40));
+      }
       expect(byQid.get("Q20")!.statements.P1889).toEqual([
         { type: "item", value: "Q10", label: "Alpha Quest" },
       ]);

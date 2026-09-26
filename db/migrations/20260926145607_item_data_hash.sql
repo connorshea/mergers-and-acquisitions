@@ -1,0 +1,1 @@
+ALTER TABLE `items` ADD `data_hash` varchar(40);

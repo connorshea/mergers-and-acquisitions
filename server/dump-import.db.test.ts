@@ -113,6 +113,44 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
     expect(await idsOf("Q100")).toEqual([{ property: "P1733", value: "999" }]);
   });
 
+  it("only restamps an item whose converted data is unchanged", async () => {
+    await run([game("Q100", "Alpha", [steam("1")]), game("Q200", "Beta", [steam("2")])], {
+      dump: "20260914",
+    });
+    const [before] = await allItems();
+    expect(before.dataHash).toMatch(/^[0-9a-f]{40}$/);
+
+    const stats = await run(
+      [game("Q100", "Alpha", [steam("1")]), game("Q200", "Beta Remastered", [steam("3")])],
+      { dump: "20260921" },
+    );
+    expect(stats).toMatchObject({
+      matched: 2,
+      upserted: 2,
+      unchanged: 1,
+      externalIds: 1,
+      pruned: 0,
+    });
+    const rows = await allItems();
+    expect(rows.map((r) => [r.qid, r.primaryLabel, r.lastDump])).toEqual([
+      ["Q100", "Alpha", "20260921"],
+      ["Q200", "Beta Remastered", "20260921"],
+    ]);
+    expect(rows[0].dataHash).toBe(before.dataHash);
+    expect(rows[1].dataHash).not.toBe(before.dataHash);
+    // The unchanged item kept its external ids; the changed one was rebuilt.
+    expect(await idsOf("Q100")).toEqual([{ property: "P1733", value: "1" }]);
+    expect(await idsOf("Q200")).toEqual([{ property: "P1733", value: "3" }]);
+  });
+
+  it("writes an item in full when its stored hash is missing", async () => {
+    await run([game("Q100", "Alpha", [steam("1")])]);
+    await db.update(items).set({ dataHash: null });
+    const stats = await run([game("Q100", "Alpha", [steam("1")])]);
+    expect(stats).toMatchObject({ upserted: 1, unchanged: 0, externalIds: 1 });
+    expect((await allItems())[0].dataHash).toMatch(/^[0-9a-f]{40}$/);
+  });
+
   it("skips external id values too long for the column", async () => {
     const stats = await run([
       game("Q100", "Starfall Drift", [steam("812340"), steam("x".repeat(513))]),
@@ -224,7 +262,9 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
     const progress = lines.filter((l) => l.includes(" MB/s now ("));
     expect(progress.length).toBeGreaterThan(0);
     for (const line of progress)
-      expect(line).toMatch(/(\d+|\?) MB\/s now \((\d+|\?) avg\), rss \d+ MB$/);
+      expect(line).toMatch(
+        /(\d+|\?) MB\/s now \((\d+|\?) avg\), write wait \d+s \((\d+%|\?)\), rss \d+ MB$/,
+      );
   });
 
   it("adds percent done and an ETA when reading from a file on disk", async () => {
@@ -247,7 +287,9 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
     expect(progress.length).toBeGreaterThan(0);
     for (const line of progress) {
       expect(line).toMatch(/^import-dump: \[\d+\.\d%\] \d+ GB inflated, /);
-      expect(line).toMatch(/ avg\), ETA (\d+h \d\dm|\d+m|<1m|\?), rss \d+ MB$/);
+      expect(line).toMatch(
+        / avg\), ETA (\d+h \d\dm|\d+m|<1m|\?), write wait \d+s \((\d+%|\?)\), rss \d+ MB$/,
+      );
     }
     // The whole (tiny) file is read by the time the last line is logged.
     expect(progress.at(-1)).toMatch(/^import-dump: \[100\.0%\] /);

@@ -3,6 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { fetch, FetchError } from "../lib/client.ts";
 import { useAuth } from "../lib/auth-context.ts";
 import AuthBar from "../AuthBar.tsx";
+import Dialog from "../Dialog.tsx";
 import { LogoMark } from "../Logo.tsx";
 import { IMPORT_CLASS_GROUPS, IMPORT_CLASS_OPTIONS } from "../lib/import-classes.ts";
 import { rememberListSearch } from "../lib/list-state.ts";
@@ -512,8 +513,10 @@ function CandidateRowView({
   const summaryReasons = c.reasons.filter((r) => !r.includes("instance of"));
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(false);
+  const [confirming, setConfirming] = useState(false);
 
   async function dismiss() {
+    setConfirming(false);
     setBusy(true);
     setFailed(false);
     try {
@@ -571,12 +574,35 @@ function CandidateRowView({
           <button
             type="button"
             className="btn-row-dismiss"
-            onClick={dismiss}
+            onClick={() => setConfirming(true)}
             disabled={busy || !canDismiss}
             title={canDismiss ? "Mark this pair as not a duplicate" : "Log in to dismiss"}
           >
             {busy ? "…" : failed ? "Retry" : "Dismiss"}
           </button>
+        )}
+        {confirming && (
+          <Dialog title="Dismiss this candidate?" onClose={() => setConfirming(false)}>
+            <p className="modal-body">
+              <strong>
+                {c.fromLabel ?? c.fromQid} ({c.fromQid})
+              </strong>{" "}
+              and{" "}
+              <strong>
+                {c.intoLabel ?? c.intoQid} ({c.intoQid})
+              </strong>{" "}
+              leave the open list. Nothing is changed on Wikidata, and the pair can be reopened from
+              its page.
+            </p>
+            <div className="modal-actions">
+              <button type="button" className="btn-secondary" onClick={() => setConfirming(false)}>
+                Cancel
+              </button>
+              <button type="button" className="btn-primary" onClick={dismiss}>
+                Dismiss
+              </button>
+            </div>
+          </Dialog>
         )}
       </td>
     </tr>

@@ -1,5 +1,3 @@
-import lockupOnLight from "./assets/logo/ma-lockup-on-light.svg";
-import lockupOnDark from "./assets/logo/ma-lockup-on-dark.svg";
 import markOnLight from "./assets/logo/ma-logo-on-light.svg";
 import markOnDark from "./assets/logo/ma-logo-on-dark.svg";
 
@@ -24,18 +22,6 @@ function Themed({
       <img className={`${className} on-light`} src={light} alt={alt} />
       <img className={`${className} on-dark`} src={dark} alt={alt} />
     </>
-  );
-}
-
-/** Mark + "M&A / A Merge Assistant" wordmark. */
-export function LogoLockup() {
-  return (
-    <Themed
-      light={lockupOnLight}
-      dark={lockupOnDark}
-      alt="M&A: A Merge Assistant"
-      className="logo-lockup"
-    />
   );
 }
 

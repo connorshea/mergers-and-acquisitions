@@ -3,7 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { fetch, FetchError } from "../lib/client.ts";
 import { useAuth } from "../lib/auth-context.ts";
 import AuthBar from "../AuthBar.tsx";
-import { LogoLockup } from "../Logo.tsx";
+import { LogoMark } from "../Logo.tsx";
 import { IMPORT_CLASS_GROUPS, IMPORT_CLASS_OPTIONS } from "../lib/import-classes.ts";
 import { rememberListSearch } from "../lib/list-state.ts";
 import {
@@ -376,7 +376,11 @@ export default function CandidatesList() {
       <header className="list-head">
         <div className="list-head-row">
           <h1 className="list-title">
-            <LogoLockup />
+            <LogoMark />
+            <span className="list-title-text">
+              Mergers &amp; Acquisitions
+              <span className="list-title-sub">A Merge Assistant</span>
+            </span>
           </h1>
           <div className="head-actions">
             {/* The hunt and the maintenance actions (sync/reset) are admin-only
@@ -426,9 +430,6 @@ export default function CandidatesList() {
             <AuthBar />
           </div>
         </div>
-        <p className="list-sub">
-          Pairs Wikidata items that may be duplicates. Always review before merging.
-        </p>
         {hunt.note && <p className="list-msg hunt-note">{hunt.note}</p>}
         {authOutcome === "denied" && (
           <p className="list-msg is-error" role="alert">
@@ -581,6 +582,9 @@ export default function CandidatesList() {
               Next →
             </button>
           </nav>
+          <p className="list-warning" role="note">
+            Reminder: Always review before merging.
+          </p>
         </>
       )}
 

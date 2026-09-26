@@ -54,7 +54,6 @@ pnpm db:generate       # generate a migration from db/schema.ts (drizzle-kit)
 pnpm db:migrate        # apply pending migrations
 pnpm seed              # load the vglist SPARQL dump into the DB (quick dev DB)
 pnpm import-items Q1 Q2 # import specific items live from Special:EntityData
-node scripts/backfill-snapshots.ts [--dry-run] # one-time: snapshot pairs resolved before snapshots existed
 
 pnpm job:import-dump   # load the mirror from the Wikidata entity JSON dump
 pnpm job:hunt          # run the duplicate-candidate hunt once

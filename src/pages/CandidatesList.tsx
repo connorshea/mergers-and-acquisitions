@@ -1,4 +1,4 @@
-import { type RefObject, useEffect, useRef, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { fetch, FetchError } from "../lib/client.ts";
 import { useAuth } from "../lib/auth-context.ts";
@@ -7,6 +7,7 @@ import Dialog from "../Dialog.tsx";
 import { LogoMark } from "../Logo.tsx";
 import { IMPORT_CLASS_GROUPS, IMPORT_CLASS_OPTIONS } from "../lib/import-classes.ts";
 import { rememberListSearch } from "../lib/list-state.ts";
+import { useDismissableMenu } from "../lib/use-dismissable-menu.ts";
 import {
   CANDIDATE_SORTS,
   CANDIDATE_STATUSES,
@@ -38,34 +39,6 @@ function confidenceTier(confidence: number): "identical" | "similar" | "distinct
 
 function oneOf<T extends string>(options: readonly T[], value: string | null, fallback: T): T {
   return options.includes(value as T) ? (value as T) : fallback;
-}
-
-/**
- * A native <details> menu doesn't dismiss on an outside click or Escape the way
- * a real dropdown should — wire both up. Handlers read `ref.current` live so
- * they stay correct across re-renders; they no-op when the menu is closed or
- * not rendered.
- */
-function useDismissableMenu(ref: RefObject<HTMLDetailsElement | null>) {
-  useEffect(() => {
-    function onPointerDown(e: PointerEvent) {
-      const menu = ref.current;
-      if (menu?.open && !menu.contains(e.target as Node)) menu.open = false;
-    }
-    function onKeyDown(e: KeyboardEvent) {
-      const menu = ref.current;
-      if (e.key === "Escape" && menu?.open) {
-        menu.open = false;
-        menu.querySelector<HTMLElement>("summary")?.focus();
-      }
-    }
-    document.addEventListener("pointerdown", onPointerDown);
-    document.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.removeEventListener("pointerdown", onPointerDown);
-      document.removeEventListener("keydown", onKeyDown);
-    };
-  }, [ref]);
 }
 
 /** A type's display name: its preset label, or the bare QID. */
@@ -117,7 +90,10 @@ function TypeFilter({
       <span id="type-filter-label">Type</span>
       <details className="menu type-filter" ref={ref}>
         <summary aria-labelledby="type-filter-label type-filter-value">
-          <span id="type-filter-value">{typeSummary(selected)}</span> ▾
+          <span id="type-filter-value" className="filter-summary">
+            {typeSummary(selected)}
+          </span>{" "}
+          ▾
         </summary>
         <div className="menu-panel type-filter-panel">
           <button type="button" onClick={() => onChange([])} disabled={selected.length === 0}>
@@ -161,7 +137,7 @@ function TypeFilter({
 
 export default function CandidatesList() {
   const [params, setParams] = useSearchParams();
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const q = params.get("q") ?? "";
   // Username of either item's creator (see item_creations); empty means anyone.
   const creator = params.get("creator") ?? "";
@@ -181,14 +157,20 @@ export default function CandidatesList() {
   const typeParam = params.get("type") ?? "";
   const types = typeParam.split(",").filter(Boolean);
   const page = Math.max(1, Number(params.get("page")) || 1);
-  const hasFilters = q !== "" || creator !== "" || status !== "open" || types.length > 0;
+  // The languages the user reads (settings page) filter the list unless the
+  // URL says `lang=any`. Logged out, or with none set, nothing is filtered.
+  const userLangs = user?.languages ?? [];
+  const anyLanguage = params.get("lang") === "any";
+  const langFilter = anyLanguage ? "" : userLangs.join(",");
+  const hasFilters =
+    q !== "" || creator !== "" || status !== "open" || types.length > 0 || anyLanguage;
   // Phones only: the filter fields fold behind a toggle (CSS hides it on wider screens).
   const [filtersOpen, setFiltersOpen] = useState(false);
   const filterSummary = [
     status[0].toUpperCase() + status.slice(1),
     typeSummary(types),
-    SORT_LABELS[sort],
     creator && `by ${creator}`,
+    userLangs.length > 0 && (anyLanguage ? "Any language" : userLangs.join(", ")),
   ]
     .filter(Boolean)
     .join(" · ");
@@ -206,6 +188,9 @@ export default function CandidatesList() {
   // Candidates dismissed in-place this session, hidden without a full refetch.
   const [dismissedIds, setDismissedIds] = useState<Set<number>>(new Set());
   useEffect(() => {
+    // Wait for the session: it decides the language filter, and fetching
+    // before it lands would flash the unfiltered list.
+    if (authLoading) return;
     let cancelled = false;
     async function load() {
       setLoading(true);
@@ -220,6 +205,7 @@ export default function CandidatesList() {
       if (q) query.q = q;
       if (typeParam) query.type = typeParam;
       if (creator) query.creator = creator;
+      if (langFilter) query.lang = langFilter;
       try {
         const res = await fetch("/api/candidates", { query });
         if (!cancelled) setData(res as CandidateListResponse);
@@ -235,7 +221,7 @@ export default function CandidatesList() {
     return () => {
       cancelled = true;
     };
-  }, [q, creator, status, sort, typeParam, page]);
+  }, [q, creator, status, sort, typeParam, page, langFilter, authLoading]);
 
   // Dismiss straight from the list; the row hides itself on success.
   async function dismissCandidate(id: number): Promise<void> {
@@ -346,19 +332,6 @@ export default function CandidatesList() {
           </span>
         </button>
         <label className="field">
-          <span>Created by</span>
-          <input
-            // Uncontrolled and re-mounted on URL changes, like the search box.
-            key={creator}
-            className="creator-input"
-            type="search"
-            name="creator"
-            defaultValue={creator}
-            placeholder="Username"
-            title="Pairs where either item was created by this Wikidata user"
-          />
-        </label>
-        <label className="field">
           <span>Status</span>
           <select value={status} onChange={(e) => update({ status: e.target.value })}>
             {/* "merging" is a transient in-flight state that's almost never
@@ -373,28 +346,42 @@ export default function CandidatesList() {
 
         <TypeFilter selected={types} onChange={(next) => update({ type: next.join(",") })} />
 
-        <label className="field">
-          <span>Sort</span>
-          <select value={sort} onChange={(e) => update({ sort: e.target.value })}>
-            {CANDIDATE_SORTS.map((s) => (
-              <option key={s} value={s}>
-                {SORT_LABELS[s]}
-              </option>
-            ))}
-          </select>
-        </label>
+        {/* Counts only filters changed from their defaults; the saved
+            languages are the default, so only `lang=any` counts. */}
+        <MoreFilters active={[creator !== "", anyLanguage].filter(Boolean).length}>
+          <label className="field">
+            <span>Created by</span>
+            <input
+              // Uncontrolled and re-mounted on URL changes, like the search box.
+              key={creator}
+              className="creator-input"
+              type="search"
+              name="creator"
+              defaultValue={creator}
+              placeholder="Username"
+              title="Pairs where either item was created by this Wikidata user"
+            />
+          </label>
+          {user && <LanguageFilter languages={userLangs} any={anyLanguage} update={update} />}
+        </MoreFilters>
 
         <div className="list-actions">
           {/* Shown while a refetch is in flight; the stale rows stay visible
               (dimmed) underneath instead of blanking the table. */}
           {loading && data && <Spinner label="Updating…" />}
-          {/* Clears the filters (search, creator, status, type) but keeps the sort. */}
+          {/* Clears the filters (search, creator, status, type, language) but keeps the sort. */}
           {hasFilters && (
             <button
               type="button"
               className="btn-clear"
               onClick={() =>
-                update({ q: undefined, creator: undefined, status: undefined, type: undefined })
+                update({
+                  q: undefined,
+                  creator: undefined,
+                  status: undefined,
+                  type: undefined,
+                  lang: undefined,
+                })
               }
             >
               Clear filters
@@ -416,15 +403,30 @@ export default function CandidatesList() {
       )}
       {data && visible.length === 0 && !loading && (
         <p className="list-msg">
-          No {status} candidates{q ? ` matching “${q}”` : ""}
-          {types.length > 0 ? ` of type ${types.map(typeLabel).join(" or ")}` : ""}
-          {creator ? ` with an item created by ${creator}` : ""}. They appear here once the hunt job
-          has scored some pairs.
+          {hasFilters || langFilter
+            ? "No candidates for these filters, please modify your filters."
+            : "No open candidates yet. They appear here once the hunt job has scored some pairs."}
         </p>
       )}
 
       {data && visible.length > 0 && (
         <>
+          {/* Ordering sits with the results it orders, apart from the filters. */}
+          <div className="results-bar">
+            <span className="results-count">
+              {total.toLocaleString()} {total === 1 ? "candidate" : "candidates"}
+            </span>
+            <label className="results-sort">
+              <span>Sort by</span>
+              <select value={sort} onChange={(e) => update({ sort: e.target.value })}>
+                {CANDIDATE_SORTS.map((s) => (
+                  <option key={s} value={s}>
+                    {SORT_LABELS[s]}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
           <div className="ledger-wrap" aria-busy={loading} data-stale={loading || undefined}>
             <table className="ledger candidates">
               <thead>
@@ -485,6 +487,75 @@ export default function CandidatesList() {
         </a>
       </footer>
     </main>
+  );
+}
+
+/**
+ * The less-used filters (creator, languages) in a dropdown panel, so the main
+ * row stays on one line. The button shows how many of them are set. It sits inside the list's form: the creator box
+ * submits with it, on Enter or the panel's Apply button.
+ */
+function MoreFilters({ active, children }: { active: number; children: ReactNode }) {
+  const ref = useRef<HTMLDetailsElement>(null);
+  useDismissableMenu(ref);
+  return (
+    <div className="field">
+      <details className="menu type-filter more-filters" ref={ref}>
+        <summary aria-label={active > 0 ? `More filters, ${active} set` : "More filters"}>
+          More filters
+          {active > 0 && (
+            <span className="filter-count" aria-hidden="true">
+              {active}
+            </span>
+          )}{" "}
+          ▾
+        </summary>
+        <div className="menu-panel more-filters-panel">
+          {children}
+          <button type="submit" className="more-filters-apply">
+            Apply
+          </button>
+        </div>
+      </details>
+    </div>
+  );
+}
+
+/**
+ * The reader-language filter: the user's languages (from settings) or any
+ * language, with a link beside the heading to choose or edit them. Until some
+ * are chosen there's nothing to pick between, so it only says so.
+ */
+function LanguageFilter({
+  languages,
+  any,
+  update,
+}: {
+  languages: string[];
+  any: boolean;
+  update: (next: Record<string, string | undefined>) => void;
+}) {
+  const hasLanguages = languages.length > 0;
+  return (
+    <div className="field">
+      <span className="field-head">
+        {hasLanguages ? <label htmlFor="language-filter">Languages</label> : <span>Languages</span>}
+        <Link to="/settings">Configure</Link>
+      </span>
+      {hasLanguages ? (
+        <select
+          id="language-filter"
+          value={any ? "any" : "mine"}
+          onChange={(e) => update({ lang: e.target.value === "any" ? "any" : undefined })}
+          title="Hide pairs that need a language you don't read to review"
+        >
+          <option value="mine">Mine ({languages.join(", ")})</option>
+          <option value="any">Any</option>
+        </select>
+      ) : (
+        <span className="field-note">Any language</span>
+      )}
+    </div>
   );
 }
 

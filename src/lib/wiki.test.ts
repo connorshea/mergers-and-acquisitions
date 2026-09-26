@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vite-plus/test";
-import { sitelinkUrl } from "./wiki.ts";
+import { sitelinkLanguage, sitelinkUrl } from "./wiki.ts";
 
 describe("sitelinkUrl", () => {
   it("links a Wikipedia sitelink, underscoring spaces and escaping the title", () => {
@@ -31,5 +31,21 @@ describe("sitelinkUrl", () => {
 
   it("returns null for a site id it can't place", () => {
     expect(sitelinkUrl("somethingelse", "X")).toBeNull();
+  });
+});
+
+describe("sitelinkLanguage", () => {
+  it("maps a wiki to its language code", () => {
+    expect(sitelinkLanguage("eswiki")).toBe("es");
+    expect(sitelinkLanguage("dewikiquote")).toBe("de");
+    expect(sitelinkLanguage("pt_brwiki")).toBe("pt-br");
+    expect(sitelinkLanguage("simplewiki")).toBe("en");
+    expect(sitelinkLanguage("nowiki")).toBe("nb");
+    expect(sitelinkLanguage("zh_min_nanwiki")).toBe("nan");
+  });
+
+  it("has no language for multilingual sites", () => {
+    expect(sitelinkLanguage("commonswiki")).toBeNull();
+    expect(sitelinkLanguage("wikidatawiki")).toBeNull();
   });
 });

@@ -15,6 +15,7 @@ import { entityLabels, itemCreations, items, mergeCandidates, properties } from 
 import type { Item } from "../src/lib/compare.ts";
 import { chunk } from "../src/lib/chunk.ts";
 import { normalizeUserName } from "../src/lib/creation.ts";
+import { languageSqlPatterns, normalizeLanguages } from "../src/lib/languages.ts";
 import {
   CANDIDATE_SORTS,
   CANDIDATE_STATUSES,
@@ -120,6 +121,21 @@ candidates.get("/", async (c) => {
       .where(eq(itemCreations.userName, normalizeUserName(creatorParam)));
     conditions.push(
       or(inArray(mergeCandidates.fromQid, createdBy), inArray(mergeCandidates.intoQid, createdBy))!,
+    );
+  }
+
+  // Reader-language filter: a comma-separated list of the languages the
+  // reviewer reads (the client sends the user's setting). Hides pairs with a
+  // sitelink clash on a wiki in another language, or an item with no label in
+  // one of them (nor `mul`). Rows the hunt hasn't annotated (null) pass.
+  const langs = normalizeLanguages((req.query("lang") ?? "").split(","));
+  if (langs.length > 0) {
+    const { allRead, anyRead } = languageSqlPatterns(langs);
+    for (const column of [mergeCandidates.fromLabelLangs, mergeCandidates.intoLabelLangs]) {
+      conditions.push(sql`(${column} is null or ${column} regexp ${anyRead})`);
+    }
+    conditions.push(
+      sql`(${mergeCandidates.clashLangs} is null or ${mergeCandidates.clashLangs} regexp ${allRead})`,
     );
   }
 

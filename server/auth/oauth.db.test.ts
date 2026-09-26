@@ -224,7 +224,7 @@ describe.skipIf(!DB_TEST)("auth", () => {
       expect(row.id).toBe(sha256Hex(session));
       expect(row.userId).toBe(7);
       expect(await me(session)).toEqual({
-        user: { id: 7, username: "Alice", isAdmin: false, blocked: false },
+        user: { id: 7, username: "Alice", isAdmin: false, blocked: false, languages: [] },
         configured: true,
         wikiBaseUrl: wikiOrigin(),
       });

@@ -116,6 +116,15 @@ export const mergeCandidates = mysqlTable(
     intoType: varchar("into_type", { length: 32 }),
     fromLabel: varchar("from_label", { length: 255 }),
     intoLabel: varchar("into_label", { length: 255 }),
+    // The languages a reviewer needs to read to judge the pair, for the list's
+    // language filter (src/lib/languages.ts): the wikis of its blocking
+    // sitelink clashes, and each item's label languages. Encoded ",de,es" (""
+    // for none) so the filter is a REGEXP over the row. Written by the hunt;
+    // null on rows it hasn't rescored since (resolved ones), which the filter
+    // lets through.
+    clashLangs: text("clash_langs"),
+    fromLabelLangs: text("from_label_langs"),
+    intoLabelLangs: text("into_label_langs"),
   },
   (t) => [
     uniqueIndex("idx_merge_candidates_pair").on(t.fromQid, t.intoQid),
@@ -275,6 +284,10 @@ export const users = mysqlTable("users", {
   username: varchar("username", { length: 255 }).notNull(),
   groups: json<string[]>("groups").notNull(), // e.g. ["*", "user", "autoconfirmed"]
   blocked: boolean("blocked").notNull().default(false),
+  // Languages the user reads (Wikidata codes, e.g. ["en", "de"]), set on the
+  // settings page. When non-empty the candidate list hides pairs that need
+  // another language to review (src/lib/languages.ts).
+  languages: json<string[]>("languages"),
   createdAt: datetime("created_at", { mode: "string" })
     .notNull()
     .default(sql`CURRENT_TIMESTAMP`),

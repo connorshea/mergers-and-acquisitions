@@ -51,6 +51,10 @@ describe.skipIf(!DB_TEST)("runHunt", () => {
       intoType: "Q7889",
       fromLabel: "Starfall Drift",
       intoLabel: "Starfall Drift",
+      // What a reviewer must read, for the list's language filter.
+      clashLangs: "",
+      fromLabelLangs: ",en",
+      intoLabelLangs: ",en",
     });
     expect(rows[0].confidence).toBeGreaterThanOrEqual(MIN_CONFIDENCE);
     expect(rows[0].reasons.some((r) => r.startsWith("shares external identifier"))).toBe(true);

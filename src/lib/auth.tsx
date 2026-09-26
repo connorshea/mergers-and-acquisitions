@@ -5,7 +5,7 @@ import { type ReactNode, useCallback, useEffect, useState } from "react";
 import { fetch } from "./client.ts";
 import { setWikiBaseUrl } from "./wiki.ts";
 import { type AuthState, AuthContext } from "./auth-context.ts";
-import type { AuthMeResponse } from "./api-types.ts";
+import type { AuthMeResponse, UserSettings } from "./api-types.ts";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<Pick<AuthState, "user" | "configured" | "loading">>({
@@ -38,5 +38,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setState((s) => ({ ...s, user: null }));
   }, []);
 
-  return <AuthContext value={{ ...state, logout }}>{children}</AuthContext>;
+  const saveLanguages = useCallback(async (languages: string[]) => {
+    const body: UserSettings = { languages };
+    const saved = (await fetch("/api/settings", { method: "PUT", body })) as UserSettings;
+    setState((s) => (s.user ? { ...s, user: { ...s.user, languages: saved.languages } } : s));
+  }, []);
+
+  return <AuthContext value={{ ...state, logout, saveLanguages }}>{children}</AuthContext>;
 }

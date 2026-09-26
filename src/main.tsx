@@ -8,6 +8,8 @@ import RouteErrorBoundary from "./ErrorBoundary.tsx";
 import { AuthProvider } from "./lib/auth.tsx";
 import CandidateDetail from "./pages/CandidateDetail.tsx";
 import CandidatesList from "./pages/CandidatesList.tsx";
+import Settings from "./pages/Settings.tsx";
+import Toast from "./Toast.tsx";
 import "./merge-candidates.css";
 
 createRoot(document.getElementById("root")!).render(
@@ -18,7 +20,9 @@ createRoot(document.getElementById("root")!).render(
           <Routes>
             <Route path="/" element={<CandidatesList />} />
             <Route path="/candidates/:id" element={<CandidateDetail />} />
+            <Route path="/settings" element={<Settings />} />
           </Routes>
+          <Toast />
         </RouteErrorBoundary>
       </AuthProvider>
     </BrowserRouter>

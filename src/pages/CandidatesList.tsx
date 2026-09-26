@@ -141,6 +141,8 @@ export default function CandidatesList() {
   const q = params.get("q") ?? "";
   // Username of either item's creator (see item_creations); empty means anyone.
   const creator = params.get("creator") ?? "";
+  // Hide pairs flagged with a merge-blocking conflict; off by default.
+  const noBlockers = params.get("noBlockers") === "1";
   // Set by the OAuth callback when the login didn't complete (?auth=denied|failed).
   // Read once into state and then stripped from the URL, so the alert doesn't
   // survive every filter change and a retried login doesn't return to it.
@@ -163,13 +165,19 @@ export default function CandidatesList() {
   const anyLanguage = params.get("lang") === "any";
   const langFilter = anyLanguage ? "" : userLangs.join(",");
   const hasFilters =
-    q !== "" || creator !== "" || status !== "open" || types.length > 0 || anyLanguage;
+    q !== "" ||
+    creator !== "" ||
+    status !== "open" ||
+    types.length > 0 ||
+    anyLanguage ||
+    noBlockers;
   // Phones only: the filter fields fold behind a toggle (CSS hides it on wider screens).
   const [filtersOpen, setFiltersOpen] = useState(false);
   const filterSummary = [
     status[0].toUpperCase() + status.slice(1),
     typeSummary(types),
     creator && `by ${creator}`,
+    noBlockers && "No blockers",
     userLangs.length > 0 && (anyLanguage ? "Any language" : userLangs.join(", ")),
   ]
     .filter(Boolean)
@@ -205,6 +213,7 @@ export default function CandidatesList() {
       if (q) query.q = q;
       if (typeParam) query.type = typeParam;
       if (creator) query.creator = creator;
+      if (noBlockers) query.noBlockers = "1";
       if (langFilter) query.lang = langFilter;
       try {
         const res = await fetch("/api/candidates", { query });
@@ -221,7 +230,7 @@ export default function CandidatesList() {
     return () => {
       cancelled = true;
     };
-  }, [q, creator, status, sort, typeParam, page, langFilter, authLoading]);
+  }, [q, creator, noBlockers, status, sort, typeParam, page, langFilter, authLoading]);
 
   // Dismiss straight from the list; the row hides itself on success.
   async function dismissCandidate(id: number): Promise<void> {
@@ -348,7 +357,7 @@ export default function CandidatesList() {
 
         {/* Counts only filters changed from their defaults; the saved
             languages are the default, so only `lang=any` counts. */}
-        <MoreFilters active={[creator !== "", anyLanguage].filter(Boolean).length}>
+        <MoreFilters active={[creator !== "", noBlockers, anyLanguage].filter(Boolean).length}>
           <label className="field">
             <span>Created by</span>
             <input
@@ -362,6 +371,14 @@ export default function CandidatesList() {
               title="Pairs where either item was created by this Wikidata user"
             />
           </label>
+          <label className="field field-check">
+            <input
+              type="checkbox"
+              checked={noBlockers}
+              onChange={(e) => update({ noBlockers: e.target.checked ? "1" : undefined })}
+            />
+            <span>Exclude pairs with blockers</span>
+          </label>
           {user && <LanguageFilter languages={userLangs} any={anyLanguage} update={update} />}
         </MoreFilters>
 
@@ -369,7 +386,7 @@ export default function CandidatesList() {
           {/* Shown while a refetch is in flight; the stale rows stay visible
               (dimmed) underneath instead of blanking the table. */}
           {loading && data && <Spinner label="Updating…" />}
-          {/* Clears the filters (search, creator, status, type, language) but keeps the sort. */}
+          {/* Clears the filters (search, creator, blockers, status, type, language) but keeps the sort. */}
           {hasFilters && (
             <button
               type="button"
@@ -378,6 +395,7 @@ export default function CandidatesList() {
                 update({
                   q: undefined,
                   creator: undefined,
+                  noBlockers: undefined,
                   status: undefined,
                   type: undefined,
                   lang: undefined,
@@ -491,7 +509,7 @@ export default function CandidatesList() {
 }
 
 /**
- * The less-used filters (creator, languages) in a dropdown panel, so the main
+ * The less-used filters (creator, blockers, languages) in a dropdown panel, so the main
  * row stays on one line. The button shows how many of them are set. It sits inside the list's form: the creator box
  * submits with it, on Enter or the panel's Apply button.
  */

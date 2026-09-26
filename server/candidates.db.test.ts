@@ -220,6 +220,12 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       expect((await list("?minConfidence=0.8")).candidates.map((c) => c.id)).toEqual([alpha]);
     });
 
+    it("excludes pairs with a blocker only when noBlockers=1", async () => {
+      expect((await list()).candidates.map((c) => c.id)).toEqual([alpha, beta]);
+      expect((await list("?noBlockers=1")).candidates.map((c) => c.id)).toEqual([alpha]);
+      expect((await list("?noBlockers=0")).total).toBe(2);
+    });
+
     it("paginates and clamps pageSize", async () => {
       const page2 = await list("?pageSize=1&page=2");
       expect(page2).toMatchObject({ total: 2, page: 2, pageSize: 1 });

@@ -808,6 +808,14 @@ a.chip-id:hover {
 .field .creator-input {
   width: 11rem;
 }
+.field-check {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--ink);
+  cursor: pointer;
+}
 /* Type filter: a multi-select dropdown of checkboxes, styled like the selects. */
 .type-filter > summary {
   font-size: 0.9rem;

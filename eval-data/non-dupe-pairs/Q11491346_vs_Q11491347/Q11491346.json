@@ -1,0 +1,265 @@
+{
+  "pageid": 12630985,
+  "ns": 0,
+  "title": "Q11491346",
+  "lastrevid": 2517126082,
+  "modified": "2026-07-13T17:34:24Z",
+  "type": "item",
+  "id": "Q11491346",
+  "labels": {
+    "ja": {
+      "language": "ja",
+      "value": "忠臣蔵"
+    },
+    "en": {
+      "language": "en",
+      "value": "Chūshingura"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "忠臣藏"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "1996 TV series"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "1996年のテレビドラマ"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "televisieprogramma"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "телевізійний серіал 1996 року"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "১৯৯৬ সালের টেলিভিশন ধারাবাহিক"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "Chusingura"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "6b8e8d6f6e2430e3c7378c7a62da7144b4307ca8",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 15416,
+              "id": "Q15416"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11491346$EB5C294F-5145-4BF4-9A3A-2256ABAE865B",
+        "rank": "normal"
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "62746ab9ccd751760bb09ecb2ef08729aa28c1ae",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 629917,
+              "id": "Q629917"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11491346$C320D531-4909-42B6-9A38-26B4A7387E64",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "83e8a55542deb67c1eb7c9d91533e6df1977bd2f",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 177837,
+                      "id": "Q177837"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "0a0ab7bf1861c188e6f5447744f21979af72cfb2",
+                  "datavalue": {
+                    "value": "https://ja.wikipedia.org/w/index.php?title=忠臣蔵_(1996年のテレビドラマ)&oldid=73911185",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P449": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P449",
+          "hash": "c0735e3e67058d41422c724d4e87216799b13b41",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 744800,
+              "id": "Q744800"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11491346$D0F2FD98-6117-4B08-A893-1FF9C0225EBF",
+        "rank": "normal"
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "e9d62405b1bb9b7b979f00006a344891e4c4f072",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 17,
+              "id": "Q17"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11491346$FC86A140-1A66-44AC-97BC-3B6732971E7D",
+        "rank": "normal"
+      }
+    ],
+    "P4983": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4983",
+          "hash": "578c8bd4f19ded2b29ab0694350d8366336cf13f",
+          "datavalue": {
+            "value": "82742",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11491346$B9A9B265-A656-4AD7-987D-C992A952F7B0",
+        "rank": "normal"
+      }
+    ],
+    "P364": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P364",
+          "hash": "e837a5e5691aacf2a7eca565824d57545629d7fa",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5287,
+              "id": "Q5287"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11491346$38F42B71-486A-4A11-9045-2BF42394598C",
+        "rank": "normal"
+      }
+    ],
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "56c1a1781efe595f39b9e4cd02522d716c3b21b3",
+          "datavalue": {
+            "value": {
+              "text": "忠臣蔵",
+              "language": "ja"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q11491346$B81C8333-1646-47EE-AF2A-8B87F4C8FA4C",
+        "rank": "normal"
+      }
+    ],
+    "P580": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P580",
+          "hash": "cb88c17ff8f74b650b73eae510b4086623869374",
+          "datavalue": {
+            "value": {
+              "time": "+2004-10-08T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q11491346$75DED980-AD93-4606-9926-6EBB5823F964",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "jawiki": {
+      "site": "jawiki",
+      "title": "忠臣蔵 (1996年のテレビドラマ)",
+      "badges": [],
+      "url": "https://ja.wikipedia.org/wiki/%E5%BF%A0%E8%87%A3%E8%94%B5_(1996%E5%B9%B4%E3%81%AE%E3%83%86%E3%83%AC%E3%83%93%E3%83%89%E3%83%A9%E3%83%9E)"
+    }
+  }
+}

@@ -3,6 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { fetch, FetchError } from "../lib/client.ts";
 import { useAuth } from "../lib/auth-context.ts";
 import AuthBar from "../AuthBar.tsx";
+import { LogoLockup } from "../Logo.tsx";
 import { IMPORT_CLASS_GROUPS, IMPORT_CLASS_OPTIONS } from "../lib/import-classes.ts";
 import { rememberListSearch } from "../lib/list-state.ts";
 import {
@@ -359,16 +360,14 @@ export default function CandidatesList() {
   const firstRow = total === 0 ? 0 : (page - 1) * PAGE_SIZE + 1;
   const lastRow = Math.min(total, page * PAGE_SIZE);
 
-  // Per-route <title> reflecting the active filters. "Merge candidates" is the
-  // shared suffix for the default (open) view; other statuses carry their own
-  // "<Status> candidates" tail. A search term leads. React 19 hoists this into
-  // <head>.
+  // Per-route <title> reflecting the active filters. The default (open) view is
+  // just the app name; other statuses carry their own "<Status> candidates"
+  // tail. A search term leads. React 19 hoists this into <head>.
   const titleTail =
     status === "open"
       ? "M&A: A Merge Assistant"
       : `${status[0].toUpperCase() + status.slice(1)} candidates`;
   const titleParts = [...(q ? [`“${q}”`] : []), ...(creator ? [`by ${creator}`] : [])];
-  if (titleParts.length === 0 && status === "open") titleParts.push("Open candidates");
   const pageTitle = [...titleParts, titleTail].join(" · ");
 
   return (
@@ -376,7 +375,9 @@ export default function CandidatesList() {
       <title>{pageTitle}</title>
       <header className="list-head">
         <div className="list-head-row">
-          <h1>M&A: A Merge Assistant</h1>
+          <h1 className="list-title">
+            <LogoLockup />
+          </h1>
           <div className="head-actions">
             {/* The hunt and the maintenance actions (sync/reset) are admin-only
                 on the server (ADMIN_USERS); only offer the controls to admins. */}

@@ -38,58 +38,84 @@
   emails: onfailure
 
 # Rebuild the item mirror from the weekly Wikidata JSON dump, split across
-# four jobs that each read a quarter of the file (`--shard i/4`, see the
+# six jobs that each read a sixth of the file (`--shard i/6`, see the
 # README); whichever finishes last completes the set and prunes. The dump is
 # only visible with `mount: all` (build-service images get no NFS by default);
-# it lands on Tuesdays. Needs the raised tool quota: 4 x 2 CPUs.
+# it lands on Tuesdays. Needs the raised tool quota: 6 x 2 CPUs and 6 x 512Mi,
+# which fits beside the webservice because no other job runs at this hour.
 #
 # Two CPUs per shard let the inflate (libuv threadpool) and the line scan
-# (main thread) run side by side instead of taking turns on one core; 4 x 2
-# CPUs finishes in ~35-40 min, sooner than 8 x 1 CPU (~50 min, paced by
-# shards doubled up on busy nodes). Each shard stays under ~300 MB RSS.
+# (main thread) run side by side instead of taking turns on one core; each
+# shard keeps both busy (~1.87 of 2 CPUs under `kubectl top`), so the pass
+# scales by adding shards, not CPUs per shard. 4 x 2 CPUs took ~35-40 min;
+# 8 x 1 CPU was slower (~50 min, paced by shards doubled up on busy nodes).
+# Each shard stays under ~300 MB RSS (the prune after the pass holds only the
+# QIDs that left the dump), hence 512Mi with a 384 MB heap.
 #
 # Retry once so a shard killed by a node drain restarts rather than waiting a
 # week (the import is idempotent and never prunes on an incomplete set); the
 # timeout catches a stuck shard before it collides with the next nightly hunt.
 - name: import-dump-1
-  command: node --max-old-space-size=768 jobs/import-dump.ts --shard 1/4
+  command: node --max-old-space-size=384 jobs/import-dump.ts --shard 1/6
   image: tool-mna/tool-mna:latest
   schedule: "0 6 * * 3" # Wednesdays 06:00 UTC
   mount: all
-  mem: 1Gi
+  mem: 512Mi
   cpu: 2
   retry: 1
   timeout: 10800 # 3 h
   emails: onfailure
 
 - name: import-dump-2
-  command: node --max-old-space-size=768 jobs/import-dump.ts --shard 2/4
+  command: node --max-old-space-size=384 jobs/import-dump.ts --shard 2/6
   image: tool-mna/tool-mna:latest
   schedule: "0 6 * * 3" # Wednesdays 06:00 UTC
   mount: all
-  mem: 1Gi
+  mem: 512Mi
   cpu: 2
   retry: 1
   timeout: 10800 # 3 h
   emails: onfailure
 
 - name: import-dump-3
-  command: node --max-old-space-size=768 jobs/import-dump.ts --shard 3/4
+  command: node --max-old-space-size=384 jobs/import-dump.ts --shard 3/6
   image: tool-mna/tool-mna:latest
   schedule: "0 6 * * 3" # Wednesdays 06:00 UTC
   mount: all
-  mem: 1Gi
+  mem: 512Mi
   cpu: 2
   retry: 1
   timeout: 10800 # 3 h
   emails: onfailure
 
 - name: import-dump-4
-  command: node --max-old-space-size=768 jobs/import-dump.ts --shard 4/4
+  command: node --max-old-space-size=384 jobs/import-dump.ts --shard 4/6
   image: tool-mna/tool-mna:latest
   schedule: "0 6 * * 3" # Wednesdays 06:00 UTC
   mount: all
-  mem: 1Gi
+  mem: 512Mi
+  cpu: 2
+  retry: 1
+  timeout: 10800 # 3 h
+  emails: onfailure
+
+- name: import-dump-5
+  command: node --max-old-space-size=384 jobs/import-dump.ts --shard 5/6
+  image: tool-mna/tool-mna:latest
+  schedule: "0 6 * * 3" # Wednesdays 06:00 UTC
+  mount: all
+  mem: 512Mi
+  cpu: 2
+  retry: 1
+  timeout: 10800 # 3 h
+  emails: onfailure
+
+- name: import-dump-6
+  command: node --max-old-space-size=384 jobs/import-dump.ts --shard 6/6
+  image: tool-mna/tool-mna:latest
+  schedule: "0 6 * * 3" # Wednesdays 06:00 UTC
+  mount: all
+  mem: 512Mi
   cpu: 2
   retry: 1
   timeout: 10800 # 3 h

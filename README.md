@@ -183,7 +183,7 @@ toolforge jobs run import-dump-test --image tool-mna/tool-mna:latest \
 toolforge envvars delete DUMP_LIMIT
 ```
 
-A full pass (156 GB gzip, ~1.6 TB inflated) is split across four jobs; see
+A full pass (156 GB gzip, ~1.6 TB inflated) is split across six jobs; see
 below. `jobs.yaml` schedules them weekly (Wednesdays, after the Tuesday dump).
 Locally, point `WIKIDATA_JSON_DUMP` at any `.json.gz` / `.json` in the same
 format (one entity per line; the `.bz2` dump is refused as far too slow). The
@@ -196,14 +196,14 @@ the whole file takes hours, but the dump's `.gz` is a concatenation of ~2,000
 independent gzip members (the generator gzips each 65k-entity batch on its own
 and `cat`s them together), so the file can be read in slices. `--shard i/N`
 reads the N-th of the compressed bytes, widened to whole members, so N jobs
-with the same N cover the file exactly once. The weekly schedule runs four
+with the same N cover the file exactly once. The weekly schedule runs six
 slices with two CPUs each; to run them by hand:
 
 ```sh
-for i in 1 2 3 4; do
+for i in 1 2 3 4 5 6; do
   toolforge jobs run import-dump-$i --image tool-mna/tool-mna:latest \
-    --command "node --max-old-space-size=768 jobs/import-dump.ts --shard $i/4" \
-    --mount all --mem 1Gi --cpu 2 --emails onfailure
+    --command "node --max-old-space-size=384 jobs/import-dump.ts --shard $i/6" \
+    --mount all --mem 512Mi --cpu 2 --emails onfailure
 done
 ```
 
@@ -211,14 +211,16 @@ Each slice upserts on its own and stamps its items with the dump (the date in
 the file name); the pruning happens once, by whichever job completes the set
 for that dump (`dump_import_runs`). A retried slice just re-records itself.
 Two CPUs per slice let the inflate (on libuv's threadpool) and the line scan
-(on the main thread) overlap rather than take turns on one core: 4 slices x 2
-CPUs finish in ~35-40 minutes, faster than 8 slices x 1 CPU (~50 minutes,
-paced by slices that landed together on busy nodes). Speed varies along the
-file: stretches dense with in-scope items run at ~100 MB/s inflated per slice
-(parsing them is the bottleneck), sparse ones at ~240 MB/s (inflate-bound).
+(on the main thread) overlap rather than take turns on one core, and a slice
+keeps both busy (~1.87 of 2 CPUs), so the pass speeds up with more slices, not
+more CPUs per slice. 4 slices x 2 CPUs finished in ~35-40 minutes, faster than
+8 slices x 1 CPU (~50 minutes, paced by slices that landed together on busy
+nodes). Speed varies along the file: stretches dense with in-scope items run at
+~100 MB/s inflated per slice (parsing them is the bottleneck), sparse ones at
+~240 MB/s (inflate-bound).
 
-The 8 CPUs this needs are more than the default tool quota (2 CPUs in total,
-shared with the web service), so it needs a
+The 12 CPUs and 3Gi this needs are more than the default tool quota (2 CPUs in
+total, shared with the web service), so it needs a
 [quota increase](https://wikitech.wikimedia.org/wiki/Help:Toolforge/Kubernetes#Quotas).
 Without `--shard` the job reads the whole file, which is `--shard 1/1`.
 

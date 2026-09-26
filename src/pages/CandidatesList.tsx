@@ -275,7 +275,7 @@ export default function CandidatesList() {
   // tail. A search term leads. React 19 hoists this into <head>.
   const titleTail =
     status === "open"
-      ? "M&A: A Merge Assistant"
+      ? "M&A: A Wikidata Merge Assistant"
       : `${status[0].toUpperCase() + status.slice(1)} candidates`;
   const titleParts = [...(q ? [`“${q}”`] : []), ...(creator ? [`by ${creator}`] : [])];
   const pageTitle = [...titleParts, titleTail].join(" · ");

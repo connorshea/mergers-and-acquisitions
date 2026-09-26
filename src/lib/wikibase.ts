@@ -61,8 +61,15 @@ export function snakValue(snak: Snak): Value | null {
       return { type: "item", value: (value as { id: string }).id };
     case "time":
       return { type: "time", value: (value as { time: string }).time };
-    case "quantity":
-      return { type: "quantity", value: (value as { amount: string }).amount };
+    case "quantity": {
+      // Amounts are signed decimal strings ("+1"); drop the redundant "+" so
+      // they read (and compare) like the SPARQL path's plain literals. The
+      // unit is an entity URI, or "1" for a unitless quantity.
+      const q = value as { amount: string; unit: string };
+      const unit = /^https?:\/\/www\.wikidata\.org\/entity\/(Q\d+)$/.exec(q.unit)?.[1];
+      const amount = q.amount.replace(/^\+/, "");
+      return unit ? { type: "quantity", value: amount, unit } : { type: "quantity", value: amount };
+    }
     case "monolingualtext":
       return { type: "string", value: (value as { text: string }).text };
     case "globecoordinate": {

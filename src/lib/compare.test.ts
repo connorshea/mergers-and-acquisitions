@@ -45,6 +45,27 @@ describe("normalize / stringSimilarity", () => {
 });
 
 describe("compareValues", () => {
+  it("treats the same amount in different units as distinct", () => {
+    expect(
+      compareValues(
+        { type: "quantity", value: "90", unit: "Q7727" },
+        { type: "quantity", value: "90", unit: "Q11574" },
+      ),
+    ).toEqual(["distinct"]);
+    expect(
+      compareValues(
+        { type: "quantity", value: "90", unit: "Q7727" },
+        { type: "quantity", value: "90" },
+      ),
+    ).toEqual(["distinct"]);
+    expect(
+      compareValues(
+        { type: "quantity", value: "90", unit: "Q7727" },
+        { type: "quantity", value: "90", unit: "Q7727" },
+      ),
+    ).toEqual(["identical"]);
+  });
+
   it("flags a genuine precision mismatch (year-precision vs day) as such", () => {
     // Year precision is encoded with 00 month/day (`+2019-00-00T…`).
     expect(

@@ -31,17 +31,20 @@ afterAll(() => (DB_TEST ? pool.end() : undefined));
 describe.skipIf(!DB_TEST)("collectReferencedItemQids", () => {
   beforeEach(truncateAll);
 
-  it("collects distinct item-valued QIDs across every page", async () => {
-    await db
-      .insert(items)
-      .values([
-        item("Q1", { P31: [ref("Q7889")], P136: [ref("Q100"), ref("Q101")] }),
-        item("Q2", { P31: [ref("Q7889")], P1476: [{ type: "string", value: "Q999" }] }),
-        item("Q3", { P400: [ref("Q102")], P577: [{ type: "time", value: "+2001-01-01" }] }),
-        item("Q4", {}),
-        item("Q5", { P400: [ref("Q102")], P178: [{ type: "somevalue", value: "" }, ref("Q103")] }),
-      ]);
-    const expected = ["Q100", "Q101", "Q102", "Q103", "Q7889"];
+  it("collects distinct item-valued and unit QIDs across every page", async () => {
+    await db.insert(items).values([
+      item("Q1", { P31: [ref("Q7889")], P136: [ref("Q100"), ref("Q101")] }),
+      item("Q2", { P31: [ref("Q7889")], P1476: [{ type: "string", value: "Q999" }] }),
+      item("Q3", { P400: [ref("Q102")], P577: [{ type: "time", value: "+2001-01-01" }] }),
+      item("Q4", {
+        P2047: [
+          { type: "quantity", value: "90", unit: "Q7727" },
+          { type: "quantity", value: "3" },
+        ],
+      }),
+      item("Q5", { P400: [ref("Q102")], P178: [{ type: "somevalue", value: "" }, ref("Q103")] }),
+    ]);
+    const expected = ["Q100", "Q101", "Q102", "Q103", "Q7727", "Q7889"];
     // A page size that divides the row count, one that doesn't, and one page.
     for (const pageSize of [1, 2, 5, 5000]) {
       expect((await collectReferencedItemQids(pageSize)).sort()).toEqual(expected);

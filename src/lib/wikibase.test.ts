@@ -55,6 +55,12 @@ const game: Entity = {
       }),
     ],
     P2047: [claim("P2047", "quantity", { type: "quantity", value: { amount: "+12", unit: "1" } })],
+    P2048: [
+      claim("P2048", "quantity", {
+        type: "quantity",
+        value: { amount: "-1.5", unit: "http://www.wikidata.org/entity/Q11573" },
+      }),
+    ],
     P999: [{ mainsnak: { snaktype: "somevalue", property: "P999" }, rank: "normal" }],
   },
 };
@@ -75,7 +81,9 @@ describe("entityToItem", () => {
       P348: [{ type: "string", value: "1.9" }], // string datatype, never an id
       P856: [{ type: "url", value: "https://example.org" }],
       P1476: [{ type: "string", value: "DOOM" }],
-      P2047: [{ type: "quantity", value: "+12" }],
+      // The redundant "+" is dropped; a unitless quantity carries no unit.
+      P2047: [{ type: "quantity", value: "12" }],
+      P2048: [{ type: "quantity", value: "-1.5", unit: "Q11573" }],
       P999: [{ type: "somevalue", value: "" }],
     });
   });

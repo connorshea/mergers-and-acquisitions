@@ -122,12 +122,13 @@
   emails: onfailure
 
 - name: hunt
-  command: node --max-old-space-size=1536 jobs/hunt.ts
+  command: node --max-old-space-size=2304 jobs/hunt.ts
   image: tool-mna/tool-mna:latest
   schedule: "0 3 * * *" # nightly 03:00 UTC, after the syncs settle
   # Defaults (512Mi / 0.1 CPU) are tiny; the in-memory label+type blocking and
-  # scoring want more headroom as the item count grows.
-  mem: 2Gi
+  # scoring want more headroom as the item count grows. At 2.18M items the pod
+  # peaked at ~1.57 GiB while scoring, too close to the old 2Gi.
+  mem: 3Gi
   cpu: 1
   emails: onfailure
 

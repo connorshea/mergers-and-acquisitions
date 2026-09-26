@@ -1229,6 +1229,41 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(result.reasons[0]).toContain("per-title identifiers differ");
   });
 
+  it("caps two novels in one series whose ISFDB and FantLab ids differ", () => {
+    // Q134618534 / Q134618537: two "Last Kids on Earth" novels (2018, 2021) with
+    // similar names, the same author and series, and a shared Penguin Random
+    // House work id — but their per-work ISFDB and FantLab records differ.
+    const novel = (id: string, title: string, isfdb: string, fantlab: string): Item => ({
+      ...base,
+      id,
+      labels: { en: title },
+      statements: stmt({
+        P31: [{ type: "item", value: "Q7725634" }],
+        P50: [{ type: "item", value: "Q54972791" }],
+        P179: [{ type: "item", value: "Q48989855" }],
+        P9818: [{ type: "external-id", value: "315311" }],
+        P1274: [{ type: "external-id", value: isfdb }],
+        P7439: [{ type: "external-id", value: fantlab }],
+      }),
+    });
+    const a = novel(
+      "Q134618534",
+      "The Last Kids on Earth and the Cosmic Beyond",
+      "2409893",
+      "1073738",
+    );
+    const b = novel(
+      "Q134618537",
+      "The Last Kids on Earth and the Doomsday Race",
+      "2903507",
+      "1467618",
+    );
+    const isId = (pid: string) => ["P9818", "P1274", "P7439"].includes(pid);
+    const result = scoreCandidate(a, b, { isIdentifierProp: isId });
+    expect(result.confidence).toBeLessThanOrEqual(0.1);
+    expect(result.reasons[0]).toContain("2 per-title identifiers differ");
+  });
+
   it("caps two same-named bands whose Discogs and Freebase ids differ", () => {
     // Two different bands called "The Radiators" (Q7759214, Q3522403): identical
     // label and P31, and a shared Billboard artist id — but that id is just the

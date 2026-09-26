@@ -477,11 +477,8 @@ a.site-link:hover {
 .is-blocker .prop-note {
   color: var(--blocker);
 }
-/* Drawn a few px inside the cell: flush with its edge, the collapsed grid lines
-   paint over it and the ledger's rounded corner clips it in the last row. */
 .is-blocker td.col-prop {
-  outline: 1px solid var(--blocker);
-  outline-offset: -4px;
+  background: var(--distinct-bg);
 }
 .none {
   color: var(--muted);

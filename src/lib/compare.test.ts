@@ -1070,6 +1070,40 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(distinct.reasons.some((r) => r.includes("external identifiers differ"))).toBe(false);
   });
 
+  it("ignores library subject classifications (Dewey, LCC, UDC) as match or distinction evidence", () => {
+    // Two unrelated novels share Dewey 813.54 (American fiction, 1945-1999). A
+    // shared subject class must not count as a shared identifier.
+    const isId = (pid: string) =>
+      pid.startsWith("P700") || ["P1036", "P1149", "P1190"].includes(pid);
+    const mkShared = (id: string): Item => ({
+      ...base,
+      id,
+      labels: { en: "Echo" },
+      statements: stmt({ P1036: [{ type: "external-id" as const, value: "813.54" }] }),
+    });
+    const shared = scoreCandidate(mkShared("Q1"), mkShared("Q2"), { isIdentifierProp: isId });
+    expect(shared.reasons.some((r) => r.startsWith("shares external identifier"))).toBe(false);
+
+    // Nor may differing classes count toward the >6 distinct-external-id
+    // disqualifier: five real differing ids plus three differing classes is 8
+    // raw, but only the five real ones count.
+    const stmts = (prefix: string) => ({
+      ...Object.fromEntries(
+        Array.from({ length: 5 }, (_, i) => [
+          `P700${i}`,
+          [{ type: "external-id" as const, value: `${prefix}${i}` }],
+        ]),
+      ),
+      P1036: [{ type: "external-id" as const, value: `${prefix}-ddc` }],
+      P1149: [{ type: "external-id" as const, value: `${prefix}-lcc` }],
+      P1190: [{ type: "external-id" as const, value: `${prefix}-udc` }],
+    });
+    const a: Item = { ...base, id: "Q3", labels: { en: "Echo" }, statements: stmt(stmts("a")) };
+    const b: Item = { ...base, id: "Q4", labels: { en: "Echo" }, statements: stmt(stmts("b")) };
+    const distinct = scoreCandidate(a, b, { isIdentifierProp: isId });
+    expect(distinct.reasons.some((r) => r.includes("external identifiers differ"))).toBe(false);
+  });
+
   it("ignores synced mirrors-Wikidata ids (P31=Q24075706) via isMirroredIdProp", () => {
     // Seven differing external ids on both items would trip the >6 distinct-id
     // disqualifier — but every one is an authority-control property that sources

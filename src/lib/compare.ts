@@ -827,6 +827,19 @@ const MIRRORED_ID_PROPS = new Set<string>([
 ]);
 
 /**
+ * Library subject classifications. Wikidata types them as external ids, but a
+ * value names a subject, not a work: unrelated books share a Dewey number (813.54
+ * is most post-war American fiction), and two editions of one work can be
+ * classed differently. So they are evidence in neither direction.
+ */
+const CLASSIFICATION_PROPS = new Set<string>([
+  "P1036", // Dewey Decimal Classification
+  "P1149", // Library of Congress Classification
+  "P1190", // Universal Decimal Classification
+  "P8248", // Colon Classification
+]);
+
+/**
  * Whether a property is a *hardcoded* Wikidata-mirroring identifier (the
  * MIRRORED_ID_PROPS floor). This is the subset that callers without the synced
  * `properties.mirrors_wikidata` set — chiefly the UI — can recognise on their
@@ -1136,7 +1149,8 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // An id either item declares shared with the other (the P4070 qualifier) is
   // likewise non-evidence: the editor is telling us one id covers both items.
   const sharedWithOther = sharedIdentifierProps(a, b);
-  const isNonEvidence = (pid: string): boolean => isMirrored(pid) || sharedWithOther.has(pid);
+  const isNonEvidence = (pid: string): boolean =>
+    isMirrored(pid) || CLASSIFICATION_PROPS.has(pid) || sharedWithOther.has(pid);
   const sharedExtIds = rows.filter(
     (r) =>
       r.kind === "statement" &&

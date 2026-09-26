@@ -39,6 +39,8 @@ export interface Entity {
   aliases?: Record<string, { value: string }[]>;
   sitelinks?: Record<string, { title: string; badges?: string[] }>;
   claims?: Record<string, Statement[]>;
+  /** The revision this JSON is of (dump lines, Special:EntityData, wbgetentities). */
+  lastrevid?: number;
 }
 
 const termMap = (o?: Record<string, { value: string }>): Record<string, string> => {

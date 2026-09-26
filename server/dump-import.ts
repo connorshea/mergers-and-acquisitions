@@ -14,7 +14,12 @@
 //      lines where the number that follows is one of IMPORT_CLASSES, and one for
 //      lines that start `{"type":"property"`. Everything else is never decoded
 //      or parsed.
-//   3. Hit lines are JSON.parsed, converted with the shared entityToItem, and
+//   3. A hit line for an item the mirror already holds at the same revision,
+//      converted by the current converter (`items.source_revid` and
+//      `converter_version`, loaded up front into a compact index), is not
+//      parsed at all: its QID and `"lastrevid"` are read from the raw bytes and
+//      the row is only restamped as seen. Most items aren't edited in a week.
+//      Other hit lines are JSON.parsed, converted with the shared entityToItem, and
 //      kept if a best-rank P31 really is one of the classes (a mention of a
 //      class QID in any other statement is discarded here).
 //   4. Items are upserted in batches; each changed item's external ids are
@@ -45,11 +50,12 @@ import { createHash } from "node:crypto";
 import { basename } from "node:path";
 import { Readable } from "node:stream";
 import { constants as zlibConstants, createGunzip, inflateRawSync } from "node:zlib";
-import { and, asc, count, eq, gt, inArray, isNull, ne, or, sql } from "drizzle-orm";
+import { and, asc, count, eq, gt, inArray, isNotNull, isNull, ne, or, sql } from "drizzle-orm";
 import { db } from "./db.ts";
 import { refreshCandidateItemInfo } from "./candidate-item-info.ts";
 import { dumpImportRuns, externalIds, items, mergeCandidates } from "../db/schema.ts";
 import { syncProperties } from "./properties-sync.ts";
+import { CONVERTER_VERSION } from "./converter-version.ts";
 import { toSqlDatetime } from "./auth/time.ts";
 import type { Item } from "../src/lib/compare.ts";
 import type { PropertyRow } from "../src/lib/sparql.ts";
@@ -82,8 +88,13 @@ export interface ScanStats {
   lines: number;
   /** Lines that passed the pre-filter and were parsed. */
   parsed: number;
-  /** Items whose best-rank P31 is the class. */
+  /** Items whose best-rank P31 is the class (`unedited` included). */
   matched: number;
+  /**
+   * Matched items skipped without parsing: the mirror already holds them at
+   * this revision, converted by the current converter (see `isUnedited`).
+   */
+  unedited: number;
   /** Pre-filter hits that couldn't be parsed or converted (see `onSkip`). */
   skipped: number;
   /** Property entities handed to onProperty. */
@@ -99,6 +110,15 @@ export interface ScanOptions {
   classQids: readonly string[];
   /** Called with every matching item, in dump order, awaited (backpressure). */
   onItem: (item: Item, entity: Entity) => void | Promise<void>;
+  /**
+   * Checked for every pre-filter hit that names an item and its revision,
+   * before the line is parsed: true when the mirror already holds that item at
+   * that revision, converted by the current converter. Such a line is counted
+   * as matched and handed to `onUnedited` instead of being parsed.
+   */
+  isUnedited?: (qid: number, revid: number) => boolean;
+  /** Called with the QID of every item `isUnedited` skipped, awaited. */
+  onUnedited?: (qid: string) => void | Promise<void>;
   /** Called with every property entity (there are ~13k, interleaved). */
   onProperty?: (entity: Entity) => void | Promise<void>;
   /**
@@ -334,6 +354,40 @@ function classHits(region: Buffer, ids: ReadonlySet<number>, into: Map<number, n
   }
 }
 
+const ITEM_ID_NEEDLE = Buffer.from('"id":"Q');
+const LASTREVID_NEEDLE = Buffer.from('"lastrevid":');
+/** How far into a line the top-level `"id"` may start (it follows `"type"`). */
+const ID_WINDOW = 256;
+
+/**
+ * The item's numeric id and revision, read from a raw dump line without
+ * parsing it: `{"type":"item","id":"Q42",…,"lastrevid":123,…}`. Null when the
+ * line isn't an item or either value can't be found, which just means the line
+ * is parsed as usual. Neither key can be matched inside a string value, where
+ * the quotes around it would be escaped. The top-level id is the first
+ * `"id":"Q` on the line whether it comes right after `"type"` (the dump's order)
+ * or after the page fields (Special:EntityData's), since both precede the
+ * claims. `"lastrevid"` is a top-level key no nested object has, so there is
+ * only one; it sits near the end of a dump line, where lastIndexOf finds it
+ * quickly.
+ */
+export function lineRevision(line: Buffer): { qid: number; revid: number } | null {
+  const idAt = line.subarray(0, ID_WINDOW).indexOf(ITEM_ID_NEEDLE);
+  if (idAt === -1) return null;
+  let at = idAt + ITEM_ID_NEEDLE.length;
+  let qid = 0;
+  while (at < line.length && isDigit(line[at])) qid = qid * 10 + (line[at++] - 0x30);
+  if (at === idAt + ITEM_ID_NEEDLE.length || line[at] !== 0x22) return null;
+
+  const revAt = line.lastIndexOf(LASTREVID_NEEDLE);
+  if (revAt === -1) return null;
+  at = revAt + LASTREVID_NEEDLE.length;
+  let revid = 0;
+  while (at < line.length && isDigit(line[at])) revid = revid * 10 + (line[at++] - 0x30);
+  if (at === revAt + LASTREVID_NEEDLE.length) return null;
+  return { qid, revid };
+}
+
 /** Parse one dump line (`{...},`) into an entity; null for the `[` / `]` lines. */
 function parseLine(line: Buffer): Entity | null {
   let text = line.toString("utf8").trim();
@@ -357,6 +411,7 @@ export async function scanDump(source: Readable, opts: ScanOptions): Promise<Sca
     lines: 0,
     parsed: 0,
     matched: 0,
+    unedited: 0,
     skipped: 0,
     properties: 0,
     stopped: false,
@@ -373,6 +428,15 @@ export async function scanDump(source: Readable, opts: ScanOptions): Promise<Sca
   };
 
   const handleLine = async (line: Buffer): Promise<void> => {
+    if (opts.isUnedited) {
+      const rev = lineRevision(line);
+      if (rev && opts.isUnedited(rev.qid, rev.revid)) {
+        stats.matched++;
+        stats.unedited++;
+        await opts.onUnedited?.(`Q${rev.qid}`);
+        return;
+      }
+    }
     let entity: Entity | null;
     try {
       entity = parseLine(line);
@@ -465,6 +529,8 @@ const ID_BATCH = 2000;
 const MAX_ID_VALUE_CHARS = 512;
 /** Default cap on skipped entities (bad lines + unwritable items) per run. */
 export const MAX_SKIPPED = 100;
+/** Unedited items restamped per statement (only their QIDs are sent). */
+const RESTAMP_BATCH = 5000;
 /** Items paged per read when pruning (keyset over the PK). */
 const READ_PAGE = 10000;
 /**
@@ -502,6 +568,121 @@ export function itemHash(
     .digest("hex");
 }
 
+/** What upsertItems stores for an item, besides its bookkeeping columns. */
+export interface PreparedRow {
+  label: string | null;
+  type: string | null;
+  /** External-id rows, deduped on the (qid, property, value) key, over-long values dropped. */
+  ids: { qid: string; property: string; value: string }[];
+  /** `itemHash` of the above and the item. */
+  dataHash: string;
+}
+
+/**
+ * The denormalized columns, external-id rows, and hash upsertItems stores for
+ * an item. Pure, so the converter-version test hashes exactly what is stored
+ * (see server/converter-version.ts).
+ */
+export function prepareRow(item: Item): PreparedRow {
+  const label = primaryLabel(item) ?? null;
+  const type = primaryType(item) ?? null;
+  const ids: PreparedRow["ids"] = [];
+  const seen = new Set<string>();
+  for (const r of externalIdRows(item)) {
+    if (r.value.length > MAX_ID_VALUE_CHARS) continue;
+    const key = `${r.property} ${r.value}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    ids.push({ qid: item.id, property: r.property, value: r.value });
+  }
+  return { label, type, ids, dataHash: itemHash(label, type, item, ids) };
+}
+
+/**
+ * The items the mirror holds at a known revision, converted by the current
+ * converter, as two parallel typed arrays sorted by numeric QID: ~12 bytes an
+ * item, where a Map of the same would take ~50x that.
+ */
+export class RevisionIndex {
+  private readonly qids: Uint32Array;
+  private readonly revids: Float64Array;
+
+  constructor(qids: Uint32Array, revids: Float64Array) {
+    this.qids = qids;
+    this.revids = revids;
+  }
+
+  get size(): number {
+    return this.qids.length;
+  }
+
+  /** True when item Q`qid` is stored at revision `revid`. */
+  has(qid: number, revid: number): boolean {
+    let lo = 0;
+    let hi = this.qids.length - 1;
+    while (lo <= hi) {
+      const mid = (lo + hi) >>> 1;
+      const at = this.qids[mid];
+      if (at === qid) return this.revids[mid] === revid;
+      if (at < qid) lo = mid + 1;
+      else hi = mid - 1;
+    }
+    return false;
+  }
+
+  /** Build from unsorted parallel lists (the load reads them in string order of QID). */
+  static from(qids: ArrayLike<number>, revids: ArrayLike<number>): RevisionIndex {
+    const order = Uint32Array.from({ length: qids.length }, (_, i) => i).sort(
+      (a, b) => qids[a] - qids[b],
+    );
+    return new RevisionIndex(
+      Uint32Array.from(order, (i) => qids[i]),
+      Float64Array.from(order, (i) => revids[i]),
+    );
+  }
+}
+
+/** Rows paged per read when loading the revision index. */
+const REVISION_PAGE = 20000;
+
+/**
+ * Load the revision index for a dump pass: every item stored at a known
+ * revision by the current converter whose primary type is still one of
+ * `classQids`. The type check keeps a class dropped from IMPORT_CLASSES from
+ * being carried forward: its items aren't in the index, so they are parsed,
+ * found out of scope, and pruned. (primaryType is a best-rank P31 value, so a
+ * row whose type is a class really is in scope at that revision.) An item left
+ * out for any reason is only parsed as before, never skipped wrongly.
+ * Reads idx_items_revision alone.
+ */
+export async function loadRevisionIndex(classQids: readonly string[]): Promise<RevisionIndex> {
+  const qids: number[] = [];
+  const revids: number[] = [];
+  let after = "";
+  for (;;) {
+    const page = await db
+      .select({ qid: items.qid, revid: items.sourceRevid })
+      .from(items)
+      .where(
+        and(
+          eq(items.converterVersion, CONVERTER_VERSION),
+          after ? gt(items.qid, after) : sql`1 = 1`,
+          isNotNull(items.sourceRevid),
+          inArray(items.primaryType, [...classQids]),
+        ),
+      )
+      .orderBy(asc(items.qid))
+      .limit(REVISION_PAGE);
+    for (const r of page) {
+      qids.push(Number(r.qid.slice(1)));
+      revids.push(r.revid!);
+    }
+    if (page.length < REVISION_PAGE) break;
+    after = page[page.length - 1].qid;
+  }
+  return RevisionIndex.from(qids, revids);
+}
+
 /** Plain code-unit order, close to the `utf8mb4_bin` order the indexes use. */
 const compareKeys = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0);
 
@@ -524,27 +705,20 @@ export interface UpsertResult {
  * from one weekly dump to the next.
  * `dump` stamps the rows as seen in that dump; without it (the single-item
  * importer) an existing row keeps its stamp.
+ * `revids` gives the Wikidata revision each item was converted from, recorded
+ * with the converter version so a later dump pass can skip the item unparsed
+ * while it stays at that revision. An item without one is stored with no
+ * revision, and is never skipped.
  */
 export async function upsertItems(
   batch: Item[],
   stamp = toSqlDatetime(new Date()),
   dump?: string,
+  revids?: ReadonlyMap<string, number>,
 ): Promise<UpsertResult> {
   if (batch.length === 0) return { written: 0, unchanged: 0, externalIds: 0 };
-  // Each item's row and external ids (deduped on the (qid, property, value)
-  // key), and the hash of the two.
   const prepared = batch.map((item) => {
-    const label = primaryLabel(item) ?? null;
-    const type = primaryType(item) ?? null;
-    const ids: (typeof externalIds.$inferInsert)[] = [];
-    const seen = new Set<string>();
-    for (const r of externalIdRows(item)) {
-      if (r.value.length > MAX_ID_VALUE_CHARS) continue;
-      const key = `${r.property} ${r.value}`;
-      if (seen.has(key)) continue;
-      seen.add(key);
-      ids.push({ qid: item.id, property: r.property, value: r.value });
-    }
+    const { label, type, ids, dataHash } = prepareRow(item);
     const row = {
       qid: item.id,
       primaryLabel: label,
@@ -552,7 +726,9 @@ export async function upsertItems(
       data: item,
       lastSyncedAt: stamp,
       lastDump: dump ?? null,
-      dataHash: itemHash(label, type, item, ids),
+      dataHash,
+      sourceRevid: revids?.get(item.id) ?? null,
+      converterVersion: CONVERTER_VERSION,
     };
     return { row, ids };
   });
@@ -566,7 +742,12 @@ export async function upsertItems(
       const stored = new Map(
         (
           await tx
-            .select({ qid: items.qid, dataHash: items.dataHash })
+            .select({
+              qid: items.qid,
+              dataHash: items.dataHash,
+              sourceRevid: items.sourceRevid,
+              converterVersion: items.converterVersion,
+            })
             .from(items)
             .where(
               inArray(
@@ -574,18 +755,44 @@ export async function upsertItems(
                 prepared.map((p) => p.row.qid),
               ),
             )
-        ).map((r) => [r.qid, r.dataHash]),
+        ).map((r) => [r.qid, r]),
       );
-      const changed = prepared.filter((p) => stored.get(p.row.qid) !== p.row.dataHash);
-      const unchanged = prepared
-        .filter((p) => stored.get(p.row.qid) === p.row.dataHash)
-        .map((p) => p.row.qid);
+      const isUnchanged = (p: (typeof prepared)[number]) =>
+        stored.get(p.row.qid)?.dataHash === p.row.dataHash;
+      const changed = prepared.filter((p) => !isUnchanged(p));
+      const unchanged = prepared.filter(isUnchanged).map((p) => p.row.qid);
 
       if (unchanged.length > 0) {
         await tx
           .update(items)
           .set({ lastSyncedAt: stamp, ...(dump ? { lastDump: dump } : {}) })
           .where(inArray(items.qid, unchanged));
+      }
+      // An unchanged item at a new revision (an edit the conversion drops, such
+      // as a label in a language we don't keep), or first seen by this
+      // converter version, stores exactly what this revision converts to now:
+      // record the revision so the next pass can skip it unparsed.
+      const revised = prepared.filter((p) => {
+        if (!isUnchanged(p) || p.row.sourceRevid === null) return false;
+        const s = stored.get(p.row.qid)!;
+        return s.sourceRevid !== p.row.sourceRevid || s.converterVersion !== CONVERTER_VERSION;
+      });
+      if (revised.length > 0) {
+        await tx
+          .update(items)
+          .set({
+            sourceRevid: sql`case ${items.qid} ${sql.join(
+              revised.map((p) => sql`when ${p.row.qid} then ${p.row.sourceRevid}`),
+              sql` `,
+            )} end`,
+            converterVersion: CONVERTER_VERSION,
+          })
+          .where(
+            inArray(
+              items.qid,
+              revised.map((p) => p.row.qid),
+            ),
+          );
       }
       if (changed.length === 0) return { written: 0, unchanged: unchanged.length, externalIds: 0 };
 
@@ -605,6 +812,8 @@ export async function upsertItems(
               lastSyncedAt: sql`values(${items.lastSyncedAt})`,
               lastDump: sql`coalesce(values(${items.lastDump}), ${items.lastDump})`,
               dataHash: sql`values(${items.dataHash})`,
+              sourceRevid: sql`values(${items.sourceRevid})`,
+              converterVersion: sql`values(${items.converterVersion})`,
             },
           });
       }
@@ -708,6 +917,12 @@ export interface ImportOptions {
   forcePrune?: boolean;
   /** Abort once more than this many entities were skipped (MAX_SKIPPED). */
   maxSkipped?: number;
+  /**
+   * Parse every hit, even items the mirror already holds at the dump's
+   * revision (DUMP_FULL=1): the escape hatch for a conversion change that
+   * CONVERTER_VERSION missed.
+   */
+  full?: boolean;
   log?: (message: string) => void;
   progressEveryBytes?: number;
 }
@@ -884,8 +1099,27 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
     );
   }
 
+  // Items the mirror already holds at a known revision, converted by the
+  // current converter: a hit at the same revision is skipped unparsed.
+  let revisions: RevisionIndex | undefined;
+  if (!opts.full) {
+    const loadStart = performance.now();
+    revisions = await loadRevisionIndex(classQids);
+    log(
+      `${tag} ${revisions.size} items stored at a known revision, ` +
+        `loaded in ${((performance.now() - loadStart) / 1000).toFixed(1)}s; ` +
+        "unedited ones are restamped without parsing",
+    );
+  } else {
+    log(`${tag} full pass: parsing every hit, unedited or not`);
+  }
+
   const propertyRows: PropertyRow[] = [];
   let batch: Item[] = [];
+  // The revision each batched item was converted from.
+  let batchRevids = new Map<string, number>();
+  // Unedited items to restamp as seen in this dump.
+  let unedited: string[] = [];
   let upserted = 0;
   let unchanged = 0;
   let idRows = 0;
@@ -902,9 +1136,9 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
   };
 
   let lockRetries = 0;
-  const upsert = (pending: Item[]): Promise<UpsertResult> =>
+  const upsert = (pending: Item[], revids: ReadonlyMap<string, number>): Promise<UpsertResult> =>
     withLockRetry(
-      () => upsertItems(pending, stamp, dump),
+      () => upsertItems(pending, stamp, dump, revids),
       (attempt, err) => {
         lockRetries++;
         log(
@@ -924,12 +1158,40 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
   // Time the scan spends blocked on the previous batch's write: when this is a
   // large share of the run, the database (not the inflate) sets the pace.
   let writeWaitMs = 0;
+  const restamp = async (qids: string[]): Promise<void> => {
+    // Key order, so concurrent shards take their locks in the same order.
+    qids.sort(compareKeys);
+    for (let i = 0; i < qids.length; i += RESTAMP_BATCH) {
+      const slice = qids.slice(i, i + RESTAMP_BATCH);
+      await withLockRetry(
+        () =>
+          db
+            .update(items)
+            .set({ lastSyncedAt: stamp, lastDump: dump })
+            .where(inArray(items.qid, slice)),
+        (attempt, err) => {
+          lockRetries++;
+          log(
+            `${tag} restamp of ${slice.length} lost a lock race ` +
+              `(${errorSummary(err)}); retry ${attempt}/${LOCK_RETRIES}`,
+          );
+        },
+      );
+    }
+  };
   const flush = async (): Promise<void> => {
+    if (unedited.length > 0) {
+      const qids = unedited;
+      unedited = [];
+      await restamp(qids);
+    }
     if (batch.length === 0) return;
     const pending = batch;
+    const revids = batchRevids;
     batch = [];
+    batchRevids = new Map();
     try {
-      tally(await upsert(pending));
+      tally(await upsert(pending, revids));
       return;
     } catch (err) {
       // Find the item(s) at fault; the rest of the batch still lands.
@@ -938,7 +1200,7 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
     const refused: string[] = [];
     for (const item of pending) {
       try {
-        tally(await upsert([item]));
+        tally(await upsert([item], revids));
       } catch (err) {
         failed++;
         refused.push(item.id);
@@ -961,24 +1223,34 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
   const mbps = (bytes: number, seconds: number): string =>
     seconds > 0 ? (bytes / 1e6 / seconds).toFixed(0) : "?";
 
+  // Write the pending items while the scan inflates the next ones: wait only
+  // for the previous write, so one is in flight at a time and the scan never
+  // waits on a database round-trip it could have overlapped.
+  const maybeFlush = async (): Promise<void> => {
+    if (batch.length < ITEM_BATCH && unedited.length < RESTAMP_BATCH) return;
+    const waitStart = performance.now();
+    await writing;
+    writeWaitMs += performance.now() - waitStart;
+    writing = flush();
+    // Handled when awaited above or after the scan; this just stops Node
+    // treating a failure in between as an unhandled rejection.
+    writing.catch(() => {});
+  };
+
   const scan = await scanDump(source, {
     classQids,
     limit: opts.limit,
     progressEveryBytes: opts.progressEveryBytes,
     onSkip,
-    onItem: async (item) => {
+    isUnedited: revisions ? (qid, revid) => revisions.has(qid, revid) : undefined,
+    onUnedited: async (qid) => {
+      unedited.push(qid);
+      await maybeFlush();
+    },
+    onItem: async (item, entity) => {
       batch.push(item);
-      if (batch.length < ITEM_BATCH) return;
-      // Write this batch while the scan inflates the next one: wait only for
-      // the previous write, so one batch is in flight at a time and the scan
-      // never waits on a database round-trip it could have overlapped.
-      const waitStart = performance.now();
-      await writing;
-      writeWaitMs += performance.now() - waitStart;
-      writing = flush();
-      // Handled when awaited above or after the scan; this just stops Node
-      // treating a failure in between as an unhandled rejection.
-      writing.catch(() => {});
+      if (entity.lastrevid !== undefined) batchRevids.set(item.id, entity.lastrevid);
+      await maybeFlush();
     },
     onProperty: (entity) => {
       const row = propertyRowFromEntity(entity);
@@ -1000,7 +1272,7 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
       last = { bytes: s.bytes, seconds: s.seconds, read, writeWaitMs };
       log(
         `${tag} ${pct}${(s.bytes / 1e9).toFixed(0)} GB inflated, ${s.lines} lines, ` +
-          `${s.parsed} parsed, ${s.matched} matched (${unchanged} unchanged), ` +
+          `${s.parsed} parsed, ${s.matched} matched (${s.unedited} unedited, ${unchanged} unchanged), ` +
           `${s.properties} properties, ` +
           `${now} MB/s now (${mbps(s.bytes, s.seconds)} avg), ${eta}` +
           `write wait ${waited.toFixed(0)}s (${waitPct}), ` +

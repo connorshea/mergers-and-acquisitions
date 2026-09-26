@@ -7,6 +7,7 @@
 //   WIKIDATA_JSON_DUMP=/path/to/dump.json.gz …   # another dump (plain .json works too)
 //   DUMP_PRUNE=0 …                               # keep items missing from the dump
 //   DUMP_PRUNE_FORCE=1 …                         # prune past the 20% safety cap
+//   DUMP_FULL=1 …                                # parse unedited items too (see CONVERTER_VERSION)
 //   node jobs/import-dump.ts --shard 3/8         # read the third of eight slices
 //
 // `--shard i/N` splits the pass across N jobs (one per slice, all with the same
@@ -63,6 +64,7 @@ runDumpImport({
   limit,
   prune: process.env.DUMP_PRUNE === "0" ? false : undefined,
   forcePrune: process.env.DUMP_PRUNE_FORCE === "1",
+  full: process.env.DUMP_FULL === "1",
 })
   .then(async (stats) => {
     console.log(
@@ -72,7 +74,7 @@ runDumpImport({
         (stats.lockRetries > 0 ? `, ${stats.lockRetries} lock retries` : "") +
         ") — " +
         `${(stats.bytes / 1e9).toFixed(1)} GB inflated, ${stats.lines} lines, ${stats.parsed} parsed, ` +
-        `${stats.matched} matched, ${stats.upserted} items upserted (${stats.unchanged} unchanged), ${stats.externalIds} external ids, ` +
+        `${stats.matched} matched (${stats.unedited} unedited), ${stats.upserted} items upserted (${stats.unchanged} unchanged), ${stats.externalIds} external ids, ` +
         (stats.skipped + stats.failed > 0
           ? `${stats.skipped} bad lines + ${stats.failed} failed items skipped, `
           : "") +

@@ -172,6 +172,16 @@ and time values keep their precision. It never talks to QLever. After a complete
 contains (merged away, deleted, retyped) and settles their open candidates; it
 refuses to drop more than 20% of the mirror at once unless `DUMP_PRUNE_FORCE=1`.
 
+Each row records the Wikidata revision it was converted from and the converter
+version (`server/converter-version.ts`) that converted it. A later pass skips an
+item without parsing it when the dump has the same revision and the version is
+still current, and only restamps the row as seen. Most items aren't edited from
+one week to the next. When you change what the conversion stores
+(`entityToItem`, `externalIdRows`, `prepareRow`), `server/converter-version.test.ts`
+fails with a new hash to append to `CONVERTER_OUTPUTS`, and the next pass
+reconverts every item. `DUMP_FULL=1` parses every item regardless, as an escape
+hatch.
+
 On Toolforge the dump is on the read-only NFS mount, which a build-service job
 only sees with `--mount all`:
 

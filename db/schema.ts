@@ -56,6 +56,13 @@ export const items = mysqlTable(
     // converted data hasn't changed. Null when something else rewrote `data`,
     // which makes the next import write the item in full.
     dataHash: varchar("data_hash", { length: 40 }),
+    // The Wikidata revision `data` was converted from, and the converter
+    // version that converted it (server/converter-version.ts). When the dump
+    // has the same revision and the version is still current, the dump import
+    // skips the item without parsing it. Null when the revision isn't known
+    // (the single-item importer without one, or a local edit to `data`).
+    sourceRevid: bigint("source_revid", { mode: "number", unsigned: true }),
+    converterVersion: int("converter_version", { unsigned: true }),
   },
   (t) => [
     index("idx_items_primary_label").on(t.primaryLabel),
@@ -63,6 +70,10 @@ export const items = mysqlTable(
     // The dump import's prune looks for rows not stamped with the current dump;
     // nearly every row is, so this turns a full scan into a short range read.
     index("idx_items_last_dump").on(t.lastDump),
+    // Covers the dump import's revision index load: a keyset over qid within
+    // one converter version, read from the index alone rather than the rows
+    // (which carry the JSON).
+    index("idx_items_revision").on(t.converterVersion, t.qid, t.sourceRevid, t.primaryType),
   ],
 );
 

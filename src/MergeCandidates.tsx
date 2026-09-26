@@ -20,6 +20,7 @@ import {
   creationRevisionUrl,
   creationTool,
   creatorUrl,
+  formatEditCount,
   historyUrl,
   isTemporaryAccount,
   looksLikeBot,
@@ -202,9 +203,12 @@ function CreationLine({ creation }: { creation: ItemCreation }) {
         <span className="plate-created-hidden">(hidden user)</span>
       )}
       {creation.userEditCount !== null && (
-        <span className="plate-created-stat">
+        <span
+          className="plate-created-stat"
+          title={`${creation.userEditCount.toLocaleString()} edits`}
+        >
           {" "}
-          ({creation.userEditCount.toLocaleString()} edits)
+          ({formatEditCount(creation.userEditCount)} edits)
         </span>
       )}
       {looksLikeBot(creation) && <span className="plate-flag">bot</span>}

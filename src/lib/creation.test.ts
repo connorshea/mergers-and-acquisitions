@@ -2,6 +2,7 @@ import { describe, expect, it } from "vite-plus/test";
 import {
   creationTool,
   creatorUrl,
+  formatEditCount,
   isTemporaryAccount,
   looksLikeBot,
   normalizeUserName,
@@ -107,5 +108,21 @@ describe("normalizeUserName", () => {
     expect(normalizeUserName("Andre Engels")).toBe("Andre Engels");
     expect(normalizeUserName("192.0.2.1")).toBe("192.0.2.1");
     expect(normalizeUserName("~2026-46215-53")).toBe("~2026-46215-53");
+  });
+});
+
+describe("formatEditCount", () => {
+  it("is exact below 1,000", () => {
+    expect(formatEditCount(0)).toBe("0");
+    expect(formatEditCount(905)).toBe("905");
+  });
+
+  it("is compact from 1,000 up", () => {
+    expect(formatEditCount(1000)).toBe("1K");
+    expect(formatEditCount(1234)).toBe("1.2K");
+    expect(formatEditCount(590_768)).toBe("591K");
+    expect(formatEditCount(1_004_200)).toBe("1M");
+    expect(formatEditCount(12_345_678)).toBe("12M");
+    expect(formatEditCount(1_200_000_000)).toBe("1.2B");
   });
 });

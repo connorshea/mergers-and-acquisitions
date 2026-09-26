@@ -3,7 +3,7 @@
 // (server/candidates.ts) and the Wikidata edit routes (server/edits.ts).
 import { inArray } from "drizzle-orm";
 import { db } from "./db.ts";
-import { entityLabels, items, mergeCandidates } from "../db/schema.ts";
+import { entityLabels, items, mergeCandidates, users } from "../db/schema.ts";
 import type { CandidateSummary } from "../src/lib/api-types.ts";
 import { IMPORT_CLASS_OPTIONS } from "../src/lib/import-classes.ts";
 
@@ -18,6 +18,7 @@ export const summaryColumns = {
   reasons: mergeCandidates.reasons,
   detectedAt: mergeCandidates.detectedAt,
   resolution: mergeCandidates.resolution,
+  resolvedBy: mergeCandidates.resolvedBy,
   fromType: mergeCandidates.fromType,
   intoType: mergeCandidates.intoType,
 };
@@ -32,6 +33,7 @@ export type CandidateRow = {
   reasons: unknown;
   detectedAt: string;
   resolution: string | null;
+  resolvedBy: number | null;
   fromType: string | null;
   intoType: string | null;
 };
@@ -46,16 +48,19 @@ export type SummaryLabels = {
   items: Map<string, string | null>;
   /** Display label by class qid, for sharedType. */
   types: Map<string, string>;
+  /** Username by user id, for resolvedBy. */
+  users: Map<number, string>;
 };
 
 /**
  * Resolve every label a set of CandidateSummary rows needs in one query per
  * kind, so callers avoid an N+1 lookup: the items' primaryLabel, and a label for
  * each shared `instance of` class (the import-class presets, else the synced
- * entity_labels). Missing qids are simply absent from the maps.
+ * entity_labels), and the username of whoever resolved each row. Missing
+ * qids and users are simply absent from the maps.
  */
 export async function loadLabels(rows: CandidateRow[]): Promise<SummaryLabels> {
-  const labels: SummaryLabels = { items: new Map(), types: new Map() };
+  const labels: SummaryLabels = { items: new Map(), types: new Map(), users: new Map() };
   const qids = [...new Set(rows.flatMap((r) => [r.fromQid, r.intoQid]))].filter(Boolean);
   const types = new Set<string>();
   for (const r of rows) {
@@ -65,7 +70,8 @@ export async function loadLabels(rows: CandidateRow[]): Promise<SummaryLabels> {
     if (preset) labels.types.set(type, preset.label);
     else types.add(type);
   }
-  const [itemRows, typeRows] = await Promise.all([
+  const userIds = [...new Set(rows.map((r) => r.resolvedBy).filter((u) => u !== null))];
+  const [itemRows, typeRows, userRows] = await Promise.all([
     qids.length === 0
       ? []
       : db
@@ -78,9 +84,16 @@ export async function loadLabels(rows: CandidateRow[]): Promise<SummaryLabels> {
           .select({ qid: entityLabels.qid, label: entityLabels.label })
           .from(entityLabels)
           .where(inArray(entityLabels.qid, [...types])),
+    userIds.length === 0
+      ? []
+      : db
+          .select({ id: users.id, username: users.username })
+          .from(users)
+          .where(inArray(users.id, userIds)),
   ]);
   for (const r of itemRows) labels.items.set(r.qid, r.primaryLabel);
   for (const r of typeRows) labels.types.set(r.qid, r.label);
+  for (const r of userRows) labels.users.set(r.id, r.username);
   return labels;
 }
 
@@ -102,5 +115,6 @@ export function toSummary(row: CandidateRow, labels: SummaryLabels): CandidateSu
     reasons: Array.isArray(row.reasons) ? (row.reasons as string[]) : [],
     detectedAt: row.detectedAt,
     resolution: row.resolution,
+    resolvedBy: row.resolvedBy === null ? null : (labels.users.get(row.resolvedBy) ?? null),
   };
 }

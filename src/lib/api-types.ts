@@ -37,6 +37,12 @@ export interface CandidateSummary {
   detectedAt: string;
   /** How a non-open candidate got that way (e.g. the merge's revision, "merged elsewhere"). */
   resolution: string | null;
+  /**
+   * Username of whoever resolved it from the app: merged or marked it
+   * "different from", dismissed it, or merged another pair that settled this
+   * one. Null on open pairs and on ones resolved without a logged-in user.
+   */
+  resolvedBy: string | null;
 }
 
 export interface CandidateListResponse {

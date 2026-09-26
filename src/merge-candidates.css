@@ -1392,6 +1392,15 @@ a.chip-id:hover {
   color: var(--muted);
   font-size: 0.85rem;
 }
+.detail-resolution a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-underline-offset: 2px;
+}
+.detail-resolution a:hover {
+  text-decoration-color: currentColor;
+}
 
 /* ---------- Auth ---------- */
 .auth-bar {

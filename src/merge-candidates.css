@@ -399,6 +399,24 @@ body {
 .col-a {
   border-right: 1px solid var(--rule);
 }
+/* A collapsed sitelink row's wikis, each a small tag linking to its page. */
+.site-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+.site-link {
+  padding: 0 0.4rem;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+a.site-link:hover {
+  border-color: var(--muted);
+  background: var(--bg);
+}
 .prop-label {
   font-weight: 500;
 }

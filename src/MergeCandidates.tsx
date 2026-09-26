@@ -1,4 +1,4 @@
-import { Fragment, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import type { AnnotatedValue, Item, Row, RowStatus } from "./lib/compare.ts";
 import {
@@ -151,23 +151,20 @@ function sitelinkSite(r: Row): string | undefined {
  */
 function SiteLinks({ sites, title }: { sites: string[]; title: string | undefined }) {
   return (
-    <>
-      {sites.map((site, i) => {
+    <span className="site-links">
+      {sites.map((site) => {
         const url = title ? sitelinkUrl(site, title) : null;
-        return (
-          <Fragment key={site}>
-            {i > 0 && ", "}
-            {url ? (
-              <a href={url} target="_blank" rel="noreferrer">
-                {site}
-              </a>
-            ) : (
-              site
-            )}
-          </Fragment>
+        return url ? (
+          <a key={site} className="site-link" href={url} target="_blank" rel="noreferrer">
+            {site}
+          </a>
+        ) : (
+          <span key={site} className="site-link">
+            {site}
+          </span>
         );
       })}
-    </>
+    </span>
   );
 }
 

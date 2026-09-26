@@ -17,8 +17,10 @@ import {
   formatDuration,
   isLockConflict,
   itemHash,
+  lineRevision,
   openDump,
   openDumpFile,
+  RevisionIndex,
   scanDump,
 } from "./dump-import.ts";
 
@@ -179,6 +181,81 @@ describe("scanDump", () => {
     expect(skipped[0]).toMatch(/^unparseable line .*Q9/);
 
     await expect(collect(Readable.from([Buffer.from(text)]))).rejects.toThrow(SyntaxError);
+  });
+});
+
+describe("lineRevision", () => {
+  const line = (e: object) => Buffer.from(`${JSON.stringify(e)},`);
+
+  it("reads the QID and revision in the dump's key order and in EntityData's", () => {
+    const entity = { ...item("Q42", { P31: [p31("Q7889")] }), lastrevid: 2412345678 };
+    expect(lineRevision(line(entity))).toEqual({ qid: 42, revid: 2412345678 });
+    const { type, id, lastrevid: _, ...rest } = entity;
+    const entityData = { pageid: 1, ns: 0, title: id, lastrevid: 7, type, id, ...rest };
+    expect(lineRevision(line(entityData))).toEqual({ qid: 42, revid: 7 });
+  });
+
+  it("isn't fooled by the keys inside a string value", () => {
+    const tricky = {
+      type: "item",
+      id: "Q42",
+      labels: { en: { value: '"id":"Q7","lastrevid":99' } },
+      lastrevid: 5,
+    };
+    expect(lineRevision(line(tricky))).toEqual({ qid: 42, revid: 5 });
+  });
+
+  it("gives up on anything that isn't an item with a revision", () => {
+    expect(lineRevision(line(item("Q42", {})))).toBeNull();
+    expect(lineRevision(line({ type: "property", id: "P31", lastrevid: 5 }))).toBeNull();
+    expect(lineRevision(line({ type: "lexeme", id: "L1", lastrevid: 5 }))).toBeNull();
+    expect(lineRevision(Buffer.from("["))).toBeNull();
+    expect(lineRevision(Buffer.from('{"type":"item","id":"Q","lastrevid":5}'))).toBeNull();
+    expect(lineRevision(Buffer.from('{"type":"item","id":"Q42","lastrevid":null}'))).toBeNull();
+  });
+});
+
+describe("RevisionIndex", () => {
+  it("finds an item at its stored revision only", () => {
+    // Loaded in string order of QID, which isn't numeric order.
+    const index = RevisionIndex.from([10, 2, 300, 7889], [100, 20, 3000, 2412345678]);
+    expect(index.size).toBe(4);
+    expect(index.has(2, 20)).toBe(true);
+    expect(index.has(10, 100)).toBe(true);
+    expect(index.has(300, 3000)).toBe(true);
+    expect(index.has(7889, 2412345678)).toBe(true);
+    expect(index.has(10, 101)).toBe(false);
+    expect(index.has(11, 100)).toBe(false);
+    expect(index.has(1, 20)).toBe(false);
+    expect(RevisionIndex.from([], []).has(1, 1)).toBe(false);
+  });
+});
+
+describe("scanDump's unedited skip", () => {
+  it("counts an unedited item as matched without parsing it, and parses the rest", async () => {
+    const entities = [
+      { ...item("Q1", { P31: [p31("Q7889")] }), lastrevid: 10 },
+      { ...item("Q6", { P31: [p31("Q7889")] }), lastrevid: 61 },
+      // A false positive at a revision the index doesn't hold.
+      { ...item("Q2", { P31: [p31("Q5")], P279: [p31("Q7889")] }), lastrevid: 20 },
+    ];
+    const index = RevisionIndex.from([1, 6], [10, 60]);
+    const matched: string[] = [];
+    const unedited: string[] = [];
+    const stats = await scanDump(Readable.from([Buffer.from(dumpText(entities))]), {
+      classQids: [VIDEO_GAME],
+      isUnedited: (qid, revid) => index.has(qid, revid),
+      onUnedited: (qid) => {
+        unedited.push(qid);
+      },
+      onItem: (i) => {
+        matched.push(i.id);
+      },
+    });
+    expect(unedited).toEqual(["Q1"]);
+    // Q6 was edited since (61 ≠ 60), so it's parsed and handed over.
+    expect(matched).toEqual(["Q6"]);
+    expect(stats).toMatchObject({ parsed: 2, matched: 2, unedited: 1 });
   });
 });
 

@@ -665,8 +665,12 @@ edits.post("/:id/different", async (c) => {
       },
     };
     try {
-      // Clear the import hash: it described the data before this edit.
-      await db.update(items).set({ data, dataHash: null }).where(eq(items.qid, item.qid));
+      // Clear the import hash and revision: they described the data before
+      // this edit, and the next dump pass should convert the item afresh.
+      await db
+        .update(items)
+        .set({ data, dataHash: null, sourceRevid: null })
+        .where(eq(items.qid, item.qid));
     } catch (err) {
       console.error(
         `different-from: ${item.qid} → ${target.qid} saved as rev ${revid} but the mirror update failed`,

@@ -32,8 +32,10 @@ async function fetchEntity(qid: string): Promise<Entity> {
 }
 
 async function importItem(qid: string): Promise<void> {
-  const item = entityToItem(await fetchEntity(qid));
-  await upsertItems([item]);
+  const entity = await fetchEntity(qid);
+  const item = entityToItem(entity);
+  const revids = new Map(entity.lastrevid === undefined ? [] : [[item.id, entity.lastrevid]]);
+  await upsertItems([item], undefined, undefined, revids);
   const ids = await db.select().from(externalIds).where(eq(externalIds.qid, item.id));
   console.log(
     `imported ${item.id} "${primaryLabel(item) ?? "?"}" (P31 ${primaryType(item) ?? "?"}), ${ids.length} external ids`,

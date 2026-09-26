@@ -12,6 +12,7 @@ import { asc, eq } from "drizzle-orm";
 import { db, pool } from "./db.ts";
 import { dumpImportRuns, externalIds, items, mergeCandidates, properties } from "../db/schema.ts";
 import { MAX_PRUNE_FRACTION, runDumpImport, upsertItems } from "./dump-import.ts";
+import { CONVERTER_VERSION } from "./converter-version.ts";
 import type { Entity, Statement } from "../src/lib/wikibase.ts";
 import { DB_TEST, insertItem, makeItem, truncateAll } from "../test/db-helpers.ts";
 import { dumpGz } from "../test/dump-gz.ts";
@@ -45,6 +46,8 @@ const game = (id: string, label: string, extra: Statement[] = []): Entity => ({
   descriptions: { en: { value: `${label} (video game)` } },
   claims: { P31: [p31("Q7889")], ...(extra.length ? { P1733: extra } : {}) },
 });
+/** The entity as the dump has it at revision `lastrevid`. */
+const at = (lastrevid: number, entity: Entity): Entity => ({ ...entity, lastrevid });
 const STEAM_PROP: Entity = {
   type: "property",
   id: "P1733",
@@ -362,14 +365,101 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
   });
 
   it("keeps an item's dump stamp when the single-item importer rewrites it", async () => {
-    await run([game("Q100", "Alpha")], { dump: "20260914" });
+    await run([at(10, game("Q100", "Alpha"))], { dump: "20260914" });
     await upsertItems([makeItem("Q100", "Alpha (renamed)")]);
     await upsertItems([makeItem("Q101", "Never in a dump")]);
     const rows = await allItems();
-    expect(rows.map((r) => [r.qid, r.primaryLabel, r.lastDump])).toEqual([
-      ["Q100", "Alpha (renamed)", "20260914"],
-      ["Q101", "Never in a dump", null],
+    // Without a revision to go with the new data, none is recorded.
+    expect(rows.map((r) => [r.qid, r.primaryLabel, r.lastDump, r.sourceRevid])).toEqual([
+      ["Q100", "Alpha (renamed)", "20260914", null],
+      ["Q101", "Never in a dump", null, null],
     ]);
+  });
+
+  it("skips an item stored at the dump's revision without parsing it", async () => {
+    await run([at(10, game("Q100", "Alpha", [steam("1")])), at(20, game("Q200", "Beta"))], {
+      dump: "20260914",
+    });
+    expect((await allItems()).map((r) => [r.qid, r.sourceRevid, r.converterVersion])).toEqual([
+      ["Q100", 10, CONVERTER_VERSION],
+      ["Q200", 20, CONVERTER_VERSION],
+    ]);
+
+    // Q100's line differs but claims the same revision: had it been parsed,
+    // the label would change. Q200 is at a new revision and is parsed.
+    const lines: string[] = [];
+    const stats = await run(
+      [at(10, game("Q100", "Not parsed")), at(21, game("Q200", "Beta Remastered"))],
+      { dump: "20260921", log: (m) => void lines.push(m) },
+    );
+    expect(stats).toMatchObject({ parsed: 1, matched: 2, unedited: 1, upserted: 1, pruned: 0 });
+    expect(lines.some((l) => /2 items stored at a known revision/.test(l))).toBe(true);
+    expect(
+      (await allItems()).map((r) => [r.qid, r.primaryLabel, r.lastDump, r.sourceRevid]),
+    ).toEqual([
+      ["Q100", "Alpha", "20260921", 10],
+      ["Q200", "Beta Remastered", "20260921", 21],
+    ]);
+    expect(await idsOf("Q100")).toEqual([{ property: "P1733", value: "1" }]);
+  });
+
+  it("records the new revision of an item whose converted data didn't change", async () => {
+    await run([at(10, game("Q100", "Alpha"))]);
+    const first = (await allItems())[0];
+    // An edit the conversion drops (here, nothing at all) still moves the revision.
+    const stats = await run([at(11, game("Q100", "Alpha"))]);
+    expect(stats).toMatchObject({ unedited: 0, unchanged: 1 });
+    const [row] = await allItems();
+    expect(row.sourceRevid).toBe(11);
+    expect(row.dataHash).toBe(first.dataHash);
+    expect(await run([at(11, game("Q100", "Alpha"))])).toMatchObject({ unedited: 1 });
+  });
+
+  it("parses a stored item again under a new converter version, or on a full pass", async () => {
+    await run([at(10, game("Q100", "Alpha"))]);
+    await db.update(items).set({ converterVersion: CONVERTER_VERSION - 1 });
+    expect(await run([at(10, game("Q100", "Alpha"))])).toMatchObject({
+      parsed: 1,
+      unedited: 0,
+      unchanged: 1,
+    });
+    // Same output, so the row is now vouched for by the current version.
+    expect((await allItems())[0].converterVersion).toBe(CONVERTER_VERSION);
+    expect(await run([at(10, game("Q100", "Alpha"))])).toMatchObject({ unedited: 1 });
+
+    const lines: string[] = [];
+    const full = await run([at(10, game("Q100", "Alpha"))], {
+      full: true,
+      log: (m) => void lines.push(m),
+    });
+    expect(full).toMatchObject({ parsed: 1, unedited: 0, unchanged: 1 });
+    expect(lines.some((l) => l.includes("full pass"))).toBe(true);
+  });
+
+  it("doesn't carry forward an item whose class was dropped from the import", async () => {
+    // A mod that is "based on" a video game: in scope while mods are imported.
+    const mod: Entity = {
+      ...game("Q300", "Doom Mod"),
+      claims: { P31: [p31("Q865493")], P144: [p31("Q7889")] },
+    };
+    await run([at(10, game("Q100", "Alpha")), at(30, mod)], {
+      classQids: ["Q7889", "Q865493"],
+      dump: "20260914",
+    });
+    expect((await allItems()).map((r) => [r.qid, r.primaryType])).toEqual([
+      ["Q100", "Q7889"],
+      ["Q300", "Q865493"],
+    ]);
+
+    // Mods dropped: the line still passes the pre-filter (it mentions Q7889),
+    // but isn't skipped as unedited, so it's parsed, found out of scope, and pruned.
+    const stats = await run([at(10, game("Q100", "Alpha")), at(30, mod)], {
+      classQids: ["Q7889"],
+      dump: "20260921",
+      forcePrune: true,
+    });
+    expect(stats).toMatchObject({ parsed: 1, matched: 1, unedited: 1, pruned: 1 });
+    expect((await allItems()).map((r) => r.qid)).toEqual(["Q100"]);
   });
 
   it("never prunes after a capped run, an empty match, or with prune off", async () => {

@@ -1400,6 +1400,14 @@ a.auth-login {
     /* Match the 16px selects beside it (see the iOS focus-zoom rule below). */
     font-size: 16px;
   }
+  /* Footer: one link per line, without the separator. */
+  .site-footer-sep {
+    display: none;
+  }
+  .site-footer a {
+    display: block;
+    padding: 0.35rem 0;
+  }
   /* The type filter is full-width now, so its panel matches it. */
   .type-filter-panel {
     left: 0;

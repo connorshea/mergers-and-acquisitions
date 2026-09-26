@@ -473,7 +473,9 @@ export default function CandidatesList() {
         >
           Source code on GitHub
         </a>
-        <span aria-hidden="true"> · </span>
+        <span className="site-footer-sep" aria-hidden="true">
+          {" · "}
+        </span>
         <a
           href="https://www.wikidata.org/w/index.php?tagfilter=OAuth+CID%3A+19397&enhanced=1&title=Special%3ARecentChanges&urlversion=2"
           target="_blank"

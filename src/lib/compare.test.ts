@@ -114,6 +114,21 @@ describe("compareValues", () => {
     ).toBe("distinct");
   });
 
+  it("treats URLs differing only by a trailing slash as identical", () => {
+    expect(
+      compareValues(
+        { type: "url", value: "https://paisinvisible.cat/" },
+        { type: "url", value: "https://paisinvisible.cat" },
+      ),
+    ).toEqual(["identical"]);
+    expect(
+      compareValues(
+        { type: "url", value: "http://www.example.com/a" },
+        { type: "url", value: "https://example.com/a/" },
+      ),
+    ).toEqual(["similar", "same host and path"]);
+  });
+
   it("treats different types as distinct", () => {
     expect(compareValues({ type: "url", value: "x" }, { type: "string", value: "x" })[0]).toBe(
       "distinct",

@@ -1324,14 +1324,31 @@ a.auth-login {
   .head-actions .auth-bar {
     margin-left: auto;
   }
-  /* Type filter: anchor the panel to the whole controls row, full width, rather
-     than to its button (which may sit mid-row). */
+  /* Filters: one control per row, each full-width, with Search filling the
+     last row beside any Clear/spinner. */
   .list-controls {
-    position: relative;
+    flex-direction: column;
+    align-items: stretch;
   }
-  .list-controls .type-filter {
-    position: static;
+  .search-input {
+    flex: none;
   }
+  .field .creator-input {
+    width: 100%;
+  }
+  .type-filter > summary {
+    display: flex;
+    justify-content: space-between;
+    /* Match the 16px selects beside it (see the iOS focus-zoom rule below). */
+    font-size: 16px;
+  }
+  .list-actions {
+    margin-left: 0;
+  }
+  .list-actions button[type="submit"] {
+    flex: 1;
+  }
+  /* The type filter is full-width now, so its panel matches it. */
   .type-filter-panel {
     left: 0;
     right: 0;

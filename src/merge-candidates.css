@@ -1832,23 +1832,24 @@ a.auth-login {
   }
 
   /* Comparison ledger: the property name spans the row, with the two items'
-     values side by side beneath it, so both stay on screen without scrolling. */
-  .ledger:not(.candidates),
-  .ledger:not(.candidates) thead,
-  .ledger:not(.candidates) tbody {
+     values side by side beneath it, so both stay on screen without scrolling.
+     The leaderboard stays a table: its rows are short enough to fit. */
+  .ledger:not(.candidates, .leaderboard-table),
+  .ledger:not(.candidates, .leaderboard-table) thead,
+  .ledger:not(.candidates, .leaderboard-table) tbody {
     display: block;
     min-width: 0;
   }
-  .ledger:not(.candidates) tr {
+  .ledger:not(.candidates, .leaderboard-table) tr {
     display: grid;
     grid-template-columns: 1fr 1fr;
     border-bottom: 1px solid var(--rule);
   }
-  .ledger:not(.candidates) tbody tr:last-child {
+  .ledger:not(.candidates, .leaderboard-table) tbody tr:last-child {
     border-bottom: none;
   }
-  .ledger:not(.candidates) th,
-  .ledger:not(.candidates) td {
+  .ledger:not(.candidates, .leaderboard-table) th,
+  .ledger:not(.candidates, .leaderboard-table) td {
     display: block;
     width: auto;
     min-width: 0;
@@ -1856,29 +1857,29 @@ a.auth-login {
     border-bottom: none;
     overflow-wrap: anywhere;
   }
-  .ledger:not(.candidates) th.col-prop {
+  .ledger:not(.candidates, .leaderboard-table) th.col-prop {
     display: none;
   }
-  .ledger:not(.candidates) td.col-prop {
+  .ledger:not(.candidates, .leaderboard-table) td.col-prop {
     grid-column: 1 / -1;
     padding-bottom: 0.1rem;
     border-right: none;
   }
   /* The property cell spans the row now, so pushing the markers to its right
      edge would strand them; keep them beside the property id instead. */
-  .ledger:not(.candidates) .prop-key {
+  .ledger:not(.candidates, .leaderboard-table) .prop-key {
     flex-wrap: wrap;
     gap: 0.25rem 0.4rem;
   }
-  .ledger:not(.candidates) .prop-key .prop-mirror,
-  .ledger:not(.candidates) .prop-key .prop-shared {
+  .ledger:not(.candidates, .leaderboard-table) .prop-key .prop-mirror,
+  .ledger:not(.candidates, .leaderboard-table) .prop-key .prop-shared {
     margin-left: 0;
   }
-  .ledger:not(.candidates) .col-name {
+  .ledger:not(.candidates, .leaderboard-table) .col-name {
     display: block;
     margin-left: 0;
   }
-  .ledger:not(.candidates) .chip {
+  .ledger:not(.candidates, .leaderboard-table) .chip {
     max-width: 100%;
     flex-wrap: wrap;
   }
@@ -1953,9 +1954,37 @@ a.auth-login {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
+.leaderboard-table a {
+  color: inherit;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-underline-offset: 2px;
+}
+.leaderboard-table a:hover {
+  text-decoration-color: currentColor;
+}
 .leaderboard-table tr.is-you td {
   background: rgba(0, 0, 0, 0.03);
 }
 .leaderboard-table .auth-badge {
   margin-left: 0.4rem;
+}
+@media (max-width: 640px) {
+  /* Let the count columns shrink to their numbers, and their headers wrap, so
+     the whole table fits a phone without scrolling sideways. */
+  .leaderboard-table th,
+  .leaderboard-table td {
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+  }
+  .leaderboard-table .col-rank {
+    width: 2rem;
+  }
+  .leaderboard-table .col-count {
+    width: 1%;
+  }
+  .leaderboard-table td:nth-child(2) {
+    overflow-wrap: anywhere;
+  }
 }

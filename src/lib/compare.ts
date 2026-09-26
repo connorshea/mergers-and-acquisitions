@@ -1064,6 +1064,34 @@ export function isPartWholePair(a: Item, b: Item): boolean {
 }
 
 /**
+ * Four-digit years (1000–2099) in a page title, e.g. 1996 from "忠臣蔵
+ * (1996年のテレビドラマ)" or "Doom (2016 video game)". NFKC first so full-width
+ * digits (２００４) count too.
+ */
+export function titleYears(title: string): Set<string> {
+  return new Set(title.normalize("NFKC").match(/(?<!\d)(?:1\d|20)\d\d(?!\d)/g) ?? []);
+}
+
+/**
+ * Wikis where the two items link *different* pages whose titles each carry a
+ * year, with no year in common — the wiki disambiguating two subjects by year
+ * ("… (1996年のテレビドラマ)" vs "… (2004年のテレビドラマ)"). A redirect on
+ * either side is excluded: a page renamed to a corrected year leaves exactly
+ * that shape behind for a genuine duplicate.
+ */
+export function yearDisambiguatedWikis(a: Item, b: Item): string[] {
+  return Object.keys(a.sitelinks).filter((wiki) => {
+    const ta = a.sitelinks[wiki];
+    const tb = b.sitelinks[wiki];
+    if (!tb || ta === tb || isRedirectSitelink(a, wiki) || isRedirectSitelink(b, wiki))
+      return false;
+    const ya = titleYears(ta);
+    const yb = titleYears(tb);
+    return ya.size > 0 && yb.size > 0 && ![...ya].some((y) => yb.has(y));
+  });
+}
+
+/**
  * Property ids on which either item has a statement whose value *is* the other
  * item — e.g. a game's "part of the series" (P179) naming the series it is being
  * compared against, or "based on" / "followed by" pointing across the pair. An
@@ -1471,6 +1499,18 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     reasons.push(
       `a per-title identifier differs (${distinctPerTitleIds[0].label}), so it points at a different store/database page`,
     );
+  }
+
+  // A wiki that titles the two items' pages with different years has two
+  // articles for two subjects (a 1996 and a 2004 drama of the same name). The
+  // wiki's own disambiguation is authoritative, overriding even a shared id —
+  // which in this shape is usually one item's data copied from the other.
+  const yearWikis = yearDisambiguatedWikis(a, b);
+  if (yearWikis.length > 0) {
+    reasons.unshift(
+      `sitelinks on ${yearWikis.join(", ")} are disambiguated by different years, not a duplicate`,
+    );
+    score = Math.min(score, 0.1);
   }
 
   // One item referencing the other (a game's "part of the series" naming the

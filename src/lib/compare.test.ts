@@ -15,6 +15,8 @@ import {
   isSeriesSequelPair,
   isWorkEditionPair,
   isPartWholePair,
+  titleYears,
+  yearDisambiguatedWikis,
   mergeConflicts,
   redirectSitelinkFixes,
   rowDisplayRank,
@@ -1468,6 +1470,39 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       statements: { ...track.statements, P361: [{ type: "item" as const, value: "Q1" }] },
     };
     expect(isPartWholePair(elsewhere, album)).toBe(false);
+  });
+
+  it("reads four-digit years out of sitelink titles", () => {
+    expect(titleYears("忠臣蔵 (2004年のテレビドラマ)")).toEqual(new Set(["2004"]));
+    expect(titleYears("忠臣蔵 (１９９６年のテレビドラマ)")).toEqual(new Set(["1996"]));
+    expect(titleYears("Doom (2016 video game)")).toEqual(new Set(["2016"]));
+    expect(titleYears("Doom (video game)").size).toBe(0);
+    expect(titleYears("Area 51500").size).toBe(0);
+  });
+
+  it("caps a pair whose same-wiki sitelinks are disambiguated by different years", () => {
+    // Two TV dramas of the same name; the 1996 item carries the 2004 one's
+    // start date and TMDb id, so everything else reads as a perfect match.
+    const mk = (id: string, title: string): Item => ({
+      ...base,
+      id,
+      labels: { ja: "忠臣蔵" },
+      sitelinks: { jawiki: title },
+      statements: stmt({ P4983: [{ type: "external-id", value: "82742" }] }),
+    });
+    const y2004 = mk("Q11491347", "忠臣蔵 (2004年のテレビドラマ)");
+    const y1996 = mk("Q11491346", "忠臣蔵 (1996年のテレビドラマ)");
+    expect(yearDisambiguatedWikis(y2004, y1996)).toEqual(["jawiki"]);
+    const result = scoreCandidate(y2004, y1996, { isIdentifierProp: (pid) => pid === "P4983" });
+    expect(result.confidence).toBeLessThanOrEqual(0.1);
+    expect(result.reasons[0]).toContain("disambiguated by different years");
+
+    // Only one side has a year, or the years agree: no signal.
+    expect(yearDisambiguatedWikis(y2004, mk("Q3", "忠臣蔵 (テレビドラマ)"))).toEqual([]);
+    expect(yearDisambiguatedWikis(y2004, mk("Q4", "忠臣蔵 2004"))).toEqual([]);
+    // A redirect (e.g. left behind by a year-correcting rename) doesn't count.
+    const redirect = { ...y1996, sitelinkBadges: { jawiki: ["Q70893996"] } };
+    expect(yearDisambiguatedWikis(y2004, redirect)).toEqual([]);
   });
 
   it("docks 0.25 when one item references the other (e.g. a game's series)", () => {

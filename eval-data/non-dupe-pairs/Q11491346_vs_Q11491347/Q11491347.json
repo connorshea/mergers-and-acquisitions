@@ -1,0 +1,229 @@
+{
+  "pageid": 12630986,
+  "ns": 0,
+  "title": "Q11491347",
+  "lastrevid": 2517127602,
+  "modified": "2026-07-13T17:40:02Z",
+  "type": "item",
+  "id": "Q11491347",
+  "labels": {
+    "ja": {
+      "language": "ja",
+      "value": "忠臣蔵"
+    },
+    "tl": {
+      "language": "tl",
+      "value": "Chushingura"
+    },
+    "en": {
+      "language": "en",
+      "value": "Chūshingura"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "忠臣藏 (2004年電視劇)"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "2004 TV series"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "2004年制作の日本のテレビドラマ番組"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "televisieprogramma"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "телевізійний серіал 2004 року"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "Chushingura"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "6b8e8d6f6e2430e3c7378c7a62da7144b4307ca8",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 15416,
+              "id": "Q15416"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11491347$FC25A29B-8FCB-4BDB-8724-19D88C857060",
+        "rank": "normal"
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "62746ab9ccd751760bb09ecb2ef08729aa28c1ae",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 629917,
+              "id": "Q629917"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11491347$09E64F6A-D82B-41EC-BBEB-39426D1AC992",
+        "rank": "normal"
+      }
+    ],
+    "P449": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P449",
+          "hash": "5990ec4475739a51b940a343d2fa82e0e59359cc",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 908436,
+              "id": "Q908436"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11491347$4B07F5D5-D2BA-4D63-9FFA-0DE9EBF97A79",
+        "rank": "normal"
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "e9d62405b1bb9b7b979f00006a344891e4c4f072",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 17,
+              "id": "Q17"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11491347$5B469145-6B1C-49A5-AA9B-09A42CFA0114",
+        "rank": "normal"
+      }
+    ],
+    "P4983": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4983",
+          "hash": "578c8bd4f19ded2b29ab0694350d8366336cf13f",
+          "datavalue": {
+            "value": "82742",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11491347$4E242BD7-D0BC-4561-BFC0-90839C91F001",
+        "rank": "normal"
+      }
+    ],
+    "P364": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P364",
+          "hash": "e837a5e5691aacf2a7eca565824d57545629d7fa",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5287,
+              "id": "Q5287"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11491347$F40C629E-6968-475D-AD9D-10C7E4116D5D",
+        "rank": "normal"
+      }
+    ],
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "56c1a1781efe595f39b9e4cd02522d716c3b21b3",
+          "datavalue": {
+            "value": {
+              "text": "忠臣蔵",
+              "language": "ja"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q11491347$A151FA24-18A6-4D83-BCA1-47850FD48EF1",
+        "rank": "normal"
+      }
+    ],
+    "P580": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P580",
+          "hash": "cb88c17ff8f74b650b73eae510b4086623869374",
+          "datavalue": {
+            "value": {
+              "time": "+2004-10-08T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q11491347$957A17FD-B919-413B-B047-4137A78B7134",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "jawiki": {
+      "site": "jawiki",
+      "title": "忠臣蔵 (2004年のテレビドラマ)",
+      "badges": [],
+      "url": "https://ja.wikipedia.org/wiki/%E5%BF%A0%E8%87%A3%E8%94%B5_(2004%E5%B9%B4%E3%81%AE%E3%83%86%E3%83%AC%E3%83%93%E3%83%89%E3%83%A9%E3%83%9E)"
+    }
+  }
+}

@@ -1377,6 +1377,28 @@ a.auth-login {
     min-height: 2.25rem;
   }
 
+  /* Detail summary: one column — score, then each reason and each action
+     full-width. */
+  .detail-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  .detail-reasons {
+    flex-direction: column;
+  }
+  .detail-reasons li {
+    border-radius: 6px;
+    padding: 0.3rem 0.6rem;
+  }
+  .detail-actions {
+    margin-left: 0;
+  }
+  .detail-actions > button {
+    flex: 1 1 100%;
+    min-height: 2.75rem;
+  }
+
   /* Comparison ledger: the property name spans the row, with the two items'
      values side by side beneath it, so both stay on screen without scrolling. */
   .ledger:not(.candidates),

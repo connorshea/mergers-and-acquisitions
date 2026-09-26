@@ -169,7 +169,6 @@ export default function CandidatesList() {
   const filterSummary = [
     status[0].toUpperCase() + status.slice(1),
     typeSummary(types),
-    SORT_LABELS[sort],
     creator && `by ${creator}`,
     userLangs.length > 0 && (anyLanguage ? "Any language" : userLangs.join(", ")),
   ]
@@ -347,16 +346,9 @@ export default function CandidatesList() {
 
         <TypeFilter selected={types} onChange={(next) => update({ type: next.join(",") })} />
 
-        <MoreFilters
-          summary={
-            [
-              creator && `by ${creator}`,
-              userLangs.length > 0 && (anyLanguage ? "Any language" : "My languages"),
-            ]
-              .filter(Boolean)
-              .join(" · ") || "None"
-          }
-        >
+        {/* Counts only filters changed from their defaults; the saved
+            languages are the default, so only `lang=any` counts. */}
+        <MoreFilters active={[creator !== "", anyLanguage].filter(Boolean).length}>
           <label className="field">
             <span>Created by</span>
             <input
@@ -372,17 +364,6 @@ export default function CandidatesList() {
           </label>
           {user && <LanguageFilter languages={userLangs} any={anyLanguage} update={update} />}
         </MoreFilters>
-
-        <label className="field">
-          <span>Sort</span>
-          <select value={sort} onChange={(e) => update({ sort: e.target.value })}>
-            {CANDIDATE_SORTS.map((s) => (
-              <option key={s} value={s}>
-                {SORT_LABELS[s]}
-              </option>
-            ))}
-          </select>
-        </label>
 
         <div className="list-actions">
           {/* Shown while a refetch is in flight; the stale rows stay visible
@@ -422,16 +403,30 @@ export default function CandidatesList() {
       )}
       {data && visible.length === 0 && !loading && (
         <p className="list-msg">
-          No {status} candidates{q ? ` matching “${q}”` : ""}
-          {types.length > 0 ? ` of type ${types.map(typeLabel).join(" or ")}` : ""}
-          {creator ? ` with an item created by ${creator}` : ""}
-          {langFilter ? ` you can review in ${userLangs.join(", ")}` : ""}. They appear here once
-          the hunt job has scored some pairs.
+          {hasFilters || langFilter
+            ? "No candidates for these filters, please modify your filters."
+            : "No open candidates yet. They appear here once the hunt job has scored some pairs."}
         </p>
       )}
 
       {data && visible.length > 0 && (
         <>
+          {/* Ordering sits with the results it orders, apart from the filters. */}
+          <div className="results-bar">
+            <span className="results-count">
+              {total.toLocaleString()} {total === 1 ? "candidate" : "candidates"}
+            </span>
+            <label className="results-sort">
+              <span>Sort by</span>
+              <select value={sort} onChange={(e) => update({ sort: e.target.value })}>
+                {CANDIDATE_SORTS.map((s) => (
+                  <option key={s} value={s}>
+                    {SORT_LABELS[s]}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
           <div className="ledger-wrap" aria-busy={loading} data-stale={loading || undefined}>
             <table className="ledger candidates">
               <thead>
@@ -497,20 +492,22 @@ export default function CandidatesList() {
 
 /**
  * The less-used filters (creator, languages) in a dropdown panel, so the main
- * row stays on one line. It sits inside the list's form: the creator box
+ * row stays on one line. The button shows how many of them are set. It sits inside the list's form: the creator box
  * submits with it, on Enter or the panel's Apply button.
  */
-function MoreFilters({ summary, children }: { summary: string; children: ReactNode }) {
+function MoreFilters({ active, children }: { active: number; children: ReactNode }) {
   const ref = useRef<HTMLDetailsElement>(null);
   useDismissableMenu(ref);
   return (
     <div className="field">
-      <span id="more-filters-label">More filters</span>
       <details className="menu type-filter more-filters" ref={ref}>
-        <summary aria-labelledby="more-filters-label more-filters-value">
-          <span id="more-filters-value" className="filter-summary">
-            {summary}
-          </span>{" "}
+        <summary aria-label={active > 0 ? `More filters, ${active} set` : "More filters"}>
+          More filters
+          {active > 0 && (
+            <span className="filter-count" aria-hidden="true">
+              {active}
+            </span>
+          )}{" "}
           ▾
         </summary>
         <div className="menu-panel more-filters-panel">

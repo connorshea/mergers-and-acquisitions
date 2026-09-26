@@ -65,7 +65,7 @@ export const items = mysqlTable(
 
 // External identifiers pulled out of each item's statements. `(property, value)`
 // is the blocking key the hunt job groups on to find shared-ID duplicates
-// without an O(n²) scan. Rebuilt wholesale for an item on each sync.
+// without an O(n²) scan. Brought in line with the item on each sync.
 export const externalIds = mysqlTable(
   "external_ids",
   {

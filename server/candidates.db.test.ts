@@ -45,7 +45,7 @@ async function insertCandidate(values: typeof mergeCandidates.$inferInsert): Pro
   return id;
 }
 
-const MOD: Value[] = [{ type: "item", value: "Q865493", label: "video game mod" }];
+const ENGINE: Value[] = [{ type: "item", value: "Q193564", label: "game engine" }];
 
 describe.skipIf(!DB_TEST)("candidates API", () => {
   // Three candidates: two open (0.9 and 0.5) and one dismissed whose items
@@ -69,8 +69,8 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       ),
     );
     await insertItem(makeItem("Q20", "Alpha Quest"));
-    await insertItem(makeItem("Q30", "Beta Blast", { P31: MOD }));
-    await insertItem(makeItem("Q40", "Beta Blast", { P31: MOD }));
+    await insertItem(makeItem("Q30", "Beta Blast", { P31: ENGINE }));
+    await insertItem(makeItem("Q40", "Beta Blast", { P31: ENGINE }));
 
     alpha = await insertCandidate({
       fromQid: "Q20",
@@ -129,9 +129,9 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       });
       expect(body.candidates[1].hasBlocker).toBe(true);
       // A shared type is named from the import-class presets, else entity_labels
-      // (none synced for the mod class here, so its label is null).
+      // (none synced for the engine class here, so its label is null).
       expect(body.candidates[0].sharedType).toEqual({ qid: "Q7889", label: "video game" });
-      expect(body.candidates[1].sharedType).toEqual({ qid: "Q865493", label: null });
+      expect(body.candidates[1].sharedType).toEqual({ qid: "Q193564", label: null });
       expect(body.candidates[0].detectedAt).toMatch(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/);
     });
 
@@ -158,15 +158,15 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
     });
 
     it("filters by instance-of type and ignores a malformed one", async () => {
-      expect((await list("?type=Q865493")).candidates.map((c) => c.id)).toEqual([beta]);
+      expect((await list("?type=Q193564")).candidates.map((c) => c.id)).toEqual([beta]);
       expect((await list("?type=not-a-qid")).total).toBe(2);
     });
 
     it("filters by any of several comma-separated types", async () => {
-      expect((await list("?type=Q865493,Q11424")).candidates.map((c) => c.id)).toEqual([beta]);
-      expect((await list("?type=Q7889,Q865493")).total).toBe(2);
+      expect((await list("?type=Q193564,Q11424")).candidates.map((c) => c.id)).toEqual([beta]);
+      expect((await list("?type=Q7889,Q193564")).total).toBe(2);
       // Malformed entries are dropped; the valid ones still apply.
-      expect((await list("?type=bogus,Q865493,")).candidates.map((c) => c.id)).toEqual([beta]);
+      expect((await list("?type=bogus,Q193564,")).candidates.map((c) => c.id)).toEqual([beta]);
     });
 
     it("follows an item's relabel/retype once the copies are refreshed", async () => {
@@ -206,7 +206,7 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       expect((await list("?creator=some_user")).candidates.map((c) => c.id)).toEqual([alpha]);
       expect((await list("?creator=SOME USER")).total).toBe(0);
       expect((await list("?creator=Other")).candidates.map((c) => c.id)).toEqual([alpha, beta]);
-      expect((await list("?creator=Other&type=Q865493")).candidates.map((c) => c.id)).toEqual([
+      expect((await list("?creator=Other&type=Q193564")).candidates.map((c) => c.id)).toEqual([
         beta,
       ]);
       expect(

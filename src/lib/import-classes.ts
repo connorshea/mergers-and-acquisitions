@@ -26,6 +26,22 @@ export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
       { qid: "Q63952888", label: "anime television series" },
       { qid: "Q21198342", label: "manga series" },
       { qid: "Q104213567", label: "light novel series" },
+      { qid: "Q20650540", label: "anime film" },
+      { qid: "Q220898", label: "original video animation" },
+    ],
+  },
+  {
+    name: "WikiProject Board Games",
+    classes: [
+      { qid: "Q131436", label: "board game" },
+      { qid: "Q1643932", label: "tabletop role-playing game" },
+    ],
+  },
+  {
+    name: "WikiProject Comics",
+    classes: [
+      { qid: "Q1004", label: "comic" },
+      { qid: "Q14406742", label: "comic book series" },
     ],
   },
   {
@@ -33,10 +49,19 @@ export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
     classes: [{ qid: "Q783794", label: "company" }],
   },
   {
+    name: "WikiProject Fictional universes",
+    // Wikidata's label is just "character"; spelled out so the type filter reads clearly.
+    classes: [{ qid: "Q95074", label: "fictional character" }],
+  },
+  {
     name: "WikiProject Movies",
     classes: [
       { qid: "Q11424", label: "film" },
+      { qid: "Q24862", label: "short film" },
+      { qid: "Q202866", label: "animated film" },
       { qid: "Q5398426", label: "television series" },
+      { qid: "Q15416", label: "television program" },
+      { qid: "Q1261214", label: "television special" },
     ],
   },
   {
@@ -54,6 +79,10 @@ export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
     ],
   },
   {
+    name: "WikiProject Podcasts",
+    classes: [{ qid: "Q24634210", label: "podcast show" }],
+  },
+  {
     name: "WikiProject Video Games",
     classes: [
       { qid: VIDEO_GAME, label: "video game" },
@@ -61,6 +90,8 @@ export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
       { qid: "Q209163", label: "expansion add-on" },
       { qid: "Q210167", label: "video game developer" },
       { qid: "Q1137109", label: "video game publisher" },
+      { qid: "Q1569167", label: "video game character" },
+      { qid: "Q865493", label: "video game mod" },
     ],
   },
 ];

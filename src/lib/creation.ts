@@ -118,3 +118,13 @@ export function normalizeUserName(name: string): string {
   const s = name.replace(/_/g, " ").replace(/\s+/g, " ").trim();
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
+
+const compactCount = new Intl.NumberFormat("en", { notation: "compact" });
+
+/**
+ * A user's edit count for display: exact below 1,000, compact above it
+ * ("590,768" → "591K", "1,004,200" → "1M"), where the exact figure is noise.
+ */
+export function formatEditCount(n: number): string {
+  return n < 1000 ? n.toLocaleString("en") : compactCount.format(n);
+}

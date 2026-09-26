@@ -954,6 +954,9 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
   // With a file on disk, its size and the compressed bytes read so far also
   // give the fraction done and an ETA from the compressed rate over the last
   // interval (inflated bytes can't be compared to the size on disk).
+  // `parsed` is the pre-filter hits that were decoded, properties included;
+  // the ones neither matched nor a property are false positives (an item that
+  // mentions a class QID somewhere other than its best-rank P31).
   let last = { bytes: 0, seconds: 0, read: 0, writeWaitMs: 0 };
   const mbps = (bytes: number, seconds: number): string =>
     seconds > 0 ? (bytes / 1e6 / seconds).toFixed(0) : "?";
@@ -997,7 +1000,8 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
       last = { bytes: s.bytes, seconds: s.seconds, read, writeWaitMs };
       log(
         `${tag} ${pct}${(s.bytes / 1e9).toFixed(0)} GB inflated, ${s.lines} lines, ` +
-          `${s.matched} matched (${unchanged} unchanged), ${s.properties} properties, ` +
+          `${s.parsed} parsed, ${s.matched} matched (${unchanged} unchanged), ` +
+          `${s.properties} properties, ` +
           `${now} MB/s now (${mbps(s.bytes, s.seconds)} avg), ${eta}` +
           `write wait ${waited.toFixed(0)}s (${waitPct}), ` +
           `rss ${Math.round(process.memoryUsage().rss / 1e6)} MB`,

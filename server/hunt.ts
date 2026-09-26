@@ -250,7 +250,7 @@ const SCORE_WINDOW = 5000;
  * Score the pairs a window at a time and write each window's results before
  * loading the next. Holding every referenced item at once doesn't fit: a parsed
  * `Item` is ~5.5 KB of heap, and a full-dump hunt touches hundreds of thousands
- * of them — past the job's 1.5 GB heap. Pairs arrive grouped by blocking bucket
+ * of them — past the job's heap cap (see jobs.yaml). Pairs arrive grouped by blocking bucket
  * (see `addGroupPairs`), so a window's items mostly overlap and few are fetched
  * twice across windows.
  *

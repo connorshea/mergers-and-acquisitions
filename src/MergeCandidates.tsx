@@ -56,9 +56,10 @@ function displayValue(v: AnnotatedValue): string {
 }
 
 /**
- * Caption for a row pairing one similar text value with one other: what the
- * difference comes down to ("Punctuation only · 92% match"). Rows with several
- * values a side would need one per pairing, so they keep the row note instead.
+ * Note for a row pairing one similar text value with one other: what the
+ * difference comes down to ("Punctuation difference only · 92% match"), in place of the
+ * value's bare "92% string match". Rows with several values a side would need
+ * one per pairing, so they keep that note instead.
  */
 function rowDiffCaption(r: Row): string | null {
   const [a] = r.a;
@@ -519,6 +520,9 @@ export default function MergeCandidates({
                               )}
                             </div>
                             {r.note && <div className="prop-note">{r.note}</div>}
+                            {!r.note && diffCaption && (
+                              <div className="prop-note">{diffCaption}</div>
+                            )}
                             {!r.note && !diffCaption && r.a.concat(r.b).find((v) => v.note) && (
                               <div className="prop-note">
                                 {r.a.concat(r.b).find((v) => v.note)!.note}
@@ -552,7 +556,6 @@ export default function MergeCandidates({
                                 />
                               ))
                             )}
-                            {diffCaption && <div className="diff-caption">{diffCaption}</div>}
                           </td>
                         </tr>
                       );

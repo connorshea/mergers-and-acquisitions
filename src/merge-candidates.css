@@ -512,11 +512,6 @@ a.site-link:hover {
   background: var(--distinct-bg);
   color: var(--distinct);
 }
-.diff-caption {
-  font-size: 0.78rem;
-  color: var(--muted);
-  margin-top: 0.2rem;
-}
 .chip-id {
   font-size: 0.75em;
   opacity: 0.7;

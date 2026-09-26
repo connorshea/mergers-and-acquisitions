@@ -1,6 +1,6 @@
 // A short description of how two similar text values differ, e.g.
 // "Teen Angels - La Despedida" vs "Teen Angels: La Despedida" →
-// "Punctuation only · 92% match".
+// "Punctuation difference only · 92% match".
 
 import { stringSimilarity } from "./compare.ts";
 
@@ -27,7 +27,8 @@ const DIFFERENCE_KINDS: { name: string; erase: (s: string) => string }[] = [
 
 /**
  * A one-line caption for two similar values: which kinds of difference account
- * for all of it ("Punctuation only", "Case and accents only"), and the match
+ * for all of it ("Punctuation difference only", "Case, accents, and
+ * punctuation difference only"), and the match
  * percentage when it's below 100. Null when the strings are equal.
  */
 export function describeDifference(a: string, b: string): string | null {
@@ -46,8 +47,10 @@ export function describeDifference(a: string, b: string): string | null {
   const parts: string[] = [];
   if (kinds.length > 0) {
     const list =
-      kinds.length === 1 ? kinds[0] : `${kinds.slice(0, -1).join(", ")} and ${kinds.at(-1)}`;
-    parts.push(`${list[0].toUpperCase()}${list.slice(1)} only`);
+      kinds.length <= 2
+        ? kinds.join(" and ")
+        : `${kinds.slice(0, -1).join(", ")}, and ${kinds.at(-1)}`;
+    parts.push(`${list[0].toUpperCase()}${list.slice(1)} difference only`);
   }
   const pct = Math.round(stringSimilarity(a, b) * 100);
   if (pct < 100) parts.push(`${pct}% match`);

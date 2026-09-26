@@ -184,20 +184,3 @@ export function externalIdRows(item: Item): { property: string; value: string }[
   }
   return rows;
 }
-
-/**
- * QIDs this item references as item-valued statement values (genre, platform,
- * developer, instance of, …). These are the entities the comparison view shows
- * by name, so the entity-label sync fetches labels for exactly this set (unioned
- * across all items) rather than asking Wikidata to derive it — see
- * server/entity-labels-sync.ts.
- */
-export function referencedItemQids(item: Item): string[] {
-  const qids: string[] = [];
-  for (const values of Object.values(item.statements)) {
-    for (const v of values) {
-      if (v.type === "item") qids.push(v.value);
-    }
-  }
-  return qids;
-}

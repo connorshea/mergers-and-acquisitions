@@ -48,9 +48,16 @@ export interface CandidateListResponse {
 
 export interface CandidateDetailResponse {
   candidate: CandidateSummary;
-  /** Parsed items.data for fromQid / intoQid, ready for the comparison view. */
-  from: Item;
-  into: Item;
+  /**
+   * Parsed items.data for fromQid / intoQid, ready for the comparison view:
+   * the mirror's current data, or for a pair merged or marked "different
+   * from" the snapshot taken then. Null when neither holds that item any more (merged before
+   * snapshots existed, merged elsewhere, or dropped from the dump).
+   */
+  from: Item | null;
+  into: Item | null;
+  /** True when `from`/`into` are the snapshot taken when the pair was resolved. */
+  snapshot: boolean;
   /** Pxxx → human label, for the property ids present on this pair. */
   propertyLabels: Record<string, string>;
   /** Pxxx → formatter URL (with "$1" placeholder), for props that have one. */
@@ -197,4 +204,22 @@ export interface UserSettings {
 
 export interface LogoutResponse {
   ok: true;
+}
+
+/** The leaderboard's time window: every edit, or the last 30 days. */
+export type LeaderboardPeriod = "all" | "30d";
+
+export interface LeaderboardEntry {
+  userId: number;
+  username: string;
+  /** Successful merges made through the app. */
+  merges: number;
+  /** Pairs marked "different from" (P1889) through the app. */
+  differentFrom: number;
+}
+
+export interface LeaderboardResponse {
+  period: LeaderboardPeriod;
+  /** Best first: by merges, then "different from". */
+  entries: LeaderboardEntry[];
 }

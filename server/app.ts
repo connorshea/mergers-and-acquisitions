@@ -10,6 +10,7 @@ import { Hono } from "hono";
 import { secureHeaders } from "hono/secure-headers";
 import { candidates } from "./candidates.ts";
 import { edits } from "./edits.ts";
+import { leaderboard } from "./leaderboard.ts";
 import { settings } from "./settings.ts";
 import { authRoutes } from "./auth/oauth.ts";
 import { sameOriginOnly } from "./auth/same-origin.ts";
@@ -51,6 +52,7 @@ app.route("/api/auth", authRoutes); // /api/auth/{login,callback,logout,me}
 app.route("/api/candidates", candidates);
 app.route("/api/candidates", edits); // /api/candidates/:id/{merge,different}
 app.route("/api/settings", settings);
+app.route("/api/leaderboard", leaderboard);
 
 // An API route that fell through to here doesn't exist — return JSON, never the
 // SPA shell, so the client sees a real 404 instead of HTML.

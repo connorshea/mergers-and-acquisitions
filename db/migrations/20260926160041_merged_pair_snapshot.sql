@@ -1,0 +1,1 @@
+ALTER TABLE `merge_candidates` ADD `snapshot` json;

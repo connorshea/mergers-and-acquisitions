@@ -298,6 +298,11 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       expect(row.status).toBe("merged");
       expect(row.resolvedBy).toBe(EDITOR_ID);
       expect(row.resolvedAt).not.toBeNull();
+      // Both items as the mirror held them, for the detail view.
+      expect(row.snapshot?.from.id).toBe("Q20");
+      expect(row.snapshot?.into.id).toBe("Q10");
+      // Only the reviewed pair gets one, not those the merge settled.
+      expect((await candidateRow(beta)).snapshot).toBeNull();
 
       // The merged-away item is gone from the mirror, ids included.
       expect(await itemQids()).toEqual(["Q10", "Q30", "Q40"]);
@@ -751,6 +756,12 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       });
       // The user is waiting on them, so neither claim carries the lag guard.
       expect(calls.every((c) => !c.params.has("maxlag"))).toBe(true);
+
+      // The pair is kept as the reviewer saw it, before the new statements.
+      const { snapshot } = await candidateRow(alpha);
+      expect(snapshot?.from.id).toBe("Q20");
+      expect(snapshot?.into.id).toBe("Q10");
+      expect(snapshot?.from.statements.P1889).toBeUndefined();
 
       // The mirror carries the new statements (with the target's label).
       const rows = await db

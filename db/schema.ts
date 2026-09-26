@@ -130,6 +130,16 @@ export const mergeCandidates = mysqlTable(
     clashLangs: text("clash_langs"),
     fromLabelLangs: text("from_label_langs"),
     intoLabelLangs: text("into_label_langs"),
+    // Both items' mirror data as the reviewer saw it, saved when the pair is
+    // merged or marked "different from": the merge drops the merged-away item
+    // from `items`, and later syncs rewrite both, so without this the detail
+    // view has nothing (or the wrong thing) to show. Null on open pairs and
+    // plain dismissals; scripts/backfill-snapshots.ts fills it in for edits
+    // made before it existed.
+    snapshot: json<{
+      from: import("../src/lib/compare.ts").Item;
+      into: import("../src/lib/compare.ts").Item;
+    }>("snapshot"),
   },
   (t) => [
     uniqueIndex("idx_merge_candidates_pair").on(t.fromQid, t.intoQid),

@@ -137,7 +137,7 @@ export default function CandidateDetail() {
   }, [id]);
 
   const detectedConflicts = useMemo(
-    () => (data ? mergeConflicts(data.from, data.into) : []),
+    () => (data?.from && data.into ? mergeConflicts(data.from, data.into) : []),
     [data],
   );
 
@@ -293,9 +293,19 @@ export default function CandidateDetail() {
             {outcome && <EditOutcomePanel outcome={outcome} />}
           </div>
         )}
+        {data?.snapshot && (
+          <p className="detail-note">
+            Showing both items as they were when this pair was{" "}
+            {candidate?.status === "merged" ? "merged" : "marked as different"}. Wikidata may have
+            changed them since.
+          </p>
+        )}
+        {data && candidate && (!data.from || !data.into) && (
+          <MissingItemsNote candidate={candidate} from={data.from} into={data.into} />
+        )}
       </div>
 
-      {data && candidate && (
+      {data?.from && data.into && candidate && (
         <MergeCandidates
           from={data.from}
           into={data.into}
@@ -307,7 +317,7 @@ export default function CandidateDetail() {
         />
       )}
 
-      {dialog === "merge" && data && candidate && id && (
+      {dialog === "merge" && data?.from && data.into && candidate && id && (
         <MergeDialog
           id={id}
           candidate={candidate}
@@ -335,6 +345,47 @@ export default function CandidateDetail() {
         />
       )}
     </>
+  );
+}
+
+/**
+ * In place of the comparison when one side's data is gone: say which, and why
+ * that's expected for a resolved pair, with links to see the items on Wikidata.
+ */
+function MissingItemsNote({
+  candidate,
+  from,
+  into,
+}: {
+  candidate: CandidateSummary;
+  from: Item | null;
+  into: Item | null;
+}) {
+  const missing = [!from && candidate.fromQid, !into && candidate.intoQid].filter(
+    (q): q is string => typeof q === "string",
+  );
+  return (
+    <div className="detail-note is-missing">
+      <p>
+        {candidate.status === "merged"
+          ? "This pair was merged before the app kept a copy of merged items, so there's no comparison to show."
+          : candidate.status === "open"
+            ? "The mirror doesn't hold data for this pair yet, so there's no comparison to show."
+            : "One of these items is no longer in the mirror (merged, deleted, or no longer a matching type), so there's no comparison to show."}{" "}
+        Missing: {missing.join(", ")}.
+      </p>
+      <p>
+        See them on Wikidata:{" "}
+        {[candidate.fromQid, candidate.intoQid].map((qid, i) => (
+          <span key={qid}>
+            {i > 0 && " · "}
+            <a href={wikiPageUrl(qid)} target="_blank" rel="noreferrer">
+              {qid}
+            </a>
+          </span>
+        ))}
+      </p>
+    </div>
   );
 }
 

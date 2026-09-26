@@ -288,6 +288,9 @@ export default function CandidatesList() {
             </span>
           </h1>
           <div className="head-actions">
+            <Link className="head-link" to="/leaderboard">
+              Leaderboard
+            </Link>
             <AuthBar />
           </div>
         </div>

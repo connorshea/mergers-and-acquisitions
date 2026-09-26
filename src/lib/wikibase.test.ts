@@ -6,7 +6,9 @@ import {
   entityToItem,
   isInstanceOf,
   propertyRowFromEntity,
+  snakValue,
   type Statement,
+  timeAtPrecision,
 } from "./wikibase.ts";
 
 const itemRef = (qid: string) => ({
@@ -107,6 +109,29 @@ describe("entityToItem", () => {
       claims: { P31: [claim("P31", "wikibase-item", itemRef("Q7889"), "deprecated")] },
     });
     expect(item.statements).toEqual({});
+  });
+});
+
+describe("timeAtPrecision", () => {
+  it("zeroes the calendar parts coarser precisions leave unspecified", () => {
+    expect(timeAtPrecision("+1977-01-01T00:00:00Z", 9)).toBe("+1977-00-00T00:00:00Z");
+    expect(timeAtPrecision("+1970-01-01T00:00:00Z", 8)).toBe("+1970-00-00T00:00:00Z");
+    expect(timeAtPrecision("+1977-03-01T00:00:00Z", 10)).toBe("+1977-03-00T00:00:00Z");
+    expect(timeAtPrecision("-0500-01-01T00:00:00Z", 9)).toBe("-0500-00-00T00:00:00Z");
+  });
+
+  it("leaves day precision, already-zeroed parts, and missing precision alone", () => {
+    expect(timeAtPrecision("+1977-01-25T00:00:00Z", 11)).toBe("+1977-01-25T00:00:00Z");
+    expect(timeAtPrecision("+1993-00-00T00:00:00Z", 9)).toBe("+1993-00-00T00:00:00Z");
+    expect(timeAtPrecision("+1977-01-01T00:00:00Z")).toBe("+1977-01-01T00:00:00Z");
+  });
+
+  it("is applied by snakValue (Q2722436's year-precision publication date)", () => {
+    const snak = claim("P577", "time", {
+      type: "time",
+      value: { time: "+1977-01-01T00:00:00Z", precision: 9 },
+    }).mainsnak;
+    expect(snakValue(snak)).toEqual({ type: "time", value: "+1977-00-00T00:00:00Z" });
   });
 });
 

@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { type ReactNode, useEffect, useRef, useState } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { fetch, FetchError } from "../lib/client.ts";
 import { useAuth } from "../lib/auth-context.ts";
 import AuthBar from "../AuthBar.tsx";
@@ -90,7 +90,10 @@ function TypeFilter({
       <span id="type-filter-label">Type</span>
       <details className="menu type-filter" ref={ref}>
         <summary aria-labelledby="type-filter-label type-filter-value">
-          <span id="type-filter-value">{typeSummary(selected)}</span> ▾
+          <span id="type-filter-value" className="filter-summary">
+            {typeSummary(selected)}
+          </span>{" "}
+          ▾
         </summary>
         <div className="menu-panel type-filter-panel">
           <button type="button" onClick={() => onChange([])} disabled={selected.length === 0}>
@@ -330,19 +333,6 @@ export default function CandidatesList() {
           </span>
         </button>
         <label className="field">
-          <span>Created by</span>
-          <input
-            // Uncontrolled and re-mounted on URL changes, like the search box.
-            key={creator}
-            className="creator-input"
-            type="search"
-            name="creator"
-            defaultValue={creator}
-            placeholder="Username"
-            title="Pairs where either item was created by this Wikidata user"
-          />
-        </label>
-        <label className="field">
           <span>Status</span>
           <select value={status} onChange={(e) => update({ status: e.target.value })}>
             {/* "merging" is a transient in-flight state that's almost never
@@ -357,7 +347,31 @@ export default function CandidatesList() {
 
         <TypeFilter selected={types} onChange={(next) => update({ type: next.join(",") })} />
 
-        {user && <LanguageFilter languages={userLangs} any={anyLanguage} update={update} />}
+        <MoreFilters
+          summary={
+            [
+              creator && `by ${creator}`,
+              userLangs.length > 0 && (anyLanguage ? "Any language" : "My languages"),
+            ]
+              .filter(Boolean)
+              .join(" · ") || "None"
+          }
+        >
+          <label className="field">
+            <span>Created by</span>
+            <input
+              // Uncontrolled and re-mounted on URL changes, like the search box.
+              key={creator}
+              className="creator-input"
+              type="search"
+              name="creator"
+              defaultValue={creator}
+              placeholder="Username"
+              title="Pairs where either item was created by this Wikidata user"
+            />
+          </label>
+          {user && <LanguageFilter languages={userLangs} any={anyLanguage} update={update} />}
+        </MoreFilters>
 
         <label className="field">
           <span>Sort</span>
@@ -482,8 +496,38 @@ export default function CandidatesList() {
 }
 
 /**
+ * The less-used filters (creator, languages) in a dropdown panel, so the main
+ * row stays on one line. It sits inside the list's form: the creator box
+ * submits with it, on Enter or the panel's Apply button.
+ */
+function MoreFilters({ summary, children }: { summary: string; children: ReactNode }) {
+  const ref = useRef<HTMLDetailsElement>(null);
+  useDismissableMenu(ref);
+  return (
+    <div className="field">
+      <span id="more-filters-label">More filters</span>
+      <details className="menu type-filter more-filters" ref={ref}>
+        <summary aria-labelledby="more-filters-label more-filters-value">
+          <span id="more-filters-value" className="filter-summary">
+            {summary}
+          </span>{" "}
+          ▾
+        </summary>
+        <div className="menu-panel more-filters-panel">
+          {children}
+          <button type="submit" className="more-filters-apply">
+            Apply
+          </button>
+        </div>
+      </details>
+    </div>
+  );
+}
+
+/**
  * The reader-language filter: the user's languages (from settings) or any
- * language. Until they've chosen some, a link to the settings page instead.
+ * language. A select like its neighbours; its last option opens the settings
+ * page to choose or change them. Until some are chosen it can only show "Any".
  */
 function LanguageFilter({
   languages,
@@ -494,30 +538,22 @@ function LanguageFilter({
   any: boolean;
   update: (next: Record<string, string | undefined>) => void;
 }) {
-  if (languages.length === 0) {
-    return (
-      <div className="field">
-        <span>Languages</span>
-        <Link
-          className="lang-settings-link"
-          to="/settings"
-          title="Hide pairs you'd need another language to review"
-        >
-          Choose yours…
-        </Link>
-      </div>
-    );
-  }
+  const navigate = useNavigate();
+  const hasLanguages = languages.length > 0;
   return (
     <label className="field">
       <span>Languages</span>
       <select
-        value={any ? "any" : "mine"}
-        onChange={(e) => update({ lang: e.target.value === "any" ? "any" : undefined })}
+        value={hasLanguages && !any ? "mine" : "any"}
+        onChange={(e) => {
+          if (e.target.value === "settings") void navigate("/settings");
+          else update({ lang: e.target.value === "any" ? "any" : undefined });
+        }}
         title="Hide pairs that need a language you don't read to review (set in Settings)"
       >
-        <option value="mine">Mine ({languages.join(", ")})</option>
+        {hasLanguages && <option value="mine">Mine ({languages.join(", ")})</option>}
         <option value="any">Any</option>
+        <option value="settings">{hasLanguages ? "Edit languages…" : "Choose languages…"}</option>
       </select>
     </label>
   );

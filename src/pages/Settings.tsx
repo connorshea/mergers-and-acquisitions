@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../lib/auth-context.ts";
 import { loginUrl } from "../lib/auth-url.ts";
 import { FetchError } from "../lib/client.ts";
@@ -7,6 +7,7 @@ import { normalizeLanguages } from "../lib/languages.ts";
 import { listHref } from "../lib/list-state.ts";
 import AuthBar from "../AuthBar.tsx";
 import { LogoMark } from "../Logo.tsx";
+import type { ToastState } from "../Toast.tsx";
 
 // Languages offered as checkboxes; anything else goes in the free-text field.
 const COMMON_LANGUAGES = [
@@ -94,12 +95,13 @@ export default function Settings() {
 
 function LanguageSettings({ saved }: { saved: string[] }) {
   const { saveLanguages } = useAuth();
+  const navigate = useNavigate();
   const [checked, setChecked] = useState(() => saved.filter((l) => COMMON_LANGUAGES.includes(l)));
   const [other, setOther] = useState(() =>
     saved.filter((l) => !COMMON_LANGUAGES.includes(l)).join(", "),
   );
   const [busy, setBusy] = useState(false);
-  const [message, setMessage] = useState<{ error: boolean; text: string } | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const languages = normalizeLanguages([
     ...COMMON_LANGUAGES.filter((l) => checked.includes(l)),
@@ -112,18 +114,25 @@ function LanguageSettings({ saved }: { saved: string[] }) {
 
   async function save() {
     setBusy(true);
-    setMessage(null);
+    setError(null);
     try {
       await saveLanguages(languages);
-      setMessage({ error: false, text: "Saved." });
     } catch (e: unknown) {
-      setMessage({
-        error: true,
-        text: e instanceof FetchError ? e.message : "Saving failed. Try again.",
-      });
-    } finally {
+      setError(e instanceof FetchError ? e.message : "Saving failed. Try again.");
       setBusy(false);
+      return;
     }
+    // Back to the list the user came from, minus a `lang=any` override, so
+    // the languages just saved take effect.
+    const back = new URL(listHref(), window.location.origin);
+    back.searchParams.delete("lang");
+    const toast: ToastState = {
+      toast:
+        languages.length > 0
+          ? `Languages saved: ${languages.map(languageName).join(", ")}`
+          : "Languages cleared: the list isn’t filtered",
+    };
+    void navigate(back.pathname + back.search, { state: toast });
   }
 
   return (
@@ -179,12 +188,9 @@ function LanguageSettings({ saved }: { saved: string[] }) {
             : "No languages chosen: the list isn’t filtered."}
       </p>
       <div className="settings-actions">
-        {message && (
-          <span
-            className={message.error ? "list-msg is-error" : "list-msg"}
-            role={message.error ? "alert" : "status"}
-          >
-            {message.text}
+        {error && (
+          <span className="list-msg is-error" role="alert">
+            {error}
           </span>
         )}
         <button type="submit" className="btn-primary" disabled={busy || !dirty}>

@@ -803,6 +803,30 @@ a.chip-id:hover {
   cursor: pointer;
   white-space: nowrap;
 }
+/* Long summaries ("WikiProject Anime and Manga") truncate rather than widen
+   the row. */
+.filter-summary {
+  display: inline-block;
+  max-width: 11rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: bottom;
+}
+.more-filters-panel {
+  gap: 0.75rem;
+  min-width: 16rem;
+  padding: 0.75rem;
+}
+.more-filters-panel .field .creator-input,
+.more-filters-panel .field select {
+  width: 100%;
+}
+.menu-panel .more-filters-apply {
+  align-self: flex-end;
+  padding: 0.35rem 0.9rem;
+  border: 1px solid var(--rule);
+  text-align: center;
+}
 .type-filter-panel {
   left: 0;
   right: auto;
@@ -1458,10 +1482,53 @@ a.auth-login {
   clip-path: inset(50%);
   white-space: nowrap;
 }
-.lang-settings-link {
-  font-size: 0.9rem;
-  padding: 0.35rem 0;
-  color: var(--focus);
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 1.5rem;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  max-width: calc(100vw - 2rem);
+  padding: 0.65rem 0.6rem 0.65rem 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--identical) 35%, transparent);
+  border-radius: 8px;
+  background: var(--identical-bg);
+  color: var(--ink);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 14%);
+  transform: translateX(-50%);
+}
+.toast-icon {
+  color: var(--identical);
+  font-weight: 600;
+}
+.toast-close {
+  font: inherit;
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 0.1rem 0.4rem;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+}
+.toast-close:hover {
+  color: var(--ink);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .toast {
+    animation: toast-in 180ms ease-out;
+  }
+}
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 0.5rem);
+  }
 }
 
 /* ---------- Narrow screens ---------- */
@@ -1562,7 +1629,11 @@ a.auth-login {
     padding: 0.35rem 0;
   }
   /* The type filter is full-width now, so its panel matches it. */
-  .type-filter-panel {
+  .filter-summary {
+    max-width: none;
+  }
+  .type-filter-panel,
+  .more-filters-panel {
     left: 0;
     right: 0;
     min-width: 0;

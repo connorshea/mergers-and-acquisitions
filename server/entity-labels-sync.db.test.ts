@@ -4,14 +4,18 @@
 import { afterAll, beforeEach, describe, expect, it } from "vite-plus/test";
 import { db, pool } from "./db.ts";
 import { items } from "../db/schema.ts";
-import { collectReferencedItemQids } from "./entity-labels-sync.ts";
+import { collectReferencedItemQids, labelsFromMirror } from "./entity-labels-sync.ts";
 import type { Item, Value } from "../src/lib/compare.ts";
 import { DB_TEST, truncateAll } from "../test/db-helpers.ts";
 
-function item(qid: string, statements: Record<string, Value[]>): typeof items.$inferInsert {
+function item(
+  qid: string,
+  statements: Record<string, Value[]>,
+  labels: Record<string, string> = { en: qid },
+): typeof items.$inferInsert {
   const data: Item = {
     id: qid,
-    labels: { en: qid },
+    labels,
     descriptions: {},
     aliases: {},
     sitelinks: {},
@@ -22,9 +26,10 @@ function item(qid: string, statements: Record<string, Value[]>): typeof items.$i
 
 const ref = (value: string): Value => ({ type: "item", value });
 
+afterAll(() => (DB_TEST ? pool.end() : undefined));
+
 describe.skipIf(!DB_TEST)("collectReferencedItemQids", () => {
   beforeEach(truncateAll);
-  afterAll(() => pool.end());
 
   it("collects distinct item-valued QIDs across every page", async () => {
     await db
@@ -45,5 +50,32 @@ describe.skipIf(!DB_TEST)("collectReferencedItemQids", () => {
 
   it("returns nothing for an empty mirror", async () => {
     expect(await collectReferencedItemQids(2)).toEqual([]);
+  });
+});
+
+describe.skipIf(!DB_TEST)("labelsFromMirror", () => {
+  beforeEach(truncateAll);
+
+  it("takes en, else mul, labels of mirrored items and leaves the rest to look up", async () => {
+    await db
+      .insert(items)
+      .values([
+        item("Q10", {}, { en: "English", mul: "Mul", fr: "Français" }),
+        item("Q11", {}, { mul: "Mul only", de: "Deutsch" }),
+        item("Q12", {}, { en: "", mul: "Empty en" }),
+        item("Q13", {}, { de: "Nur Deutsch" }),
+      ]);
+    const result = await labelsFromMirror(["Q10", "Q11", "Q12", "Q13", "Q20", "Q21"]);
+    expect(result.rows.sort((a, b) => a.qid.localeCompare(b.qid))).toEqual([
+      { qid: "Q10", label: "English" },
+      { qid: "Q11", label: "Mul only" },
+      { qid: "Q12", label: "Empty en" },
+    ]);
+    expect(result.unlabeled).toBe(1);
+    expect(result.missing).toEqual(["Q20", "Q21"]);
+  });
+
+  it("handles no QIDs", async () => {
+    expect(await labelsFromMirror([])).toEqual({ rows: [], unlabeled: 0, missing: [] });
   });
 });

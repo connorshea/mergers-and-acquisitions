@@ -72,7 +72,7 @@ runDumpImport({
         (stats.lockRetries > 0 ? `, ${stats.lockRetries} lock retries` : "") +
         ") — " +
         `${(stats.bytes / 1e9).toFixed(1)} GB inflated, ${stats.lines} lines, ${stats.parsed} parsed, ` +
-        `${stats.matched} matched, ${stats.upserted} items upserted, ${stats.externalIds} external ids, ` +
+        `${stats.matched} matched, ${stats.upserted} items upserted (${stats.unchanged} unchanged), ${stats.externalIds} external ids, ` +
         (stats.skipped + stats.failed > 0
           ? `${stats.skipped} bad lines + ${stats.failed} failed items skipped, `
           : "") +

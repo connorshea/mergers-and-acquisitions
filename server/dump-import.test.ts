@@ -16,6 +16,7 @@ import {
   findMemberStart,
   formatDuration,
   isLockConflict,
+  itemHash,
   openDump,
   openDumpFile,
   scanDump,
@@ -349,5 +350,25 @@ describe("isLockConflict", () => {
     expect(isLockConflict(new Error("boom"))).toBe(false);
     expect(isLockConflict("ER_LOCK_DEADLOCK")).toBe(false);
     expect(isLockConflict(undefined)).toBe(false);
+  });
+});
+
+describe("itemHash", () => {
+  const item = { id: "Q1", labels: { en: "A" }, statements: {} } as unknown as Item;
+  const ids = [{ property: "P1733", value: "1" }];
+
+  it("ignores the order the item's keys were built in", () => {
+    const reordered = { statements: {}, labels: { en: "A" }, id: "Q1" } as unknown as Item;
+    expect(itemHash("A", "Q7889", reordered, ids)).toBe(itemHash("A", "Q7889", item, ids));
+  });
+
+  it("changes with the item, its columns, or the external ids kept for it", () => {
+    const base = itemHash("A", "Q7889", item, ids);
+    const relabelled = { ...item, labels: { en: "B" } } as unknown as Item;
+    expect(itemHash("A", "Q7889", relabelled, ids)).not.toBe(base);
+    expect(itemHash("B", "Q7889", item, ids)).not.toBe(base);
+    expect(itemHash("A", null, item, ids)).not.toBe(base);
+    expect(itemHash("A", "Q7889", item, [{ property: "P1733", value: "2" }])).not.toBe(base);
+    expect(itemHash("A", "Q7889", item, [])).not.toBe(base);
   });
 });

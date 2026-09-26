@@ -51,6 +51,11 @@ export const items = mysqlTable(
     // import. Lets the prune of a sharded import work across jobs: once every
     // shard of a dump has finished, rows not stamped with it have left the dump.
     lastDump: varchar("last_dump", { length: 32 }),
+    // SHA-1 (hex) of everything the dump import wrote for this row (see
+    // server/dump-import.ts `itemHash`), so a re-import can skip an item whose
+    // converted data hasn't changed. Null when something else rewrote `data`,
+    // which makes the next import write the item in full.
+    dataHash: varchar("data_hash", { length: 40 }),
   },
   (t) => [
     index("idx_items_primary_label").on(t.primaryLabel),

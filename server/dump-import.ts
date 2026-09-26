@@ -40,6 +40,7 @@
 // dump they were seen in, and the shard that completes the set for a dump
 // (see `dump_import_runs`) prunes the rows the dump no longer contains.
 import { closeSync, createReadStream, openSync, readSync, statSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { basename } from "node:path";
 import { Readable } from "node:stream";
 import { constants as zlibConstants, createGunzip, inflateRawSync } from "node:zlib";
@@ -471,33 +472,120 @@ const READ_PAGE = 10000;
  */
 export const MAX_PRUNE_FRACTION = 0.2;
 
+/** Recursively sort object keys so equal values serialize identically, whatever order they were built in. */
+function canonical(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(canonical);
+  if (value === null || typeof value !== "object") return value;
+  const out: Record<string, unknown> = {};
+  for (const key of Object.keys(value).sort()) {
+    out[key] = canonical((value as Record<string, unknown>)[key]);
+  }
+  return out;
+}
+
+/**
+ * SHA-1 (hex) of everything upsertItems stores for an item: its denormalized
+ * columns, its data, and the external-id rows it keeps. Hashing the converted
+ * output rather than using the entity's revision id means a change to the
+ * adapter (entityToItem, externalIdRows) also counts as a change.
+ */
+export function itemHash(
+  label: string | null,
+  type: string | null,
+  item: Item,
+  ids: readonly { property: string; value: string }[],
+): string {
+  const ordered = [label, type, item, ids.map((r) => [r.property, r.value])];
+  return createHash("sha1")
+    .update(JSON.stringify(canonical(ordered)))
+    .digest("hex");
+}
+
+/** What upsertItems did with a batch. */
+export interface UpsertResult {
+  /** Items written in full (new, changed, or without a stored hash). */
+  written: number;
+  /** Items whose stored hash matched, only restamped. */
+  unchanged: number;
+  /** External-id rows written for the written items. */
+  externalIds: number;
+}
+
 /**
  * Upsert items and rebuild their external ids — the one write path shared by
  * the dump import and the single-item importer, so both store the same shape.
+ * An item whose hash (see `itemHash`) matches the stored one is only
+ * restamped: rewriting its JSON and deleting and re-inserting its external
+ * ids would store exactly what is already there, and most items don't change
+ * from one weekly dump to the next.
  * `dump` stamps the rows as seen in that dump; without it (the single-item
- * importer) an existing row keeps its stamp. Returns the number of external-id
- * rows written.
+ * importer) an existing row keeps its stamp.
  */
 export async function upsertItems(
   batch: Item[],
   stamp = toSqlDatetime(new Date()),
   dump?: string,
-): Promise<number> {
-  if (batch.length === 0) return 0;
+): Promise<UpsertResult> {
+  if (batch.length === 0) return { written: 0, unchanged: 0, externalIds: 0 };
+  // Each item's row and external ids (deduped on the (qid, property, value)
+  // key), and the hash of the two.
+  const prepared = batch.map((item) => {
+    const label = primaryLabel(item) ?? null;
+    const type = primaryType(item) ?? null;
+    const ids: (typeof externalIds.$inferInsert)[] = [];
+    const seen = new Set<string>();
+    for (const r of externalIdRows(item)) {
+      if (r.value.length > MAX_ID_VALUE_CHARS) continue;
+      const key = `${r.property} ${r.value}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      ids.push({ qid: item.id, property: r.property, value: r.value });
+    }
+    const row = {
+      qid: item.id,
+      primaryLabel: label,
+      primaryType: type,
+      data: item,
+      lastSyncedAt: stamp,
+      lastDump: dump ?? null,
+      dataHash: itemHash(label, type, item, ids),
+    };
+    return { row, ids };
+  });
+
   // One transaction, so a batch that fails leaves every item as it was (not,
   // say, updated with its external ids already deleted) and can be retried.
   // READ COMMITTED drops the gap locks REPEATABLE READ takes on the external-id
   // delete's index range, which is what concurrent shards deadlocked on.
   return db.transaction(
     async (tx) => {
-      const rows = batch.map((item) => ({
-        qid: item.id,
-        primaryLabel: primaryLabel(item) ?? null,
-        primaryType: primaryType(item) ?? null,
-        data: item,
-        lastSyncedAt: stamp,
-        lastDump: dump ?? null,
-      }));
+      const stored = new Map(
+        (
+          await tx
+            .select({ qid: items.qid, dataHash: items.dataHash })
+            .from(items)
+            .where(
+              inArray(
+                items.qid,
+                prepared.map((p) => p.row.qid),
+              ),
+            )
+        ).map((r) => [r.qid, r.dataHash]),
+      );
+      const changed = prepared.filter((p) => stored.get(p.row.qid) !== p.row.dataHash);
+      const unchanged = prepared
+        .filter((p) => stored.get(p.row.qid) === p.row.dataHash)
+        .map((p) => p.row.qid);
+
+      if (unchanged.length > 0) {
+        await tx
+          .update(items)
+          .set({ lastSyncedAt: stamp, ...(dump ? { lastDump: dump } : {}) })
+          .where(inArray(items.qid, unchanged));
+      }
+      if (changed.length === 0) return { written: 0, unchanged: unchanged.length, externalIds: 0 };
+
+      const rows = changed.map((p) => p.row);
       for (let i = 0; i < rows.length; i += ITEM_BATCH) {
         await tx
           .insert(items)
@@ -509,28 +597,23 @@ export async function upsertItems(
               data: sql`values(${items.data})`,
               lastSyncedAt: sql`values(${items.lastSyncedAt})`,
               lastDump: sql`coalesce(values(${items.lastDump}), ${items.lastDump})`,
+              dataHash: sql`values(${items.dataHash})`,
             },
           });
       }
 
-      // Rebuild external ids wholesale, deduped on the (qid, property, value) key.
-      const qids = batch.map((item) => item.id);
-      await tx.delete(externalIds).where(inArray(externalIds.qid, qids));
-      const idRows: (typeof externalIds.$inferInsert)[] = [];
-      const seen = new Set<string>();
-      for (const item of batch) {
-        for (const r of externalIdRows(item)) {
-          if (r.value.length > MAX_ID_VALUE_CHARS) continue;
-          const key = `${item.id} ${r.property} ${r.value}`;
-          if (seen.has(key)) continue;
-          seen.add(key);
-          idRows.push({ qid: item.id, property: r.property, value: r.value });
-        }
-      }
+      // Rebuild the changed items' external ids wholesale.
+      await tx.delete(externalIds).where(
+        inArray(
+          externalIds.qid,
+          rows.map((r) => r.qid),
+        ),
+      );
+      const idRows = changed.flatMap((p) => p.ids);
       for (let i = 0; i < idRows.length; i += ID_BATCH) {
         await tx.insert(externalIds).values(idRows.slice(i, i + ID_BATCH));
       }
-      return idRows.length;
+      return { written: changed.length, unchanged: unchanged.length, externalIds: idRows.length };
     },
     { isolationLevel: "read committed" },
   );
@@ -596,8 +679,10 @@ export interface ImportOptions {
 }
 
 export interface ImportStats extends ScanStats {
-  /** Items upserted. */
+  /** Items upserted (written in full, or restamped as unchanged). */
   upserted: number;
+  /** Of those, items whose stored hash matched, so only their dump stamp was updated. */
+  unchanged: number;
   /** External-id rows written. */
   externalIds: number;
   /** Matched items the database refused, skipped (their QIDs are logged). */
@@ -768,6 +853,7 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
   const propertyRows: PropertyRow[] = [];
   let batch: Item[] = [];
   let upserted = 0;
+  let unchanged = 0;
   let idRows = 0;
 
   let failed = 0;
@@ -782,7 +868,7 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
   };
 
   let lockRetries = 0;
-  const upsert = (pending: Item[]): Promise<number> =>
+  const upsert = (pending: Item[]): Promise<UpsertResult> =>
     withLockRetry(
       () => upsertItems(pending, stamp, dump),
       (attempt, err) => {
@@ -794,6 +880,12 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
       },
     );
 
+  const tally = (r: UpsertResult): void => {
+    idRows += r.externalIds;
+    upserted += r.written + r.unchanged;
+    unchanged += r.unchanged;
+  };
+
   let writing: Promise<void> = Promise.resolve();
   // Time the scan spends blocked on the previous batch's write: when this is a
   // large share of the run, the database (not the inflate) sets the pace.
@@ -803,8 +895,7 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
     const pending = batch;
     batch = [];
     try {
-      idRows += await upsert(pending);
-      upserted += pending.length;
+      tally(await upsert(pending));
       return;
     } catch (err) {
       // Find the item(s) at fault; the rest of the batch still lands.
@@ -813,8 +904,7 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
     const refused: string[] = [];
     for (const item of pending) {
       try {
-        idRows += await upsert([item]);
-        upserted++;
+        tally(await upsert([item]));
       } catch (err) {
         failed++;
         refused.push(item.id);
@@ -873,7 +963,7 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
       last = { bytes: s.bytes, seconds: s.seconds, read, writeWaitMs };
       log(
         `${tag} ${pct}${(s.bytes / 1e9).toFixed(0)} GB inflated, ${s.lines} lines, ` +
-          `${s.matched} matched, ${s.properties} properties, ` +
+          `${s.matched} matched (${unchanged} unchanged), ${s.properties} properties, ` +
           `${now} MB/s now (${mbps(s.bytes, s.seconds)} avg), ${eta}` +
           `write wait ${waited.toFixed(0)}s (${waitPct}), ` +
           `rss ${Math.round(process.memoryUsage().rss / 1e6)} MB`,
@@ -910,6 +1000,7 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
   return {
     ...scan,
     upserted,
+    unchanged,
     externalIds: idRows,
     failed,
     lockRetries,

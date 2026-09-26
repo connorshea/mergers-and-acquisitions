@@ -1,0 +1,1 @@
+CREATE INDEX `idx_items_last_dump` ON `items` (`last_dump`);

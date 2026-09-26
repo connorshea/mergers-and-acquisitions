@@ -60,6 +60,9 @@ export const items = mysqlTable(
   (t) => [
     index("idx_items_primary_label").on(t.primaryLabel),
     index("idx_items_primary_type").on(t.primaryType),
+    // The dump import's prune looks for rows not stamped with the current dump;
+    // nearly every row is, so this turns a full scan into a short range read.
+    index("idx_items_last_dump").on(t.lastDump),
   ],
 );
 

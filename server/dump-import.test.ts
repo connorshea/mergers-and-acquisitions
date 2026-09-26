@@ -7,6 +7,7 @@ import { Readable } from "node:stream";
 import { gzipSync } from "node:zlib";
 import { describe, expect, it } from "vite-plus/test";
 import type { Item } from "../src/lib/compare.ts";
+import { VIDEO_GAME } from "../src/lib/import-classes.ts";
 import type { Entity, Statement } from "../src/lib/wikibase.ts";
 import { dumpGz } from "../test/dump-gz.ts";
 import {
@@ -17,7 +18,6 @@ import {
   openDump,
   openDumpFile,
   scanDump,
-  VIDEO_GAME,
 } from "./dump-import.ts";
 
 const itemRef = (qid: string) => ({

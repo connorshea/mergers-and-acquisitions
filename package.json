@@ -24,7 +24,8 @@
     "eval:fetch-pairs": "node scripts/fetch-merge-pairs.ts",
     "eval:fetch-nondupes": "node scripts/fetch-nondupe-pairs.ts",
     "eval:score": "node scripts/eval-score.ts",
-    "eval:resolve-redirects": "node scripts/resolve-eval-redirects.ts"
+    "eval:resolve-redirects": "node scripts/resolve-eval-redirects.ts",
+    "knip": "knip"
   },
   "dependencies": {
     "@fontsource/ibm-plex-sans": "^5.3.0",
@@ -44,6 +45,7 @@
     "@vitejs/plugin-react": "^6.1.1",
     "concurrently": "^10.0.5",
     "drizzle-kit": "^0.31.10",
+    "knip": "^6.38.0",
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"

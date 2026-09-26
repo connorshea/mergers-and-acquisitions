@@ -60,10 +60,6 @@ import {
 } from "../src/lib/wikibase.ts";
 import { IMPORT_CLASSES } from "../src/lib/import-classes.ts";
 
-// The class list lives in src/lib so the candidates list's type filter can
-// share it; re-exported here for the jobs and tests that import it from here.
-export { IMPORT_CLASSES, VIDEO_GAME } from "../src/lib/import-classes.ts";
-
 /** Where Toolforge mounts the latest weekly JSON dump (needs `mount: all`). */
 export const DEFAULT_DUMP_PATH = "/public/dumps/public/wikidatawiki/entities/latest-all.json.gz";
 

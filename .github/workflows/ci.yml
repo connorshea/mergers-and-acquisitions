@@ -37,6 +37,9 @@ jobs:
       - name: Build
         run: pnpm exec vp build
 
+      - name: Find unused files, exports, and dependencies
+        run: pnpm exec knip
+
   # The scorer's offline regression gate: scores every labelled pair under
   # eval-data/ and fails only if a pair the checked-in baseline got right is now
   # wrong. Needs no DB or network, so it runs on its own. See scripts/eval-score.ts

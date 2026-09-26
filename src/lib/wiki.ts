@@ -15,11 +15,6 @@ export function setWikiBaseUrl(url: string): void {
   if (url) base = url.replace(/\/+$/, "");
 }
 
-/** Current instance base, e.g. "https://test.wikidata.org". */
-export function wikiBaseUrl(): string {
-  return base;
-}
-
 /**
  * URL of a wiki page on the edited instance. Pass the page title, already
  * namespaced where needed: a QID ("Q42"), "Property:P31", or "User:Name".

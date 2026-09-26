@@ -299,7 +299,6 @@ export default function CandidateDetail() {
           from={data.from}
           into={data.into}
           detected={detectedConflicts}
-          username={user?.username ?? ""}
           onClose={() => setDialog(null)}
           onDone={(res) => {
             applyCandidate(res.candidate);
@@ -312,7 +311,6 @@ export default function CandidateDetail() {
         <DifferentDialog
           id={id}
           candidate={candidate}
-          username={user?.username ?? ""}
           onClose={() => setDialog(null)}
           onDone={(res) => {
             applyCandidate(res.candidate);
@@ -452,7 +450,6 @@ function MergeDialog({
   from,
   into,
   detected,
-  username,
   onClose,
   onDone,
 }: {
@@ -461,7 +458,6 @@ function MergeDialog({
   from: Item;
   into: Item;
   detected: MergeConflict[];
-  username: string;
   onClose: () => void;
   onDone: (res: CandidateMergeResponse) => void;
 }) {
@@ -496,8 +492,7 @@ function MergeDialog({
         <p>
           Merge <b>{side(candidate.fromLabel, from.id)}</b> into{" "}
           <b>{side(candidate.intoLabel, into.id)}</b>. {from.id} becomes a redirect and its labels,
-          aliases, sitelinks and statements move to {into.id}. The edit is made under your account
-          {username ? ` (${username})` : ""} and credits this tool in its summary.
+          aliases, sitelinks and statements move to {into.id}. The edit summary credits this tool.
         </p>
         {autoHandled.includes("description") && (
           <p className="modal-note">
@@ -566,13 +561,11 @@ function MergeDialog({
 function DifferentDialog({
   id,
   candidate,
-  username,
   onClose,
   onDone,
 }: {
   id: string;
   candidate: CandidateSummary;
-  username: string;
   onClose: () => void;
   onDone: (res: CandidateDifferentResponse) => void;
 }) {
@@ -597,9 +590,8 @@ function DifferentDialog({
         <p>
           Add a <b>different from</b> (P1889) statement on{" "}
           <b>{side(candidate.fromLabel, candidate.fromQid)}</b> pointing at{" "}
-          <b>{side(candidate.intoLabel, candidate.intoQid)}</b>, and the reverse, under your account
-          {username ? ` (${username})` : ""}. This candidate is then dismissed, and the hunt will
-          not pair these two again.
+          <b>{side(candidate.intoLabel, candidate.intoQid)}</b>, and the reverse. This candidate is
+          then dismissed, and the hunt will not pair these two again.
         </p>
         {error && <EditErrorNote error={error} id={id} />}
       </div>

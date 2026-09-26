@@ -177,6 +177,8 @@ export interface AuthUserInfo {
   username: string;
   isAdmin: boolean;
   blocked: boolean;
+  /** Languages the user reads (Wikidata codes); empty when unset. */
+  languages: string[];
 }
 
 export interface AuthMeResponse {
@@ -185,6 +187,12 @@ export interface AuthMeResponse {
   configured: boolean;
   /** Origin of the Wikidata instance edits go to, e.g. "https://test.wikidata.org". */
   wikiBaseUrl: string;
+}
+
+/** Body of PUT /api/settings; also its response. */
+export interface UserSettings {
+  /** Languages the user reads, e.g. ["en", "de"]; the list filter uses them. */
+  languages: string[];
 }
 
 export interface LogoutResponse {

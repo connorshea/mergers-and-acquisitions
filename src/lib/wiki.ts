@@ -62,6 +62,41 @@ export function sitelinkHost(site: string): string | null {
 }
 
 /**
+ * Wikis whose subdomain isn't the language code Wikidata labels use for the
+ * same language (Simple English is English to a reader; Norwegian Wikipedia
+ * is Bokmål; the rest are legacy subdomains).
+ */
+const SITE_LANGUAGE_ALIASES: Record<string, string> = {
+  simple: "en",
+  no: "nb",
+  "be-x-old": "be-tarask",
+  "zh-yue": "yue",
+  "zh-classical": "lzh",
+  "zh-min-nan": "nan",
+  als: "gsw",
+  "roa-rup": "rup",
+  "bat-smg": "sgs",
+  "fiu-vro": "vro",
+};
+
+/**
+ * The language a sitelink's wiki is written in, as a Wikidata language code
+ * ("eswiki" → "es", "zh_yuewiki" → "yue", "simplewiki" → "en"); null for
+ * multilingual or language-less sites (Commons, Wikispecies, Wikidata, …).
+ */
+export function sitelinkLanguage(site: string): string | null {
+  if (SPECIAL_SITES[site]) return null;
+  for (const [suffix] of PROJECT_DOMAINS) {
+    if (!site.endsWith(suffix)) continue;
+    const prefix = site.slice(0, -suffix.length);
+    if (!/^[a-z][a-z0-9_]*$/.test(prefix)) return null;
+    const code = prefix.replace(/_/g, "-");
+    return SITE_LANGUAGE_ALIASES[code] ?? code;
+  }
+  return null;
+}
+
+/**
  * URL of a sitelink's page, e.g. ("enwiki", "Doom (1993 video game)") →
  * "https://en.wikipedia.org/wiki/Doom_(1993_video_game)". Sitelinks always point
  * at the real Wikimedia projects (the mirror comes from the production dump), so

@@ -10,6 +10,7 @@ import { Hono } from "hono";
 import { secureHeaders } from "hono/secure-headers";
 import { candidates } from "./candidates.ts";
 import { edits } from "./edits.ts";
+import { settings } from "./settings.ts";
 import { authRoutes } from "./auth/oauth.ts";
 import { sameOriginOnly } from "./auth/same-origin.ts";
 import { type AuthEnv, sessionMiddleware } from "./auth/session.ts";
@@ -49,6 +50,7 @@ app.use("/api/*", sessionMiddleware);
 app.route("/api/auth", authRoutes); // /api/auth/{login,callback,logout,me}
 app.route("/api/candidates", candidates);
 app.route("/api/candidates", edits); // /api/candidates/:id/{merge,different}
+app.route("/api/settings", settings);
 
 // An API route that fell through to here doesn't exist — return JSON, never the
 // SPA shell, so the client sees a real 404 instead of HTML.

@@ -28,6 +28,7 @@ import { connConfig } from "./db-config.ts";
 import type { Item, ScoreOptions } from "../src/lib/compare.ts";
 import { blockingLabelKey, orderByAge, scoreCandidate } from "../src/lib/compare.ts";
 import { primaryLabel, primaryType } from "../src/lib/wikidata.ts";
+import { encodeLanguageList, pairLanguages } from "../src/lib/languages.ts";
 import { refreshCandidateItemInfo } from "./candidate-item-info.ts";
 import { attachSitelinkRedirects } from "./sitelink-overlay.ts";
 import { chunk } from "../src/lib/chunk.ts";
@@ -235,6 +236,9 @@ async function upsertCandidates(db: Db, rows: CandidateRow[]): Promise<void> {
         intoType: sql`values(${mergeCandidates.intoType})`,
         fromLabel: sql`values(${mergeCandidates.fromLabel})`,
         intoLabel: sql`values(${mergeCandidates.intoLabel})`,
+        clashLangs: sql`values(${mergeCandidates.clashLangs})`,
+        fromLabelLangs: sql`values(${mergeCandidates.fromLabelLangs})`,
+        intoLabelLangs: sql`values(${mergeCandidates.intoLabelLangs})`,
       },
     });
 }
@@ -357,6 +361,7 @@ async function score(db: Db, pairs: [string, string][]): Promise<HuntStats> {
           if (id !== undefined) stale.push(id);
           continue;
         }
+        const langs = pairLanguages(from, into);
         survivors.push({
           fromQid: from.id,
           intoQid: into.id,
@@ -367,6 +372,9 @@ async function score(db: Db, pairs: [string, string][]): Promise<HuntStats> {
           intoType: primaryType(into) ?? null,
           fromLabel: primaryLabel(from) ?? null,
           intoLabel: primaryLabel(into) ?? null,
+          clashLangs: encodeLanguageList(langs.clash),
+          fromLabelLangs: encodeLanguageList(langs.fromLabels),
+          intoLabelLangs: encodeLanguageList(langs.intoLabels),
         });
       } catch (err) {
         console.error(`hunt score: pair ${qa}/${qb} failed`, err);

@@ -24,6 +24,8 @@ export interface AuthUser {
   username: string;
   isAdmin: boolean;
   blocked: boolean;
+  /** Languages the user reads (settings page); empty when unset. */
+  languages: string[];
 }
 
 export type AuthVariables = { user: AuthUser | null; sessionId: string | null };
@@ -120,6 +122,7 @@ export const sessionMiddleware: MiddlewareHandler<AuthEnv> = async (c, next) => 
         userId: users.id,
         username: users.username,
         blocked: users.blocked,
+        languages: users.languages,
       })
       .from(sessions)
       .innerJoin(users, eq(users.id, sessions.userId))
@@ -152,6 +155,7 @@ export const sessionMiddleware: MiddlewareHandler<AuthEnv> = async (c, next) => 
         username: row.username,
         isAdmin: isAdminId(row.userId),
         blocked: row.blocked,
+        languages: row.languages ?? [],
       });
       c.set("sessionId", id);
     }

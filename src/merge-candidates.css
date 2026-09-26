@@ -1281,13 +1281,6 @@ a.chip-id:hover {
   font-weight: 500;
   white-space: nowrap;
 }
-.auth-user-link {
-  color: inherit;
-  text-decoration: none;
-}
-.auth-user-link:hover {
-  text-decoration: underline;
-}
 .auth-badge {
   font-size: 0.72rem;
   font-weight: 600;
@@ -1301,6 +1294,27 @@ a.chip-id:hover {
 .auth-badge.is-blocked {
   background: var(--distinct-bg);
   color: var(--distinct);
+}
+.user-menu > summary {
+  padding: 0.35rem 0.6rem;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--surface);
+  cursor: pointer;
+}
+.user-menu > summary:hover {
+  border-color: var(--muted);
+}
+.user-menu-panel a {
+  font: inherit;
+  padding: 0.5rem 0.6rem;
+  border-radius: 6px;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.user-menu-panel a:hover {
+  background: var(--bg);
 }
 .auth-note {
   color: var(--muted);
@@ -1316,6 +1330,137 @@ a.auth-login {
   font-size: 0.9rem;
 }
 .login-hint a {
+  color: var(--focus);
+}
+
+/* ---------- Settings ---------- */
+/* Same width as the nav above it, so the page lines up with "Back to candidates". */
+.mc.settings {
+  padding-top: 0.5rem;
+}
+.settings h1 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin: 0 0 1.25rem;
+}
+.settings-card {
+  padding: 0 1.5rem;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: var(--surface);
+}
+.settings-card-head {
+  padding: 1.25rem 0 0;
+}
+.settings-card h2 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0 0 0.35rem;
+}
+.settings-help {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: 0 0 1rem;
+}
+.settings-languages {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+/* Each language is a tile; the checked ones are tinted. */
+.settings-language {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-width: 0;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  cursor: pointer;
+}
+.settings-language:hover {
+  border-color: var(--muted);
+}
+.settings-language:has(input:checked) {
+  border-color: var(--focus);
+  background: color-mix(in srgb, var(--focus) 8%, var(--surface));
+}
+.settings-language input {
+  margin: 0;
+  flex: none;
+}
+.settings-language-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.settings-code {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.settings-other {
+  margin-bottom: 0.35rem;
+}
+.settings-other .creator-input {
+  width: 100%;
+  max-width: 28rem;
+}
+.settings-other + .settings-help {
+  font-size: 0.85rem;
+  margin-bottom: 1.25rem;
+}
+.settings-other:has([aria-invalid]) + .settings-help {
+  color: var(--distinct);
+}
+/* Footer bar: status on the left, Save on the right. */
+.settings-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin: 0 -1.5rem;
+  padding: 0.9rem 1.5rem;
+  border-top: 1px solid var(--rule);
+  background: var(--bg);
+  border-radius: 0 0 10px 10px;
+}
+.settings-actions .list-msg {
+  padding: 0;
+  margin-right: auto;
+}
+@media (max-width: 640px) {
+  .settings-card {
+    padding: 0 1rem;
+  }
+  .settings-actions {
+    margin: 0 -1rem;
+    padding: 0.8rem 1rem;
+  }
+  .settings-languages {
+    grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+  }
+  .settings-other .creator-input {
+    max-width: none;
+  }
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.lang-settings-link {
+  font-size: 0.9rem;
+  padding: 0.35rem 0;
   color: var(--focus);
 }
 

@@ -12,6 +12,8 @@ export interface AuthState {
   /** True until the first /api/auth/me response lands. */
   loading: boolean;
   logout: () => Promise<void>;
+  /** Save the user's reader languages (PUT /api/settings) and update `user`. */
+  saveLanguages: (languages: string[]) => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthState>({
@@ -19,6 +21,7 @@ export const AuthContext = createContext<AuthState>({
   configured: false,
   loading: true,
   logout: async () => {},
+  saveLanguages: async () => {},
 });
 
 export function useAuth(): AuthState {

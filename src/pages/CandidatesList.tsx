@@ -1,4 +1,4 @@
-import { type RefObject, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { fetch, FetchError } from "../lib/client.ts";
 import { useAuth } from "../lib/auth-context.ts";
@@ -7,6 +7,7 @@ import Dialog from "../Dialog.tsx";
 import { LogoMark } from "../Logo.tsx";
 import { IMPORT_CLASS_GROUPS, IMPORT_CLASS_OPTIONS } from "../lib/import-classes.ts";
 import { rememberListSearch } from "../lib/list-state.ts";
+import { useDismissableMenu } from "../lib/use-dismissable-menu.ts";
 import {
   CANDIDATE_SORTS,
   CANDIDATE_STATUSES,
@@ -38,34 +39,6 @@ function confidenceTier(confidence: number): "identical" | "similar" | "distinct
 
 function oneOf<T extends string>(options: readonly T[], value: string | null, fallback: T): T {
   return options.includes(value as T) ? (value as T) : fallback;
-}
-
-/**
- * A native <details> menu doesn't dismiss on an outside click or Escape the way
- * a real dropdown should — wire both up. Handlers read `ref.current` live so
- * they stay correct across re-renders; they no-op when the menu is closed or
- * not rendered.
- */
-function useDismissableMenu(ref: RefObject<HTMLDetailsElement | null>) {
-  useEffect(() => {
-    function onPointerDown(e: PointerEvent) {
-      const menu = ref.current;
-      if (menu?.open && !menu.contains(e.target as Node)) menu.open = false;
-    }
-    function onKeyDown(e: KeyboardEvent) {
-      const menu = ref.current;
-      if (e.key === "Escape" && menu?.open) {
-        menu.open = false;
-        menu.querySelector<HTMLElement>("summary")?.focus();
-      }
-    }
-    document.addEventListener("pointerdown", onPointerDown);
-    document.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.removeEventListener("pointerdown", onPointerDown);
-      document.removeEventListener("keydown", onKeyDown);
-    };
-  }, [ref]);
 }
 
 /** A type's display name: its preset label, or the bare QID. */
@@ -161,7 +134,7 @@ function TypeFilter({
 
 export default function CandidatesList() {
   const [params, setParams] = useSearchParams();
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const q = params.get("q") ?? "";
   // Username of either item's creator (see item_creations); empty means anyone.
   const creator = params.get("creator") ?? "";
@@ -181,7 +154,13 @@ export default function CandidatesList() {
   const typeParam = params.get("type") ?? "";
   const types = typeParam.split(",").filter(Boolean);
   const page = Math.max(1, Number(params.get("page")) || 1);
-  const hasFilters = q !== "" || creator !== "" || status !== "open" || types.length > 0;
+  // The languages the user reads (settings page) filter the list unless the
+  // URL says `lang=any`. Logged out, or with none set, nothing is filtered.
+  const userLangs = user?.languages ?? [];
+  const anyLanguage = params.get("lang") === "any";
+  const langFilter = anyLanguage ? "" : userLangs.join(",");
+  const hasFilters =
+    q !== "" || creator !== "" || status !== "open" || types.length > 0 || anyLanguage;
   // Phones only: the filter fields fold behind a toggle (CSS hides it on wider screens).
   const [filtersOpen, setFiltersOpen] = useState(false);
   const filterSummary = [
@@ -189,6 +168,7 @@ export default function CandidatesList() {
     typeSummary(types),
     SORT_LABELS[sort],
     creator && `by ${creator}`,
+    userLangs.length > 0 && (anyLanguage ? "Any language" : userLangs.join(", ")),
   ]
     .filter(Boolean)
     .join(" · ");
@@ -206,6 +186,9 @@ export default function CandidatesList() {
   // Candidates dismissed in-place this session, hidden without a full refetch.
   const [dismissedIds, setDismissedIds] = useState<Set<number>>(new Set());
   useEffect(() => {
+    // Wait for the session: it decides the language filter, and fetching
+    // before it lands would flash the unfiltered list.
+    if (authLoading) return;
     let cancelled = false;
     async function load() {
       setLoading(true);
@@ -220,6 +203,7 @@ export default function CandidatesList() {
       if (q) query.q = q;
       if (typeParam) query.type = typeParam;
       if (creator) query.creator = creator;
+      if (langFilter) query.lang = langFilter;
       try {
         const res = await fetch("/api/candidates", { query });
         if (!cancelled) setData(res as CandidateListResponse);
@@ -235,7 +219,7 @@ export default function CandidatesList() {
     return () => {
       cancelled = true;
     };
-  }, [q, creator, status, sort, typeParam, page]);
+  }, [q, creator, status, sort, typeParam, page, langFilter, authLoading]);
 
   // Dismiss straight from the list; the row hides itself on success.
   async function dismissCandidate(id: number): Promise<void> {
@@ -373,6 +357,8 @@ export default function CandidatesList() {
 
         <TypeFilter selected={types} onChange={(next) => update({ type: next.join(",") })} />
 
+        {user && <LanguageFilter languages={userLangs} any={anyLanguage} update={update} />}
+
         <label className="field">
           <span>Sort</span>
           <select value={sort} onChange={(e) => update({ sort: e.target.value })}>
@@ -388,13 +374,19 @@ export default function CandidatesList() {
           {/* Shown while a refetch is in flight; the stale rows stay visible
               (dimmed) underneath instead of blanking the table. */}
           {loading && data && <Spinner label="Updating…" />}
-          {/* Clears the filters (search, creator, status, type) but keeps the sort. */}
+          {/* Clears the filters (search, creator, status, type, language) but keeps the sort. */}
           {hasFilters && (
             <button
               type="button"
               className="btn-clear"
               onClick={() =>
-                update({ q: undefined, creator: undefined, status: undefined, type: undefined })
+                update({
+                  q: undefined,
+                  creator: undefined,
+                  status: undefined,
+                  type: undefined,
+                  lang: undefined,
+                })
               }
             >
               Clear filters
@@ -418,8 +410,9 @@ export default function CandidatesList() {
         <p className="list-msg">
           No {status} candidates{q ? ` matching “${q}”` : ""}
           {types.length > 0 ? ` of type ${types.map(typeLabel).join(" or ")}` : ""}
-          {creator ? ` with an item created by ${creator}` : ""}. They appear here once the hunt job
-          has scored some pairs.
+          {creator ? ` with an item created by ${creator}` : ""}
+          {langFilter ? ` you can review in ${userLangs.join(", ")}` : ""}. They appear here once
+          the hunt job has scored some pairs.
         </p>
       )}
 
@@ -485,6 +478,48 @@ export default function CandidatesList() {
         </a>
       </footer>
     </main>
+  );
+}
+
+/**
+ * The reader-language filter: the user's languages (from settings) or any
+ * language. Until they've chosen some, a link to the settings page instead.
+ */
+function LanguageFilter({
+  languages,
+  any,
+  update,
+}: {
+  languages: string[];
+  any: boolean;
+  update: (next: Record<string, string | undefined>) => void;
+}) {
+  if (languages.length === 0) {
+    return (
+      <div className="field">
+        <span>Languages</span>
+        <Link
+          className="lang-settings-link"
+          to="/settings"
+          title="Hide pairs you'd need another language to review"
+        >
+          Choose yours…
+        </Link>
+      </div>
+    );
+  }
+  return (
+    <label className="field">
+      <span>Languages</span>
+      <select
+        value={any ? "any" : "mine"}
+        onChange={(e) => update({ lang: e.target.value === "any" ? "any" : undefined })}
+        title="Hide pairs that need a language you don't read to review (set in Settings)"
+      >
+        <option value="mine">Mine ({languages.join(", ")})</option>
+        <option value="any">Any</option>
+      </select>
+    </label>
   );
 }
 

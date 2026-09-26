@@ -226,6 +226,49 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       expect(page2.candidates.map((c) => c.id)).toEqual([beta]);
       expect((await list("?pageSize=1000")).pageSize).toBe(100);
     });
+
+    describe("language filter", () => {
+      beforeEach(async () => {
+        // alpha: a clash on kowiki, and an English label each side. beta: no
+        // clash, but its merged-away item is labelled only in Japanese.
+        await db
+          .update(mergeCandidates)
+          .set({ clashLangs: ",ko", fromLabelLangs: ",en", intoLabelLangs: ",en,ja" })
+          .where(eq(mergeCandidates.id, alpha));
+        await db
+          .update(mergeCandidates)
+          .set({ clashLangs: "", fromLabelLangs: ",ja", intoLabelLangs: ",en" })
+          .where(eq(mergeCandidates.id, beta));
+      });
+
+      const ids = async (query: string) => (await list(query)).candidates.map((c) => c.id);
+
+      it("hides pairs needing a language the reader doesn't read", async () => {
+        expect(await ids("?lang=en")).toEqual([]);
+        expect(await ids("?lang=en,ko")).toEqual([alpha]);
+        // Reads the clash, but not alpha's English-only merged-away item.
+        expect(await ids("?lang=ja,ko")).toEqual([]);
+        expect(await ids("?lang=en,ja")).toEqual([beta]);
+        expect((await list("?lang=en,ko")).total).toBe(1);
+      });
+
+      it("reads regional variants, and counts a mul label as readable", async () => {
+        await db
+          .update(mergeCandidates)
+          .set({ fromLabelLangs: ",ja,mul", intoLabelLangs: ",en-gb" })
+          .where(eq(mergeCandidates.id, beta));
+        expect(await ids("?lang=en")).toEqual([beta]);
+      });
+
+      it("lets rows the hunt hasn't annotated through, and ignores junk codes", async () => {
+        await db
+          .update(mergeCandidates)
+          .set({ clashLangs: null, fromLabelLangs: null, intoLabelLangs: null })
+          .where(eq(mergeCandidates.id, alpha));
+        expect(await ids("?lang=de")).toEqual([alpha]);
+        expect(await ids("?lang=')%20or%201=1")).toEqual([alpha, beta]);
+      });
+    });
   });
 
   describe("GET /api/candidates/:id", () => {

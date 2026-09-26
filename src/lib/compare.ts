@@ -927,10 +927,12 @@ function romanToInt(s: string): number | null {
  * Split a title into its base and a trailing installment number, e.g.
  * "Revenge on the Streets 2" → { base: "revenge on the streets", num: 2 } and
  * "Final Fantasy VII" → { base: "final fantasy", num: 7 }. `num` is null when
- * there's no trailing arabic/Roman number.
+ * there's no trailing arabic/Roman number. NFKC folds the Unicode Roman
+ * numeral characters ("Ⅱ", U+2161) and fullwidth digits to ASCII first, so
+ * "Beneath the Raptor's Wing Ⅰ" vs "… Ⅱ" reads as a sequel pair.
  */
 export function installment(label: string): { base: string; num: number | null } {
-  const norm = normalize(label);
+  const norm = normalize(label.normalize("NFKC"));
   const m = norm.match(/^(.+?)[\s:._-]+([0-9]{1,4}|[ivxlcdm]+)$/i);
   if (!m) return { base: norm, num: null };
   const base = m[1].trim();

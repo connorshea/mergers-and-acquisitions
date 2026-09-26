@@ -662,6 +662,13 @@ describe("installment / sequel detection", () => {
     expect(installment("Portal")).toEqual({ base: "portal", num: null });
     // An internal number is not a trailing installment.
     expect(installment("Left 4 Dead")).toEqual({ base: "left 4 dead", num: null });
+    // Unicode Roman numeral characters (U+2160 block) and fullwidth digits.
+    expect(installment("Beneath the Raptor's Wing Ⅱ")).toEqual({
+      base: "beneath the raptor's wing",
+      num: 2,
+    });
+    expect(installment("Final Fantasy Ⅻ")).toEqual({ base: "final fantasy", num: 12 });
+    expect(installment("Portal ２")).toEqual({ base: "portal", num: 2 });
   });
 
   it("recognizes same-base / different-number pairs as sequels", () => {
@@ -674,6 +681,11 @@ describe("installment / sequel detection", () => {
     expect(isSeriesSequelPair(a, b)).toBe(true);
     expect(isSeriesSequelPair(c, c2)).toBe(false); // same title, same number
     expect(isSeriesSequelPair(a, c)).toBe(false); // different bases
+
+    // Q54807364 / Q54807365: two-part novel titled with U+2160/U+2161.
+    const r1: Item = { ...base, id: "Q54807364", labels: { en: "Beneath the Raptor's Wing Ⅰ" } };
+    const r2: Item = { ...base, id: "Q54807365", labels: { en: "Beneath the Raptor's Wing Ⅱ" } };
+    expect(isSeriesSequelPair(r1, r2)).toBe(true);
   });
 });
 

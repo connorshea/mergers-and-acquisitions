@@ -14,6 +14,7 @@ import {
   isDeclaredDifferent,
   isSeriesSequelPair,
   isWorkEditionPair,
+  isPartWholePair,
   mergeConflicts,
   redirectSitelinkFixes,
   rowDisplayRank,
@@ -1412,6 +1413,45 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       statements: { ...edition.statements, P629: [{ type: "item" as const, value: "Q1" }] },
     };
     expect(isWorkEditionPair(elsewhere, work)).toBe(false);
+  });
+
+  it("caps a whole and its part (P527 / P361) below the candidate floor", () => {
+    // An album and its same-titled track share a label, P31-level type and date.
+    const album: Item = {
+      ...base,
+      id: "Q500",
+      labels: { en: "Blue Champagne" },
+      statements: stmt({ P577: [{ type: "time", value: "+1990-00-00T00:00:00Z" }] }),
+    };
+    const track: Item = { ...album, id: "Q501" };
+    expect(scoreCandidate(album, track).confidence).toBeGreaterThan(0.4);
+
+    const hasPart = {
+      ...album,
+      statements: { ...album.statements, P527: [{ type: "item" as const, value: "Q501" }] },
+    };
+    const partOf = {
+      ...track,
+      statements: { ...track.statements, P361: [{ type: "item" as const, value: "Q500" }] },
+    };
+    for (const [a, b] of [
+      [hasPart, track],
+      [track, hasPart],
+      [partOf, album],
+      [album, partOf],
+    ]) {
+      expect(isPartWholePair(a, b)).toBe(true);
+      const result = scoreCandidate(a, b);
+      expect(result.confidence).toBeLessThanOrEqual(0.1);
+      expect(result.reasons[0]).toContain("whole and its part");
+      expect(result.reasons.some((r) => r.startsWith("one item references the other"))).toBe(false);
+    }
+    // Being part of some *third* item says nothing about this pair.
+    const elsewhere = {
+      ...track,
+      statements: { ...track.statements, P361: [{ type: "item" as const, value: "Q1" }] },
+    };
+    expect(isPartWholePair(elsewhere, album)).toBe(false);
   });
 
   it("docks 0.25 when one item references the other (e.g. a game's series)", () => {

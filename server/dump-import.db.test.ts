@@ -224,7 +224,9 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
     const progress = lines.filter((l) => l.includes(" MB/s now ("));
     expect(progress.length).toBeGreaterThan(0);
     for (const line of progress)
-      expect(line).toMatch(/(\d+|\?) MB\/s now \((\d+|\?) avg\), rss \d+ MB$/);
+      expect(line).toMatch(
+        /(\d+|\?) MB\/s now \((\d+|\?) avg\), write wait \d+s \((\d+%|\?)\), rss \d+ MB$/,
+      );
   });
 
   it("adds percent done and an ETA when reading from a file on disk", async () => {
@@ -247,7 +249,9 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
     expect(progress.length).toBeGreaterThan(0);
     for (const line of progress) {
       expect(line).toMatch(/^import-dump: \[\d+\.\d%\] \d+ GB inflated, /);
-      expect(line).toMatch(/ avg\), ETA (\d+h \d\dm|\d+m|<1m|\?), rss \d+ MB$/);
+      expect(line).toMatch(
+        / avg\), ETA (\d+h \d\dm|\d+m|<1m|\?), write wait \d+s \((\d+%|\?)\), rss \d+ MB$/,
+      );
     }
     // The whole (tiny) file is read by the time the last line is logged.
     expect(progress.at(-1)).toMatch(/^import-dump: \[100\.0%\] /);

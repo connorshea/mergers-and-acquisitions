@@ -67,7 +67,10 @@ runDumpImport({
   .then(async (stats) => {
     console.log(
       `import-dump: ${shard.count > 1 ? `shard ${shard.index + 1}/${shard.count} ` : ""}` +
-        `done in ${(stats.seconds / 60).toFixed(1)} min — ` +
+        `done in ${(stats.seconds / 60).toFixed(1)} min ` +
+        `(${(stats.writeWaitSeconds / 60).toFixed(1)} min waiting on writes` +
+        (stats.lockRetries > 0 ? `, ${stats.lockRetries} lock retries` : "") +
+        ") — " +
         `${(stats.bytes / 1e9).toFixed(1)} GB inflated, ${stats.lines} lines, ${stats.parsed} parsed, ` +
         `${stats.matched} matched, ${stats.upserted} items upserted, ${stats.externalIds} external ids, ` +
         (stats.skipped + stats.failed > 0

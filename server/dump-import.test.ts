@@ -15,6 +15,7 @@ import {
   dumpSlice,
   findMemberStart,
   formatDuration,
+  isLockConflict,
   openDump,
   openDumpFile,
   scanDump,
@@ -328,5 +329,25 @@ describe("formatDuration", () => {
     expect(formatDuration(Number.NaN)).toBe("?");
     expect(formatDuration(Number.POSITIVE_INFINITY)).toBe("?");
     expect(formatDuration(-5)).toBe("?");
+  });
+});
+
+describe("isLockConflict", () => {
+  const driverError = (code: string) => Object.assign(new Error(code), { code });
+
+  it("spots a deadlock or lock-wait timeout, bare or wrapped by Drizzle", () => {
+    expect(isLockConflict(driverError("ER_LOCK_DEADLOCK"))).toBe(true);
+    expect(isLockConflict(driverError("ER_LOCK_WAIT_TIMEOUT"))).toBe(true);
+    const wrapped = new Error("Failed query: delete from ...", {
+      cause: driverError("ER_LOCK_DEADLOCK"),
+    });
+    expect(isLockConflict(wrapped)).toBe(true);
+  });
+
+  it("leaves every other error to the one-by-one fallback", () => {
+    expect(isLockConflict(driverError("ER_DATA_TOO_LONG"))).toBe(false);
+    expect(isLockConflict(new Error("boom"))).toBe(false);
+    expect(isLockConflict("ER_LOCK_DEADLOCK")).toBe(false);
+    expect(isLockConflict(undefined)).toBe(false);
   });
 });

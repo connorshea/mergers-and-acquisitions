@@ -486,49 +486,87 @@ export async function upsertItems(
   if (batch.length === 0) return 0;
   // One transaction, so a batch that fails leaves every item as it was (not,
   // say, updated with its external ids already deleted) and can be retried.
-  return db.transaction(async (tx) => {
-    const rows = batch.map((item) => ({
-      qid: item.id,
-      primaryLabel: primaryLabel(item) ?? null,
-      primaryType: primaryType(item) ?? null,
-      data: item,
-      lastSyncedAt: stamp,
-      lastDump: dump ?? null,
-    }));
-    for (let i = 0; i < rows.length; i += ITEM_BATCH) {
-      await tx
-        .insert(items)
-        .values(rows.slice(i, i + ITEM_BATCH))
-        .onDuplicateKeyUpdate({
-          set: {
-            primaryLabel: sql`values(${items.primaryLabel})`,
-            primaryType: sql`values(${items.primaryType})`,
-            data: sql`values(${items.data})`,
-            lastSyncedAt: sql`values(${items.lastSyncedAt})`,
-            lastDump: sql`coalesce(values(${items.lastDump}), ${items.lastDump})`,
-          },
-        });
-    }
-
-    // Rebuild external ids wholesale, deduped on the (qid, property, value) key.
-    const qids = batch.map((item) => item.id);
-    await tx.delete(externalIds).where(inArray(externalIds.qid, qids));
-    const idRows: (typeof externalIds.$inferInsert)[] = [];
-    const seen = new Set<string>();
-    for (const item of batch) {
-      for (const r of externalIdRows(item)) {
-        if (r.value.length > MAX_ID_VALUE_CHARS) continue;
-        const key = `${item.id} ${r.property} ${r.value}`;
-        if (seen.has(key)) continue;
-        seen.add(key);
-        idRows.push({ qid: item.id, property: r.property, value: r.value });
+  // READ COMMITTED drops the gap locks REPEATABLE READ takes on the external-id
+  // delete's index range, which is what concurrent shards deadlocked on.
+  return db.transaction(
+    async (tx) => {
+      const rows = batch.map((item) => ({
+        qid: item.id,
+        primaryLabel: primaryLabel(item) ?? null,
+        primaryType: primaryType(item) ?? null,
+        data: item,
+        lastSyncedAt: stamp,
+        lastDump: dump ?? null,
+      }));
+      for (let i = 0; i < rows.length; i += ITEM_BATCH) {
+        await tx
+          .insert(items)
+          .values(rows.slice(i, i + ITEM_BATCH))
+          .onDuplicateKeyUpdate({
+            set: {
+              primaryLabel: sql`values(${items.primaryLabel})`,
+              primaryType: sql`values(${items.primaryType})`,
+              data: sql`values(${items.data})`,
+              lastSyncedAt: sql`values(${items.lastSyncedAt})`,
+              lastDump: sql`coalesce(values(${items.lastDump}), ${items.lastDump})`,
+            },
+          });
       }
+
+      // Rebuild external ids wholesale, deduped on the (qid, property, value) key.
+      const qids = batch.map((item) => item.id);
+      await tx.delete(externalIds).where(inArray(externalIds.qid, qids));
+      const idRows: (typeof externalIds.$inferInsert)[] = [];
+      const seen = new Set<string>();
+      for (const item of batch) {
+        for (const r of externalIdRows(item)) {
+          if (r.value.length > MAX_ID_VALUE_CHARS) continue;
+          const key = `${item.id} ${r.property} ${r.value}`;
+          if (seen.has(key)) continue;
+          seen.add(key);
+          idRows.push({ qid: item.id, property: r.property, value: r.value });
+        }
+      }
+      for (let i = 0; i < idRows.length; i += ID_BATCH) {
+        await tx.insert(externalIds).values(idRows.slice(i, i + ID_BATCH));
+      }
+      return idRows.length;
+    },
+    { isolationLevel: "read committed" },
+  );
+}
+
+/** Driver error codes for losing a lock race: the transaction was rolled back and can simply be re-run. */
+const LOCK_CONFLICT_CODES = new Set(["ER_LOCK_DEADLOCK", "ER_LOCK_WAIT_TIMEOUT"]);
+/** Re-runs of a batch that lost a lock race before it falls back to one item at a time. */
+const LOCK_RETRIES = 3;
+
+/** True when `err` (or an error it wraps, e.g. a DrizzleQueryError) is a deadlock or lock-wait timeout. */
+export function isLockConflict(err: unknown): boolean {
+  for (let e = err; e instanceof Error; e = e.cause) {
+    if (LOCK_CONFLICT_CODES.has((e as { code?: string }).code ?? "")) return true;
+  }
+  return false;
+}
+
+/**
+ * Run `write`, re-running it up to LOCK_RETRIES times when it loses a lock race
+ * with another shard (with a short, jittered backoff so the two don't collide
+ * again). Any other error, or a conflict past the retries, is thrown.
+ */
+async function withLockRetry<T>(
+  write: () => Promise<T>,
+  onRetry: (attempt: number, err: unknown) => void,
+): Promise<T> {
+  for (let attempt = 1; ; attempt++) {
+    try {
+      return await write();
+    } catch (err) {
+      if (attempt > LOCK_RETRIES || !isLockConflict(err)) throw err;
+      onRetry(attempt, err);
+      await new Promise((r) => setTimeout(r, 100 * 2 ** attempt * (0.5 + Math.random())));
     }
-    for (let i = 0; i < idRows.length; i += ID_BATCH) {
-      await tx.insert(externalIds).values(idRows.slice(i, i + ID_BATCH));
-    }
-    return idRows.length;
-  });
+  }
 }
 
 export interface ImportOptions {
@@ -564,6 +602,10 @@ export interface ImportStats extends ScanStats {
   externalIds: number;
   /** Matched items the database refused, skipped (their QIDs are logged). */
   failed: number;
+  /** Writes re-run after losing a lock race (deadlock or lock-wait timeout) with another shard. */
+  lockRetries: number;
+  /** Seconds the scan sat waiting for the previous batch's write to finish. */
+  writeWaitSeconds: number;
   /** Property rows synced. */
   propertyRows: number;
   /** Items deleted because they were no longer in the dump. */
@@ -739,13 +781,29 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
     }
   };
 
+  let lockRetries = 0;
+  const upsert = (pending: Item[]): Promise<number> =>
+    withLockRetry(
+      () => upsertItems(pending, stamp, dump),
+      (attempt, err) => {
+        lockRetries++;
+        log(
+          `${tag} ${pending.length === 1 ? pending[0].id : `batch of ${pending.length}`} lost a lock race ` +
+            `(${errorSummary(err)}); retry ${attempt}/${LOCK_RETRIES}`,
+        );
+      },
+    );
+
   let writing: Promise<void> = Promise.resolve();
+  // Time the scan spends blocked on the previous batch's write: when this is a
+  // large share of the run, the database (not the inflate) sets the pace.
+  let writeWaitMs = 0;
   const flush = async (): Promise<void> => {
     if (batch.length === 0) return;
     const pending = batch;
     batch = [];
     try {
-      idRows += await upsertItems(pending, stamp, dump);
+      idRows += await upsert(pending);
       upserted += pending.length;
       return;
     } catch (err) {
@@ -755,7 +813,7 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
     const refused: string[] = [];
     for (const item of pending) {
       try {
-        idRows += await upsertItems([item], stamp, dump);
+        idRows += await upsert([item]);
         upserted++;
       } catch (err) {
         failed++;
@@ -772,7 +830,7 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
   // With a file on disk, its size and the compressed bytes read so far also
   // give the fraction done and an ETA from the compressed rate over the last
   // interval (inflated bytes can't be compared to the size on disk).
-  let last = { bytes: 0, seconds: 0, read: 0 };
+  let last = { bytes: 0, seconds: 0, read: 0, writeWaitMs: 0 };
   const mbps = (bytes: number, seconds: number): string =>
     seconds > 0 ? (bytes / 1e6 / seconds).toFixed(0) : "?";
 
@@ -787,7 +845,9 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
       // Write this batch while the scan inflates the next one: wait only for
       // the previous write, so one batch is in flight at a time and the scan
       // never waits on a database round-trip it could have overlapped.
+      const waitStart = performance.now();
       await writing;
+      writeWaitMs += performance.now() - waitStart;
       writing = flush();
       // Handled when awaited above or after the scan; this just stops Node
       // treating a failure in between as an unhandled rejection.
@@ -807,11 +867,15 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
         const rate = (read - last.read) / (s.seconds - last.seconds); // compressed B/s
         eta = `ETA ${rate > 0 ? formatDuration((file.size - read) / rate) : "?"}, `;
       }
-      last = { bytes: s.bytes, seconds: s.seconds, read };
+      const interval = s.seconds - last.seconds;
+      const waited = (writeWaitMs - last.writeWaitMs) / 1000;
+      const waitPct = interval > 0 ? `${Math.round((100 * waited) / interval)}%` : "?";
+      last = { bytes: s.bytes, seconds: s.seconds, read, writeWaitMs };
       log(
         `${tag} ${pct}${(s.bytes / 1e9).toFixed(0)} GB inflated, ${s.lines} lines, ` +
           `${s.matched} matched, ${s.properties} properties, ` +
           `${now} MB/s now (${mbps(s.bytes, s.seconds)} avg), ${eta}` +
+          `write wait ${waited.toFixed(0)}s (${waitPct}), ` +
           `rss ${Math.round(process.memoryUsage().rss / 1e6)} MB`,
       );
     },
@@ -848,6 +912,8 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
     upserted,
     externalIds: idRows,
     failed,
+    lockRetries,
+    writeWaitSeconds: writeWaitMs / 1000,
     propertyRows: propertyCount,
     pruned,
     settled,

@@ -274,16 +274,32 @@ it with `toolforge build show`; when it succeeds `toolforge images` lists the
 toolforge build start https://github.com/connorshea/mergers-and-acquisitions
 ```
 
-Then apply migrations as a one-off job, load the mirror with the `import-dump-1..4`
+Then apply migrations as a one-off job, load the mirror with the `import-dump-1..6`
 shard jobs above, start the web service (`toolforge webservice buildservice start
 --mount none`; the build service requires an explicit mount flag, and the web
-process needs no NFS), and load the schedule with `toolforge jobs load
-jobs.yaml`. A finished one-off job deletes itself, so the same command reruns it:
+process needs no NFS), and load the schedule from `jobs.yaml` (below). A
+finished one-off job deletes itself, so the same command reruns it:
 
 ```sh
 toolforge jobs run migrate --image tool-mna/tool-mna:latest \
   --command "node scripts/migrate.ts" --wait
 ```
+
+### Loading the job schedule
+
+With no checkout on the bastion, `jobs.yaml` isn't there either: fetch it from
+`main` on GitHub, then load it. Run this as the tool (`become mna`) whenever
+`jobs.yaml` changes:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/connorshea/mergers-and-acquisitions/main/jobs.yaml \
+  -o ~/jobs.yaml && toolforge jobs load ~/jobs.yaml
+```
+
+`load` recreates every job whose definition changed, which kills a run of it
+that's in progress, so don't load while the `import-dump-*` shards are running
+(check `toolforge jobs list`). It stops at the first job it can't create, so
+read its output to the end. GitHub's raw file can lag a merge by a few minutes.
 
 Job and Procfile commands call `node` directly rather than `npm run …`: the
 launch image has npm but not pnpm, and npm 11 refuses to run scripts because

@@ -1,5 +1,5 @@
 // Integration tests for the HTTP API (candidates list/detail/dismiss/reopen,
-// reset, hunt trigger, API 404s) against a real MariaDB. Opt-in via DB_TEST=1 —
+// API 404s) against a real MariaDB. Opt-in via DB_TEST=1 —
 // see test/global-setup.ts for the database selection + migration.
 import { afterAll, beforeEach, describe, expect, it } from "vite-plus/test";
 import { eq } from "drizzle-orm";
@@ -13,8 +13,6 @@ import type {
   CandidateDismissResponse,
   CandidateListResponse,
   CandidateReopenResponse,
-  HuntTriggerResponse,
-  ResetResponse,
 } from "../src/lib/api-types.ts";
 import {
   DB_TEST,
@@ -34,7 +32,6 @@ const get = <T>(path: string) => request<T>(path);
 const post = <T>(path: string, headers: Record<string, string> = SAME_ORIGIN) =>
   request<T>(path, { method: "POST", headers });
 
-const ADMIN_ID = 42;
 const EDITOR_ID = 7;
 
 async function list(query = ""): Promise<CandidateListResponse> {
@@ -57,15 +54,12 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
   let beta: number; // Q40 -> Q30, 0.5, open, blocker
   let orphan: number; // Q60 -> Q50, 0.7, dismissed, items missing
 
-  // Session headers for a plain editor and for an ADMIN_USERS member.
+  // Session headers for a plain (non-admin) editor.
   let editor: Record<string, string>;
-  let admin: Record<string, string>;
 
   beforeEach(async () => {
-    process.env.ADMIN_USERS = String(ADMIN_ID);
     await truncateAll();
     editor = await loginAs(EDITOR_ID, "Editor");
-    admin = await loginAs(ADMIN_ID, "Admin");
     await insertItem(
       makeItem(
         "Q10",
@@ -315,39 +309,8 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
     });
   });
 
-  describe("POST /api/reset", () => {
-    it("is admin-only", async () => {
-      expect((await post("/api/reset")).status).toBe(401);
-      expect((await post("/api/reset", editor)).status).toBe(403);
-      expect((await list()).total).toBe(2);
-    });
-
-    it("deletes every candidate regardless of status", async () => {
-      const { body } = await post<ResetResponse>("/api/reset", admin);
-      expect(body).toEqual({ deleted: 3 });
-      expect((await list()).total).toBe(0);
-      expect((await list("?status=dismissed")).total).toBe(0);
-    });
-  });
-
-  describe("POST /api/hunt", () => {
-    it("starts a hunt in the background that populates candidates", async () => {
-      await db.delete(mergeCandidates);
-      expect((await post("/api/hunt", editor)).status).toBe(403);
-      const { status, body } = await post<HuntTriggerResponse>("/api/hunt", admin);
-      expect(status).toBe(200);
-      expect(body.enqueued).toBe(true);
-      expect(body.message).toMatch(/^Hunt started/);
-      // Both same-label pairs (Q10/Q20, Q30/Q40) clear MIN_CONFIDENCE.
-      await expect.poll(async () => (await list()).total, { timeout: 15_000 }).toBe(2);
-    });
-  });
-
   it("returns JSON 404s for unknown API routes", async () => {
     expect(await get("/api/nope")).toEqual({ status: 404, body: { error: "Not found" } });
     expect((await post("/api/candidates/1/nope", editor)).status).toBe(404);
-    // The sync triggers are admin-only too.
-    expect((await post("/api/properties/sync")).status).toBe(401);
-    expect((await post("/api/properties/sync", editor)).status).toBe(403);
   });
 });

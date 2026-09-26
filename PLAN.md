@@ -45,8 +45,8 @@ column type, `datetime` handling — live in `CLAUDE.md`.)
 ## Repository layout
 
 ```
-server/        Hono app (app.ts, index.ts) + routers (candidates, edits,
-               actions, sync-routes); auth/ (OAuth login, sessions, tokens);
+server/        Hono app (app.ts, index.ts) + routers (candidates, edits);
+               auth/ (OAuth login, sessions, tokens);
                the Wikidata edit client (wikidata-client.ts); the Drizzle
                handle (db.ts) + connection config (db-config.ts); shared sync
                write paths (*-sync.ts); the hunt (hunt.ts).

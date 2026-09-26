@@ -544,9 +544,10 @@ a.chip-id:hover {
 }
 .list-head-row {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.75rem 1rem;
 }
 .list-head h1 {
   font-size: 1.6rem;
@@ -608,6 +609,7 @@ a.chip-id:hover {
 }
 .head-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
   align-items: center;
 }
@@ -627,17 +629,6 @@ a.chip-id:hover {
 .btn-secondary:disabled {
   opacity: 0.6;
   cursor: default;
-}
-.btn-hunt {
-  font: inherit;
-  font-weight: 600;
-  padding: 0.45rem 1rem;
-  border: 1px solid var(--identical);
-  border-radius: 6px;
-  background: var(--identical);
-  color: var(--surface);
-  cursor: pointer;
-  white-space: nowrap;
 }
 .col-actions {
   width: 1%;
@@ -662,14 +653,7 @@ a.chip-id:hover {
   opacity: 0.6;
   cursor: default;
 }
-.btn-hunt:hover:not(:disabled) {
-  filter: brightness(1.05);
-}
-.btn-hunt:disabled {
-  opacity: 0.6;
-  cursor: default;
-}
-/* "Manage" dropdown: maintenance actions (sync/reset) collapsed out of the header. */
+/* Dropdown menu on a native <details> (the type filter). */
 .menu {
   position: relative;
 }
@@ -688,6 +672,7 @@ a.chip-id:hover {
   display: flex;
   flex-direction: column;
   min-width: 13rem;
+  max-width: calc(100vw - 2rem);
   padding: 0.3rem;
   border: 1px solid var(--rule);
   border-radius: 8px;
@@ -711,16 +696,6 @@ a.chip-id:hover {
 .menu-panel button:disabled {
   opacity: 0.6;
   cursor: default;
-}
-.menu-panel button.menu-danger {
-  color: var(--distinct);
-}
-.menu-panel button.menu-danger:hover:not(:disabled) {
-  background: var(--distinct);
-  color: var(--surface);
-}
-.hunt-note {
-  margin-top: 0.6rem;
 }
 .list-warning {
   width: fit-content;
@@ -1031,9 +1006,10 @@ a.chip-id:hover {
 }
 .detail-nav {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.75rem 1rem;
   margin: 0 0 1rem;
 }
 .detail-back {
@@ -1115,6 +1091,7 @@ a.chip-id:hover {
 .detail-actions {
   margin-left: auto;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
 }
@@ -1336,4 +1313,158 @@ a.auth-login {
 }
 .login-hint a {
   color: var(--focus);
+}
+
+/* ---------- Narrow screens ---------- */
+@media (max-width: 640px) {
+  /* Header: the signed-in user takes its own row under the title, on the right. */
+  .head-actions {
+    width: 100%;
+  }
+  .head-actions .auth-bar {
+    margin-left: auto;
+  }
+  /* Filters: one control per row, each full-width, with Search filling the
+     last row beside any Clear/spinner. */
+  .list-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .search-input {
+    flex: none;
+  }
+  .field .creator-input {
+    width: 100%;
+  }
+  .type-filter > summary {
+    display: flex;
+    justify-content: space-between;
+    /* Match the 16px selects beside it (see the iOS focus-zoom rule below). */
+    font-size: 16px;
+  }
+  .list-actions {
+    margin-left: 0;
+  }
+  .list-actions button[type="submit"] {
+    flex: 1;
+  }
+  /* The type filter is full-width now, so its panel matches it. */
+  .type-filter-panel {
+    left: 0;
+    right: 0;
+    min-width: 0;
+    max-width: none;
+  }
+  .type-filter-panel label {
+    white-space: normal;
+  }
+
+  /* Candidates list: each row becomes a card — the pair across the top, then
+     confidence, flags and Dismiss on one line beneath. */
+  .ledger.candidates,
+  .ledger.candidates tbody {
+    display: block;
+    min-width: 0;
+  }
+  .ledger.candidates thead {
+    display: none;
+  }
+  .ledger.candidates tbody tr {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    column-gap: 0.6rem;
+    padding: 0.7rem 0.9rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .ledger.candidates tbody tr:last-child {
+    border-bottom: none;
+  }
+  .ledger.candidates td {
+    display: block;
+    width: auto;
+    padding: 0;
+    border-bottom: none;
+  }
+  .ledger.candidates .col-pair {
+    grid-column: 1 / -1;
+    margin-bottom: 0.5rem;
+  }
+  .btn-row-dismiss {
+    min-height: 2.25rem;
+  }
+
+  /* Detail summary: one column — score, then each reason and each action
+     full-width. */
+  .detail-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  .detail-reasons {
+    flex-direction: column;
+  }
+  .detail-reasons li {
+    border-radius: 6px;
+    padding: 0.3rem 0.6rem;
+  }
+  .detail-actions {
+    margin-left: 0;
+  }
+  .detail-actions > button {
+    flex: 1 1 100%;
+    min-height: 2.75rem;
+  }
+
+  /* Comparison ledger: the property name spans the row, with the two items'
+     values side by side beneath it, so both stay on screen without scrolling. */
+  .ledger:not(.candidates),
+  .ledger:not(.candidates) thead,
+  .ledger:not(.candidates) tbody {
+    display: block;
+    min-width: 0;
+  }
+  .ledger:not(.candidates) tr {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--rule);
+  }
+  .ledger:not(.candidates) tbody tr:last-child {
+    border-bottom: none;
+  }
+  .ledger:not(.candidates) th,
+  .ledger:not(.candidates) td {
+    display: block;
+    width: auto;
+    min-width: 0;
+    padding: 0.5rem 0.7rem;
+    border-bottom: none;
+    overflow-wrap: anywhere;
+  }
+  .ledger:not(.candidates) th.col-prop {
+    display: none;
+  }
+  .ledger:not(.candidates) td.col-prop {
+    grid-column: 1 / -1;
+    padding-bottom: 0.1rem;
+    border-right: none;
+  }
+  .ledger:not(.candidates) .col-name {
+    display: block;
+    margin-left: 0;
+  }
+  .ledger:not(.candidates) .chip {
+    max-width: 100%;
+    flex-wrap: wrap;
+  }
+}
+
+/* iOS Safari zooms the page in when focusing a text field or select whose font
+   is under 16px; keep them at 16px wherever that can happen. */
+@media (max-width: 640px), (pointer: coarse) {
+  .search-input,
+  .field select,
+  .field .creator-input {
+    font-size: 16px;
+  }
 }

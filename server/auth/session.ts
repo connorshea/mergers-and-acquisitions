@@ -1,7 +1,7 @@
 // Cookie-backed server-side sessions. The cookie carries an opaque random
 // token; the `sessions` row is keyed on its SHA-256. `sessionMiddleware`
 // resolves the cookie to a user on every /api request and exposes it as
-// `c.get("user")`; `requireUser` / `requireAdmin` gate individual routes.
+// `c.get("user")`; `requireUser` gates individual routes.
 import type { Context, MiddlewareHandler } from "hono";
 import { deleteCookie, getCookie, setCookie } from "hono/cookie";
 import { and, eq, lt, notExists } from "drizzle-orm";
@@ -103,7 +103,7 @@ export async function pruneExpiredSessions(
 /**
  * Resolve the session cookie (if any) to a user. Never rejects a request on
  * its own: a missing, expired, or unknown session just yields `user: null`
- * (and clears the stale cookie). Gating is `requireUser` / `requireAdmin`.
+ * (and clears the stale cookie). Gating is `requireUser`.
  */
 export const sessionMiddleware: MiddlewareHandler<AuthEnv> = async (c, next) => {
   c.set("user", null);
@@ -175,13 +175,5 @@ function isAdminId(id: number): boolean {
 /** 401 unless a user is logged in. */
 export const requireUser: MiddlewareHandler<AuthEnv> = async (c, next) => {
   if (!c.get("user")) return c.json({ error: "Login required" }, 401);
-  await next();
-};
-
-/** 401 when logged out, 403 unless the user is in ADMIN_USERS. */
-export const requireAdmin: MiddlewareHandler<AuthEnv> = async (c, next) => {
-  const user = c.get("user");
-  if (!user) return c.json({ error: "Login required" }, 401);
-  if (!user.isAdmin) return c.json({ error: "Admin access required" }, 403);
   await next();
 };

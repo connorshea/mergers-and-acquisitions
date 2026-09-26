@@ -38,17 +38,17 @@ Layout:
 
 - `server/` — the Hono app (`app.ts`, listener in `index.ts`) and its routers
   (`candidates.ts`, `edits.ts` for the Wikidata merge / "different from"
-  endpoints, `actions.ts`, `sync-routes.ts`; `candidate-summary.ts` holds the
+  endpoints; `candidate-summary.ts` holds the
   shared wire shape); the Wikidata Action API edit client
   (`wikidata-client.ts`: token refresh, asserted CSRF token, `maxlag`/`badtoken`
   retries, error mapping) and the per-user edit `rate-limit.ts`; the Drizzle
-  handle (`db.ts`) + connection config (`db-config.ts`); the shared sync write
+  handle (`db.ts`) + connection config (`db-config.ts`); the sync write
   paths (`*-sync.ts`); the hunt (`hunt.ts`, scan→score→upsert in one pass); and
   the dump import (`dump-import.ts`: streams the Wikidata entity JSON dump from
   Toolforge's `/public/dumps` NFS mount, pre-filters on `"numeric-id":7889`,
   upserts items + external ids + properties, prunes what left the dump).
 - `server/auth/` — Wikimedia OAuth 2.0 login (`oauth.ts` routes), cookie
-  sessions + `requireUser`/`requireAdmin` (`session.ts`), encrypted token
+  sessions + `requireUser` (`session.ts`), encrypted token
   storage + refresh (`tokens.ts`, `crypto.ts`), and the same-origin CSRF guard.
   Config is read from env on each call (`config.ts`); see `.env.example`.
   Every Wikidata edit attempt lands in the `wikidata_edits` audit table.

@@ -5,6 +5,7 @@ import { useAuth } from "../lib/auth-context.ts";
 import { loginUrl } from "../lib/auth-url.ts";
 import { listHref } from "../lib/list-state.ts";
 import AuthBar from "../AuthBar.tsx";
+import Dialog from "../Dialog.tsx";
 import { LogoMark } from "../Logo.tsx";
 import MergeCandidates from "../MergeCandidates.tsx";
 import {
@@ -641,42 +642,5 @@ function ReasonText({
         );
       })}
     </>
-  );
-}
-
-// A minimal modal shell. Closes on backdrop click or Escape (callers pass a
-// no-op `onClose` while a request is in flight).
-function Dialog({
-  title,
-  wide,
-  onClose,
-  children,
-}: {
-  title: string;
-  wide?: boolean;
-  onClose: () => void;
-  children: ReactNode;
-}) {
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, [onClose]);
-
-  return (
-    <div className="modal-backdrop" onClick={onClose}>
-      <div
-        className={`modal${wide ? " is-wide" : ""}`}
-        role="dialog"
-        aria-modal="true"
-        aria-label={title}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <h2 className="modal-title">{title}</h2>
-        {children}
-      </div>
-    </div>
   );
 }

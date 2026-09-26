@@ -7,8 +7,8 @@
 # These replace the Void crons/ + queues/ pipeline:
 #   crons/sync-*.ts        -> the scheduled sync-* jobs
 #   crons/ + queues/ hunt  -> the single scheduled `hunt` job (server/hunt.ts)
-# The initial dump load is `import-dump` run once by hand (see README); the same
-# job then runs weekly to pick up the new dump.
+# The initial dump load is the `import-dump-1..4` shards run once by hand (see
+# README); the same jobs then run weekly to pick up the new dump.
 #
 # Commands call `node` directly rather than `npm run job:*`: the launch image
 # has npm but not pnpm, and npm 11 refuses to run scripts when package.json's
@@ -37,27 +37,62 @@
   schedule: "45 2 * * *" # nightly 02:45 UTC
   emails: onfailure
 
-# Rebuild the item mirror from the weekly Wikidata JSON dump. The dump is only
-# visible with `mount: all` (build-service images get no NFS by default); it
-# lands on Tuesdays, and a full pass takes a few hours on one CPU. Needs the
-# per-job maximum (1 CPU / 4Gi under the default tool quota).
+# Rebuild the item mirror from the weekly Wikidata JSON dump, split across
+# four jobs that each read a quarter of the file (`--shard i/4`, see the
+# README); whichever finishes last completes the set and prunes. The dump is
+# only visible with `mount: all` (build-service images get no NFS by default);
+# it lands on Tuesdays. Needs the raised tool quota: 4 x 2 CPUs.
 #
-# To split the pass across N jobs (needs a CPU quota increase, see the README),
-# replace this job with N copies named import-dump-1..N whose commands are
-# `node jobs/import-dump.ts --shard 1/N` … `--shard N/N`, on the same schedule.
-- name: import-dump
-  command: node --max-old-space-size=3072 jobs/import-dump.ts
+# Two CPUs per shard let the inflate (libuv threadpool) and the line scan
+# (main thread) run side by side instead of taking turns on one core; 4 x 2
+# CPUs finishes in ~35-40 min, sooner than 8 x 1 CPU (~50 min, paced by
+# shards doubled up on busy nodes). Each shard stays under ~300 MB RSS.
+#
+# Retry once so a shard killed by a node drain restarts rather than waiting a
+# week (the import is idempotent and never prunes on an incomplete set); the
+# timeout catches a stuck shard before it collides with the next nightly hunt.
+- name: import-dump-1
+  command: node --max-old-space-size=768 jobs/import-dump.ts --shard 1/4
   image: tool-mna/tool-mna:latest
   schedule: "0 6 * * 3" # Wednesdays 06:00 UTC
   mount: all
-  mem: 4Gi
-  cpu: 1
-  # A full pass is ~6-7 h at ~80 MB/s inflated on one CPU. Retry once so a run
-  # killed by a node drain restarts rather than waiting a week (the import is
-  # idempotent and never prunes on an incomplete pass); the timeout catches a
-  # stuck run before it collides with the next nightly hunt.
+  mem: 1Gi
+  cpu: 2
   retry: 1
-  timeout: 36000 # 10 h
+  timeout: 10800 # 3 h
+  emails: onfailure
+
+- name: import-dump-2
+  command: node --max-old-space-size=768 jobs/import-dump.ts --shard 2/4
+  image: tool-mna/tool-mna:latest
+  schedule: "0 6 * * 3" # Wednesdays 06:00 UTC
+  mount: all
+  mem: 1Gi
+  cpu: 2
+  retry: 1
+  timeout: 10800 # 3 h
+  emails: onfailure
+
+- name: import-dump-3
+  command: node --max-old-space-size=768 jobs/import-dump.ts --shard 3/4
+  image: tool-mna/tool-mna:latest
+  schedule: "0 6 * * 3" # Wednesdays 06:00 UTC
+  mount: all
+  mem: 1Gi
+  cpu: 2
+  retry: 1
+  timeout: 10800 # 3 h
+  emails: onfailure
+
+- name: import-dump-4
+  command: node --max-old-space-size=768 jobs/import-dump.ts --shard 4/4
+  image: tool-mna/tool-mna:latest
+  schedule: "0 6 * * 3" # Wednesdays 06:00 UTC
+  mount: all
+  mem: 1Gi
+  cpu: 2
+  retry: 1
+  timeout: 10800 # 3 h
   emails: onfailure
 
 - name: hunt

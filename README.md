@@ -104,8 +104,7 @@ runs read-only and the login link is hidden.
    signs the login-state cookie; `TOKEN_ENC_KEY` encrypts the stored OAuth
    tokens; `BASE_URL` is the public origin (cookies are `Secure` iff https).
 3. Optionally, put your own central user id in `ADMIN_USERS`; it only marks you
-   as "admin" in the header. The hunt, syncs, and dump import run as Toolforge
-   jobs (see below), not from the app.
+   as "admin" in the header.
 
 Session cookies are `HttpOnly; SameSite=Lax`, the DB stores only their hash, and
 state-changing API calls must carry a same-origin `Sec-Fetch-Site`/`Origin`. The

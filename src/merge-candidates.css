@@ -763,6 +763,10 @@ a.chip-id:hover {
   gap: 0.4rem;
   margin-left: auto;
 }
+/* Phones only: folds the filter fields away (see "Narrow screens"). */
+.filters-toggle {
+  display: none;
+}
 .list-actions .btn-clear {
   border-color: transparent;
   background: none;
@@ -1324,14 +1328,68 @@ a.auth-login {
   .head-actions .auth-bar {
     margin-left: auto;
   }
-  /* Filters: one control per row, each full-width, with Search filling the
-     last row beside any Clear/spinner. */
+  /* Filters: search and Search on the first row, then a Filters toggle (with
+     Clear beside it) that folds away the other fields, which open one per row,
+     full-width. The spinner gets its own row under them. */
   .list-controls {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr auto;
     align-items: stretch;
   }
   .search-input {
-    flex: none;
+    grid-row: 1;
+    grid-column: 1;
+  }
+  .list-actions {
+    display: contents;
+  }
+  .list-actions button[type="submit"] {
+    grid-row: 1;
+    grid-column: 2;
+  }
+  .filters-toggle {
+    grid-row: 2;
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+    font: inherit;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--ink);
+    text-align: left;
+    cursor: pointer;
+  }
+  .list-controls:has(.btn-clear) .filters-toggle {
+    grid-column: 1;
+  }
+  .list-actions .btn-clear {
+    grid-row: 2;
+    grid-column: 2;
+  }
+  .filters-toggle-summary {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--muted);
+  }
+  .filters-open .filters-toggle-caret {
+    transform: rotate(180deg);
+  }
+  .list-controls > .field {
+    grid-column: 1 / -1;
+  }
+  .list-controls:not(.filters-open) > .field {
+    display: none;
+  }
+  .list-actions .spinner {
+    grid-column: 1 / -1;
+    order: 1;
   }
   .field .creator-input {
     width: 100%;
@@ -1341,12 +1399,6 @@ a.auth-login {
     justify-content: space-between;
     /* Match the 16px selects beside it (see the iOS focus-zoom rule below). */
     font-size: 16px;
-  }
-  .list-actions {
-    margin-left: 0;
-  }
-  .list-actions button[type="submit"] {
-    flex: 1;
   }
   /* The type filter is full-width now, so its panel matches it. */
   .type-filter-panel {

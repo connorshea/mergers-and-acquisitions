@@ -181,6 +181,16 @@ export default function CandidatesList() {
   const types = typeParam.split(",").filter(Boolean);
   const page = Math.max(1, Number(params.get("page")) || 1);
   const hasFilters = q !== "" || creator !== "" || status !== "open" || types.length > 0;
+  // Phones only: the filter fields fold behind a toggle (CSS hides it on wider screens).
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const filterSummary = [
+    status[0].toUpperCase() + status.slice(1),
+    typeSummary(types),
+    SORT_LABELS[sort],
+    creator && `by ${creator}`,
+  ]
+    .filter(Boolean)
+    .join(" · ");
 
   // Remember the current view so the detail page's "Back to candidates" link
   // returns here. The one-shot `auth` param is stripped (and re-recorded) above.
@@ -299,7 +309,7 @@ export default function CandidatesList() {
       </header>
 
       <form
-        className="list-controls"
+        className={filtersOpen ? "list-controls filters-open" : "list-controls"}
         onSubmit={(e) => {
           e.preventDefault();
           const form = new FormData(e.currentTarget);
@@ -322,6 +332,18 @@ export default function CandidatesList() {
           placeholder="Search by label…"
           aria-label="Search candidates by label"
         />
+        <button
+          type="button"
+          className="filters-toggle"
+          aria-expanded={filtersOpen}
+          onClick={() => setFiltersOpen((open) => !open)}
+        >
+          <span className="filters-toggle-label">Filters</span>
+          <span className="filters-toggle-summary">{filterSummary}</span>
+          <span className="filters-toggle-caret" aria-hidden="true">
+            ▾
+          </span>
+        </button>
         <label className="field">
           <span>Created by</span>
           <input

@@ -399,23 +399,21 @@ body {
 .col-a {
   border-right: 1px solid var(--rule);
 }
-/* A collapsed sitelink row's wikis, each a small tag linking to its page. */
+/* A collapsed sitelink row's wikis, each linking to its page (underlined like
+   the property ids below them). */
 .site-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.3rem;
+  gap: 0.1rem 0.6rem;
 }
-.site-link {
-  padding: 0 0.4rem;
-  border: 1px solid var(--rule);
-  border-radius: 4px;
-  font-size: 0.85rem;
-  color: var(--ink);
-  text-decoration: none;
+a.site-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-underline-offset: 2px;
 }
 a.site-link:hover {
-  border-color: var(--muted);
-  background: var(--bg);
+  text-decoration-color: currentColor;
 }
 .prop-label {
   font-weight: 500;

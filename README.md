@@ -4,8 +4,9 @@
 
 Compares two Wikidata items and groups their labels, aliases, sitelinks and
 statements into identical / similar / distinct / one-sided, flagging anything
-that would block a merge. Currently runs on dummy data in
-`src/MergeCandidates.tsx` (`EXAMPLES`).
+that would block a merge. Candidate pairs come from a nightly hunt over a local
+mirror of Wikidata items (loaded from the weekly entity dump); logged-in users
+review them and merge or mark them as different, editing Wikidata directly.
 
 ## Toolchain
 
@@ -51,10 +52,13 @@ pnpm start             # run the production server (serves API + dist/client)
 
 pnpm db:generate       # generate a migration from db/schema.ts (drizzle-kit)
 pnpm db:migrate        # apply pending migrations
-pnpm seed              # load the dump into the DB
+pnpm seed              # load the vglist SPARQL dump into the DB (quick dev DB)
+pnpm import-items Q1 Q2 # import specific items live from Special:EntityData
 
+pnpm job:import-dump   # load the mirror from the Wikidata entity JSON dump
 pnpm job:hunt          # run the duplicate-candidate hunt once
 pnpm job:sync-properties / :sync-entity-labels
+pnpm job:resolve-sitelinks / :resolve-creations
 pnpm job:prune-sessions # delete expired login sessions
 ```
 
@@ -159,7 +163,9 @@ consumer must list `testwikidatawiki`; QIDs there won't match the mirror).
 
 `pnpm job:import-dump` (`jobs/import-dump.ts` → `server/dump-import.ts`) streams
 the Wikidata **entity JSON dump** once and upserts every item whose `instance of`
-(best rank) is _video game_ (Q7889), together with its external ids and the
+(best rank) is one of the classes in `src/lib/import-classes.ts` (video games,
+films and TV series, music, anime and manga, companies, …; exact QIDs, no
+subclasses), together with its external ids and the
 `properties` table (labels, datatypes, formatter URLs). Items carry their
 descriptions, aliases and sitelinks (so there is no separate description sync:
 until the first full pass has run, the comparison view shows no descriptions),
@@ -171,7 +177,7 @@ On Toolforge the dump is on the read-only NFS mount, which a build-service job
 only sees with `--mount all`:
 
 ```sh
-# quick timing/validation run: stop after 2000 games, no pruning
+# quick timing/validation run: stop after 2000 items, no pruning
 toolforge envvars create DUMP_LIMIT 2000
 toolforge jobs run import-dump-test --image tool-mna/tool-mna:latest \
   --command "node --max-old-space-size=3072 jobs/import-dump.ts" --mount all --mem 4Gi --cpu 1 --emails onfinish
@@ -264,7 +270,7 @@ Then apply migrations as a one-off job, load the mirror with the `import-dump`
 job above, start the web service (`toolforge webservice buildservice start
 --mount none`; the build service requires an explicit mount flag, and the web
 process needs no NFS), and load the schedule with `toolforge jobs load
-jobs.yaml` (set the image name in `jobs.yaml` first). One-off jobs keep their
+jobs.yaml`. One-off jobs keep their
 name after finishing, so `toolforge jobs delete migrate` before rerunning:
 
 ```sh

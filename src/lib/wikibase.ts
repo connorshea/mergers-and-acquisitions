@@ -51,6 +51,22 @@ const termMap = (o?: Record<string, { value: string }>): Record<string, string> 
 
 // ---------- snaks / statements -> Value ----------
 
+/**
+ * Blank the calendar parts a time value doesn't actually specify. Wikidata
+ * usually stores a year-precision date as `+1977-01-01T00:00:00Z` with
+ * `precision: 9`, so the "01"s are filler, not January 1st. Comparison and
+ * display read an unspecified part as "00" (`+1977-00-00`), so normalize to
+ * that here: precision 9 (year) or coarser zeroes month and day, 10 (month)
+ * zeroes the day.
+ */
+export function timeAtPrecision(time: string, precision?: number): string {
+  if (precision === undefined || precision >= 11) return time;
+  const m = /^([+-]?\d+)-(\d\d)-(\d\d)(.*)$/.exec(time);
+  if (!m) return time;
+  const [, y, mo, , rest] = m;
+  return precision === 10 ? `${y}-${mo}-00${rest}` : `${y}-00-00${rest}`;
+}
+
 /** Convert one snak into a scorer Value. Preserves Wikidata's special snak
  * types: "somevalue" (unknown value) and "novalue" (explicit no value). */
 export function snakValue(snak: Snak): Value | null {
@@ -61,8 +77,10 @@ export function snakValue(snak: Snak): Value | null {
   switch (type) {
     case "wikibase-entityid":
       return { type: "item", value: (value as { id: string }).id };
-    case "time":
-      return { type: "time", value: (value as { time: string }).time };
+    case "time": {
+      const t = value as { time: string; precision?: number };
+      return { type: "time", value: timeAtPrecision(t.time, t.precision) };
+    }
     case "quantity": {
       // Amounts are signed decimal strings ("+1"); drop the redundant "+" so
       // they read (and compare) like the SPARQL path's plain literals. The

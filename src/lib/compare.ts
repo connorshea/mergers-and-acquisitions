@@ -748,11 +748,29 @@ const WEAK_ID_PROPS = new Set<string>([
   "P6634", // LinkedIn personal profile ID
   "P1581", // official blog URL
   "P3185", // VK username
+  "P3579", // Sina Weibo user ID
+  "P11245", // YouTube handle
+  "P6455", // Bilibili UID
+  "P5797", // Twitch username
+  "P2037", // GitHub account
+  "P12361", // Bluesky handle
+  "P3943", // Tumblr username
+  "P11079", // Linktree ID
+  "P4175", // Patreon ID
+  "P4033", // Mastodon address
+  "P11892", // Threads username
+  "P7650", // WeChat ID
+  "P11705", // Facebook numeric ID
+  "P2847", // Google+ ID
   // Series/franchise-level catalogue IDs — one page often covers a whole series,
   // so a shared value doesn't mean two items are the same *title* (e.g. a game
-  // and its sequel share a TV Tropes or speedrun.com page).
+  // and its sequel share a TV Tropes or speedrun.com page, a subreddit, a Fandom
+  // wiki or a Discord server).
   "P6839", // TV Tropes ID
   "P6783", // speedrun.com game ID
+  "P3984", // subreddit
+  "P4073", // Fandom wiki ID (one wiki per franchise; P6262 article ID stays per-title)
+  "P9078", // Discord invite ID
   // Name-derived slugs: the id is the name itself, so two different acts with
   // the same name get the same one (e.g. both bands called The Radiators are
   // Billboard "the-radiators").

@@ -22,7 +22,11 @@ export interface ImportClassGroup {
 export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
   {
     name: "WikiProject Anime and Manga",
-    classes: [{ qid: "Q63952888", label: "anime television series" }],
+    classes: [
+      { qid: "Q63952888", label: "anime television series" },
+      { qid: "Q21198342", label: "manga series" },
+      { qid: "Q104213567", label: "light novel series" },
+    ],
   },
   {
     name: "WikiProject Companies",
@@ -54,6 +58,7 @@ export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
     classes: [
       { qid: VIDEO_GAME, label: "video game" },
       { qid: "Q7058673", label: "video game series" },
+      { qid: "Q209163", label: "expansion add-on" },
       { qid: "Q210167", label: "video game developer" },
       { qid: "Q1137109", label: "video game publisher" },
     ],

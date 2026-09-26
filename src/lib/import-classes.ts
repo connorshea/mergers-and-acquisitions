@@ -38,6 +38,14 @@ export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
     ],
   },
   {
+    name: "WikiProject Books",
+    classes: [
+      { qid: "Q7725634", label: "literary work" },
+      { qid: "Q47461344", label: "written work" },
+      { qid: "Q571", label: "book" },
+    ],
+  },
+  {
     name: "WikiProject Comics",
     classes: [
       { qid: "Q1004", label: "comic" },

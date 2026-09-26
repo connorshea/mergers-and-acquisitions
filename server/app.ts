@@ -10,8 +10,6 @@ import { Hono } from "hono";
 import { secureHeaders } from "hono/secure-headers";
 import { candidates } from "./candidates.ts";
 import { edits } from "./edits.ts";
-import { actions } from "./actions.ts";
-import { syncRoutes } from "./sync-routes.ts";
 import { authRoutes } from "./auth/oauth.ts";
 import { sameOriginOnly } from "./auth/same-origin.ts";
 import { type AuthEnv, sessionMiddleware } from "./auth/session.ts";
@@ -45,14 +43,12 @@ app.use("*", secureHeaders({ contentSecurityPolicy: CONTENT_SECURITY_POLICY }));
 // --- API ---
 // Every API request gets the session resolved (c.get("user")) and, if it is
 // state-changing, must come from this origin. Individual routes then gate with
-// requireUser / requireAdmin (server/auth/session.ts).
+// requireUser (server/auth/session.ts).
 app.use("/api/*", sameOriginOnly);
 app.use("/api/*", sessionMiddleware);
 app.route("/api/auth", authRoutes); // /api/auth/{login,callback,logout,me}
 app.route("/api/candidates", candidates);
 app.route("/api/candidates", edits); // /api/candidates/:id/{merge,different}
-app.route("/api", actions); // /api/hunt, /api/reset
-app.route("/api", syncRoutes); // /api/{properties,entity-labels,descriptions}/sync
 
 // An API route that fell through to here doesn't exist — return JSON, never the
 // SPA shell, so the client sees a real 404 instead of HTML.

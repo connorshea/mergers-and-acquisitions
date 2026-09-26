@@ -14,10 +14,6 @@ import {
   type CandidateStatus,
   type CandidateDismissResponse,
   type CandidateSummary,
-  type EntityLabelsSyncResponse,
-  type HuntTriggerResponse,
-  type PropertiesSyncResponse,
-  type ResetResponse,
 } from "../lib/api-types.ts";
 
 const PAGE_SIZE = 25;
@@ -196,25 +192,8 @@ export default function CandidatesList() {
   const [data, setData] = useState<CandidateListResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  // Bumping this refetches the list without changing any URL param — used to
-  // pull in candidates the hunt job produced after it was triggered.
-  const [reloadKey, setReloadKey] = useState(0);
-  const [hunt, setHunt] = useState<{ running: boolean; note: string | null }>({
-    running: false,
-    note: null,
-  });
-  const [syncing, setSyncing] = useState(false);
-  const [syncingValues, setSyncingValues] = useState(false);
-  const [resetting, setResetting] = useState(false);
   // Candidates dismissed in-place this session, hidden without a full refetch.
   const [dismissedIds, setDismissedIds] = useState<Set<number>>(new Set());
-  const menuRef = useRef<HTMLDetailsElement>(null);
-  const closeMenu = () => {
-    if (menuRef.current) menuRef.current.open = false;
-  };
-
-  useDismissableMenu(menuRef);
-
   useEffect(() => {
     let cancelled = false;
     async function load() {
@@ -245,87 +224,7 @@ export default function CandidatesList() {
     return () => {
       cancelled = true;
     };
-  }, [q, creator, status, sort, typeParam, page, reloadKey]);
-
-  async function runHunt() {
-    setHunt({ running: true, note: null });
-    try {
-      const res = await fetch("/api/hunt", { method: "POST" });
-      setHunt({ running: false, note: (res as HuntTriggerResponse).message });
-      // The queue processes asynchronously; refetch shortly so freshly scored
-      // pairs show up without a manual reload.
-      setTimeout(() => setReloadKey((k) => k + 1), 2500);
-    } catch (e: unknown) {
-      setHunt({
-        running: false,
-        note: e instanceof FetchError ? `Hunt failed (${e.status}).` : "Hunt failed.",
-      });
-    }
-  }
-
-  async function syncProperties() {
-    setSyncing(true);
-    setHunt({ running: false, note: null });
-    try {
-      const res = await fetch("/api/properties/sync", { method: "POST" });
-      const { synced } = res as PropertiesSyncResponse;
-      setHunt({ running: false, note: `Synced ${synced.toLocaleString()} property names.` });
-    } catch (e: unknown) {
-      setHunt({
-        running: false,
-        note:
-          e instanceof FetchError ? `Property sync failed (${e.status}).` : "Property sync failed.",
-      });
-    } finally {
-      setSyncing(false);
-    }
-  }
-
-  async function syncValueNames() {
-    setSyncingValues(true);
-    setHunt({ running: false, note: null });
-    try {
-      const res = await fetch("/api/entity-labels/sync", { method: "POST" });
-      const { synced, failed } = res as EntityLabelsSyncResponse;
-      const skipped =
-        failed > 0 ? ` Skipped ${failed.toLocaleString()} after repeated failures.` : "";
-      setHunt({ running: false, note: `Synced ${synced.toLocaleString()} value names.${skipped}` });
-    } catch (e: unknown) {
-      setHunt({
-        running: false,
-        note: e instanceof FetchError ? `Value sync failed (${e.status}).` : "Value sync failed.",
-      });
-    } finally {
-      setSyncingValues(false);
-    }
-  }
-
-  async function resetCandidates() {
-    const ok = window.confirm(
-      "Delete ALL found merge candidates (including dismissed ones) so the hunt " +
-        "can run from scratch?\n\nThis does not touch synced items, only the " +
-        "candidate list. This cannot be undone.",
-    );
-    if (!ok) return;
-    setResetting(true);
-    setHunt({ running: false, note: null });
-    try {
-      const res = await fetch("/api/reset", { method: "POST" });
-      const { deleted } = res as ResetResponse;
-      setHunt({
-        running: false,
-        note: `Cleared ${deleted.toLocaleString()} candidates. Run the hunt to rebuild.`,
-      });
-      setReloadKey((k) => k + 1);
-    } catch (e: unknown) {
-      setHunt({
-        running: false,
-        note: e instanceof FetchError ? `Reset failed (${e.status}).` : "Reset failed.",
-      });
-    } finally {
-      setResetting(false);
-    }
-  }
+  }, [q, creator, status, sort, typeParam, page]);
 
   // Dismiss straight from the list; the row hides itself on success.
   async function dismissCandidate(id: number): Promise<void> {
@@ -383,54 +282,9 @@ export default function CandidatesList() {
             </span>
           </h1>
           <div className="head-actions">
-            {/* The hunt and the maintenance actions (sync/reset) are admin-only
-                on the server (ADMIN_USERS); only offer the controls to admins. */}
-            {user?.isAdmin && (
-              <button type="button" className="btn-hunt" onClick={runHunt} disabled={hunt.running}>
-                {hunt.running ? "Starting hunt…" : "Run hunt"}
-              </button>
-            )}
-            {user?.isAdmin && (
-              <details className="menu" ref={menuRef}>
-                <summary className="btn-secondary" aria-label="Maintenance actions">
-                  Manage ▾
-                </summary>
-                <div className="menu-panel" role="menu" onClick={closeMenu}>
-                  <button
-                    type="button"
-                    role="menuitem"
-                    onClick={syncProperties}
-                    disabled={syncing}
-                    title="Fetch human-readable property names from Wikidata"
-                  >
-                    {syncing ? "Syncing property names…" : "Sync property names"}
-                  </button>
-                  <button
-                    type="button"
-                    role="menuitem"
-                    onClick={syncValueNames}
-                    disabled={syncingValues}
-                    title="Fetch human-readable labels for item values (genre, platform, …)"
-                  >
-                    {syncingValues ? "Syncing value names…" : "Sync value names"}
-                  </button>
-                  <button
-                    type="button"
-                    role="menuitem"
-                    className="menu-danger"
-                    onClick={resetCandidates}
-                    disabled={resetting}
-                    title="Delete all found candidates so the hunt can run from scratch"
-                  >
-                    {resetting ? "Resetting…" : "Reset candidates"}
-                  </button>
-                </div>
-              </details>
-            )}
             <AuthBar />
           </div>
         </div>
-        {hunt.note && <p className="list-msg hunt-note">{hunt.note}</p>}
         {authOutcome === "denied" && (
           <p className="list-msg is-error" role="alert">
             Login cancelled: the authorization request was declined by Wikidata.

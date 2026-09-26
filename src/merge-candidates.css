@@ -630,17 +630,6 @@ a.chip-id:hover {
   opacity: 0.6;
   cursor: default;
 }
-.btn-hunt {
-  font: inherit;
-  font-weight: 600;
-  padding: 0.45rem 1rem;
-  border: 1px solid var(--identical);
-  border-radius: 6px;
-  background: var(--identical);
-  color: var(--surface);
-  cursor: pointer;
-  white-space: nowrap;
-}
 .col-actions {
   width: 1%;
   text-align: right;
@@ -664,14 +653,7 @@ a.chip-id:hover {
   opacity: 0.6;
   cursor: default;
 }
-.btn-hunt:hover:not(:disabled) {
-  filter: brightness(1.05);
-}
-.btn-hunt:disabled {
-  opacity: 0.6;
-  cursor: default;
-}
-/* "Manage" dropdown: maintenance actions (sync/reset) collapsed out of the header. */
+/* Dropdown menu on a native <details> (the type filter). */
 .menu {
   position: relative;
 }
@@ -714,16 +696,6 @@ a.chip-id:hover {
 .menu-panel button:disabled {
   opacity: 0.6;
   cursor: default;
-}
-.menu-panel button.menu-danger {
-  color: var(--distinct);
-}
-.menu-panel button.menu-danger:hover:not(:disabled) {
-  background: var(--distinct);
-  color: var(--surface);
-}
-.hunt-note {
-  margin-top: 0.6rem;
 }
 .list-warning {
   width: fit-content;
@@ -1345,19 +1317,12 @@ a.auth-login {
 
 /* ---------- Narrow screens ---------- */
 @media (max-width: 640px) {
-  /* Header: the actions take their own row under the title, with the signed-in
-     user pushed to the right (it wraps onto a further row when it doesn't fit). */
+  /* Header: the signed-in user takes its own row under the title, on the right. */
   .head-actions {
     width: 100%;
   }
   .head-actions .auth-bar {
     margin-left: auto;
-  }
-  /* The Manage button sits at the left of that row now, so open its panel
-     rightward instead of off the left edge. */
-  .head-actions .menu-panel {
-    left: 0;
-    right: auto;
   }
   /* Type filter: anchor the panel to the whole controls row, full width, rather
      than to its button (which may sit mid-row). */

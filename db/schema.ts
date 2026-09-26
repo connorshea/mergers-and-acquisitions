@@ -330,7 +330,7 @@ export const oauthTokens = mysqlTable("oauth_tokens", {
 // One row per edit *attempt* against Wikidata (a merge, or one direction of a
 // "different from" claim), success or failure, so there is an audit trail of
 // what the tool did under whose account and which revisions it produced.
-// `candidateId` is not a foreign key: /api/reset deletes candidates and the
+// `candidateId` is not a foreign key: the hunt prunes candidates and the
 // history should outlive that. Revision ids are bigint — Wikidata's are past
 // 2^31 already.
 export const wikidataEdits = mysqlTable(

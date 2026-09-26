@@ -14,7 +14,7 @@
 // Worker's CPU/subrequest limits. Toolforge has no managed queue and no such
 // limits, so the whole thing collapses into this single function: blocking
 // query → expand to pairs → score inline → upsert. It runs as jobs/hunt.ts on a
-// schedule and is also fired (unawaited) by POST /api/hunt.
+// schedule.
 //
 // All writes are idempotent upserts, so re-running is always safe, and a pair a
 // human already resolved (dismissed/merged, or mid-merge) is never rescored or resurrected

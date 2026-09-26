@@ -171,28 +171,6 @@ export interface EditErrorResponse {
     | "wikidata-error";
 }
 
-export interface HuntTriggerResponse {
-  enqueued: boolean;
-  message: string;
-}
-
-export interface PropertiesSyncResponse {
-  /** Number of property labels fetched and upserted. */
-  synced: number;
-}
-
-export interface EntityLabelsSyncResponse {
-  /** Number of item/value labels fetched and upserted. */
-  synced: number;
-  /** Referenced QIDs skipped after repeated lookup failures. */
-  failed: number;
-}
-
-export interface ResetResponse {
-  /** Number of merge candidates deleted. */
-  deleted: number;
-}
-
 /** The logged-in user as exposed to the client (never tokens). */
 export interface AuthUserInfo {
   id: number;

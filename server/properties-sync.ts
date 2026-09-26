@@ -1,6 +1,5 @@
-// Shared server-side write path for the Wikidata property-label sync, used by
-// both the manual route (server/sync-routes.ts) and the scheduled job
-// (jobs/sync-properties.ts).
+// Server-side write path for the Wikidata property-label sync, run by the
+// scheduled job (jobs/sync-properties.ts).
 import { sql } from "drizzle-orm";
 import { db } from "./db.ts";
 import { properties } from "../db/schema.ts";

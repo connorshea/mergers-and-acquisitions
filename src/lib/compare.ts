@@ -494,16 +494,17 @@ export function buildRows(
     else if (clash && redirectsToPartner(b, a, wiki))
       note = `${b.id}'s page redirects to ${a.id}'s page. Merging will remove ${b.id}'s sitelink for you.`;
     else if (clash && targetA !== undefined && targetA === targetB)
-      note = `Both pages redirect to “${targetA}”. A real merge would need one removed first.`;
+      note = `Both pages redirect to “${targetA}”. One will need to be removed manually before merging.`;
     else if (clash && redirectA && redirectB)
-      note = "Both pages are redirects. A real merge would need one removed first.";
+      note = "Both pages are redirects. One will need to be removed manually before merging.";
     else if (clash && (redirectA || redirectB)) {
       const [id, target] = redirectA ? [a.id, targetA] : [b.id, targetB];
       note = target
-        ? `${id}'s page redirects to “${target}”, not the other item's page. A real merge would need one removed first.`
+        ? `${id}'s page redirects to “${target}”, not the other item's page. One will need to be removed manually before merging.`
         : `${id}'s page is a redirect (likely to the other page). Remove that sitelink before merging.`;
     } else if (clash)
-      note = "Two different pages on the same wiki. A real merge would need one removed first.";
+      note =
+        "Two different pages on the same wiki. One will need to be removed manually before merging.";
     rows.push({
       key: `sitelink:${wiki}`,
       label: wiki,

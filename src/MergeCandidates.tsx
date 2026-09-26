@@ -12,6 +12,7 @@ import {
   safeHttpUrl,
   sharedIdentifierProps,
 } from "./lib/compare.ts";
+import { describeDifference } from "./lib/text-difference.ts";
 import { sitelinkUrl, wikiPageUrl } from "./lib/wiki.ts";
 import { displayLabel } from "./lib/wikidata.ts";
 import type { ItemCreation } from "./lib/api-types.ts";
@@ -52,6 +53,19 @@ function displayValue(v: AnnotatedValue): string {
     if (m) return m[1].replace(/^\+/, "").replace(/-00$/, "").replace(/-00$/, "");
   }
   return v.value;
+}
+
+/**
+ * Caption for a row pairing one similar text value with one other: what the
+ * difference comes down to ("Punctuation only · 92% match"). Rows with several
+ * values a side would need one per pairing, so they keep the row note instead.
+ */
+function rowDiffCaption(r: Row): string | null {
+  const [a] = r.a;
+  const [b] = r.b;
+  if (r.a.length !== 1 || r.b.length !== 1) return null;
+  if (a.type !== "string" || b.type !== "string" || a.status !== "similar") return null;
+  return describeDifference(a.value, b.value);
 }
 
 function ValueChip({
@@ -457,6 +471,7 @@ export default function MergeCandidates({
                       // formatter URL; other kinds have none.
                       const formatter =
                         r.kind === "statement" ? propertyFormatters?.[r.key] : undefined;
+                      const diffCaption = rowDiffCaption(r);
                       return (
                         <tr
                           key={r.key}
@@ -507,7 +522,7 @@ export default function MergeCandidates({
                               )}
                             </div>
                             {r.note && <div className="prop-note">{r.note}</div>}
-                            {!r.note && r.a.concat(r.b).find((v) => v.note) && (
+                            {!r.note && !diffCaption && r.a.concat(r.b).find((v) => v.note) && (
                               <div className="prop-note">
                                 {r.a.concat(r.b).find((v) => v.note)!.note}
                               </div>
@@ -540,6 +555,7 @@ export default function MergeCandidates({
                                 />
                               ))
                             )}
+                            {diffCaption && <div className="diff-caption">{diffCaption}</div>}
                           </td>
                         </tr>
                       );

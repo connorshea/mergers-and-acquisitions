@@ -26,6 +26,14 @@ export interface Value {
   /** Human label for item values; ignored otherwise. */
   label?: string;
   /**
+   * Quantity values only: the QID of the unit (e.g. "Q7727" for minute).
+   * Absent for unitless quantities, and on the SPARQL path, whose `wdt:`
+   * literal carries only the amount.
+   */
+  unit?: string;
+  /** Human label for `unit`, backfilled for display like `label`. */
+  unitLabel?: string;
+  /**
    * QIDs of the *other* items this identifier is declared to also cover —
    * Wikidata's "identifier shared with" (P4070) qualifier on the statement. An
    * editor adds it when one external id (e.g. a MusicBrainz release group)
@@ -282,6 +290,8 @@ export function compareValues(x: Value, y: Value): [Status, string?] {
   // assertion of absence, so two of them agree.
   if (x.type === "somevalue") return ["distinct", "unknown value on both sides"];
   if (x.type === "novalue") return ["identical"];
+  // The same amount in different units (90 minutes vs 90 seconds) differs.
+  if (x.type === "quantity" && x.unit !== y.unit) return ["distinct"];
   if (x.value === y.value) return ["identical"];
 
   switch (x.type) {
@@ -366,7 +376,7 @@ export function compareSets(
  * PROPERTY_LABELS map and finally to the bare property id. `valueLabels` (Qxxx →
  * human label) backfills the display label of item-valued statements whose
  * label the sync didn't resolve, so genre/platform/etc. show a name instead of
- * a bare QID; it's ignored for non-item values.
+ * a bare QID, and likewise the unit of quantity values.
  */
 export function buildRows(
   a: Item,
@@ -376,12 +386,15 @@ export function buildRows(
 ): Row[] {
   const rows: Row[] = [];
 
-  // Backfill a display label for item values missing one, from valueLabels.
+  // Backfill a display label for item values missing one, and for quantity
+  // units, from valueLabels.
   const withLabels = (values: Value[]): Value[] =>
     values.map((v) =>
       v.type === "item" && !v.label && valueLabels[v.value]
         ? { ...v, label: valueLabels[v.value] }
-        : v,
+        : v.unit && !v.unitLabel && valueLabels[v.unit]
+          ? { ...v, unitLabel: valueLabels[v.unit] }
+          : v,
     );
 
   /**

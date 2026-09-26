@@ -53,6 +53,7 @@ function displayValue(v: AnnotatedValue): string {
     // Year/month precision arrives as "00" parts (+1987-00-00 → 1987).
     if (m) return m[1].replace(/^\+/, "").replace(/-00$/, "").replace(/-00$/, "");
   }
+  if (v.type === "quantity" && v.unit) return `${v.value} ${v.unitLabel ?? v.unit}`;
   return v.value;
 }
 

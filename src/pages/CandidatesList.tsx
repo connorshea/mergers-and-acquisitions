@@ -1,5 +1,5 @@
 import { type ReactNode, useEffect, useRef, useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { fetch, FetchError } from "../lib/client.ts";
 import { useAuth } from "../lib/auth-context.ts";
 import AuthBar from "../AuthBar.tsx";
@@ -523,8 +523,8 @@ function MoreFilters({ active, children }: { active: number; children: ReactNode
 
 /**
  * The reader-language filter: the user's languages (from settings) or any
- * language. A select like its neighbours; its last option opens the settings
- * page to choose or change them. Until some are chosen it can only show "Any".
+ * language, with a link beside the heading to choose or edit them. Until some
+ * are chosen there's nothing to pick between, so it only says so.
  */
 function LanguageFilter({
   languages,
@@ -535,24 +535,27 @@ function LanguageFilter({
   any: boolean;
   update: (next: Record<string, string | undefined>) => void;
 }) {
-  const navigate = useNavigate();
   const hasLanguages = languages.length > 0;
   return (
-    <label className="field">
-      <span>Languages</span>
-      <select
-        value={hasLanguages && !any ? "mine" : "any"}
-        onChange={(e) => {
-          if (e.target.value === "settings") void navigate("/settings");
-          else update({ lang: e.target.value === "any" ? "any" : undefined });
-        }}
-        title="Hide pairs that need a language you don't read to review (set in Settings)"
-      >
-        {hasLanguages && <option value="mine">Mine ({languages.join(", ")})</option>}
-        <option value="any">Any</option>
-        <option value="settings">{hasLanguages ? "Edit languages…" : "Choose languages…"}</option>
-      </select>
-    </label>
+    <div className="field">
+      <span className="field-head">
+        {hasLanguages ? <label htmlFor="language-filter">Languages</label> : <span>Languages</span>}
+        <Link to="/settings">Configure</Link>
+      </span>
+      {hasLanguages ? (
+        <select
+          id="language-filter"
+          value={any ? "any" : "mine"}
+          onChange={(e) => update({ lang: e.target.value === "any" ? "any" : undefined })}
+          title="Hide pairs that need a language you don't read to review"
+        >
+          <option value="mine">Mine ({languages.join(", ")})</option>
+          <option value="any">Any</option>
+        </select>
+      ) : (
+        <span className="field-note">Any language</span>
+      )}
+    </div>
   );
 }
 

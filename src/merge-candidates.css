@@ -836,6 +836,19 @@ a.chip-id:hover {
   text-overflow: ellipsis;
   vertical-align: bottom;
 }
+/* A field's heading with a link on the right (the language filter's "Configure"). */
+.field-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.field-head a {
+  color: var(--focus);
+}
+.field-note {
+  font-size: 0.9rem;
+  color: var(--ink);
+}
 .filter-count {
   display: inline-block;
   min-width: 1.3rem;

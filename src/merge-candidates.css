@@ -553,6 +553,39 @@ a.chip-id:hover {
   font-weight: 600;
   margin: 0;
 }
+.list-title {
+  display: flex;
+}
+.logo-lockup {
+  height: 3.5rem;
+  width: auto;
+}
+.logo-mark {
+  height: 1.6em;
+  width: auto;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+/* Themed logo variants: show the one matching the active color scheme, using
+   the same selectors as the color tokens above. Both sit in flex containers, so
+   the revealed `inline` is blockified. */
+.on-dark {
+  display: none;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .on-light {
+    display: none;
+  }
+  :root:not([data-theme="light"]) .on-dark {
+    display: inline;
+  }
+}
+:root[data-theme="dark"] .on-light {
+  display: none;
+}
+:root[data-theme="dark"] .on-dark {
+  display: inline;
+}
 .head-actions {
   display: flex;
   gap: 0.5rem;
@@ -978,6 +1011,8 @@ a.chip-id:hover {
   margin: 0 0 1rem;
 }
 .detail-back {
+  display: inline-flex;
+  align-items: center;
   color: var(--muted);
   text-decoration: none;
 }

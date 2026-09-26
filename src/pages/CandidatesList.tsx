@@ -3,6 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { fetch, FetchError } from "../lib/client.ts";
 import { useAuth } from "../lib/auth-context.ts";
 import AuthBar from "../AuthBar.tsx";
+import { LogoLockup } from "../Logo.tsx";
 import { IMPORT_CLASS_GROUPS, IMPORT_CLASS_OPTIONS } from "../lib/import-classes.ts";
 import { rememberListSearch } from "../lib/list-state.ts";
 import {
@@ -376,7 +377,9 @@ export default function CandidatesList() {
       <title>{pageTitle}</title>
       <header className="list-head">
         <div className="list-head-row">
-          <h1>M&A: A Merge Assistant</h1>
+          <h1 className="list-title">
+            <LogoLockup />
+          </h1>
           <div className="head-actions">
             {/* The hunt and the maintenance actions (sync/reset) are admin-only
                 on the server (ADMIN_USERS); only offer the controls to admins. */}

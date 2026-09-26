@@ -5,6 +5,7 @@ import { useAuth } from "../lib/auth-context.ts";
 import { loginUrl } from "../lib/auth-url.ts";
 import { listHref } from "../lib/list-state.ts";
 import AuthBar from "../AuthBar.tsx";
+import { LogoMark } from "../Logo.tsx";
 import MergeCandidates from "../MergeCandidates.tsx";
 import {
   AUTO_IGNORED_CONFLICTS,
@@ -157,7 +158,7 @@ export default function CandidateDetail() {
       <div className="detail-top">
         <nav className="detail-nav">
           <Link className="detail-back" to={listHref()}>
-            ← Back to candidates
+            <LogoMark />← Back to candidates
           </Link>
           <div className="detail-siblings">
             {data?.prevId != null ? (

@@ -1,0 +1,109 @@
+{
+  "pageid": 76802634,
+  "ns": 0,
+  "title": "Q77336223",
+  "lastrevid": 1076285854,
+  "modified": "2019-12-15T00:14:35Z",
+  "type": "item",
+  "id": "Q77336223",
+  "labels": {
+    "es": {
+      "language": "es",
+      "value": "Obras completas: novelas XIII (Fernán Caballero)"
+    }
+  },
+  "descriptions": {
+    "es": {
+      "language": "es",
+      "value": "Novela de la autora Fernán Caballero"
+    },
+    "en": {
+      "language": "en",
+      "value": "Novel by Fernán Caballero"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "Novel·la de Fernán Caballero"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5963e3cad5eee4ae1cffbefbac15327800b9a7e6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7725634,
+              "id": "Q7725634"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q77336223$B61ABFE8-CA01-454C-AA0D-FFAC0D3FA697",
+        "rank": "normal"
+      }
+    ],
+    "P50": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P50",
+          "hash": "df3c036a09146defab5c6d60f6d1b17266d637c8",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 291397,
+              "id": "Q291397"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q77336223$da9b9acd-478e-36ca-982d-20d55e799541",
+        "rank": "normal"
+      }
+    ],
+    "P3976": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3976",
+          "hash": "93e3f98146dc741f8973044b10ab0d9b10cadc3a",
+          "datavalue": {
+            "value": "885761",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q77336223$adf12bda-480a-04fb-ead4-00eff6bd68c5",
+        "rank": "normal"
+      }
+    ],
+    "P2799": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2799",
+          "hash": "0fb444b8354e2288861f71ef567a89e929498d88",
+          "datavalue": {
+            "value": "111",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q77336223$67e97255-4791-c2ae-8fbe-c0fc58ad2abd",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

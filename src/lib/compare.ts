@@ -1057,7 +1057,10 @@ function romanToInt(s: string): number | null {
  * A number closing a trailing bracketed group counts too, with the brackets
  * dropped: "Dove... quando... (parte II)" → { base: "dove... quando... parte",
  * num: 2 }. A four-digit year there is left alone — "Doom (2016)" is a
- * Wikipedia-style disambiguator, not an installment.
+ * Wikipedia-style disambiguator, not an installment. A bracket with no number
+ * is a qualifier, and a number just before it counts: "Obras completas:
+ * novelas V (Fernán Caballero)" → { base: "obras completas: novelas (fernán
+ * caballero)", num: 5 }.
  */
 export function installment(label: string): { base: string; num: number | null } {
   const norm = normalize(label.normalize("NFKC"));
@@ -1066,7 +1069,12 @@ export function installment(label: string): { base: string; num: number | null }
   const bracketed = norm.match(/^(.+?)\s*[([]([^()[\]]+)[)\]]$/);
   if (bracketed) {
     const inner = trailingInstallment(`${bracketed[1]} ${bracketed[2].trim()}`);
-    if (inner && inner.num < 1000) return inner;
+    if (inner) return inner.num < 1000 ? inner : { base: norm, num: null };
+    // No number inside: the bracket is a qualifier (an author, a medium), so the
+    // number may sit just before it. It stays in the base, so only labels
+    // qualified the same way read as one series.
+    const before = trailingInstallment(bracketed[1]);
+    if (before) return { base: `${before.base} (${bracketed[2].trim()})`, num: before.num };
   }
   return { base: norm, num: null };
 }

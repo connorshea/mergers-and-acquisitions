@@ -835,6 +835,15 @@ describe("installment / sequel detection", () => {
     // A bracketed year is a disambiguator, and a bracket without a number is kept.
     expect(installment("Doom (2016)")).toEqual({ base: "doom (2016)", num: null });
     expect(installment("Foo (Live)")).toEqual({ base: "foo (live)", num: null });
+    // A number just before a bracketed qualifier; the qualifier stays in the base.
+    expect(installment("Obras completas: novelas V (Fernán Caballero)")).toEqual({
+      base: "obras completas: novelas (fernán caballero)",
+      num: 5,
+    });
+    expect(installment("Portal 2 (video game)")).toEqual({
+      base: "portal (video game)",
+      num: 2,
+    });
   });
 
   it("recognizes same-base / different-number pairs as sequels", () => {
@@ -862,6 +871,19 @@ describe("installment / sequel detection", () => {
     const p1: Item = { ...base, id: "Q30124570", labels: { en: "Dove... quando... (parte I)" } };
     const p2: Item = { ...base, id: "Q30124841", labels: { en: "Dove... quando... (parte II)" } };
     expect(isSeriesSequelPair(p1, p2)).toBe(true);
+
+    // Q77336442 / Q77336223: volumes of a collected works, the author in parentheses.
+    const v5: Item = {
+      ...base,
+      id: "Q77336442",
+      labels: { es: "Obras completas: novelas V (Fernán Caballero)" },
+    };
+    const v13: Item = {
+      ...base,
+      id: "Q77336223",
+      labels: { es: "Obras completas: novelas XIII (Fernán Caballero)" },
+    };
+    expect(isSeriesSequelPair(v5, v13)).toBe(true);
   });
 });
 

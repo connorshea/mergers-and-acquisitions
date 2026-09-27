@@ -767,8 +767,11 @@ a.chip-id:hover {
 }
 /* A small basis so the extra "Clear filters" button (and a longer type-filter
    summary) fit on one row; it still grows to fill whatever space is left. */
-.search-input {
+.search-box {
   flex: 1 1 7rem;
+  min-width: 0;
+}
+.search-input {
   min-width: 0;
   font: inherit;
   padding: 0.4rem 0.6rem;
@@ -833,7 +836,7 @@ a.chip-id:hover {
   position: relative;
   display: flex;
 }
-.clearable-input .creator-input {
+.clearable-input input {
   flex: 1;
   padding-right: 1.9rem;
 }
@@ -1767,7 +1770,7 @@ a.auth-login {
     grid-template-columns: 1fr auto;
     align-items: stretch;
   }
-  .search-input {
+  .search-box {
     grid-row: 1;
     grid-column: 1;
   }

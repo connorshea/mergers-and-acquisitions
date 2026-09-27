@@ -1,4 +1,11 @@
-import { Fragment, type ReactNode, useEffect, useRef, useState } from "react";
+import {
+  Fragment,
+  type InputHTMLAttributes,
+  type ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { fetch, FetchError } from "../lib/client.ts";
 import { useAuth } from "../lib/auth-context.ts";
@@ -320,15 +327,15 @@ export default function CandidatesList() {
           update({ q: text("q"), creator: text("creator") });
         }}
       >
-        <input
-          // Uncontrolled: `key={q}` re-mounts it when the URL query changes
-          // (e.g. via back/forward or Clear) so it stays in sync without a
-          // state-sync effect.
-          key={q}
+        <ClearableInput
+          applied={q}
+          onClear={() => {
+            if (q) update({ q: undefined });
+          }}
+          clearLabel="Clear search"
+          wrapperClassName="search-box"
           className="search-input"
-          type="search"
           name="q"
-          defaultValue={q}
           placeholder="Search by label…"
           aria-label="Search candidates by label"
         />
@@ -487,57 +494,82 @@ export default function CandidatesList() {
 }
 
 /**
- * The "Created by" box, with a button that clears it once it has text (and
- * drops the filter, if one is applied). Unlike the search box it's controlled,
- * so the input keeps focus when clearing it changes the URL; the typed text
- * resets whenever the applied creator does (back/forward, Clear filters).
+ * The "Created by" box: drops the creator filter, if one is applied, when cleared.
  */
 function CreatorFilter({ creator, onClear }: { creator: string; onClear: () => void }) {
-  const [text, setText] = useState(creator);
-  const [applied, setApplied] = useState(creator);
-  if (creator !== applied) {
-    setApplied(creator);
-    setText(creator);
-  }
-  const inputRef = useRef<HTMLInputElement>(null);
   return (
     <div className="field">
       <label htmlFor="creator-filter">Created by</label>
-      <div className="clearable-input">
-        <input
-          ref={inputRef}
-          id="creator-filter"
-          className="creator-input"
-          type="search"
-          name="creator"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="Username"
-          title="Pairs where either item was created by this Wikidata user"
-        />
-        {text !== "" && (
-          <button
-            type="button"
-            className="clear-input"
-            aria-label="Clear creator"
-            title="Clear"
-            onClick={() => {
-              setText("");
-              onClear();
-              inputRef.current?.focus();
-            }}
-          >
-            <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
-              <path
-                d="M2 2l8 8M10 2l-8 8"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-              />
-            </svg>
-          </button>
-        )}
-      </div>
+      <ClearableInput
+        applied={creator}
+        onClear={onClear}
+        clearLabel="Clear creator"
+        id="creator-filter"
+        className="creator-input"
+        name="creator"
+        placeholder="Username"
+        title="Pairs where either item was created by this Wikidata user"
+      />
+    </div>
+  );
+}
+
+/**
+ * A search box with a button that clears it once it has text; `onClear` then
+ * drops the filter, if one is applied. It's controlled, so the input keeps
+ * focus when clearing it changes the URL; the typed text resets whenever the
+ * `applied` value does (back/forward, Clear filters).
+ */
+function ClearableInput({
+  applied,
+  onClear,
+  clearLabel,
+  wrapperClassName,
+  ...inputProps
+}: {
+  applied: string;
+  onClear: () => void;
+  clearLabel: string;
+  wrapperClassName?: string;
+} & Omit<InputHTMLAttributes<HTMLInputElement>, "type" | "value" | "defaultValue" | "onChange">) {
+  const [text, setText] = useState(applied);
+  const [synced, setSynced] = useState(applied);
+  if (applied !== synced) {
+    setSynced(applied);
+    setText(applied);
+  }
+  const inputRef = useRef<HTMLInputElement>(null);
+  return (
+    <div className={wrapperClassName ? `clearable-input ${wrapperClassName}` : "clearable-input"}>
+      <input
+        {...inputProps}
+        ref={inputRef}
+        type="search"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+      />
+      {text !== "" && (
+        <button
+          type="button"
+          className="clear-input"
+          aria-label={clearLabel}
+          title="Clear"
+          onClick={() => {
+            setText("");
+            onClear();
+            inputRef.current?.focus();
+          }}
+        >
+          <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+            <path
+              d="M2 2l8 8M10 2l-8 8"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+            />
+          </svg>
+        </button>
+      )}
     </div>
   );
 }

@@ -858,6 +858,17 @@ const LOW_ENTROPY_PROPS = new Set<string>([
   // Wikimedia maintenance: a WikiProject tags every item in its scope, so the
   // whole topic shares one value and a match says nothing about the pair.
   "P5008", // on focus list of Wikimedia project
+  // Person boilerplate. Sex and citizenship have a handful of values, and the
+  // mirror's humans are game people, most sharing a game occupation. Given and
+  // family names are the label restated, so two namesakes always agree on them
+  // and the name check already counted it.
+  "P21", // sex or gender
+  "P27", // country of citizenship
+  "P106", // occupation
+  "P735", // given name
+  "P734", // family name
+  "P1412", // languages spoken, written or signed
+  "P103", // native language
 ]);
 
 /**
@@ -949,6 +960,17 @@ function disjointCreators(a: Item, b: Item, pid: string): boolean {
   };
   return !va.some((x) => vb.some((y) => overlaps(x, y)));
 }
+
+/**
+ * Life dates that, matched to the day, are strong evidence two people are one:
+ * namesakes are common, a shared day of birth or death is not. Year- and
+ * month-precision matches get nothing extra (they still count as agreeing
+ * statements).
+ */
+const DAY_MATCH_DATES = [
+  { pid: "P569", bonus: 0.2, what: "date of birth" },
+  { pid: "P570", bonus: 0.15, what: "date of death" },
+] as const;
 
 /** Date properties compared for the release/founding/birth year gap. */
 const YEAR_GAP_PROPS = ["P577", "P571", "P569"] as const;
@@ -1539,6 +1561,22 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   if (stmtRows.length > 0 && agreeing.length > 0) {
     score += 0.2 * (agreeing.length / stmtRows.length);
     reasons.push(`${agreeing.length} of ${stmtRows.length} shared statements agree`);
+  }
+
+  // The same day of birth or death: any day-precision value the two share.
+  // Wikibase day precision fills month and day (`+1948-05-21T…`); coarser
+  // precisions zero them.
+  const dayDates = (item: Item, pid: string): string[] =>
+    (item.statements[pid] ?? [])
+      .filter((v) => v.type === "time" && /^[+-]?\d+-(?!00)\d\d-(?!00)\d\d/.test(v.value))
+      .map((v) => v.value);
+  for (const { pid, bonus, what } of DAY_MATCH_DATES) {
+    const bDates = dayDates(b, pid);
+    const shared = dayDates(a, pid).find((d) => bDates.includes(d));
+    if (shared) {
+      score += bonus;
+      reasons.push(`same ${what} (${shared.replace(/^\+/, "").slice(0, 10)})`);
+    }
   }
 
   // Publication-year disagreement. Take the closest pair of release years across

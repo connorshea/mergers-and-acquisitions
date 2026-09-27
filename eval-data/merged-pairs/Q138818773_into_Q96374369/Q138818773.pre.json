@@ -1,0 +1,697 @@
+{
+  "pageid": 132285028,
+  "ns": 0,
+  "title": "Q138818773",
+  "lastrevid": 2532055478,
+  "modified": "2026-08-16T18:30:53Z",
+  "type": "item",
+  "id": "Q138818773",
+  "labels": {
+    "de": {
+      "language": "de",
+      "value": "Canna"
+    },
+    "en": {
+      "language": "en",
+      "value": "Canna"
+    }
+  },
+  "descriptions": {
+    "de": {
+      "language": "de",
+      "value": "E-Sportler in der Disziplin League of Legends"
+    },
+    "en": {
+      "language": "en",
+      "value": "professional League of Legends player"
+    }
+  },
+  "aliases": {
+    "mul": [
+      {
+        "language": "mul",
+        "value": "Changdong Kim"
+      }
+    ]
+  },
+  "claims": {
+    "P742": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P742",
+          "hash": "d84d106127bbffcff975c4b6525686b10b265ae7",
+          "datavalue": {
+            "value": "Canna",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q138818773$89798C0D-6C67-4518-A98E-4EB17E4C79E8",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "c1afe2348574c19ef1475bf27964062fbec804dc",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "07e36ec48c128e93a8dcccbd3a45421ae87b8f2c",
+                  "datavalue": {
+                    "value": "https://docs.google.com/spreadsheets/d/1Y7k5kQ2AegbuyiGwEPsa62e883FYVtHqr6UVut9RC4o/pubhtml#",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "9e1c2b938c23ebc258a69173f2c60ebeac68ac5e",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-03-28T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "de5102a9c0bdc5f9befc84af1b550e6cb2c4aa77",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4379701,
+              "id": "Q4379701"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138818773$E084EB6B-A858-43E3-85E0-84D474A7C2F2",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "7ab1ca8174ebdb2f89a473122d887b64fcca9128",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 18536342,
+              "id": "Q18536342"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138818773$908CFDE8-9DA7-496A-9A58-93F86EFCBC30",
+        "rank": "normal"
+      }
+    ],
+    "P413": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P413",
+          "hash": "8694b005d688bc5212877abe486474c813151a26",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 101542133,
+              "id": "Q101542133"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138818773$25DD931C-2908-4050-A1E5-76CC7554BD88",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "c1afe2348574c19ef1475bf27964062fbec804dc",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "07e36ec48c128e93a8dcccbd3a45421ae87b8f2c",
+                  "datavalue": {
+                    "value": "https://docs.google.com/spreadsheets/d/1Y7k5kQ2AegbuyiGwEPsa62e883FYVtHqr6UVut9RC4o/pubhtml#",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "9e1c2b938c23ebc258a69173f2c60ebeac68ac5e",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-03-28T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138818773$86FF909F-0DB5-4A81-8DFA-4C3822848ED1",
+        "rank": "normal"
+      }
+    ],
+    "P54": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P54",
+          "hash": "e40fe046d0b7170e912213f27c03512763cb7a95",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 106114035,
+              "id": "Q106114035"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138818773$C7C33DD2-93C9-4507-A3CC-1103F8DC9AC0",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "c1afe2348574c19ef1475bf27964062fbec804dc",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "07e36ec48c128e93a8dcccbd3a45421ae87b8f2c",
+                  "datavalue": {
+                    "value": "https://docs.google.com/spreadsheets/d/1Y7k5kQ2AegbuyiGwEPsa62e883FYVtHqr6UVut9RC4o/pubhtml#",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "9e1c2b938c23ebc258a69173f2c60ebeac68ac5e",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-03-28T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138818773$67E81BFD-FD97-45CC-A56A-C85CAD9C3900",
+        "rank": "normal"
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "c88bc438bef1e0369928f7dacc18d06b2353282d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 300920,
+              "id": "Q300920"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138818773$2F0B1B72-0E8E-4236-BA56-C3D67811560A",
+        "rank": "normal"
+      }
+    ],
+    "P2416": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2416",
+          "hash": "9831c8f652243fa6e904cbdd87ae6302e8cdc3aa",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 223341,
+              "id": "Q223341"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138818773$58A1076D-4800-4E3D-9A42-1F1D95E9BF9E",
+        "rank": "normal"
+      }
+    ],
+    "P10918": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10918",
+          "hash": "fb3b001e5596b646fb9ae4a080304530bc125d19",
+          "datavalue": {
+            "value": "leagueoflegends/Canna",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9675": [
+            {
+              "snaktype": "value",
+              "property": "P9675",
+              "hash": "4ab1dc346c3da2da1184f549c22ec8c3c2500c99",
+              "datavalue": {
+                "value": "49460",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9675"],
+        "id": "Q138818773$D5F665AF-EDCA-4B2C-ACA7-398760FA4180",
+        "rank": "normal"
+      }
+    ],
+    "P569": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P569",
+          "hash": "f5539a2e5dda16fec065590c168b1ed9896ef0fc",
+          "datavalue": {
+            "value": {
+              "time": "+2000-02-11T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q138818773$ACBABEB9-5CDC-40C7-A9D4-A253FFD8D97B",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2295dc210aeb41555b49f81500fcbfd506454db5",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "86454c19e2bf05a48f833f1cb7a52e14fcf526d0",
+                  "datavalue": {
+                    "value": "https://liquipedia.net/leagueoflegends/Canna",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "2216b32fbd1b2f67f19787025cf22a1f06ebc631",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-07-25T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "4c8732ed5fd2efcd7e616db0ae504388e4456649",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 884,
+              "id": "Q884"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138818773$518DD379-5E36-4799-A651-83601220EF7C",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2295dc210aeb41555b49f81500fcbfd506454db5",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "86454c19e2bf05a48f833f1cb7a52e14fcf526d0",
+                  "datavalue": {
+                    "value": "https://liquipedia.net/leagueoflegends/Canna",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "2216b32fbd1b2f67f19787025cf22a1f06ebc631",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-07-25T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P2002": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2002",
+          "hash": "a5674f09439f3e3b1e75970797e849bd7814c101",
+          "datavalue": {
+            "value": "CannaXDXD",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q138818773$00E30D01-6A0B-40F6-8B0C-1BE19FFCA5B6",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2295dc210aeb41555b49f81500fcbfd506454db5",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "86454c19e2bf05a48f833f1cb7a52e14fcf526d0",
+                  "datavalue": {
+                    "value": "https://liquipedia.net/leagueoflegends/Canna",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "2216b32fbd1b2f67f19787025cf22a1f06ebc631",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-07-25T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P5797": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5797",
+          "hash": "9b461aa3d40f1597ac657b8a8dfaa43d80a8d12a",
+          "datavalue": {
+            "value": "canna",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P12229": [
+            {
+              "snaktype": "value",
+              "property": "P12229",
+              "hash": "e6c84c903c1f314cb55d236812d9c6f0705e682b",
+              "datavalue": {
+                "value": "476354382",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ],
+          "P580": [
+            {
+              "snaktype": "value",
+              "property": "P580",
+              "hash": "aea91590552fff2c34affece75d333291da4c527",
+              "datavalue": {
+                "value": {
+                  "time": "+2019-12-06T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P12229", "P580"],
+        "id": "Q138818773$21096576-3E2C-42FB-A444-AF658CE104FD",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2295dc210aeb41555b49f81500fcbfd506454db5",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "86454c19e2bf05a48f833f1cb7a52e14fcf526d0",
+                  "datavalue": {
+                    "value": "https://liquipedia.net/leagueoflegends/Canna",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "2216b32fbd1b2f67f19787025cf22a1f06ebc631",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-07-25T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P2003": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2003",
+          "hash": "3e5b9a13ac8779622e58cca3032f2aa7bb363a32",
+          "datavalue": {
+            "value": "canna_00",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q138818773$83A35327-352C-4AD0-952B-CF10B517CF3C",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2295dc210aeb41555b49f81500fcbfd506454db5",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "86454c19e2bf05a48f833f1cb7a52e14fcf526d0",
+                  "datavalue": {
+                    "value": "https://liquipedia.net/leagueoflegends/Canna",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "2216b32fbd1b2f67f19787025cf22a1f06ebc631",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-07-25T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {}
+}

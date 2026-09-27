@@ -2162,3 +2162,57 @@ describe("isCollectionSiblingPair", () => {
     expect(isCollectionSiblingPair(leaf("Q1", "1966.218.z"), unnumbered)).toBe(false);
   });
 });
+
+describe("scoreCandidate — people", () => {
+  const base = { descriptions: {}, aliases: {}, sitelinks: {} };
+  const item = (v: string) => [{ type: "item" as const, value: v }];
+  const time = (v: string) => [{ type: "time" as const, value: v }];
+  const person = (id: string, extra: Item["statements"] = {}): Item => ({
+    ...base,
+    id,
+    labels: { en: "Sarah Hamilton" },
+    statements: {
+      P31: item("Q5"),
+      P21: item("Q6581072"),
+      P27: item("Q30"),
+      P106: item("Q2405480"),
+      P735: item("Q18201513"),
+      P734: item("Q21450552"),
+      ...extra,
+    },
+  });
+
+  it("doesn't count sex, citizenship, occupation or name parts as agreement", () => {
+    // Two namesakes agree on all of these by default; only the name counts.
+    const result = scoreCandidate(person("Q1"), person("Q2"));
+    expect(result.reasons.some((r) => r.includes("shared statements agree"))).toBe(false);
+    expect(result.confidence).toBeCloseTo(0.45);
+  });
+
+  it("rewards the same day of birth and of death", () => {
+    const lived = { P569: time("+1948-05-21T00:00:00Z"), P570: time("+2020-01-02T00:00:00Z") };
+    const plain = scoreCandidate(person("Q1"), person("Q2"));
+    const result = scoreCandidate(person("Q1", lived), person("Q2", lived));
+    expect(result.reasons).toContain("same date of birth (1948-05-21)");
+    expect(result.reasons).toContain("same date of death (2020-01-02)");
+    expect(result.confidence).toBeGreaterThan(plain.confidence + 0.3);
+  });
+
+  it("gives no bonus for a birth date shared only to the year or month", () => {
+    for (const value of ["+1948-00-00T00:00:00Z", "+1948-05-00T00:00:00Z"]) {
+      const result = scoreCandidate(
+        person("Q1", { P569: time(value) }),
+        person("Q2", { P569: time(value) }),
+      );
+      expect(result.reasons.some((r) => r.startsWith("same date of birth"))).toBe(false);
+    }
+  });
+
+  it("gives no bonus when the days of birth differ", () => {
+    const result = scoreCandidate(
+      person("Q1", { P569: time("+1948-05-21T00:00:00Z") }),
+      person("Q2", { P569: time("+1948-05-22T00:00:00Z") }),
+    );
+    expect(result.reasons.some((r) => r.startsWith("same date of birth"))).toBe(false);
+  });
+});

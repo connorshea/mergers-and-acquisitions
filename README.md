@@ -204,35 +204,54 @@ older `pnpm seed` path (the vglist SPARQL blob) still works for a quick dev DB.
 The pass is CPU-bound (inflate plus the line scan), and a single job reading
 the whole file takes hours, but the dump's `.gz` is a concatenation of ~2,000
 independent gzip members (the generator gzips each 65k-entity batch on its own
-and `cat`s them together), so the file can be read in slices. `--shard i/N`
-reads the N-th of the compressed bytes, widened to whole members, so N jobs
-with the same N cover the file exactly once. The weekly schedule runs six
-slices with two CPUs each; to run them by hand:
+and `cat`s them together), so the file can be read in slices, each widened to
+whole members so that the slices cover the file exactly once.
+
+The weekly jobs are six identical **workers** sharing a queue of 64 such
+slices ("segments", ~2.5 GB of `.gz` each) in `dump_import_segments`. Each
+worker claims the lowest free segment, scans it, marks it done, and claims the
+next until none is left, so a worker on a fast node takes on more of the file
+instead of sitting idle while one on a busy node finishes a fixed share. To
+run them by hand:
 
 ```sh
 for i in 1 2 3 4 5 6; do
   toolforge jobs run import-dump-$i --image tool-mna/tool-mna:latest \
-    --command "node --max-old-space-size=384 jobs/import-dump.ts --shard $i/6" \
+    --command "node --max-old-space-size=384 jobs/import-dump.ts --worker import-dump-$i" \
     --mount all --mem 512Mi --cpu 2 --emails onfailure
 done
 ```
 
-Each slice upserts on its own and stamps its items with the dump (the date in
-the file name); the pruning happens once, by whichever job completes the set
-for that dump (`dump_import_runs`). A retried slice just re-records itself.
-Two CPUs per slice let the inflate (on libuv's threadpool) and the line scan
-(on the main thread) overlap rather than take turns on one core, and a slice
-keeps both busy (~1.87 of 2 CPUs), so the pass speeds up with more slices, not
-more CPUs per slice. 4 slices x 2 CPUs finished in ~35-40 minutes, faster than
-8 slices x 1 CPU (~50 minutes, paced by slices that landed together on busy
-nodes). Speed varies along the file: stretches dense with in-scope items run at
-~100 MB/s inflated per slice (parsing them is the bottleneck), sparse ones at
-~240 MB/s (inflate-bound).
+Every worker upserts on its own and stamps its items with the dump (the date in
+the file name); the pruning happens once, by whichever worker marks the dump's
+last segment done. Workers can be added or removed without touching the
+others; each only needs its own name (`--worker <name>`), which a retry of the
+same job keeps. A claim is refreshed every minute while its segment is
+scanned: a retried job takes back the segment its dead predecessor held, and
+any claim silent for 10 minutes is taken over by another worker, so a crash
+costs one segment, not a sixth of the dump. A worker with nothing left to claim
+waits for the other workers' segments, to take over any that go stale. Starting
+workers on a dump that is already fully imported does nothing, unless
+`DUMP_FULL=1` (which re-imports it). Every worker must agree on the segment
+count (`DUMP_SEGMENTS`, default 64).
+
+Two CPUs per worker let the inflate (on libuv's threadpool) and the line scan
+(on the main thread) overlap rather than take turns on one core, and a worker
+keeps both busy (~1.87 of 2 CPUs), so the pass speeds up with more workers, not
+more CPUs per worker. With fixed slices, 4 x 2 CPUs finished in ~35-40 minutes,
+faster than 8 x 1 CPU (~50 minutes, paced by slices that landed together on
+busy nodes). Speed varies along the file: stretches dense with in-scope items
+run at ~100 MB/s inflated per worker (parsing them is the bottleneck), sparse
+ones at ~240 MB/s (inflate-bound).
 
 The 12 CPUs and 3Gi this needs are more than the default tool quota (2 CPUs in
 total, shared with the web service), so it needs a
 [quota increase](https://wikitech.wikimedia.org/wiki/Help:Toolforge/Kubernetes#Quotas).
-Without `--shard` the job reads the whole file, which is `--shard 1/1`.
+
+`--shard i/N` instead reads one fixed N-th of the file, for local and one-off
+runs: N jobs with the same N cover the file once, and the one that completes
+the set prunes. Without `--worker` or `--shard` the job reads the whole file,
+which is `--shard 1/1`.
 
 ## Resolving sitelink redirects
 
@@ -285,7 +304,7 @@ toolforge build start https://github.com/connorshea/mergers-and-acquisitions
 ```
 
 Then apply migrations as a one-off job, load the mirror with the `import-dump-1..6`
-shard jobs above, start the web service (`toolforge webservice buildservice start
+worker jobs above, start the web service (`toolforge webservice buildservice start
 --mount none`; the build service requires an explicit mount flag, and the web
 process needs no NFS), and load the schedule from `jobs.yaml` (below). A
 finished one-off job deletes itself, so the same command reruns it:
@@ -307,7 +326,7 @@ curl -fsSL https://raw.githubusercontent.com/connorshea/mergers-and-acquisitions
 ```
 
 `load` recreates every job whose definition changed, which kills a run of it
-that's in progress, so don't load while the `import-dump-*` shards are running
+that's in progress, so don't load while the `import-dump-*` workers are running
 (check `toolforge jobs list`). It stops at the first job it can't create, so
 read its output to the end. GitHub's raw file can lag a merge by a few minutes.
 

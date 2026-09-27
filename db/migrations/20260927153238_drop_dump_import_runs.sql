@@ -1,0 +1,1 @@
+DROP TABLE `dump_import_runs`;

@@ -291,22 +291,26 @@ export const syncState = mysqlTable("sync_state", {
   lastRunAt: datetime("last_run_at", { mode: "string" }),
 });
 
-// One row per finished shard of a dump import (server/dump-import.ts). The dump
-// can be split across N jobs, each reading a byte range of the .gz; the shard
-// that completes the set for a dump is the one that prunes. One shard (the
-// default) is simply the `1/1` row.
-export const dumpImportRuns = mysqlTable(
-  "dump_import_runs",
+// The dump import's work queue (server/dump-import.ts). A pass over `dump` is
+// split into `segments` byte ranges of the .gz; workers claim them one at a
+// time (`claimed_by` is the worker's name, `claim` a token for this claim,
+// `claimed_at` refreshed as a heartbeat while it scans) and mark each done
+// with its match count. The worker that marks the last segment of the set
+// done prunes. A `--shard i/N` run records itself as segment i-1 of N. The
+// set's rows are created by whichever worker starts first.
+export const dumpImportSegments = mysqlTable(
+  "dump_import_segments",
   {
     dump: varchar("dump", { length: 32 }).notNull(), // e.g. "20260914"
-    shard: int("shard").notNull(), // 0-based
-    shards: int("shards").notNull(),
-    matched: int("matched").notNull(),
-    finishedAt: datetime("finished_at", { mode: "string" })
-      .notNull()
-      .default(sql`CURRENT_TIMESTAMP`),
+    segments: int("segments").notNull(),
+    segment: int("segment").notNull(), // 0-based
+    claimedBy: varchar("claimed_by", { length: 64 }),
+    claim: varchar("claim", { length: 16 }),
+    claimedAt: datetime("claimed_at", { mode: "string" }),
+    doneAt: datetime("done_at", { mode: "string" }),
+    matched: int("matched"),
   },
-  (t) => [primaryKey({ columns: [t.dump, t.shard] })],
+  (t) => [primaryKey({ columns: [t.dump, t.segments, t.segment] })],
 );
 
 // ---------------------------------------------------------------------------

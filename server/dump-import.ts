@@ -61,7 +61,7 @@ import { closeSync, createReadStream, openSync, readSync, statSync } from "node:
 import { createHash, randomBytes } from "node:crypto";
 import { basename } from "node:path";
 import { Readable } from "node:stream";
-import { constants as zlibConstants, createGunzip, inflateRawSync } from "node:zlib";
+import { constants as zlibConstants, crc32, createGunzip, inflateRawSync } from "node:zlib";
 import { and, asc, count, eq, gt, inArray, isNotNull, isNull, lt, ne, or, sql } from "drizzle-orm";
 import { db } from "./db.ts";
 import { refreshCandidateItemInfo } from "./candidate-item-info.ts";
@@ -205,20 +205,55 @@ function gzipHeaderLength(buf: Buffer): number {
   return n <= buf.length ? n : -1;
 }
 
-/** True when a gzip member really starts at `offset`: valid header, and its first deflate bytes inflate. */
+/** Inflated bytes a probe that hasn't reached its member's end must yield to be judged. */
+const PROBE_MIN_TEXT = 256;
+
+/**
+ * True when `out` reads like dump text: JSON lines, so no control byte but the
+ * newline (the JSON escapes every other one). Inflated random bytes are ~12%
+ * control bytes, so a few hundred of them never pass.
+ */
+function isDumpText(out: Buffer): boolean {
+  if (out.length < PROBE_MIN_TEXT) return false;
+  for (const byte of out) if (byte < 0x20 && byte !== 0x0a) return false;
+  return true;
+}
+
+/**
+ * True when a gzip member really starts at `offset`: a valid header, then
+ * deflate bytes that either end the member within the probe with a trailer
+ * whose CRC-32 and length match what they inflated to (the tiny `[` / `,`
+ * members), or inflate to dump text. A chance `1f 8b 08` inside a member is
+ * followed by pseudo-random bytes, which mostly fail to inflate at all — but
+ * ~0.6% of the time they decode as a final block that ends at once, which
+ * inflates without error, so success alone is not enough: that false boundary
+ * cut a segment mid-member ("unexpected end of file").
+ */
 function isMemberStart(fd: number, offset: number): boolean {
   const buf = Buffer.alloc(PROBE_BYTES + 1024);
   const n = readSync(fd, buf, 0, buf.length, offset);
   const header = gzipHeaderLength(buf.subarray(0, n));
   if (header === -1) return false;
+  let out: Buffer;
+  let used: number;
   try {
-    // A truncated valid stream inflates to a prefix; the pseudo-random deflate
-    // bytes that follow a chance `1f 8b 08` inside a member fail within bytes.
-    inflateRawSync(buf.subarray(header, n), { finishFlush: zlibConstants.Z_SYNC_FLUSH });
-    return true;
+    // A truncated valid stream inflates to a prefix, so the probe needn't hold a whole member.
+    // `info: true` (untyped in @types/node) also returns the engine, whose
+    // bytesWritten is the deflate input consumed: less than given when the stream ended.
+    const { buffer, engine } = inflateRawSync(buf.subarray(header, n), {
+      finishFlush: zlibConstants.Z_SYNC_FLUSH,
+      info: true,
+    }) as unknown as { buffer: Buffer; engine: { bytesWritten: number } };
+    out = buffer;
+    used = engine.bytesWritten;
   } catch {
     return false;
   }
+  if (used >= n - header) return isDumpText(out);
+  // The deflate stream ended inside the probe: check the 8-byte trailer after it.
+  const trailer = Buffer.alloc(8);
+  if (readSync(fd, trailer, 0, 8, offset + header + used) < 8) return false;
+  return trailer.readUInt32LE(0) === crc32(out) && trailer.readUInt32LE(4) === out.length >>> 0;
 }
 
 /**

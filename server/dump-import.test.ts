@@ -4,7 +4,7 @@ import { mkdtemp, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { Readable } from "node:stream";
-import { gzipSync } from "node:zlib";
+import { deflateRawSync, gzipSync } from "node:zlib";
 import { describe, expect, it } from "vite-plus/test";
 import type { Item } from "../src/lib/compare.ts";
 import { VIDEO_GAME } from "../src/lib/import-classes.ts";
@@ -303,12 +303,27 @@ describe("openDump", () => {
 
 describe("dump shards", () => {
   // Three batches, like the real dump's per-batch members, plus one stored
-  // (uncompressed) member whose content contains a fake gzip header followed
-  // by bytes that are not valid deflate data.
-  const FAKE_HEADER = Buffer.from([0x1f, 0x8b, 0x08, 0, 0, 0, 0, 0, 0, 3, 7, 7, 7, 7, 7, 7, 7, 7]);
+  // (uncompressed) member whose content contains fake gzip headers followed
+  // by: bytes that are not valid deflate data; a deflate stream that ends at
+  // once but whose trailer doesn't match (random bytes decode like that ~0.6%
+  // of the time); and a stored block that inflates to binary, not dump text.
+  const GZIP_HEADER = Buffer.from([0x1f, 0x8b, 0x08, 0, 0, 0, 0, 0, 0, 3]);
+  const FAKE_HEADER = Buffer.concat([GZIP_HEADER, Buffer.alloc(8, 7)]);
+  const ENDED_DECOY = Buffer.concat([GZIP_HEADER, deflateRawSync("ok"), Buffer.alloc(8, 7)]);
+  const BINARY_DECOY = Buffer.concat([
+    GZIP_HEADER,
+    // BFINAL stored block of 6000 bytes (LEN, then its complement), longer than the probe.
+    Buffer.from([0x01, 0x70, 0x17, 0x8f, 0xe8]),
+    Buffer.alloc(6000, 1),
+  ]);
+  // The decoys sit past the first PROBE bytes of their member, so the real
+  // member start still inflates to dump text.
   const decoy = Buffer.concat([
     Buffer.from('{"type":"item","id":"Q7","labels":{"en":{"value":"'),
+    Buffer.alloc(8192, "a"),
     FAKE_HEADER,
+    ENDED_DECOY,
+    BINARY_DECOY,
     Buffer.from('"}},"claims":{}}'),
   ]);
   const fixture = dumpGz([ENTITIES.slice(0, 3), ENTITIES.slice(3, 5), decoy, ENTITIES.slice(5)]);
@@ -332,10 +347,12 @@ describe("dump shards", () => {
       const next = fixture.members[i + 1] ?? fixture.gz.length;
       expect(findMemberStart(gz, at + 1)).toBe(next);
     }
-    const fake = fixture.gz.indexOf(FAKE_HEADER);
-    expect(fake).toBeGreaterThan(0);
-    expect(fixture.members).not.toContain(fake);
-    expect(findMemberStart(gz, fake)).not.toBe(fake);
+    for (const header of [FAKE_HEADER, ENDED_DECOY, BINARY_DECOY]) {
+      const fake = fixture.gz.indexOf(header);
+      expect(fake).toBeGreaterThan(0);
+      expect(fixture.members).not.toContain(fake);
+      expect(findMemberStart(gz, fake)).not.toBe(fake);
+    }
     expect(findMemberStart(gz, fixture.gz.length)).toBe(fixture.gz.length);
   });
 

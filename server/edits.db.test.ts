@@ -790,6 +790,44 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       ]);
     });
 
+    it("qualifies both statements with a criterion when one is given", async () => {
+      const calls = stubWikidata((_p, n) => claimOk(200 + n));
+      const { status, body } = await post<CandidateDifferentResponse>(
+        `/api/candidates/${alpha}/different`,
+        editor,
+        { criterion: "Q55761780" },
+      );
+      expect(status).toBe(200);
+      expect(body.candidate.status).toBe("dismissed");
+      const posts = calls
+        .filter((c) => c.method === "POST")
+        .map((c) => Object.fromEntries(c.params));
+      expect(posts.map((p) => p.action)).toEqual(["wbsetclaim", "wbsetclaim"]);
+      const claims = posts.map((p) => JSON.parse(p.claim));
+      expect(claims.map((c) => [c.id.split("$")[0], c.mainsnak.datavalue.value.id])).toEqual([
+        ["Q20", "Q10"],
+        ["Q10", "Q20"],
+      ]);
+      for (const c of claims) {
+        expect(c.qualifiers.P1013[0].datavalue.value.id).toBe("Q55761780");
+      }
+      const audits = await db.select().from(wikidataEdits);
+      expect(audits.map((a) => a.params)).toEqual([
+        { criterion: "Q55761780" },
+        { criterion: "Q55761780" },
+      ]);
+    });
+
+    it("rejects a criterion that isn't an item id, before claiming", async () => {
+      const calls = stubWikidata(() => claimOk(1));
+      const { status } = await post(`/api/candidates/${alpha}/different`, editor, {
+        criterion: "P1013",
+      });
+      expect(status).toBe(400);
+      expect(calls).toHaveLength(0);
+      expect((await candidateRow(alpha)).status).toBe("open");
+    });
+
     it("skips a direction the mirror already has", async () => {
       const [q20] = await db.select({ data: items.data }).from(items).where(eq(items.qid, "Q20"));
       await db

@@ -36,6 +36,7 @@ import {
 } from "./wikidata-client.ts";
 import {
   AUTO_IGNORED_CONFLICTS,
+  CRITERION_USED,
   DIFFERENT_FROM,
   type Item,
   type MergeConflict,
@@ -552,6 +553,24 @@ async function mergeOutcome(
   return { fromRevid: probe.fromRevid, intoRevid: probe.intoRevid, redirected: true };
 }
 
+/**
+ * The optional `criterion` from a "different from" request body: the item id,
+ * undefined when there is none (no body, or no/empty field), or false when it
+ * is present but not an item id.
+ */
+async function parseCriterion(c: EditContext): Promise<string | undefined | false> {
+  if (!c.req.header("Content-Type")?.includes("application/json")) return undefined;
+  let body: unknown;
+  try {
+    body = await c.req.json();
+  } catch {
+    return false;
+  }
+  const raw = (body as { criterion?: unknown } | null)?.criterion;
+  if (raw === undefined || raw === null || raw === "") return undefined;
+  return typeof raw === "string" && /^Q[1-9]\d*$/.test(raw) ? raw : false;
+}
+
 /** True when `item` already carries `different from` (P1889) → `target`. */
 function hasDifferentFrom(item: Item, target: string): boolean {
   return (item.statements[DIFFERENT_FROM] ?? []).some(
@@ -559,18 +578,24 @@ function hasDifferentFrom(item: Item, target: string): boolean {
   );
 }
 
-// POST /api/candidates/:id/different — wbcreateclaim P1889 in both directions,
-// then dismiss the candidate. One direction is enough for Wikidata to treat the
-// pair as declared distinct, so a second-leg failure still dismisses (and is
-// reported per edit); a first-leg failure changes nothing and is an error.
-// The same `merging` claim as the merge route keeps two submits from each
-// adding their own copy of the statement (wbcreateclaim doesn't dedupe).
+// POST /api/candidates/:id/different — P1889 in both directions, then dismiss
+// the candidate. An optional JSON body `{ criterion: "Q…" }` adds that item as
+// a "criterion used" (P1013) qualifier on both statements. One direction is
+// enough for Wikidata to treat the pair as declared distinct, so a second-leg
+// failure still dismisses (and is reported per edit); a first-leg failure
+// changes nothing and is an error. The same `merging` claim as the merge route
+// keeps two submits from each adding their own copy of the statement
+// (neither wbcreateclaim nor wbsetclaim with a fresh GUID dedupes).
 edits.post("/:id/different", async (c) => {
   const user = c.get("user")!;
   const gate = editGate(c, user);
   if (gate) return gate;
   const id = parseId(c.req.param("id"));
   if (id === null) return c.json({ error: "Invalid candidate id" }, 404);
+  const criterion = await parseCriterion(c);
+  if (criterion === false) {
+    return c.json({ error: "criterion must be an item id like Q55761780" }, 400);
+  }
 
   if (!(await claimCandidate(id, new Date()))) return claimRefused(c, id, "marked");
 
@@ -607,6 +632,7 @@ edits.post("/:id/different", async (c) => {
       action: "different-from",
       fromQid: item.qid,
       intoQid: target.qid,
+      ...(criterion ? { params: { criterion } } : {}),
     };
     // Only the Wikidata call decides whether this leg failed. Once the
     // statement is saved, a DB error while recording it must not be reported
@@ -618,6 +644,7 @@ edits.post("/:id/different", async (c) => {
         qid: item.qid,
         property: DIFFERENT_FROM,
         target: target.qid,
+        ...(criterion ? { qualifier: { property: CRITERION_USED, target: criterion } } : {}),
         summary: `Not a duplicate of ${target.qid} (${TOOL_CREDIT})`,
       }));
     } catch (err) {

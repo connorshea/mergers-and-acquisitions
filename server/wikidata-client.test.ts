@@ -389,6 +389,42 @@ describe("addItemClaim", () => {
     // The user is waiting on it, so it skips the lag guard.
     expect(calls[1].params.has("maxlag")).toBe(false);
   });
+
+  it("sets the whole statement under a fresh GUID when there is a qualifier", async () => {
+    const { deps, calls } = makeDeps([
+      { success: 1, pageinfo: { lastrevid: 43 }, claim: { id: "Q20$x" } },
+    ]);
+    const result = await addItemClaim(
+      USER,
+      {
+        qid: "Q20",
+        property: "P1889",
+        target: "Q10",
+        qualifier: { property: "P1013", target: "Q55761780" },
+        summary: "s",
+      },
+      deps,
+    );
+    expect(result).toEqual({ revid: 43 });
+    const params = Object.fromEntries(calls[1].params);
+    expect(params).toMatchObject({ action: "wbsetclaim", summary: "s", token: "csrf-1" });
+    expect(params).not.toHaveProperty("entity");
+    const item = (id: string) => ({
+      type: "wikibase-entityid",
+      value: { "entity-type": "item", id },
+    });
+    const claim = JSON.parse(params.claim);
+    expect(claim.id).toMatch(/^Q20\$[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
+    expect(claim).toMatchObject({
+      type: "statement",
+      rank: "normal",
+      mainsnak: { snaktype: "value", property: "P1889", datavalue: item("Q10") },
+      qualifiers: {
+        P1013: [{ snaktype: "value", property: "P1013", datavalue: item("Q55761780") }],
+      },
+    });
+    expect(calls[1].params.has("maxlag")).toBe(false);
+  });
 });
 
 describe("removeSitelink", () => {

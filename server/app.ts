@@ -14,6 +14,7 @@ import { leaderboard } from "./leaderboard.ts";
 import { settings } from "./settings.ts";
 import { authRoutes } from "./auth/oauth.ts";
 import { sameOriginOnly } from "./auth/same-origin.ts";
+import { requestLog } from "./request-log.ts";
 import { type AuthEnv, sessionMiddleware } from "./auth/session.ts";
 
 const CLIENT_DIR = process.env.CLIENT_DIR ?? "./dist/client";
@@ -46,6 +47,9 @@ app.use("*", secureHeaders({ contentSecurityPolicy: CONTENT_SECURITY_POLICY }));
 // Every API request gets the session resolved (c.get("user")) and, if it is
 // state-changing, must come from this origin. Individual routes then gate with
 // requireUser (server/auth/session.ts).
+// Logged first, so requests the guards below turn away show up too. Tests
+// drive the app in-process and would only fill their output with these lines.
+if (!process.env.VITEST) app.use("/api/*", requestLog());
 app.use("/api/*", sameOriginOnly);
 app.use("/api/*", sessionMiddleware);
 app.route("/api/auth", authRoutes); // /api/auth/{login,callback,logout,me}

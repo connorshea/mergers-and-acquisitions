@@ -1,0 +1,208 @@
+{
+  "pageid": 31737221,
+  "ns": 0,
+  "title": "Q30124841",
+  "lastrevid": 2487223304,
+  "modified": "2026-05-04T11:08:25Z",
+  "type": "item",
+  "id": "Q30124841",
+  "labels": {
+    "it": {
+      "language": "it",
+      "value": "Dove... quando... (parte II)"
+    },
+    "de": {
+      "language": "de",
+      "value": "Dove... quando... (parte II)"
+    },
+    "en": {
+      "language": "en",
+      "value": "Dove... quando... (parte II)"
+    },
+    "es": {
+      "language": "es",
+      "value": "Dove... quando... (parte II)"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Dove... quando... (parte II)"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Dove... quando... (parte II)"
+    }
+  },
+  "descriptions": {
+    "it": {
+      "language": "it",
+      "value": "canzone della PFM"
+    },
+    "en": {
+      "language": "en",
+      "value": "song composed by Franco Mussida with lyrics by Mauro Pagani"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "cantar"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P676": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P676",
+          "hash": "0c274bff86c23c06ed273de4a6b69a79095e957a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 683618,
+              "id": "Q683618"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q30124841$39210b40-4f44-1307-4bdb-7d4288b1286c",
+        "rank": "normal"
+      }
+    ],
+    "P86": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P86",
+          "hash": "74ec1016e8554ad8771b35e93b1e228cb2ed22aa",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3751459,
+              "id": "Q3751459"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q30124841$f361e60e-457d-5006-873d-f7236a0232d9",
+        "rank": "normal"
+      }
+    ],
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "6fef4c7c8807e18b36b822d68f5d6661697fa9d2",
+          "datavalue": {
+            "value": {
+              "text": "Dove... quando...",
+              "language": "it"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q30124841$3b372da7-448c-6d37-8070-3e21554f434c",
+        "rank": "normal"
+      }
+    ],
+    "P1827": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1827",
+          "hash": "c7450968559a360201675d5564afff2bfc9e22e7",
+          "datavalue": {
+            "value": "T0050042380",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q30124841$633cb50f-4187-c4d3-bd48-cd143b8e1ae8",
+        "rank": "normal"
+      }
+    ],
+    "P361": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P361",
+          "hash": "219817ba78128a9ff06be1523e76425eff134605",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 30330312,
+              "id": "Q30330312"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q30124841$f3b2b1b4-4916-f608-fb69-1eec3ff2f959",
+        "rank": "normal"
+      }
+    ],
+    "P162": [
+      {
+        "mainsnak": {
+          "snaktype": "novalue",
+          "property": "P162",
+          "hash": "33c53c26c8fdf0262b292e7b4b4a24cbfb0146aa",
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q30124841$B36BF2AF-64FD-4374-9890-B91833A34278",
+        "rank": "normal"
+      }
+    ],
+    "P7937": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7937",
+          "hash": "95c182f3c475d9df12743fde55dc93e0a76efa11",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7366,
+              "id": "Q7366"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q30124841$E846EE7E-4C32-4137-B845-4753C54CC429",
+        "rank": "normal"
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5be109d8a3cbbd062357a9d210d4ef00ef25244e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 105543609,
+              "id": "Q105543609"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q30124841$846439A9-78BE-4755-85A8-39274FF44374",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

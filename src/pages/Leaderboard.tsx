@@ -48,6 +48,7 @@ export default function Leaderboard() {
 
   const current = loaded?.period === period ? loaded : null;
   const entries = current?.data?.entries;
+  const totals = current?.data?.totals;
   // Standard competition ranking: users with the same total share a rank.
   const ranks: number[] = [];
   entries?.forEach((e, i) => {
@@ -135,6 +136,19 @@ export default function Leaderboard() {
                   </tr>
                 ))}
               </tbody>
+              {totals && (
+                <tfoot>
+                  <tr>
+                    <td className="col-rank" />
+                    <th scope="row">
+                      {totals.users === 1 ? "1 user" : `All ${totals.users.toLocaleString()} users`}
+                    </th>
+                    <td className="col-count">{totals.merges.toLocaleString()}</td>
+                    <td className="col-count">{totals.differentFrom.toLocaleString()}</td>
+                    <td className="col-count col-total">{totals.total.toLocaleString()}</td>
+                  </tr>
+                </tfoot>
+              )}
             </table>
           </div>
         )}

@@ -24,19 +24,30 @@ leaderboard.get("/", async (c) => {
   const merges = sql<number>`cast(sum(${wikidataEdits.action} = 'merge') as signed)`;
   const differentFrom = sql<number>`count(distinct case when ${wikidataEdits.action} = 'different-from' then ${wikidataEdits.candidateId} end)`;
   const total = sql<number>`${merges} + ${differentFrom}`;
-  const rows = await db
-    .select({ userId: users.id, username: users.username, merges, differentFrom })
-    .from(wikidataEdits)
-    .innerJoin(users, eq(users.id, wikidataEdits.userId))
-    .where(
-      and(
-        eq(wikidataEdits.ok, true),
-        period === "30d" ? gte(wikidataEdits.createdAt, sql`now() - interval 30 day`) : undefined,
-      ),
-    )
-    .groupBy(users.id, users.username)
-    .orderBy(desc(total), desc(merges), users.username)
-    .limit(LIMIT);
+  const where = and(
+    eq(wikidataEdits.ok, true),
+    period === "30d" ? gte(wikidataEdits.createdAt, sql`now() - interval 30 day`) : undefined,
+  );
+  const [rows, [totals]] = await Promise.all([
+    db
+      .select({ userId: users.id, username: users.username, merges, differentFrom })
+      .from(wikidataEdits)
+      .innerJoin(users, eq(users.id, wikidataEdits.userId))
+      .where(where)
+      .groupBy(users.id, users.username)
+      .orderBy(desc(total), desc(merges), users.username)
+      .limit(LIMIT),
+    // Across every user, not just the listed ones. Pairs marked different are
+    // counted per user, as in the rows, so the column adds up.
+    db
+      .select({
+        users: sql<number>`count(distinct ${wikidataEdits.userId})`,
+        merges,
+        differentFrom: sql<number>`count(distinct case when ${wikidataEdits.action} = 'different-from' then ${wikidataEdits.candidateId} end, ${wikidataEdits.userId})`,
+      })
+      .from(wikidataEdits)
+      .where(where),
+  ]);
   const payload: LeaderboardResponse = {
     period,
     entries: rows.map((r) => ({
@@ -45,6 +56,13 @@ leaderboard.get("/", async (c) => {
       differentFrom: Number(r.differentFrom),
       total: Number(r.merges) + Number(r.differentFrom),
     })),
+    // sum() over no rows is NULL.
+    totals: {
+      users: Number(totals.users),
+      merges: Number(totals.merges ?? 0),
+      differentFrom: Number(totals.differentFrom),
+      total: Number(totals.merges ?? 0) + Number(totals.differentFrom),
+    },
   };
   return c.json(payload);
 });

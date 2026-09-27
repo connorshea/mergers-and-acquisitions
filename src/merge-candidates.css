@@ -2055,6 +2055,17 @@ a.auth-login {
 .leaderboard-table a:hover {
   text-decoration-color: currentColor;
 }
+.leaderboard-table tfoot th,
+.leaderboard-table tfoot td {
+  border-top: 2px solid var(--rule);
+  border-bottom: none;
+  font-weight: 600;
+}
+.leaderboard-table tfoot th {
+  padding: 0.6rem 0.9rem;
+  font-size: inherit;
+  color: inherit;
+}
 .leaderboard-table tr.is-you td {
   background: rgba(0, 0, 0, 0.03);
 }

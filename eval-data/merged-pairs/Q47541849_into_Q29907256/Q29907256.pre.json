@@ -1,0 +1,205 @@
+{
+  "pageid": 31534131,
+  "ns": 0,
+  "title": "Q29907256",
+  "lastrevid": 2521126335,
+  "modified": "2026-07-22T13:46:03Z",
+  "type": "item",
+  "id": "Q29907256",
+  "labels": {
+    "fr": {
+      "language": "fr",
+      "value": "Michael Brough"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Michael Brough"
+    },
+    "en": {
+      "language": "en",
+      "value": "Michael Brough"
+    },
+    "es": {
+      "language": "es",
+      "value": "Michael Brough"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Michael Brough"
+    }
+  },
+  "descriptions": {
+    "fr": {
+      "language": "fr",
+      "value": "concepteur de jeu néo-zélandais"
+    },
+    "en": {
+      "language": "en",
+      "value": "New Zealand video game designer"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "spelontwerper"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "নিউজিল্যান্ডের ভিডিও গেম ডিজাইনার"
+    },
+    "as": {
+      "language": "as",
+      "value": "নিউজিলেণ্ড ভিডিঅ' গেম ডিজাইনাৰ"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q29907256$83440e3b-45c9-a1aa-b402-fe60e7bfbfcb",
+        "rank": "normal"
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "5a3f9c5df7a5692cf234fcbcbfb4528187e41028",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3630699,
+              "id": "Q3630699"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q29907256$16b1b61f-4c2f-ccd8-e0ac-e94b8af5aa72",
+        "rank": "normal"
+      }
+    ],
+    "P735": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P735",
+          "hash": "769fc2424092cc987cdc8781b2e791793107683e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4927524,
+              "id": "Q4927524"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q29907256$ADC6F54B-FD11-449A-BBAE-34B9888B7F4B",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q29907256$95EBDF08-2F16-48D8-9444-4DBC8FB5CF8D",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "57988403f9dd119562d73cf737513d91b76c3a6b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 48441997,
+              "id": "Q48441997"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1013": [
+            {
+              "snaktype": "value",
+              "property": "P1013",
+              "hash": "777ef156b80647ee99a58557816899e0d978b78f",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 55773103,
+                  "id": "Q55773103"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1013"],
+        "id": "Q29907256$7B851A4C-F254-4FDF-954F-453E20C72B9E",
+        "rank": "normal"
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "60c4656f9ab74b668633b9930dacb1e7a7f0c836",
+          "datavalue": {
+            "value": "/g/11g7zgbxsy",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q29907256$FCFD06F3-03EC-4719-84B3-EE1F2C11D53D",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "frwiki": {
+      "site": "frwiki",
+      "title": "Michael Brough",
+      "badges": [],
+      "url": "https://fr.wikipedia.org/wiki/Michael_Brough"
+    }
+  }
+}

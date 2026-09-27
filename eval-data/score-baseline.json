@@ -1,14 +1,14 @@
 {
   "threshold": 0.4,
-  "generatedAt": "2026-09-27T21:36:13.565Z",
+  "generatedAt": "2026-09-27T21:50:13.868Z",
   "summary": {
-    "pairs": 123,
-    "duplicate": 51,
+    "pairs": 124,
+    "duplicate": 52,
     "distinct": 72,
-    "accuracy": 0.9187,
-    "precision": 0.9767,
-    "recall": 0.8235,
-    "f1": 0.8936
+    "accuracy": 0.9274,
+    "precision": 0.9778,
+    "recall": 0.8462,
+    "f1": 0.9072
   },
   "pairs": {
     "Q100436886_into_Q85872424": {
@@ -19,7 +19,7 @@
     "Q10379091_into_Q3982545": {
       "label": "duplicate",
       "correct": true,
-      "confidence": 0.5333
+      "confidence": 0.6333
     },
     "Q10381682_into_Q582679": {
       "label": "duplicate",
@@ -124,7 +124,7 @@
     "Q125406517_into_Q4768394": {
       "label": "duplicate",
       "correct": false,
-      "confidence": 0.15
+      "confidence": 0.25
     },
     "Q130732355_into_Q123403710": {
       "label": "duplicate",
@@ -314,7 +314,7 @@
     "Q16621820_into_Q3944964": {
       "label": "duplicate",
       "correct": true,
-      "confidence": 0.4429
+      "confidence": 0.5429
     },
     "Q1670446_vs_Q4520528": {
       "label": "distinct",
@@ -394,7 +394,7 @@
     "Q21485557_into_Q1100978": {
       "label": "duplicate",
       "correct": false,
-      "confidence": 0
+      "confidence": 0.1
     },
     "Q2274947_vs_Q53841930": {
       "label": "distinct",
@@ -463,8 +463,8 @@
     },
     "Q33732193_into_Q2347653": {
       "label": "duplicate",
-      "correct": false,
-      "confidence": 0.35
+      "correct": true,
+      "confidence": 0.45
     },
     "Q338754_vs_Q54935655": {
       "label": "distinct",
@@ -525,6 +525,11 @@
       "label": "distinct",
       "correct": false,
       "confidence": 0.7074
+    },
+    "Q47541849_into_Q29907256": {
+      "label": "duplicate",
+      "correct": true,
+      "confidence": 0.55
     },
     "Q499188_vs_Q104867241": {
       "label": "distinct",
@@ -619,7 +624,7 @@
     "Q97195446_into_Q24549952": {
       "label": "duplicate",
       "correct": true,
-      "confidence": 0.69
+      "confidence": 0.79
     },
     "Q99677989_into_Q6915657": {
       "label": "duplicate",

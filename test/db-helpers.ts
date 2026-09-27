@@ -2,6 +2,7 @@
 // test/global-setup.ts for how the database is selected and migrated.
 import { sql } from "drizzle-orm";
 import { db } from "../server/db.ts";
+import { clearCandidateCounts } from "../server/candidate-count-cache.ts";
 import { externalIds, items, sessions, users } from "../db/schema.ts";
 import { SESSION_COOKIE, SESSION_TTL_SECONDS } from "../server/auth/session.ts";
 import { randomToken, sha256Hex } from "../server/auth/crypto.ts";
@@ -36,6 +37,8 @@ export async function truncateAll(): Promise<void> {
   for (const table of FK_TABLES) {
     await db.execute(sql.raw(`DELETE FROM \`${table}\``));
   }
+  // The list's totals are cached in-process; a fresh database needs fresh counts.
+  clearCandidateCounts();
 }
 
 /**

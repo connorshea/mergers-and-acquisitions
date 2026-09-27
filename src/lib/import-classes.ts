@@ -82,6 +82,7 @@ export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
       { qid: "Q7302866", label: "audio track" },
       { qid: "Q55850593", label: "music track with vocals" },
       { qid: "Q55850643", label: "music track without lyrics" },
+      { qid: "Q105543609", label: "musical work/composition" },
       { qid: "Q215380", label: "musical group" },
       { qid: "Q18127", label: "record label" },
       { qid: "Q2442401", label: "record company" },

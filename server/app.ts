@@ -9,6 +9,7 @@ import { serveStatic } from "@hono/node-server/serve-static";
 import { Hono } from "hono";
 import { secureHeaders } from "hono/secure-headers";
 import { candidates } from "./candidates.ts";
+import { clearCountsOnWrite } from "./candidate-count-cache.ts";
 import { edits } from "./edits.ts";
 import { leaderboard } from "./leaderboard.ts";
 import { settings } from "./settings.ts";
@@ -53,6 +54,9 @@ if (!process.env.VITEST) app.use("/api/*", requestLog());
 app.use("/api/*", sameOriginOnly);
 app.use("/api/*", sessionMiddleware);
 app.route("/api/auth", authRoutes); // /api/auth/{login,callback,logout,me}
+// Any write to a candidate (dismiss, reopen, merge, "different from") can move
+// it between statuses, so it invalidates the list's cached totals.
+app.use("/api/candidates/*", clearCountsOnWrite);
 app.route("/api/candidates", candidates);
 app.route("/api/candidates", edits); // /api/candidates/:id/{merge,different}
 app.route("/api/settings", settings);

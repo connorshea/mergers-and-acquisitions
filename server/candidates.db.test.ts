@@ -167,6 +167,8 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
     it("searches labels case-insensitively", async () => {
       expect((await list("?q=BETA")).candidates.map((c) => c.id)).toEqual([beta]);
       expect((await list("?q=zzz")).total).toBe(0);
+      // An overlong search is still a 200 (cut to 250 characters), not an error.
+      expect((await list(`?q=${"a".repeat(1000)}`)).total).toBe(0);
     });
 
     it("filters by instance-of type and ignores a malformed one", async () => {
@@ -366,6 +368,8 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
     });
 
     it("dismisses, then reopens, a candidate", async () => {
+      // Cache the list's total before the dismiss; the write has to invalidate it.
+      expect((await list()).total).toBe(2);
       const dismissed = await post<CandidateDismissResponse>(
         `/api/candidates/${alpha}/dismiss`,
         editor,
@@ -376,7 +380,7 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
         status: "dismissed",
         resolvedBy: "Editor",
       });
-      expect((await list()).candidates.map((c) => c.id)).toEqual([beta]);
+      expect(await list()).toMatchObject({ total: 1, candidates: [{ id: beta }] });
       // The detail and the list name who resolved it too.
       const resolved = await get<CandidateDetailResponse>(`/api/candidates/${alpha}`);
       expect(resolved.body.candidate.resolvedBy).toBe("Editor");
@@ -410,6 +414,7 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       const detail = await get<CandidateDetailResponse>(`/api/candidates/${alpha}`);
       expect(detail.body.snapshot).toBe(false);
       expect(detail.body.from?.labels.en).toBe("Alpha Quest");
+      expect((await list()).total).toBe(2);
     });
 
     it("404s for an unknown candidate", async () => {

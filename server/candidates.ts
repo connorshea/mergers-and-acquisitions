@@ -11,6 +11,7 @@ import { MERGING_STALE_SECONDS } from "./edits.ts";
 import { loadLabels, summaryColumns, toSummary } from "./candidate-summary.ts";
 import { attachSitelinkRedirects } from "./sitelink-overlay.ts";
 import { loadCreations } from "./item-creations.ts";
+import { cachedCount } from "./candidate-count-cache.ts";
 import { entityLabels, itemCreations, items, mergeCandidates, properties } from "../db/schema.ts";
 import type { Item } from "../src/lib/compare.ts";
 import { chunk } from "../src/lib/chunk.ts";
@@ -32,6 +33,13 @@ const DEFAULT_PAGE_SIZE = 25;
 const MAX_PAGE_SIZE = 100;
 /** Most instance-of types one list request filters on. */
 const MAX_TYPE_FILTERS = 50;
+/**
+ * Longest `q` / `creator` a list request filters on; longer input is cut. A
+ * Wikidata label is at most 250 characters (and a username 85), so no real
+ * search loses anything, while junk can't bloat the LIKE pattern or the count
+ * cache's keys.
+ */
+const MAX_TEXT_FILTER = 250;
 // Qids/pids loaded per IN list. MariaDB has no tight bound-param cap.
 const ID_CHUNK = 1000;
 /** Property ids embedded in a reason string. */
@@ -52,7 +60,7 @@ candidates.use("/:id/reopen", requireUser);
 candidates.get("/", async (c) => {
   const req = c.req;
 
-  const q = req.query("q")?.trim();
+  const q = req.query("q")?.trim().slice(0, MAX_TEXT_FILTER);
   const statusParam = req.query("status");
   const status = STATUSES.includes(statusParam as (typeof STATUSES)[number])
     ? (statusParam as (typeof STATUSES)[number])
@@ -121,7 +129,7 @@ candidates.get("/", async (c) => {
   // match on the normalized name, via the item_creations user index). Only
   // items with an item_creations row can match; the nightly job fills those
   // for open candidates, and viewing a pair fills its two.
-  const creatorParam = req.query("creator")?.trim();
+  const creatorParam = req.query("creator")?.trim().slice(0, MAX_TEXT_FILTER);
   if (creatorParam) {
     const createdBy = db
       .select({ qid: itemCreations.qid })
@@ -151,10 +159,25 @@ candidates.get("/", async (c) => {
   const sortColumn =
     sort === "confidence" ? mergeCandidates.confidence : mergeCandidates.detectedAt;
 
+  // Everything that decides the count (not page/pageSize/sort), normalized so
+  // equivalent requests share a cache entry.
+  const countKey = JSON.stringify([
+    status,
+    minConfidenceRaw ?? "",
+    req.query("noBlockers") === "1",
+    q?.toLowerCase() ?? "",
+    [...types].sort(),
+    creatorParam ? normalizeUserName(creatorParam) : "",
+    langs,
+  ]);
+
   // The count and the page are independent; run them concurrently (each takes
-  // its own pool connection).
-  const [[{ total }], rows] = await Promise.all([
-    db.select({ total: count() }).from(mergeCandidates).where(where),
+  // its own pool connection). The count is cached across pages.
+  const [total, rows] = await Promise.all([
+    cachedCount(countKey, async () => {
+      const [{ total }] = await db.select({ total: count() }).from(mergeCandidates).where(where);
+      return total;
+    }),
     db
       .select(summaryColumns)
       .from(mergeCandidates)

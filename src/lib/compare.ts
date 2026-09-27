@@ -797,6 +797,18 @@ const WEAK_ID_PROPS = new Set<string>([
 ]);
 
 /**
+ * Aggregator ids built by machine-matching many sources — Freebase (P646) and
+ * the Google Knowledge Graph (P2671). Their entities are notoriously conflated
+ * (a game's regional release folded into its sibling, two albums sharing one
+ * mid), so a shared value is weak evidence, like an account id. A *differing*
+ * Freebase id still counts as a per-title difference (PER_TITLE_ID_PROPS).
+ */
+const CONFLATED_AGGREGATOR_ID_PROPS = new Set<string>([
+  "P646", // Freebase ID
+  "P2671", // Google Knowledge Graph ID
+]);
+
+/**
  * Ubiquitous, low-information item-valued properties. Thousands of unrelated
  * games share these exact values ("single-player", "action game", a country),
  * so agreement on them is near-meaningless and must not inflate the
@@ -899,6 +911,42 @@ export function isHardcodedMirrorProp(pid: string): boolean {
  */
 const LARGE_YEAR_GAP = 10;
 
+/**
+ * Who made a work: two works whose creators don't overlap are different works
+ * that share a title. Developer (P178) and publisher (P123) are handled apart,
+ * more leniently — studios are renamed and ports change hands.
+ */
+const CREATOR_PROP_LABELS: Record<string, string> = {
+  P50: "author",
+  P2093: "author name string",
+  P175: "performer",
+  P86: "composer",
+  P676: "lyricist",
+  P57: "director",
+  P170: "creator",
+};
+const CREATOR_PROPS = Object.keys(CREATOR_PROP_LABELS);
+
+/**
+ * Whether both items name creators under `pid` and none of them overlap.
+ * Items overlap on a shared QID, or (when labels are loaded) on near-identical
+ * labels — two items for one person shouldn't read as different creators.
+ * String values (author name string) overlap on near-identical text.
+ */
+function disjointCreators(a: Item, b: Item, pid: string): boolean {
+  const va = (a.statements[pid] ?? []).filter((v) => v.type === "item" || v.type === "string");
+  const vb = (b.statements[pid] ?? []).filter((v) => v.type === "item" || v.type === "string");
+  if (va.length === 0 || vb.length === 0) return false;
+  const text = (v: Value): string | undefined => (v.type === "string" ? v.value : v.label);
+  const overlaps = (x: Value, y: Value): boolean => {
+    if (x.type === y.type && x.value === y.value) return true;
+    const tx = text(x);
+    const ty = text(y);
+    return tx !== undefined && ty !== undefined && stringSimilarity(tx, ty) >= 0.9;
+  };
+  return !va.some((x) => vb.some((y) => overlaps(x, y)));
+}
+
 /** Date properties compared for the release/founding/birth year gap. */
 const YEAR_GAP_PROPS = ["P577", "P571", "P569"] as const;
 
@@ -933,9 +981,16 @@ const PER_TITLE_ID_PROPS = new Set<string>([
   "P1733", // Steam application ID
   "P6337", // PCGamingWiki ID
   "P11688", // MobyGames game ID
+  "P1933", // MobyGames game ID (former scheme)
   "P5794", // IGDB game ID
   "P7294", // itch.io URL
   "P5247", // Giant Bomb ID
+  "P5494", // GameSpot game ID
+  "P7597", // Lutris game ID
+  "P12561", // SteamGridDB ID
+  "P12570", // IsThereAnyDeal ID
+  // Not per-platform catalogues (TheGamesDB, Gaming-History): one game has an
+  // entry per platform there, so a real duplicate can carry two different ones.
   // Music. Not MusicBrainz: it's sourced from Wikidata (tagged P31=Q24075706,
   // so the synced mirror set already makes it non-evidence either way).
   "P1953", // Discogs artist ID
@@ -956,6 +1011,19 @@ const PER_TITLE_ID_PROPS = new Set<string>([
   "P1274", // ISFDB title ID
   "P7439", // FantLab work ID
 ]);
+
+/** A trailing `--N` disambiguation suffix on a slug id. */
+const SLUG_SUFFIX_RE = /--\d+$/;
+
+/**
+ * Whether two external-id values are the same slug told apart only by a
+ * `--N` suffix ("mutant" vs "mutant--1").
+ */
+function isSlugSuffixSplit(x: Value, y: Value): boolean {
+  if (x.type !== "external-id" || y.type !== "external-id" || x.value === y.value) return false;
+  if (!SLUG_SUFFIX_RE.test(x.value) && !SLUG_SUFFIX_RE.test(y.value)) return false;
+  return x.value.replace(SLUG_SUFFIX_RE, "") === y.value.replace(SLUG_SUFFIX_RE, "");
+}
 
 const ROMAN_RE = /^m{0,3}(cm|cd|d?c{0,3})(xc|xl|l?x{0,3})(ix|iv|v?i{0,3})$/i;
 
@@ -1327,14 +1395,21 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
       !isNonEvidence(r.key) &&
       (isId ? isId(r.key) : true),
   );
-  const strongIds = sharedExtIds.filter((r) => !WEAK_ID_PROPS.has(r.key));
-  const weakIds = sharedExtIds.filter((r) => WEAK_ID_PROPS.has(r.key));
+  const isWeakId = (pid: string): boolean =>
+    WEAK_ID_PROPS.has(pid) || CONFLATED_AGGREGATOR_ID_PROPS.has(pid);
+  const strongIds = sharedExtIds.filter((r) => !isWeakId(r.key));
+  const weakIds = sharedExtIds.filter((r) => isWeakId(r.key));
   if (strongIds.length > 0) {
     score += 0.6;
     reasons.push(`shares external identifier: ${strongIds.map((r) => r.key).join(", ")}`);
   } else if (weakIds.length > 0) {
     score += 0.1;
-    reasons.push(`shares account/social identifier: ${weakIds.map((r) => r.key).join(", ")}`);
+    const pids = weakIds.map((r) => r.key).join(", ");
+    reasons.push(
+      weakIds.every((r) => CONFLATED_AGGREGATOR_ID_PROPS.has(r.key))
+        ? `shares an often-conflated aggregator identifier: ${pids}`
+        : `shares account/social identifier: ${pids}`,
+    );
   }
   // Explain the ids we deliberately ignored: a value the pair agrees on but
   // that Wikidata itself says is shared between exactly these two items.
@@ -1462,6 +1537,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   };
   const diffDeveloper = disjoint("P178");
   const diffPublisher = disjoint("P123");
+  const diffCreators = CREATOR_PROPS.filter((pid) => disjointCreators(a, b, pid));
   const modestYearGap = Number.isFinite(yearGap) && yearGap >= 2 && yearGap < LARGE_YEAR_GAP;
 
   // Lesser disagreement penalties. A shared strong per-title identifier is near-
@@ -1484,6 +1560,21 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
       score -= 0.2;
       reasons.push("different publisher");
     }
+  }
+
+  // A different author/performer/composer/director is the classic shape of two
+  // works that merely share a title ("Imagine" the novel vs. the non-fiction
+  // book, two albums called "The Collection", cover recordings of one song).
+  // Unlike developer/publisher (studios get renamed, ports change hands) a
+  // shared id does *not* excuse it: here the id is far more often a
+  // collection-level or mis-entered value than the creator is wrong. Without a
+  // shared id the penalty drops a title-only pair below the persistence floor;
+  // with one, the ceiling below holds it well off near-certain.
+  if (diffCreators.length > 0) {
+    score -= 0.3;
+    reasons.push(
+      `different ${diffCreators.map((pid) => `${CREATOR_PROP_LABELS[pid]} (${pid})`).join(", ")}`,
+    );
   }
 
   // Conflicts the merge flow handles itself (a differing description, a
@@ -1597,6 +1688,24 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     );
   }
 
+  // Slug ids that differ only by a `--N` suffix (IGDB "bug-attack" vs
+  // "bug-attack--1", likewise IsThereAnyDeal and Lutris) are the database itself
+  // telling two same-named titles apart. Cap below the persistence floor,
+  // overriding even a shared id.
+  const suffixSplitIds = rows.filter(
+    (r) =>
+      r.kind === "statement" &&
+      r.status === "distinct" &&
+      !isNonEvidence(r.key) &&
+      r.a.some((x) => r.b.some((y) => isSlugSuffixSplit(x, y))),
+  );
+  if (suffixSplitIds.length > 0) {
+    reasons.unshift(
+      `${suffixSplitIds.map((r) => r.key).join(", ")} lists the two as separate same-named entries (a "--N" slug), not a duplicate`,
+    );
+    score = Math.min(score, 0.1);
+  }
+
   // A wiki that titles the two items' pages with different years has two
   // articles for two subjects (a 1996 and a 2004 drama of the same name). The
   // wiki's own disambiguation is authoritative, overriding even a shared id —
@@ -1684,14 +1793,21 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     (r) => r.status === "identical" && !r.a.some((v) => v.type === "external-id"),
   ).length;
   const strongSignals = strongIds.length + propAgreement + (redirectWikis.length > 0 ? 1 : 0);
-  let ceiling = 1;
-  if (nameSim >= 0.75) {
-    if (strongSignals >= 3) ceiling = 1;
-    else if (strongSignals === 2) ceiling = 0.93;
-    else if (strongSignals === 1) ceiling = 0.85;
-    else ceiling = 0.72;
-  }
+  let ceiling: number;
+  if (strongSignals >= 3) ceiling = 1;
+  else if (strongSignals === 2) ceiling = 0.93;
+  else if (strongSignals === 1) ceiling = 0.85;
+  else ceiling = 0.72;
+  // Names that only loosely match can't be near-certain however much else
+  // agrees: batch-created siblings (a set of genealogy volumes sharing a set
+  // ISBN, a game's characters copied from one template) agree on everything
+  // *except* the name. Corroboration can't lift them past the "no corroboration"
+  // tier, and clearly different names sit lower still.
+  const looseName = nameSim < 0.75;
+  if (looseName) ceiling = Math.min(ceiling, nameSim >= 0.5 ? 0.72 : 0.6);
   const hasConcreteDifference =
+    sitelinkClash ||
+    diffCreators.length > 0 ||
     diffDeveloper ||
     diffPublisher ||
     modestYearGap ||
@@ -1701,6 +1817,11 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   if (hasConcreteDifference) ceiling = Math.min(ceiling, 0.9);
   if (distinctPerTitleIds.length === 1) ceiling = Math.min(ceiling, 0.8);
   if (largeYearGap) ceiling = Math.min(ceiling, 0.6);
+  // Two separate (non-redirect) pages on one wiki usually mean two subjects,
+  // and the merge can't go through without resolving it anyway — never
+  // near-certain, even though the score penalty above is small.
+  if (sitelinkClash) ceiling = Math.min(ceiling, 0.85);
+  if (diffCreators.length > 0) ceiling = Math.min(ceiling, 0.5);
   if (score > ceiling) {
     score = ceiling;
     // Only explain the clamp when the ceiling actually held the pair *below*
@@ -1710,9 +1831,11 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     // below — so no "held back" reason applies.
     if (ceiling < 1) {
       reasons.push(
-        strongSignals <= 1 && !hasConcreteDifference
-          ? "held below near-certain: only one strong corroborating signal"
-          : "held below near-certain: a difference remains or corroboration is thin",
+        looseName && !hasConcreteDifference
+          ? "held below near-certain: the names only loosely match"
+          : strongSignals <= 1 && !hasConcreteDifference
+            ? "held below near-certain: only one strong corroborating signal"
+            : "held below near-certain: a difference remains or corroboration is thin",
       );
     }
   }

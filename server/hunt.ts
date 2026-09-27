@@ -385,6 +385,45 @@ const PAIR_MATCH = `
 /** Status filter for rows the hunt may change (never one a human resolved). */
 const UNRESOLVED_SQL = `c.status not in (${PROTECTED_STATUSES.map((s) => `'${s}'`).join(", ")})`;
 
+/** The phases of a scoring window, in the order the window log prints them. */
+const WINDOW_PHASES = ["pairs", "fetch", "parse", "redirects", "score", "write"] as const;
+type WindowPhase = (typeof WINDOW_PHASES)[number];
+
+/**
+ * Wall-clock time per scoring phase, for the current window and for the whole
+ * run, so the logs show where the scoring time goes. `lap` charges the time
+ * since the previous lap to a phase.
+ */
+class PhaseTimes {
+  private last = performance.now();
+  private readonly window = new Map<WindowPhase, number>();
+  private readonly total = new Map<WindowPhase, number>();
+
+  lap(phase: WindowPhase): void {
+    const now = performance.now();
+    const ms = now - this.last;
+    this.last = now;
+    this.window.set(phase, (this.window.get(phase) ?? 0) + ms);
+    this.total.set(phase, (this.total.get(phase) ?? 0) + ms);
+  }
+
+  /** "pairs 0.0s, fetch 2.1s, …" for the current window; starts the next one. */
+  endWindow(): string {
+    const out = PhaseTimes.format(this.window);
+    this.window.clear();
+    return out;
+  }
+
+  /** The same breakdown summed over every window. */
+  totals(): string {
+    return PhaseTimes.format(this.total);
+  }
+
+  private static format(times: Map<WindowPhase, number>): string {
+    return WINDOW_PHASES.map((p) => `${p} ${((times.get(p) ?? 0) / 1000).toFixed(1)}s`).join(", ");
+  }
+}
+
 /** Ids of the candidate rows a query over `merge_candidates c` returns. */
 async function candidateIds(conn: mysql.Connection, query: string): Promise<number[]> {
   const [rows] = await conn.query<mysql.RowDataPacket[]>(query);
@@ -448,6 +487,7 @@ async function score(db: Db, conn: mysql.Connection, pairCount: number): Promise
   let pairsDone = 0;
   let staleCount = 0;
   let lastSeq = 0;
+  const times = new PhaseTimes();
   for (;;) {
     const [pairRows] = await conn.query<mysql.RowDataPacket[]>(
       "select seq, a, b from hunt_pairs where seq > ? order by seq limit ?",
@@ -461,20 +501,33 @@ async function score(db: Db, conn: mysql.Connection, pairCount: number): Promise
       qa: `Q${r.a}`,
       qb: `Q${r.b}`,
     }));
+    times.lap("pairs");
 
     const wanted = new Set<string>();
     for (const { qa, qb } of window) {
       wanted.add(qa);
       wanted.add(qb);
     }
-    const byQid = new Map<string, Item>();
+    // `data` is read as the raw JSON string and parsed here (mysql2 otherwise
+    // parses MariaDB's JSON columns itself while reading the result, and the
+    // column's decoder would too), so the log can tell the database
+    // round trips apart from the parsing.
+    const raw: { qid: string; data: string }[] = [];
     for (const ids of chunk(Array.from(wanted), ID_CHUNK)) {
-      const rows = await db
-        .select({ qid: items.qid, data: items.data })
-        .from(items)
-        .where(inArray(items.qid, ids));
-      for (const row of rows) byQid.set(row.qid, row.data as Item);
+      raw.push(
+        ...(await db
+          .select({
+            qid: items.qid,
+            data: sql<string>`cast(${items.data} as char)`.mapWith(String),
+          })
+          .from(items)
+          .where(inArray(items.qid, ids))),
+      );
     }
+    times.lap("fetch");
+    const byQid = new Map<string, Item>();
+    for (const row of raw) byQid.set(row.qid, JSON.parse(row.data) as Item);
+    times.lap("parse");
     // Redirects resolved by the previous resolve-sitelinks run, so a clash
     // that's one page redirecting to the other scores as duplicate evidence.
     await attachSitelinkRedirects(
@@ -485,6 +538,8 @@ async function score(db: Db, conn: mysql.Connection, pairCount: number): Promise
         return a && b ? [[a, b] as [Item, Item]] : [];
       }),
     );
+
+    times.lap("redirects");
 
     const survivors: CandidateRow[] = [];
     const staleSeqs: number[] = [];
@@ -531,6 +586,7 @@ async function score(db: Db, conn: mysql.Connection, pairCount: number): Promise
         stats.failed++;
       }
     }
+    times.lap("score");
     staleCount += staleSeqs.length;
     if (staleSeqs.length > 0) {
       await conn.query("update hunt_pairs set stale = 1 where seq in (?)", [staleSeqs]);
@@ -559,6 +615,8 @@ async function score(db: Db, conn: mysql.Connection, pairCount: number): Promise
       }
     }
 
+    times.lap("write");
+
     pairsDone += window.length;
     const elapsedSec = (performance.now() - start) / 1000;
     const rate = elapsedSec > 0 ? Math.round(pairsDone / elapsedSec) : 0;
@@ -569,9 +627,11 @@ async function score(db: Db, conn: mysql.Connection, pairCount: number): Promise
         `${survivors.length} survivors; totals scored ${stats.scored}, upserted ${stats.upserted}, ` +
         `below floor ${staleCount}` +
         (stats.failed > 0 ? `, ${stats.failed} failed` : "") +
-        ` (${secondsSince(start)}, ${rate} pairs/s, ~${etaSec}s left, ${heapMb()})`,
+        ` (${secondsSince(start)}, ${rate} pairs/s, ~${etaSec}s left, ${heapMb()}; ` +
+        `${times.endWindow()})`,
     );
   }
+  console.log(`hunt score: time by phase over all windows: ${times.totals()}`);
 
   // Open rows for pairs that scored below the floor. The DELETE re-checks the
   // status in case a reviewer resolved the row since this SELECT.

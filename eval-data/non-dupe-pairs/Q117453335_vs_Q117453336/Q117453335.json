@@ -1,0 +1,728 @@
+{
+  "pageid": 112216289,
+  "ns": 0,
+  "title": "Q117453335",
+  "lastrevid": 2513834460,
+  "modified": "2026-07-04T14:34:52Z",
+  "type": "item",
+  "id": "Q117453335",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Gemini"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Gemini"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "American progamer"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "মার্কিন পেশাদার গেমার"
+    },
+    "as": {
+      "language": "as",
+      "value": "আমেৰিকান পেছাদাৰী গেমাৰ"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "Dylan Kristopovich"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q117453335$5F1C7A0B-5BB9-4C5A-828B-8B5C7B0CAAD2",
+        "rank": "normal"
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "de5102a9c0bdc5f9befc84af1b550e6cb2c4aa77",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4379701,
+              "id": "Q4379701"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q117453335$45FC9D72-7087-44F7-94B3-433B7689FA1A",
+        "rank": "normal"
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "c88bc438bef1e0369928f7dacc18d06b2353282d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 300920,
+              "id": "Q300920"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q117453335$E95AD8DF-B8AD-4BC1-AEAF-CE7D7783F445",
+        "rank": "normal"
+      }
+    ],
+    "P742": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P742",
+          "hash": "de3bd11ed2106c7512e2a87b738bf8a2197e8a34",
+          "datavalue": {
+            "value": "Gemini",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q117453335$8944D52B-7C20-4E00-A5A3-AFFD7F5A56FC",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "54514caa589216d605194ee7a51829e9e0ad2a59",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "09dd4004d749385030f291c99ab0b05adf63654d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 105835728,
+                      "id": "Q105835728"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P10918": [
+                {
+                  "snaktype": "value",
+                  "property": "P10918",
+                  "hash": "09009b592336f55ae2181cea2282d0ce388ca771",
+                  "datavalue": {
+                    "value": "starcraft2/Gemini_(American_player)",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a3656b97ef0ee894d55c5515cff67353c93be6c4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-03-26T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P10918", "P813"]
+          }
+        ]
+      }
+    ],
+    "P569": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P569",
+          "hash": "aa0b05c9e60e49375fd953f40636f5c78f79fe49",
+          "datavalue": {
+            "value": {
+              "time": "+1995-05-18T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q117453335$17DA3A61-34A5-444C-BD16-4D616F0A8F5A",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "54514caa589216d605194ee7a51829e9e0ad2a59",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "09dd4004d749385030f291c99ab0b05adf63654d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 105835728,
+                      "id": "Q105835728"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P10918": [
+                {
+                  "snaktype": "value",
+                  "property": "P10918",
+                  "hash": "09009b592336f55ae2181cea2282d0ce388ca771",
+                  "datavalue": {
+                    "value": "starcraft2/Gemini_(American_player)",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a3656b97ef0ee894d55c5515cff67353c93be6c4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-03-26T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P10918", "P813"]
+          }
+        ]
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "52d0408c7915122e0519a22577f0cbdcb28f749b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 30,
+              "id": "Q30"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q117453335$69D605DB-03A2-486D-A973-57FF5D7D0963",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "54514caa589216d605194ee7a51829e9e0ad2a59",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "09dd4004d749385030f291c99ab0b05adf63654d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 105835728,
+                      "id": "Q105835728"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P10918": [
+                {
+                  "snaktype": "value",
+                  "property": "P10918",
+                  "hash": "09009b592336f55ae2181cea2282d0ce388ca771",
+                  "datavalue": {
+                    "value": "starcraft2/Gemini_(American_player)",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a3656b97ef0ee894d55c5515cff67353c93be6c4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-03-26T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P10918", "P813"]
+          }
+        ]
+      }
+    ],
+    "P10918": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10918",
+          "hash": "09009b592336f55ae2181cea2282d0ce388ca771",
+          "datavalue": {
+            "value": "starcraft2/Gemini_(American_player)",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9675": [
+            {
+              "snaktype": "value",
+              "property": "P9675",
+              "hash": "aff3f6b00b8cf924c816d3454c90cc1c763d41a0",
+              "datavalue": {
+                "value": "77773",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9675"],
+        "id": "Q117453335$77788E54-AB4A-4656-8E22-6A61CB37A07C",
+        "rank": "normal"
+      }
+    ],
+    "P2002": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2002",
+          "hash": "c944d4a10bc656e06fe37cd7aa241b14c4a9d8c3",
+          "datavalue": {
+            "value": "GGemini19",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P6552": [
+            {
+              "snaktype": "value",
+              "property": "P6552",
+              "hash": "5876625bbb25ed738a7c3f59805dc93531f847be",
+              "datavalue": {
+                "value": "163089333",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ],
+          "P580": [
+            {
+              "snaktype": "value",
+              "property": "P580",
+              "hash": "df8504a233f3d3821b2522e75a6a5995a7f349c3",
+              "datavalue": {
+                "value": {
+                  "time": "+2010-07-05T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P585": [
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "6a5432717652f3e6c3c9016a840423c33d0ff249",
+              "datavalue": {
+                "value": {
+                  "time": "+2023-04-10T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P6552", "P580", "P585"],
+        "id": "Q117453335$35DEF72E-F06F-45D1-ADCB-DC0743BB72E9",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "54514caa589216d605194ee7a51829e9e0ad2a59",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "09dd4004d749385030f291c99ab0b05adf63654d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 105835728,
+                      "id": "Q105835728"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P10918": [
+                {
+                  "snaktype": "value",
+                  "property": "P10918",
+                  "hash": "09009b592336f55ae2181cea2282d0ce388ca771",
+                  "datavalue": {
+                    "value": "starcraft2/Gemini_(American_player)",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a3656b97ef0ee894d55c5515cff67353c93be6c4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-03-26T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P10918", "P813"]
+          }
+        ]
+      }
+    ],
+    "P5797": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5797",
+          "hash": "87990eb9f63cb255781b19a450f43a57b5902e56",
+          "datavalue": {
+            "value": "geminisc2",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P12229": [
+            {
+              "snaktype": "value",
+              "property": "P12229",
+              "hash": "713f4bb074e9d172994656955d32ccef9d936ffb",
+              "datavalue": {
+                "value": "18662818",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ],
+          "P580": [
+            {
+              "snaktype": "value",
+              "property": "P580",
+              "hash": "ed1e5c0b8a43df1f287af903a8c2029dcaecc550",
+              "datavalue": {
+                "value": {
+                  "time": "+2010-12-12T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P12229", "P580"],
+        "id": "Q117453335$8210F9C8-B8F0-47F1-9DA9-8EE9739BEBC3",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "54514caa589216d605194ee7a51829e9e0ad2a59",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "09dd4004d749385030f291c99ab0b05adf63654d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 105835728,
+                      "id": "Q105835728"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P10918": [
+                {
+                  "snaktype": "value",
+                  "property": "P10918",
+                  "hash": "09009b592336f55ae2181cea2282d0ce388ca771",
+                  "datavalue": {
+                    "value": "starcraft2/Gemini_(American_player)",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a3656b97ef0ee894d55c5515cff67353c93be6c4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-03-26T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P10918", "P813"]
+          }
+        ]
+      }
+    ],
+    "P11706": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11706",
+          "hash": "13cdda1b3007ec97ad9da371cc78760ad59d9581",
+          "datavalue": {
+            "value": "6306",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q117453335$6AA6506D-BC94-4820-8DDC-DD5CA90F70AF",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "54514caa589216d605194ee7a51829e9e0ad2a59",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "09dd4004d749385030f291c99ab0b05adf63654d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 105835728,
+                      "id": "Q105835728"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P10918": [
+                {
+                  "snaktype": "value",
+                  "property": "P10918",
+                  "hash": "09009b592336f55ae2181cea2282d0ce388ca771",
+                  "datavalue": {
+                    "value": "starcraft2/Gemini_(American_player)",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a3656b97ef0ee894d55c5515cff67353c93be6c4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-03-26T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P10918", "P813"]
+          }
+        ]
+      }
+    ],
+    "P2416": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2416",
+          "hash": "c0539d759349f7e6d61b2b354ab0f7c9498b1594",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 18142874,
+              "id": "Q18142874"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q117453335$6F87780C-2664-4DC2-A9AB-D0366FCC7842",
+        "rank": "normal"
+      }
+    ],
+    "P11721": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11721",
+          "hash": "f6e84644673115cb07efac01eb443ed65c29f2c9",
+          "datavalue": {
+            "value": "starcraft-2/gemini-1",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "q117453335$fe587ab8-4a28-6f0c-2e2d-95887755e362",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q117453335$0081cd94-4d7c-a865-3c0c-c050c73d4117",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

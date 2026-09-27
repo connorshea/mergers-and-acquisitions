@@ -1,0 +1,660 @@
+{
+  "pageid": 112216535,
+  "ns": 0,
+  "title": "Q117453597",
+  "lastrevid": 2527405501,
+  "modified": "2026-08-05T01:42:21Z",
+  "type": "item",
+  "id": "Q117453597",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Mamba"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Mamba"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Mamba"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "Swiss progamer"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "সুইস পেশাদার গেমার"
+    },
+    "as": {
+      "language": "as",
+      "value": "ছুইচ প্ৰ'গামাৰ"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "Alwin Hauser"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q117453597$B71507FB-8362-4708-B5C9-B6E379F05E7C",
+        "rank": "normal"
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "de5102a9c0bdc5f9befc84af1b550e6cb2c4aa77",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4379701,
+              "id": "Q4379701"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q117453597$9A6B3BA2-C9E2-4D5B-89AD-2339D01BA915",
+        "rank": "normal"
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "c88bc438bef1e0369928f7dacc18d06b2353282d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 300920,
+              "id": "Q300920"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q117453597$B2AE79A3-2C7F-4B4D-BC13-65EC7EF3629C",
+        "rank": "normal"
+      }
+    ],
+    "P742": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P742",
+          "hash": "0fa98aef0f461c695bde68845dcb8b415678585d",
+          "datavalue": {
+            "value": "Mamba",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q117453597$8303B26E-538A-4EA5-A410-C0310EB19493",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "34136edbd27d3eec5e9624deff44303cf765b29c",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "09dd4004d749385030f291c99ab0b05adf63654d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 105835728,
+                      "id": "Q105835728"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P10918": [
+                {
+                  "snaktype": "value",
+                  "property": "P10918",
+                  "hash": "f9d82dd5142650f17dadfe76762ac3bb0ab7fa99",
+                  "datavalue": {
+                    "value": "starcraft2/Mamba_(Swiss_player)",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a3656b97ef0ee894d55c5515cff67353c93be6c4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-03-26T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P10918", "P813"]
+          }
+        ]
+      }
+    ],
+    "P569": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P569",
+          "hash": "08f8fa8377cef0503caa92f881cb20a75727a809",
+          "datavalue": {
+            "value": {
+              "time": "+1996-12-27T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q117453597$057E07E5-DC38-4CD6-A688-EA9747BF8F50",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "34136edbd27d3eec5e9624deff44303cf765b29c",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "09dd4004d749385030f291c99ab0b05adf63654d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 105835728,
+                      "id": "Q105835728"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P10918": [
+                {
+                  "snaktype": "value",
+                  "property": "P10918",
+                  "hash": "f9d82dd5142650f17dadfe76762ac3bb0ab7fa99",
+                  "datavalue": {
+                    "value": "starcraft2/Mamba_(Swiss_player)",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a3656b97ef0ee894d55c5515cff67353c93be6c4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-03-26T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P10918", "P813"]
+          }
+        ]
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "9b760ff67a497bb6392f74786c64450d68c460ed",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 39,
+              "id": "Q39"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q117453597$EEE328D6-C125-4BB4-A884-78D78202F437",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "34136edbd27d3eec5e9624deff44303cf765b29c",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "09dd4004d749385030f291c99ab0b05adf63654d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 105835728,
+                      "id": "Q105835728"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P10918": [
+                {
+                  "snaktype": "value",
+                  "property": "P10918",
+                  "hash": "f9d82dd5142650f17dadfe76762ac3bb0ab7fa99",
+                  "datavalue": {
+                    "value": "starcraft2/Mamba_(Swiss_player)",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a3656b97ef0ee894d55c5515cff67353c93be6c4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-03-26T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P10918", "P813"]
+          }
+        ]
+      }
+    ],
+    "P10918": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10918",
+          "hash": "f9d82dd5142650f17dadfe76762ac3bb0ab7fa99",
+          "datavalue": {
+            "value": "starcraft2/Mamba_(Swiss_player)",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9675": [
+            {
+              "snaktype": "value",
+              "property": "P9675",
+              "hash": "bba69c0ac3eae6f1414e240f5a426e24e9b4358d",
+              "datavalue": {
+                "value": "67290",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9675"],
+        "id": "Q117453597$4DD75102-C7FA-4615-8AE0-42B842CF5181",
+        "rank": "normal"
+      }
+    ],
+    "P2002": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2002",
+          "hash": "ca2967fd282104ee0c408dc79e092884ab08943c",
+          "datavalue": {
+            "value": "MambaTheSnake",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P6552": [
+            {
+              "snaktype": "value",
+              "property": "P6552",
+              "hash": "f0c11d4840e25af7d9826be59358ff9e549aa013",
+              "datavalue": {
+                "value": "1513406695",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ],
+          "P580": [
+            {
+              "snaktype": "value",
+              "property": "P580",
+              "hash": "3f8c06e8233adc31273b782a911136052b81bcf7",
+              "datavalue": {
+                "value": {
+                  "time": "+2013-06-13T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P585": [
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "6a5432717652f3e6c3c9016a840423c33d0ff249",
+              "datavalue": {
+                "value": {
+                  "time": "+2023-04-10T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P6552", "P580", "P585"],
+        "id": "Q117453597$99A162CD-C4C1-4E2C-9765-AB3A62A4A42B",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "34136edbd27d3eec5e9624deff44303cf765b29c",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "09dd4004d749385030f291c99ab0b05adf63654d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 105835728,
+                      "id": "Q105835728"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P10918": [
+                {
+                  "snaktype": "value",
+                  "property": "P10918",
+                  "hash": "f9d82dd5142650f17dadfe76762ac3bb0ab7fa99",
+                  "datavalue": {
+                    "value": "starcraft2/Mamba_(Swiss_player)",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a3656b97ef0ee894d55c5515cff67353c93be6c4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-03-26T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P10918", "P813"]
+          }
+        ]
+      }
+    ],
+    "P11706": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11706",
+          "hash": "5f5f2424ba2413ee76039919c467ee91295384da",
+          "datavalue": {
+            "value": "9877",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q117453597$E8AD798C-78BE-42F4-B9F7-EAF603406AF2",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "34136edbd27d3eec5e9624deff44303cf765b29c",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "09dd4004d749385030f291c99ab0b05adf63654d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 105835728,
+                      "id": "Q105835728"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P10918": [
+                {
+                  "snaktype": "value",
+                  "property": "P10918",
+                  "hash": "f9d82dd5142650f17dadfe76762ac3bb0ab7fa99",
+                  "datavalue": {
+                    "value": "starcraft2/Mamba_(Swiss_player)",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a3656b97ef0ee894d55c5515cff67353c93be6c4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-03-26T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P10918", "P813"]
+          }
+        ]
+      }
+    ],
+    "P10803": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10803",
+          "hash": "31a1bf0945d823b1300b80c34cf88287bd5a682e",
+          "datavalue": {
+            "value": "32770",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "q117453597$b4f7b9f0-47c3-ebb8-c99e-8bec576e71ec",
+        "rank": "normal"
+      }
+    ],
+    "P2416": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2416",
+          "hash": "c0539d759349f7e6d61b2b354ab0f7c9498b1594",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 18142874,
+              "id": "Q18142874"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q117453597$1d340aab-f0c9-4793-913b-f883aea2fbb2",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a63a726dd983ad156d136322fd047e56a104f7b4",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "28e734435addf004717860e22a206aa2c2c9869d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 112144524,
+                      "id": "Q112144524"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P10803": [
+                {
+                  "snaktype": "value",
+                  "property": "P10803",
+                  "hash": "31a1bf0945d823b1300b80c34cf88287bd5a682e",
+                  "datavalue": {
+                    "value": "32770",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "ae64107d4af435bf703dd5c3f86162c9e8bd59fa",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-04-08T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P10803", "P813"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {}
+}

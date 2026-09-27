@@ -1,0 +1,623 @@
+{
+  "pageid": 111256021,
+  "ns": 0,
+  "title": "Q116493543",
+  "lastrevid": 2513833672,
+  "modified": "2026-07-04T14:32:57Z",
+  "type": "item",
+  "id": "Q116493543",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Edge"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Edge"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Edge"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "American progamer"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "xugador profesional de videoxuegos surcoreanu"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "মার্কিন পেশাদার গেমার"
+    },
+    "as": {
+      "language": "as",
+      "value": "আমেৰিকান পেছাদাৰী গেমাৰ"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "Josh Yang"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q116493543$e523e9f5-4c37-c72b-f072-8571506d7863",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q116493543$845dd968-4c67-a7fe-44f3-bfbc31bbb4b5",
+        "rank": "normal"
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "52d0408c7915122e0519a22577f0cbdcb28f749b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 30,
+              "id": "Q30"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q116493543$401b5332-418c-2f74-aed7-0c43055aab4b",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "4c8732ed5fd2efcd7e616db0ae504388e4456649",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 884,
+              "id": "Q884"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q116493543$F8EC80E0-9AB6-4052-B779-33BBC704F62B",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ed508d0e7ca796fcddf936d340cfe2b53d2912d6",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "09dd4004d749385030f291c99ab0b05adf63654d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 105835728,
+                      "id": "Q105835728"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P10918": [
+                {
+                  "snaktype": "value",
+                  "property": "P10918",
+                  "hash": "703ee7b529674cc6150a62ea81feb05185e1ed6f",
+                  "datavalue": {
+                    "value": "starcraft2/Edge_(American_player)",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a3656b97ef0ee894d55c5515cff67353c93be6c4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-03-26T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P10918", "P813"]
+          }
+        ]
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "de5102a9c0bdc5f9befc84af1b550e6cb2c4aa77",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4379701,
+              "id": "Q4379701"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q116493543$27997f30-4528-c788-a435-3fb349aab8d8",
+        "rank": "normal"
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "c88bc438bef1e0369928f7dacc18d06b2353282d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 300920,
+              "id": "Q300920"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q116493543$9924b8eb-46cf-8e57-9234-584baee1f8ce",
+        "rank": "normal"
+      }
+    ],
+    "P2416": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2416",
+          "hash": "c0539d759349f7e6d61b2b354ab0f7c9498b1594",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 18142874,
+              "id": "Q18142874"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q116493543$e70424ab-4c45-e6a0-6837-eb01813b91fd",
+        "rank": "normal"
+      }
+    ],
+    "P10803": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10803",
+          "hash": "a7ca490c6e79defa0f2e04f7366d7cccdd8a43ce",
+          "datavalue": {
+            "value": "1246",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "q116493543$862dc617-4cb1-b6d4-d403-39f99feae93f",
+        "rank": "normal"
+      }
+    ],
+    "P10918": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10918",
+          "hash": "703ee7b529674cc6150a62ea81feb05185e1ed6f",
+          "datavalue": {
+            "value": "starcraft2/Edge_(American_player)",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9675": [
+            {
+              "snaktype": "value",
+              "property": "P9675",
+              "hash": "87d28ae278b9425b71b40906a097c4de6682bdcf",
+              "datavalue": {
+                "value": "16327",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9675"],
+        "id": "q116493543$34fc4a40-4ad4-15df-bdfb-0cccbf1d5a8e",
+        "rank": "normal"
+      }
+    ],
+    "P11706": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11706",
+          "hash": "f34754d8e2b9650051a617a70e9d826a585998c8",
+          "datavalue": {
+            "value": "656",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q116493543$A7AB8F0E-5F4E-407E-A532-EAF9368C8DE3",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ed508d0e7ca796fcddf936d340cfe2b53d2912d6",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "09dd4004d749385030f291c99ab0b05adf63654d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 105835728,
+                      "id": "Q105835728"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P10918": [
+                {
+                  "snaktype": "value",
+                  "property": "P10918",
+                  "hash": "703ee7b529674cc6150a62ea81feb05185e1ed6f",
+                  "datavalue": {
+                    "value": "starcraft2/Edge_(American_player)",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a3656b97ef0ee894d55c5515cff67353c93be6c4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-03-26T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P10918", "P813"]
+          }
+        ]
+      }
+    ],
+    "P742": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P742",
+          "hash": "a4401920646a44d4d1e301334c155ca2c48d75ce",
+          "datavalue": {
+            "value": "Edge",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q116493543$4AC2AD1C-F184-49DA-9D0F-6B6039215AA1",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ed508d0e7ca796fcddf936d340cfe2b53d2912d6",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "09dd4004d749385030f291c99ab0b05adf63654d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 105835728,
+                      "id": "Q105835728"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P10918": [
+                {
+                  "snaktype": "value",
+                  "property": "P10918",
+                  "hash": "703ee7b529674cc6150a62ea81feb05185e1ed6f",
+                  "datavalue": {
+                    "value": "starcraft2/Edge_(American_player)",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a3656b97ef0ee894d55c5515cff67353c93be6c4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-03-26T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P10918", "P813"]
+          }
+        ]
+      }
+    ],
+    "P2002": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2002",
+          "hash": "8ecf2ed778a8730687c733286f2c9dc41fa773ba",
+          "datavalue": {
+            "value": "CoreEdgeSC",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q116493543$D25FB393-B597-4BAF-A95A-48352A18CE28",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ed508d0e7ca796fcddf936d340cfe2b53d2912d6",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "09dd4004d749385030f291c99ab0b05adf63654d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 105835728,
+                      "id": "Q105835728"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P10918": [
+                {
+                  "snaktype": "value",
+                  "property": "P10918",
+                  "hash": "703ee7b529674cc6150a62ea81feb05185e1ed6f",
+                  "datavalue": {
+                    "value": "starcraft2/Edge_(American_player)",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a3656b97ef0ee894d55c5515cff67353c93be6c4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-03-26T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P10918", "P813"]
+          }
+        ]
+      }
+    ],
+    "P5797": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5797",
+          "hash": "e5bba6db0c9e1007528d896ee2e3b9fc682a7024",
+          "datavalue": {
+            "value": "edgesc",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P12229": [
+            {
+              "snaktype": "value",
+              "property": "P12229",
+              "hash": "de0a3646e534d755544c043ef15098dd2f4443f6",
+              "datavalue": {
+                "value": "21417197",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ],
+          "P580": [
+            {
+              "snaktype": "value",
+              "property": "P580",
+              "hash": "cc8e116c147728e50bac4ea19a5e594a5661be9e",
+              "datavalue": {
+                "value": {
+                  "time": "+2011-03-30T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P12229", "P580"],
+        "id": "Q116493543$108D5D23-AD0E-4A53-878D-19437B2C8116",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ed508d0e7ca796fcddf936d340cfe2b53d2912d6",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "09dd4004d749385030f291c99ab0b05adf63654d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 105835728,
+                      "id": "Q105835728"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P10918": [
+                {
+                  "snaktype": "value",
+                  "property": "P10918",
+                  "hash": "703ee7b529674cc6150a62ea81feb05185e1ed6f",
+                  "datavalue": {
+                    "value": "starcraft2/Edge_(American_player)",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a3656b97ef0ee894d55c5515cff67353c93be6c4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-03-26T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P10918", "P813"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {}
+}

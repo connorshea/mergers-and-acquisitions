@@ -921,7 +921,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
   });
 
   describe("separate articles on many wikis", () => {
-    // Same label, same P31, shared per-title id — a strong candidate on its own.
+    // Same label, same P31, shared per-subject id — a strong candidate on its own.
     const mk = (id: string, sitelinks: Record<string, string>, badges?: string[]): Item => ({
       ...base,
       id,
@@ -1022,7 +1022,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     });
   });
 
-  it("weights a shared account/social id far below a per-title id", () => {
+  it("weights a shared account/social id far below a per-subject id", () => {
     // Distinct labels so the shared id is the dominant signal and neither score
     // saturates at the 1.0 cap, exposing the full weighting gap.
     const strongA: Item = {
@@ -1177,7 +1177,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       }),
     });
     // A modest gap (< LARGE_YEAR_GAP, e.g. a regional-release difference) is
-    // forgiven when a strong per-title id vouches for the pair.
+    // forgiven when a strong per-subject id vouches for the pair.
     const result = scoreCandidate(mk("Q5", "2018"), mk("Q6", "2020"), {
       isIdentifierProp: (pid) => pid === "P1733",
     });
@@ -1348,9 +1348,9 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(withMirror.reasons.some((r) => r.includes("external identifiers differ"))).toBe(false);
   });
 
-  it("caps a pair hard when two+ per-title ids differ, even with a shared id and identical name", () => {
+  it("caps a pair hard when two+ per-subject ids differ, even with a shared id and identical name", () => {
     // Identical name, same P31 and a *shared* IGDB id would score very high, but
-    // two per-title store pages differ (Steam + MobyGames) — distinct games.
+    // two per-subject store pages differ (Steam + MobyGames) — distinct games.
     const a: Item = {
       ...base,
       id: "Q50",
@@ -1374,7 +1374,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     const isId = (pid: string) => ["P5794", "P1733", "P11688"].includes(pid);
     const result = scoreCandidate(a, b, { isIdentifierProp: isId });
     expect(result.confidence).toBeLessThanOrEqual(0.1);
-    expect(result.reasons[0]).toContain("per-title identifiers differ");
+    expect(result.reasons[0]).toContain("per-subject identifiers differ");
   });
 
   it("treats differing MyAnimeList + AniList ids as two works, for anime and manga", () => {
@@ -1395,13 +1395,13 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       });
       const result = scoreCandidate(item("Q60", "19875"), item("Q61", "5223"));
       expect(result.confidence).toBeLessThanOrEqual(0.1);
-      expect(result.reasons[0]).toContain(`per-title identifiers differ (${mal}, ${anilist})`);
+      expect(result.reasons[0]).toContain(`per-subject identifiers differ (${mal}, ${anilist})`);
     }
   });
 
-  it("counts itch.io URL (a url-typed value, not an ExternalId) toward the per-title rule", () => {
+  it("counts itch.io URL (a url-typed value, not an ExternalId) toward the per-subject rule", () => {
     // itch.io URL (P7294) is a `url` datatype; paired with a differing Steam id
-    // that's two distinct per-title pages, so the cap fires by property id even
+    // that's two distinct per-subject pages, so the cap fires by property id even
     // though isIdentifierProp excludes the url value.
     const mk = (id: string, steam: string, itch: string): Item => ({
       ...base,
@@ -1418,7 +1418,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       { isIdentifierProp: (pid) => pid === "P1733" },
     );
     expect(result.confidence).toBeLessThanOrEqual(0.1);
-    expect(result.reasons[0]).toContain("per-title identifiers differ");
+    expect(result.reasons[0]).toContain("per-subject identifiers differ");
   });
 
   it("caps two novels in one series whose ISFDB and FantLab ids differ", () => {
@@ -1453,7 +1453,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     const isId = (pid: string) => ["P9818", "P1274", "P7439"].includes(pid);
     const result = scoreCandidate(a, b, { isIdentifierProp: isId });
     expect(result.confidence).toBeLessThanOrEqual(0.1);
-    expect(result.reasons[0]).toContain("2 per-title identifiers differ");
+    expect(result.reasons[0]).toContain("2 per-subject identifiers differ");
   });
 
   it("caps two same-named bands whose Discogs and Freebase ids differ", () => {
@@ -1483,7 +1483,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       isMirroredIdProp: (pid) => pid === "P434",
     });
     expect(result.confidence).toBeLessThanOrEqual(0.1);
-    expect(result.reasons[0]).toContain("2 per-title identifiers differ");
+    expect(result.reasons[0]).toContain("2 per-subject identifiers differ");
     expect(result.reasons[0]).not.toContain("P434");
     expect(
       result.reasons.some(
@@ -1492,8 +1492,8 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     ).toBe(true);
   });
 
-  it("does not trip the per-title rule on a single differing id or one-sided ids", () => {
-    // One differing per-title id (Steam) plus a MobyGames id present on only one
+  it("does not trip the per-subject rule on a single differing id or one-sided ids", () => {
+    // One differing per-subject id (Steam) plus a MobyGames id present on only one
     // side: exactly one prop is "distinct", so the pair is not capped.
     const a: Item = {
       ...base,
@@ -1516,7 +1516,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     };
     const isId = (pid: string) => ["P5794", "P1733", "P11688"].includes(pid);
     const result = scoreCandidate(a, b, { isIdentifierProp: isId });
-    expect(result.reasons.some((r) => r.includes("per-title identifiers differ"))).toBe(false);
+    expect(result.reasons.some((r) => r.includes("per-subject identifiers differ"))).toBe(false);
     expect(result.confidence).toBeGreaterThan(0.4);
   });
 
@@ -1548,7 +1548,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(diff.reasons).toContain("different developer");
   });
 
-  it("scores a series-level id (TV Tropes) as weak, not a strong per-title id", () => {
+  it("scores a series-level id (TV Tropes) as weak, not a strong per-subject id", () => {
     const mk = (id: string, name: string): Item => ({
       ...base,
       id,
@@ -1562,7 +1562,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(result.reasons.some((r) => r.startsWith("shares external identifier"))).toBe(false);
   });
 
-  it("scores a Sina Weibo user ID as a weak account id, not a per-title id", () => {
+  it("scores a Sina Weibo user ID as a weak account id, not a per-subject id", () => {
     // A drama's Weibo account is often the studio's or broadcaster's, shared by
     // every show it posts about, so a shared value says little about the title.
     const mk = (id: string, name: string): Item => ({
@@ -1604,7 +1604,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
   });
 
   it('zeroes out a pair one item declares "different from" the other (P1889)', () => {
-    // Identical label + P31 + shared per-title id would otherwise score ~1.0.
+    // Identical label + P31 + shared per-subject id would otherwise score ~1.0.
     const a: Item = {
       ...base,
       id: "Q100",
@@ -1629,7 +1629,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
   });
 
   describe('"permanent duplicated item" (P2959)', () => {
-    // Identical label + shared per-title id would otherwise score high.
+    // Identical label + shared per-subject id would otherwise score high.
     const mk = (id: string, p2959: string[] = []): Item => ({
       ...base,
       id,
@@ -1860,7 +1860,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     // Two distinct items (e.g. a game and its soundtrack release, or two
     // regional editions) can legitimately carry the same MusicBrainz release
     // group id, and an editor records that with the P4070 qualifier. Identical
-    // label + P31 + that shared id would otherwise read as a strong per-title
+    // label + P31 + that shared id would otherwise read as a strong per-subject
     // id match; with the qualifier, the id must count for nothing.
     const mk = (id: string, sharedWith?: string[]): Item => ({
       ...base,
@@ -2247,5 +2247,33 @@ describe("scoreCandidate — ids naming a page section", () => {
       colleague("Q2", "Vladomir Svistunov", page),
     );
     expect(result.reasons).toContain("shares external identifier: P6262");
+  });
+});
+
+describe("scoreCandidate — namesake progamers", () => {
+  const base = { descriptions: {}, aliases: {}, sitelinks: {} };
+  const player = (id: string, country: string, liquipedia: string, aligulac: string): Item => ({
+    ...base,
+    id,
+    labels: { en: "Mamba" },
+    statements: {
+      P31: [{ type: "item", value: "Q5" }],
+      P27: [{ type: "item", value: country }],
+      P742: [{ type: "string", value: "Mamba" }],
+      P641: [{ type: "item", value: "Q300920" }],
+      P2416: [{ type: "item", value: "Q18142874" }],
+      P10918: [{ type: "external-id", value: liquipedia }],
+      P11706: [{ type: "external-id", value: aligulac }],
+    },
+  });
+
+  it("separates two players who share a handle but have their own player pages", () => {
+    const result = scoreCandidate(
+      player("Q117453597", "Q39", "starcraft2/Mamba_(Swiss_player)", "9877"),
+      player("Q117453598", "Q865", "starcraft2/Mamba_(Taiwanese_player)", "7813"),
+    );
+    expect(result.reasons[0]).toContain("2 per-subject identifiers differ (P10918, P11706)");
+    expect(result.reasons.some((r) => r.includes("shared statements agree"))).toBe(false);
+    expect(result.confidence).toBeLessThan(0.4);
   });
 });

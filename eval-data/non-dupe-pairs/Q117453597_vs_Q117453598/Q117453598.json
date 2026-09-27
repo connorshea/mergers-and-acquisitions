@@ -1,0 +1,452 @@
+{
+  "pageid": 112216536,
+  "ns": 0,
+  "title": "Q117453598",
+  "lastrevid": 2518891235,
+  "modified": "2026-07-17T22:13:16Z",
+  "type": "item",
+  "id": "Q117453598",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Mamba"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Mamba"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "Taiwanese progamer"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "তাইওয়ানি পেশাদার গেমার"
+    },
+    "as": {
+      "language": "as",
+      "value": "টাইৱানী প্ৰ'গামাৰ"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "Hung Lien Cheng"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q117453598$A0AB5D29-C1DE-4818-A385-7BB33D69AAEC",
+        "rank": "normal"
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "de5102a9c0bdc5f9befc84af1b550e6cb2c4aa77",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4379701,
+              "id": "Q4379701"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q117453598$36F0EE99-8036-4102-83E8-037334605EF3",
+        "rank": "normal"
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "c88bc438bef1e0369928f7dacc18d06b2353282d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 300920,
+              "id": "Q300920"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q117453598$D56FB850-8194-49C7-B922-35B82A6BD416",
+        "rank": "normal"
+      }
+    ],
+    "P742": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P742",
+          "hash": "0fa98aef0f461c695bde68845dcb8b415678585d",
+          "datavalue": {
+            "value": "Mamba",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q117453598$31EFC16E-C871-43D6-936E-BE07F1F9CC67",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "647340fd7360d5ec707e33259ddf7d28a0f83c05",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "09dd4004d749385030f291c99ab0b05adf63654d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 105835728,
+                      "id": "Q105835728"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P10918": [
+                {
+                  "snaktype": "value",
+                  "property": "P10918",
+                  "hash": "b82f32454e7bfddaf6cabb5245d688bc8e6a5478",
+                  "datavalue": {
+                    "value": "starcraft2/Mamba_(Taiwanese_player)",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a3656b97ef0ee894d55c5515cff67353c93be6c4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-03-26T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P10918", "P813"]
+          }
+        ]
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "5e51bd61971a52beebe110cd5232eb4cb1a99a3f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 865,
+              "id": "Q865"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q117453598$EB519351-E0FC-4B42-989C-364F1F676940",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "647340fd7360d5ec707e33259ddf7d28a0f83c05",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "09dd4004d749385030f291c99ab0b05adf63654d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 105835728,
+                      "id": "Q105835728"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P10918": [
+                {
+                  "snaktype": "value",
+                  "property": "P10918",
+                  "hash": "b82f32454e7bfddaf6cabb5245d688bc8e6a5478",
+                  "datavalue": {
+                    "value": "starcraft2/Mamba_(Taiwanese_player)",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a3656b97ef0ee894d55c5515cff67353c93be6c4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-03-26T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P10918", "P813"]
+          }
+        ]
+      }
+    ],
+    "P10918": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10918",
+          "hash": "b82f32454e7bfddaf6cabb5245d688bc8e6a5478",
+          "datavalue": {
+            "value": "starcraft2/Mamba_(Taiwanese_player)",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9675": [
+            {
+              "snaktype": "value",
+              "property": "P9675",
+              "hash": "49d68f4839ddc184f5079bc1cf437aea5d57f0b9",
+              "datavalue": {
+                "value": "47057",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9675"],
+        "id": "Q117453598$722B1AF1-FF62-4956-92ED-75747DBCE2AD",
+        "rank": "normal"
+      }
+    ],
+    "P11706": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11706",
+          "hash": "e45d006b613690749141884ce8bde805c069b356",
+          "datavalue": {
+            "value": "7813",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q117453598$155D5E73-50F3-4536-928F-65A897AAF35E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "647340fd7360d5ec707e33259ddf7d28a0f83c05",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "09dd4004d749385030f291c99ab0b05adf63654d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 105835728,
+                      "id": "Q105835728"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P10918": [
+                {
+                  "snaktype": "value",
+                  "property": "P10918",
+                  "hash": "b82f32454e7bfddaf6cabb5245d688bc8e6a5478",
+                  "datavalue": {
+                    "value": "starcraft2/Mamba_(Taiwanese_player)",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a3656b97ef0ee894d55c5515cff67353c93be6c4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-03-26T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P10918", "P813"]
+          }
+        ]
+      }
+    ],
+    "P10803": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10803",
+          "hash": "786521ecfc6866669a605895c1fa7eeb8dd829cf",
+          "datavalue": {
+            "value": "31020",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "q117453598$2c6a894f-4f08-d516-6ef7-cd6210d01fff",
+        "rank": "normal"
+      }
+    ],
+    "P2416": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2416",
+          "hash": "c0539d759349f7e6d61b2b354ab0f7c9498b1594",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 18142874,
+              "id": "Q18142874"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q117453598$edee571c-3a0f-4c44-bc78-f538943a5744",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "83e1747b11843f65c543de7a670435a7161eaa84",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "28e734435addf004717860e22a206aa2c2c9869d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 112144524,
+                      "id": "Q112144524"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P10803": [
+                {
+                  "snaktype": "value",
+                  "property": "P10803",
+                  "hash": "786521ecfc6866669a605895c1fa7eeb8dd829cf",
+                  "datavalue": {
+                    "value": "31020",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "ae64107d4af435bf703dd5c3f86162c9e8bd59fa",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-04-08T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P10803", "P813"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {}
+}

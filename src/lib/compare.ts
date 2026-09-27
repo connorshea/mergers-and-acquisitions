@@ -752,7 +752,7 @@ export function orderByAge(x: Item, y: Item): [from: Item, into: Item] {
  * single title — a developer's Facebook page or a series' Twitter handle is the
  * same across their whole catalog, so a shared value here is weak evidence of a
  * duplicate (it's exactly what makes a game and its sequel look identical).
- * Per-title store/database IDs (Steam, GOG, MobyGames, …) are not listed and
+ * Per-subject store/database IDs (Steam, GOG, MobyGames, …) are not listed and
  * keep their full weight.
  */
 const WEAK_ID_PROPS = new Set<string>([
@@ -788,7 +788,7 @@ const WEAK_ID_PROPS = new Set<string>([
   "P6839", // TV Tropes ID
   "P6783", // speedrun.com game ID
   "P3984", // subreddit
-  "P4073", // Fandom wiki ID (one wiki per franchise; P6262 article ID stays per-title)
+  "P4073", // Fandom wiki ID (one wiki per franchise; P6262 article ID stays per-subject)
   "P9078", // Discord invite ID
   // Name-derived slugs: the id is the name itself, so two different acts with
   // the same name get the same one (e.g. both bands called The Radiators are
@@ -801,7 +801,7 @@ const WEAK_ID_PROPS = new Set<string>([
  * the Google Knowledge Graph (P2671). Their entities are notoriously conflated
  * (a game's regional release folded into its sibling, two albums sharing one
  * mid), so a shared value is weak evidence, like an account id. A *differing*
- * Freebase id still counts as a per-title difference (PER_TITLE_ID_PROPS).
+ * Freebase id still counts as a per-subject difference (SUBJECT_PAGE_ID_PROPS).
  */
 const CONFLATED_AGGREGATOR_ID_PROPS = new Set<string>([
   "P646", // Freebase ID
@@ -813,7 +813,7 @@ const CONFLATED_AGGREGATOR_ID_PROPS = new Set<string>([
  * games share these exact values ("single-player", "action game", a country),
  * so agreement on them is near-meaningless and must not inflate the
  * statement-agreement signal — it's excluded from that term entirely. Genuinely
- * discriminative properties (developer, publisher, per-title ids) keep full
+ * discriminative properties (developer, publisher, per-subject ids) keep full
  * weight. Series (P179) is here too: sharing a series is at best a weak hint of
  * sameness — every entry in a franchise shares it, and a sequel is not a
  * duplicate — so it must not inflate the match signal.
@@ -869,6 +869,11 @@ const LOW_ENTROPY_PROPS = new Set<string>([
   "P734", // family name
   "P1412", // languages spoken, written or signed
   "P103", // native language
+  // A pseudonym restates the label (a progamer's handle), and every player of
+  // one game shares its sport and discipline.
+  "P742", // pseudonym
+  "P641", // sport
+  "P2416", // sports discipline competed in
 ]);
 
 /**
@@ -986,8 +991,8 @@ const YEAR_GAP_PROPS = ["P577", "P571", "P569"] as const;
 const MANY_SITELINK_CLASHES = 3;
 
 /**
- * Per-title identifiers where each distinct subject has exactly one page: a
- * specific store or database entry for one game, artist, release, or film. If
+ * Per-subject identifiers where each distinct subject has exactly one page: a
+ * specific store or database entry for one game, artist, release, film or person. If
  * two items each carry their *own differing* value for two or more of these,
  * they point at two different store/database pages — near-conclusive that they
  * are different subjects, even if some other id happens to collide (a shared id
@@ -1001,7 +1006,7 @@ const MANY_SITELINK_CLASHES = 3;
  * library authority files (VIAF, LoC, GND, ISNI) are left out, since their own
  * duplicate records are common enough to split a real duplicate.
  */
-const PER_TITLE_ID_PROPS = new Set<string>([
+const SUBJECT_PAGE_ID_PROPS = new Set<string>([
   // Video games
   "P1733", // Steam application ID
   "P6337", // PCGamingWiki ID
@@ -1035,6 +1040,13 @@ const PER_TITLE_ID_PROPS = new Set<string>([
   // Books: one title/work record per literary work.
   "P1274", // ISFDB title ID
   "P7439", // FantLab work ID
+  // People: one page per person. Namesake progamers share a handle, but each
+  // has their own Liquipedia, Aligulac and Esports Earnings page.
+  "P10918", // Liquipedia ID
+  "P10803", // Esports Earnings player ID
+  "P11706", // Aligulac player ID
+  "P11721", // cybersport.ru player ID
+  "P3913", // MobyGames person ID
 ]);
 
 /** A trailing `--N` disambiguation suffix on a slug id. */
@@ -1400,17 +1412,17 @@ export interface CandidateScore {
  * vs. different `instance of` (P31), name similarity/distinctness (labels and
  * aliases, so renames still match), and how much of the shared statements agree
  * — into a 0–1 score. Concrete disagreement subtracts too: a differing release
- * year, developer, or publisher (unless a shared strong per-title id vouches for
+ * year, developer, or publisher (unless a shared strong per-subject id vouches for
  * the pair — except a *large* publication-year gap, which overrides even that).
  * A near-certain (≈1.0) score is *reserved*: it takes a very similar name plus
  * strong corroboration — two or more shared external ids, or an id plus agreeing
  * discriminative properties — and minimal differences. A lone shared id with a
  * matching name is strong but not conclusive and is capped below 1.0; any
  * concrete difference (differing developer/publisher, a year gap, or a single
- * conflicting per-title id like two different Steam pages) caps it further.
+ * conflicting per-subject id like two different Steam pages) caps it further.
  * Two strong negatives can effectively disqualify a pair: clearly-different
  * names, and many external identifiers that are present on both items yet all
- * differ. More narrowly, two or more differing *per-title* identifiers (Steam,
+ * differ. More narrowly, two or more differing *per-subject* identifiers (Steam,
  * PCGamingWiki, MobyGames, IGDB, itch.io, Giant Bomb, MyAnimeList, AniList) point at distinct
  * store/database pages and cap the score hard, overriding even a shared id.
  * Identifiers that mirror Wikidata itself (vglist, GamerProfiles) are
@@ -1450,7 +1462,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   let score = 0;
 
   // Shared external identifiers are the strongest single signal — but only
-  // genuine per-title identifiers. Restrict to real ExternalId properties when
+  // genuine per-subject identifiers. Restrict to real ExternalId properties when
   // we can (opts.isIdentifierProp), which drops non-id lookalikes like review
   // scores, then further split out account/franchise ids (WEAK_ID_PROPS) that a
   // game shares with its whole series.
@@ -1639,7 +1651,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   const diffCreators = CREATOR_PROPS.filter((pid) => disjointCreators(a, b, pid));
   const modestYearGap = Number.isFinite(yearGap) && yearGap >= 2 && yearGap < LARGE_YEAR_GAP;
 
-  // Lesser disagreement penalties. A shared strong per-title identifier is near-
+  // Lesser disagreement penalties. A shared strong per-subject identifier is near-
   // conclusive for these, so when we have one we trust it and skip the *penalties*
   // (a small release-date or renamed-studio mismatch shouldn't sink a genuine
   // duplicate). Otherwise, concrete disagreement — a modest release-year gap, the
@@ -1754,36 +1766,36 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     score = Math.min(score, 0.1);
   }
 
-  // Two or more *per-title* identifiers (Steam, MobyGames, Discogs, IMDb, …; see
-  // PER_TITLE_ID_PROPS) present on both items with differing values means the
+  // Two or more *per-subject* identifiers (Steam, MobyGames, Discogs, IMDb, …; see
+  // SUBJECT_PAGE_ID_PROPS) present on both items with differing values means the
   // pair points at two distinct store/database pages — near-conclusive that they
   // are different subjects. Ids that mirror Wikidata are skipped: a differing
   // value there only means one side hasn't been re-synced. Cap hard, below the
   // persistence floor, overriding even a shared id. (Ids present on only one side
   // are "one-sided", not "distinct", and don't count.)
-  const distinctPerTitleIds = rows.filter(
+  const distinctSubjectPageIds = rows.filter(
     (r) =>
       r.kind === "statement" &&
       r.status === "distinct" &&
-      PER_TITLE_ID_PROPS.has(r.key) &&
+      SUBJECT_PAGE_ID_PROPS.has(r.key) &&
       !isNonEvidence(r.key),
   );
-  if (distinctPerTitleIds.length >= 2) {
+  if (distinctSubjectPageIds.length >= 2) {
     reasons.unshift(
-      `${distinctPerTitleIds.length} per-title identifiers differ (${distinctPerTitleIds
+      `${distinctSubjectPageIds.length} per-subject identifiers differ (${distinctSubjectPageIds
         .map((r) => r.key)
         .join(", ")}), almost certainly different subjects`,
     );
     score = Math.min(score, 0.1);
-  } else if (distinctPerTitleIds.length === 1) {
-    // A single differing per-title id (e.g. two different Steam or itch.io pages)
+  } else if (distinctSubjectPageIds.length === 1) {
+    // A single differing per-subject id (e.g. two different Steam or itch.io pages)
     // is a real discrepancy — usually different games, occasionally a data slip
     // when a stronger id still agrees. Dock it modestly and (via the ceiling
     // below) hold the pair well off a near-certain score, but keep the nudge
     // small so a genuine duplicate with one mis-entered id stays a candidate.
     score -= 0.1;
     reasons.push(
-      `a per-title identifier differs (${distinctPerTitleIds[0].key}), so it points at a different store/database page`,
+      `a per-subject identifier differs (${distinctSubjectPageIds[0].key}), so it points at a different store/database page`,
     );
   }
 
@@ -1894,7 +1906,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // single shared identifier with a matching name is strong but not conclusive
   // (that lone id could be stale or mis-entered), so it is capped well below 1.0;
   // any concrete disagreement — a differing developer/publisher, a release-year
-  // gap, or a conflicting per-title id — caps it further. Corroborating signals
+  // gap, or a conflicting per-subject id — caps it further. Corroborating signals
   // are the shared strong ids plus the discriminative statements (non-id) that
   // agree, plus a wiki redirecting one item's page to the other's. This clamp
   // only ever lowers a score; it cannot make a non-duplicate look like one.
@@ -1928,10 +1940,10 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     diffPublisher ||
     modestYearGap ||
     largeYearGap ||
-    distinctPerTitleIds.length > 0 ||
+    distinctSubjectPageIds.length > 0 ||
     distinctExtIdRows.length > 0;
   if (hasConcreteDifference) ceiling = Math.min(ceiling, 0.9);
-  if (distinctPerTitleIds.length === 1) ceiling = Math.min(ceiling, 0.8);
+  if (distinctSubjectPageIds.length === 1) ceiling = Math.min(ceiling, 0.8);
   if (largeYearGap) ceiling = Math.min(ceiling, 0.6);
   // Two separate (non-redirect) pages on one wiki usually mean two subjects,
   // and the merge can't go through without resolving it anyway — never

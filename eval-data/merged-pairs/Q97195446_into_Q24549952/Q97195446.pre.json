@@ -1,0 +1,377 @@
+{
+  "pageid": 95636064,
+  "ns": 0,
+  "title": "Q97195446",
+  "lastrevid": 2521667483,
+  "modified": "2026-07-23T13:48:40Z",
+  "type": "item",
+  "id": "Q97195446",
+  "labels": {
+    "ko": {
+      "language": "ko",
+      "value": "이윤재"
+    },
+    "en": {
+      "language": "en",
+      "value": "Rush"
+    }
+  },
+  "descriptions": {
+    "ko": {
+      "language": "ko",
+      "value": "대한민국의 리그 오브 레전드 프로게이머"
+    },
+    "en": {
+      "language": "en",
+      "value": "South Korean pro gamer (1991−)"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "韓國《英雄聯盟》電競選手"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "Lee Yoon-jae"
+      }
+    ]
+  },
+  "claims": {
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "f938736c7a2a1d803bfdb2cb21895851c7636067",
+          "datavalue": {
+            "value": "/g/11jvcs56fx",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q97195446$456C31BE-AE88-4624-94E5-770D305BF700",
+        "rank": "normal"
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q97195446$dd5f894e-6ad0-4ac6-b0ff-e069dd37f3d5",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "08be9f116c5c541d7fa461ad59ad559a42ffd6ed",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "56f99b6701feb379816767ae88bb77e0e74981b3",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 17985,
+                      "id": "Q17985"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P569": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P569",
+          "hash": "a22a578a7dc7fd89325ed6f03b5657c74ebac2fe",
+          "datavalue": {
+            "value": {
+              "time": "+1993-04-06T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q97195446$be38c0d7-37ef-4ba3-957c-20917123455b",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "954e4f018e283dd529184f014d020e4a703fe821",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "56f99b6701feb379816767ae88bb77e0e74981b3",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 17985,
+                      "id": "Q17985"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "6d936f009564bcdefc46c9acd202bdb031a0a4ee",
+                  "datavalue": {
+                    "value": "https://ko.wikipedia.org/w/index.php?title=%EB%9F%AC%EC%89%AC%20%28%ED%94%84%EB%A1%9C%EA%B2%8C%EC%9D%B4%EB%A8%B8%29&oldid=31861435",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "4c8732ed5fd2efcd7e616db0ae504388e4456649",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 884,
+              "id": "Q884"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q97195446$E6FEA95B-FA78-4FB5-88CA-0F1285F399C3",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f6f191f3990c1d47969c1009ed0decd11210f705",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "56f99b6701feb379816767ae88bb77e0e74981b3",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 17985,
+                      "id": "Q17985"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "efb441c30b633d20fbe66a6f44f067044a7698e1",
+                  "datavalue": {
+                    "value": "https://ko.wikipedia.org/w/index.php?title=러쉬_(프로게이머)&oldid=31861435",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "c88bc438bef1e0369928f7dacc18d06b2353282d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 300920,
+              "id": "Q300920"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q97195446$9C9DBCE5-A235-4C35-8EBF-865C9B79BAD7",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "08be9f116c5c541d7fa461ad59ad559a42ffd6ed",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "56f99b6701feb379816767ae88bb77e0e74981b3",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 17985,
+                      "id": "Q17985"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P2416": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2416",
+          "hash": "9831c8f652243fa6e904cbdd87ae6302e8cdc3aa",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 223341,
+              "id": "Q223341"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q97195446$33A9CA73-CC41-4799-9705-325BE49E0AB2",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f6f191f3990c1d47969c1009ed0decd11210f705",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "56f99b6701feb379816767ae88bb77e0e74981b3",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 17985,
+                      "id": "Q17985"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "efb441c30b633d20fbe66a6f44f067044a7698e1",
+                  "datavalue": {
+                    "value": "https://ko.wikipedia.org/w/index.php?title=러쉬_(프로게이머)&oldid=31861435",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "de5102a9c0bdc5f9befc84af1b550e6cb2c4aa77",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4379701,
+              "id": "Q4379701"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q97195446$6F8548CE-2C29-4810-A019-A473B3E8E340",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "08be9f116c5c541d7fa461ad59ad559a42ffd6ed",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "56f99b6701feb379816767ae88bb77e0e74981b3",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 17985,
+                      "id": "Q17985"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {
+    "kowiki": {
+      "site": "kowiki",
+      "title": "러쉬 (프로게이머)",
+      "badges": [],
+      "url": "https://ko.wikipedia.org/wiki/%EB%9F%AC%EC%89%AC_(%ED%94%84%EB%A1%9C%EA%B2%8C%EC%9D%B4%EB%A8%B8)"
+    }
+  }
+}

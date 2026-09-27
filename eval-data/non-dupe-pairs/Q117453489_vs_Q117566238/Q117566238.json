@@ -1,0 +1,460 @@
+{
+  "pageid": 112326326,
+  "ns": 0,
+  "title": "Q117566238",
+  "lastrevid": 2518894193,
+  "modified": "2026-07-17T22:20:35Z",
+  "type": "item",
+  "id": "Q117566238",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Kamikaze"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Kamikaze"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Kamikaze"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Kamikaze"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "French progamer"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "ফরাসি পেশাদার গেমার"
+    },
+    "as": {
+      "language": "as",
+      "value": "ফৰাচী প্ৰ'গামাৰ"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "Lucas Dupouy"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q117566238$0638EA72-593B-4158-A744-51D5E259CC3E",
+        "rank": "normal"
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "de5102a9c0bdc5f9befc84af1b550e6cb2c4aa77",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4379701,
+              "id": "Q4379701"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q117566238$016A9C7F-33C9-4D57-AE41-D9C2737D3C07",
+        "rank": "normal"
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "c88bc438bef1e0369928f7dacc18d06b2353282d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 300920,
+              "id": "Q300920"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q117566238$5C298C76-78C1-41C0-AD12-687D5E5DBDAB",
+        "rank": "normal"
+      }
+    ],
+    "P742": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P742",
+          "hash": "71a7835a9e925908c7d022b0e0e5a4f26bf6b062",
+          "datavalue": {
+            "value": "Kamikaze",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q117566238$8F13D616-CB52-4584-8666-16B107BC041F",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ce5830e91653d28e3e825e6aad45fd7603478a98",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "09dd4004d749385030f291c99ab0b05adf63654d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 105835728,
+                      "id": "Q105835728"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P10918": [
+                {
+                  "snaktype": "value",
+                  "property": "P10918",
+                  "hash": "ffb5f7955d6a56b9a9a546fcc252d23df2b10c0e",
+                  "datavalue": {
+                    "value": "starcraft2/Kamikaze",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "8954cf2c5a5b9feb7b8574e6399a57632fee45f9",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-04-11T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P10918", "P813"]
+          }
+        ]
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "a3d46fa4beeabd048657cdb76d1f1113c94ae554",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 142,
+              "id": "Q142"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q117566238$6067B018-EB4E-4B12-93A2-A1B252F3D050",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ce5830e91653d28e3e825e6aad45fd7603478a98",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "09dd4004d749385030f291c99ab0b05adf63654d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 105835728,
+                      "id": "Q105835728"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P10918": [
+                {
+                  "snaktype": "value",
+                  "property": "P10918",
+                  "hash": "ffb5f7955d6a56b9a9a546fcc252d23df2b10c0e",
+                  "datavalue": {
+                    "value": "starcraft2/Kamikaze",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "8954cf2c5a5b9feb7b8574e6399a57632fee45f9",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-04-11T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P10918", "P813"]
+          }
+        ]
+      }
+    ],
+    "P10918": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10918",
+          "hash": "5ad8a9d3ea3efc0a7633df79cb34d978f1957119",
+          "datavalue": {
+            "value": "starcraft2/Kamikaze_(French_player)",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9675": [
+            {
+              "snaktype": "value",
+              "property": "P9675",
+              "hash": "c221a0969252ca88245bc62f86d59ab7300be885",
+              "datavalue": {
+                "value": "18465",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9675"],
+        "id": "Q117566238$3EA2BF8B-2A10-4311-AF60-890E078793EB",
+        "rank": "normal"
+      }
+    ],
+    "P11706": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11706",
+          "hash": "7654d6010c5445e29918e2566922cba4967932c6",
+          "datavalue": {
+            "value": "2417",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q117566238$35127DD9-EEBC-42E7-BC99-6E1884100055",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ce5830e91653d28e3e825e6aad45fd7603478a98",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "09dd4004d749385030f291c99ab0b05adf63654d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 105835728,
+                      "id": "Q105835728"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P10918": [
+                {
+                  "snaktype": "value",
+                  "property": "P10918",
+                  "hash": "ffb5f7955d6a56b9a9a546fcc252d23df2b10c0e",
+                  "datavalue": {
+                    "value": "starcraft2/Kamikaze",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "8954cf2c5a5b9feb7b8574e6399a57632fee45f9",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-04-11T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P10918", "P813"]
+          }
+        ]
+      }
+    ],
+    "P10803": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10803",
+          "hash": "9bd6dd4afc872e7adb142d317149c7350598c9b8",
+          "datavalue": {
+            "value": "7394",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "q117566238$de591360-4349-86b4-87dd-caf6540663d4",
+        "rank": "normal"
+      }
+    ],
+    "P2416": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2416",
+          "hash": "c0539d759349f7e6d61b2b354ab0f7c9498b1594",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 18142874,
+              "id": "Q18142874"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q117566238$3466c967-d311-4ac2-9f3a-dd5eb8653b13",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "1b3ca7c26242245434335c2b1b857e0733fb24cb",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "28e734435addf004717860e22a206aa2c2c9869d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 112144524,
+                      "id": "Q112144524"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P10803": [
+                {
+                  "snaktype": "value",
+                  "property": "P10803",
+                  "hash": "9bd6dd4afc872e7adb142d317149c7350598c9b8",
+                  "datavalue": {
+                    "value": "7394",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "688635dc4f85c0c890bebda8aa4428470655c129",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-04-14T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P10803", "P813"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {}
+}

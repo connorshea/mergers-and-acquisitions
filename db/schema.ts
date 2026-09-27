@@ -309,6 +309,9 @@ export const dumpImportSegments = mysqlTable(
     claimedAt: datetime("claimed_at", { mode: "string" }),
     doneAt: datetime("done_at", { mode: "string" }),
     matched: int("matched"),
+    // The DUMP_REDO token of the last re-import of a finished set, so a worker
+    // starting late with the same token doesn't reset the set a second time.
+    pass: varchar("pass", { length: 32 }),
   },
   (t) => [primaryKey({ columns: [t.dump, t.segments, t.segment] })],
 );

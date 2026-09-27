@@ -10,6 +10,7 @@
 //   DUMP_FULL=1 …                                # parse unedited items too (see CONVERTER_VERSION)
 //   node jobs/import-dump.ts --worker import-dump-3   # a queue worker (the weekly jobs)
 //   DUMP_SEGMENTS=128 … --worker …               # segments per pass (every worker must agree)
+//   DUMP_REDO=2026-09-28 … --worker …            # import an already-imported dump again, once per token
 //   node jobs/import-dump.ts --shard 3/8         # read the third of eight slices
 //
 // `--worker <name>` makes the job one of several identical workers: they claim
@@ -91,6 +92,11 @@ if (limit !== undefined && !(Number.isInteger(limit) && limit > 0)) {
   );
   process.exit(2);
 }
+const redo = process.env.DUMP_REDO || undefined;
+if (redo !== undefined && !(redo.length <= 32 && worker !== undefined)) {
+  console.error("import-dump: DUMP_REDO is a token of at most 32 characters, for --worker runs");
+  process.exit(2);
+}
 if (limit !== undefined && worker !== undefined) {
   console.error("import-dump: DUMP_LIMIT is for a single run; use it without --worker");
   process.exit(2);
@@ -105,7 +111,7 @@ console.log(
 
 runDumpImport({
   path,
-  ...(worker !== undefined ? { worker, segments } : { shard }),
+  ...(worker !== undefined ? { worker, segments, redo } : { shard }),
   limit,
   prune: process.env.DUMP_PRUNE === "0" ? false : undefined,
   forcePrune: process.env.DUMP_PRUNE_FORCE === "1",

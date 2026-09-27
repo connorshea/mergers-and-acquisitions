@@ -935,9 +935,11 @@ export interface ImportOptions {
   heartbeatMs?: number;
   /**
    * Import a dump again whose segment set is already complete (a worker
-   * otherwise finds nothing to do). Defaults to `full`.
+   * otherwise finds nothing to do): a token naming this re-import (DUMP_REDO),
+   * the same for all its workers. The set is reset once per token, so a
+   * worker that starts after the others have finished doesn't start it over.
    */
-  redo?: boolean;
+  redo?: string;
   /**
    * Identifies the dump for the seen-stamp and the shard bookkeeping. Derived
    * from the file (`wikidata-20260914-all.json.gz` → "20260914") when not given.
@@ -1032,21 +1034,33 @@ async function ensureSegments(dump: string, segments: number): Promise<void> {
 
 /**
  * Put a finished set back to unclaimed, for a pass over a dump that was already
- * imported (DUMP_FULL=1 after a converter change, say). The set's rows are
- * locked while it is checked, so of several workers starting together only
- * the first resets it; the rest find it in progress and join in.
+ * imported (with DUMP_FULL=1 after a converter change, say), and record the
+ * pass's `token` on it. Each token resets the set once: a worker of the same
+ * pass that starts after the others have finished (it sat Pending, or it's a
+ * retry) finds the token already there and leaves the set alone, rather than
+ * re-importing the whole dump on its own. The set's rows are locked while it
+ * is checked, so of several workers starting together only the first resets
+ * it; the rest find it in progress and join in.
  */
-async function resetFinishedSet(dump: string, segments: number): Promise<boolean> {
+async function resetFinishedSet(dump: string, segments: number, token: string): Promise<boolean> {
   return db.transaction(async (tx) => {
     const rows = await tx
-      .select({ doneAt: dumpImportSegments.doneAt })
+      .select({ doneAt: dumpImportSegments.doneAt, pass: dumpImportSegments.pass })
       .from(dumpImportSegments)
       .where(inSet(dump, segments))
       .for("update");
     if (rows.length === 0 || rows.some((r) => r.doneAt === null)) return false;
+    if (rows.every((r) => r.pass === token)) return false;
     await tx
       .update(dumpImportSegments)
-      .set({ claimedBy: null, claim: null, claimedAt: null, doneAt: null, matched: null })
+      .set({
+        claimedBy: null,
+        claim: null,
+        claimedAt: null,
+        doneAt: null,
+        matched: null,
+        pass: token,
+      })
       .where(inSet(dump, segments));
     return true;
   });
@@ -1321,10 +1335,10 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
   await ensureSegments(dump, segments);
   if (
     worker !== undefined &&
-    (opts.redo ?? opts.full) &&
-    (await resetFinishedSet(dump, segments))
+    opts.redo !== undefined &&
+    (await resetFinishedSet(dump, segments, opts.redo))
   ) {
-    log(`${tag} dump ${dump} was imported before; importing it again`);
+    log(`${tag} dump ${dump} was imported before; importing it again (redo ${opts.redo})`);
   }
   // Workers started on a dump that is already imported have nothing to scan.
   // Asked to force the prune (after one refused at the cap), they do just that.

@@ -469,10 +469,18 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
       // A worker started on a dump that is already imported finds nothing to do…
       const late = await worker(path, "c");
       expect([late.segmentsScanned, late.pruned]).toEqual([0, 0]);
-      // …unless asked to import it again.
-      const redo = await worker(path, "c", { redo: true });
+      // …unless asked to import it again…
+      const redo = await worker(path, "c", { redo: "t1" });
       expect(redo.segmentsScanned).toBe(SEGMENTS);
       expect(redo.matched).toBe(GAMES.length);
+      expect((await segmentRows()).every((r) => r.done && r.pass === "t1")).toBe(true);
+      // …once: a worker of the same re-import that starts after it finished
+      // (Pending, or a retry) leaves the set alone.
+      const straggler = await worker(path, "d", { redo: "t1" });
+      expect([straggler.segmentsScanned, straggler.pruned]).toEqual([0, 0]);
+      // A new token is a new re-import.
+      const next = await worker(path, "d", { redo: "t2" });
+      expect(next.segmentsScanned).toBe(SEGMENTS);
     });
 
     it("takes over a stale claim, and waits out a live one until it goes stale", async () => {

@@ -486,6 +486,29 @@ export function lineItemId(line: Buffer): number | null {
   return qid;
 }
 
+const PROPERTY_ID_NEEDLE = Buffer.from('"P');
+
+/**
+ * Whether `line` mentions one of `properties` (numeric ids) as a quoted
+ * `"P<id>"`, as a claim key or a snak's `property` does. One pass over the
+ * line whatever the number of properties, where a needle per property would
+ * scan it once each. A mention in a string value matches too, which the
+ * parsed-item check then turns down.
+ */
+function mentionsProperty(line: Buffer, properties: ReadonlySet<number>): boolean {
+  let at = line.indexOf(PROPERTY_ID_NEEDLE);
+  while (at !== -1) {
+    let end = at + PROPERTY_ID_NEEDLE.length;
+    let pid = 0;
+    while (end < line.length && isDigit(line[end])) pid = pid * 10 + (line[end++] - 0x30);
+    if (end > at + PROPERTY_ID_NEEDLE.length && line[end] === 0x22 && properties.has(pid)) {
+      return true;
+    }
+    at = line.indexOf(PROPERTY_ID_NEEDLE, end);
+  }
+  return false;
+}
+
 /**
  * The selective classes' two checks: `line`, on the raw bytes, for the
  * pre-filter (a mention of `"numeric-id":<id>` at `at` on the line starting
@@ -494,9 +517,9 @@ export function lineItemId(line: Buffer): number | null {
  * id property only as a qualifier), never the reverse.
  */
 function selectiveMatcher(scan: SelectiveScan) {
-  const numeric = (qid: string) => Number(qid.slice(1));
+  const numeric = (id: string) => Number(id.slice(1)); // Q5 → 5, P8286 → 8286
   const byClass = new Map(
-    scan.classes.map((c) => [numeric(c.qid), c.idProperties.map((p) => Buffer.from(`"${p}"`))]),
+    scan.classes.map((c) => [numeric(c.qid), new Set(c.idProperties.map(numeric))]),
   );
   const occupations = new Set(scan.classes.flatMap((c) => c.occupations.map(numeric)));
   const classSets = scan.classes.map((c) => [c, new Set([c.qid])] as const);
@@ -507,14 +530,14 @@ function selectiveMatcher(scan: SelectiveScan) {
   return {
     line(region: Buffer, id: number, start: number, at: number): boolean {
       if (occupations.has(id)) return true;
-      const needles = byClass.get(id);
-      if (!needles || (checkedIn === region && checked === start)) return false;
+      const idProperties = byClass.get(id);
+      if (!idProperties || (checkedIn === region && checked === start)) return false;
       checkedIn = region;
       checked = start;
       if (scan.linkedQids.has(lineItemId(region.subarray(start, at)) ?? -1)) return true;
       const end = region.indexOf(NL, at);
       const line = region.subarray(start, end);
-      return needles.some((n) => line.includes(n));
+      return mentionsProperty(line, idProperties);
     },
     item(item: Item): boolean {
       return classSets.some(

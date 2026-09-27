@@ -42,13 +42,16 @@ const VIDEO_GAME_CLASSES: readonly ImportClass[] = [
 ];
 
 /**
- * The humans the mirror imports, out of Wikidata's ~13M: ~37k in all
+ * The humans the mirror imports, out of Wikidata's ~13M: ~290k in all
  * (September 2026). Game people (~20k, ~11k of them linked from games): the
  * video game occupations under "game designer" / "video game developer" (not
  * board game, tabletop RPG or crossword designers), professional gamers, and
  * the game databases' person ids. Anime staff (~17k more): anyone with an
  * AniList or MyAnimeList person id, which covers directors, animators,
- * writers, composers and voice actors.
+ * writers, composers and voice actors. Olympians (~254k more): anyone with an
+ * id in one of the multi-sport Olympic databases, which bulk imports each
+ * created their own items from. Other athletes (~1.4M under the "athlete"
+ * occupation) are left out for size.
  */
 const PEOPLE: SelectiveImport = {
   linkedFrom: VIDEO_GAME_CLASSES.map((c) => c.qid),
@@ -74,6 +77,11 @@ const PEOPLE: SelectiveImport = {
     "P5796", // Internet Game Database person ID
     "P11227", // AniList staff ID
     "P4084", // MyAnimeList people ID
+    "P8286", // Olympedia people ID
+    "P5815", // Olympics.com athlete ID
+    "P1447", // Sports-Reference.com Olympic athlete ID (archived)
+    "P14105", // InterSportStats athlete ID
+    "P4391", // The-Sports.org athlete ID
   ],
 };
 

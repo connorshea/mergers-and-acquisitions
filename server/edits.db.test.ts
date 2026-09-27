@@ -671,6 +671,27 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       });
     });
 
+    it("suggests the pair may already be merged when Wikidata can't load an item", async () => {
+      stubWikidata(() =>
+        apiError("cant-load-entity-content", "Cannot access content, revision may be deleted."),
+      );
+      const { status, body } = await post<EditErrorResponse>(
+        `/api/candidates/${alpha}/merge`,
+        editor,
+        {},
+      );
+      expect(status).toBe(502);
+      expect(body.code).toBe("wikidata-error");
+      expect(body.error).toBe(
+        "Cannot access content, revision may be deleted. The items may already have been " +
+          "merged by someone else on Wikidata; if so, dismiss this pair.",
+      );
+      expect((await candidateRow(alpha)).status).toBe("open");
+      // The audit keeps Wikidata's own text.
+      const [audit] = await db.select().from(wikidataEdits);
+      expect(audit.errorText).toBe("Cannot access content, revision may be deleted.");
+    });
+
     it("maps a revoked grant to a re-login and drops the stored tokens", async () => {
       stubWikidata(() =>
         apiError(

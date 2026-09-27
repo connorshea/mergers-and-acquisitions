@@ -5,7 +5,8 @@
 // from two cheap "blocking" strategies:
 //
 //   1. Shared external id — qids that share the same `(property, value)` in
-//      `external_ids` (SQL GROUP BY … HAVING count(distinct qid) > 1).
+//      `external_ids`. The shared keys are kept in `external_id_dupes`
+//      (see `refreshDupeKeys`), so only those keys are grouped, not every id.
 //   2. Label + type — items that share the same `items.blocking_key`
 //      (`storedBlockingKey(primaryLabel)`) AND the same `primaryType` (both
 //      non-null), grouped the same way in SQL.
@@ -30,7 +31,7 @@ import {
 import { drizzle, type MySql2Database } from "drizzle-orm/mysql2";
 import { and, eq, inArray, notInArray, sql } from "drizzle-orm";
 import * as schema from "../db/schema.ts";
-import { mergeCandidates, properties } from "../db/schema.ts";
+import { mergeCandidates, properties, syncState } from "../db/schema.ts";
 import { connConfig } from "./db-config.ts";
 import type { Item, ScoreOptions } from "../src/lib/compare.ts";
 import {
@@ -209,6 +210,74 @@ async function* streamRows<T>(conn: CoreConnection, query: string): AsyncGenerat
   }
 }
 
+/** `sync_state` scope holding the highest `external_ids.id` already in external_id_dupes. */
+const DUPE_KEYS_SCOPE = "hunt-external-id-dupes";
+
+/**
+ * How far below the watermark each incremental refresh re-reads. Auto-increment
+ * ids are handed out before commit, so a row with a lower id than the watermark
+ * can still become visible after it was read (an import committing mid-hunt).
+ * Re-reading this many rows is cheap and the insert is idempotent.
+ */
+const DUPE_KEYS_MARGIN = 100_000;
+
+/**
+ * Bring `external_id_dupes` up to date with `external_ids`, so it holds (at
+ * least) every `(property, value)` two or more qids share. Nothing updates an
+ * external id in place — writers only delete rows and insert new ones — so a
+ * key can only become shared through a newly inserted row, i.e. one above the
+ * last run's watermark on the auto-increment id. Those rows are checked
+ * against the index for another qid holding the same key. Deletes can only
+ * un-share a key, which the scan notices when it re-counts it.
+ *
+ * Rebuilt from a full GROUP BY instead when there's no watermark yet, when the
+ * table's ids have gone backwards (it was truncated and re-imported), or when
+ * `HUNT_REBUILD_DUPES=1` is set.
+ */
+async function refreshDupeKeys(db: Db, conn: mysql.Connection): Promise<void> {
+  const start = performance.now();
+  const [maxRows] = await conn.query<mysql.RowDataPacket[]>(
+    "select coalesce(max(id), 0) as id from external_ids",
+  );
+  const maxId = Number(maxRows[0].id);
+  const [state] = await db
+    .select({ cursor: syncState.cursor })
+    .from(syncState)
+    .where(eq(syncState.scope, DUPE_KEYS_SCOPE));
+  const rebuild = !state || maxId < state.cursor || process.env.HUNT_REBUILD_DUPES === "1";
+  if (rebuild) {
+    console.log("hunt scan: rebuilding the shared id keys from every external id");
+    await conn.query("truncate table external_id_dupes");
+    await conn.query(`
+      insert into external_id_dupes (property, value)
+      select property, value from external_ids
+      group by property, value
+      having count(distinct qid) > 1`);
+  } else {
+    await conn.query(
+      `insert ignore into external_id_dupes (property, value)
+       select n.property, n.value from external_ids n
+       where n.id > ? and exists (
+         select 1 from external_ids o
+         where o.property = n.property and o.value = n.value and o.qid <> n.qid)`,
+      [Math.max(0, state.cursor - DUPE_KEYS_MARGIN)],
+    );
+  }
+  await db
+    .insert(syncState)
+    .values({ scope: DUPE_KEYS_SCOPE, cursor: maxId, lastRunAt: sql`CURRENT_TIMESTAMP` })
+    .onDuplicateKeyUpdate({
+      set: { cursor: sql`values(${syncState.cursor})`, lastRunAt: sql`CURRENT_TIMESTAMP` },
+    });
+  const [countRows] = await conn.query<mysql.RowDataPacket[]>(
+    "select count(*) as n from external_id_dupes",
+  );
+  console.log(
+    `hunt scan: ${rebuild ? "rebuilt" : `added ids above ${state.cursor} to`} the shared id keys; ` +
+      `${countRows[0].n} keys (${secondsSince(start)})`,
+  );
+}
+
 /** Pair rows per `INSERT IGNORE` into hunt_pairs. */
 const PAIR_INSERT_CHUNK = 1000;
 
@@ -277,11 +346,14 @@ async function scan(db: Db, conn: mysql.Connection, reader: CoreConnection): Pro
   const sink = new PairSink(conn);
 
   // 1. Shared external id: same (property, value) held by more than one qid.
+  // Only the keys in external_id_dupes are grouped; each is re-counted here, and
+  // one no longer held by two qids (an id deleted or merged away) is dropped.
   // Restrict to real identifier properties when the property table is synced —
   // otherwise non-ids like review scores (hundreds of games share "80/100")
   // form huge junk blocks. Fall back to all properties before the first sync.
   // GROUP_CONCAT is safe here: the reader connection raised
   // group_concat_max_len, and blocks are capped at MAX_BLOCK_GROUP anyway.
+  await refreshDupeKeys(db, conn);
   const idProps = await loadIdentifierProps(db);
   console.log(
     idProps.size > 0
@@ -290,19 +362,38 @@ async function scan(db: Db, conn: mysql.Connection, reader: CoreConnection): Pro
   );
   const identifierFilter =
     idProps.size > 0
-      ? "where property in (select pid from properties where datatype = 'ExternalId')"
+      ? "where d.property in (select pid from properties where datatype = 'ExternalId')"
       : "";
   let extGroups = 0;
-  for await (const group of streamRows<BlockRow>(
+  let unshared: [string, string][] = [];
+  let dropped = 0;
+  const dropUnshared = async () => {
+    if (unshared.length === 0) return;
+    const keys = unshared;
+    unshared = [];
+    dropped += keys.length;
+    await conn.query("delete from external_id_dupes where (property, value) in (?)", [keys]);
+  };
+  for await (const group of streamRows<BlockRow & { property: string; value: string }>(
     reader,
-    `select group_concat(distinct qid) as qids, count(distinct qid) as n
-     from external_ids ${identifierFilter}
-     group by property, value
-     having n > 1`,
+    `select d.property, d.value,
+       group_concat(distinct e.qid) as qids, count(distinct e.qid) as n
+     from external_id_dupes d
+     left join external_ids e on e.property = d.property and e.value = d.value
+     ${identifierFilter}
+     group by d.property, d.value`,
   )) {
+    if (group.n < 2) {
+      unshared.push([group.property, group.value]);
+      if (unshared.length >= PAIR_INSERT_CHUNK) await dropUnshared();
+      continue;
+    }
     extGroups++;
     await sink.addGroup(group, "shared-external-id");
   }
+  await dropUnshared();
+  if (dropped > 0) console.log(`hunt scan: dropped ${dropped} no-longer-shared id keys`);
+  await sink.flush();
   await sink.flush();
   const extPairs = await countPairs(conn);
   console.log(

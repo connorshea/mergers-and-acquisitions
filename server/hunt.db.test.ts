@@ -1,9 +1,17 @@
 // Integration tests for the hunt (server/hunt.ts) against a real MariaDB:
 // blocking, scoring, and the upsert rules. Opt-in via DB_TEST=1 — see
 // test/global-setup.ts.
-import { afterAll, afterEach, beforeEach, describe, expect, it } from "vite-plus/test";
+import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
+import { eq, sql } from "drizzle-orm";
 import { db, pool } from "./db.ts";
-import { items, mergeCandidates, properties } from "../db/schema.ts";
+import {
+  externalIdDupes,
+  externalIds,
+  items,
+  mergeCandidates,
+  properties,
+  syncState,
+} from "../db/schema.ts";
 import { MIN_CONFIDENCE, runHunt } from "./hunt.ts";
 import type { Value } from "../src/lib/compare.ts";
 import { DB_TEST, insertItem, makeItem, truncateAll } from "../test/db-helpers.ts";
@@ -286,5 +294,63 @@ describe.skipIf(!DB_TEST)("runHunt", () => {
     ]);
     expect((await runHunt()).pairs).toBe(0);
     expect(await allCandidates()).toHaveLength(0);
+  });
+
+  describe("shared id keys", () => {
+    const dupeKeys = async () =>
+      (await db.select().from(externalIdDupes).orderBy(externalIdDupes.value)).map((k) => [
+        k.property,
+        k.value,
+      ]);
+    // Did the run rebuild external_id_dupes from scratch, or only add new rows?
+    const rebuiltOn = async (run: () => Promise<unknown>): Promise<boolean> => {
+      const log = vi.spyOn(console, "log").mockImplementation(() => {});
+      try {
+        await run();
+        return log.mock.calls.some(([line]) => String(line).includes("rebuilding the shared id"));
+      } finally {
+        log.mockRestore();
+      }
+    };
+
+    it("adds keys from new rows and drops keys that are no longer shared", async () => {
+      await insertItem(makeItem("Q100", "Alpha", steam("1")));
+      await insertItem(makeItem("Q200", "Beta", steam("1")));
+      await insertItem(makeItem("Q300", "Gamma", steam("2")));
+      expect(await rebuiltOn(async () => expect((await runHunt()).pairs).toBe(1))).toBe(true);
+      expect(await dupeKeys()).toEqual([["P1733", "1"]]);
+      const [{ maxId }] = await db
+        .select({ maxId: sql<number>`max(${externalIds.id})` })
+        .from(externalIds);
+      const [state] = await db
+        .select()
+        .from(syncState)
+        .where(eq(syncState.scope, "hunt-external-id-dupes"));
+      expect(state.cursor).toBe(Number(maxId));
+
+      // A new item sharing Q300's id: found without a rebuild.
+      await insertItem(makeItem("Q400", "Delta", steam("2")));
+      expect(await rebuiltOn(async () => expect((await runHunt()).pairs).toBe(2))).toBe(false);
+      expect(await dupeKeys()).toEqual([
+        ["P1733", "1"],
+        ["P1733", "2"],
+      ]);
+
+      // Q200's id goes away (a merge, or an edit on Wikidata): the key is dropped.
+      await db.delete(externalIds).where(eq(externalIds.qid, "Q200"));
+      expect(await rebuiltOn(async () => expect((await runHunt()).pairs).toBe(1))).toBe(false);
+      expect(await dupeKeys()).toEqual([["P1733", "2"]]);
+    });
+
+    it("rebuilds once the external ids have been truncated", async () => {
+      for (const qid of ["Q100", "Q200", "Q300"]) await insertItem(makeItem(qid, qid, steam("1")));
+      await runHunt();
+      await db.execute(sql`truncate table external_ids`);
+      await db.execute(sql`truncate table items`);
+      await insertItem(makeItem("Q500", "Epsilon", steam("9")));
+      await insertItem(makeItem("Q600", "Zeta", steam("9")));
+      expect(await rebuiltOn(async () => expect((await runHunt()).pairs).toBe(1))).toBe(true);
+      expect(await dupeKeys()).toEqual([["P1733", "9"]]);
+    });
   });
 });

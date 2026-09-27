@@ -16,6 +16,7 @@ export const DB_TEST = process.env.DB_TEST === "1";
 const TABLES = [
   "merge_candidates",
   "external_ids",
+  "external_id_dupes",
   "items",
   "properties",
   "entity_labels",

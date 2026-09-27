@@ -10,6 +10,9 @@
 // Usage — QIDs are taken pairwise (Q1 Q2  Q3 Q4  → two pairs):
 //   node scripts/fetch-nondupe-pairs.ts Q4047343 Q1535818 Q140140365 Q213911
 //   node scripts/fetch-nondupe-pairs.ts --out eval-data/non-dupe-pairs Q1 Q2
+//
+// A QID may be pinned to a past revision as `Q123@REVID`, for a pair whose
+// telling state has since been edited away (e.g. a conflation that was split).
 
 import { mkdir, writeFile, readFile } from "node:fs/promises";
 import { join } from "node:path";
@@ -25,9 +28,13 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 const qidNum = (id: string): number => parseInt(id.replace(/^Q/, ""), 10);
 
-/** Current full entity JSON blob (labels/aliases/claims/sitelinks). */
-async function fetchEntity(qid: string): Promise<Record<string, unknown>> {
-  const res = await fetch(`${ENTITYDATA}/${qid}.json`, {
+/**
+ * Full entity JSON blob (labels/aliases/claims/sitelinks), at `revision` when
+ * given, else current.
+ */
+async function fetchEntity(qid: string, revision?: number): Promise<Record<string, unknown>> {
+  const query = revision !== undefined ? `?revision=${revision}` : "";
+  const res = await fetch(`${ENTITYDATA}/${qid}.json${query}`, {
     headers: { "User-Agent": UA, Accept: "application/json" },
   });
   if (!res.ok) throw new Error(`GET ${qid} -> ${res.status}`);
@@ -77,15 +84,23 @@ async function main() {
   let outDir = "eval-data/non-dupe-pairs";
   let provenance = "hand-curated";
   const qids: string[] = [];
+  // Revision pins given as `Qxxx@REVID`; unpinned QIDs fetch the current revision.
+  const pins = new Map<string, number>();
   for (let i = 0; i < args.length; i++) {
     if (args[i] === "--out") outDir = args[++i];
     else if (args[i] === "--provenance") provenance = args[++i];
-    else if (/^Q\d+$/.test(args[i])) qids.push(args[i]);
-    else throw new Error(`unexpected arg: ${args[i]} (want Qxxx, --out DIR, or --provenance STR)`);
+    else if (/^Q\d+(@\d+)?$/.test(args[i])) {
+      const [qid, rev] = args[i].split("@");
+      qids.push(qid);
+      if (rev) pins.set(qid, Number(rev));
+    } else
+      throw new Error(
+        `unexpected arg: ${args[i]} (want Qxxx, Qxxx@REVID, --out DIR, or --provenance STR)`,
+      );
   }
   if (qids.length === 0 || qids.length % 2 !== 0)
     throw new Error(
-      "usage: node scripts/fetch-nondupe-pairs.ts [--out DIR] Qa Qb [Qc Qd …] (pairs)",
+      "usage: node scripts/fetch-nondupe-pairs.ts [--out DIR] Qa[@REVID] Qb[@REVID] [Qc Qd …] (pairs)",
     );
 
   await mkdir(outDir, { recursive: true });
@@ -117,7 +132,7 @@ async function main() {
     let ea: Record<string, unknown>;
     let eb: Record<string, unknown>;
     try {
-      [ea, eb] = await Promise.all([fetchEntity(a), fetchEntity(b)]);
+      [ea, eb] = await Promise.all([fetchEntity(a, pins.get(a)), fetchEntity(b, pins.get(b))]);
     } catch (err) {
       failed++;
       console.warn(`${key}: skipped — ${err instanceof Error ? err.message : String(err)}`);

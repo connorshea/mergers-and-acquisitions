@@ -148,6 +148,16 @@ pnpm eval:fetch-nondupes Q4047343 Q1535818  Q140140365 Q213911
 pnpm eval:fetch-nondupes -- --provenance wikidata-p1889-different-from Q719960 Q116783524 …
 ```
 
+Append `@REVID` to a QID to pin it to a past revision instead of the current
+one — for a pair whose telling state has since been edited away. E.g. the
+_Laughing Under the Clouds_ manga item was marked a conflation (P31 Q14946528)
+of the manga and the anime until the anime was split out to its own item, so
+the pair is kept at its pre-split revisions:
+
+```sh
+pnpm eval:fetch-nondupes Q17224315@2548121095 Q141514726@2548190235
+```
+
 Good sources of hard negatives: pairs you personally confirm are distinct;
 Wikidata P1889 "different from" pairs (query QLever for `?a wdt:P1889 ?b`,
 Q-items only, ranked by label similarity + shared type); and — once the app is

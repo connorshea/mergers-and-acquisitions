@@ -109,6 +109,49 @@ describe("scanDump", () => {
     expect(stats.bytes).toBe(Buffer.byteLength(dumpText(ENTITIES)));
   });
 
+  it("imports a selective class's instances only when linked, occupied or identified", async () => {
+    const claim = (property: string, qid: string): Statement => ({
+      ...p31(qid),
+      mainsnak: { ...p31(qid).mainsnak, property },
+    });
+    const externalId = (property: string, value: string): Statement => ({
+      mainsnak: {
+        snaktype: "value",
+        property,
+        datatype: "external-id",
+        datavalue: { type: "string", value },
+      },
+      rank: "normal",
+    });
+    const human = (id: string, claims: Record<string, Statement[]> = {}) =>
+      item(id, { P31: [p31("Q5")], ...claims });
+    const entities = [
+      human("Q20"), // linked from a game
+      human("Q21", { P106: [claim("P106", "Q3630699")] }), // game designer
+      human("Q22", { P3913: [externalId("P3913", "jane-doe")] }), // MobyGames person
+      human("Q23", { P106: [claim("P106", "Q33999")] }), // an actor nothing links to
+      human("Q24"), // no sign of games at all: never parsed
+      // Game signs on something that isn't a human.
+      item("Q25", { P31: [p31("Q43229")], P106: [claim("P106", "Q3630699")] }),
+      // A game that happens to mention Q5 is imported as a game.
+      item("Q26", { P31: [p31("Q7889")], P921: [claim("P921", "Q5")] }),
+    ];
+    const matched: string[] = [];
+    const stats = await scanDump(Readable.from([Buffer.from(dumpText(entities))]), {
+      classQids: [VIDEO_GAME],
+      selective: {
+        classes: [{ qid: "Q5", occupations: ["Q3630699"], idProperties: ["P3913"] }],
+        linkedQids: new Set([20]),
+      },
+      onItem: (i) => {
+        matched.push(i.id);
+      },
+    });
+    expect(matched).toEqual(["Q20", "Q21", "Q22", "Q26"]);
+    // Q23 and Q24 never reach the parser; Q25 does, for its occupation.
+    expect(stats).toMatchObject({ parsed: 5, matched: 4 });
+  });
+
   it("matches any of several classes in one pass, by the whole number", async () => {
     const entities = [
       item("Q10", { P31: [p31("Q11424")] }),

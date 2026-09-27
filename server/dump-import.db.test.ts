@@ -656,6 +656,58 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
     expect((await allItems()).map((r) => r.qid)).toEqual(["Q100"]);
   });
 
+  it("imports game people: linked from games, or by occupation, pruning the unlinked", async () => {
+    const human = (id: string, label: string): Entity => ({
+      type: "item",
+      id,
+      labels: { en: { value: label } },
+      claims: { P31: [p31("Q5")] },
+    });
+    const designedBy = (entity: Entity, qid: string): Entity => ({
+      ...entity,
+      claims: { ...entity.claims, P287: [p31(qid)] },
+    });
+    // A game designer by occupation, whom no game names.
+    const designer: Entity = {
+      ...human("Q30", "Grace Designer"),
+      claims: {
+        P31: [p31("Q5")],
+        P106: [{ ...p31("Q3630699"), mainsnak: { ...p31("Q3630699").mainsnak, property: "P106" } }],
+      },
+    };
+    // The mirror's game names Q20 as its designer; nothing names Q21.
+    await run([at(10, designedBy(game("Q100", "Alpha"), "Q20"))], { dump: "20260907" });
+    const dump = [
+      at(10, designedBy(game("Q100", "Alpha"), "Q20")),
+      at(20, human("Q20", "Ada Designer")),
+      at(21, human("Q21", "Someone Else")),
+      at(30, designer),
+    ];
+    const lines: string[] = [];
+    const first = await run(dump, { dump: "20260914", log: (m) => void lines.push(m) });
+    expect(first).toMatchObject({ matched: 3, unedited: 1, parsed: 2 });
+    expect(lines.some((l) => l.includes("2 items linked from the mirror"))).toBe(true);
+    expect((await allItems()).map((r) => [r.qid, r.primaryType])).toEqual([
+      ["Q100", "Q7889"],
+      ["Q20", "Q5"],
+      ["Q30", "Q5"],
+    ]);
+
+    // Unedited next week, the human is skipped unparsed like any other item.
+    expect(await run(dump, { dump: "20260921" })).toMatchObject({ unedited: 3, parsed: 0 });
+
+    // The game drops its designer: the human is still linked from the mirror
+    // this week, and left out and pruned the week after. The designer by
+    // occupation stays.
+    const unlinked = [at(11, game("Q100", "Alpha")), ...dump.slice(1)];
+    expect(await run(unlinked, { dump: "20260928" })).toMatchObject({ matched: 3, pruned: 0 });
+    expect(await run(unlinked, { dump: "20261005", forcePrune: true })).toMatchObject({
+      matched: 2,
+      pruned: 1,
+    });
+    expect((await allItems()).map((r) => r.qid)).toEqual(["Q100", "Q30"]);
+  });
+
   it("never prunes after a capped run, an empty match, or with prune off", async () => {
     await insertItem(makeItem("Q100", "Alpha"));
     await insertItem(makeItem("Q200", "Beta"));

@@ -13,7 +13,11 @@
 //   2. Cheap pre-filter: one Buffer search for `"numeric-id":`, keeping the
 //      lines where the number that follows is one of IMPORT_CLASSES, and one for
 //      lines that start `{"type":"property"`. Everything else is never decoded
-//      or parsed.
+//      or parsed. A selective class (SELECTIVE_IMPORT_CLASSES: humans) only
+//      counts for a line whose own QID a mirrored item links to (read from
+//      the mirror before the pass, loadLinkedQids), or that names one of the
+//      class's occupations or id properties, so the ~13M humans outside video
+//      games are passed over like any other line.
 //   3. A hit line for an item the mirror already holds at the same revision,
 //      converted by the current converter (`items.source_revid` and
 //      `converter_version`, loaded up front into a compact index), is not
@@ -79,7 +83,12 @@ import {
   isInstanceOfAny,
   propertyRowFromEntity,
 } from "../src/lib/wikibase.ts";
-import { IMPORT_CLASSES } from "../src/lib/import-classes.ts";
+import {
+  IMPORT_CLASSES,
+  SELECTIVE_IMPORT_CLASSES,
+  type SelectiveImport,
+  type SelectiveImportClass,
+} from "../src/lib/import-classes.ts";
 
 /** Where Toolforge mounts the latest weekly JSON dump (needs `mount: all`). */
 export const DEFAULT_DUMP_PATH = "/public/dumps/public/wikidatawiki/entities/latest-all.json.gz";
@@ -118,9 +127,24 @@ export interface ScanStats {
   seconds: number;
 }
 
+/** Classes of which only some instances are imported (see SELECTIVE_IMPORT_CLASSES). */
+export interface SelectiveScan {
+  classes: readonly (SelectiveImport & { qid: string })[];
+  /** Numeric ids of the items mirrored items link to (loadLinkedQids). */
+  linkedQids: ReadonlySet<number>;
+}
+
 export interface ScanOptions {
   /** Class QIDs an item's best-rank P31 must include one of (IMPORT_CLASSES). */
   classQids: readonly string[];
+  /**
+   * Classes of which only some instances are imported: those linked from the
+   * mirror (`linkedQids`), with one of the class's occupations, or with one of
+   * its id properties. A line naming such a class (and none of `classQids`)
+   * is only a hit when the raw line already shows one of those, so the other
+   * ~13M humans are never parsed.
+   */
+  selective?: SelectiveScan;
   /** Called with every matching item, in dump order, awaited (backpressure). */
   onItem: (item: Item, entity: Entity) => void | Promise<void>;
   /**
@@ -384,9 +408,16 @@ const NUMERIC_ID_NEEDLE = Buffer.from('"numeric-id":');
  * entity whose numeric id is in `ids` (`"numeric-id":7889`, and not Q78890).
  * One search for the shared `"numeric-id":` prefix, reading the digits after
  * each hit, rather than a pass per class: a region is ~1 MB, and with a dozen
- * classes the per-class passes cost ~7x the single one. `region` must end with `\n`.
+ * classes the per-class passes cost ~7x the single one. Any other id is put
+ * to `other(id, lineStart, at)` (the selective classes); on false the search
+ * carries on along the line. `region` must end with `\n`.
  */
-function classHits(region: Buffer, ids: ReadonlySet<number>, into: Map<number, number>): void {
+function classHits(
+  region: Buffer,
+  ids: ReadonlySet<number>,
+  into: Map<number, number>,
+  other?: (id: number, start: number, at: number) => boolean,
+): void {
   let from = 0;
   while (from < region.length) {
     const idx = region.indexOf(NUMERIC_ID_NEEDLE, from);
@@ -395,11 +426,15 @@ function classHits(region: Buffer, ids: ReadonlySet<number>, into: Map<number, n
     let id = 0;
     // Wikidata ids stay far below 2^53, so the running number is exact.
     while (at < region.length && isDigit(region[at])) id = id * 10 + (region[at++] - 0x30);
-    if (at === idx + NUMERIC_ID_NEEDLE.length || !ids.has(id)) {
+    if (at === idx + NUMERIC_ID_NEEDLE.length) {
       from = at;
       continue;
     }
     const start = region.lastIndexOf(NL, idx) + 1;
+    if (!ids.has(id) && !other?.(id, start, at)) {
+      from = at;
+      continue;
+    }
     const end = region.indexOf(NL, at);
     into.set(start, end);
     from = end + 1;
@@ -424,20 +459,75 @@ const ID_WINDOW = 256;
  * quickly.
  */
 export function lineRevision(line: Buffer): { qid: number; revid: number } | null {
+  const qid = lineItemId(line);
+  if (qid === null) return null;
+
+  const revAt = line.lastIndexOf(LASTREVID_NEEDLE);
+  if (revAt === -1) return null;
+  let at = revAt + LASTREVID_NEEDLE.length;
+  let revid = 0;
+  while (at < line.length && isDigit(line[at])) revid = revid * 10 + (line[at++] - 0x30);
+  if (at === revAt + LASTREVID_NEEDLE.length) return null;
+  return { qid, revid };
+}
+
+/**
+ * The item's numeric id, read from the start of a raw dump line (see
+ * lineRevision); null when the line isn't an item. Only the first ID_WINDOW
+ * bytes are read, so `line` may be cut short after them.
+ */
+export function lineItemId(line: Buffer): number | null {
   const idAt = line.subarray(0, ID_WINDOW).indexOf(ITEM_ID_NEEDLE);
   if (idAt === -1) return null;
   let at = idAt + ITEM_ID_NEEDLE.length;
   let qid = 0;
   while (at < line.length && isDigit(line[at])) qid = qid * 10 + (line[at++] - 0x30);
   if (at === idAt + ITEM_ID_NEEDLE.length || line[at] !== 0x22) return null;
+  return qid;
+}
 
-  const revAt = line.lastIndexOf(LASTREVID_NEEDLE);
-  if (revAt === -1) return null;
-  at = revAt + LASTREVID_NEEDLE.length;
-  let revid = 0;
-  while (at < line.length && isDigit(line[at])) revid = revid * 10 + (line[at++] - 0x30);
-  if (at === revAt + LASTREVID_NEEDLE.length) return null;
-  return { qid, revid };
+/**
+ * The selective classes' two checks: `line`, on the raw bytes, for the
+ * pre-filter (a mention of `"numeric-id":<id>` at `at` on the line starting
+ * at `start`), and `item`, on the parsed item, for the verdict. `line` may let
+ * through a line `item` turns down (an occupation mentioned outside P106, an
+ * id property only as a qualifier), never the reverse.
+ */
+function selectiveMatcher(scan: SelectiveScan) {
+  const numeric = (qid: string) => Number(qid.slice(1));
+  const byClass = new Map(
+    scan.classes.map((c) => [numeric(c.qid), c.idProperties.map((p) => Buffer.from(`"${p}"`))]),
+  );
+  const occupations = new Set(scan.classes.flatMap((c) => c.occupations.map(numeric)));
+  const classSets = scan.classes.map((c) => [c, new Set([c.qid])] as const);
+  // A line can mention its class many times (Q5 in references, say): look at
+  // each line once.
+  let checked = -1;
+  let checkedIn: Buffer | undefined;
+  return {
+    line(region: Buffer, id: number, start: number, at: number): boolean {
+      if (occupations.has(id)) return true;
+      const needles = byClass.get(id);
+      if (!needles || (checkedIn === region && checked === start)) return false;
+      checkedIn = region;
+      checked = start;
+      if (scan.linkedQids.has(lineItemId(region.subarray(start, at)) ?? -1)) return true;
+      const end = region.indexOf(NL, at);
+      const line = region.subarray(start, end);
+      return needles.some((n) => line.includes(n));
+    },
+    item(item: Item): boolean {
+      return classSets.some(
+        ([c, set]) =>
+          isInstanceOfAny(item, set) &&
+          (scan.linkedQids.has(numeric(item.id)) ||
+            (item.statements.P106 ?? []).some(
+              (v) => v.type === "item" && c.occupations.includes(v.value),
+            ) ||
+            c.idProperties.some((p) => (item.statements[p]?.length ?? 0) > 0)),
+      );
+    },
+  };
 }
 
 /** Parse one dump line (`{...},`) into an entity; null for the `[` / `]` lines. */
@@ -454,8 +544,11 @@ function parseLine(line: Buffer): Entity | null {
  * the scan statistics.
  */
 export async function scanDump(source: Readable, opts: ScanOptions): Promise<ScanStats> {
-  const classIds = new Set(opts.classQids.map((qid) => Number(qid.replace(/^Q/, ""))));
+  const numeric = (qid: string) => Number(qid.replace(/^Q/, ""));
+  const classIds = new Set(opts.classQids.map(numeric));
   const classSet = new Set(opts.classQids);
+  const selective = opts.selective;
+  const inSelective = selective && selectiveMatcher(selective);
   const progressEvery = opts.progressEveryBytes ?? 5e9;
   const started = Date.now();
   const stats: ScanStats = {
@@ -511,7 +604,7 @@ export async function scanDump(source: Readable, opts: ScanOptions): Promise<Sca
       skip(`${entity.id} (unconvertible)`, err);
       return;
     }
-    if (!isInstanceOfAny(item, classSet)) return;
+    if (!isInstanceOfAny(item, classSet) && !inSelective?.item(item)) return;
     stats.matched++;
     await opts.onItem(item, entity);
   };
@@ -522,7 +615,12 @@ export async function scanDump(source: Readable, opts: ScanOptions): Promise<Sca
     while ((nl = region.indexOf(NL, nl + 1)) !== -1) stats.lines++;
 
     hits.clear();
-    classHits(region, classIds, hits);
+    classHits(
+      region,
+      classIds,
+      hits,
+      inSelective && ((id, s, at) => inSelective.line(region, id, s, at)),
+    );
     if (opts.onProperty) lineStartHits(region, PROPERTY_NEEDLE, hits);
     if (hits.size === 0) return false;
     // Dump order matters for nothing, but keep it anyway.
@@ -692,6 +790,34 @@ export class RevisionIndex {
       Float64Array.from(order, (i) => revids[i]),
     );
   }
+}
+
+/**
+ * The numeric ids of every item that a mirrored item of one of `sources`
+ * names in an item-valued statement: the instances of the selective classes
+ * this pass imports because they are linked. Read from the mirror before the pass, so an item that
+ * starts being linked this week is imported with next week's dump. MariaDB
+ * pulls the values out of `data` itself (JSON_TABLE), so only the distinct
+ * QIDs cross the wire.
+ */
+export async function loadLinkedQids(sources: readonly string[]): Promise<Set<number>> {
+  const out = new Set<number>();
+  if (sources.length === 0) return out;
+  const [rows] = (await db.execute(sql`
+    select distinct jt.qid from ${items} i,
+      json_table(i.data, '$.statements.*[*]' columns (
+        type varchar(16) path '$.type',
+        qid varchar(32) path '$.value'
+      )) jt
+    where i.primary_type in (${sql.join(
+      sources.map((q) => sql`${q}`),
+      sql`, `,
+    )})
+      and jt.type = 'item'`)) as unknown as [{ qid: string }[]];
+  for (const { qid } of rows) {
+    if (/^Q\d+$/.test(qid)) out.add(Number(qid.slice(1)));
+  }
+  return out;
 }
 
 /** Rows paged per read when loading the revision index. */
@@ -985,6 +1111,8 @@ export interface ImportOptions {
   source?: Readable;
   /** Class QIDs whose instances to import (defaults to IMPORT_CLASSES). */
   classQids?: readonly string[];
+  /** Classes of which only some instances are imported (defaults to SELECTIVE_IMPORT_CLASSES). */
+  selectiveClasses?: readonly SelectiveImportClass[];
   /** Stop after this many matching items; implies no pruning. */
   limit?: number;
   /** Delete items absent from a complete pass (default true without `limit`). */
@@ -1343,6 +1471,7 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
   const runStart = performance.now();
   const log = opts.log ?? ((m: string) => console.log(m));
   const classQids = opts.classQids ?? IMPORT_CLASSES;
+  const selectiveClasses = opts.selectiveClasses ?? SELECTIVE_IMPORT_CLASSES;
   const path = opts.path ?? DEFAULT_DUMP_PATH;
   const worker = opts.worker;
   if (worker !== undefined && (opts.source || opts.shard || opts.limit !== undefined)) {
@@ -1388,12 +1517,30 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
     }
   }
 
+  // The items the mirror's items of the selective classes' sources link to:
+  // one way in for a selective class's instance. All selective classes share
+  // one set, drawn from all their sources.
+  let selective: SelectiveScan | undefined;
+  if (selectiveClasses.length > 0) {
+    const loadStart = performance.now();
+    const linkedQids = await loadLinkedQids([
+      ...new Set(selectiveClasses.flatMap((c) => c.sources)),
+    ]);
+    selective = { classes: selectiveClasses, linkedQids };
+    log(
+      `${tag} ${linkedQids.size} items linked from the mirror, loaded in ` +
+        `${((performance.now() - loadStart) / 1000).toFixed(1)}s; instances of ` +
+        `${selectiveClasses.map((c) => c.qid).join(", ")} among them are imported, ` +
+        "as are those with one of the class's occupations or id properties",
+    );
+  }
+
   // Items the mirror already holds at a known revision, converted by the
   // current converter: a hit at the same revision is skipped unparsed.
   let revisions: RevisionIndex | undefined;
   if (!opts.full) {
     const loadStart = performance.now();
-    revisions = await loadRevisionIndex(classQids);
+    revisions = await loadRevisionIndex([...classQids, ...selectiveClasses.map((c) => c.qid)]);
     log(
       `${tag} ${revisions.size} items stored at a known revision, ` +
         `loaded in ${((performance.now() - loadStart) / 1000).toFixed(1)}s; ` +
@@ -1601,6 +1748,7 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
     try {
       scan = await scanDump(source, {
         classQids,
+        selective,
         limit: opts.limit,
         progressEveryBytes: opts.progressEveryBytes,
         onSkip,

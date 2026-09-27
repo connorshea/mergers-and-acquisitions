@@ -98,6 +98,7 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
     expect(rows[0]).toMatchObject({
       qid: "Q100",
       primaryLabel: "Starfall Drift",
+      blockingKey: "starfall drift",
       primaryType: "Q7889",
     });
     expect(rows[0].data.descriptions).toEqual({ en: "Starfall Drift (video game)" });
@@ -113,6 +114,7 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
     const rows = await allItems();
     expect(rows).toHaveLength(1);
     expect(rows[0].primaryLabel).toBe("Starfall Drift II");
+    expect(rows[0].blockingKey).toBe("starfall drift ii");
     expect(await idsOf("Q100")).toEqual([{ property: "P1733", value: "999" }]);
   });
 

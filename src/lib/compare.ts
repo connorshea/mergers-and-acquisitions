@@ -252,6 +252,20 @@ export function blockingLabelKey(label: string): string {
     .trim();
 }
 
+/** Longest blocking key `items.blocking_key` holds (varchar, in characters). */
+export const BLOCKING_KEY_MAX = 255;
+
+/**
+ * The `items.blocking_key` value for a primary label: `blockingLabelKey`,
+ * clipped to the column (lowercasing can lengthen a label that was already at
+ * the 255-character limit). The hunt groups on the stored value in SQL, so a
+ * change to `blockingLabelKey` must ship with a migration that nulls the
+ * column, which makes the next hunt recompute every key.
+ */
+export function storedBlockingKey(label: string | null | undefined): string | null {
+  return label == null ? null : blockingLabelKey(label).slice(0, BLOCKING_KEY_MAX);
+}
+
 /**
  * Build the external URL for an identifier value from a Wikidata formatter URL
  * (P1630), substituting the value for the `$1` placeholder — e.g.

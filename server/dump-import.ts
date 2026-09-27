@@ -57,7 +57,7 @@ import { dumpImportRuns, externalIds, items, mergeCandidates } from "../db/schem
 import { syncProperties } from "./properties-sync.ts";
 import { CONVERTER_VERSION } from "./converter-version.ts";
 import { toSqlDatetime } from "./auth/time.ts";
-import type { Item } from "../src/lib/compare.ts";
+import { storedBlockingKey, type Item } from "../src/lib/compare.ts";
 import type { PropertyRow } from "../src/lib/sparql.ts";
 import { externalIdRows, primaryLabel, primaryType } from "../src/lib/wikidata.ts";
 import {
@@ -722,6 +722,7 @@ export async function upsertItems(
     const row = {
       qid: item.id,
       primaryLabel: label,
+      blockingKey: storedBlockingKey(label),
       primaryType: type,
       data: item,
       lastSyncedAt: stamp,
@@ -807,6 +808,7 @@ export async function upsertItems(
           .onDuplicateKeyUpdate({
             set: {
               primaryLabel: sql`values(${items.primaryLabel})`,
+              blockingKey: sql`values(${items.blockingKey})`,
               primaryType: sql`values(${items.primaryType})`,
               data: sql`values(${items.data})`,
               lastSyncedAt: sql`values(${items.lastSyncedAt})`,

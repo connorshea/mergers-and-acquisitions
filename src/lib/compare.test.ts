@@ -17,6 +17,7 @@ import {
   isSeriesSequelPair,
   isWorkEditionPair,
   isPartWholePair,
+  isCollectionSiblingPair,
   isConflationPair,
   titleYears,
   yearDisambiguatedWikis,
@@ -2033,5 +2034,51 @@ describe("scoreCandidate — creators, loose names, clashes and aggregator ids",
     });
     expect(result.confidence).toBeLessThanOrEqual(0.1);
     expect(result.reasons[0]).toContain('"--N" slug');
+  });
+});
+
+describe("isCollectionSiblingPair", () => {
+  const base = { descriptions: {}, aliases: {}, sitelinks: {} };
+  const CMA = { type: "item" as const, value: "Q657415" }; // Cleveland Museum of Art
+  // Two leaves of one bound volume, as the museum's batch import created them.
+  const leaf = (id: string, inv: string, collection = CMA): Item => ({
+    ...base,
+    id,
+    labels: { en: "Voyage en Italie en 1822" },
+    descriptions: { en: `bound volume by Jean-Baptiste Isabey (${inv})` },
+    statements: {
+      P31: [{ type: "item", value: "Q1261026" }],
+      P195: [collection],
+      P217: [{ type: "string", value: inv }],
+      P361: [{ type: "item", value: "Q80042200" }],
+      P1476: [{ type: "string", value: "Voyage en Italie en 1822" }],
+      P571: [{ type: "time", value: "+1822-00-00T00:00:00Z" }],
+      P6216: [{ type: "item", value: "Q19652" }],
+    },
+  });
+
+  it("flags different inventory numbers in a shared collection", () => {
+    expect(isCollectionSiblingPair(leaf("Q1", "1966.218.z"), leaf("Q2", "1966.218.y"))).toBe(true);
+  });
+
+  it("caps the sibling pair below the persistence floor", () => {
+    const result = scoreCandidate(leaf("Q1", "1966.218.z"), leaf("Q2", "1966.218.y"));
+    expect(result.confidence).toBeLessThanOrEqual(0.1);
+    expect(result.reasons[0]).toContain("different inventory numbers (P217)");
+  });
+
+  it("ignores case and punctuation, and any shared number", () => {
+    expect(isCollectionSiblingPair(leaf("Q1", "1966.218.A"), leaf("Q2", "1966-218-a"))).toBe(false);
+    const both = leaf("Q1", "1966.218.a");
+    both.statements.P217.push({ type: "string", value: "OLD-42" });
+    expect(isCollectionSiblingPair(both, leaf("Q2", "OLD 42"))).toBe(false);
+  });
+
+  it("needs a shared collection and a number on both sides", () => {
+    const elsewhere = leaf("Q2", "1966.218.y", { type: "item", value: "Q160236" });
+    expect(isCollectionSiblingPair(leaf("Q1", "1966.218.z"), elsewhere)).toBe(false);
+    const unnumbered = leaf("Q2", "x");
+    delete unnumbered.statements.P217;
+    expect(isCollectionSiblingPair(leaf("Q1", "1966.218.z"), unnumbered)).toBe(false);
   });
 });

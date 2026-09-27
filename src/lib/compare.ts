@@ -1205,6 +1205,35 @@ export function isPartWholePair(a: Item, b: Item): boolean {
   return points(a, b.id) || points(b, a.id);
 }
 
+/** Wikidata "collection" — the museum/library/archive holding an object. */
+export const COLLECTION = "P195";
+/** Wikidata "inventory number" — the holding collection's accession number. */
+export const INVENTORY_NUMBER = "P217";
+
+/**
+ * True when both items sit in a shared collection (P195) under different
+ * inventory numbers (P217): one collection gives each physical object its own
+ * number, so these are two objects — typically sibling leaves of one bound
+ * volume or album ("Voyage en Italie en 1822", 1966.218.a … .z), which share
+ * a title, creator, date and parent and so otherwise read as a near-perfect
+ * match. Numbers are compared ignoring case and punctuation, and any shared
+ * number (an item may also carry an old one) means no split.
+ */
+export function isCollectionSiblingPair(a: Item, b: Item): boolean {
+  const collections = (item: Item) =>
+    (item.statements[COLLECTION] ?? []).filter((v) => v.type === "item").map((v) => v.value);
+  const ca = collections(a);
+  if (!collections(b).some((c) => ca.includes(c))) return false;
+  const numbers = (item: Item) =>
+    (item.statements[INVENTORY_NUMBER] ?? [])
+      .filter((v) => v.type === "string" || v.type === "external-id")
+      .map((v) => v.value.toLowerCase().replace(/[^\p{L}\p{N}]/gu, ""))
+      .filter((n) => n !== "");
+  const na = numbers(a);
+  const nb = numbers(b);
+  return na.length > 0 && nb.length > 0 && !na.some((n) => nb.includes(n));
+}
+
 /** Wikidata "conflation" — an item knowingly covering several distinct subjects. */
 export const CONFLATION = "Q14946528";
 
@@ -1751,6 +1780,16 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // nothing is part of itself. Cap below the persistence floor, like editions.
   if (isPartWholePair(a, b)) {
     reasons.unshift("linked as a whole and its part on Wikidata (P527/P361), not a duplicate");
+    score = Math.min(score, 0.1);
+  }
+
+  // Two objects in one collection under different inventory numbers are two
+  // physical objects (sibling leaves of an album, volumes of a set), however
+  // much else they share. Cap below the persistence floor.
+  if (isCollectionSiblingPair(a, b)) {
+    reasons.unshift(
+      "different inventory numbers (P217) in the same collection (P195), separate objects",
+    );
     score = Math.min(score, 0.1);
   }
 

@@ -7,7 +7,7 @@ import { Readable } from "node:stream";
 import { deflateRawSync, gzipSync } from "node:zlib";
 import { describe, expect, it } from "vite-plus/test";
 import type { Item } from "../src/lib/compare.ts";
-import { VIDEO_GAME } from "../src/lib/import-classes.ts";
+import { IMPORT_CLASSES, SELECTIVE_IMPORT_CLASSES, VIDEO_GAME } from "../src/lib/import-classes.ts";
 import type { Entity, Statement } from "../src/lib/wikibase.ts";
 import { dumpGz } from "../test/dump-gz.ts";
 import {
@@ -150,6 +150,34 @@ describe("scanDump", () => {
     expect(matched).toEqual(["Q20", "Q21", "Q22", "Q26"]);
     // Q23 and Q24 never reach the parser; Q25 does, for its occupation.
     expect(stats).toMatchObject({ parsed: 5, matched: 4 });
+  });
+
+  it("imports anime staff by their AniList or MyAnimeList person id", async () => {
+    const externalId = (property: string, value: string): Statement => ({
+      mainsnak: {
+        snaktype: "value",
+        property,
+        datatype: "external-id",
+        datavalue: { type: "string", value },
+      },
+      rank: "normal",
+    });
+    const human = (id: string, claims: Record<string, Statement[]> = {}) =>
+      item(id, { P31: [p31("Q5")], ...claims });
+    const entities = [
+      human("Q30", { P11227: [externalId("P11227", "96870")] }), // AniList staff
+      human("Q31", { P4084: [externalId("P4084", "118")] }), // MyAnimeList people
+      human("Q32"), // neither
+    ];
+    const matched: string[] = [];
+    await scanDump(Readable.from([Buffer.from(dumpText(entities))]), {
+      classQids: IMPORT_CLASSES,
+      selective: { classes: SELECTIVE_IMPORT_CLASSES, linkedQids: new Set() },
+      onItem: (i) => {
+        matched.push(i.id);
+      },
+    });
+    expect(matched).toEqual(["Q30", "Q31"]);
   });
 
   it("matches any of several classes in one pass, by the whole number", async () => {

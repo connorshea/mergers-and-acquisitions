@@ -302,8 +302,20 @@ export function safeHttpUrl(raw: string): string | null {
   return url.protocol === "http:" || url.protocol === "https:" ? raw : null;
 }
 
-/** Returns [status, note] for a pair of values of the same property. */
-export function compareValues(x: Value, y: Value): [Status, string?] {
+/**
+ * Item properties whose few values have look-alike labels for opposite things,
+ * so a close label says nothing: "male" and "female" are two edits apart.
+ */
+const NO_FUZZY_ITEM_LABELS = new Set<string>([
+  "P21", // sex or gender
+]);
+
+/**
+ * Returns [status, note] for a pair of values of the same property. `pid`, when
+ * given, is that property; it turns off the fuzzy item-label hint for
+ * NO_FUZZY_ITEM_LABELS.
+ */
+export function compareValues(x: Value, y: Value, pid?: string): [Status, string?] {
   if (x.type !== y.type) return ["distinct"];
   // Unknown value (somevalue): a value exists but isn't recorded, so two of them
   // can't be confirmed equal — never an identical match, and their (blank-node)
@@ -318,7 +330,12 @@ export function compareValues(x: Value, y: Value): [Status, string?] {
   switch (x.type) {
     case "item":
       // Different QIDs; fall back to label similarity as a hint only.
-      if (x.label && y.label && stringSimilarity(x.label, y.label) >= 0.6)
+      if (
+        x.label &&
+        y.label &&
+        !(pid && NO_FUZZY_ITEM_LABELS.has(pid)) &&
+        stringSimilarity(x.label, y.label) >= 0.6
+      )
         return ["similar", "different items with similar labels"];
       return ["distinct"];
     case "time": {
@@ -368,13 +385,14 @@ export function compareValues(x: Value, y: Value): [Status, string?] {
 export function compareSets(
   a: Value[],
   b: Value[],
+  pid?: string,
 ): { status: Status; a: AnnotatedValue[]; b: AnnotatedValue[] } {
   const annotate = (side: Value[], other: Value[]): AnnotatedValue[] =>
     side.map((v) => {
       let best: Status = "distinct";
       let note: string | undefined;
       for (const o of other) {
-        const [s, n] = compareValues(v, o);
+        const [s, n] = compareValues(v, o, pid);
         if (s === "identical") return { ...v, status: s };
         if (s === "similar" && best !== "similar") {
           best = "similar";
@@ -560,7 +578,7 @@ export function buildRows(
   for (const pid of langs(a.statements, b.statements)) {
     const va = withLabels(a.statements[pid] ?? []);
     const vb = withLabels(b.statements[pid] ?? []);
-    const cmp = compareSets(va, vb);
+    const cmp = compareSets(va, vb, pid);
     const oneSided = va.length === 0 || vb.length === 0;
     rows.push({
       key: pid,

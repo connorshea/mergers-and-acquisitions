@@ -184,6 +184,16 @@ describe("bestNameSimilarity", () => {
 });
 
 describe("compareValues", () => {
+  it("skips the similar-label hint for sex or gender", () => {
+    const female = { type: "item" as const, value: "Q6581072", label: "female" };
+    const male = { type: "item" as const, value: "Q6581097", label: "male" };
+    expect(compareValues(female, male, "P21")).toEqual(["distinct"]);
+    expect(compareValues(female, male, "P50")).toEqual([
+      "similar",
+      "different items with similar labels",
+    ]);
+  });
+
   it("treats the same amount in different units as distinct", () => {
     expect(
       compareValues(

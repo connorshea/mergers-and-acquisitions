@@ -825,6 +825,16 @@ describe("installment / sequel detection", () => {
     expect(installment("World of Tennis ’75")).toEqual({ base: "world of tennis", num: 75 });
     // Only a two-digit year takes the apostrophe.
     expect(installment("Tennis '1974")).toEqual({ base: "tennis '1974", num: null });
+    // A number closing a trailing bracketed group.
+    expect(installment("Dove... quando... (parte II)")).toEqual({
+      base: "dove... quando... parte",
+      num: 2,
+    });
+    expect(installment("Foo (Part 2)")).toEqual({ base: "foo part", num: 2 });
+    expect(installment("Foo [Vol. 3]")).toEqual({ base: "foo vol", num: 3 });
+    // A bracketed year is a disambiguator, and a bracket without a number is kept.
+    expect(installment("Doom (2016)")).toEqual({ base: "doom (2016)", num: null });
+    expect(installment("Foo (Live)")).toEqual({ base: "foo (live)", num: null });
   });
 
   it("recognizes same-base / different-number pairs as sequels", () => {
@@ -847,6 +857,11 @@ describe("installment / sequel detection", () => {
     const y1: Item = { ...base, id: "Q28914385", labels: { en: "World of Tennis '74" } };
     const y2: Item = { ...base, id: "Q28918614", labels: { en: "World of Tennis '75" } };
     expect(isSeriesSequelPair(y1, y2)).toBe(true);
+
+    // Q30124570 / Q30124841: the two parts of one song, numbered in parentheses.
+    const p1: Item = { ...base, id: "Q30124570", labels: { en: "Dove... quando... (parte I)" } };
+    const p2: Item = { ...base, id: "Q30124841", labels: { en: "Dove... quando... (parte II)" } };
+    expect(isSeriesSequelPair(p1, p2)).toBe(true);
   });
 });
 

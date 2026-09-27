@@ -1050,15 +1050,31 @@ function romanToInt(s: string): number | null {
  * "Beneath the Raptor's Wing Ⅰ" vs "… Ⅱ" reads as a sequel pair. An
  * apostrophe-abbreviated year counts too ("World of Tennis '74" → 74), so
  * consecutive annuals and yearbooks read as different entries.
+ *
+ * A number closing a trailing bracketed group counts too, with the brackets
+ * dropped: "Dove... quando... (parte II)" → { base: "dove... quando... parte",
+ * num: 2 }. A four-digit year there is left alone — "Doom (2016)" is a
+ * Wikipedia-style disambiguator, not an installment.
  */
 export function installment(label: string): { base: string; num: number | null } {
   const norm = normalize(label.normalize("NFKC"));
+  const direct = trailingInstallment(norm);
+  if (direct) return direct;
+  const bracketed = norm.match(/^(.+?)\s*[([]([^()[\]]+)[)\]]$/);
+  if (bracketed) {
+    const inner = trailingInstallment(`${bracketed[1]} ${bracketed[2].trim()}`);
+    if (inner && inner.num < 1000) return inner;
+  }
+  return { base: norm, num: null };
+}
+
+function trailingInstallment(norm: string): { base: string; num: number } | null {
   const m = norm.match(/^(.+?)[\s:._-]+(?:['‘’]([0-9]{2})|([0-9]{1,4}|[ivxlcdm]+))$/i);
-  if (!m) return { base: norm, num: null };
+  if (!m) return null;
   const base = m[1].trim();
   const tok = m[2] ?? m[3];
   const num = /^[0-9]+$/.test(tok) ? parseInt(tok, 10) : romanToInt(tok);
-  if (num === null || base.length === 0) return { base: norm, num: null };
+  if (num === null || base.length === 0) return null;
   return { base, num };
 }
 

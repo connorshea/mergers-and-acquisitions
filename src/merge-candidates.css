@@ -1045,6 +1045,9 @@ a.chip-id:hover {
   font-size: 0.8rem;
   margin-top: 0.25rem;
 }
+.pair-reasons .reason-prop {
+  color: inherit;
+}
 
 /* Confidence badge */
 .confidence {

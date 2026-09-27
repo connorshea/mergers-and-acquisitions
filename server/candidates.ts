@@ -34,6 +34,8 @@ const MAX_PAGE_SIZE = 100;
 const MAX_TYPE_FILTERS = 50;
 // Qids/pids loaded per IN list. MariaDB has no tight bound-param cap.
 const ID_CHUNK = 1000;
+/** Property ids embedded in a reason string. */
+const PID_RE = /\bP\d+\b/g;
 
 function parseIntParam(value: string | undefined, fallback: number): number {
   const n = Number(value);
@@ -163,14 +165,34 @@ candidates.get("/", async (c) => {
       .offset((page - 1) * pageSize),
   ]);
 
-  const labels = await loadLabels(rows);
+  // Reasons embed raw property ids ("shares external identifier: P1733, …");
+  // resolve the ones on this page in one batch so the list can name them.
+  const pids = [
+    ...new Set(
+      rows.flatMap((r) =>
+        Array.isArray(r.reasons) ? (r.reasons.join(" ").match(PID_RE) ?? []) : [],
+      ),
+    ),
+  ];
+  const [labels, propertyRows] = await Promise.all([
+    loadLabels(rows),
+    pids.length > 0
+      ? db
+          .select({ pid: properties.pid, label: properties.label })
+          .from(properties)
+          .where(inArray(properties.pid, pids))
+      : [],
+  ]);
   const candidateList = rows.map((r) => toSummary(r, labels));
+  const propertyLabels: Record<string, string> = {};
+  for (const r of propertyRows) propertyLabels[r.pid] = r.label;
 
   const payload: CandidateListResponse = {
     candidates: candidateList,
     total,
     page,
     pageSize,
+    propertyLabels,
   };
   return c.json(payload);
 });

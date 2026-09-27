@@ -50,6 +50,8 @@ export interface CandidateListResponse {
   total: number;
   page: number;
   pageSize: number;
+  /** Pxxx → human label, for the property ids named in this page's reasons. */
+  propertyLabels: Record<string, string>;
 }
 
 export interface CandidateDetailResponse {

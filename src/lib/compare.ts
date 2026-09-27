@@ -1248,10 +1248,10 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   const weakIds = sharedExtIds.filter((r) => WEAK_ID_PROPS.has(r.key));
   if (strongIds.length > 0) {
     score += 0.6;
-    reasons.push(`shares external identifier: ${strongIds.map((r) => r.label).join(", ")}`);
+    reasons.push(`shares external identifier: ${strongIds.map((r) => r.key).join(", ")}`);
   } else if (weakIds.length > 0) {
     score += 0.1;
-    reasons.push(`shares account/social identifier: ${weakIds.map((r) => r.label).join(", ")}`);
+    reasons.push(`shares account/social identifier: ${weakIds.map((r) => r.key).join(", ")}`);
   }
   // Explain the ids we deliberately ignored: a value the pair agrees on but
   // that Wikidata itself says is shared between exactly these two items.
@@ -1261,7 +1261,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   if (declaredShared.length > 0) {
     reasons.push(
       `identifier declared shared between the two items (P4070), not counted: ${declaredShared
-        .map((r) => r.label)
+        .map((r) => r.key)
         .join(", ")}`,
     );
   }
@@ -1493,7 +1493,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   if (distinctPerTitleIds.length >= 2) {
     reasons.unshift(
       `${distinctPerTitleIds.length} per-title identifiers differ (${distinctPerTitleIds
-        .map((r) => r.label)
+        .map((r) => r.key)
         .join(", ")}), almost certainly different subjects`,
     );
     score = Math.min(score, 0.1);
@@ -1505,7 +1505,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     // small so a genuine duplicate with one mis-entered id stays a candidate.
     score -= 0.1;
     reasons.push(
-      `a per-title identifier differs (${distinctPerTitleIds[0].label}), so it points at a different store/database page`,
+      `a per-title identifier differs (${distinctPerTitleIds[0].key}), so it points at a different store/database page`,
     );
   }
 
@@ -1527,8 +1527,8 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   const crossRefs = crossReferenceProps(a, b);
   if (crossRefs.size > 0) {
     score -= 0.25;
-    const labels = rows.filter((r) => crossRefs.has(r.key)).map((r) => r.label);
-    reasons.push(`one item references the other (${labels.join(", ")})`);
+    const pids = rows.filter((r) => crossRefs.has(r.key)).map((r) => r.key);
+    reasons.push(`one item references the other (${pids.join(", ")})`);
   }
 
   // A sequel is not a duplicate. Different entries in the same series share a

@@ -882,7 +882,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     const strong = scoreCandidate(strongA, strongB);
     const weak = scoreCandidate(weakA, weakB);
     expect(strong.confidence).toBeGreaterThan(weak.confidence + 0.3);
-    expect(strong.reasons).toContain("shares external identifier: Steam application ID");
+    expect(strong.reasons).toContain("shares external identifier: P1733");
     expect(weak.reasons.some((r) => r.startsWith("shares account/social identifier"))).toBe(true);
   });
 

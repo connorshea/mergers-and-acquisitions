@@ -925,6 +925,163 @@ export function isHardcodedMirrorProp(pid: string): boolean {
   return MIRRORED_ID_PROPS.has(pid);
 }
 
+const HUMAN = "Q5";
+const NAME_IN_NATIVE_LANGUAGE = "P1559";
+
+const isHuman = (item: Item): boolean =>
+  (item.statements.P31 ?? []).some((v) => v.type === "item" && v.value === HUMAN);
+
+/**
+ * Countries whose citizens' native names are written in kanji or hangul, and
+ * the label language holding that name. Romanization collapses many of these
+ * names onto one Latin spelling (山本雅博 and 山本正弘 are both "Masahiro
+ * Yamamoto"), so the native script is what tells namesakes apart.
+ */
+const NATIVE_NAME_LANGS: Record<string, string> = {
+  Q17: "ja", // Japan
+  Q884: "ko", // South Korea
+  Q423: "ko", // North Korea
+};
+
+/**
+ * Old and variant kanji forms folded to their common form. One person's name
+ * turns up both ways across items and databases (髙野/高野, 宮﨑/宮崎, 淺雄/浅雄),
+ * and that must not read as two different names.
+ */
+const KANJI_VARIANTS: Record<string, string> = Object.fromEntries(
+  (
+    "髙高 﨑崎 嵜崎 碕崎 德徳 邊辺 邉辺 淺浅 澤沢 濱浜 廣広 國国 眞真 瀨瀬 櫻桜 龍竜 實実 臺台 繪絵 惠恵 " +
+    "榮栄 齋斎 齊斉 藏蔵 壽寿 豐豊 彌弥 當当 學学 圓円 萬万 與与 條条 對対 賴頼 桒桑 冨富 嶋島 嶌島 峯峰 " +
+    "埜野 渕淵 淸清 靜静 曉暁 來来 兒児 應応 縣県 藝芸 聲声 爲為 黑黒 橫横 巖巌 將将 莊荘 禮礼 靑青 薰薫 " +
+    "驛駅 寬寛 槇槙 𠮷吉"
+  )
+    .split(" ")
+    .map((pair) => Array.from(pair)),
+);
+
+const HAN_RE = /\p{Script=Han}/u;
+const HANGUL_RE = /\p{Script=Hangul}/u;
+const KANA_RE = /[\p{Script=Hiragana}\p{Script=Katakana}]/u;
+
+/**
+ * A native-script name reduced to what identifies it: width-folded, spacing,
+ * name separators and parentheticals dropped, katakana read as hiragana, and
+ * variant kanji folded to their common form.
+ */
+export function foldNativeName(name: string): string {
+  const stripped = name
+    .normalize("NFKC")
+    .replace(/[(（][^)）]*[)）]/gu, "")
+    .replace(/[\s・·=＝、]/gu, "");
+  let out = "";
+  for (const ch of stripped) {
+    const cp = ch.codePointAt(0)!;
+    out +=
+      cp >= 0x30a1 && cp <= 0x30f6 ? String.fromCodePoint(cp - 0x60) : (KANJI_VARIANTS[ch] ?? ch);
+  }
+  return out;
+}
+
+/**
+ * A human's native-script names, split by script: `han` holds names with kanji
+ * or hanja in them, `hangul` all-hangul ones. They come from "name in native
+ * language" (P1559) and, for a Japanese or Korean citizen, the ja/ko labels and
+ * aliases. All-kana and Latin names are left out: an all-kana name is often a
+ * reading of the kanji (いぬい とみこ for 乾 富子), not a different name. A
+ * ja/ko label counts only for that country's citizens, since elsewhere it's a
+ * transliteration (다카노 아야 for Aya Takano, or a Chinese name in shinjitai).
+ */
+function nativeNames(item: Item): { han: Map<string, string>; hangul: Map<string, string> } {
+  const langs = new Set(
+    (item.statements.P27 ?? []).flatMap((v) =>
+      v.type === "item" && NATIVE_NAME_LANGS[v.value] ? [NATIVE_NAME_LANGS[v.value]] : [],
+    ),
+  );
+  // Without a Japanese/Korean citizenship, a P1559 value counts only when its
+  // own script shows it's Japanese or Korean (a Chinese name is all Han, and
+  // simplified vs. traditional forms would read as different names).
+  const p1559 = (item.statements[NAME_IN_NATIVE_LANGUAGE] ?? [])
+    .map((v) => v.value)
+    .filter((s) => langs.size > 0 || KANA_RE.test(s) || HANGUL_RE.test(s));
+  const raw = [
+    ...p1559,
+    ...[...langs].flatMap((l) => [item.labels[l], ...(item.aliases[l] ?? [])]),
+  ];
+  // Folded name → the name as written, for the reason text.
+  const han = new Map<string, string>();
+  const hangul = new Map<string, string>();
+  for (const s of raw) {
+    if (!s) continue;
+    const folded = foldNativeName(s);
+    if (folded.length < 2) continue;
+    if (HAN_RE.test(folded)) han.set(folded, s);
+    else if (HANGUL_RE.test(folded) && !KANA_RE.test(folded)) hangul.set(folded, s);
+  }
+  return { han, hangul };
+}
+
+/**
+ * The two humans' native-script names when they conflict, or null. They
+ * conflict when both have names in some script (kanji/hanja, or hangul) and no
+ * name on one side matches — or contains, for a prefix like 二代目 or a
+ * married name's added surname — a name on the other in any script. Two people
+ * sharing a romanized name are usually told apart this way (髙野綾 vs タカノ綾,
+ * 山本雅博 vs 山本正弘).
+ */
+export function differingNativeNames(a: Item, b: Item): [string, string] | null {
+  if (!isHuman(a) || !isHuman(b)) return null;
+  const na = nativeNames(a);
+  const nb = nativeNames(b);
+  const overlaps = (xs: Map<string, string>, ys: Map<string, string>) =>
+    [...xs.keys()].some((x) => [...ys.keys()].some((y) => x.includes(y) || y.includes(x)));
+  if (overlaps(na.han, nb.han) || overlaps(na.hangul, nb.hangul)) return null;
+  for (const script of ["han", "hangul"] as const) {
+    const [x] = na[script].values();
+    const [y] = nb[script].values();
+    if (x !== undefined && y !== undefined) return [x, y];
+  }
+  return null;
+}
+
+/**
+ * Personal social-media accounts: one person, one handle (mostly). For people
+ * they tell namesakes apart — a progamer's `azure_sc2` and an illustrator's
+ * `azure_0608_sub` — but only weakly: handles get renamed, and about one in
+ * 30 people with an X username on Wikidata lists more than one.
+ */
+const PERSONAL_ACCOUNT_PROPS = [
+  "P2002", // X/Twitter username
+  "P2003", // Instagram username
+  "P7085", // TikTok username
+  "P5797", // Twitch username
+  "P2397", // YouTube channel ID
+  "P11245", // YouTube handle
+  "P12361", // Bluesky handle
+  "P11892", // Threads username
+  "P3185", // VK username
+  "P3579", // Sina Weibo user ID
+  "P6455", // Bilibili UID
+  "P2037", // GitHub account
+  "P3943", // Tumblr username
+  "P4175", // Patreon ID
+  "P4033", // Mastodon address
+];
+
+/**
+ * The personal-account properties on which two people each have a handle but
+ * share none. Handles compare case-insensitively, ignoring a leading "@".
+ */
+export function differingPersonalAccounts(a: Item, b: Item): string[] {
+  if (!isHuman(a) || !isHuman(b)) return [];
+  const handles = (item: Item, pid: string) =>
+    new Set((item.statements[pid] ?? []).map((v) => v.value.toLowerCase().replace(/^@/, "")));
+  return PERSONAL_ACCOUNT_PROPS.filter((pid) => {
+    const ha = handles(a, pid);
+    const hb = handles(b, pid);
+    return ha.size > 0 && hb.size > 0 && ![...ha].some((h) => hb.has(h));
+  });
+}
+
 /**
  * A publication-year gap at or beyond this is treated as near-conclusive that
  * two items are different games/editions: no single game is first published a
@@ -1433,7 +1590,9 @@ export interface CandidateScore {
  * Identifiers that mirror Wikidata itself (vglist, GamerProfiles) are
  * ignored as evidence in either direction, as is any identifier one item
  * declares "shared with" (P4070) the other — Wikidata's own way of saying one
- * id covers both items. Blockers (conflicting descriptions or same-wiki
+ * id covers both items. Two people whose native-script names (P1559, and a
+ * Japanese or Korean citizen's ja/ko label) differ once spacing and variant
+ * kanji are folded are penalized as likely namesakes. Blockers (conflicting descriptions or same-wiki
  * sitelinks) are surfaced via `hasBlocker` but do not by themselves sink the
  * score: real duplicates routinely have conflicting descriptions.
  */
@@ -1691,6 +1850,27 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     reasons.push(
       `different ${diffCreators.map((pid) => `${CREATOR_PROP_LABELS[pid]} (${pid})`).join(", ")}`,
     );
+  }
+
+  // Two people whose native-script names differ (髙野綾 vs タカノ綾) are usually
+  // namesakes who only collide once romanized. Not a hard cap: one person can
+  // carry several real names (a stage or pen name, a legal name, a maiden
+  // name) and two items may each record a different one, so a shared id can
+  // still outweigh it. Without one, the penalty drops a label-only pair below
+  // the persistence floor, and the ceiling below keeps it off near-certain.
+  const nativeNameDiff = differingNativeNames(a, b);
+  if (nativeNameDiff) {
+    score -= 0.3;
+    reasons.push(`different names in native script (${nativeNameDiff.join(" / ")})`);
+  }
+
+  // Each person having their own handle on the same site hints at namesakes.
+  // Only a nudge (a renamed or second account is common), a little more when
+  // two or more sites disagree.
+  const accountDiffs = differingPersonalAccounts(a, b);
+  if (accountDiffs.length > 0) {
+    score -= accountDiffs.length >= 2 ? 0.25 : 0.15;
+    reasons.push(`different social-media accounts (${accountDiffs.join(", ")})`);
   }
 
   // Conflicts the merge flow handles itself (a differing description, a
@@ -1969,10 +2149,13 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     modestYearGap ||
     largeYearGap ||
     distinctSubjectPageIds.length > 0 ||
-    distinctExtIdRows.length > 0;
+    distinctExtIdRows.length > 0 ||
+    nativeNameDiff !== null ||
+    accountDiffs.length > 0;
   if (hasConcreteDifference) ceiling = Math.min(ceiling, 0.9);
   if (distinctSubjectPageIds.length === 1) ceiling = Math.min(ceiling, 0.8);
   if (largeYearGap) ceiling = Math.min(ceiling, 0.6);
+  if (nativeNameDiff) ceiling = Math.min(ceiling, 0.6);
   // Two separate (non-redirect) pages on one wiki usually mean two subjects,
   // and the merge can't go through without resolving it anyway — never
   // near-certain, even though the score penalty above is small.

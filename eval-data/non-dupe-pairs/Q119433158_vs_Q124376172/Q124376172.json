@@ -1,0 +1,247 @@
+{
+  "pageid": 118548205,
+  "ns": 0,
+  "title": "Q124376172",
+  "lastrevid": 2440453862,
+  "modified": "2025-12-10T13:56:47Z",
+  "type": "item",
+  "id": "Q124376172",
+  "labels": {
+    "fi": {
+      "language": "fi",
+      "value": "Buzz"
+    },
+    "en": {
+      "language": "en",
+      "value": "Buzz"
+    },
+    "da": {
+      "language": "da",
+      "value": "Buzz"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Buzz"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "Danish professional Counter-Strike 2 player"
+    }
+  },
+  "aliases": {
+    "fi": [
+      {
+        "language": "fi",
+        "value": "Christian Møss Andersen"
+      }
+    ],
+    "en": [
+      {
+        "language": "en",
+        "value": "Christian Møss Andersen"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q124376172$45B1B1CC-E031-47BC-9C54-01CC851FB950",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q124376172$11bfc505-4472-a699-ef24-7ab2fa3caa8a",
+        "rank": "normal"
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "f8be8b42d811214d5f966c759900d192b86be219",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 756617,
+              "id": "Q756617"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q124376172$5187F8CC-2EDE-4843-A230-C3065DC1542F",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9542c024eafd90f60c3c90278cc07062602439ae",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "889b94c40f0dc1125270051a5044b24e92e7236a",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 175482,
+                      "id": "Q175482"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "442c6bab67e792a1e8f83ca1a48c267cc86acab8",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2024-07-19T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P813"]
+          }
+        ]
+      }
+    ],
+    "P735": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P735",
+          "hash": "e020c00b8f3c58732b36f4590a5cb49d69ebb2a3",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 18001597,
+              "id": "Q18001597"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q124376172$4c4d8257-4385-4ca2-48c6-952da3bb20a5",
+        "rank": "normal"
+      }
+    ],
+    "P734": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P734",
+          "hash": "f5bc574ca3d91b625a9638257130322fbd9490a9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 21501893,
+              "id": "Q21501893"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q124376172$ab6cc9f9-440d-20b4-4e4d-c36d9e8e7784",
+        "rank": "normal"
+      }
+    ],
+    "P6978": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6978",
+          "hash": "b707f271b3dd8dc14a321402a9d9fb2eb978bf75",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 127607150,
+              "id": "Q127607150"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q124376172$e362a146-4d84-8bef-ae98-b1a12692b855",
+        "rank": "normal"
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "de5102a9c0bdc5f9befc84af1b550e6cb2c4aa77",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4379701,
+              "id": "Q4379701"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q124376172$06389f88-4a61-3244-84e4-d811e56f7b7b",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "fiwiki": {
+      "site": "fiwiki",
+      "title": "Christian Andersen",
+      "badges": [],
+      "url": "https://fi.wikipedia.org/wiki/Christian_Andersen"
+    }
+  }
+}

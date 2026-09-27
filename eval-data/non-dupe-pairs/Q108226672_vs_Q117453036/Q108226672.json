@@ -1,0 +1,424 @@
+{
+  "pageid": 103492978,
+  "ns": 0,
+  "title": "Q108226672",
+  "lastrevid": 2544176670,
+  "modified": "2026-09-11T20:36:18Z",
+  "type": "item",
+  "id": "Q108226672",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Azure"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "あずーる"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Azure"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "Azure"
+    },
+    "zh-tw": {
+      "language": "zh-tw",
+      "value": "Azure"
+    },
+    "vi": {
+      "language": "vi",
+      "value": "Azure"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "Japanese character designer"
+    },
+    "vi": {
+      "language": "vi",
+      "value": "nhà thiết kế nhân vật Nhật Bản"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "日本插画家"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "জাপানি চরিত্র নকশাবিদ"
+    },
+    "as": {
+      "language": "as",
+      "value": "জাপানী চৰিত্ৰ ডিজাইনাৰ"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P4084": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4084",
+          "hash": "639efafb07d50ec1d4ee4f3768b1c2f793bfc372",
+          "datavalue": {
+            "value": "42322",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q108226672$67342a92-4163-122b-362a-528a33d1bed2",
+        "rank": "normal"
+      }
+    ],
+    "P1982": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1982",
+          "hash": "e5914d745db4904823c0ea31dc3c12b316109dcd",
+          "datavalue": {
+            "value": "190130",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q108226672$b734cd55-4159-2a80-bd5b-3c19846e5faa",
+        "rank": "normal"
+      }
+    ],
+    "P2002": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2002",
+          "hash": "e8b811b2f98af4040e487479d0051f2269629ff2",
+          "datavalue": {
+            "value": "azure_0608_sub",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P6552": [
+            {
+              "snaktype": "value",
+              "property": "P6552",
+              "hash": "0b123d3d73df6ad2c8ccf340af63c6c7f777e09a",
+              "datavalue": {
+                "value": "1117549241285533697",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ],
+          "P580": [
+            {
+              "snaktype": "value",
+              "property": "P580",
+              "hash": "b5e85188f3c3fae8171900ae1601124df0ea1cbf",
+              "datavalue": {
+                "value": {
+                  "time": "+2019-04-14T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P585": [
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "bd7ac18a56da4151eb047c789a81ce351b7a1b49",
+              "datavalue": {
+                "value": {
+                  "time": "+2021-09-15T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P6552", "P580", "P585"],
+        "id": "Q108226672$231e91c4-401d-7a28-8259-939e5243ac46",
+        "rank": "normal"
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q108226672$0c6fda59-4d7b-ff1a-9ea2-29266a2e2579",
+        "rank": "normal"
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "dbc124254fe916bc74d9d41305291a2efeed26c3",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1062952,
+              "id": "Q1062952"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q108226672$062302df-4ece-968c-0711-ea20d76555e4",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ba14d1237ddb4b55699f7bf644983c88f4af485a",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "3b5d8e0835bd744e737ecb42f3ca8ea71e16f7d5",
+                  "datavalue": {
+                    "value": "https://en.hololive.tv/portfolio/items/nanashi-mumei",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "6ab0873ca19a768c0bddb7f453e065f8a0b4e166",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-08-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P8687": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8687",
+          "hash": "e030cae0f71c3781bca55ca5823576dc1e3bc6b8",
+          "datavalue": {
+            "value": {
+              "amount": "+113874",
+              "unit": "1"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P6552": [
+            {
+              "snaktype": "value",
+              "property": "P6552",
+              "hash": "0b123d3d73df6ad2c8ccf340af63c6c7f777e09a",
+              "datavalue": {
+                "value": "1117549241285533697",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ],
+          "P585": [
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "abdc29f25a8e4fdbdb1377969b8a43c74ef7173c",
+              "datavalue": {
+                "value": {
+                  "time": "+2021-09-21T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P6552", "P585"],
+        "id": "Q108226672$9db2a01a-0711-4602-a1d0-a261c660d752",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8687",
+          "hash": "e09636bfa392052e37bbdefe7e53bf16e637334e",
+          "datavalue": {
+            "value": {
+              "amount": "+220450",
+              "unit": "1"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P6552": [
+            {
+              "snaktype": "value",
+              "property": "P6552",
+              "hash": "0b123d3d73df6ad2c8ccf340af63c6c7f777e09a",
+              "datavalue": {
+                "value": "1117549241285533697",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ],
+          "P585": [
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "f8752aaee69e878b264b48cf2b5c504be28099d7",
+              "datavalue": {
+                "value": {
+                  "time": "+2023-02-05T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P6552", "P585"],
+        "id": "Q108226672$82dd16cd-cb82-4142-ad01-6ccec8ae5905",
+        "rank": "preferred"
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "442eed7751165909dcf1eb3e23702fbd4f08a258",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 17,
+              "id": "Q17"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q108226672$51B5B7BF-8F7E-4FA5-A047-D6C8CEC4905C",
+        "rank": "normal"
+      }
+    ],
+    "P5435": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5435",
+          "hash": "621ce9521b2f5623119fbfbe72b88aae0293fa6f",
+          "datavalue": {
+            "value": "5838770",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q108226672$a9e56dcb-4055-73e6-20c3-75d34b0b535e",
+        "rank": "normal"
+      }
+    ],
+    "P1412": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1412",
+          "hash": "793e190594b14ce471153f6fd9f0d8b4228d5112",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5287,
+              "id": "Q5287"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q108226672$BCB58A5F-805A-4131-A739-994E67C362EE",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "jawiki": {
+      "site": "jawiki",
+      "title": "あずーる",
+      "badges": [],
+      "url": "https://ja.wikipedia.org/wiki/%E3%81%82%E3%81%9A%E3%83%BC%E3%82%8B"
+    },
+    "zhwiki": {
+      "site": "zhwiki",
+      "title": "Azure (插畫家)",
+      "badges": [],
+      "url": "https://zh.wikipedia.org/wiki/Azure_(%E6%8F%92%E7%95%AB%E5%AE%B6)"
+    }
+  }
+}

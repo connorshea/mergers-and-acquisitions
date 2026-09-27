@@ -1,0 +1,293 @@
+{
+  "pageid": 3144340,
+  "ns": 0,
+  "title": "Q3297124",
+  "lastrevid": 2049796831,
+  "modified": "2024-01-09T15:28:10Z",
+  "type": "item",
+  "id": "Q3297124",
+  "labels": {
+    "fr": {
+      "language": "fr",
+      "value": "Masahiro Yamamoto"
+    },
+    "en": {
+      "language": "en",
+      "value": "Masahiro Yamamoto"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Masahiro Yamamoto"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "山本正弘"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Masahiro Yamamoto"
+    },
+    "es": {
+      "language": "es",
+      "value": "Masahiro Yamamoto"
+    },
+    "tr": {
+      "language": "tr",
+      "value": "Masahiro Yamamoto"
+    }
+  },
+  "descriptions": {
+    "nl": {
+      "language": "nl",
+      "value": "Japans computerspelontwerper"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "مصمم ألعاب فيديو ياباني"
+    },
+    "de": {
+      "language": "de",
+      "value": "japanischer Computerspieledesigner"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "diseñador de videoxuegos xaponés"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3297124$6CABF427-625F-46AA-AA49-C88C35DF62C0",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3297124$DF5A2107-B374-4C4B-A3D2-73AB263E0F03",
+        "rank": "normal"
+      }
+    ],
+    "P569": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P569",
+          "hash": "d676ae5e514830d1e56350391b4077c7440abb08",
+          "datavalue": {
+            "value": {
+              "time": "+1972-07-08T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q3297124$97F8BF85-40CE-46D9-BCC2-900A4ADAA9BD",
+        "rank": "normal"
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "32be464d864689cdcf451aac4fcb94e16ee22221",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 18882335,
+              "id": "Q18882335"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3297124$ef700612-4c23-adbb-b074-e16e527913e2",
+        "rank": "normal"
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "442eed7751165909dcf1eb3e23702fbd4f08a258",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 17,
+              "id": "Q17"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3297124$6f26ee2b-46a4-34e6-486e-ddb4bac7398f",
+        "rank": "normal"
+      }
+    ],
+    "P19": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P19",
+          "hash": "e6b660969b78a3d968e25625da6d9adc0346c2a3",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 35765,
+              "id": "Q35765"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3297124$fa11a216-4e15-3c02-8c8c-675047596b19",
+        "rank": "normal"
+      }
+    ],
+    "P1559": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1559",
+          "hash": "70f46a44d8b22213b2f45f5f356851c35d884caf",
+          "datavalue": {
+            "value": {
+              "text": "山本正弘",
+              "language": "ja"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q3297124$5B96DBC4-B105-4049-B58C-0B1589C6267C",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "06dfc2db21d1a0987f76ce5dbfe4d971fdc03f74",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6782384,
+              "id": "Q6782384"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1013": [
+            {
+              "snaktype": "value",
+              "property": "P1013",
+              "hash": "777ef156b80647ee99a58557816899e0d978b78f",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 55773103,
+                  "id": "Q55773103"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1013"],
+        "id": "Q3297124$F31D69E5-05FC-405E-BA64-8F3C1F73BB7A",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "c823be6381a365eea19dade50991fb5b82cb8cf9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 111530244,
+              "id": "Q111530244"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3297124$a3b3f4a3-4932-ce53-2ea1-dad061002315",
+        "rank": "normal"
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "f2e3951ffd121b27fff0652ff8b5b647c1171670",
+          "datavalue": {
+            "value": "/g/121bdc17",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q3297124$8B8C8D71-27A8-4D84-AE8D-A46931C481EF",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "frwiki": {
+      "site": "frwiki",
+      "title": "Masahiro Yamamoto",
+      "badges": [],
+      "url": "https://fr.wikipedia.org/wiki/Masahiro_Yamamoto"
+    }
+  }
+}

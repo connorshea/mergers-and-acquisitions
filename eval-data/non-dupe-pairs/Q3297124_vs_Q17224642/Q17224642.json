@@ -1,0 +1,279 @@
+{
+  "pageid": 18821454,
+  "ns": 0,
+  "title": "Q17224642",
+  "lastrevid": 2523662809,
+  "modified": "2026-07-27T22:44:38Z",
+  "type": "item",
+  "id": "Q17224642",
+  "labels": {
+    "ja": {
+      "language": "ja",
+      "value": "山本雅博"
+    },
+    "ru": {
+      "language": "ru",
+      "value": "Масахиро Ямамото"
+    },
+    "en": {
+      "language": "en",
+      "value": "Masahiro Yamamoto"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Masahiro Yamamoto"
+    },
+    "tr": {
+      "language": "tr",
+      "value": "Masahiro Yamamoto"
+    }
+  },
+  "descriptions": {
+    "ast": {
+      "language": "ast",
+      "value": "diseñador de xuegos xaponés"
+    },
+    "en": {
+      "language": "en",
+      "value": "Japanese video game developer"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "日本のゲームクリエイター"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "জাপানি ভিডিও গেম ডেভেলপার"
+    },
+    "as": {
+      "language": "as",
+      "value": "জাপানী ভিডিঅ' গেম ডেভেলপাৰ"
+    }
+  },
+  "aliases": {
+    "ru": [
+      {
+        "language": "ru",
+        "value": "Масахиро Ямамото"
+      },
+      {
+        "language": "ru",
+        "value": "Ямамото, Масахиро"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q17224642$0A87F457-3BE5-4E9E-871D-CD3D18B9E5A2",
+        "rank": "normal"
+      }
+    ],
+    "P1814": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1814",
+          "hash": "ebef4ddd2b4a774480647e96b1a545890f6c887b",
+          "datavalue": {
+            "value": "やまもと まさひろ",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q17224642$01DCF6ED-C1FD-4312-9551-AE707ABCB472",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 177837,
+                      "id": "Q177837"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P734": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P734",
+          "hash": "6e0ebab4c7788b92392d215fac1c86250e4273e6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 24090378,
+              "id": "Q24090378"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q17224642$522EFE3B-0C3A-43A4-9494-353C6FD41A80",
+        "rank": "normal"
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "442eed7751165909dcf1eb3e23702fbd4f08a258",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 17,
+              "id": "Q17"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q17224642$84D879B5-9F0C-436A-883A-64237656FF53",
+        "rank": "normal"
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "5a3f9c5df7a5692cf234fcbcbfb4528187e41028",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3630699,
+              "id": "Q3630699"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q17224642$d777be6c-072b-4d73-aad6-df7e7242a543",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 177837,
+                      "id": "Q177837"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q17224642$036701df-4d9f-9b08-37ed-fd5cb00214f3",
+        "rank": "normal"
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "d8517260e11ce401d8176c8dc9c83da9d94d78f8",
+          "datavalue": {
+            "value": "/g/12hhj30pc",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q17224642$B1569CDB-E87D-4A3C-B65A-48B4496FB7C4",
+        "rank": "normal"
+      }
+    ],
+    "P3180": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3180",
+          "hash": "9274199ca6aa22aff99376589a25c558cc6feca0",
+          "datavalue": {
+            "value": "s11750",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q17224642$2D19B9FC-8C48-43B5-AB1D-6C33D592D1B9",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "jawiki": {
+      "site": "jawiki",
+      "title": "山本雅博",
+      "badges": [],
+      "url": "https://ja.wikipedia.org/wiki/%E5%B1%B1%E6%9C%AC%E9%9B%85%E5%8D%9A"
+    }
+  }
+}

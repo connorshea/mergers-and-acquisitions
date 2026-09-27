@@ -2002,6 +2002,37 @@ describe("scoreCandidate — creators, loose names, clashes and aggregator ids",
     expect(different.confidence).toBeLessThanOrEqual(0.6);
   });
 
+  it("caps a pair whose names match only through an alias", () => {
+    // Two books from one batch import: different titles, a shared series alias,
+    // and a shared edition id — everything agrees except the label.
+    const shared = {
+      P4549: ext("arlima-1"),
+      P8383: ext("gr-1"),
+      P577: [{ type: "time" as const, value: "+2020-00-00T00:00:00Z" }],
+      P921: [{ type: "item" as const, value: "Q5" }],
+      P1433: [{ type: "item" as const, value: "Q6" }],
+    };
+    const alias = { aliases: { en: ["Understand Yourself"] } };
+    const result = scoreCandidate(
+      mk("Q1", "Human Personality Types", shared, alias),
+      mk("Q2", "Arabian Markets: 200+ Case Studies", shared, alias),
+      { isIdentifierProp: isId },
+    );
+    expect(result.confidence).toBeLessThanOrEqual(0.72);
+    expect(result.confidence).toBeGreaterThan(0.4);
+    expect(result.reasons).toContain("label matches the other item's alias");
+    expect(result.reasons).toContain(
+      "held below near-certain: the names match only through an alias",
+    );
+    // Labels already very similar on their own: the alias adds nothing to cap.
+    const close = scoreCandidate(
+      mk("Q3", "Human Personality Types", shared, alias),
+      mk("Q4", "Human Personality Type", shared, alias),
+      { isIdentifierProp: isId },
+    );
+    expect(close.confidence).toBeGreaterThan(0.72);
+  });
+
   it("caps a pair with a non-redirect sitelink clash at 0.85", () => {
     const shared = {
       P4549: ext("arlima-1"),

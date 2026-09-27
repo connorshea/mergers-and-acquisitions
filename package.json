@@ -21,6 +21,7 @@
     "job:prune-sessions": "node jobs/prune-sessions.ts",
     "job:resolve-sitelinks": "node jobs/resolve-sitelinks.ts",
     "job:resolve-creations": "node jobs/resolve-creations.ts",
+    "job:resolve-merges": "node jobs/resolve-merges.ts",
     "eval:fetch-pairs": "node scripts/fetch-merge-pairs.ts",
     "eval:fetch-nondupes": "node scripts/fetch-nondupe-pairs.ts",
     "eval:score": "node scripts/eval-score.ts",

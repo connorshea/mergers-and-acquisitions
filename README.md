@@ -58,7 +58,7 @@ pnpm import-items Q1 Q2 # import specific items live from Special:EntityData
 pnpm job:import-dump   # load the mirror from the Wikidata entity JSON dump
 pnpm job:hunt          # run the duplicate-candidate hunt once
 pnpm job:sync-properties / :sync-entity-labels
-pnpm job:resolve-sitelinks / :resolve-creations
+pnpm job:resolve-sitelinks / :resolve-creations / :resolve-merges
 pnpm job:prune-sessions # delete expired login sessions
 ```
 
@@ -296,6 +296,17 @@ with the same replica settings as above. Only new items are read, plus rows
 older than 30 days, to refresh the creator's stats. A pair viewed before the
 job has reached it is looked up through the Action API instead
 (`GET /api/candidates/:id/creations`) and cached the same way.
+
+## Merges made outside the app
+
+An item merged on Wikidata by someone else leaves the mirror only when the next
+weekly dump import prunes it, so until then its pairs stay open and a merge
+attempt fails with "Cannot access content, revision may be deleted."
+`pnpm job:resolve-merges` (`jobs/resolve-merges.ts` → `server/outside-merges.ts`,
+nightly before the hunt) looks every open candidate's items up in the
+`wikidatawiki` replica. A pair with a side that is now a redirect is settled as
+`merged`; one with a side that was deleted, as `dismissed`. Those items' rows
+leave the mirror, as with a merge made in the app.
 
 ## Deploying to Toolforge
 

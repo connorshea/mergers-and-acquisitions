@@ -123,6 +123,16 @@
   timeout: 10800 # 3 h
   emails: onfailure
 
+# Settle open candidates whose items were merged or deleted on Wikidata since
+# the last dump, from the wikidatawiki replica (same TOOL_REPLICA_* credentials).
+# Before the hunt, so it skips the items that are gone.
+- name: resolve-merges
+  command: node jobs/resolve-merges.ts
+  image: tool-mna/tool-mna:latest
+  schedule: "30 2 * * *" # nightly 02:30 UTC
+  mem: 1Gi
+  emails: onfailure
+
 - name: hunt
   command: node --max-old-space-size=1536 jobs/hunt.ts
   image: tool-mna/tool-mna:latest

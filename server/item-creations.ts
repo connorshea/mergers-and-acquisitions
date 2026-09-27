@@ -285,7 +285,7 @@ export async function loadCreations(
 }
 
 /** Every item on an open candidate. */
-async function collectOpenQids(): Promise<Set<string>> {
+export async function collectOpenQids(): Promise<Set<string>> {
   const qids = new Set<string>();
   let after = 0;
   for (;;) {

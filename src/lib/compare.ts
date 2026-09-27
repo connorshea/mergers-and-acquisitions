@@ -1071,6 +1071,21 @@ export function isPartWholePair(a: Item, b: Item): boolean {
   return points(a, b.id) || points(b, a.id);
 }
 
+/** Wikidata "conflation" — an item knowingly covering several distinct subjects. */
+export const CONFLATION = "Q14946528";
+
+/**
+ * True when either item is an instance of (P31) conflation (Q14946528): an item
+ * already known to lump several subjects together (e.g. an anime and its manga
+ * in one item). Merging another item into it would only deepen the mess — the
+ * conflation needs splitting, not growing — so such an item never pairs.
+ */
+export function isConflationPair(a: Item, b: Item): boolean {
+  const conflated = (item: Item) =>
+    (item.statements.P31 ?? []).some((v) => v.type === "item" && v.value === CONFLATION);
+  return conflated(a) || conflated(b);
+}
+
 /**
  * Four-digit years (1000–2099) in a page title, e.g. 1996 from "忠臣蔵
  * (1996年のテレビドラマ)" or "Doom (2016 video game)". NFKC first so full-width
@@ -1555,6 +1570,13 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   if (isPartWholePair(a, b)) {
     reasons.unshift("linked as a whole and its part on Wikidata (P527/P361), not a duplicate");
     score = Math.min(score, 0.1);
+  }
+
+  // A conflation (P31 = Q14946528) already mixes several subjects; merging
+  // anything into it compounds the problem, so the pair never surfaces.
+  if (isConflationPair(a, b)) {
+    reasons.unshift("one item is marked as a conflation (Q14946528), not a merge target");
+    score = 0;
   }
 
   // A "different from" (P1889) statement is an editor explicitly declaring the

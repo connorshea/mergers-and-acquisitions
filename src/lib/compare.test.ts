@@ -15,6 +15,7 @@ import {
   isSeriesSequelPair,
   isWorkEditionPair,
   isPartWholePair,
+  isConflationPair,
   titleYears,
   yearDisambiguatedWikis,
   mergeConflicts,
@@ -1515,6 +1516,39 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       statements: { ...track.statements, P361: [{ type: "item" as const, value: "Q1" }] },
     };
     expect(isPartWholePair(elsewhere, album)).toBe(false);
+  });
+
+  it("never pairs an item marked as a conflation (Q14946528)", () => {
+    // Q141514726 vs. Q17224315: one side already conflates an anime and a manga.
+    const anime: Item = {
+      ...base,
+      id: "Q17224315",
+      labels: { en: "Kaiju Girl Caramelise" },
+      statements: stmt({ P4086: [{ type: "external-id", value: "12345" }] }),
+    };
+    const other: Item = { ...anime, id: "Q141514726" };
+    expect(scoreCandidate(anime, other).confidence).toBeGreaterThan(0.4);
+
+    const conflation: Item = {
+      ...anime,
+      statements: {
+        ...anime.statements,
+        P31: [
+          { type: "item", value: "Q63952888" },
+          { type: "item", value: "Q14946528" },
+        ],
+      },
+    };
+    for (const [a, b] of [
+      [conflation, other],
+      [other, conflation],
+    ]) {
+      expect(isConflationPair(a, b)).toBe(true);
+      const result = scoreCandidate(a, b);
+      expect(result.confidence).toBe(0);
+      expect(result.reasons[0]).toContain("conflation");
+    }
+    expect(isConflationPair(anime, other)).toBe(false);
   });
 
   it("reads four-digit years out of sitelink titles", () => {

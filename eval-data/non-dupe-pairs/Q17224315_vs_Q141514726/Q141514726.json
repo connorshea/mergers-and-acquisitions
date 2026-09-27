@@ -1,0 +1,124 @@
+{
+  "pageid": 135074085,
+  "ns": 0,
+  "title": "Q141514726",
+  "lastrevid": 2548190235,
+  "modified": "2026-09-21T18:12:49Z",
+  "type": "item",
+  "id": "Q141514726",
+  "labels": {
+    "ja": {
+      "language": "ja",
+      "value": "曇天に笑う"
+    }
+  },
+  "descriptions": {},
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "022b89adfef511a9ec77c6ab616bd1f808327301",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 63952888,
+              "id": "Q63952888"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141514726$BB37B25F-39A4-4870-8061-4F868FBE6DA2",
+        "rank": "normal"
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "e9d62405b1bb9b7b979f00006a344891e4c4f072",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 17,
+              "id": "Q17"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141514726$DD7DCA11-C561-4802-BDC7-C3A329FF887D",
+        "rank": "normal"
+      }
+    ],
+    "P364": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P364",
+          "hash": "e837a5e5691aacf2a7eca565824d57545629d7fa",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5287,
+              "id": "Q5287"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141514726$2E3108E6-1DBC-44B4-AA8C-4A5B196E5339",
+        "rank": "normal"
+      }
+    ],
+    "P144": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P144",
+          "hash": "2ad4396295ba678a112f14a990a9297bfaadf49c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 17224315,
+              "id": "Q17224315"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141514726$132BD411-C38A-47B6-885B-BD5BC51FF737",
+        "rank": "normal"
+      }
+    ],
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "d9802f3217e7346121d24deb1a647909ae7d8deb",
+          "datavalue": {
+            "value": {
+              "text": "曇天に笑う",
+              "language": "ja"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q141514726$8746058B-C0DC-45A7-8F27-09A5A097C5E4",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

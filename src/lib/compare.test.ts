@@ -1554,6 +1554,18 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(result.reasons.some((r) => r.includes("shared statements agree"))).toBe(false);
   });
 
+  it("ignores agreement on a shared WikiProject focus list (P5008)", () => {
+    // A WikiProject tags every item in its topic, so sharing one is no evidence.
+    const mk = (id: string, name: string): Item => ({
+      ...base,
+      id,
+      labels: { en: name },
+      statements: stmt({ P5008: [{ type: "item" as const, value: "Q100000" }] }),
+    });
+    const result = scoreCandidate(mk("Q1", "Alpha"), mk("Q2", "Beta"));
+    expect(result.reasons.some((r) => r.includes("shared statements agree"))).toBe(false);
+  });
+
   it('zeroes out a pair one item declares "different from" the other (P1889)', () => {
     // Identical label + P31 + shared per-title id would otherwise score ~1.0.
     const a: Item = {

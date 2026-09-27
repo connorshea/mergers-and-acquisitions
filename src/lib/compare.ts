@@ -855,6 +855,9 @@ const LOW_ENTROPY_PROPS = new Set<string>([
   // Time-varying snapshot: a count captured on some date, so real duplicates
   // rarely match exactly and a match is coincidence, not evidence.
   "P8687", // social media followers
+  // Wikimedia maintenance: a WikiProject tags every item in its scope, so the
+  // whole topic shares one value and a match says nothing about the pair.
+  "P5008", // on focus list of Wikimedia project
 ]);
 
 /**

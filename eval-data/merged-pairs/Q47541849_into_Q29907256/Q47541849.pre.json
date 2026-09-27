@@ -1,0 +1,499 @@
+{
+  "pageid": 48583766,
+  "ns": 0,
+  "title": "Q47541849",
+  "lastrevid": 2522584561,
+  "modified": "2026-07-25T17:23:34Z",
+  "type": "item",
+  "id": "Q47541849",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Michael Brough"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Michael Brough"
+    },
+    "es": {
+      "language": "es",
+      "value": "Michael Brough"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Michael Brough"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Michael Brough"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "New Zealand video game developer"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "computerspelontwikkelaar"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "নিউজিল্যান্ডের ভিডিও গেম ডেভেলপার"
+    },
+    "as": {
+      "language": "as",
+      "value": "নিউজিলেণ্ড ভিডিঅ' গেম ডেভেলপাৰ"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q47541849$F44AA8DF-A50F-4E89-95B9-4142E71EC0F3",
+        "rank": "normal"
+      }
+    ],
+    "P18": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "64322bcf95c9efff9a85333c66a6d1b206ae540d",
+          "datavalue": {
+            "value": "Michael Brough (6120713406).jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q47541849$840CCEDC-20BA-47AE-819C-871532E3190B",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q47541849$14A487C1-45C1-456F-AD86-0ECD29A75363",
+        "rank": "normal"
+      }
+    ],
+    "P569": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P569",
+          "hash": "1d7081c0048e61e1997c5db30ab7d22ae072e7c6",
+          "datavalue": {
+            "value": {
+              "time": "+1985-05-20T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q47541849$E5B2289D-AF7E-43B5-A626-315274BA9659",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P19": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P19",
+          "hash": "a382102549ea4c8a965a843c9c68ee1fe89779fd",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 37100,
+              "id": "Q37100"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q47541849$C3D1E5C5-B6A7-4055-A0F5-B9267E42B4D4",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "4d5caff8a4b63a3ddf72ba773c26ea8525b40c52",
+          "datavalue": {
+            "value": "http://www.smestorp.com/",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q47541849$4103AAFB-D435-4E9E-866C-A07707EAFF16",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "1c9f9b7b7cfd72257d65a12de41b21d89f43c3e1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "31b58a49d14c629a77541c4ca0ff0cf193a34588",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Michael_Brough_(game_designer)&oldid=854949243",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "4278f1a60102248c4a5ed8e4c7861f93c33ffe7f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 58287519,
+              "id": "Q58287519"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q47541849$691D82B6-266E-4A0F-818E-633186B6CC1B",
+        "rank": "normal"
+      }
+    ],
+    "P735": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P735",
+          "hash": "769fc2424092cc987cdc8781b2e791793107683e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4927524,
+              "id": "Q4927524"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q47541849$3CEEC861-7C47-4A05-BE47-3015E284E179",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "323be97becfd18ea6625da4b3770079385901a18",
+            "snaks": {
+              "P887": [
+                {
+                  "snaktype": "value",
+                  "property": "P887",
+                  "hash": "b40d6c0ac6eb965460f92fade101fe40a3c44239",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 97033143,
+                      "id": "Q97033143"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P887"]
+          }
+        ]
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "35ead4334ba01988b58aca00e9112e276fe81af4",
+          "datavalue": {
+            "value": "/g/11hbpdm__k",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q47541849$55C70E94-9D37-4B5B-836D-C59AB6461179",
+        "rank": "normal"
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "882c9c711da1e9094c1d0df0480a19d70ff7d570",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 664,
+              "id": "Q664"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q47541849$880C4C88-7BAF-45D1-95F8-4ADD2D53A02C",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2f4da295986044ca08a86246d629e6f123779d34",
+            "snaks": {
+              "P3452": [
+                {
+                  "snaktype": "value",
+                  "property": "P3452",
+                  "hash": "f7ae0d557a610347ee344ab9d84feb9ce129b8cb",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 91770864,
+                      "id": "Q91770864"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P3452"]
+          }
+        ]
+      }
+    ],
+    "P3913": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3913",
+          "hash": "ceeb2caf9b90827af659197532e21df5ed336443",
+          "datavalue": {
+            "value": "467596",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q47541849$f7a4005d-4d52-6cd2-464a-1d53bf2d6751",
+        "rank": "normal"
+      }
+    ],
+    "P5247": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5247",
+          "hash": "c3bbe1f1255af879c6e30a26b24d10d26eb4dd8e",
+          "datavalue": {
+            "value": "3040-101775",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q47541849$829c405f-43a6-2d62-71da-541f33abadd6",
+        "rank": "normal"
+      }
+    ],
+    "P8176": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8176",
+          "hash": "c58765c79a788348f51858f3162e140b1c8f73f1",
+          "datavalue": {
+            "value": "smestorp",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q47541849$dc4a0c82-48be-e8bf-ca89-8cbd22676f86",
+        "rank": "normal"
+      }
+    ],
+    "P373": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P373",
+          "hash": "888f27f27384e5c425836d02725e672cbcbf9310",
+          "datavalue": {
+            "value": "Michael Brough (game designer)",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q47541849$4d563044-de60-46e7-ac03-73e42774067d",
+        "rank": "normal"
+      }
+    ],
+    "P14470": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P14470",
+          "hash": "cd6f9df2eb62a567db8180901d8979839705f3e5",
+          "datavalue": {
+            "value": "People/Michael_Brough",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9675": [
+            {
+              "snaktype": "value",
+              "property": "P9675",
+              "hash": "6785e4bdc1a6fc4a15605718d71880dae5626b42",
+              "datavalue": {
+                "value": "365522",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9675"],
+        "id": "Q47541849$F8E960DD-FB42-4687-8097-A49AA1604C8F",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Michael Brough (game designer)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Michael_Brough_(game_designer)"
+    },
+    "commonswiki": {
+      "site": "commonswiki",
+      "title": "Category:Michael Brough (game designer)",
+      "badges": [],
+      "url": "https://commons.wikimedia.org/wiki/Category:Michael_Brough_(game_designer)"
+    }
+  }
+}

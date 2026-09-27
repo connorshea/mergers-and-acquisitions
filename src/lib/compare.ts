@@ -4,6 +4,8 @@
 // by the React UI, the server routes, and the background jobs (sync +
 // candidate hunting). Keep it that way — no React, no browser globals.
 
+import { sitelinkHost } from "./wiki.ts";
+
 // ---------- Types ----------
 
 // "somevalue" / "novalue" mirror Wikidata's special snak types: an *unknown*
@@ -1722,6 +1724,29 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     score += 0.2;
     reasons.push(
       `sitelink redirects to the other item's page on ${redirectWikis.map((r) => r.label).join(", ")}`,
+    );
+  }
+
+  // Complementary Wikipedia articles: each item has its own article, on wikis
+  // where the other has none (a French article on one, an English one on the
+  // other), and neither is a redirect. An item is often created from one
+  // language's article without finding the existing item for another's, so
+  // this is the usual shape of a cross-language duplicate. Only a nudge:
+  // namesakes can each have an article in their own language too.
+  const wikipedias = (item: Item): string[] =>
+    Object.keys(item.sitelinks).filter((w) => sitelinkHost(w)?.endsWith(".wikipedia.org"));
+  const articles = (item: Item): string[] =>
+    wikipedias(item).filter((w) => !isRedirectSitelink(item, w));
+  const articlesA = articles(a);
+  const articlesB = articles(b);
+  if (
+    articlesA.length > 0 &&
+    articlesB.length > 0 &&
+    !wikipedias(a).some((w) => w in b.sitelinks)
+  ) {
+    score += 0.1;
+    reasons.push(
+      `Wikipedia articles in different languages, none on the same wiki (${articlesA.join(", ")} / ${articlesB.join(", ")})`,
     );
   }
 

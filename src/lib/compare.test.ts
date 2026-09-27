@@ -2277,3 +2277,49 @@ describe("scoreCandidate — namesake progamers", () => {
     expect(result.confidence).toBeLessThan(0.4);
   });
 });
+
+describe("scoreCandidate — Wikipedia articles in different languages", () => {
+  const base = {
+    descriptions: {},
+    aliases: {},
+    statements: { P31: [{ type: "item" as const, value: "Q5" }] },
+  };
+  const mk = (id: string, sitelinks: Record<string, string>, extra: Partial<Item> = {}): Item => ({
+    ...base,
+    id,
+    labels: { en: "Michael Brough" },
+    sitelinks,
+    ...extra,
+  });
+  const complementary = (r: { reasons: string[] }) =>
+    r.reasons.find((x) => x.startsWith("Wikipedia articles in different languages"));
+
+  it("boosts a pair whose articles are on different wikis (Michael Brough)", () => {
+    const fr = mk("Q29907256", { frwiki: "Michael Brough" });
+    const en = mk("Q47541849", {
+      enwiki: "Michael Brough (game designer)",
+      commonswiki: "Category:Michael Brough (game designer)",
+    });
+    const result = scoreCandidate(fr, en);
+    expect(complementary(result)).toBe(
+      "Wikipedia articles in different languages, none on the same wiki (frwiki / enwiki)",
+    );
+    const bare = scoreCandidate(mk("Q1", { frwiki: "x" }), mk("Q2", {}));
+    expect(result.confidence).toBeCloseTo(bare.confidence + 0.1);
+  });
+
+  it("doesn't fire when a wiki has a page for both", () => {
+    const result = scoreCandidate(
+      mk("Q1", { frwiki: "A", dewiki: "A" }),
+      mk("Q2", { enwiki: "B", dewiki: "B" }),
+    );
+    expect(complementary(result)).toBeUndefined();
+  });
+
+  it("doesn't count a redirect or a non-Wikipedia sitelink as an article", () => {
+    const redirect = mk("Q1", { frwiki: "A" }, { sitelinkBadges: { frwiki: ["Q70893996"] } });
+    expect(complementary(scoreCandidate(redirect, mk("Q2", { enwiki: "B" })))).toBeUndefined();
+    const commons = mk("Q3", { commonswiki: "Category:A", enwikiquote: "A" });
+    expect(complementary(scoreCandidate(commons, mk("Q4", { enwiki: "B" })))).toBeUndefined();
+  });
+});

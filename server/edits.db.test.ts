@@ -66,6 +66,21 @@ const ENWIKI_API = "https://en.wikipedia.org/w/api.php";
 
 /** An entity JSON blob for the pre-merge conflict re-check (wbgetentities). */
 type EntityStub = { sitelinks?: Record<string, { title: string }>; claims?: object };
+/** Live `claims` JSON: property `pid` with one item value per id in `targets`. */
+function itemClaims(pid: string, ...targets: string[]): object {
+  return {
+    [pid]: targets.map((id) => ({
+      mainsnak: {
+        snaktype: "value",
+        property: pid,
+        datatype: "wikibase-item",
+        datavalue: { type: "wikibase-entityid", value: { id } },
+      },
+      rank: "normal",
+    })),
+  };
+}
+
 /** No sitelinks and no statements — the pre-merge check finds no conflict. */
 const noConflict: EntityStub = { sitelinks: {}, claims: {} };
 
@@ -415,6 +430,53 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       });
     });
 
+    describe("a pair declared distinct on live Wikidata", () => {
+      it.each<[string, Record<string, EntityStub>, string]>([
+        [
+          'marked "permanent duplicated item" (P2959)',
+          { Q10: { claims: itemClaims("P2959", "Q20") } },
+          "(P2959)",
+        ],
+        [
+          "naming the same third item as P2959",
+          {
+            Q20: { claims: itemClaims("P2959", "Q999") },
+            Q10: { claims: itemClaims("P2959", "Q999") },
+          },
+          "(P2959)",
+        ],
+        [
+          'marked "different from" (P1889)',
+          { Q20: { claims: itemClaims("P1889", "Q10") } },
+          "(P1889)",
+        ],
+      ])("refuses a pair %s", async (_, entities, text) => {
+        const calls = stubWikidata(() => mergeOk(), entities);
+        const { status, body } = await post<EditErrorResponse>(
+          `/api/candidates/${alpha}/merge`,
+          editor,
+        );
+        expect(status).toBe(409);
+        expect(body.code).toBe("conflict");
+        expect(body.error).toContain(text);
+        expect(calls.some((c) => c.method === "POST")).toBe(false);
+        const row = await candidateRow(alpha);
+        expect(row.status).toBe("open");
+        expect(row.resolvedAt).toBeNull();
+        const [audit] = await db.select().from(wikidataEdits);
+        expect(audit).toMatchObject({ action: "merge", ok: false, errorCode: "declared-distinct" });
+      });
+
+      it("merges when P2959 names two different third items", async () => {
+        stubWikidata(() => mergeOk(), {
+          Q20: { claims: itemClaims("P2959", "Q998") },
+          Q10: { claims: itemClaims("P2959", "Q999") },
+        });
+        const { status } = await post(`/api/candidates/${alpha}/merge`, editor);
+        expect(status).toBe(200);
+      });
+    });
+
     describe("a sitelink clash where one page redirects to the other", () => {
       // Live: Q20's enwiki page redirects to Q10's.
       const clash = {
@@ -508,19 +570,9 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
         const linked = {
           Q20: {
             ...clash.Q20,
-            claims: {
-              P1889: [
-                {
-                  mainsnak: {
-                    snaktype: "value",
-                    property: "P1889",
-                    datatype: "wikibase-item",
-                    datavalue: { type: "wikibase-entityid", value: { id: "Q10" } },
-                  },
-                  rank: "normal",
-                },
-              ],
-            },
+            // "follows" (P155) naming the partner: an ordinary cross-link
+            // (not P1889, which is refused outright before conflicts).
+            claims: itemClaims("P155", "Q10"),
           },
           Q10: clash.Q10,
         };
@@ -577,22 +629,9 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
     });
 
     it("refuses before merging when one live item links to the other", async () => {
+      // "follows" (P155): an ordinary link, not a declared-distinct one.
       const calls = stubWikidata(() => mergeOk(), {
-        Q20: {
-          claims: {
-            P1889: [
-              {
-                mainsnak: {
-                  snaktype: "value",
-                  property: "P1889",
-                  datatype: "wikibase-item",
-                  datavalue: { type: "wikibase-entityid", value: { id: "Q10" } },
-                },
-                rank: "normal",
-              },
-            ],
-          },
-        },
+        Q20: { claims: itemClaims("P155", "Q10") },
       });
       const { status, body } = await post<EditErrorResponse>(
         `/api/candidates/${alpha}/merge`,

@@ -1074,6 +1074,29 @@ export function isDeclaredDifferent(a: Item, b: Item): boolean {
   return points(a, b.id) || points(b, a.id);
 }
 
+/** Wikidata "permanent duplicated item" — a known duplicate that can't be merged. */
+export const PERMANENT_DUPLICATE = "P2959";
+
+/**
+ * True when the pair is marked as permanent duplicates (P2959): either item
+ * names the other, or both name the same third item (A → C and B → C make all
+ * three permanent duplicates of one another). Editors add it where a wiki keeps
+ * a separate page for each (so the sitelinks can never live on one item), and
+ * it says outright that the pair must stay separate. Like P1889, it is
+ * authoritative.
+ */
+export function isPermanentDuplicatePair(a: Item, b: Item): boolean {
+  const targets = (item: Item) =>
+    new Set(
+      (item.statements[PERMANENT_DUPLICATE] ?? [])
+        .filter((v) => v.type === "item")
+        .map((v) => v.value),
+    );
+  const ta = targets(a);
+  const tb = targets(b);
+  return ta.has(b.id) || tb.has(a.id) || [...ta].some((q) => tb.has(q));
+}
+
 /** Wikidata "edition or translation of" — an edition item naming its work. */
 export const EDITION_OF = "P629";
 /** Wikidata "has edition or translation" — the inverse, a work naming its editions. */
@@ -1162,8 +1185,9 @@ export function yearDisambiguatedWikis(a: Item, b: Item): string[] {
  * item — e.g. a game's "part of the series" (P179) naming the series it is being
  * compared against, or "based on" / "followed by" pointing across the pair. An
  * item doesn't reference itself, so any such link means the two are related but
- * distinct subjects. (P1889, P629 and P747 are excluded: they are handled, more
- * strongly, by isDeclaredDifferent and isWorkEditionPair.)
+ * distinct subjects. (P1889, P2959, P629/P747 and P527/P361 are excluded: they
+ * are handled, more strongly, by isDeclaredDifferent, isPermanentDuplicatePair,
+ * isWorkEditionPair and isPartWholePair.)
  */
 export function crossReferenceProps(a: Item, b: Item): Set<string> {
   const out = new Set<string>();
@@ -1171,6 +1195,7 @@ export function crossReferenceProps(a: Item, b: Item): Set<string> {
     for (const [pid, values] of Object.entries(from.statements)) {
       if (
         pid === DIFFERENT_FROM ||
+        pid === PERMANENT_DUPLICATE ||
         pid === EDITION_OF ||
         pid === HAS_EDITION ||
         pid === HAS_PART ||
@@ -1371,11 +1396,13 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // "Different from" (P1889) is excluded too: both items naming the same third
   // item as distinct only says editors confused each with it, not that the pair
   // is one subject (two unrelated bands called Halo both point at a third Halo).
+  // "Permanent duplicated item" (P2959) is handled on its own below.
   const stmtRows = rows.filter(
     (r) =>
       r.kind === "statement" &&
       r.key !== "P31" &&
-      r.key !== "P1889" &&
+      r.key !== DIFFERENT_FROM &&
+      r.key !== PERMANENT_DUPLICATE &&
       !LOW_ENTROPY_PROPS.has(r.key) &&
       !sharedWithOther.has(r.key),
   );
@@ -1630,6 +1657,15 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // force the score to zero so the pair can never surface as a candidate.
   if (isDeclaredDifferent(a, b)) {
     reasons.unshift('marked "different from" on Wikidata (P1889), not a duplicate');
+    score = 0;
+  }
+
+  // A "permanent duplicated item" (P2959) link — direct, or via a shared third
+  // item — says the two are the same subject but must stay separate items
+  // (usually because a wiki has a page for each). Wikidata would refuse the
+  // merge anyway, so the pair can never be acted on: force it to zero.
+  if (isPermanentDuplicatePair(a, b)) {
+    reasons.unshift('marked "permanent duplicated item" on Wikidata (P2959), can\'t be merged');
     score = 0;
   }
 

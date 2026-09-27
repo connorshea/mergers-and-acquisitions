@@ -3,7 +3,7 @@
 // test/global-setup.ts.
 import { afterAll, afterEach, beforeEach, describe, expect, it } from "vite-plus/test";
 import { db, pool } from "./db.ts";
-import { mergeCandidates, properties } from "../db/schema.ts";
+import { items, mergeCandidates, properties } from "../db/schema.ts";
 import { MIN_CONFIDENCE, runHunt } from "./hunt.ts";
 import type { Value } from "../src/lib/compare.ts";
 import { DB_TEST, insertItem, makeItem, truncateAll } from "../test/db-helpers.ts";
@@ -81,6 +81,27 @@ describe.skipIf(!DB_TEST)("runHunt", () => {
     const stats = await runHunt();
     expect(stats.pairs).toBe(0);
     expect(await allCandidates()).toHaveLength(0);
+  });
+
+  it("blocks on the stored label key, filling it in for rows without one", async () => {
+    // Differ only in punctuation, so they share a blocking key; no shared id.
+    await insertItem(makeItem("Q300", "Go West: A Lucky Luke Adventure"));
+    await insertItem(makeItem("Q400", "Go West! A Lucky Luke Adventure"));
+    const stats = await runHunt();
+    expect(stats.pairs).toBe(1);
+    const keys = await db
+      .select({ qid: items.qid, blockingKey: items.blockingKey })
+      .from(items)
+      .orderBy(items.qid);
+    expect(keys).toEqual([
+      { qid: "Q300", blockingKey: "go west a lucky luke adventure" },
+      { qid: "Q400", blockingKey: "go west a lucky luke adventure" },
+    ]);
+  });
+
+  it("skips an oversized label+type block", async () => {
+    for (let i = 0; i < 101; i++) await insertItem(makeItem(`Q${1000 + i}`, "Untitled"));
+    expect((await runHunt()).pairs).toBe(0);
   });
 
   it("never rescores or resurrects a pair a human resolved", async () => {

@@ -43,6 +43,12 @@ export const items = mysqlTable(
     qid: varchar("qid", { length: 32 }).primaryKey(), // e.g. "Q42"
     primaryLabel: varchar("primary_label", { length: 255 }), // Item.labels.en ?? mul, nullable
     primaryType: varchar("primary_type", { length: 32 }), // first P31 value QID, e.g. "Q7889"
+    // storedBlockingKey(primaryLabel) (src/lib/compare.ts), so the hunt can
+    // group items by label+type in SQL instead of loading every label into
+    // memory. Written with primaryLabel by the dump import; a row whose key is
+    // missing (older rows, or other writers) is filled in by the hunt before it
+    // scans. Null when primaryLabel is.
+    blockingKey: varchar("blocking_key", { length: 255 }),
     data: json<import("../src/lib/compare.ts").Item>("data").notNull(), // JSON-encoded Item
     lastSyncedAt: datetime("last_synced_at", { mode: "string" })
       .notNull()
@@ -67,6 +73,10 @@ export const items = mysqlTable(
   (t) => [
     index("idx_items_primary_label").on(t.primaryLabel),
     index("idx_items_primary_type").on(t.primaryType),
+    // The hunt's label+type blocking: GROUP BY (blocking_key, primary_type) →
+    // group_concat(qid), answered from this index alone; also finds the rows
+    // whose key is still null.
+    index("idx_items_blocking").on(t.blockingKey, t.primaryType, t.qid),
     // The dump import's prune looks for rows not stamped with the current dump;
     // nearly every row is, so this turns a full scan into a short range read.
     index("idx_items_last_dump").on(t.lastDump),

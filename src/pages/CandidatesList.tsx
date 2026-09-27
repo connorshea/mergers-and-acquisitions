@@ -633,7 +633,7 @@ function CandidateRowView({
             {summaryReasons.map((r, i) => (
               <Fragment key={i}>
                 {i > 0 && " · "}
-                <ReasonText text={r} propertyLabels={propertyLabels} inline />
+                <ReasonText text={r} propertyLabels={propertyLabels} inline maxIds={3} />
               </Fragment>
             ))}
           </div>

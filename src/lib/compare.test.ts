@@ -2323,3 +2323,28 @@ describe("scoreCandidate — Wikipedia articles in different languages", () => {
     expect(complementary(scoreCandidate(commons, mk("Q4", { enwiki: "B" })))).toBeUndefined();
   });
 });
+
+describe("scoreCandidate — namesake anime staff", () => {
+  const base = { descriptions: {}, aliases: {}, sitelinks: {} };
+  const staff = (id: string, anilist: string, mal: string): Item => ({
+    ...base,
+    id,
+    labels: { en: "Takashi Watanabe" },
+    statements: {
+      P31: [{ type: "item", value: "Q5" }],
+      P11227: [{ type: "external-id", value: anilist }],
+      P4084: [{ type: "external-id", value: mal }],
+    },
+  });
+
+  it("separates two staff who share a name but have their own AniList and MAL pages", () => {
+    const result = scoreCandidate(staff("Q1", "100185", "6155"), staff("Q2", "96870", "7118"));
+    expect(result.reasons[0]).toContain("2 per-subject identifiers differ (P11227, P4084)");
+    expect(result.confidence).toBeLessThan(0.4);
+  });
+
+  it("still pairs two items sharing an AniList staff id", () => {
+    const result = scoreCandidate(staff("Q1", "100185", "6155"), staff("Q2", "100185", "6155"));
+    expect(result.reasons).toContain("shares external identifier: P11227, P4084");
+  });
+});

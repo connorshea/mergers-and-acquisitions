@@ -129,7 +129,7 @@ export interface ScanStats {
 
 /** Classes of which only some instances are imported (see SELECTIVE_IMPORT_CLASSES). */
 export interface SelectiveScan {
-  classes: readonly (SelectiveImport & { qid: string })[];
+  classes: readonly (Pick<SelectiveImport, "occupations" | "idProperties"> & { qid: string })[];
   /** Numeric ids of the items mirrored items link to (loadLinkedQids). */
   linkedQids: ReadonlySet<number>;
 }
@@ -1524,7 +1524,7 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
   if (selectiveClasses.length > 0) {
     const loadStart = performance.now();
     const linkedQids = await loadLinkedQids([
-      ...new Set(selectiveClasses.flatMap((c) => c.sources)),
+      ...new Set(selectiveClasses.flatMap((c) => c.linkedFrom)),
     ]);
     selective = { classes: selectiveClasses, linkedQids };
     log(

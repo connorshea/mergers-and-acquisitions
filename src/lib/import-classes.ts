@@ -8,7 +8,7 @@ export const VIDEO_GAME = "Q7889";
 /**
  * Which instances of a selective class to import, rather than all of them. An
  * instance is imported when any of these holds:
- * - an item of one of the group's other classes links to it (any item-valued
+ * - an item of one of the `linkedFrom` classes links to it (any item-valued
  *   statement), as a game names its designer or voice actor;
  * - a best-rank `occupation` (P106) is one of `occupations`;
  * - it has a value for one of `idProperties`.
@@ -16,6 +16,7 @@ export const VIDEO_GAME = "Q7889";
  * made from a game database's entry, which the shared-id matching pairs.
  */
 export interface SelectiveImport {
+  linkedFrom: readonly string[];
   occupations: readonly string[];
   idProperties: readonly string[];
 }
@@ -28,14 +29,29 @@ export interface ImportClass {
   selective?: SelectiveImport;
 }
 
+/** The WikiProject Video Games classes; games link in the people they name. */
+const VIDEO_GAME_CLASSES: readonly ImportClass[] = [
+  { qid: VIDEO_GAME, label: "video game" },
+  { qid: "Q7058673", label: "video game series" },
+  { qid: "Q209163", label: "expansion add-on" },
+  { qid: "Q1066707", label: "downloadable content" },
+  { qid: "Q210167", label: "video game developer" },
+  { qid: "Q1137109", label: "video game publisher" },
+  { qid: "Q1569167", label: "video game character" },
+  { qid: "Q865493", label: "video game mod" },
+];
+
 /**
- * The humans the video game group imports, out of Wikidata's ~13M: ~20k in
- * all (September 2026), of which ~11k are linked from games. The occupations
- * are the video game ones under "game designer" / "video game developer"
- * (not board game, tabletop RPG or crossword designers) and professional
- * gamers; the ids are the game databases' person ids.
+ * The humans the mirror imports, out of Wikidata's ~13M: ~37k in all
+ * (September 2026). Game people (~20k, ~11k of them linked from games): the
+ * video game occupations under "game designer" / "video game developer" (not
+ * board game, tabletop RPG or crossword designers), professional gamers, and
+ * the game databases' person ids. Anime staff (~17k more): anyone with an
+ * AniList or MyAnimeList person id, which covers directors, animators,
+ * writers, composers and voice actors.
  */
-const GAME_PEOPLE: SelectiveImport = {
+const PEOPLE: SelectiveImport = {
+  linkedFrom: VIDEO_GAME_CLASSES.map((c) => c.qid),
   occupations: [
     "Q58287519", // video game developer
     "Q3630699", // game designer
@@ -56,6 +72,8 @@ const GAME_PEOPLE: SelectiveImport = {
     "P5247", // Giant Bomb ID
     "P10918", // Liquipedia ID
     "P5796", // Internet Game Database person ID
+    "P11227", // AniList staff ID
+    "P4084", // MyAnimeList people ID
   ],
 };
 
@@ -71,7 +89,8 @@ export interface ImportClassGroup {
  * names any of these. Only these exact QIDs match — subclasses are not
  * expanded — so add a class here to widen the mirror; the importer's
  * pre-filter needles, its P31 check, and the candidates list's type filter all
- * read this list. Each class belongs to exactly one group.
+ * read this list. Each class belongs to exactly one group; classes that span
+ * WikiProjects go in "Other".
  */
 export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
   {
@@ -154,17 +173,12 @@ export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
   },
   {
     name: "WikiProject Video Games",
-    classes: [
-      { qid: VIDEO_GAME, label: "video game" },
-      { qid: "Q7058673", label: "video game series" },
-      { qid: "Q209163", label: "expansion add-on" },
-      { qid: "Q1066707", label: "downloadable content" },
-      { qid: "Q210167", label: "video game developer" },
-      { qid: "Q1137109", label: "video game publisher" },
-      { qid: "Q1569167", label: "video game character" },
-      { qid: "Q865493", label: "video game mod" },
-      { qid: "Q5", label: "human", selective: GAME_PEOPLE },
-    ],
+    classes: VIDEO_GAME_CLASSES,
+  },
+  {
+    // Classes that span WikiProjects: the people are drawn from several.
+    name: "Other",
+    classes: [{ qid: "Q5", label: "human", selective: PEOPLE }],
   },
 ];
 
@@ -181,22 +195,8 @@ export const IMPORT_CLASSES: readonly string[] = IMPORT_CLASS_OPTIONS.filter(
 /** A class of which only some instances are imported (see SelectiveImport). */
 export interface SelectiveImportClass extends SelectiveImport {
   qid: string;
-  /** The classes whose items' links bring an instance in: the group's other classes. */
-  sources: readonly string[];
 }
 
-/** The `selective` classes, each with its group's other classes as link sources. */
+/** The `selective` classes, each with the lists that pick its instances. */
 export const SELECTIVE_IMPORT_CLASSES: readonly SelectiveImportClass[] =
-  IMPORT_CLASS_GROUPS.flatMap((g) =>
-    g.classes.flatMap((c) =>
-      c.selective
-        ? [
-            {
-              qid: c.qid,
-              ...c.selective,
-              sources: g.classes.filter((s) => !s.selective).map((s) => s.qid),
-            },
-          ]
-        : [],
-    ),
-  );
+  IMPORT_CLASS_OPTIONS.flatMap((c) => (c.selective ? [{ qid: c.qid, ...c.selective }] : []));

@@ -342,7 +342,7 @@ edits.post("/:id/merge", async (c) => {
     // Couldn't reach Wikidata to check: hand the claim back rather than merge
     // blind. This read touched no edit endpoint, so nothing was applied.
     await releaseClaim(id);
-    return failedEdit(c, await auditFailure(audit, err));
+    return failedEdit(c, noteMaybeMerged(await auditFailure(audit, err)));
   }
   if (declaredDistinct) {
     await releaseClaim(id);
@@ -430,7 +430,10 @@ edits.post("/:id/merge", async (c) => {
     if (outcome === "not-merged") {
       // Give the claim back before anything else.
       await releaseClaim(id);
-      return failedEdit(c, noteRemoved(await auditFailure(audit, err), removedSitelinks));
+      return failedEdit(
+        c,
+        noteRemoved(noteMaybeMerged(await auditFailure(audit, err)), removedSitelinks),
+      );
     }
     result = outcome;
     audit.params = { ...audit.params, confirmedAfterTimeout: true };
@@ -558,6 +561,26 @@ async function liveSitelinkFixes(from: Item, into: Item): Promise<SitelinkFix[] 
     return null;
   }
   return redirectSitelinkFixes(from, into);
+}
+
+/**
+ * Wikibase's "Cannot access content, revision may be deleted." — what a merge
+ * gets when one of the items is already a redirect, most often because
+ * someone else merged the pair on Wikidata since the hunt found it.
+ */
+const CANT_LOAD_CONTENT_TEXT = /revision may be deleted/i;
+
+/** `err`, with a hint when Wikidata couldn't load an item that may already be merged. */
+function noteMaybeMerged(err: WikidataEditError): WikidataEditError {
+  if (err.code !== "cant-load-entity-content" && !CANT_LOAD_CONTENT_TEXT.test(err.message)) {
+    return err;
+  }
+  return new WikidataEditError(
+    err.kind,
+    err.code,
+    `${err.message} The items may already have been merged by someone else on Wikidata; ` +
+      `if so, dismiss this pair.`,
+  );
 }
 
 /** `err`, with a note naming the redirect sitelinks already removed before it. */

@@ -928,6 +928,9 @@ export function isHardcodedMirrorProp(pid: string): boolean {
 const HUMAN = "Q5";
 const NAME_IN_NATIVE_LANGUAGE = "P1559";
 
+const isHuman = (item: Item): boolean =>
+  (item.statements.P31 ?? []).some((v) => v.type === "item" && v.value === HUMAN);
+
 /**
  * Countries whose citizens' native names are written in kanji or hangul, and
  * the label language holding that name. Romanization collapses many of these
@@ -1026,8 +1029,6 @@ function nativeNames(item: Item): { han: Map<string, string>; hangul: Map<string
  * 山本雅博 vs 山本正弘).
  */
 export function differingNativeNames(a: Item, b: Item): [string, string] | null {
-  const isHuman = (item: Item) =>
-    (item.statements.P31 ?? []).some((v) => v.type === "item" && v.value === HUMAN);
   if (!isHuman(a) || !isHuman(b)) return null;
   const na = nativeNames(a);
   const nb = nativeNames(b);
@@ -1040,6 +1041,45 @@ export function differingNativeNames(a: Item, b: Item): [string, string] | null 
     if (x !== undefined && y !== undefined) return [x, y];
   }
   return null;
+}
+
+/**
+ * Personal social-media accounts: one person, one handle (mostly). For people
+ * they tell namesakes apart — a progamer's `azure_sc2` and an illustrator's
+ * `azure_0608_sub` — but only weakly: handles get renamed, and about one in
+ * 30 people with an X username on Wikidata lists more than one.
+ */
+const PERSONAL_ACCOUNT_PROPS = [
+  "P2002", // X/Twitter username
+  "P2003", // Instagram username
+  "P7085", // TikTok username
+  "P5797", // Twitch username
+  "P2397", // YouTube channel ID
+  "P11245", // YouTube handle
+  "P12361", // Bluesky handle
+  "P11892", // Threads username
+  "P3185", // VK username
+  "P3579", // Sina Weibo user ID
+  "P6455", // Bilibili UID
+  "P2037", // GitHub account
+  "P3943", // Tumblr username
+  "P4175", // Patreon ID
+  "P4033", // Mastodon address
+];
+
+/**
+ * The personal-account properties on which two people each have a handle but
+ * share none. Handles compare case-insensitively, ignoring a leading "@".
+ */
+export function differingPersonalAccounts(a: Item, b: Item): string[] {
+  if (!isHuman(a) || !isHuman(b)) return [];
+  const handles = (item: Item, pid: string) =>
+    new Set((item.statements[pid] ?? []).map((v) => v.value.toLowerCase().replace(/^@/, "")));
+  return PERSONAL_ACCOUNT_PROPS.filter((pid) => {
+    const ha = handles(a, pid);
+    const hb = handles(b, pid);
+    return ha.size > 0 && hb.size > 0 && ![...ha].some((h) => hb.has(h));
+  });
 }
 
 /**
@@ -1824,6 +1864,15 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     reasons.push(`different names in native script (${nativeNameDiff.join(" / ")})`);
   }
 
+  // Each person having their own handle on the same site hints at namesakes.
+  // Only a nudge (a renamed or second account is common), a little more when
+  // two or more sites disagree.
+  const accountDiffs = differingPersonalAccounts(a, b);
+  if (accountDiffs.length > 0) {
+    score -= accountDiffs.length >= 2 ? 0.25 : 0.15;
+    reasons.push(`different social-media accounts (${accountDiffs.join(", ")})`);
+  }
+
   // Conflicts the merge flow handles itself (a differing description, a
   // redirect sitelink to the partner's page) don't count: they never block a
   // merge the tool performs, so they aren't surfaced or flagged on the candidate.
@@ -2101,7 +2150,8 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     largeYearGap ||
     distinctSubjectPageIds.length > 0 ||
     distinctExtIdRows.length > 0 ||
-    nativeNameDiff !== null;
+    nativeNameDiff !== null ||
+    accountDiffs.length > 0;
   if (hasConcreteDifference) ceiling = Math.min(ceiling, 0.9);
   if (distinctSubjectPageIds.length === 1) ceiling = Math.min(ceiling, 0.8);
   if (largeYearGap) ceiling = Math.min(ceiling, 0.6);

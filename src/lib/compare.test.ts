@@ -7,6 +7,7 @@ import {
   compareRowRank,
   compareValues,
   differingNativeNames,
+  differingPersonalAccounts,
   foldNativeName,
   formatIdUrl,
   installment,
@@ -2452,5 +2453,43 @@ describe("differingNativeNames / scoreCandidate — native-script names", () => 
     );
     expect(result.confidence).toBeGreaterThanOrEqual(0.4);
     expect(result.confidence).toBeLessThanOrEqual(0.6);
+  });
+});
+
+describe("differingPersonalAccounts / scoreCandidate — social-media handles", () => {
+  const base = { descriptions: {}, aliases: {}, sitelinks: {} };
+  const person = (id: string, accounts: Item["statements"], p31 = "Q5"): Item => ({
+    ...base,
+    id,
+    labels: { en: "Azure" },
+    statements: { P31: [{ type: "item", value: p31 }], ...accounts },
+  });
+  const handle = (value: string) => [{ type: "external-id" as const, value }];
+
+  it("docks two people with their own X accounts below the floor", () => {
+    const a = person("Q1", { P2002: handle("azure_sc2") });
+    const b = person("Q2", { P2002: handle("azure_0608_sub") });
+    expect(differingPersonalAccounts(a, b)).toEqual(["P2002"]);
+    const result = scoreCandidate(a, b);
+    expect(result.reasons).toContain("different social-media accounts (P2002)");
+    expect(result.confidence).toBeLessThan(0.4);
+  });
+
+  it("matches handles case-insensitively, ignoring a leading @, and any shared one", () => {
+    const a = person("Q1", { P2002: [...handle("@CoreEdgeSC"), ...handle("old_handle")] });
+    const b = person("Q2", { P2002: handle("coreedgesc") });
+    expect(differingPersonalAccounts(a, b)).toEqual([]);
+  });
+
+  it("ignores one-sided accounts and non-humans", () => {
+    expect(
+      differingPersonalAccounts(person("Q1", { P2002: handle("x") }), person("Q2", {})),
+    ).toEqual([]);
+    expect(
+      differingPersonalAccounts(
+        person("Q1", { P2002: handle("x") }, "Q7889"),
+        person("Q2", { P2002: handle("y") }, "Q7889"),
+      ),
+    ).toEqual([]);
   });
 });

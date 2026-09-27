@@ -11,6 +11,7 @@ import {
   type Item,
   crossReferenceProps,
   isAutoIgnoredConflict,
+  levenshtein,
   isDeclaredDifferent,
   isSeriesSequelPair,
   isWorkEditionPair,
@@ -45,6 +46,135 @@ describe("normalize / stringSimilarity", () => {
 
   it("scores unrelated strings low", () => {
     expect(stringSimilarity("Meridian Games", "Totally Different")).toBeLessThan(0.5);
+  });
+});
+
+/** Deterministic PRNG (mulberry32), so the randomized cases below are reproducible. */
+function rng(seed: number): () => number {
+  return () => {
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/** A short random string over a small alphabet, so pairs share plenty of characters. */
+function randomString(next: () => number, alphabet: string, maxLength: number): string {
+  const length = Math.floor(next() * (maxLength + 1));
+  let out = "";
+  for (let i = 0; i < length; i++) out += alphabet[Math.floor(next() * alphabet.length)];
+  return out;
+}
+
+describe("levenshtein", () => {
+  /** Textbook full-matrix edit distance, as the reference. */
+  const reference = (a: string, b: string): number => {
+    const d = Array.from({ length: a.length + 1 }, (_, i) =>
+      Array.from({ length: b.length + 1 }, (_, j) => (i === 0 ? j : j === 0 ? i : 0)),
+    );
+    for (let i = 1; i <= a.length; i++)
+      for (let j = 1; j <= b.length; j++)
+        d[i][j] = Math.min(
+          d[i - 1][j] + 1,
+          d[i][j - 1] + 1,
+          d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1),
+        );
+    return d[a.length][b.length];
+  };
+
+  it("gives known distances", () => {
+    expect(levenshtein("", "")).toBe(0);
+    expect(levenshtein("", "abc")).toBe(3);
+    expect(levenshtein("abc", "")).toBe(3);
+    expect(levenshtein("abc", "abc")).toBe(0);
+    expect(levenshtein("kitten", "sitting")).toBe(3);
+    expect(levenshtein("flaw", "lawn")).toBe(2);
+    expect(levenshtein("Portal", "Portal 2")).toBe(2);
+    expect(levenshtein("ab", "ba")).toBe(2);
+  });
+
+  it("matches the full-matrix reference on random strings", () => {
+    const next = rng(1);
+    for (let i = 0; i < 2000; i++) {
+      const a = randomString(next, "abcé ", 12);
+      const b = randomString(next, "abcé ", 12);
+      expect(levenshtein(a, b), `${JSON.stringify(a)} vs ${JSON.stringify(b)}`).toBe(
+        reference(a, b),
+      );
+      expect(levenshtein(b, a)).toBe(levenshtein(a, b));
+    }
+  });
+});
+
+describe("bestNameSimilarity", () => {
+  const base = { descriptions: {}, statements: {}, sitelinks: {} };
+  const named = (
+    id: string,
+    labels: Record<string, string>,
+    aliases: Record<string, string[]> = {},
+  ): Item => ({ ...base, id, labels, aliases });
+
+  /** The plain all-pairs definition it must agree with. */
+  const reference = (a: Item, b: Item, includeAliases: boolean): number => {
+    const names = (item: Item) =>
+      [
+        ...Object.values(item.labels),
+        ...(includeAliases ? Object.values(item.aliases).flat() : []),
+      ].filter(Boolean);
+    let best = 0;
+    for (const x of names(a))
+      for (const y of names(b)) best = Math.max(best, stringSimilarity(x, y));
+    return best;
+  };
+
+  it("is 0 when either side has no names", () => {
+    expect(bestNameSimilarity(named("Q1", {}), named("Q2", { en: "Doom" }))).toBe(0);
+    // Aliases don't count when only labels are compared.
+    expect(
+      bestNameSimilarity(named("Q1", {}, { en: ["Doom"] }), named("Q2", { en: "Doom" }), false),
+    ).toBe(0);
+  });
+
+  it("treats names equal after normalization as identical", () => {
+    const a = named("Q1", { en: "  The   Legend of Zelda " });
+    const b = named("Q2", { fr: "the legend of zelda" });
+    expect(bestNameSimilarity(a, b)).toBe(1);
+    expect(bestNameSimilarity(a, b, false)).toBe(1);
+  });
+
+  it("finds the best pair when it isn't the first one tried", () => {
+    // Long names that match nothing come first; the close pair is short and
+    // late, so skipping on length must not skip past it.
+    const a = named("Q1", { en: "An Extremely Long Unrelated Title", de: "Doom II" });
+    const b = named("Q2", { en: "Something Else Entirely Here", ja: "Doom 2" });
+    expect(bestNameSimilarity(a, b)).toBe(stringSimilarity("Doom II", "Doom 2"));
+  });
+
+  it("matches the all-pairs reference on items with many names", () => {
+    const next = rng(2);
+    const langs = ["en", "de", "fr", "ja", "es", "it", "nl", "pl"];
+    const randomNames = () => {
+      const labels: Record<string, string> = {};
+      const aliases: Record<string, string[]> = {};
+      for (const lang of langs) {
+        if (next() < 0.7) labels[lang] = randomString(next, "abAB c", 10);
+        if (next() < 0.4)
+          aliases[lang] = Array.from({ length: 1 + Math.floor(next() * 3) }, () =>
+            randomString(next, "abAB c", 10),
+          );
+      }
+      return { labels, aliases };
+    };
+    for (let i = 0; i < 1000; i++) {
+      const x = randomNames();
+      const y = randomNames();
+      const a = named("Q1", x.labels, x.aliases);
+      const b = named("Q2", y.labels, y.aliases);
+      for (const includeAliases of [true, false]) {
+        expect(bestNameSimilarity(a, b, includeAliases)).toBe(reference(a, b, includeAliases));
+      }
+    }
   });
 });
 

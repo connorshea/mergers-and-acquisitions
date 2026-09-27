@@ -214,16 +214,21 @@ export function levenshtein(a: string, b: string): number {
   const n = b.length;
   if (m === 0) return n;
   if (n === 0) return m;
-  let prev = Array.from({ length: n + 1 }, (_, i) => i);
+  // One row, updated in place: `diag` holds the previous row's value at j - 1.
+  const row = new Int32Array(n + 1);
+  for (let j = 0; j <= n; j++) row[j] = j;
   for (let i = 1; i <= m; i++) {
-    const cur = [i];
+    let diag = row[0];
+    row[0] = i;
+    const ca = a.charCodeAt(i - 1);
     for (let j = 1; j <= n; j++) {
-      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
-      cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + cost);
+      const up = row[j];
+      const cost = ca === b.charCodeAt(j - 1) ? 0 : 1;
+      row[j] = Math.min(up + 1, row[j - 1] + 1, diag + cost);
+      diag = up;
     }
-    prev = cur;
   }
-  return prev[n];
+  return row[n];
 }
 
 export function stringSimilarity(a: string, b: string): number {
@@ -993,11 +998,18 @@ function bestLabel(item: Item): string {
   return item.labels.en ?? item.labels.mul ?? Object.values(item.labels)[0] ?? "";
 }
 
-/** Every label (and, optionally, alias) string an item carries, across languages. */
+/**
+ * Every label (and, optionally, alias) string an item carries, across
+ * languages, normalized and deduplicated — a well-known item repeats the same
+ * name in dozens of languages.
+ */
 function nameStrings(item: Item, includeAliases: boolean): string[] {
-  const out = Object.values(item.labels);
-  if (includeAliases) for (const arr of Object.values(item.aliases)) out.push(...arr);
-  return out.filter(Boolean);
+  const out = new Set<string>();
+  for (const label of Object.values(item.labels)) if (label) out.add(normalize(label));
+  if (includeAliases)
+    for (const arr of Object.values(item.aliases))
+      for (const alias of arr) if (alias) out.add(normalize(alias));
+  return [...out];
 }
 
 /**
@@ -1006,16 +1018,26 @@ function nameStrings(item: Item, includeAliases: boolean): string[] {
  * so a rename — where the label differs but matches the other item's alias —
  * still reads as a match. With it off, only labels are compared, which lets the
  * caller tell an outright identical label from an alias-only match.
+ *
+ * Equal to the best `stringSimilarity` over every name pair, computed without
+ * trying every pair: items with hundreds of labels and aliases made this
+ * all-pairs loop nearly all of the hunt's scoring time. Names are normalized
+ * once, an exact match is a set lookup, and a pair is skipped when the length
+ * difference alone (a lower bound on the edit distance) rules out beating the
+ * best so far.
  */
 export function bestNameSimilarity(a: Item, b: Item, includeAliases = true): number {
   const as = nameStrings(a, includeAliases);
   const bs = nameStrings(b, includeAliases);
   if (as.length === 0 || bs.length === 0) return 0;
+  const bSet = new Set(bs);
+  if (as.some((x) => bSet.has(x))) return 1;
   let best = 0;
   for (const x of as) {
     for (const y of bs) {
-      best = Math.max(best, stringSimilarity(x, y));
-      if (best === 1) return 1;
+      const max = Math.max(x.length, y.length);
+      if (1 - Math.abs(x.length - y.length) / max <= best) continue;
+      best = Math.max(best, 1 - levenshtein(x, y) / max);
     }
   }
   return best;
@@ -1324,11 +1346,14 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // the other item's alias) still reads as a match; comparing labels-only lets
   // us tell an outright identical label from an alias-only match in the reason.
   const nameSim = bestNameSimilarity(a, b);
-  const labelSim = bestNameSimilarity(a, b, false);
   const namePct = Math.round(nameSim * 100);
   if (nameSim >= 0.995) {
     score += 0.35;
-    reasons.push(labelSim >= 0.995 ? "identical label" : "label matches the other item's alias");
+    reasons.push(
+      bestNameSimilarity(a, b, false) >= 0.995
+        ? "identical label"
+        : "label matches the other item's alias",
+    );
   } else if (nameSim >= 0.75) {
     score += 0.2;
     reasons.push(`very similar names (${namePct}%)`);

@@ -2362,6 +2362,38 @@ describe("scoreCandidate — namesake anime staff", () => {
   });
 });
 
+describe("scoreCandidate — namesake Olympians", () => {
+  const base = { descriptions: {}, aliases: {}, sitelinks: {} };
+  const olympian = (id: string, ids: Record<string, string>): Item => ({
+    ...base,
+    id,
+    labels: { en: "Kim Min-jung" },
+    statements: {
+      P31: [{ type: "item", value: "Q5" }],
+      ...Object.fromEntries(
+        Object.entries(ids).map(([p, value]) => [p, [{ type: "external-id" as const, value }]]),
+      ),
+    },
+  });
+
+  it("separates two Olympians who share a name but have their own Olympedia and Olympics.com pages", () => {
+    const result = scoreCandidate(
+      olympian("Q1", { P8286: "93530", P5815: "1000001" }),
+      olympian("Q2", { P8286: "130021", P5815: "1000002" }),
+    );
+    expect(result.reasons[0]).toContain("2 per-subject identifiers differ (P5815, P8286)");
+    expect(result.confidence).toBeLessThan(0.4);
+  });
+
+  it("doesn't count The-Sports.org as one page per person", () => {
+    const result = scoreCandidate(
+      olympian("Q1", { P8286: "93530", P4391: "1234" }),
+      olympian("Q2", { P8286: "130021", P4391: "5678" }),
+    );
+    expect(result.reasons.join("\n")).not.toContain("per-subject identifiers differ");
+  });
+});
+
 describe("differingNativeNames / scoreCandidate — native-script names", () => {
   const base = { descriptions: {}, aliases: {}, sitelinks: {} };
   const person = (

@@ -180,6 +180,38 @@ describe("scanDump", () => {
     expect(matched).toEqual(["Q30", "Q31"]);
   });
 
+  it("imports Olympians by their Olympic database ids", async () => {
+    const externalId = (property: string, value: string): Statement => ({
+      mainsnak: {
+        snaktype: "value",
+        property,
+        datatype: "external-id",
+        datavalue: { type: "string", value },
+      },
+      rank: "normal",
+    });
+    const human = (id: string, claims: Record<string, Statement[]> = {}) =>
+      item(id, { P31: [p31("Q5")], ...claims });
+    const entities = [
+      human("Q40", { P8286: [externalId("P8286", "93530")] }), // Olympedia
+      human("Q41", { P5815: [externalId("P5815", "usain-bolt")] }), // Olympics.com
+      human("Q42", { P1447: [externalId("P1447", "bo/usain-bolt-1")] }), // Sports-Reference
+      human("Q43", { P14105: [externalId("P14105", "12345")] }), // InterSportStats
+      human("Q44", { P4391: [externalId("P4391", "6789")] }), // The-Sports.org
+      human("Q45", { P2446: [externalId("P2446", "28003")] }), // Transfermarkt: not imported
+      human("Q46", { P82860: [externalId("P82860", "1")] }), // P8286 is only a prefix of it
+    ];
+    const matched: string[] = [];
+    await scanDump(Readable.from([Buffer.from(dumpText(entities))]), {
+      classQids: IMPORT_CLASSES,
+      selective: { classes: SELECTIVE_IMPORT_CLASSES, linkedQids: new Set() },
+      onItem: (i) => {
+        matched.push(i.id);
+      },
+    });
+    expect(matched).toEqual(["Q40", "Q41", "Q42", "Q43", "Q44"]);
+  });
+
   it("matches any of several classes in one pass, by the whole number", async () => {
     const entities = [
       item("Q10", { P31: [p31("Q11424")] }),

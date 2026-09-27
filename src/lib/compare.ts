@@ -889,10 +889,9 @@ const LOW_ENTROPY_PROPS = new Set<string>([
   // whole topic shares one value and a match says nothing about the pair.
   "P5008", // on focus list of Wikimedia project
   // Person boilerplate. Sex and citizenship have a handful of values, and the
-  // mirror's humans are game people and anime staff, most sharing a handful of
-  // occupations. Given and
-  // family names are the label restated, so two namesakes always agree on them
-  // and the name check already counted it.
+  // mirror's humans are game people, anime staff and Olympians, most sharing a
+  // handful of occupations. Given and family names are the label restated, so
+  // two namesakes always agree on them and the name check already counted it.
   "P21", // sex or gender
   "P27", // country of citizenship
   "P106", // occupation
@@ -905,6 +904,7 @@ const LOW_ENTROPY_PROPS = new Set<string>([
   "P742", // pseudonym
   "P641", // sport
   "P2416", // sports discipline competed in
+  "P1532", // country for sport (citizenship again, for athletes)
 ]);
 
 /**
@@ -1237,6 +1237,12 @@ const SUBJECT_PAGE_ID_PROPS = new Set<string>([
   "P3913", // MobyGames person ID
   "P11227", // AniList staff ID
   "P4084", // MyAnimeList people ID
+  // Olympians. Not The-Sports.org: ~3% of its people carry two of its ids, so
+  // it keeps duplicate pages of its own.
+  "P8286", // Olympedia people ID
+  "P5815", // Olympics.com athlete ID
+  "P1447", // Sports-Reference.com Olympic athlete ID (archived)
+  "P14105", // InterSportStats athlete ID
 ]);
 
 /** A trailing `--N` disambiguation suffix on a slug id. */

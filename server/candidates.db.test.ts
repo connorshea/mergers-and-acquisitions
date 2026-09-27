@@ -135,6 +135,18 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       expect(body.candidates[0].detectedAt).toMatch(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/);
     });
 
+    it("names the properties cited in the page's reasons", async () => {
+      await db
+        .update(mergeCandidates)
+        .set({ reasons: ["shares external identifier: P1733, P9999", "same genre (P136)"] })
+        .where(eq(mergeCandidates.id, alpha));
+      const body = await list();
+      // Only pids in reasons, and only those the properties table knows.
+      expect(body.propertyLabels).toEqual({ P1733: "Steam application ID", P136: "genre" });
+      // A page whose reasons cite no properties gets an empty map.
+      expect((await list("?status=dismissed")).propertyLabels).toEqual({});
+    });
+
     it("filters by status and nulls labels for items that are missing", async () => {
       const body = await list("?status=dismissed");
       expect(body.total).toBe(1);

@@ -8,6 +8,7 @@ import AuthBar from "../AuthBar.tsx";
 import Dialog from "../Dialog.tsx";
 import { LogoMark } from "../Logo.tsx";
 import MergeCandidates from "../MergeCandidates.tsx";
+import ReasonText from "../ReasonText.tsx";
 import {
   AUTO_IGNORED_CONFLICTS,
   type Item,
@@ -766,35 +767,5 @@ function DifferentDialog({
         </button>
       </div>
     </Dialog>
-  );
-}
-
-// Renders one reason line, turning any Wikidata property id (Pxxx) into a
-// hoverable token that shows the property's human label. The scorer builds
-// reasons without property labels, so they embed raw pids (e.g. "shares external
-// identifier: P12813, P5794"); the detail payload carries the labels, so we
-// resolve them here for the tooltip while keeping the pid visible.
-function ReasonText({
-  text,
-  propertyLabels,
-}: {
-  text: string;
-  propertyLabels?: Record<string, string>;
-}) {
-  // Split on pid tokens, keeping them (capturing group) so we can decorate each.
-  const parts = text.split(/(\bP\d+\b)/g);
-  return (
-    <>
-      {parts.map((part, i) => {
-        const label = /^P\d+$/.test(part) ? propertyLabels?.[part] : undefined;
-        return label ? (
-          <abbr key={i} className="reason-prop" title={label}>
-            {part}
-          </abbr>
-        ) : (
-          <span key={i}>{part}</span>
-        );
-      })}
-    </>
   );
 }

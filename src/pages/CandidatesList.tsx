@@ -1,10 +1,11 @@
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import { Fragment, type ReactNode, useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { fetch, FetchError } from "../lib/client.ts";
 import { useAuth } from "../lib/auth-context.ts";
 import AuthBar from "../AuthBar.tsx";
 import Dialog from "../Dialog.tsx";
 import { LogoMark } from "../Logo.tsx";
+import ReasonText from "../ReasonText.tsx";
 import { IMPORT_CLASS_GROUPS, IMPORT_CLASS_OPTIONS } from "../lib/import-classes.ts";
 import { rememberListSearch } from "../lib/list-state.ts";
 import { useDismissableMenu } from "../lib/use-dismissable-menu.ts";
@@ -465,6 +466,7 @@ export default function CandidatesList() {
                     candidate={c}
                     onDismiss={dismissCandidate}
                     canDismiss={user !== null}
+                    propertyLabels={data?.propertyLabels}
                   />
                 ))}
               </tbody>
@@ -574,11 +576,14 @@ function CandidateRowView({
   candidate: c,
   onDismiss,
   canDismiss,
+  propertyLabels,
 }: {
   candidate: CandidateSummary;
   onDismiss: (id: number) => Promise<void>;
   /** False when logged out: dismissing needs an account. */
   canDismiss: boolean;
+  /** Pxxx → label, for naming the properties in the reasons. */
+  propertyLabels?: Record<string, string>;
 }) {
   const pct = Math.round(c.confidence * 100);
   // "same instance of (P31)" is already shown as the type pill (and is true of
@@ -624,7 +629,14 @@ function CandidateRowView({
           </span>
         </Link>
         {summaryReasons.length > 0 && (
-          <div className="pair-reasons">{summaryReasons.join(" · ")}</div>
+          <div className="pair-reasons">
+            {summaryReasons.map((r, i) => (
+              <Fragment key={i}>
+                {i > 0 && " · "}
+                <ReasonText text={r} propertyLabels={propertyLabels} inline />
+              </Fragment>
+            ))}
+          </div>
         )}
       </td>
       <td className="col-conf">

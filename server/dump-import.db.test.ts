@@ -8,9 +8,15 @@ import { join } from "node:path";
 import { Readable } from "node:stream";
 import { gzipSync } from "node:zlib";
 import { afterAll, beforeEach, describe, expect, it } from "vite-plus/test";
-import { asc, eq } from "drizzle-orm";
+import { and, asc, eq, sql } from "drizzle-orm";
 import { db, pool } from "./db.ts";
-import { dumpImportRuns, externalIds, items, mergeCandidates, properties } from "../db/schema.ts";
+import {
+  dumpImportSegments,
+  externalIds,
+  items,
+  mergeCandidates,
+  properties,
+} from "../db/schema.ts";
 import { MAX_PRUNE_FRACTION, runDumpImport, upsertItems } from "./dump-import.ts";
 import { CONVERTER_VERSION } from "./converter-version.ts";
 import type { Entity, Statement } from "../src/lib/wikibase.ts";
@@ -62,6 +68,13 @@ const run = (entities: object[], opts: Parameters<typeof runDumpImport>[0] = {})
   runDumpImport({ source: source(entities), log: () => {}, ...opts });
 
 const allItems = () => db.select().from(items).orderBy(asc(items.qid));
+const segmentRows = async () =>
+  (
+    await db
+      .select()
+      .from(dumpImportSegments)
+      .orderBy(asc(dumpImportSegments.segments), asc(dumpImportSegments.segment))
+  ).map((r) => ({ ...r, done: r.doneAt !== null }));
 const idsOf = (qid: string) =>
   db
     .select({ property: externalIds.property, value: externalIds.value })
@@ -343,8 +356,9 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
       true,
     );
     expect((await allItems()).map((r) => r.qid)).toContain("Q900");
-    expect(await db.select().from(dumpImportRuns)).toMatchObject([
-      { dump: "20260914", shard: 0, shards: 2 },
+    expect(await segmentRows()).toMatchObject([
+      { segments: 2, segment: 0, done: true },
+      { segments: 2, segment: 1, done: false },
     ]);
 
     // A retried shard re-records itself rather than tripping the primary key.
@@ -357,23 +371,191 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
     expect(rows.map((r) => r.qid)).toEqual(["Q100", "Q200", "Q300"]);
     expect(rows.map((r) => r.lastDump)).toEqual(["20260914", "20260914", "20260914"]);
     expect(await db.select().from(properties)).toHaveLength(1);
-    const runs = await db.select().from(dumpImportRuns).orderBy(asc(dumpImportRuns.shard));
-    expect(runs.map((r) => [r.shard, r.shards])).toEqual([
-      [0, 2],
-      [1, 2],
+    const runs = await segmentRows();
+    expect(runs.map((r) => [r.segment, r.segments, r.done])).toEqual([
+      [0, 2, true],
+      [1, 2, true],
     ]);
-    expect(runs.reduce((n, r) => n + r.matched, 0)).toBe(3);
+    expect(runs.reduce((n, r) => n + (r.matched ?? 0), 0)).toBe(3);
 
-    // The same dump re-run with another shard count starts a new set: the
-    // re-recorded shard 0 now counts towards 3, not 2.
+    // The same dump re-run with another shard count starts a new set: shard 0
+    // of 3 doesn't complete it, whatever the set of 2 did.
     const again = await runDumpImport({ ...opts, shard: { index: 0, count: 3 } });
     expect(again.pruned).toBe(0);
-    expect(await db.select().from(dumpImportRuns).orderBy(asc(dumpImportRuns.shard))).toMatchObject(
-      [
-        { shard: 0, shards: 3 },
-        { shard: 1, shards: 2 },
-      ],
-    );
+    expect((await segmentRows()).map((r) => [r.segments, r.segment, r.done])).toEqual([
+      [2, 0, true],
+      [2, 1, true],
+      [3, 0, true],
+      [3, 1, false],
+      [3, 2, false],
+    ]);
+  });
+
+  describe("as queue workers", () => {
+    // Six games, one gzip member each, so the segments partition them.
+    const GAMES = ["Q100", "Q200", "Q300", "Q400", "Q500", "Q600"];
+    const SEGMENTS = 6;
+    const DUMP = "20260914";
+
+    async function writeDump(): Promise<string> {
+      const dir = await mkdtemp(join(tmpdir(), "dump-import-db-"));
+      const path = join(dir, `wikidata-${DUMP}-all.json.gz`);
+      const batches: object[][] = GAMES.map((qid) => [game(qid, `Game ${qid}`)]);
+      batches[batches.length - 1].push(STEAM_PROP);
+      await writeFile(path, dumpGz(batches).gz);
+      return path;
+    }
+
+    /** Pre-create the set with some rows already claimed or done. */
+    async function seedSet(
+      rows: { segment: number; claimedBy?: string; ageSeconds?: number; matched?: number }[],
+    ): Promise<void> {
+      await db.insert(dumpImportSegments).values(
+        Array.from({ length: SEGMENTS }, (_, segment) => ({
+          dump: DUMP,
+          segments: SEGMENTS,
+          segment,
+        })),
+      );
+      for (const r of rows) {
+        const where = and(
+          eq(dumpImportSegments.dump, DUMP),
+          eq(dumpImportSegments.segments, SEGMENTS),
+          eq(dumpImportSegments.segment, r.segment),
+        );
+        if (r.claimedBy !== undefined) {
+          await db
+            .update(dumpImportSegments)
+            .set({
+              claimedBy: r.claimedBy,
+              claim: "0000000000000000",
+              claimedAt: sql`current_timestamp - interval ${sql.raw(String(r.ageSeconds ?? 0))} second`,
+            })
+            .where(where);
+        }
+        if (r.matched !== undefined) {
+          await db
+            .update(dumpImportSegments)
+            .set({ doneAt: sql`current_timestamp`, matched: r.matched })
+            .where(where);
+        }
+      }
+    }
+
+    const worker = (path: string, name: string, extra: Parameters<typeof runDumpImport>[0] = {}) =>
+      runDumpImport({
+        path,
+        worker: name,
+        segments: SEGMENTS,
+        waitPollMs: 50,
+        log: () => {},
+        ...extra,
+      });
+
+    it("scans every segment exactly once between racing workers, and the last to finish prunes", async () => {
+      await insertItem(makeItem("Q900", "Left the dump"));
+      const path = await writeDump();
+
+      const [a, b] = await Promise.all([worker(path, "a"), worker(path, "b")]);
+      expect(a.segmentsScanned + b.segmentsScanned).toBe(SEGMENTS);
+      // Each item matched once across the two: no segment was read twice.
+      expect(a.matched + b.matched).toBe(GAMES.length);
+      expect(a.pruned + b.pruned).toBe(1);
+      expect((await allItems()).map((r) => r.qid)).toEqual(GAMES);
+      const rows = await segmentRows();
+      expect(rows.every((r) => r.done && (r.claimedBy === "a" || r.claimedBy === "b"))).toBe(true);
+      expect(rows.reduce((n, r) => n + (r.matched ?? 0), 0)).toBe(GAMES.length);
+
+      // A worker started on a dump that is already imported finds nothing to do…
+      const late = await worker(path, "c");
+      expect([late.segmentsScanned, late.pruned]).toEqual([0, 0]);
+      // …unless asked to import it again…
+      const redo = await worker(path, "c", { redo: "t1" });
+      expect(redo.segmentsScanned).toBe(SEGMENTS);
+      expect(redo.matched).toBe(GAMES.length);
+      expect((await segmentRows()).every((r) => r.done && r.pass === "t1")).toBe(true);
+      // …once: a worker of the same re-import that starts after it finished
+      // (Pending, or a retry) leaves the set alone.
+      const straggler = await worker(path, "d", { redo: "t1" });
+      expect([straggler.segmentsScanned, straggler.pruned]).toEqual([0, 0]);
+      // A new token is a new re-import.
+      const next = await worker(path, "d", { redo: "t2" });
+      expect(next.segmentsScanned).toBe(SEGMENTS);
+    });
+
+    it("takes over a stale claim, and waits out a live one until it goes stale", async () => {
+      const path = await writeDump();
+      // Segment 1's worker died an hour ago; segment 4's claim is fresh.
+      await seedSet([
+        { segment: 1, claimedBy: "dead", ageSeconds: 3600 },
+        { segment: 4, claimedBy: "busy" },
+      ]);
+      const lines: string[] = [];
+      const stats = await worker(path, "w", {
+        staleClaimSeconds: 2,
+        waitPollMs: 100,
+        log: (m) => void lines.push(m),
+      });
+      expect(stats.segmentsScanned).toBe(SEGMENTS);
+      expect(lines.some((l) => l.includes("taken over from dead"))).toBe(true);
+      expect(lines.some((l) => l.includes("waiting on the 1 segment(s)"))).toBe(true);
+      expect(lines.some((l) => l.includes("taken over from busy"))).toBe(true);
+      expect((await segmentRows()).every((r) => r.done && r.claimedBy === "w")).toBe(true);
+      expect((await allItems()).map((r) => r.qid)).toEqual(GAMES);
+    });
+
+    it("prunes only once every segment is done, by the worker that finishes the last", async () => {
+      await insertItem(makeItem("Q900", "Left the dump"));
+      const path = await writeDump();
+      // "other" holds segment 2 (fresh), so "w" runs out of segments first.
+      await seedSet([{ segment: 2, claimedBy: "other" }]);
+      const lines: string[] = [];
+      const waiting = worker(path, "w", { waitPollMs: 50, log: (m) => void lines.push(m) });
+      while (!lines.some((l) => l.includes("nothing left to claim"))) {
+        await new Promise((r) => setTimeout(r, 20));
+      }
+      expect((await allItems()).map((r) => r.qid)).toContain("Q900");
+
+      // "other" is retried under the same name and picks its segment back up.
+      const other = await worker(path, "other");
+      expect(other.segmentsScanned).toBe(1);
+      expect(other.pruned).toBe(1);
+      const w = await waiting;
+      expect(w.segmentsScanned).toBe(SEGMENTS - 1);
+      expect(w.pruned).toBe(0);
+      expect((await allItems()).map((r) => r.qid)).toEqual(GAMES);
+    });
+
+    it("prunes a finished set without rescanning when re-run with forcePrune", async () => {
+      const path = await writeDump();
+      await worker(path, "a");
+      // Items that left the dump after the pass, past the 20% cap.
+      for (const qid of ["Q901", "Q902", "Q903"]) await insertItem(makeItem(qid, "Left the dump"));
+      const lines: string[] = [];
+      const forced = await worker(path, "a", {
+        forcePrune: true,
+        log: (m) => void lines.push(m),
+      });
+      expect([forced.segmentsScanned, forced.pruned]).toEqual([0, 3]);
+      expect(lines.some((l) => l.includes("pruning it as forced"))).toBe(true);
+      expect((await allItems()).map((r) => r.qid)).toEqual(GAMES);
+    });
+
+    it("resumes a retried worker at its unfinished segment rather than starting over", async () => {
+      const path = await writeDump();
+      // Every segment but 3 is done (by this worker's earlier pod, say); it
+      // died holding 3.
+      await seedSet([
+        ...[0, 1, 2, 4, 5].map((segment) => ({ segment, claimedBy: "w", matched: 1 })),
+        { segment: 3, claimedBy: "w" },
+      ]);
+      const stats = await worker(path, "w");
+      expect(stats.segmentsScanned).toBe(1);
+      const stored = await allItems();
+      expect(stats.matched).toBe(stored.length);
+      expect(stored.length).toBeLessThan(GAMES.length);
+      expect((await segmentRows()).every((r) => r.done)).toBe(true);
+    });
   });
 
   it("keeps an item's dump stamp when the single-item importer rewrites it", async () => {

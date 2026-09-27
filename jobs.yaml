@@ -7,8 +7,10 @@
 # These replace the Void crons/ + queues/ pipeline:
 #   crons/sync-*.ts        -> the scheduled sync-* jobs
 #   crons/ + queues/ hunt  -> the single scheduled `hunt` job (server/hunt.ts)
-# The initial dump load is the `import-dump-1..4` shards run once by hand (see
-# README); the same jobs then run weekly to pick up the new dump.
+# The initial dump load is the `import-dump-1..6` workers run once by hand (see
+# README); the same jobs then run weekly to pick up the new dump. They are
+# identical workers sharing a segment queue, so adding or removing one needs
+# no other change (each only needs its own name after `--worker`).
 #
 # Commands call `node` directly rather than `npm run job:*`: the launch image
 # has npm but not pnpm, and npm 11 refuses to run scripts when package.json's
@@ -56,7 +58,7 @@
 # week (the import is idempotent and never prunes on an incomplete set); the
 # timeout catches a stuck shard before it collides with the next nightly hunt.
 - name: import-dump-1
-  command: node --max-old-space-size=384 jobs/import-dump.ts --shard 1/6
+  command: node --max-old-space-size=384 jobs/import-dump.ts --worker import-dump-1
   image: tool-mna/tool-mna:latest
   schedule: "0 6 * * 3" # Wednesdays 06:00 UTC
   mount: all
@@ -67,7 +69,7 @@
   emails: onfailure
 
 - name: import-dump-2
-  command: node --max-old-space-size=384 jobs/import-dump.ts --shard 2/6
+  command: node --max-old-space-size=384 jobs/import-dump.ts --worker import-dump-2
   image: tool-mna/tool-mna:latest
   schedule: "0 6 * * 3" # Wednesdays 06:00 UTC
   mount: all
@@ -78,7 +80,7 @@
   emails: onfailure
 
 - name: import-dump-3
-  command: node --max-old-space-size=384 jobs/import-dump.ts --shard 3/6
+  command: node --max-old-space-size=384 jobs/import-dump.ts --worker import-dump-3
   image: tool-mna/tool-mna:latest
   schedule: "0 6 * * 3" # Wednesdays 06:00 UTC
   mount: all
@@ -89,7 +91,7 @@
   emails: onfailure
 
 - name: import-dump-4
-  command: node --max-old-space-size=384 jobs/import-dump.ts --shard 4/6
+  command: node --max-old-space-size=384 jobs/import-dump.ts --worker import-dump-4
   image: tool-mna/tool-mna:latest
   schedule: "0 6 * * 3" # Wednesdays 06:00 UTC
   mount: all
@@ -100,7 +102,7 @@
   emails: onfailure
 
 - name: import-dump-5
-  command: node --max-old-space-size=384 jobs/import-dump.ts --shard 5/6
+  command: node --max-old-space-size=384 jobs/import-dump.ts --worker import-dump-5
   image: tool-mna/tool-mna:latest
   schedule: "0 6 * * 3" # Wednesdays 06:00 UTC
   mount: all
@@ -111,7 +113,7 @@
   emails: onfailure
 
 - name: import-dump-6
-  command: node --max-old-space-size=384 jobs/import-dump.ts --shard 6/6
+  command: node --max-old-space-size=384 jobs/import-dump.ts --worker import-dump-6
   image: tool-mna/tool-mna:latest
   schedule: "0 6 * * 3" # Wednesdays 06:00 UTC
   mount: all

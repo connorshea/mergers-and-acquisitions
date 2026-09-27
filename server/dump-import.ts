@@ -35,25 +35,37 @@
 // item), is logged and skipped. Past `maxSkipped` of those the run aborts,
 // since that many points at an outage or a bug rather than bad data.
 //
-// The pass can be split across N jobs ("shards"). The dump's .gz is not one
-// stream: the generator (operations/dumps, dumpwikibasejson.sh) gzips each
-// 65k-entity batch on its own and `cat`s them together with tiny `[`, `,` and
-// `]` members between, ~2,000 independent members that each start on a line
-// boundary. Shard i/N takes the N-th of the compressed bytes starting at the
-// first member header at or past i*size/N and ending at the first one at or
-// past (i+1)*size/N, so every byte is read by exactly one shard and no index
-// pass is needed. Each shard upserts on its own; items are stamped with the
-// dump they were seen in, and the shard that completes the set for a dump
-// (see `dump_import_runs`) prunes the rows the dump no longer contains.
+// The pass is split across several jobs. The dump's .gz is not one stream:
+// the generator (operations/dumps, dumpwikibasejson.sh) gzips each 65k-entity
+// batch on its own and `cat`s them together with tiny `[`, `,` and `]` members
+// between, ~2,000 independent members that each start on a line boundary.
+// Slice i of N is the N-th of the compressed bytes starting at the first
+// member header at or past i*size/N and ending at the first one at or past
+// (i+1)*size/N, so the N slices read every byte exactly once and no index pass
+// is needed.
+//
+// The jobs are identical workers (`worker`) sharing a queue of K such slices
+// ("segments", DEFAULT_SEGMENTS) in `dump_import_segments`: each claims the
+// lowest free segment (SELECT … FOR UPDATE SKIP LOCKED), scans it, marks it
+// done, and claims the next, so a fast worker takes on more of the file
+// instead of sitting idle while a slow one finishes a fixed share. A claim is
+// kept alive by a heartbeat; one gone stale (its worker died), or held under
+// the worker's own name (a retry of the same job), is taken over, so a retry
+// redoes one segment rather than a share of the dump. A worker with nothing
+// left to claim waits for the others' segments to finish, to take over any
+// that go stale. Items are stamped with the dump they were seen in, and the
+// worker that marks the set's last segment done prunes the rows the dump no
+// longer contains. `--shard i/N` (one fixed slice per job, recorded as segment
+// i of an N-segment set) remains for local and one-off runs.
 import { closeSync, createReadStream, openSync, readSync, statSync } from "node:fs";
-import { createHash } from "node:crypto";
+import { createHash, randomBytes } from "node:crypto";
 import { basename } from "node:path";
 import { Readable } from "node:stream";
 import { constants as zlibConstants, createGunzip, inflateRawSync } from "node:zlib";
-import { and, asc, count, eq, gt, inArray, isNotNull, isNull, ne, or, sql } from "drizzle-orm";
+import { and, asc, count, eq, gt, inArray, isNotNull, isNull, lt, ne, or, sql } from "drizzle-orm";
 import { db } from "./db.ts";
 import { refreshCandidateItemInfo } from "./candidate-item-info.ts";
-import { dumpImportRuns, externalIds, items, mergeCandidates } from "../db/schema.ts";
+import { dumpImportSegments, externalIds, items, mergeCandidates } from "../db/schema.ts";
 import { syncProperties } from "./properties-sync.ts";
 import { CONVERTER_VERSION } from "./converter-version.ts";
 import { toSqlDatetime } from "./auth/time.ts";
@@ -280,10 +292,14 @@ export function dumpSlice(path: string, shard: DumpShard): { start: number; end:
   return { start, end: Math.max(start, end) };
 }
 
-export function openDumpFile(path: string, shard: DumpShard = WHOLE_DUMP): DumpFile {
+function refuseBz2(path: string): void {
   if (path.endsWith(".bz2")) {
     throw new Error(`${path}: use the .gz dump (bzip2 is ~10x slower to inflate)`);
   }
+}
+
+export function openDumpFile(path: string, shard: DumpShard = WHOLE_DUMP): DumpFile {
+  refuseBz2(path);
   const { start, end } = dumpSlice(path, shard);
   const size = end - start;
   if (size === 0) {
@@ -903,6 +919,28 @@ export interface ImportOptions {
   /** Read only this N-th of the file (see the header comment); the whole file by default. */
   shard?: DumpShard;
   /**
+   * Run as a queue worker under this name instead of reading one shard: claim
+   * segments of the file from `dump_import_segments` until none is left (see
+   * the header comment). The name must be unique among the workers running
+   * together, and stable across a retry of the same worker (the job name).
+   */
+  worker?: string;
+  /** Segments a worker pass splits the file into (DEFAULT_SEGMENTS); every worker must agree. */
+  segments?: number;
+  /** Seconds without a heartbeat after which a claim is taken over (STALE_CLAIM_SECONDS). */
+  staleClaimSeconds?: number;
+  /** How often a worker waiting on other workers' segments checks again (tests). */
+  waitPollMs?: number;
+  /** How often a worker refreshes its claim while it scans (tests). */
+  heartbeatMs?: number;
+  /**
+   * Import a dump again whose segment set is already complete (a worker
+   * otherwise finds nothing to do): a token naming this re-import (DUMP_REDO),
+   * the same for all its workers. The set is reset once per token, so a
+   * worker that starts after the others have finished doesn't start it over.
+   */
+  redo?: string;
+  /**
    * Identifies the dump for the seen-stamp and the shard bookkeeping. Derived
    * from the file (`wikidata-20260914-all.json.gz` → "20260914") when not given.
    */
@@ -942,6 +980,8 @@ export interface ImportStats extends ScanStats {
   lockRetries: number;
   /** Seconds the scan sat waiting for the previous batch's write to finish. */
   writeWaitSeconds: number;
+  /** Segments this run scanned in full (one for a shard run). */
+  segmentsScanned: number;
   /** Property rows synced. */
   propertyRows: number;
   /** Items deleted because they were no longer in the dump. */
@@ -962,29 +1002,215 @@ export function dumpIdFor(path: string): string {
   return `${Math.floor(st.mtimeMs)}-${st.size}`;
 }
 
+// ---------------------------------------------------------------------------
+// Segment work queue (`dump_import_segments`)
+// ---------------------------------------------------------------------------
+
+/** Segments a worker pass splits the dump into (~2.5 GB of .gz each). */
+export const DEFAULT_SEGMENTS = 64;
+/** A claim whose heartbeat is older than this is taken to be abandoned. */
+export const STALE_CLAIM_SECONDS = 600;
+/** How often a worker refreshes its claim while it scans. */
+const HEARTBEAT_MS = 60_000;
+/** How often a worker with nothing to claim checks on the segments still being scanned. */
+const WAIT_POLL_MS = 30_000;
+
+/** The rows of one segment set: `dump` split into `segments`. */
+const inSet = (dump: string, segments: number) =>
+  and(eq(dumpImportSegments.dump, dump), eq(dumpImportSegments.segments, segments));
+const segmentRow = (dump: string, segments: number, segment: number) =>
+  and(inSet(dump, segments), eq(dumpImportSegments.segment, segment));
+
+/** Create the set's rows, unless another worker already has. */
+async function ensureSegments(dump: string, segments: number): Promise<void> {
+  const rows = Array.from({ length: segments }, (_, segment) => ({ dump, segments, segment }));
+  for (let i = 0; i < rows.length; i += ID_BATCH) {
+    await db
+      .insert(dumpImportSegments)
+      .ignore()
+      .values(rows.slice(i, i + ID_BATCH));
+  }
+}
+
 /**
- * Record that shard `index` of `count` finished a complete pass over `dump`,
- * and report whether that completes the set. Two shards finishing together
- * could both see the set complete and both prune; the second prune finds
- * nothing to do, so no lock is needed.
+ * Put a finished set back to unclaimed, for a pass over a dump that was already
+ * imported (with DUMP_FULL=1 after a converter change, say), and record the
+ * pass's `token` on it. Each token resets the set once: a worker of the same
+ * pass that starts after the others have finished (it sat Pending, or it's a
+ * retry) finds the token already there and leaves the set alone, rather than
+ * re-importing the whole dump on its own. The set's rows are locked while it
+ * is checked, so of several workers starting together only the first resets
+ * it; the rest find it in progress and join in.
  */
-async function recordShardDone(
+async function resetFinishedSet(dump: string, segments: number, token: string): Promise<boolean> {
+  return db.transaction(async (tx) => {
+    const rows = await tx
+      .select({ doneAt: dumpImportSegments.doneAt, pass: dumpImportSegments.pass })
+      .from(dumpImportSegments)
+      .where(inSet(dump, segments))
+      .for("update");
+    if (rows.length === 0 || rows.some((r) => r.doneAt === null)) return false;
+    if (rows.every((r) => r.pass === token)) return false;
+    await tx
+      .update(dumpImportSegments)
+      .set({
+        claimedBy: null,
+        claim: null,
+        claimedAt: null,
+        doneAt: null,
+        matched: null,
+        pass: token,
+      })
+      .where(inSet(dump, segments));
+    return true;
+  });
+}
+
+export interface SegmentClaim {
+  segment: number;
+  /** Token identifying this claim, for its heartbeat. */
+  claim: string;
+  /** Who held the segment before, when this claim took it over (a retry, or a stale claim). */
+  from: { worker: string; at: string } | null;
+}
+
+/**
+ * Claim the lowest segment of the set that nobody is working on: unclaimed,
+ * or claimed by this worker's name (an earlier pod of the same job that
+ * died), or claimed by anyone with a heartbeat older than `staleSeconds`. Rows
+ * other workers are claiming at the same moment are skipped, not waited on.
+ */
+async function claimSegment(
   dump: string,
-  shard: DumpShard,
-  matched: number,
-): Promise<{ complete: boolean; matched: number }> {
+  segments: number,
+  worker: string,
+  staleSeconds: number,
+): Promise<SegmentClaim | null> {
+  const staleBefore = sql`current_timestamp - interval ${sql.raw(String(Math.max(0, Math.floor(staleSeconds))))} second`;
+  return db.transaction(async (tx) => {
+    const [row] = await tx
+      .select({
+        segment: dumpImportSegments.segment,
+        claimedBy: dumpImportSegments.claimedBy,
+        claimedAt: dumpImportSegments.claimedAt,
+      })
+      .from(dumpImportSegments)
+      .where(
+        and(
+          inSet(dump, segments),
+          isNull(dumpImportSegments.doneAt),
+          or(
+            isNull(dumpImportSegments.claimedAt),
+            eq(dumpImportSegments.claimedBy, worker),
+            lt(dumpImportSegments.claimedAt, staleBefore),
+          ),
+        ),
+      )
+      .orderBy(asc(dumpImportSegments.segment))
+      .limit(1)
+      .for("update", { skipLocked: true });
+    if (!row) return null;
+    const claim = randomBytes(8).toString("hex");
+    await tx
+      .update(dumpImportSegments)
+      .set({ claimedBy: worker, claim, claimedAt: sql`current_timestamp` })
+      .where(segmentRow(dump, segments, row.segment));
+    return {
+      segment: row.segment,
+      claim,
+      from:
+        row.claimedBy !== null && row.claimedAt !== null
+          ? { worker: row.claimedBy, at: row.claimedAt }
+          : null,
+    };
+  });
+}
+
+/** Refresh a claim's heartbeat, unless it has since been taken over or finished. */
+async function heartbeat(dump: string, segments: number, claim: SegmentClaim): Promise<void> {
   await db
-    .insert(dumpImportRuns)
-    .values({ dump, shard: shard.index, shards: shard.count, matched })
-    .onDuplicateKeyUpdate({
-      // A retry, or the same dump re-run with another shard count.
-      set: { shards: shard.count, matched, finishedAt: sql`current_timestamp` },
-    });
+    .update(dumpImportSegments)
+    .set({ claimedAt: sql`current_timestamp` })
+    .where(
+      and(
+        segmentRow(dump, segments, claim.segment),
+        eq(dumpImportSegments.claim, claim.claim),
+        isNull(dumpImportSegments.doneAt),
+      ),
+    );
+}
+
+interface SetProgress {
+  segments: number;
+  done: number;
+  /** Claimed, not done (being scanned, or abandoned and not stale yet). */
+  claimed: number;
+  /** Items matched by the done segments. */
+  matched: number;
+}
+
+async function setProgress(dump: string, segments: number): Promise<SetProgress> {
   const [row] = await db
-    .select({ shards: count(), matched: sql<number>`coalesce(sum(${dumpImportRuns.matched}), 0)` })
-    .from(dumpImportRuns)
-    .where(and(eq(dumpImportRuns.dump, dump), eq(dumpImportRuns.shards, shard.count)));
-  return { complete: row.shards >= shard.count, matched: Number(row.matched) };
+    .select({
+      done: count(dumpImportSegments.doneAt),
+      claimed: sql<number>`coalesce(sum(${dumpImportSegments.doneAt} is null and ${dumpImportSegments.claimedAt} is not null), 0)`,
+      matched: sql<number>`coalesce(sum(${dumpImportSegments.matched}), 0)`,
+    })
+    .from(dumpImportSegments)
+    .where(inSet(dump, segments));
+  return {
+    segments,
+    done: Number(row.done),
+    claimed: Number(row.claimed),
+    matched: Number(row.matched),
+  };
+}
+
+/**
+ * Record that `segment` of the set was scanned in full and its writes have
+ * landed, and report the set's progress. For workers, `completedNow` is true
+ * for exactly one call per set: the one that marks its last undone segment
+ * done, which is the one to prune. The set's rows are locked meanwhile, so two
+ * workers finishing the last segments together see each other's update in
+ * turn and only the second completes the set. A segment scanned twice (a
+ * claim taken over while its first worker was still alive) is recorded again,
+ * but never completes the set a second time. A `--shard` run is run by hand,
+ * so with `repeat` a re-run of a finished set completes it again (a re-run
+ * with DUMP_PRUNE_FORCE=1 after a refused prune).
+ */
+async function finishSegment(
+  dump: string,
+  segments: number,
+  segment: number,
+  matched: number,
+  repeat: boolean,
+): Promise<SetProgress & { completedNow: boolean }> {
+  return db.transaction(async (tx) => {
+    const rows = await tx
+      .select({
+        segment: dumpImportSegments.segment,
+        doneAt: dumpImportSegments.doneAt,
+        claimedAt: dumpImportSegments.claimedAt,
+        matched: dumpImportSegments.matched,
+      })
+      .from(dumpImportSegments)
+      .where(inSet(dump, segments))
+      .for("update");
+    await tx
+      .update(dumpImportSegments)
+      .set({ doneAt: sql`current_timestamp`, matched })
+      .where(segmentRow(dump, segments, segment));
+    const others = rows.filter((r) => r.segment !== segment);
+    const wasDone = rows.some((r) => r.segment === segment && r.doneAt !== null);
+    const done = others.filter((r) => r.doneAt !== null).length + 1;
+    return {
+      segments,
+      done,
+      claimed: others.filter((r) => r.doneAt === null && r.claimedAt !== null).length,
+      matched: others.reduce((n, r) => n + (r.matched ?? 0), 0) + matched,
+      completedNow: (repeat || !wasDone) && done >= segments,
+    };
+  });
 }
 
 /**
@@ -1080,25 +1306,52 @@ function errorSummary(err: unknown): string {
  * the dump no longer contains.
  */
 export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportStats> {
+  const runStart = performance.now();
   const log = opts.log ?? ((m: string) => console.log(m));
   const classQids = opts.classQids ?? IMPORT_CLASSES;
-  const shard = opts.shard ?? WHOLE_DUMP;
   const path = opts.path ?? DEFAULT_DUMP_PATH;
-  const file = opts.source ? undefined : openDumpFile(path, shard);
-  const source = opts.source ?? file!.source;
+  const worker = opts.worker;
+  if (worker !== undefined && (opts.source || opts.shard || opts.limit !== undefined)) {
+    throw new Error("a worker reads whole segments of `path`: no `source`, `shard` or `limit`");
+  }
+  if (!opts.source) refuseBz2(path);
+  const shard = opts.shard ?? WHOLE_DUMP;
+  // A shard run is one segment of a set of `shard.count`.
+  const segments = worker !== undefined ? (opts.segments ?? DEFAULT_SEGMENTS) : shard.count;
   const prune = opts.prune ?? opts.limit === undefined;
   const stamp = toSqlDatetime(new Date());
   // A stream has no file to derive the id from: stamp with the moment instead,
   // which still tells this pass apart from every earlier one for the prune.
-  const dump = opts.dump ?? (file ? dumpIdFor(path) : stamp);
-  // "import-dump:" for the usual single shard; "import-dump 3/8:" otherwise.
-  const tag = shard.count === 1 ? "import-dump:" : `import-dump ${shard.index + 1}/${shard.count}:`;
-  if (file && shard.count > 1) {
-    log(
-      `${tag} bytes ${file.start}-${file.end} of ${statSync(path).size} ` +
-        `(${(file.size / 1e9).toFixed(2)} GB compressed)` +
-        (file.size === 0 ? " — empty slice, more shards than members?" : ""),
-    );
+  const dump = opts.dump ?? (opts.source ? stamp : dumpIdFor(path));
+  // "import-dump:" for the usual single shard; "import-dump 3/8:" for a shard,
+  // "import-dump <worker>:" for a worker.
+  const tag =
+    worker !== undefined
+      ? `import-dump ${worker}:`
+      : shard.count === 1
+        ? "import-dump:"
+        : `import-dump ${shard.index + 1}/${shard.count}:`;
+
+  await ensureSegments(dump, segments);
+  if (
+    worker !== undefined &&
+    opts.redo !== undefined &&
+    (await resetFinishedSet(dump, segments, opts.redo))
+  ) {
+    log(`${tag} dump ${dump} was imported before; importing it again (redo ${opts.redo})`);
+  }
+  // Workers started on a dump that is already imported have nothing to scan.
+  // Asked to force the prune (after one refused at the cap), they do just that.
+  let alreadyDone: SetProgress | undefined;
+  if (worker !== undefined) {
+    const progress = await setProgress(dump, segments);
+    if (progress.done >= segments) {
+      alreadyDone = progress;
+      log(
+        `${tag} dump ${dump} is already imported (all ${segments} segments done)` +
+          (opts.forcePrune ? "; pruning it as forced" : "; nothing to do"),
+      );
+    }
   }
 
   // Items the mirror already holds at a known revision, converted by the
@@ -1239,84 +1492,198 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
     writing.catch(() => {});
   };
 
-  const scan = await scanDump(source, {
-    classQids,
-    limit: opts.limit,
-    progressEveryBytes: opts.progressEveryBytes,
-    onSkip,
-    isUnedited: revisions ? (qid, revid) => revisions.has(qid, revid) : undefined,
-    onUnedited: async (qid) => {
-      unedited.push(qid);
-      await maybeFlush();
-    },
-    onItem: async (item, entity) => {
-      batch.push(item);
-      if (entity.lastrevid !== undefined) batchRevids.set(item.id, entity.lastrevid);
-      await maybeFlush();
-    },
-    onProperty: (entity) => {
-      const row = propertyRowFromEntity(entity);
-      if (row) propertyRows.push(row);
-    },
-    onProgress: (s) => {
-      const now = mbps(s.bytes - last.bytes, s.seconds - last.seconds);
-      const read = file?.read() ?? 0;
-      let pct = "";
-      let eta = "";
-      if (file && file.size > 0) {
-        pct = `[${((100 * read) / file.size).toFixed(1)}%] `;
-        const rate = (read - last.read) / (s.seconds - last.seconds); // compressed B/s
-        eta = `ETA ${rate > 0 ? formatDuration((file.size - read) / rate) : "?"}, `;
-      }
-      const interval = s.seconds - last.seconds;
-      const waited = (writeWaitMs - last.writeWaitMs) / 1000;
-      const waitPct = interval > 0 ? `${Math.round((100 * waited) / interval)}%` : "?";
-      last = { bytes: s.bytes, seconds: s.seconds, read, writeWaitMs };
-      log(
-        `${tag} ${pct}${(s.bytes / 1e9).toFixed(0)} GB inflated, ${s.lines} lines, ` +
-          `${s.parsed} parsed, ${s.matched} matched (${s.unedited} unedited, ${unchanged} unchanged), ` +
-          `${s.properties} properties, ` +
-          `${now} MB/s now (${mbps(s.bytes, s.seconds)} avg), ${eta}` +
-          `write wait ${waited.toFixed(0)}s (${waitPct}), ` +
-          `rss ${Math.round(process.memoryUsage().rss / 1e6)} MB`,
+  // Every segment this run scanned, summed.
+  const total: ScanStats = {
+    bytes: 0,
+    lines: 0,
+    parsed: 0,
+    matched: 0,
+    unedited: 0,
+    skipped: 0,
+    properties: 0,
+    stopped: false,
+    seconds: 0,
+  };
+  let segmentsScanned = 0;
+  // Set when this run finished the set's last segment: it is the one to prune.
+  let completed = opts.forcePrune ? alreadyDone : undefined;
+  let waiting = false;
+
+  while (!alreadyDone) {
+    let claim: SegmentClaim | null = null;
+    let segment = shard.index;
+    if (worker !== undefined) {
+      claim = await claimSegment(
+        dump,
+        segments,
+        worker,
+        opts.staleClaimSeconds ?? STALE_CLAIM_SECONDS,
       );
-    },
-  });
-  await writing;
-  await flush();
+      if (!claim) {
+        const progress = await setProgress(dump, segments);
+        if (progress.done >= segments) break;
+        // The rest are being scanned. Stay until they are done, to take over
+        // any whose worker dies (its claim goes stale), rather than leave the
+        // set unfinished and the prune undone.
+        if (!waiting) {
+          log(
+            `${tag} nothing left to claim; waiting on the ${segments - progress.done} ` +
+              "segment(s) other workers are scanning",
+          );
+        }
+        waiting = true;
+        await new Promise((r) => setTimeout(r, opts.waitPollMs ?? WAIT_POLL_MS));
+        continue;
+      }
+      waiting = false;
+      segment = claim.segment;
+    }
+
+    const file = opts.source ? undefined : openDumpFile(path, { index: segment, count: segments });
+    const source = opts.source ?? file!.source;
+    const segTag = worker !== undefined ? `import-dump ${worker} ${segment + 1}/${segments}:` : tag;
+    if (file && segments > 1) {
+      log(
+        `${segTag} bytes ${file.start}-${file.end} of ${statSync(path).size} ` +
+          `(${(file.size / 1e9).toFixed(2)} GB compressed)` +
+          (file.size === 0 ? " — empty slice, more segments than members?" : "") +
+          (claim?.from
+            ? `, taken over from ${claim.from.worker} (last heartbeat ${claim.from.at})`
+            : ""),
+      );
+    }
+    last = { bytes: 0, seconds: 0, read: 0, writeWaitMs };
+    const held = claim;
+    const beat = held
+      ? setInterval(() => {
+          heartbeat(dump, segments, held).catch((err) =>
+            log(`${segTag} heartbeat failed: ${errorSummary(err)}`),
+          );
+        }, opts.heartbeatMs ?? HEARTBEAT_MS)
+      : undefined;
+    beat?.unref();
+
+    let scan: ScanStats;
+    try {
+      scan = await scanDump(source, {
+        classQids,
+        limit: opts.limit,
+        progressEveryBytes: opts.progressEveryBytes,
+        onSkip,
+        isUnedited: revisions ? (qid, revid) => revisions.has(qid, revid) : undefined,
+        onUnedited: async (qid) => {
+          unedited.push(qid);
+          await maybeFlush();
+        },
+        onItem: async (item, entity) => {
+          batch.push(item);
+          if (entity.lastrevid !== undefined) batchRevids.set(item.id, entity.lastrevid);
+          await maybeFlush();
+        },
+        onProperty: (entity) => {
+          const row = propertyRowFromEntity(entity);
+          if (row) propertyRows.push(row);
+        },
+        onProgress: (s) => {
+          const now = mbps(s.bytes - last.bytes, s.seconds - last.seconds);
+          const read = file?.read() ?? 0;
+          let pct = "";
+          let eta = "";
+          if (file && file.size > 0) {
+            pct = `[${((100 * read) / file.size).toFixed(1)}%] `;
+            const rate = (read - last.read) / (s.seconds - last.seconds); // compressed B/s
+            eta = `ETA ${rate > 0 ? formatDuration((file.size - read) / rate) : "?"}, `;
+          }
+          const interval = s.seconds - last.seconds;
+          const waited = (writeWaitMs - last.writeWaitMs) / 1000;
+          const waitPct = interval > 0 ? `${Math.round((100 * waited) / interval)}%` : "?";
+          last = { bytes: s.bytes, seconds: s.seconds, read, writeWaitMs };
+          log(
+            `${segTag} ${pct}${(s.bytes / 1e9).toFixed(0)} GB inflated, ${s.lines} lines, ` +
+              `${s.parsed} parsed, ${s.matched} matched (${s.unedited} unedited, ${unchanged} unchanged), ` +
+              `${s.properties} properties, ` +
+              `${now} MB/s now (${mbps(s.bytes, s.seconds)} avg), ${eta}` +
+              `write wait ${waited.toFixed(0)}s (${waitPct}), ` +
+              `rss ${Math.round(process.memoryUsage().rss / 1e6)} MB`,
+          );
+        },
+      });
+      // The segment only counts as done once its writes have landed: the
+      // prune, maybe run by another worker, relies on their dump stamps.
+      await writing;
+      await flush();
+    } finally {
+      clearInterval(beat);
+    }
+
+    for (const key of [
+      "bytes",
+      "lines",
+      "parsed",
+      "matched",
+      "unedited",
+      "skipped",
+      "properties",
+    ] as const) {
+      total[key] += scan[key];
+    }
+    // Only a complete pass over the segment counts towards the set.
+    if (scan.stopped) {
+      total.stopped = true;
+      break;
+    }
+    segmentsScanned++;
+    const progress = await finishSegment(
+      dump,
+      segments,
+      segment,
+      scan.matched,
+      worker === undefined,
+    );
+    if (worker !== undefined) {
+      log(
+        `${segTag} scanned in ${formatDuration(scan.seconds)}, ${scan.matched} matched; ` +
+          `${progress.done}/${segments} segments of dump ${dump} done`,
+      );
+    }
+    if (progress.completedNow) completed = progress;
+    if (worker === undefined) break;
+  }
+  total.seconds = (performance.now() - runStart) / 1000;
 
   const propertyCount = await syncProperties(propertyRows);
   // Items this pass relabelled or retyped: bring the candidates' copies in line.
   const refreshed = await refreshCandidateItemInfo(db);
   log(`${tag} refreshed item type/label on ${refreshed} candidate rows`);
-  if (scan.stopped) {
+  if (total.stopped) {
     log(`${tag} stopped at limit ${opts.limit}; properties synced so far only`);
   }
 
   let pruned = 0;
   let settled = 0;
-  if (!scan.stopped) {
-    // Only a complete pass counts towards the dump's shard set.
-    const set = await recordShardDone(dump, shard, scan.matched);
-    if (prune) {
-      if (!set.complete) {
-        log(`${tag} done; the prune waits for the other shards of dump ${dump}`);
-      } else if (set.matched === 0) {
-        log(`${tag} matched nothing — not pruning (wrong file?)`);
-      } else {
-        [pruned, settled] = await pruneMissing(dump, { force: opts.forcePrune ?? false, log });
-      }
+  if (prune && !total.stopped) {
+    if (!completed) {
+      log(
+        worker !== undefined
+          ? `${tag} done; the prune is left to whichever worker finishes dump ${dump}'s last segment`
+          : `${tag} done; the prune waits for the other shards of dump ${dump}`,
+      );
+    } else if (completed.matched === 0) {
+      log(`${tag} matched nothing — not pruning (wrong file?)`);
+    } else {
+      [pruned, settled] = await pruneMissing(dump, { force: opts.forcePrune ?? false, log });
     }
   }
 
   return {
-    ...scan,
+    ...total,
     upserted,
     unchanged,
     externalIds: idRows,
     failed,
     lockRetries,
     writeWaitSeconds: writeWaitMs / 1000,
+    segmentsScanned,
     propertyRows: propertyCount,
     pruned,
     settled,

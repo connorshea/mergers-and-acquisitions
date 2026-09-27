@@ -1,0 +1,1 @@
+ALTER TABLE `dump_import_segments` ADD `pass` varchar(32);

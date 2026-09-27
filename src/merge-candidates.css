@@ -1,4 +1,6 @@
 :root {
+  /* Native controls (checkboxes, select popups, scrollbars) follow the theme. */
+  color-scheme: light;
   --bg: #fbfbf9;
   --surface: #ffffff;
   --ink: #1f2430;
@@ -22,6 +24,7 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
+    color-scheme: dark;
     --bg: #171a1f;
     --surface: #1f232a;
     --ink: #e8e9e4;
@@ -43,6 +46,7 @@
   }
 }
 :root[data-theme="dark"] {
+  color-scheme: dark;
   --bg: #171a1f;
   --surface: #1f232a;
   --ink: #e8e9e4;
@@ -73,10 +77,17 @@ body {
 body {
   background: var(--bg);
   color: var(--ink);
+  /* Checked boxes and radios in the site's blue rather than the browser's. */
+  accent-color: var(--focus);
   font-family: var(--font);
   font-size: 15px;
   line-height: 1.45;
   font-feature-settings: "tnum";
+}
+/* Links nobody styled otherwise; the browser default (#0000ee) is unreadable
+   on the dark theme. */
+a {
+  color: var(--focus);
 }
 :focus-visible {
   outline: 2px solid var(--focus);

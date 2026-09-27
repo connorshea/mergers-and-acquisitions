@@ -2,6 +2,8 @@
   --bg: #fbfbf9;
   --surface: #ffffff;
   --ink: #1f2430;
+  /* The filter selects' drawn caret (an SVG can't read currentColor from here). */
+  --select-caret: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%231f2430' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   --muted: #6c727f;
   --rule: #e2e4e0;
   --identical: #2a7f68;
@@ -23,6 +25,7 @@
     --bg: #171a1f;
     --surface: #1f232a;
     --ink: #e8e9e4;
+    --select-caret: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23e8e9e4' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     --muted: #9aa0ab;
     --rule: #30353d;
     --identical: #6fcaae;
@@ -43,6 +46,7 @@
   --bg: #171a1f;
   --surface: #1f232a;
   --ink: #e8e9e4;
+  --select-caret: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23e8e9e4' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   --muted: #9aa0ab;
   --rule: #30353d;
   --identical: #6fcaae;
@@ -890,6 +894,14 @@ a.chip-id:hover {
   border-radius: 6px;
   background: var(--surface);
   color: var(--ink);
+}
+/* The browser's own select arrow hugs the right border; draw our own with
+   room on both sides. */
+.field select,
+.results-sort select {
+  appearance: none;
+  padding-right: 1.75rem;
+  background: var(--surface) var(--select-caret) no-repeat right 0.6rem center / 0.6rem;
 }
 /* Long summaries ("WikiProject Anime and Manga") truncate rather than widen
    the row. */

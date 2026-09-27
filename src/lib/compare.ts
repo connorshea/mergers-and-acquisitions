@@ -1476,13 +1476,11 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // us tell an outright identical label from an alias-only match in the reason.
   const nameSim = bestNameSimilarity(a, b);
   const namePct = Math.round(nameSim * 100);
+  // Labels alone, when an alias might be what lifted the names to a match.
+  const labelSim = nameSim >= 0.75 ? bestNameSimilarity(a, b, false) : nameSim;
   if (nameSim >= 0.995) {
     score += 0.35;
-    reasons.push(
-      bestNameSimilarity(a, b, false) >= 0.995
-        ? "identical label"
-        : "label matches the other item's alias",
-    );
+    reasons.push(labelSim >= 0.995 ? "identical label" : "label matches the other item's alias");
   } else if (nameSim >= 0.75) {
     score += 0.2;
     reasons.push(`very similar names (${namePct}%)`);
@@ -1844,6 +1842,13 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // tier, and clearly different names sit lower still.
   const looseName = nameSim < 0.75;
   if (looseName) ceiling = Math.min(ceiling, nameSim >= 0.5 ? 0.72 : 0.6);
+  // A match that holds only through an alias, with labels that on their own
+  // would be loose or different, gets the loose-name cap too: siblings often
+  // share an alias (the series or set name on every volume, episode or single),
+  // which made "…Tome 2" / "Human Personality Types" pairs read as the same
+  // name. A genuine rename lands here as well, and stays in the queue at 0.72.
+  const aliasOnlyName = !looseName && labelSim < 0.75;
+  if (aliasOnlyName) ceiling = Math.min(ceiling, 0.72);
   const hasConcreteDifference =
     sitelinkClash ||
     diffCreators.length > 0 ||
@@ -1872,9 +1877,11 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
       reasons.push(
         looseName && !hasConcreteDifference
           ? "held below near-certain: the names only loosely match"
-          : strongSignals <= 1 && !hasConcreteDifference
-            ? "held below near-certain: only one strong corroborating signal"
-            : "held below near-certain: a difference remains or corroboration is thin",
+          : aliasOnlyName && !hasConcreteDifference
+            ? "held below near-certain: the names match only through an alias"
+            : strongSignals <= 1 && !hasConcreteDifference
+              ? "held below near-certain: only one strong corroborating signal"
+              : "held below near-certain: a difference remains or corroboration is thin",
       );
     }
   }

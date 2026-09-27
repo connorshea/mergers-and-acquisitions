@@ -1473,10 +1473,15 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
       !isNonEvidence(r.key) &&
       (isId ? isId(r.key) : true),
   );
-  const isWeakId = (pid: string): boolean =>
-    WEAK_ID_PROPS.has(pid) || CONFLATED_AGGREGATOR_ID_PROPS.has(pid);
-  const strongIds = sharedExtIds.filter((r) => !isWeakId(r.key));
-  const weakIds = sharedExtIds.filter((r) => isWeakId(r.key));
+  // An id whose value carries a `#section` anchor names one section of a page
+  // (a studio wiki's "Members" list, say), which several subjects can share:
+  // two colleagues both pointing at `Trioskaz#Members` aren't one person.
+  const isSectionId = (r: Row): boolean =>
+    r.a.every((v) => v.type !== "external-id" || v.value.includes("#"));
+  const isWeakId = (r: Row): boolean =>
+    WEAK_ID_PROPS.has(r.key) || CONFLATED_AGGREGATOR_ID_PROPS.has(r.key) || isSectionId(r);
+  const strongIds = sharedExtIds.filter((r) => !isWeakId(r));
+  const weakIds = sharedExtIds.filter((r) => isWeakId(r));
   if (strongIds.length > 0) {
     score += 0.6;
     reasons.push(`shares external identifier: ${strongIds.map((r) => r.key).join(", ")}`);
@@ -1486,7 +1491,9 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     reasons.push(
       weakIds.every((r) => CONFLATED_AGGREGATOR_ID_PROPS.has(r.key))
         ? `shares an often-conflated aggregator identifier: ${pids}`
-        : `shares account/social identifier: ${pids}`,
+        : weakIds.every(isSectionId)
+          ? `shares an identifier naming a page section: ${pids}`
+          : `shares account/social identifier: ${pids}`,
     );
   }
   // Explain the ids we deliberately ignored: a value the pair agrees on but

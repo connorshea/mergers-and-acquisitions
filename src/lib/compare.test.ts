@@ -2216,3 +2216,36 @@ describe("scoreCandidate — people", () => {
     expect(result.reasons.some((r) => r.startsWith("same date of birth"))).toBe(false);
   });
 });
+
+describe("scoreCandidate — ids naming a page section", () => {
+  const base = { descriptions: {}, aliases: {}, sitelinks: {} };
+  const colleague = (id: string, name: string, fandom: string): Item => ({
+    ...base,
+    id,
+    labels: { mul: name },
+    statements: {
+      P31: [{ type: "item", value: "Q5" }],
+      P6262: [{ type: "external-id", value: fandom }],
+      P108: [{ type: "item", value: "Q138034847" }],
+    },
+  });
+
+  it("treats a shared id with a #section anchor as weak (two members of one studio)", () => {
+    const section = "no-i-am-not-a-human:Trioskaz#Members";
+    const result = scoreCandidate(
+      colleague("Q138035335", "Vladomir Svistunov", section),
+      colleague("Q139493693", "Elisey Sinitsa", section),
+    );
+    expect(result.reasons).toContain("shares an identifier naming a page section: P6262");
+    expect(result.confidence).toBeLessThan(0.4);
+  });
+
+  it("still counts the same id without an anchor as strong", () => {
+    const page = "no-i-am-not-a-human:Vladomir_Svistunov";
+    const result = scoreCandidate(
+      colleague("Q1", "Vladomir Svistunov", page),
+      colleague("Q2", "Vladomir Svistunov", page),
+    );
+    expect(result.reasons).toContain("shares external identifier: P6262");
+  });
+});

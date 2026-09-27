@@ -198,7 +198,18 @@ interface BlockRow {
  * can await other work between rows; the stream pauses while it does.
  */
 async function* streamRows<T>(conn: CoreConnection, query: string): AsyncGenerator<T> {
-  for await (const row of conn.query(query).stream({ highWaterMark: 1000 })) yield row as T;
+  const stream = conn.query(query).stream({ highWaterMark: 1000 });
+  // A stream-mode query has no result callback, so mysql2 reports a fatal
+  // connection error (a dropped socket, a server restart) only as an 'error'
+  // on the connection, never to the stream. Forward it, or the loop below
+  // would wait on rows that are never coming.
+  const onError = (err: Error) => stream.destroy(err);
+  conn.on("error", onError);
+  try {
+    for await (const row of stream) yield row as T;
+  } finally {
+    conn.off("error", onError);
+  }
 }
 
 /** Pair rows per `INSERT IGNORE` into hunt_pairs. */
@@ -633,10 +644,22 @@ export async function runHunt(): Promise<HuntStats> {
   console.log("hunt: starting");
   const conn = await mysql.createConnection(connConfig());
   const reader = createCoreConnection(connConfig());
+  // Without a listener, an 'error' mysql2 emits on the connection itself (a
+  // fatal error mid-stream, or the socket dropping while idle) is an uncaught
+  // exception that kills the process. Mid-stream errors also reach the
+  // stream (see streamRows) and fail the hunt through the normal path.
+  reader.on("error", (err) => console.warn(`hunt: reader connection error: ${err.message}`));
+  const endReader = () =>
+    reader
+      .promise()
+      .end()
+      .catch(() => {});
   try {
     await reader.promise().query("SET SESSION group_concat_max_len = 1048576");
     const db = drizzle(conn, { schema, mode: "default" });
     const pairCount = await scan(db, conn, reader);
+    // The reader is only for blocking; don't hold it idle through scoring.
+    await endReader();
     const stats = await score(db, conn, pairCount);
     await conn.query("drop temporary table if exists hunt_pairs");
     // Pairs the hunt didn't rescore (resolved ones, or ones whose blocking
@@ -650,6 +673,6 @@ export async function runHunt(): Promise<HuntStats> {
     console.log(`hunt: finished in ${secondsSince(start)}`);
     return stats;
   } finally {
-    await Promise.allSettled([conn.end(), reader.promise().end()]);
+    await Promise.allSettled([conn.end(), endReader()]);
   }
 }

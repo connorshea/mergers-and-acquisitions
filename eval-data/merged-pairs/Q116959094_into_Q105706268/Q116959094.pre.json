@@ -1,0 +1,424 @@
+{
+  "pageid": 111752247,
+  "ns": 0,
+  "title": "Q116959094",
+  "lastrevid": 2521669877,
+  "modified": "2026-07-23T13:54:03Z",
+  "type": "item",
+  "id": "Q116959094",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Mowgli"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Mowgli"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Mowgli"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "Esports player"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "xugador profesional de videoxuegos surcoreanu"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "韓國《英雄聯盟》電競選手"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "Lee Jae-ha"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q116959094$02232a73-4669-1b30-d5e6-f3958e7815f6",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q116959094$6878b364-475b-9903-4f62-7c7be1c618b8",
+        "rank": "normal"
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "de5102a9c0bdc5f9befc84af1b550e6cb2c4aa77",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4379701,
+              "id": "Q4379701"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q116959094$10286ad4-447b-d9eb-6113-d3dcfd7fa8a3",
+        "rank": "normal"
+      }
+    ],
+    "P735": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P735",
+          "hash": "3ca995e3f0c4cfe6d4f1d3a41ef74325666600cc",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 69508082,
+              "id": "Q69508082"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q116959094$3f22a70b-475a-b8df-7acb-8c98bebf177a",
+        "rank": "normal"
+      }
+    ],
+    "P734": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P734",
+          "hash": "05587f520ead8b0e6d9edbf6b80b9c08ff487d29",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11983535,
+              "id": "Q11983535"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q116959094$b7c67325-42c7-8779-2fa1-41ab4d1ca218",
+        "rank": "normal"
+      }
+    ],
+    "P569": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P569",
+          "hash": "587f3bd9e5e06c9d68525be0d0d815def7f30347",
+          "datavalue": {
+            "value": {
+              "time": "+1998-04-14T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q116959094$d3c6568d-4bfa-8d24-fa3e-975204c897ef",
+        "rank": "normal"
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "4c8732ed5fd2efcd7e616db0ae504388e4456649",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 884,
+              "id": "Q884"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q116959094$77401f10-4ead-c102-d9b5-52f0fffec2cc",
+        "rank": "normal"
+      }
+    ],
+    "P10918": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10918",
+          "hash": "269876e9313366f7c654874724941a6a228b2cb0",
+          "datavalue": {
+            "value": "leagueoflegends/Mowgli",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9675": [
+            {
+              "snaktype": "value",
+              "property": "P9675",
+              "hash": "9c30f691ace98a4b508b8afd67fb00a5837f482b",
+              "datavalue": {
+                "value": "23848",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9675"],
+        "id": "Q116959094$63d32031-472c-8d19-5f2f-ce71f30c71fd",
+        "rank": "normal"
+      }
+    ],
+    "P373": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P373",
+          "hash": "8d33db4cac47bac2872fe8dc316cee907df75de3",
+          "datavalue": {
+            "value": "Mowgli (gamer)",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q116959094$ffdce68b-6bba-4fb1-abb2-93c78c95b8bd",
+        "rank": "normal"
+      }
+    ],
+    "P18": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "1ce879ed1e54dd3594f1400d08d519dfdfd7fdea",
+          "datavalue": {
+            "value": "20170828 vs. MVP (8).jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P585": [
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "78ab3153aae2990e4ebadb5daddcb153f12a8a2f",
+              "datavalue": {
+                "value": {
+                  "time": "+2017-08-28T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P585"],
+        "id": "Q116959094$5eb41c05-4357-9840-52fc-dbd6c42c3df9",
+        "rank": "normal"
+      }
+    ],
+    "P11721": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11721",
+          "hash": "082cf48d439bdb54964ebaf90b67ba9f1fced818",
+          "datavalue": {
+            "value": "league-of-legends/mowgli",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q116959094$03F44F21-8E29-433C-A1C8-C13B7D655962",
+        "rank": "normal"
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "c88bc438bef1e0369928f7dacc18d06b2353282d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 300920,
+              "id": "Q300920"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q116959094$A30D83EF-6534-4F56-B2AD-CCF3D7EB98B1",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "0551731d8551afb7c1bf4c4dc9c8ecf1c4b0a6b2",
+            "snaks": {
+              "P11721": [
+                {
+                  "snaktype": "value",
+                  "property": "P11721",
+                  "hash": "082cf48d439bdb54964ebaf90b67ba9f1fced818",
+                  "datavalue": {
+                    "value": "league-of-legends/mowgli",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "98a05d6499a9d07f056c0090a9540e80c8cf2417",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 107666686,
+                      "id": "Q107666686"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P11721", "P248"]
+          }
+        ]
+      }
+    ],
+    "P2416": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2416",
+          "hash": "9831c8f652243fa6e904cbdd87ae6302e8cdc3aa",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 223341,
+              "id": "Q223341"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q116959094$848E32EB-9DE8-4362-8EE1-2D479E323EF3",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "0551731d8551afb7c1bf4c4dc9c8ecf1c4b0a6b2",
+            "snaks": {
+              "P11721": [
+                {
+                  "snaktype": "value",
+                  "property": "P11721",
+                  "hash": "082cf48d439bdb54964ebaf90b67ba9f1fced818",
+                  "datavalue": {
+                    "value": "league-of-legends/mowgli",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "98a05d6499a9d07f056c0090a9540e80c8cf2417",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 107666686,
+                      "id": "Q107666686"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P11721", "P248"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {
+    "commonswiki": {
+      "site": "commonswiki",
+      "title": "Category:Mowgli (gamer)",
+      "badges": [],
+      "url": "https://commons.wikimedia.org/wiki/Category:Mowgli_(gamer)"
+    }
+  }
+}

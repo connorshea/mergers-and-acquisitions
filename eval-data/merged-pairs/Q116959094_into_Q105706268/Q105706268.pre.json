@@ -1,0 +1,346 @@
+{
+  "pageid": 101068171,
+  "ns": 0,
+  "title": "Q105706268",
+  "lastrevid": 2521669261,
+  "modified": "2026-07-23T13:52:38Z",
+  "type": "item",
+  "id": "Q105706268",
+  "labels": {
+    "ko": {
+      "language": "ko",
+      "value": "이재하"
+    },
+    "en": {
+      "language": "en",
+      "value": "Mowgli"
+    }
+  },
+  "descriptions": {
+    "ko": {
+      "language": "ko",
+      "value": "대한민국의 리그 오브 레전드 프로게이머"
+    },
+    "en": {
+      "language": "en",
+      "value": "South Korean pro gamer"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "韓國《英雄聯盟》電競選手"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q105706268$73079DE5-86FB-4A46-921E-949A91BDE7AD",
+        "rank": "normal"
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "605e2f88142bbd820bd149c091a33541ea353e2f",
+          "datavalue": {
+            "value": "/g/11ll29v1xh",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q105706268$050347C8-B2A3-4EE8-84BC-5157FA20FA30",
+        "rank": "normal"
+      }
+    ],
+    "P569": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P569",
+          "hash": "587f3bd9e5e06c9d68525be0d0d815def7f30347",
+          "datavalue": {
+            "value": {
+              "time": "+1998-04-14T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q105706268$3d884639-7452-4b76-b5af-1a3b8e6b9e84",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "77e4335362e8e91f683697d5cb2b808faeb23d7e",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "56f99b6701feb379816767ae88bb77e0e74981b3",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 17985,
+                      "id": "Q17985"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "3e321d5749fe2d2eb5d36d27b2d8534ec2858836",
+                  "datavalue": {
+                    "value": "https://ko.wikipedia.org/w/index.php?title=%EB%AA%A8%EA%B8%80%EB%A6%AC%20%28%ED%94%84%EB%A1%9C%EA%B2%8C%EC%9D%B4%EB%A8%B8%29&oldid=36924877",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "4c8732ed5fd2efcd7e616db0ae504388e4456649",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 884,
+              "id": "Q884"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q105706268$B35D4EEB-1322-45D7-9F27-4EF81DD38D20",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2fd228b07037a583a107121ac004668cba4b6b30",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "56f99b6701feb379816767ae88bb77e0e74981b3",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 17985,
+                      "id": "Q17985"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "ef3201d1dea3da4777386f9283c695ddaabaffff",
+                  "datavalue": {
+                    "value": "https://ko.wikipedia.org/w/index.php?title=모글리_(프로게이머)&oldid=36924877",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "c88bc438bef1e0369928f7dacc18d06b2353282d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 300920,
+              "id": "Q300920"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q105706268$0C644A8C-0D5D-4FE6-9A8B-8BABCB7F4B7C",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "08be9f116c5c541d7fa461ad59ad559a42ffd6ed",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "56f99b6701feb379816767ae88bb77e0e74981b3",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 17985,
+                      "id": "Q17985"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "de5102a9c0bdc5f9befc84af1b550e6cb2c4aa77",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4379701,
+              "id": "Q4379701"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q105706268$0412E0C2-54F5-4324-A475-FD9F980300CF",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "08be9f116c5c541d7fa461ad59ad559a42ffd6ed",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "56f99b6701feb379816767ae88bb77e0e74981b3",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 17985,
+                      "id": "Q17985"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P2416": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2416",
+          "hash": "9831c8f652243fa6e904cbdd87ae6302e8cdc3aa",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 223341,
+              "id": "Q223341"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q105706268$2FD1D052-3019-42A6-9ADA-FF35336A1F9E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2fd228b07037a583a107121ac004668cba4b6b30",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "56f99b6701feb379816767ae88bb77e0e74981b3",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 17985,
+                      "id": "Q17985"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "ef3201d1dea3da4777386f9283c695ddaabaffff",
+                  "datavalue": {
+                    "value": "https://ko.wikipedia.org/w/index.php?title=모글리_(프로게이머)&oldid=36924877",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {
+    "kowiki": {
+      "site": "kowiki",
+      "title": "모글리 (프로게이머)",
+      "badges": [],
+      "url": "https://ko.wikipedia.org/wiki/%EB%AA%A8%EA%B8%80%EB%A6%AC_(%ED%94%84%EB%A1%9C%EA%B2%8C%EC%9D%B4%EB%A8%B8)"
+    }
+  }
+}

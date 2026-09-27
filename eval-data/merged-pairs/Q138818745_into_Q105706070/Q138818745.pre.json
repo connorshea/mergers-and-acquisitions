@@ -1,0 +1,607 @@
+{
+  "pageid": 132285000,
+  "ns": 0,
+  "title": "Q138818745",
+  "lastrevid": 2522557477,
+  "modified": "2026-07-25T16:14:23Z",
+  "type": "item",
+  "id": "Q138818745",
+  "labels": {
+    "de": {
+      "language": "de",
+      "value": "Jun"
+    },
+    "en": {
+      "language": "en",
+      "value": "Jun"
+    }
+  },
+  "descriptions": {
+    "de": {
+      "language": "de",
+      "value": "E-Sportler in der Disziplin League of Legends"
+    },
+    "en": {
+      "language": "en",
+      "value": "professional League of Legends player"
+    }
+  },
+  "aliases": {
+    "mul": [
+      {
+        "language": "mul",
+        "value": "Sejun Yoon"
+      }
+    ]
+  },
+  "claims": {
+    "P742": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P742",
+          "hash": "2e4b829d8109e4994676728c927f90f1c8f6f64e",
+          "datavalue": {
+            "value": "Jun",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q138818745$E92B643F-C5B8-4B0C-8887-BDF789E56ADD",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "c1afe2348574c19ef1475bf27964062fbec804dc",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "07e36ec48c128e93a8dcccbd3a45421ae87b8f2c",
+                  "datavalue": {
+                    "value": "https://docs.google.com/spreadsheets/d/1Y7k5kQ2AegbuyiGwEPsa62e883FYVtHqr6UVut9RC4o/pubhtml#",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "9e1c2b938c23ebc258a69173f2c60ebeac68ac5e",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-03-28T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "de5102a9c0bdc5f9befc84af1b550e6cb2c4aa77",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4379701,
+              "id": "Q4379701"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138818745$78D42025-5A7A-40DF-9E9D-4A2298289ED4",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "7ab1ca8174ebdb2f89a473122d887b64fcca9128",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 18536342,
+              "id": "Q18536342"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138818745$4C03330C-3D48-469C-8E20-127E5DF622FF",
+        "rank": "normal"
+      }
+    ],
+    "P413": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P413",
+          "hash": "16cc6cd9efa2fdf99f4bf827f2106993f4a66414",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 101542209,
+              "id": "Q101542209"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138818745$39CBDCD3-7CC0-4F2C-AC1F-9975FBDB4A11",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "c1afe2348574c19ef1475bf27964062fbec804dc",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "07e36ec48c128e93a8dcccbd3a45421ae87b8f2c",
+                  "datavalue": {
+                    "value": "https://docs.google.com/spreadsheets/d/1Y7k5kQ2AegbuyiGwEPsa62e883FYVtHqr6UVut9RC4o/pubhtml#",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "9e1c2b938c23ebc258a69173f2c60ebeac68ac5e",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-03-28T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138818745$51893FC4-BCFF-460D-9FF8-27A622D118B1",
+        "rank": "normal"
+      }
+    ],
+    "P54": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P54",
+          "hash": "60feff0f0343a3fa08218a83c3bd54dce4858267",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 124131517,
+              "id": "Q124131517"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138818745$49FC4FB4-D91C-45A8-8197-E235C4C723FA",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "c1afe2348574c19ef1475bf27964062fbec804dc",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "07e36ec48c128e93a8dcccbd3a45421ae87b8f2c",
+                  "datavalue": {
+                    "value": "https://docs.google.com/spreadsheets/d/1Y7k5kQ2AegbuyiGwEPsa62e883FYVtHqr6UVut9RC4o/pubhtml#",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "9e1c2b938c23ebc258a69173f2c60ebeac68ac5e",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-03-28T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138818745$27B7999F-B75F-4B8D-A49B-7ACA09FA55FC",
+        "rank": "normal"
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "c88bc438bef1e0369928f7dacc18d06b2353282d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 300920,
+              "id": "Q300920"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138818745$D0B34175-9859-43FB-A576-CD20F3C6B2F0",
+        "rank": "normal"
+      }
+    ],
+    "P2416": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2416",
+          "hash": "9831c8f652243fa6e904cbdd87ae6302e8cdc3aa",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 223341,
+              "id": "Q223341"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138818745$60DF6837-7881-48A2-9272-01FE02EF78BE",
+        "rank": "normal"
+      }
+    ],
+    "P10918": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10918",
+          "hash": "7a1a6737a647a462da4f82ea07dbdd60822b21b5",
+          "datavalue": {
+            "value": "leagueoflegends/Jun",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9675": [
+            {
+              "snaktype": "value",
+              "property": "P9675",
+              "hash": "9f090c664473c74645bd62c61cebd4428ebc3b69",
+              "datavalue": {
+                "value": "54644",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9675"],
+        "id": "Q138818745$CE651678-CDD9-4064-9484-5CA3C8DC25D2",
+        "rank": "normal"
+      }
+    ],
+    "P569": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P569",
+          "hash": "b331df696cb7f4aadeeaba9e2445155f6471e59f",
+          "datavalue": {
+            "value": {
+              "time": "+2000-08-02T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q138818745$A57E31E2-2241-4E94-8A3D-AD889870B5FF",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "e3568d845f2dcf55f5610ffadbad9005c6178319",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "2e995568d691dc3fa7b5726f5477de5c5c3915ca",
+                  "datavalue": {
+                    "value": "https://liquipedia.net/leagueoflegends/Jun",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "2216b32fbd1b2f67f19787025cf22a1f06ebc631",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-07-25T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "4c8732ed5fd2efcd7e616db0ae504388e4456649",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 884,
+              "id": "Q884"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138818745$168CBAA3-C844-4789-B7C6-3834FD2151D6",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "e3568d845f2dcf55f5610ffadbad9005c6178319",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "2e995568d691dc3fa7b5726f5477de5c5c3915ca",
+                  "datavalue": {
+                    "value": "https://liquipedia.net/leagueoflegends/Jun",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "2216b32fbd1b2f67f19787025cf22a1f06ebc631",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-07-25T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P2002": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2002",
+          "hash": "f38bdb62f3dba854d6a4cc33897d14653deb8cf3",
+          "datavalue": {
+            "value": "jun70965157",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q138818745$DFDD8F22-5520-4BC8-9028-B767D14AE73D",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "e3568d845f2dcf55f5610ffadbad9005c6178319",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "2e995568d691dc3fa7b5726f5477de5c5c3915ca",
+                  "datavalue": {
+                    "value": "https://liquipedia.net/leagueoflegends/Jun",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "2216b32fbd1b2f67f19787025cf22a1f06ebc631",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-07-25T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P5797": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5797",
+          "hash": "67bb6202fef57d4fea47ec5828d23777a50c7653",
+          "datavalue": {
+            "value": "sejun000",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q138818745$1154C9B3-3FDD-43DB-904D-32C533DDC1C0",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "e3568d845f2dcf55f5610ffadbad9005c6178319",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "2e995568d691dc3fa7b5726f5477de5c5c3915ca",
+                  "datavalue": {
+                    "value": "https://liquipedia.net/leagueoflegends/Jun",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "2216b32fbd1b2f67f19787025cf22a1f06ebc631",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-07-25T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {}
+}

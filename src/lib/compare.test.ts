@@ -6,6 +6,8 @@ import {
   collapseRepeatedRows,
   compareRowRank,
   compareValues,
+  differingNativeNames,
+  foldNativeName,
   formatIdUrl,
   installment,
   type Item,
@@ -2346,5 +2348,109 @@ describe("scoreCandidate — namesake anime staff", () => {
   it("still pairs two items sharing an AniList staff id", () => {
     const result = scoreCandidate(staff("Q1", "100185", "6155"), staff("Q2", "100185", "6155"));
     expect(result.reasons).toContain("shares external identifier: P11227, P4084");
+  });
+});
+
+describe("differingNativeNames / scoreCandidate — native-script names", () => {
+  const base = { descriptions: {}, aliases: {}, sitelinks: {} };
+  const person = (
+    id: string,
+    {
+      ja,
+      native,
+      country = "Q17",
+      p31 = "Q5",
+    }: { ja?: string; native?: string; country?: string; p31?: string },
+  ): Item => ({
+    ...base,
+    id,
+    labels: { en: "Aya Takano", ...(ja ? { ja } : {}) },
+    statements: {
+      P31: [{ type: "item", value: p31 }],
+      P27: [{ type: "item", value: country }],
+      ...(native ? { P1559: [{ type: "string" as const, value: native }] } : {}),
+    },
+  });
+
+  it("tells apart namesakes whose kanji differ", () => {
+    const a = person("Q1", { native: "山本正弘" });
+    const b = person("Q2", { ja: "山本雅博" });
+    expect(differingNativeNames(a, b)).toEqual(["山本正弘", "山本雅博"]);
+    const result = scoreCandidate(a, b);
+    expect(result.reasons).toContain("different names in native script (山本正弘 / 山本雅博)");
+    expect(result.confidence).toBeLessThan(0.4);
+  });
+
+  it("counts a katakana stylization against a kanji name, even with the same reading", () => {
+    expect(
+      differingNativeNames(
+        person("Q1", { native: "タカノ綾" }),
+        person("Q2", { native: "髙野綾" }),
+      ),
+    ).not.toBeNull();
+  });
+
+  it("folds spacing, variant kanji and katakana", () => {
+    const same = [
+      ["植村 秀", "植村秀"],
+      ["宮﨑 知子", "宮崎知子"],
+      ["髙野綾", "高野 綾"],
+      ["山田龍城", "山田竜城"],
+      ["エンデ・佐藤真理子", "佐藤真理子"],
+    ];
+    for (const [x, y] of same)
+      expect(
+        differingNativeNames(person("Q1", { native: x }), person("Q2", { native: y })),
+      ).toBeNull();
+    expect(foldNativeName("タカノ 綾")).toBe(foldNativeName("たかの綾"));
+  });
+
+  it("matches when any of the names agree (a stage name alongside a legal name)", () => {
+    const a = person("Q1", { native: "大野穣", ja: "北島三郎" });
+    const b = person("Q2", { ja: "北島 三郎" });
+    expect(differingNativeNames(a, b)).toBeNull();
+  });
+
+  it("ignores all-kana names, which are often a reading of the kanji", () => {
+    expect(
+      differingNativeNames(
+        person("Q1", { native: "いぬい とみこ" }),
+        person("Q2", { native: "乾 富子" }),
+      ),
+    ).toBeNull();
+  });
+
+  it("compares hangul names", () => {
+    const a = person("Q1", { native: "유병철", country: "Q884" });
+    const b = person("Q2", { native: "김병철", country: "Q884" });
+    expect(differingNativeNames(a, b)).toEqual(["유병철", "김병철"]);
+  });
+
+  it("skips non-humans, and ja labels of people who aren't Japanese citizens", () => {
+    expect(
+      differingNativeNames(
+        person("Q1", { native: "山本正弘", p31: "Q7889" }),
+        person("Q2", { native: "山本雅博", p31: "Q7889" }),
+      ),
+    ).toBeNull();
+    // A Chinese name in simplified vs. traditional characters.
+    expect(
+      differingNativeNames(
+        person("Q1", { ja: "习近平", native: "习近平", country: "Q148" }),
+        person("Q2", { ja: "習近平", native: "習近平", country: "Q148" }),
+      ),
+    ).toBeNull();
+  });
+
+  it("lets a shared id keep the pair a candidate, held off near-certain", () => {
+    const id = { P11227: [{ type: "external-id" as const, value: "1" }] };
+    const a = person("Q1", { native: "高野綾" });
+    const b = person("Q2", { native: "タカノ綾" });
+    const result = scoreCandidate(
+      { ...a, statements: { ...a.statements, ...id } },
+      { ...b, statements: { ...b.statements, ...id } },
+    );
+    expect(result.confidence).toBeGreaterThanOrEqual(0.4);
+    expect(result.confidence).toBeLessThanOrEqual(0.6);
   });
 });

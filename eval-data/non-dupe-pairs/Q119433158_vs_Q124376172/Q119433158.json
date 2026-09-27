@@ -1,0 +1,321 @@
+{
+  "pageid": 113920516,
+  "ns": 0,
+  "title": "Q119433158",
+  "lastrevid": 2346077084,
+  "modified": "2025-05-08T14:03:46Z",
+  "type": "item",
+  "id": "Q119433158",
+  "labels": {
+    "ko": {
+      "language": "ko",
+      "value": "버즈"
+    },
+    "en": {
+      "language": "en",
+      "value": "BuZz"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "South Korean pro gamer"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q119433158$618D3C9F-F73A-49D7-9D4F-53C919E69A67",
+        "rank": "normal"
+      }
+    ],
+    "P569": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P569",
+          "hash": "3c8a397179c141b49e525b9ef7ad984d5db7db68",
+          "datavalue": {
+            "value": {
+              "time": "+2003-01-13T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q119433158$7020cadc-3485-4ca2-ae46-9beb710b01f0",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a5725adb3abb8cb8c941cc45fa656c911e479381",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "56f99b6701feb379816767ae88bb77e0e74981b3",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 17985,
+                      "id": "Q17985"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "6be1697d7b35fa3c5d92df10d44fa9f797e08f4e",
+                  "datavalue": {
+                    "value": "https://ko.wikipedia.org/w/index.php?title=%EB%B2%84%EC%A6%88%20%28%ED%94%84%EB%A1%9C%EA%B2%8C%EC%9D%B4%EB%A8%B8%29&oldid=38860394",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "4c8732ed5fd2efcd7e616db0ae504388e4456649",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 884,
+              "id": "Q884"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q119433158$03A84CF9-E51C-4CDD-A2CF-C68E6B8A303E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2c4eea55849d8f2c47abe97ffce9af655729325d",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "56f99b6701feb379816767ae88bb77e0e74981b3",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 17985,
+                      "id": "Q17985"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "4c87736b1f68a9659027460d758af0b3f8f9fb0e",
+                  "datavalue": {
+                    "value": "https://ko.wikipedia.org/w/index.php?title=버즈_(프로게이머)&oldid=38860394",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "c88bc438bef1e0369928f7dacc18d06b2353282d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 300920,
+              "id": "Q300920"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q119433158$F8CA88B6-6E7F-4CFD-853D-764EDD7E91E7",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "08be9f116c5c541d7fa461ad59ad559a42ffd6ed",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "56f99b6701feb379816767ae88bb77e0e74981b3",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 17985,
+                      "id": "Q17985"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "de5102a9c0bdc5f9befc84af1b550e6cb2c4aa77",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4379701,
+              "id": "Q4379701"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q119433158$70040B93-958F-445F-A8AA-BAE08CFA49ED",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "08be9f116c5c541d7fa461ad59ad559a42ffd6ed",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "56f99b6701feb379816767ae88bb77e0e74981b3",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 17985,
+                      "id": "Q17985"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P2416": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2416",
+          "hash": "727d5132125524a3c96553be716d8214f1099e70",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 86919275,
+              "id": "Q86919275"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q119433158$E0BE1FD3-63CC-478F-ADDA-464AFDAC3CE7",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2c4eea55849d8f2c47abe97ffce9af655729325d",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "56f99b6701feb379816767ae88bb77e0e74981b3",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 17985,
+                      "id": "Q17985"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "4c87736b1f68a9659027460d758af0b3f8f9fb0e",
+                  "datavalue": {
+                    "value": "https://ko.wikipedia.org/w/index.php?title=버즈_(프로게이머)&oldid=38860394",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {
+    "kowiki": {
+      "site": "kowiki",
+      "title": "버즈 (프로게이머)",
+      "badges": [],
+      "url": "https://ko.wikipedia.org/wiki/%EB%B2%84%EC%A6%88_(%ED%94%84%EB%A1%9C%EA%B2%8C%EC%9D%B4%EB%A8%B8)"
+    }
+  }
+}

@@ -1,0 +1,325 @@
+{
+  "pageid": 127585658,
+  "ns": 0,
+  "title": "Q133738050",
+  "lastrevid": 2534491150,
+  "modified": "2026-08-22T00:02:43Z",
+  "type": "item",
+  "id": "Q133738050",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Magic User's Club"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "魔法使いTai!"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "1996 Japanese manga series"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "日本系列漫畫"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "佐藤順一による日本の連載漫画"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "série de mangá japonesa"
+    },
+    "pt-br": {
+      "language": "pt-br",
+      "value": "série de mangá japonesa"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "Mahō Tsukai Tai!"
+      },
+      {
+        "language": "en",
+        "value": "Mahou Tsukai Tai!"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "549c072d6be8a6a43f999d1d0e82640b16c4260e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 21198342,
+              "id": "Q21198342"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q133738050$f273f79b-4f4d-459a-0767-1e827897c99b",
+        "rank": "normal"
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "e9d62405b1bb9b7b979f00006a344891e4c4f072",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 17,
+              "id": "Q17"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q133738050$8b35d475-4184-a587-8225-f8ee387affff",
+        "rank": "normal"
+      }
+    ],
+    "P407": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P407",
+          "hash": "d858d1b9f6e6e383f38dfbe706d102f056c07312",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5287,
+              "id": "Q5287"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q133738050$348d3880-4a10-5b75-8373-4c4b7b11d69b",
+        "rank": "normal"
+      }
+    ],
+    "P50": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P50",
+          "hash": "98929adb7d205bf24e75c8cc173d78fd6edf579f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 142052,
+              "id": "Q142052"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q133738050$93621b06-4833-77b1-0327-dca273ee9525",
+        "rank": "normal"
+      }
+    ],
+    "P144": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P144",
+          "hash": "883004402b512af8d779c07c52600d3452853a07",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2505313,
+              "id": "Q2505313"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q133738050$01d9fdfd-4e80-5821-7a8e-4a8cfd78dbf8",
+        "rank": "normal"
+      }
+    ],
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "9c7d99cab0184e01375d14e435ce0157c01d0aa8",
+          "datavalue": {
+            "value": {
+              "text": "魔法使いTai!",
+              "language": "ja"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q133738050$1d1feb0a-475c-8c8f-e2de-811f284f562f",
+        "rank": "normal"
+      }
+    ],
+    "P1433": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1433",
+          "hash": "8fdd655002f92c902ca81b9ea0149a82926dd340",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1629642,
+              "id": "Q1629642"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q133738050$7f5f623d-440f-c623-1b88-4c2b8ce22987",
+        "rank": "normal"
+      }
+    ],
+    "P580": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P580",
+          "hash": "68c4b4d459d1b131347d9ffde2e282a8b9a167c8",
+          "datavalue": {
+            "value": {
+              "time": "+1996-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q133738050$867b9105-4872-194f-c2c0-bdb6f6814d4a",
+        "rank": "normal"
+      }
+    ],
+    "P582": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P582",
+          "hash": "b6c7ffa7d085b02f36602293f106bcfea1211caa",
+          "datavalue": {
+            "value": {
+              "time": "+1998-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q133738050$fadf1312-4fe8-c9c6-fa47-d923b2adfca6",
+        "rank": "normal"
+      }
+    ],
+    "P2635": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2635",
+          "hash": "4905cd815e0bc887136c98df64931be939af4bcd",
+          "datavalue": {
+            "value": {
+              "amount": "+4",
+              "unit": "http://www.wikidata.org/entity/Q1238720"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q133738050$e18d50d9-4d25-8383-60d9-1443019fa023",
+        "rank": "normal"
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "40da2e9091146fb03edf51da7ee6e711787c16d0",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 752321,
+              "id": "Q752321"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q133738050$35a80b90-46dd-e343-6d58-56bc961f716a",
+        "rank": "normal"
+      }
+    ],
+    "P8731": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8731",
+          "hash": "a3dd576082c156fbccfeffee3090fa9c5d1083f9",
+          "datavalue": {
+            "value": "57303",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q133738050$CE7C6AB0-AA92-493E-B3B7-42F22B1632CE",
+        "rank": "normal"
+      }
+    ],
+    "P4087": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4087",
+          "hash": "4307288224b847eeedb7605f95ab2b10d51663c3",
+          "datavalue": {
+            "value": "27303",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q133738050$C965D69E-EB2D-41CE-8DA8-15E1CB355D83",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

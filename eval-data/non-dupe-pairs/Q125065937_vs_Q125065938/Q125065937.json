@@ -1,0 +1,322 @@
+{
+  "pageid": 119235204,
+  "ns": 0,
+  "title": "Q125065937",
+  "lastrevid": 2547450708,
+  "modified": "2026-09-18T14:24:53Z",
+  "type": "item",
+  "id": "Q125065937",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Grisaia: Phantom Trigger the Animation"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "グリザイア：ファントムトリガー THE ANIMATION"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "2019 anime film"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "২০১৯ সালের অ্যানিমে চলচ্চিত্র"
+    },
+    "as": {
+      "language": "as",
+      "value": "২০১৯ চনৰ এনিমে চলচ্চিত্ৰ"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "49a107854c5e1c55f5b128b8e4c2de852c4407e1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 20650540,
+              "id": "Q20650540"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q125065937$6faca8ab-4785-0821-83a5-e0237d3aa836",
+        "rank": "normal"
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "e9d62405b1bb9b7b979f00006a344891e4c4f072",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 17,
+              "id": "Q17"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q125065937$6eab9075-4feb-528f-2bad-581d7500808b",
+        "rank": "normal"
+      }
+    ],
+    "P364": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P364",
+          "hash": "e837a5e5691aacf2a7eca565824d57545629d7fa",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5287,
+              "id": "Q5287"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q125065937$3bbfaa37-476b-2a30-4dd0-72a0d5c5db6e",
+        "rank": "normal"
+      }
+    ],
+    "P144": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P144",
+          "hash": "fce1028debb055b9289a5787fa19c37217936709",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 48937449,
+              "id": "Q48937449"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q125065937$0a41312a-48f2-0dbd-2ae8-9b3c195060fa",
+        "rank": "normal"
+      }
+    ],
+    "P8729": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8729",
+          "hash": "94b0ccb8c825cf37dff3dc65a65f47e4136207f9",
+          "datavalue": {
+            "value": "99470",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q125065937$C44CA2FC-D61D-4D18-B73A-F5AC91198BF1",
+        "rank": "normal"
+      }
+    ],
+    "P4086": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4086",
+          "hash": "4bf5440029951d992e46478ebec64e4e09f94131",
+          "datavalue": {
+            "value": "35868",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q125065937$2FB9D8D0-DD7C-4B48-8581-396AEDC47CBC",
+        "rank": "normal"
+      }
+    ],
+    "P272": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P272",
+          "hash": "53e48321d3b062672b42fcc47fd754ab2f1ed4e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 65946206,
+              "id": "Q65946206"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q125065937$e9dc3d80-47e4-aed4-d73f-697d599d2818",
+        "rank": "normal"
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "69dd67dacb45ebf31d21fce6d83eaa9068f56ee5",
+          "datavalue": {
+            "value": {
+              "time": "+2019-03-15T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q125065937$1bf536c4-4866-d6a0-5898-08467f1dd841",
+        "rank": "normal"
+      }
+    ],
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "bf4a1a61fd1c52a0bd08911e15b58026fa770f9d",
+          "datavalue": {
+            "value": {
+              "text": "グリザイア：ファントムトリガー THE ANIMATION",
+              "language": "ja"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q125065937$298eecfe-47f6-bdc1-20fa-a9572a7cb743",
+        "rank": "normal"
+      }
+    ],
+    "P12489": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12489",
+          "hash": "b9cae65417b29b2bf514685c4ada262c87300044",
+          "datavalue": {
+            "value": "2783",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q125065937$52b2812f-468d-fd53-6f31-9b8f21bb2f18",
+        "rank": "normal"
+      }
+    ],
+    "P5646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5646",
+          "hash": "e1a9fb77b03533a43bf1b6162b946cfbf77f2c73",
+          "datavalue": {
+            "value": "13273",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q125065937$5a138e75-47c0-aed5-9af2-641266cb4a94",
+        "rank": "normal"
+      }
+    ],
+    "P11460": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11460",
+          "hash": "f3bb220d50c2eb3df684ed4fbb7bf1cb57f548ff",
+          "datavalue": {
+            "value": "5d7770e2fb0d55001f5fb23b",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q125065937$14f7b478-494e-d66b-df09-d7857aa264a0",
+        "rank": "normal"
+      }
+    ],
+    "P4947": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4947",
+          "hash": "c1b4974bae3a5ad978f9d9c8215668500c1eb0b7",
+          "datavalue": {
+            "value": "601980",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q125065937$D3BDD874-81B2-4257-B0F0-8644F31FB334",
+        "rank": "normal"
+      }
+    ],
+    "P2002": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2002",
+          "hash": "3782a99ce2e81059bb32a15e13c6dd4d5548ead2",
+          "datavalue": {
+            "value": "grisaia_fw",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q125065937$C9D34207-1324-4921-AF85-8E37580AA793",
+        "rank": "normal"
+      }
+    ],
+    "P6367": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6367",
+          "hash": "f72dd55cc5687386c232831a430d9d71913d5cf3",
+          "datavalue": {
+            "value": "90117",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q125065937$4837BC5E-CF6B-46D8-BA85-7E2E6CFE7E82",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

@@ -937,6 +937,13 @@ const PER_TITLE_ID_PROPS = new Set<string>([
   "P1954", // Discogs master ID
   "P1728", // AllMusic artist ID
   "P1729", // AllMusic album ID
+  // Anime and manga: one entry per series/season/film, so two items with their
+  // own MyAnimeList and AniList entries are two works (a manga and its sequel
+  // series, a 1966 anime and its 1986 remake, a film and its follow-up).
+  "P4086", // MyAnimeList anime ID
+  "P4087", // MyAnimeList manga ID
+  "P8729", // AniList anime ID
+  "P8731", // AniList manga ID
   // Film/TV and general
   "P345", // IMDb ID
   "P646", // Freebase ID
@@ -1211,7 +1218,7 @@ export interface CandidateScore {
  * Two strong negatives can effectively disqualify a pair: clearly-different
  * names, and many external identifiers that are present on both items yet all
  * differ. More narrowly, two or more differing *per-title* identifiers (Steam,
- * PCGamingWiki, MobyGames, IGDB, itch.io, Giant Bomb) point at distinct
+ * PCGamingWiki, MobyGames, IGDB, itch.io, Giant Bomb, MyAnimeList, AniList) point at distinct
  * store/database pages and cap the score hard, overriding even a shared id.
  * Identifiers that mirror Wikidata itself (vglist, GamerProfiles) are
  * ignored as evidence in either direction, as is any identifier one item

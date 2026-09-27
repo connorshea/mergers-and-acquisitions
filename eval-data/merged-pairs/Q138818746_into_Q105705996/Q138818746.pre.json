@@ -1,0 +1,697 @@
+{
+  "pageid": 132285001,
+  "ns": 0,
+  "title": "Q138818746",
+  "lastrevid": 2532055505,
+  "modified": "2026-08-16T18:30:58Z",
+  "type": "item",
+  "id": "Q138818746",
+  "labels": {
+    "de": {
+      "language": "de",
+      "value": "Noah"
+    },
+    "en": {
+      "language": "en",
+      "value": "Noah"
+    }
+  },
+  "descriptions": {
+    "de": {
+      "language": "de",
+      "value": "E-Sportler in der Disziplin League of Legends"
+    },
+    "en": {
+      "language": "en",
+      "value": "professional League of Legends player"
+    }
+  },
+  "aliases": {
+    "mul": [
+      {
+        "language": "mul",
+        "value": "Hyeon-Taek Oh"
+      }
+    ]
+  },
+  "claims": {
+    "P742": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P742",
+          "hash": "63d8237812e2162e7a0c794aa958cc3041f9e467",
+          "datavalue": {
+            "value": "Noah",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q138818746$4B9252E8-0918-40A8-A85A-3E25E80E25DC",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "c1afe2348574c19ef1475bf27964062fbec804dc",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "07e36ec48c128e93a8dcccbd3a45421ae87b8f2c",
+                  "datavalue": {
+                    "value": "https://docs.google.com/spreadsheets/d/1Y7k5kQ2AegbuyiGwEPsa62e883FYVtHqr6UVut9RC4o/pubhtml#",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "9e1c2b938c23ebc258a69173f2c60ebeac68ac5e",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-03-28T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "de5102a9c0bdc5f9befc84af1b550e6cb2c4aa77",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4379701,
+              "id": "Q4379701"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138818746$C2413395-97F1-4BBA-A3FC-FA655D160349",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "7ab1ca8174ebdb2f89a473122d887b64fcca9128",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 18536342,
+              "id": "Q18536342"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138818746$BADDC8D8-3749-4789-A1F2-A93468BA4AF9",
+        "rank": "normal"
+      }
+    ],
+    "P413": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P413",
+          "hash": "ec408a0ed58a2ab83ceeb305ffc54e4d1c0c9149",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 101542201,
+              "id": "Q101542201"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138818746$88F41102-7EC4-46D0-B1FA-975E7060362D",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "c1afe2348574c19ef1475bf27964062fbec804dc",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "07e36ec48c128e93a8dcccbd3a45421ae87b8f2c",
+                  "datavalue": {
+                    "value": "https://docs.google.com/spreadsheets/d/1Y7k5kQ2AegbuyiGwEPsa62e883FYVtHqr6UVut9RC4o/pubhtml#",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "9e1c2b938c23ebc258a69173f2c60ebeac68ac5e",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-03-28T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138818746$EEA0293C-A866-4663-A64B-54E76EC3E196",
+        "rank": "normal"
+      }
+    ],
+    "P54": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P54",
+          "hash": "60feff0f0343a3fa08218a83c3bd54dce4858267",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 124131517,
+              "id": "Q124131517"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138818746$8E003AE3-85F2-4D1C-BE27-E3078306EB9A",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "c1afe2348574c19ef1475bf27964062fbec804dc",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "07e36ec48c128e93a8dcccbd3a45421ae87b8f2c",
+                  "datavalue": {
+                    "value": "https://docs.google.com/spreadsheets/d/1Y7k5kQ2AegbuyiGwEPsa62e883FYVtHqr6UVut9RC4o/pubhtml#",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "9e1c2b938c23ebc258a69173f2c60ebeac68ac5e",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-03-28T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138818746$F8367D0C-33D3-44EA-A2D7-8BB00FBAE948",
+        "rank": "normal"
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "c88bc438bef1e0369928f7dacc18d06b2353282d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 300920,
+              "id": "Q300920"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138818746$331FE9BF-18EB-4F29-AC1A-BE569D00E457",
+        "rank": "normal"
+      }
+    ],
+    "P2416": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2416",
+          "hash": "9831c8f652243fa6e904cbdd87ae6302e8cdc3aa",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 223341,
+              "id": "Q223341"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138818746$FA57E1FD-0682-4F64-8D22-51A87DF967FC",
+        "rank": "normal"
+      }
+    ],
+    "P10918": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10918",
+          "hash": "cf766e2c84f30194cbe250f361185ebf7320d5f4",
+          "datavalue": {
+            "value": "leagueoflegends/Noah",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9675": [
+            {
+              "snaktype": "value",
+              "property": "P9675",
+              "hash": "222a44292262576caacb0140bb8356c840d6cab7",
+              "datavalue": {
+                "value": "55777",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9675"],
+        "id": "Q138818746$AF2D7F91-8132-451B-9D5B-675F9A18782A",
+        "rank": "normal"
+      }
+    ],
+    "P569": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P569",
+          "hash": "e529d5db7e32627a5ce0b6a96cc3d3a2b64f590c",
+          "datavalue": {
+            "value": {
+              "time": "+2001-10-04T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q138818746$4D5B7219-BDA0-4DB9-BF78-6552C180EFB1",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "312b2391ce712c91319326e878454c45dc2c0fa9",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "a3a946def338e82918609f4920ee42ebdd43bc8c",
+                  "datavalue": {
+                    "value": "https://liquipedia.net/leagueoflegends/Noah",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "2216b32fbd1b2f67f19787025cf22a1f06ebc631",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-07-25T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "4c8732ed5fd2efcd7e616db0ae504388e4456649",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 884,
+              "id": "Q884"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138818746$B5A8000A-AC07-417E-9D02-0F1CB5CB4C25",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "312b2391ce712c91319326e878454c45dc2c0fa9",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "a3a946def338e82918609f4920ee42ebdd43bc8c",
+                  "datavalue": {
+                    "value": "https://liquipedia.net/leagueoflegends/Noah",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "2216b32fbd1b2f67f19787025cf22a1f06ebc631",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-07-25T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P2002": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2002",
+          "hash": "9d159c82f69eaaee29155eb6130c6e7650050aa1",
+          "datavalue": {
+            "value": "Noah_lol1004",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q138818746$A4EB2978-0DAA-4017-AD6D-0DAADAB1808A",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "312b2391ce712c91319326e878454c45dc2c0fa9",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "a3a946def338e82918609f4920ee42ebdd43bc8c",
+                  "datavalue": {
+                    "value": "https://liquipedia.net/leagueoflegends/Noah",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "2216b32fbd1b2f67f19787025cf22a1f06ebc631",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-07-25T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P5797": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5797",
+          "hash": "1289f6ec512efc503173f12557cb0913c8b0f11f",
+          "datavalue": {
+            "value": "krnoah7",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P12229": [
+            {
+              "snaktype": "value",
+              "property": "P12229",
+              "hash": "946bddcab3dbbe7829d06cb2e89fa8d7a4121356",
+              "datavalue": {
+                "value": "678349186",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ],
+          "P580": [
+            {
+              "snaktype": "value",
+              "property": "P580",
+              "hash": "caa06d5f1eb201a06a8a16bcfe189b5046f9bc8e",
+              "datavalue": {
+                "value": {
+                  "time": "+2021-04-21T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P12229", "P580"],
+        "id": "Q138818746$F15618A2-01A7-42B5-98B9-668EA9F3C32F",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "312b2391ce712c91319326e878454c45dc2c0fa9",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "a3a946def338e82918609f4920ee42ebdd43bc8c",
+                  "datavalue": {
+                    "value": "https://liquipedia.net/leagueoflegends/Noah",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "2216b32fbd1b2f67f19787025cf22a1f06ebc631",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-07-25T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P2003": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2003",
+          "hash": "712435ab5c4713bcbf539a1ff3d0141bcb6fe4bd",
+          "datavalue": {
+            "value": "krnoah7",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q138818746$C6C3D4D5-EFAF-4EB9-91FC-8C9CE3107780",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "312b2391ce712c91319326e878454c45dc2c0fa9",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "a3a946def338e82918609f4920ee42ebdd43bc8c",
+                  "datavalue": {
+                    "value": "https://liquipedia.net/leagueoflegends/Noah",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "2216b32fbd1b2f67f19787025cf22a1f06ebc631",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-07-25T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {}
+}

@@ -1,0 +1,342 @@
+{
+  "pageid": 101067897,
+  "ns": 0,
+  "title": "Q105705996",
+  "lastrevid": 2521669102,
+  "modified": "2026-07-23T13:52:16Z",
+  "type": "item",
+  "id": "Q105705996",
+  "labels": {
+    "ko": {
+      "language": "ko",
+      "value": "오현택"
+    },
+    "en": {
+      "language": "en",
+      "value": "Noah"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "South Korean pro gamer"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "韓國《英雄聯盟》電競選手"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q105705996$60FB9CF5-3529-48B6-A82C-1CE1F45E67E4",
+        "rank": "normal"
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "6368309f3635494f4d71c30e881eb3e53e068329",
+          "datavalue": {
+            "value": "/g/11qt1hknyc",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q105705996$DF401074-C565-4A96-9D2B-049062151CDC",
+        "rank": "normal"
+      }
+    ],
+    "P569": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P569",
+          "hash": "e529d5db7e32627a5ce0b6a96cc3d3a2b64f590c",
+          "datavalue": {
+            "value": {
+              "time": "+2001-10-04T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q105705996$d92a1d35-ca58-4e90-9abd-bad1177d2f87",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "e509404261856653c25bd27f612506295a3d811a",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "56f99b6701feb379816767ae88bb77e0e74981b3",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 17985,
+                      "id": "Q17985"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "2b342c5abeb3fb0e3d471d326d88b4fde75af62d",
+                  "datavalue": {
+                    "value": "https://ko.wikipedia.org/w/index.php?title=%EB%85%B8%EC%95%84%20%28%ED%94%84%EB%A1%9C%EA%B2%8C%EC%9D%B4%EB%A8%B8%29&oldid=33689323",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "4c8732ed5fd2efcd7e616db0ae504388e4456649",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 884,
+              "id": "Q884"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q105705996$105BB39C-ED82-4F5D-BC44-D8D4F467BA76",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "e79a0ccd4009fc093172a3c3f42bd6a6a152e6bb",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "56f99b6701feb379816767ae88bb77e0e74981b3",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 17985,
+                      "id": "Q17985"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "3b409a3cb03b38678d4b1095d99f2f2bdd110317",
+                  "datavalue": {
+                    "value": "https://ko.wikipedia.org/w/index.php?title=노아_(프로게이머)&oldid=33689323",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "c88bc438bef1e0369928f7dacc18d06b2353282d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 300920,
+              "id": "Q300920"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q105705996$C7FBD1B3-B87E-4585-BC01-980066F85B94",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "08be9f116c5c541d7fa461ad59ad559a42ffd6ed",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "56f99b6701feb379816767ae88bb77e0e74981b3",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 17985,
+                      "id": "Q17985"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "de5102a9c0bdc5f9befc84af1b550e6cb2c4aa77",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4379701,
+              "id": "Q4379701"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q105705996$3A4F0653-201F-4CD3-8B11-E2A54BE316D6",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "08be9f116c5c541d7fa461ad59ad559a42ffd6ed",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "56f99b6701feb379816767ae88bb77e0e74981b3",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 17985,
+                      "id": "Q17985"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P2416": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2416",
+          "hash": "9831c8f652243fa6e904cbdd87ae6302e8cdc3aa",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 223341,
+              "id": "Q223341"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q105705996$09CCF844-F73C-47AE-B0BB-9BAED16CAD8D",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "e79a0ccd4009fc093172a3c3f42bd6a6a152e6bb",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "56f99b6701feb379816767ae88bb77e0e74981b3",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 17985,
+                      "id": "Q17985"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "3b409a3cb03b38678d4b1095d99f2f2bdd110317",
+                  "datavalue": {
+                    "value": "https://ko.wikipedia.org/w/index.php?title=노아_(프로게이머)&oldid=33689323",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {
+    "kowiki": {
+      "site": "kowiki",
+      "title": "노아 (프로게이머)",
+      "badges": [],
+      "url": "https://ko.wikipedia.org/wiki/%EB%85%B8%EC%95%84_(%ED%94%84%EB%A1%9C%EA%B2%8C%EC%9D%B4%EB%A8%B8)"
+    }
+  }
+}

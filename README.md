@@ -309,6 +309,15 @@ it with `toolforge build show`; when it succeeds `toolforge images` lists the
 toolforge build start https://github.com/connorshea/mergers-and-acquisitions
 ```
 
+Once the build succeeds, restart the web service to pick up the new image —
+but **run the `migrate` job (below) first** if the build includes new
+migrations. The new code may query tables or columns that only exist after the
+migration, so restarting before migrating can break the live site:
+
+```sh
+toolforge webservice restart
+```
+
 Then apply migrations as a one-off job, load the mirror with the `import-dump-1..6`
 worker jobs above, start the web service (`toolforge webservice buildservice start
 --mount none`; the build service requires an explicit mount flag, and the web

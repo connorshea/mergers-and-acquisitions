@@ -83,7 +83,7 @@ export default function Leaderboard() {
           </nav>
         </div>
         <p className="settings-help">
-          Merges and different-from edits applied on Wikidata for each user. Make sure to always
+          Different-from edits and merges applied on Wikidata for each user. Make sure to always
           make responsible edits!
         </p>
         {current?.error ? (
@@ -106,10 +106,10 @@ export default function Leaderboard() {
                   </th>
                   <th scope="col">User</th>
                   <th scope="col" className="col-count">
-                    Merges
+                    Marked different
                   </th>
                   <th scope="col" className="col-count">
-                    Marked different
+                    Merges
                   </th>
                   <th scope="col" className="col-count col-total">
                     Total
@@ -130,8 +130,8 @@ export default function Leaderboard() {
                       </a>
                       {e.userId === user?.id && <span className="auth-badge">you</span>}
                     </td>
-                    <td className="col-count">{e.merges.toLocaleString()}</td>
                     <td className="col-count">{e.differentFrom.toLocaleString()}</td>
+                    <td className="col-count">{e.merges.toLocaleString()}</td>
                     <td className="col-count col-total">{e.total.toLocaleString()}</td>
                   </tr>
                 ))}
@@ -143,8 +143,8 @@ export default function Leaderboard() {
                     <th scope="row">
                       {totals.users === 1 ? "1 user" : `All ${totals.users.toLocaleString()} users`}
                     </th>
-                    <td className="col-count">{totals.merges.toLocaleString()}</td>
                     <td className="col-count">{totals.differentFrom.toLocaleString()}</td>
+                    <td className="col-count">{totals.merges.toLocaleString()}</td>
                     <td className="col-count col-total">{totals.total.toLocaleString()}</td>
                   </tr>
                 </tfoot>

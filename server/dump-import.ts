@@ -69,6 +69,7 @@ import { dumpImportSegments, externalIds, items, mergeCandidates } from "../db/s
 import { syncProperties } from "./properties-sync.ts";
 import { CONVERTER_VERSION } from "./converter-version.ts";
 import { toSqlDatetime } from "./auth/time.ts";
+import { STALE_CLAIM_SECONDS } from "./import-claims.ts";
 import { storedBlockingKey, type Item } from "../src/lib/compare.ts";
 import type { PropertyRow } from "../src/lib/sparql.ts";
 import { externalIdRows, primaryLabel, primaryType } from "../src/lib/wikidata.ts";
@@ -1043,8 +1044,6 @@ export function dumpIdFor(path: string): string {
 
 /** Segments a worker pass splits the dump into (~2.5 GB of .gz each). */
 export const DEFAULT_SEGMENTS = 64;
-/** A claim whose heartbeat is older than this is taken to be abandoned. */
-export const STALE_CLAIM_SECONDS = 600;
 /** How often a worker refreshes its claim while it scans. */
 const HEARTBEAT_MS = 60_000;
 /** How often a worker with nothing to claim checks on the segments still being scanned. */

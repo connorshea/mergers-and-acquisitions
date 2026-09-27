@@ -5,6 +5,7 @@ import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vite-
 import { eq, sql } from "drizzle-orm";
 import { db, pool } from "./db.ts";
 import {
+  dumpImportSegments,
   externalIdDupes,
   externalIds,
   items,
@@ -340,6 +341,33 @@ describe.skipIf(!DB_TEST)("runHunt", () => {
       await db.delete(externalIds).where(eq(externalIds.qid, "Q200"));
       expect(await rebuiltOn(async () => expect((await runHunt()).pairs).toBe(1))).toBe(false);
       expect(await dupeKeys()).toEqual([["P1733", "2"]]);
+    });
+
+    it("keeps the watermark back while a dump import is running", async () => {
+      await insertItem(makeItem("Q100", "Alpha", steam("1")));
+      await insertItem(makeItem("Q200", "Beta", steam("1")));
+      const cursor = async () =>
+        (await db.select().from(syncState).where(eq(syncState.scope, "hunt-external-id-dupes")))[0]
+          .cursor;
+      // A live claim: a worker may still be committing rows below max(id).
+      await db.insert(dumpImportSegments).values({
+        dump: "20260922",
+        segments: 64,
+        segment: 0,
+        claimedBy: "import-dump-1",
+        claim: "abc",
+        claimedAt: sql`current_timestamp`,
+      });
+      await runHunt();
+      expect(await cursor()).toBe(0);
+
+      // Finished (or abandoned) claims don't count.
+      await db.update(dumpImportSegments).set({ doneAt: sql`current_timestamp` });
+      await runHunt();
+      const [{ maxId }] = await db
+        .select({ maxId: sql<number>`max(${externalIds.id})` })
+        .from(externalIds);
+      expect(await cursor()).toBe(Number(maxId));
     });
 
     it("rebuilds once the external ids have been truncated", async () => {

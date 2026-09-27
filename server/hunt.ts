@@ -33,6 +33,7 @@ import { and, eq, inArray, notInArray, sql } from "drizzle-orm";
 import * as schema from "../db/schema.ts";
 import { mergeCandidates, properties, syncState } from "../db/schema.ts";
 import { connConfig } from "./db-config.ts";
+import { STALE_CLAIM_SECONDS } from "./import-claims.ts";
 import type { Item, ScoreOptions } from "../src/lib/compare.ts";
 import {
   BLOCKING_KEY_MAX,
@@ -214,12 +215,26 @@ async function* streamRows<T>(conn: CoreConnection, query: string): AsyncGenerat
 const DUPE_KEYS_SCOPE = "hunt-external-id-dupes";
 
 /**
- * How far below the watermark each incremental refresh re-reads. Auto-increment
- * ids are handed out before commit, so a row with a lower id than the watermark
- * can still become visible after it was read (an import committing mid-hunt).
- * Re-reading this many rows is cheap and the insert is idempotent.
+ * How far below `max(external_ids.id)` to leave the watermark when a dump
+ * import is running. Auto-increment ids are handed out before commit, so while
+ * import workers write concurrently, a row with a lower id than the maximum we
+ * read can still become visible afterwards. The next run re-reads this many ids
+ * to pick those up. With no import running there's nothing in flight, and the
+ * watermark is the maximum itself: re-reading ids already covered costs a
+ * random index lookup each (~20 s per 100k in prod).
  */
 const DUPE_KEYS_MARGIN = 100_000;
+
+/** Whether any dump-import worker holds a live claim (see server/import-claims.ts). */
+async function importRunning(conn: mysql.Connection): Promise<boolean> {
+  const [rows] = await conn.query<mysql.RowDataPacket[]>(
+    `select 1 from dump_import_segments
+     where done_at is null and claimed_at > now() - interval ? second
+     limit 1`,
+    [STALE_CLAIM_SECONDS],
+  );
+  return rows.length > 0;
+}
 
 /**
  * Bring `external_id_dupes` up to date with `external_ids`, so it holds (at
@@ -240,6 +255,9 @@ async function refreshDupeKeys(db: Db, conn: mysql.Connection): Promise<void> {
     "select coalesce(max(id), 0) as id from external_ids",
   );
   const maxId = Number(maxRows[0].id);
+  // Checked after reading the maximum: a worker writes only while its claim is
+  // live, so no live claim now means nothing below maxId is still uncommitted.
+  const busy = await importRunning(conn);
   const [state] = await db
     .select({ cursor: syncState.cursor })
     .from(syncState)
@@ -260,12 +278,16 @@ async function refreshDupeKeys(db: Db, conn: mysql.Connection): Promise<void> {
        where n.id > ? and exists (
          select 1 from external_ids o
          where o.property = n.property and o.value = n.value and o.qid <> n.qid)`,
-      [Math.max(0, state.cursor - DUPE_KEYS_MARGIN)],
+      [state.cursor],
     );
   }
   await db
     .insert(syncState)
-    .values({ scope: DUPE_KEYS_SCOPE, cursor: maxId, lastRunAt: sql`CURRENT_TIMESTAMP` })
+    .values({
+      scope: DUPE_KEYS_SCOPE,
+      cursor: busy ? Math.max(0, maxId - DUPE_KEYS_MARGIN) : maxId,
+      lastRunAt: sql`CURRENT_TIMESTAMP`,
+    })
     .onDuplicateKeyUpdate({
       set: { cursor: sql`values(${syncState.cursor})`, lastRunAt: sql`CURRENT_TIMESTAMP` },
     });
@@ -274,7 +296,7 @@ async function refreshDupeKeys(db: Db, conn: mysql.Connection): Promise<void> {
   );
   console.log(
     `hunt scan: ${rebuild ? "rebuilt" : `added ids above ${state.cursor} to`} the shared id keys; ` +
-      `${countRows[0].n} keys (${secondsSince(start)})`,
+      `${countRows[0].n} keys${busy ? "; import running, watermark kept back" : ""} (${secondsSince(start)})`,
   );
 }
 

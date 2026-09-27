@@ -362,19 +362,12 @@ export default function CandidatesList() {
         {/* Counts only filters changed from their defaults; the saved
             languages are the default, so only `lang=any` counts. */}
         <MoreFilters active={[creator !== "", noBlockers, anyLanguage].filter(Boolean).length}>
-          <label className="field">
-            <span>Created by</span>
-            <input
-              // Uncontrolled and re-mounted on URL changes, like the search box.
-              key={creator}
-              className="creator-input"
-              type="search"
-              name="creator"
-              defaultValue={creator}
-              placeholder="Username"
-              title="Pairs where either item was created by this Wikidata user"
-            />
-          </label>
+          <CreatorFilter
+            creator={creator}
+            onClear={() => {
+              if (creator) update({ creator: undefined });
+            }}
+          />
           <label className="field field-check">
             <input
               type="checkbox"
@@ -490,6 +483,62 @@ export default function CandidatesList() {
         </>
       )}
     </main>
+  );
+}
+
+/**
+ * The "Created by" box, with a button that clears it once it has text (and
+ * drops the filter, if one is applied). Unlike the search box it's controlled,
+ * so the input keeps focus when clearing it changes the URL; the typed text
+ * resets whenever the applied creator does (back/forward, Clear filters).
+ */
+function CreatorFilter({ creator, onClear }: { creator: string; onClear: () => void }) {
+  const [text, setText] = useState(creator);
+  const [applied, setApplied] = useState(creator);
+  if (creator !== applied) {
+    setApplied(creator);
+    setText(creator);
+  }
+  const inputRef = useRef<HTMLInputElement>(null);
+  return (
+    <div className="field">
+      <label htmlFor="creator-filter">Created by</label>
+      <div className="clearable-input">
+        <input
+          ref={inputRef}
+          id="creator-filter"
+          className="creator-input"
+          type="search"
+          name="creator"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Username"
+          title="Pairs where either item was created by this Wikidata user"
+        />
+        {text !== "" && (
+          <button
+            type="button"
+            className="clear-input"
+            aria-label="Clear creator"
+            title="Clear"
+            onClick={() => {
+              setText("");
+              onClear();
+              inputRef.current?.focus();
+            }}
+          >
+            <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+              <path
+                d="M2 2l8 8M10 2l-8 8"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+              />
+            </svg>
+          </button>
+        )}
+      </div>
+    </div>
   );
 }
 

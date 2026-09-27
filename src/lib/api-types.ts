@@ -238,4 +238,14 @@ export interface LeaderboardResponse {
   period: LeaderboardPeriod;
   /** Best first: by total, then merges. */
   entries: LeaderboardEntry[];
+  /** Summed over every user with an edit in the period, not only the listed ones. */
+  totals: LeaderboardTotals;
+}
+
+export interface LeaderboardTotals {
+  /** Users with at least one successful edit in the period. */
+  users: number;
+  merges: number;
+  differentFrom: number;
+  total: number;
 }

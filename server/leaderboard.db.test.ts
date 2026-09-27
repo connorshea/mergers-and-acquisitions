@@ -53,8 +53,9 @@ describe.skipIf(!DB_TEST)("GET /api/leaderboard", () => {
       edit(3, 9, { action: "different-from" }),
       edit(3, 10, { action: "different-from" }),
     ]);
-    const { period, entries } = await leaderboard();
+    const { period, entries, totals } = await leaderboard();
     expect(period).toBe("all");
+    expect(totals).toEqual({ users: 3, merges: 4, differentFrom: 4, total: 8 });
     expect(entries).toEqual([
       { userId: 2, username: "Bob", merges: 2, differentFrom: 1, total: 3 },
       { userId: 3, username: "Carol", merges: 0, differentFrom: 3, total: 3 },
@@ -76,9 +77,12 @@ describe.skipIf(!DB_TEST)("GET /api/leaderboard", () => {
     const all = await leaderboard("?period=bogus");
     expect(all.period).toBe("all");
     expect(all.entries.map((e) => e.username)).toEqual(["Alice", "Bob"]);
+    expect(all.totals).toEqual({ users: 2, merges: 3, differentFrom: 0, total: 3 });
   });
 
   it("is public", async () => {
-    expect((await leaderboard()).entries).toEqual([]);
+    const empty = await leaderboard();
+    expect(empty.entries).toEqual([]);
+    expect(empty.totals).toEqual({ users: 0, merges: 0, differentFrom: 0, total: 0 });
   });
 });

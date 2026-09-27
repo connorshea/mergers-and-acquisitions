@@ -111,6 +111,21 @@ export const externalIds = mysqlTable(
   ],
 );
 
+// The `(property, value)` keys of `external_ids` held by two or more qids, so
+// the hunt's shared-id blocking reads only these instead of grouping every
+// external id. Kept by the hunt itself (`refreshDupeKeys` in server/hunt.ts):
+// one full rebuild, then only the keys of rows added since its last run
+// (a `sync_state` watermark on `external_ids.id`). May hold keys that are no
+// longer shared — the hunt re-counts each one and drops those.
+export const externalIdDupes = mysqlTable(
+  "external_id_dupes",
+  {
+    property: varchar("property", { length: 16 }).notNull(),
+    value: varchar("value", { length: 512 }).notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.property, t.value] })],
+);
+
 // A scored, ordered pair of items that may be duplicates. The pair is stored
 // ordered by `orderByAge` (higher QID = `fromQid`, merged into the lower
 // `intoQid`), so `(fromQid, intoQid)` is unique per candidate.

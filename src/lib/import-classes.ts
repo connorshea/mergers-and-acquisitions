@@ -5,10 +5,64 @@
 /** "video game" — the first class the mirror held. */
 export const VIDEO_GAME = "Q7889";
 
+/**
+ * Which instances of a selective class to import, rather than all of them. An
+ * instance is imported when any of these holds:
+ * - an item of one of the group's other classes links to it (any item-valued
+ *   statement), as a game names its designer or voice actor;
+ * - a best-rank `occupation` (P106) is one of `occupations`;
+ * - it has a value for one of `idProperties`.
+ * The last two find the duplicate that nothing links to yet: often a stub
+ * made from a game database's entry, which the shared-id matching pairs.
+ */
+export interface SelectiveImport {
+  occupations: readonly string[];
+  idProperties: readonly string[];
+}
+
+/** One class the mirror holds. */
+export interface ImportClass {
+  qid: string;
+  label: string;
+  /** Import only some instances (see SelectiveImport); SELECTIVE_IMPORT_CLASSES. */
+  selective?: SelectiveImport;
+}
+
+/**
+ * The humans the video game group imports, out of Wikidata's ~13M: ~20k in
+ * all (September 2026), of which ~11k are linked from games. The occupations
+ * are the video game ones under "game designer" / "video game developer"
+ * (not board game, tabletop RPG or crossword designers) and professional
+ * gamers; the ids are the game databases' person ids.
+ */
+const GAME_PEOPLE: SelectiveImport = {
+  occupations: [
+    "Q58287519", // video game developer
+    "Q3630699", // game designer
+    "Q18882335", // video game designer
+    "Q2702296", // video game producer
+    "Q63538345", // video game director
+    "Q863368", // game programmer
+    "Q3476620", // video game writer
+    "Q6966205", // narrative designer
+    "Q63852516", // level designer
+    "Q107636670", // modder
+    "Q9357633", // game tester
+    "Q2872378", // video game author
+    "Q4379701", // professional gamer
+  ],
+  idProperties: [
+    "P3913", // MobyGames person ID
+    "P5247", // Giant Bomb ID
+    "P10918", // Liquipedia ID
+    "P5796", // Internet Game Database person ID
+  ],
+};
+
 /** A named group of import classes, shown as one section of the type filter. */
 export interface ImportClassGroup {
   name: string;
-  classes: readonly { qid: string; label: string }[];
+  classes: readonly ImportClass[];
 }
 
 /**
@@ -109,13 +163,40 @@ export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
       { qid: "Q1137109", label: "video game publisher" },
       { qid: "Q1569167", label: "video game character" },
       { qid: "Q865493", label: "video game mod" },
+      { qid: "Q5", label: "human", selective: GAME_PEOPLE },
     ],
   },
 ];
 
 /** Every import class, flattened in group order. */
-export const IMPORT_CLASS_OPTIONS: readonly { qid: string; label: string }[] =
-  IMPORT_CLASS_GROUPS.flatMap((g) => g.classes);
+export const IMPORT_CLASS_OPTIONS: readonly ImportClass[] = IMPORT_CLASS_GROUPS.flatMap(
+  (g) => g.classes,
+);
 
-/** Just the QIDs of IMPORT_CLASS_OPTIONS. */
-export const IMPORT_CLASSES: readonly string[] = IMPORT_CLASS_OPTIONS.map((c) => c.qid);
+/** The QIDs of the classes whose every instance is imported. */
+export const IMPORT_CLASSES: readonly string[] = IMPORT_CLASS_OPTIONS.filter(
+  (c) => !c.selective,
+).map((c) => c.qid);
+
+/** A class of which only some instances are imported (see SelectiveImport). */
+export interface SelectiveImportClass extends SelectiveImport {
+  qid: string;
+  /** The classes whose items' links bring an instance in: the group's other classes. */
+  sources: readonly string[];
+}
+
+/** The `selective` classes, each with its group's other classes as link sources. */
+export const SELECTIVE_IMPORT_CLASSES: readonly SelectiveImportClass[] =
+  IMPORT_CLASS_GROUPS.flatMap((g) =>
+    g.classes.flatMap((c) =>
+      c.selective
+        ? [
+            {
+              qid: c.qid,
+              ...c.selective,
+              sources: g.classes.filter((s) => !s.selective).map((s) => s.qid),
+            },
+          ]
+        : [],
+    ),
+  );

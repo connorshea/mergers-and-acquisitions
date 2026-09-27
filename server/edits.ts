@@ -38,6 +38,8 @@ import {
   AUTO_IGNORED_CONFLICTS,
   CRITERION_USED,
   DIFFERENT_FROM,
+  isDeclaredDifferent,
+  isPermanentDuplicatePair,
   type Item,
   type MergeConflict,
   mergeConflicts,
@@ -164,6 +166,27 @@ function conflictMessage(
     .filter((k): k is Exclude<MergeConflict, "description"> => k !== "description")
     .map((k) => CONFLICT_REASON[k]);
   return `Wikidata won't merge ${fromQid} into ${intoQid}: ${reasons.join("; ")}.`;
+}
+
+/**
+ * Why the live items must never be merged, or null when nothing says so: one
+ * declares the other "different from" (P1889), or they are marked "permanent
+ * duplicated item" (P2959) of each other or of a shared third item.
+ */
+function declaredDistinctMessage(from: Item, into: Item): string | null {
+  if (isDeclaredDifferent(from, into)) {
+    return (
+      `${from.id} and ${into.id} are marked "different from" (P1889) on Wikidata, ` +
+      `so they must not be merged.`
+    );
+  }
+  if (isPermanentDuplicatePair(from, into)) {
+    return (
+      `${from.id} and ${into.id} are marked "permanent duplicated item" (P2959) on ` +
+      `Wikidata, so they must stay separate items.`
+    );
+  }
+  return null;
 }
 
 /** The JSON error for a failed edit, with the status its kind implies. */
@@ -293,14 +316,22 @@ edits.post("/:id/merge", async (c) => {
   // clash where one page is — per its wiki, asked just now — a redirect to the
   // other item's page: that sitelink is removed first (below), which is what
   // a human would do and loses nothing.
+  //
+  // The same live read also catches a pair an editor has since declared
+  // distinct — "different from" (P1889) or "permanent duplicated item" (P2959,
+  // including two items naming the same third one) — after the candidate row
+  // was scored. Those are refused outright: nothing on the items should be
+  // "fixed" to get such a pair through.
   let liveConflicts: MergeConflict[];
   let sitelinkFixes: SitelinkFix[] = [];
+  let declaredDistinct: string | null = null;
   try {
     const [freshFrom, freshInto] = await fetchItemsForMergeCheck(user, [fromQid, intoQid]);
+    declaredDistinct = declaredDistinctMessage(freshFrom, freshInto);
     liveConflicts = mergeConflicts(freshFrom, freshInto).filter(
       (k) => !AUTO_IGNORED_CONFLICTS.includes(k),
     );
-    if (liveConflicts.includes("sitelink")) {
+    if (!declaredDistinct && liveConflicts.includes("sitelink")) {
       const fixes = await liveSitelinkFixes(freshFrom, freshInto);
       if (fixes) {
         sitelinkFixes = fixes;
@@ -312,6 +343,16 @@ edits.post("/:id/merge", async (c) => {
     // blind. This read touched no edit endpoint, so nothing was applied.
     await releaseClaim(id);
     return failedEdit(c, await auditFailure(audit, err));
+  }
+  if (declaredDistinct) {
+    await releaseClaim(id);
+    return failedEdit(
+      c,
+      await auditFailure(
+        audit,
+        new WikidataEditError("conflict", "declared-distinct", declaredDistinct),
+      ),
+    );
   }
   if (liveConflicts.length > 0) {
     await releaseClaim(id);

@@ -13,6 +13,7 @@ import {
   isAutoIgnoredConflict,
   levenshtein,
   isDeclaredDifferent,
+  isPermanentDuplicatePair,
   isSeriesSequelPair,
   isWorkEditionPair,
   isPartWholePair,
@@ -1575,6 +1576,56 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(result.reasons[0]).toContain("different from");
     // Symmetric: the declaration counts from whichever side holds it.
     expect(scoreCandidate(b, a).confidence).toBe(0);
+  });
+
+  describe('"permanent duplicated item" (P2959)', () => {
+    // Identical label + shared per-title id would otherwise score high.
+    const mk = (id: string, p2959: string[] = []): Item => ({
+      ...base,
+      id,
+      labels: { en: "Look-Alike" },
+      statements: stmt({
+        P1733: [{ type: "external-id", value: "42" }],
+        ...(p2959.length > 0
+          ? { P2959: p2959.map((value) => ({ type: "item" as const, value })) }
+          : {}),
+      }),
+    });
+
+    it("zeroes out a pair where either item names the other", () => {
+      const a = mk("Q100", ["Q101"]);
+      const b = mk("Q101");
+      for (const [x, y] of [
+        [a, b],
+        [b, a],
+      ]) {
+        expect(isPermanentDuplicatePair(x, y)).toBe(true);
+        const result = scoreCandidate(x, y);
+        expect(result.confidence).toBe(0);
+        expect(result.reasons[0]).toBe(
+          'marked "permanent duplicated item" on Wikidata (P2959), can\'t be merged',
+        );
+        // Not also listed as a generic cross-reference.
+        expect(result.reasons.some((r) => r.includes("references the other"))).toBe(false);
+      }
+      expect(scoreCandidate(mk("Q100"), b).confidence).toBeGreaterThan(0.5);
+    });
+
+    it("zeroes out a pair that both name the same third item", () => {
+      const a = mk("Q100", ["Q999"]);
+      const b = mk("Q101", ["Q999"]);
+      expect(isPermanentDuplicatePair(a, b)).toBe(true);
+      expect(scoreCandidate(a, b).confidence).toBe(0);
+    });
+
+    it("leaves a pair alone when each names a different third item", () => {
+      const a = mk("Q100", ["Q998"]);
+      const b = mk("Q101", ["Q999"]);
+      expect(isPermanentDuplicatePair(a, b)).toBe(false);
+      const result = scoreCandidate(a, b);
+      expect(result.confidence).toBeGreaterThan(0.5);
+      expect(result.reasons.some((r) => r.includes("P2959"))).toBe(false);
+    });
   });
 
   it("caps a pair linked as work and edition (P629/P747) below the floor", () => {

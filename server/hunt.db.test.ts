@@ -60,6 +60,25 @@ describe.skipIf(!DB_TEST)("runHunt", () => {
     expect(rows[0].reasons.some((r) => r.startsWith("shares external identifier"))).toBe(true);
   });
 
+  it("scores every pair when the pairs span several windows read ahead", async () => {
+    // Five pairs in windows of two: three windows, each read while the one
+    // before it is scored and written.
+    for (let i = 1; i <= 5; i++) {
+      await insertItem(makeItem(`Q${i}00`, `Starfall Drift ${i}`, steam(`81234${i}`)));
+      await insertItem(makeItem(`Q${i}01`, `Starfall Drift ${i}`, steam(`81234${i}`)));
+    }
+    const stats = await runHunt({ scoreWindow: 2 });
+    expect(stats).toMatchObject({ pairs: 5, scored: 5, upserted: 5, failed: 0 });
+    const rows = await allCandidates();
+    expect(rows.map((r) => `${r.fromQid}>${r.intoQid}`).sort()).toEqual([
+      "Q101>Q100",
+      "Q201>Q200",
+      "Q301>Q300",
+      "Q401>Q400",
+      "Q501>Q500",
+    ]);
+  });
+
   it("is idempotent across runs", async () => {
     await insertItem(makeItem("Q100", "Starfall Drift", steam("812340")));
     await insertItem(makeItem("Q200", "Starfall Drift", steam("812340")));

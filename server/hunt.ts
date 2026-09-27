@@ -30,7 +30,7 @@ import {
 import { drizzle, type MySql2Database } from "drizzle-orm/mysql2";
 import { and, eq, inArray, notInArray, sql } from "drizzle-orm";
 import * as schema from "../db/schema.ts";
-import { items, mergeCandidates, properties } from "../db/schema.ts";
+import { mergeCandidates, properties } from "../db/schema.ts";
 import { connConfig } from "./db-config.ts";
 import type { Item, ScoreOptions } from "../src/lib/compare.ts";
 import {
@@ -61,9 +61,6 @@ export const MIN_CONFIDENCE = 0.4;
  * so it is dropped with a warning rather than expanded.
  */
 const MAX_BLOCK_GROUP = 100;
-
-/** Qids loaded per `inArray` item read. MariaDB has no tight bound-param cap. */
-const ID_CHUNK = 1000;
 
 /** Candidate rows per multi-row upsert / ids per stale-row DELETE. */
 const WRITE_CHUNK = 500;
@@ -385,14 +382,20 @@ const PAIR_MATCH = `
 /** Status filter for rows the hunt may change (never one a human resolved). */
 const UNRESOLVED_SQL = `c.status not in (${PROTECTED_STATUSES.map((s) => `'${s}'`).join(", ")})`;
 
-/** The phases of a scoring window, in the order the window log prints them. */
-const WINDOW_PHASES = ["pairs", "fetch", "parse", "redirects", "score", "write"] as const;
+/**
+ * The phases of a scoring window, in the order the window log prints them.
+ * `read` is the wall time of the window's item read (fetch, parse, and
+ * redirects), which runs while the previous window is scored and written;
+ * `wait` is the part of it scoring still had to sit through.
+ */
+const WINDOW_PHASES = ["pairs", "read", "wait", "score", "write"] as const;
 type WindowPhase = (typeof WINDOW_PHASES)[number];
 
 /**
  * Wall-clock time per scoring phase, for the current window and for the whole
  * run, so the logs show where the scoring time goes. `lap` charges the time
- * since the previous lap to a phase.
+ * since the previous lap to a phase; `add` charges time measured elsewhere
+ * (a window's read, which overlaps the laps).
  */
 class PhaseTimes {
   private last = performance.now();
@@ -401,13 +404,16 @@ class PhaseTimes {
 
   lap(phase: WindowPhase): void {
     const now = performance.now();
-    const ms = now - this.last;
+    this.add(phase, now - this.last);
     this.last = now;
+  }
+
+  add(phase: WindowPhase, ms: number): void {
     this.window.set(phase, (this.window.get(phase) ?? 0) + ms);
     this.total.set(phase, (this.total.get(phase) ?? 0) + ms);
   }
 
-  /** "pairs 0.0s, fetch 2.1s, …" for the current window; starts the next one. */
+  /** "pairs 0.0s, read 2.1s, …" for the current window; starts the next one. */
   endWindow(): string {
     const out = PhaseTimes.format(this.window);
     this.window.clear();
@@ -430,10 +436,82 @@ async function candidateIds(conn: mysql.Connection, query: string): Promise<numb
   return rows.map((r) => Number(r.id));
 }
 
+interface WindowPair {
+  seq: number;
+  qa: string;
+  qb: string;
+}
+
+/**
+ * The next window of pairs after `afterSeq`, or none once hunt_pairs is
+ * exhausted. Always on `conn`: hunt_pairs is a temporary table on it.
+ */
+async function readPairs(
+  conn: mysql.Connection,
+  afterSeq: number,
+  size: number,
+): Promise<WindowPair[]> {
+  const [rows] = await conn.query<mysql.RowDataPacket[]>(
+    "select seq, a, b from hunt_pairs where seq > ? order by seq limit ?",
+    [afterSeq, size],
+  );
+  return rows.map((r) => ({ seq: Number(r.seq), qa: `Q${r.a}`, qb: `Q${r.b}` }));
+}
+
+/** A window's items, parsed and overlaid with redirects, and how long that took. */
+interface WindowItems {
+  byQid: Map<string, Item>;
+  ms: number;
+}
+
+/**
+ * Read, parse, and overlay the items a window's pairs reference, on
+ * `itemConn` (a connection of its own, so this can run while `conn` writes the
+ * previous window). The items go out as one statement on the plain mysql2
+ * connection, which sends it before this returns; a drizzle query is only sent
+ * on a later tick. The scoring that follows is synchronous, so a query sent
+ * any later would wait for it to finish and the read would no longer overlap
+ * it. A window references at most 2 × SCORE_WINDOW qids.
+ */
+async function readItems(
+  itemConn: mysql.Connection,
+  itemDb: Db,
+  pairs: WindowPair[],
+): Promise<WindowItems> {
+  const start = performance.now();
+  const wanted = new Set<string>();
+  for (const { qa, qb } of pairs) {
+    wanted.add(qa);
+    wanted.add(qb);
+  }
+  // `data` is read as the raw JSON string and parsed here: mysql2 would
+  // otherwise parse MariaDB's JSON columns itself while reading the result,
+  // and the column's decoder would too.
+  const [raw] = await itemConn.query<mysql.RowDataPacket[]>(
+    "select qid, cast(data as char) as data from items where qid in (?)",
+    [Array.from(wanted)],
+  );
+  const byQid = new Map<string, Item>();
+  for (const row of raw) byQid.set(String(row.qid), JSON.parse(String(row.data)) as Item);
+  // Redirects resolved by the previous resolve-sitelinks run, so a clash
+  // that's one page redirecting to the other scores as duplicate evidence.
+  await attachSitelinkRedirects(
+    itemDb,
+    pairs.flatMap(({ qa, qb }) => {
+      const a = byQid.get(qa);
+      const b = byQid.get(qb);
+      return a && b ? [[a, b] as [Item, Item]] : [];
+    }),
+  );
+  return { byQid, ms: performance.now() - start };
+}
+
 /**
  * Score the pairs in `hunt_pairs` a window at a time and write each window's
- * results before reading the next. Holding every referenced item at once
- * doesn't fit: a parsed `Item` is ~5.5 KB of heap, and a full-dump hunt touches
+ * results before scoring the next. The next window's item read (see
+ * `readItems`) runs on `itemConn` while the current one is scored and written,
+ * so the database time of the read and the CPU time of scoring overlap.
+ * Holding every referenced item at once doesn't fit: a parsed `Item` is ~5.5 KB of heap, and a full-dump hunt touches
  * hundreds of thousands of them — past the job's heap cap (see jobs.yaml).
  * Windows follow insertion order, which keeps each blocking group's pairs
  * together, so a window's items mostly overlap and few are fetched twice
@@ -445,7 +523,13 @@ async function candidateIds(conn: mysql.Connection, query: string): Promise<numb
  * join each against hunt_pairs, so nothing here grows with the number of pairs
  * or open candidates.
  */
-async function score(db: Db, conn: mysql.Connection, pairCount: number): Promise<HuntStats> {
+async function score(
+  db: Db,
+  conn: mysql.Connection,
+  itemConn: mysql.Connection,
+  pairCount: number,
+  windowSize: number,
+): Promise<HuntStats> {
   const stats: HuntStats = {
     pairs: pairCount,
     scored: 0,
@@ -477,69 +561,39 @@ async function score(db: Db, conn: mysql.Connection, pairCount: number): Promise
     `select count(*) as open from merge_candidates c where ${UNRESOLVED_SQL}`,
   );
   const openCount = Number(open);
-  const windowCount = Math.ceil(pairCount / SCORE_WINDOW);
+  const windowCount = Math.ceil(pairCount / windowSize);
   console.log(
     `hunt score: ${openCount} open candidate rows; scoring ${pairCount} pairs ` +
-      `in ${windowCount} windows of ${SCORE_WINDOW}`,
+      `in ${windowCount} windows of ${windowSize}`,
   );
 
   let windowIndex = 0;
   let pairsDone = 0;
   let staleCount = 0;
-  let lastSeq = 0;
+  const itemDb = drizzle(itemConn, { schema, mode: "default" });
   const times = new PhaseTimes();
-  for (;;) {
-    const [pairRows] = await conn.query<mysql.RowDataPacket[]>(
-      "select seq, a, b from hunt_pairs where seq > ? order by seq limit ?",
-      [lastSeq, SCORE_WINDOW],
-    );
-    if (pairRows.length === 0) break;
-    lastSeq = Number(pairRows.at(-1)!.seq);
+  // At most one item read is in flight, one window ahead, so at most two
+  // windows' items are in memory. A read that fails while the current window
+  // is being scored surfaces when the loop awaits it; the no-op catch keeps
+  // Node from treating it as unhandled in the meantime.
+  const readAhead = (pairs: WindowPair[]): Promise<WindowItems> | null => {
+    if (pairs.length === 0) return null;
+    const read = readItems(itemConn, itemDb, pairs);
+    read.catch(() => {});
+    return read;
+  };
+  let window = await readPairs(conn, 0, windowSize);
+  times.lap("pairs");
+  let read = readAhead(window);
+  while (read) {
+    const { byQid, ms } = await read;
+    times.lap("wait");
+    times.add("read", ms);
     windowIndex++;
-    const window = pairRows.map((r) => ({
-      seq: Number(r.seq),
-      qa: `Q${r.a}`,
-      qb: `Q${r.b}`,
-    }));
+    // Start the next window's read before scoring this one.
+    const nextWindow = await readPairs(conn, window.at(-1)!.seq, windowSize);
     times.lap("pairs");
-
-    const wanted = new Set<string>();
-    for (const { qa, qb } of window) {
-      wanted.add(qa);
-      wanted.add(qb);
-    }
-    // `data` is read as the raw JSON string and parsed here (mysql2 otherwise
-    // parses MariaDB's JSON columns itself while reading the result, and the
-    // column's decoder would too), so the log can tell the database
-    // round trips apart from the parsing.
-    const raw: { qid: string; data: string }[] = [];
-    for (const ids of chunk(Array.from(wanted), ID_CHUNK)) {
-      raw.push(
-        ...(await db
-          .select({
-            qid: items.qid,
-            data: sql<string>`cast(${items.data} as char)`.mapWith(String),
-          })
-          .from(items)
-          .where(inArray(items.qid, ids))),
-      );
-    }
-    times.lap("fetch");
-    const byQid = new Map<string, Item>();
-    for (const row of raw) byQid.set(row.qid, JSON.parse(row.data) as Item);
-    times.lap("parse");
-    // Redirects resolved by the previous resolve-sitelinks run, so a clash
-    // that's one page redirecting to the other scores as duplicate evidence.
-    await attachSitelinkRedirects(
-      db,
-      window.flatMap(({ qa, qb }) => {
-        const a = byQid.get(qa);
-        const b = byQid.get(qb);
-        return a && b ? [[a, b] as [Item, Item]] : [];
-      }),
-    );
-
-    times.lap("redirects");
+    const nextRead = readAhead(nextWindow);
 
     const survivors: CandidateRow[] = [];
     const staleSeqs: number[] = [];
@@ -618,6 +672,8 @@ async function score(db: Db, conn: mysql.Connection, pairCount: number): Promise
     times.lap("write");
 
     pairsDone += window.length;
+    window = nextWindow;
+    read = nextRead;
     const elapsedSec = (performance.now() - start) / 1000;
     const rate = elapsedSec > 0 ? Math.round(pairsDone / elapsedSec) : 0;
     const etaSec = rate > 0 ? Math.round((pairCount - pairsDone) / rate) : 0;
@@ -631,7 +687,10 @@ async function score(db: Db, conn: mysql.Connection, pairCount: number): Promise
         `${times.endWindow()})`,
     );
   }
-  console.log(`hunt score: time by phase over all windows: ${times.totals()}`);
+  console.log(
+    `hunt score: time by phase over all windows: ${times.totals()} ` +
+      `(read overlaps scoring and writing; wait is the part it didn't hide)`,
+  );
 
   // Open rows for pairs that scored below the floor. The DELETE re-checks the
   // status in case a reviewer resolved the row since this SELECT.
@@ -698,8 +757,11 @@ async function score(db: Db, conn: mysql.Connection, pairCount: number): Promise
  * with `group_concat_max_len` raised — the 1 KB default would truncate a
  * ~100-qid block and silently drop qids from the `split(",")`. A connection
  * can't run a query while it's still streaming another's rows, hence two.
+ * Once blocking is done the streaming one closes, and scoring opens a third
+ * that reads items while the first writes (see `score`), so two are open at
+ * any time.
  */
-export async function runHunt(): Promise<HuntStats> {
+export async function runHunt(opts: { scoreWindow?: number } = {}): Promise<HuntStats> {
   const start = performance.now();
   console.log("hunt: starting");
   const conn = await mysql.createConnection(connConfig());
@@ -709,6 +771,8 @@ export async function runHunt(): Promise<HuntStats> {
   // exception that kills the process. Mid-stream errors also reach the
   // stream (see streamRows) and fail the hunt through the normal path.
   reader.on("error", (err) => console.warn(`hunt: reader connection error: ${err.message}`));
+  let itemConn: mysql.Connection | undefined;
+  const endItemConn = () => itemConn?.end().catch(() => {});
   const endReader = () =>
     reader
       .promise()
@@ -720,7 +784,14 @@ export async function runHunt(): Promise<HuntStats> {
     const pairCount = await scan(db, conn, reader);
     // The reader is only for blocking; don't hold it idle through scoring.
     await endReader();
-    const stats = await score(db, conn, pairCount);
+    // Scoring reads items on its own connection, busy every window, so the
+    // next window's read can overlap the current window's writes on `conn`.
+    itemConn = await mysql.createConnection(connConfig());
+    // Same reason as the reader's listener: a dropped socket must fail the
+    // hunt through the pending query, not crash the process.
+    itemConn.on("error", (err) => console.warn(`hunt: item connection error: ${err.message}`));
+    const stats = await score(db, conn, itemConn, pairCount, opts.scoreWindow ?? SCORE_WINDOW);
+    await endItemConn();
     await conn.query("drop temporary table if exists hunt_pairs");
     // Pairs the hunt didn't rescore (resolved ones, or ones whose blocking
     // group changed) still need their item copies kept current.
@@ -733,6 +804,6 @@ export async function runHunt(): Promise<HuntStats> {
     console.log(`hunt: finished in ${secondsSince(start)}`);
     return stats;
   } finally {
-    await Promise.allSettled([conn.end(), endReader()]);
+    await Promise.allSettled([conn.end(), endReader(), endItemConn()]);
   }
 }

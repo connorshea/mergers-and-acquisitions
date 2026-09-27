@@ -812,6 +812,42 @@ a.chip-id:hover {
 .field .creator-input {
   width: 11rem;
 }
+/* A text box with its own clear (×) button inside the right edge. The two-class
+   selectors outrank `.menu-panel button`, which would pad the icon away. */
+.clearable-input {
+  position: relative;
+  display: flex;
+}
+.clearable-input .creator-input {
+  flex: 1;
+  padding-right: 1.9rem;
+}
+/* The browser's own search-field clear button would double up with ours. */
+.clearable-input input::-webkit-search-cancel-button {
+  appearance: none;
+}
+.clearable-input .clear-input {
+  position: absolute;
+  top: 50%;
+  right: 0.3rem;
+  transform: translateY(-50%);
+  width: 1.4rem;
+  height: 1.4rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+.clearable-input .clear-input:hover,
+.clearable-input .clear-input:focus-visible {
+  background: var(--rule);
+  color: var(--ink);
+}
 .field-check {
   flex-direction: row;
   align-items: center;

@@ -1154,23 +1154,49 @@ async function setProgress(dump: string, segments: number): Promise<SetProgress>
 
 /**
  * Record that `segment` of the set was scanned in full and its writes have
- * landed, and report the set's progress; it is complete when `done` reaches
- * `segments`. A segment scanned twice (a claim taken over while its first
- * worker was still alive) is simply recorded twice. Two workers finishing the
- * last segments together could both see the set complete and both prune; the
- * second prune finds nothing to do, so no lock is needed.
+ * landed, and report the set's progress. For workers, `completedNow` is true
+ * for exactly one call per set: the one that marks its last undone segment
+ * done, which is the one to prune. The set's rows are locked meanwhile, so two
+ * workers finishing the last segments together see each other's update in
+ * turn and only the second completes the set. A segment scanned twice (a
+ * claim taken over while its first worker was still alive) is recorded again,
+ * but never completes the set a second time. A `--shard` run is run by hand,
+ * so with `repeat` a re-run of a finished set completes it again (a re-run
+ * with DUMP_PRUNE_FORCE=1 after a refused prune).
  */
 async function finishSegment(
   dump: string,
   segments: number,
   segment: number,
   matched: number,
-): Promise<SetProgress> {
-  await db
-    .update(dumpImportSegments)
-    .set({ doneAt: sql`current_timestamp`, matched })
-    .where(segmentRow(dump, segments, segment));
-  return setProgress(dump, segments);
+  repeat: boolean,
+): Promise<SetProgress & { completedNow: boolean }> {
+  return db.transaction(async (tx) => {
+    const rows = await tx
+      .select({
+        segment: dumpImportSegments.segment,
+        doneAt: dumpImportSegments.doneAt,
+        claimedAt: dumpImportSegments.claimedAt,
+        matched: dumpImportSegments.matched,
+      })
+      .from(dumpImportSegments)
+      .where(inSet(dump, segments))
+      .for("update");
+    await tx
+      .update(dumpImportSegments)
+      .set({ doneAt: sql`current_timestamp`, matched })
+      .where(segmentRow(dump, segments, segment));
+    const others = rows.filter((r) => r.segment !== segment);
+    const wasDone = rows.some((r) => r.segment === segment && r.doneAt !== null);
+    const done = others.filter((r) => r.doneAt !== null).length + 1;
+    return {
+      segments,
+      done,
+      claimed: others.filter((r) => r.doneAt === null && r.claimedAt !== null).length,
+      matched: others.reduce((n, r) => n + (r.matched ?? 0), 0) + matched,
+      completedNow: (repeat || !wasDone) && done >= segments,
+    };
+  });
 }
 
 /**
@@ -1299,6 +1325,19 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
     (await resetFinishedSet(dump, segments))
   ) {
     log(`${tag} dump ${dump} was imported before; importing it again`);
+  }
+  // Workers started on a dump that is already imported have nothing to scan.
+  // Asked to force the prune (after one refused at the cap), they do just that.
+  let alreadyDone: SetProgress | undefined;
+  if (worker !== undefined) {
+    const progress = await setProgress(dump, segments);
+    if (progress.done >= segments) {
+      alreadyDone = progress;
+      log(
+        `${tag} dump ${dump} is already imported (all ${segments} segments done)` +
+          (opts.forcePrune ? "; pruning it as forced" : "; nothing to do"),
+      );
+    }
   }
 
   // Items the mirror already holds at a known revision, converted by the
@@ -1453,10 +1492,10 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
   };
   let segmentsScanned = 0;
   // Set when this run finished the set's last segment: it is the one to prune.
-  let completed: SetProgress | undefined;
+  let completed = opts.forcePrune ? alreadyDone : undefined;
   let waiting = false;
 
-  for (;;) {
+  while (!alreadyDone) {
     let claim: SegmentClaim | null = null;
     let segment = shard.index;
     if (worker !== undefined) {
@@ -1580,14 +1619,20 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
       break;
     }
     segmentsScanned++;
-    const progress = await finishSegment(dump, segments, segment, scan.matched);
+    const progress = await finishSegment(
+      dump,
+      segments,
+      segment,
+      scan.matched,
+      worker === undefined,
+    );
     if (worker !== undefined) {
       log(
         `${segTag} scanned in ${formatDuration(scan.seconds)}, ${scan.matched} matched; ` +
           `${progress.done}/${segments} segments of dump ${dump} done`,
       );
     }
-    if (progress.done >= segments) completed = progress;
+    if (progress.completedNow) completed = progress;
     if (worker === undefined) break;
   }
   total.seconds = (performance.now() - runStart) / 1000;

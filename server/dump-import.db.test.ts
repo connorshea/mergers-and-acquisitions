@@ -518,6 +518,21 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
       expect((await allItems()).map((r) => r.qid)).toEqual(GAMES);
     });
 
+    it("prunes a finished set without rescanning when re-run with forcePrune", async () => {
+      const path = await writeDump();
+      await worker(path, "a");
+      // Items that left the dump after the pass, past the 20% cap.
+      for (const qid of ["Q901", "Q902", "Q903"]) await insertItem(makeItem(qid, "Left the dump"));
+      const lines: string[] = [];
+      const forced = await worker(path, "a", {
+        forcePrune: true,
+        log: (m) => void lines.push(m),
+      });
+      expect([forced.segmentsScanned, forced.pruned]).toEqual([0, 3]);
+      expect(lines.some((l) => l.includes("pruning it as forced"))).toBe(true);
+      expect((await allItems()).map((r) => r.qid)).toEqual(GAMES);
+    });
+
     it("resumes a retried worker at its unfinished segment rather than starting over", async () => {
       const path = await writeDump();
       // Every segment but 3 is done (by this worker's earlier pod, say); it

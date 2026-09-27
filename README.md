@@ -232,7 +232,8 @@ any claim silent for 10 minutes is taken over by another worker, so a crash
 costs one segment, not a sixth of the dump. A worker with nothing left to claim
 waits for the other workers' segments, to take over any that go stale. Starting
 workers on a dump that is already fully imported does nothing, unless
-`DUMP_FULL=1` (which re-imports it). Every worker must agree on the segment
+`DUMP_FULL=1` (which re-imports it) or `DUMP_PRUNE_FORCE=1` (which runs the
+prune the 20% cap refused, without rescanning). Every worker must agree on the segment
 count (`DUMP_SEGMENTS`, default 64).
 
 Two CPUs per worker let the inflate (on libuv's threadpool) and the line scan

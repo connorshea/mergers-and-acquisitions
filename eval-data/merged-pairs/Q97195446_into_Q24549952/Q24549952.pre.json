@@ -1,0 +1,441 @@
+{
+  "pageid": 26517232,
+  "ns": 0,
+  "title": "Q24549952",
+  "lastrevid": 2521667136,
+  "modified": "2026-07-23T13:48:00Z",
+  "type": "item",
+  "id": "Q24549952",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Rush"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Rush"
+    },
+    "es": {
+      "language": "es",
+      "value": "Rush"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Rush"
+    },
+    "sq": {
+      "language": "sq",
+      "value": "Rush"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "from South Korea"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "professioneel gamer"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "韓國《英雄聯盟》電競選手"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q24549952$E6967760-2AA0-4ED9-826E-E69573495993",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q24549952$F528DD2E-2755-4294-8C0B-861F67BF843D",
+        "rank": "normal"
+      }
+    ],
+    "P569": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P569",
+          "hash": "a22a578a7dc7fd89325ed6f03b5657c74ebac2fe",
+          "datavalue": {
+            "value": {
+              "time": "+1993-04-06T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q24549952$A596DD56-C03F-4ED9-8CE2-AA9BEEFA5B1C",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": [
+              "P143"
+            ]
+          }
+        ]
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "de5102a9c0bdc5f9befc84af1b550e6cb2c4aa77",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4379701,
+              "id": "Q4379701"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q24549952$4ADC3094-B81D-479A-961F-E9E77F4C4D7E",
+        "rank": "normal"
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "c88bc438bef1e0369928f7dacc18d06b2353282d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 300920,
+              "id": "Q300920"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q24549952$4602F89E-BE21-4F6D-B12F-401E9AE65E32",
+        "rank": "normal"
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "4e850511d0abe6924facc33318b7d0b1c7914097",
+          "datavalue": {
+            "value": "/g/11byzcw8xr",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q24549952$2B08A151-C299-4926-8206-7F87787DD438",
+        "rank": "normal"
+      }
+    ],
+    "P10803": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10803",
+          "hash": "f1545b4335f0c76ba022493b70723de36d00568d",
+          "datavalue": {
+            "value": "16893",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q24549952$8ec4e3c1-47bc-052b-8cbc-a359b9982d91",
+        "rank": "normal"
+      }
+    ],
+    "P10918": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10918",
+          "hash": "96e789bff4b7b5ee2b01ae439e2679f150883366",
+          "datavalue": {
+            "value": "leagueoflegends/Rush",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9675": [
+            {
+              "snaktype": "value",
+              "property": "P9675",
+              "hash": "8227054e769e0235f73b15f29df06b2de029f6ec",
+              "datavalue": {
+                "value": "12563",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": [
+          "P9675"
+        ],
+        "id": "Q24549952$d49d1a4e-4fe1-462c-f5f0-2e29694980cf",
+        "rank": "normal"
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "4c8732ed5fd2efcd7e616db0ae504388e4456649",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 884,
+              "id": "Q884"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q24549952$86B9BEC0-2DB6-4025-A305-4EB8C9233A13",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "b4ed704bc076f5bbded22c04400549562bacdbf8",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "09dd4004d749385030f291c99ab0b05adf63654d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 105835728,
+                      "id": "Q105835728"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P10918": [
+                {
+                  "snaktype": "value",
+                  "property": "P10918",
+                  "hash": "96e789bff4b7b5ee2b01ae439e2679f150883366",
+                  "datavalue": {
+                    "value": "leagueoflegends/Rush",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "e1c9253594770df0b13011843ce526d713ffd2da",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-04-04T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": [
+              "P248",
+              "P10918",
+              "P813"
+            ]
+          }
+        ]
+      }
+    ],
+    "P2416": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2416",
+          "hash": "9831c8f652243fa6e904cbdd87ae6302e8cdc3aa",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 223341,
+              "id": "Q223341"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q24549952$09ff49eb-8de6-4e9b-83df-a669f2bd7158",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2a95f20d229856033409fe4f69f3ec21f6342e54",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "28e734435addf004717860e22a206aa2c2c9869d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 112144524,
+                      "id": "Q112144524"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P10803": [
+                {
+                  "snaktype": "value",
+                  "property": "P10803",
+                  "hash": "f1545b4335f0c76ba022493b70723de36d00568d",
+                  "datavalue": {
+                    "value": "16893",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a1958fb0b6c3fb14d1d014a4339f83813a2e99ce",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-04-06T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": [
+              "P248",
+              "P10803",
+              "P813"
+            ]
+          }
+        ]
+      }
+    ],
+    "P18": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "224e96da8070aa0b7b1dc7a1ffbce8dda4f97382",
+          "datavalue": {
+            "value": "Rush on Fox Tales.jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q24549952$2e6d71fd-47b4-500e-c66e-0901df7dd025",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Rush (gamer)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Rush_(gamer)"
+    },
+    "commonswiki": {
+      "site": "commonswiki",
+      "title": "Category:Rush (gamer, born 1993)",
+      "badges": [],
+      "url": "https://commons.wikimedia.org/wiki/Category:Rush_(gamer,_born_1993)"
+    }
+  }
+}

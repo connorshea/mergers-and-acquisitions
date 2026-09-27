@@ -241,6 +241,16 @@ export function stringSimilarity(a: string, b: string): number {
   return max === 0 ? 1 : 1 - levenshtein(na, nb) / max;
 }
 
+/** Dice coefficient (0–1) over the distinct words of two strings. */
+export function wordOverlap(a: string, b: string): number {
+  const wa = new Set(normalize(a).split(" ").filter(Boolean));
+  const wb = new Set(normalize(b).split(" ").filter(Boolean));
+  if (wa.size === 0 || wb.size === 0) return 0;
+  let shared = 0;
+  for (const w of wa) if (wb.has(w)) shared++;
+  return (2 * shared) / (wa.size + wb.size);
+}
+
 /**
  * Blocking key for a label: a deliberately looser normalization than
  * `normalize()` used only to decide which items are *considered* as a pair (see
@@ -1741,6 +1751,21 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     score -= 0.35;
     reasons.push(`different names (${namePct}%)`);
   }
+
+  // Descriptions, compared within each shared language. Informational only —
+  // no score change: two different subjects often share a boilerplate
+  // description ("video game", "1977 short story") and real duplicates often
+  // word theirs differently, so it's shown to the reviewer but not weighed.
+  // Word overlap counts alongside edit distance, so an inserted word ("1977
+  // short story" vs "1977 short story collection") still reads as similar.
+  let descSim = 0;
+  for (const lang of Object.keys(a.descriptions)) {
+    const da = a.descriptions[lang];
+    const db = b.descriptions[lang];
+    if (da && db) descSim = Math.max(descSim, stringSimilarity(da, db), wordOverlap(da, db));
+  }
+  if (descSim >= 0.995) reasons.push("identical description");
+  else if (descSim >= 0.75) reasons.push(`similar descriptions (${Math.round(descSim * 100)}%)`);
 
   // How much of the shared statement set agrees, over *discriminative* properties
   // only (P31 counted above; low-entropy props like genre/game mode/country

@@ -1272,6 +1272,29 @@ a.chip-id:hover {
   border-radius: 999px;
   padding: 0.1rem 0.55rem;
 }
+/* Reason chips tinted by which way the signal pushes the score (green for,
+   red against) and how hard: a faint outline for a weak nudge, a light fill
+   for a medium one, a deeper fill with bold text for a strong one. */
+.detail-reasons li.reason-positive {
+  --tone: var(--identical);
+}
+.detail-reasons li.reason-negative {
+  --tone: var(--distinct);
+}
+.detail-reasons li:is(.reason-positive, .reason-negative) {
+  border-color: color-mix(in srgb, var(--tone) 40%, var(--rule));
+}
+.detail-reasons li:is(.reason-positive, .reason-negative).reason-strength-2 {
+  background: color-mix(in srgb, var(--tone) 12%, var(--surface));
+  border-color: color-mix(in srgb, var(--tone) 55%, var(--rule));
+  color: var(--ink);
+}
+.detail-reasons li:is(.reason-positive, .reason-negative).reason-strength-3 {
+  background: color-mix(in srgb, var(--tone) 26%, var(--surface));
+  border-color: var(--tone);
+  color: var(--ink);
+  font-weight: 600;
+}
 /* A property id inside a reason, hoverable to reveal the property's name. */
 .reason-prop {
   color: var(--ink);

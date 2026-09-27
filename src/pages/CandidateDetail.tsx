@@ -4,6 +4,7 @@ import { fetch, FetchError } from "../lib/client.ts";
 import { useAuth } from "../lib/auth-context.ts";
 import { loginUrl } from "../lib/auth-url.ts";
 import { listHref } from "../lib/list-state.ts";
+import { reasonTone } from "../lib/reasons.ts";
 import AuthBar from "../AuthBar.tsx";
 import Dialog from "../Dialog.tsx";
 import { LogoMark } from "../Logo.tsx";
@@ -232,11 +233,17 @@ export default function CandidateDetail() {
             </div>
             {candidate.reasons.length > 0 && (
               <ul className="detail-reasons">
-                {candidate.reasons.map((r) => (
-                  <li key={r}>
-                    <ReasonText text={r} propertyLabels={data?.propertyLabels} />
-                  </li>
-                ))}
+                {candidate.reasons.map((r) => {
+                  const tone = reasonTone(r);
+                  return (
+                    <li
+                      key={r}
+                      className={`reason-${tone.polarity} reason-strength-${tone.strength}`}
+                    >
+                      <ReasonText text={r} propertyLabels={data?.propertyLabels} />
+                    </li>
+                  );
+                })}
               </ul>
             )}
             <div className="detail-actions">

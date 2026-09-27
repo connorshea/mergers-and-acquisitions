@@ -2503,3 +2503,38 @@ describe("differingPersonalAccounts / scoreCandidate — social-media handles", 
     ).toEqual([]);
   });
 });
+
+describe("scoreCandidate description reason", () => {
+  const base = { aliases: {}, statements: {}, sitelinks: {} };
+  const book = (id: string, descriptions: Record<string, string>): Item => ({
+    ...base,
+    id,
+    labels: { en: "Delta of Venus" },
+    descriptions,
+  });
+
+  it("notes identical and similar descriptions without changing the score", () => {
+    const plain = scoreCandidate(book("Q1", {}), book("Q2", {}));
+    const same = scoreCandidate(
+      book("Q1", { en: "1977 short story by Anaïs Nin" }),
+      book("Q2", { en: "1977 Short Story by Anaïs Nin" }),
+    );
+    expect(same.reasons).toContain("identical description");
+    expect(same.confidence).toBe(plain.confidence);
+
+    const similar = scoreCandidate(
+      book("Q1", { en: "1977 short story by Anaïs Nin" }),
+      book("Q2", { en: "1977 short story collection by Anaïs Nin" }),
+    );
+    expect(similar.reasons.some((r) => r.startsWith("similar descriptions ("))).toBe(true);
+    expect(similar.confidence).toBe(plain.confidence);
+  });
+
+  it("only compares descriptions within a shared language", () => {
+    const result = scoreCandidate(
+      book("Q1", { en: "video game" }),
+      book("Q2", { de: "video game" }),
+    );
+    expect(result.reasons.some((r) => r.includes("description"))).toBe(false);
+  });
+});

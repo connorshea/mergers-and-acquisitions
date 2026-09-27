@@ -20,3 +20,61 @@ export function capIdReason(
   if (ids.length <= max) return null;
   return { prefix: m[1], shown: ids.slice(0, max), hidden: ids.slice(max) };
 }
+
+/** Which way a reason pushes the score, and roughly how hard (1 weak – 3 strong). */
+export interface ReasonTone {
+  polarity: "positive" | "negative" | "neutral";
+  strength: 1 | 2 | 3;
+}
+
+// Reason patterns, first match wins, with the tone of the score change behind
+// each (see scoreCandidate): strength 3 is a ≥0.35 swing or a hard cap, 2 is
+// ≈0.15–0.3, 1 is ≤0.1 (or informational). Order matters where one reason's
+// text is a prefix of another's ("different names in native script" before
+// "different names").
+const REASON_TONES: [RegExp, ReasonTone["polarity"], ReasonTone["strength"]][] = [
+  // Disqualifiers and hard caps.
+  [
+    /not a duplicate|not a merge target|can't be merged|separate objects|almost certainly different/,
+    "negative",
+    3,
+  ],
+  [/^different instance of/, "negative", 3],
+  [/^different names in native script/, "negative", 2],
+  [/^different names \(/, "negative", 3],
+  [/^different social-media accounts/, "negative", 2],
+  [/^publication\/inception\/birth years differ/, "negative", 2],
+  [/^one item references the other/, "negative", 2],
+  [/^different /, "negative", 2], // developer, publisher, author, …
+  [/^a per-subject identifier differs/, "negative", 1],
+  [/would block the merge$/, "negative", 1],
+  [/not counted/, "neutral", 1],
+  [/^shares external identifier/, "positive", 3],
+  [/^identical label|^label matches the other item's alias/, "positive", 3],
+  [/^very similar names/, "positive", 2],
+  [/^same date of (birth|death)/, "positive", 2],
+  [/^sitelink redirects to the other item's page/, "positive", 2],
+  [/^shares /, "positive", 1], // account/social, aggregator, page-section ids
+  [/^loosely similar names/, "positive", 1],
+  [/^same instance of/, "positive", 1],
+  [/^Wikipedia articles in different languages/, "positive", 1],
+  [/^identical description|^similar descriptions/, "positive", 1],
+];
+
+/**
+ * Classify a scorer reason as a positive or negative signal and how strong it
+ * is, for coloring it. "N of M shared statements agree" (worth at most 0.2)
+ * is medium when at least half agree, weak otherwise. Unknown reasons are
+ * neutral.
+ */
+export function reasonTone(text: string): ReasonTone {
+  const agree = /^(\d+) of (\d+) shared statements agree$/.exec(text);
+  if (agree) {
+    const ratio = Number(agree[1]) / Number(agree[2]);
+    return { polarity: "positive", strength: ratio >= 0.5 ? 2 : 1 };
+  }
+  for (const [re, polarity, strength] of REASON_TONES) {
+    if (re.test(text)) return { polarity, strength };
+  }
+  return { polarity: "neutral", strength: 1 };
+}

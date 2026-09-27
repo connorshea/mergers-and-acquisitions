@@ -13,6 +13,7 @@ import type { Connection } from "mysql2/promise";
 import { and, eq, inArray, or } from "drizzle-orm";
 import { db } from "./db.ts";
 import { externalIds, items, mergeCandidates } from "../db/schema.ts";
+import type { Item } from "../src/lib/compare.ts";
 import { chunk } from "../src/lib/chunk.ts";
 import { toSqlDatetime } from "./auth/time.ts";
 import { collectOpenQids } from "./item-creations.ts";
@@ -100,7 +101,9 @@ async function lookUpFates(conn: Connection, qids: string[]): Promise<ItemFate[]
 
 /**
  * Settle the open candidates on `qids` per `fates`, and drop those items from
- * the mirror. Returns how many candidates were settled.
+ * the mirror. Each settled pair keeps a snapshot of both items as mirrored, as
+ * a merge in the app does, so its detail page still shows the comparison.
+ * Returns how many candidates were settled.
  */
 async function settle(qids: string[], fates: Map<string, ItemFate>): Promise<number> {
   const stamp = toSqlDatetime(new Date());
@@ -118,13 +121,28 @@ async function settle(qids: string[], fates: Map<string, ItemFate>): Promise<num
           eq(mergeCandidates.status, "open"),
         ),
       );
+    const sides = [...new Set(pairs.flatMap((p) => [p.fromQid, p.intoQid]))];
+    const mirrored = new Map<string, Item>();
+    for (const batch of chunk(sides, SETTLE_CHUNK)) {
+      const rows = await tx
+        .select({ qid: items.qid, data: items.data })
+        .from(items)
+        .where(inArray(items.qid, batch));
+      for (const r of rows) mirrored.set(r.qid, r.data);
+    }
     let settled = 0;
     for (const p of pairs) {
       const outcome = settlement(p.fromQid, p.intoQid, fates);
       if (!outcome) continue;
+      const from = mirrored.get(p.fromQid);
+      const into = mirrored.get(p.intoQid);
       const [res] = await tx
         .update(mergeCandidates)
-        .set({ ...outcome, resolvedAt: stamp })
+        .set({
+          ...outcome,
+          resolvedAt: stamp,
+          ...(from && into ? { snapshot: { from, into } } : {}),
+        })
         // Re-checked: a reviewer may have taken the pair since the select.
         .where(and(eq(mergeCandidates.id, p.id), eq(mergeCandidates.status, "open")));
       settled += res.affectedRows;

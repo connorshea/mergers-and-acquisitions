@@ -1,0 +1,828 @@
+{
+  "pageid": 95094745,
+  "ns": 0,
+  "title": "Q96374369",
+  "lastrevid": 2524089375,
+  "modified": "2026-07-28T21:46:41Z",
+  "type": "item",
+  "id": "Q96374369",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Canna"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Canna"
+    },
+    "sq": {
+      "language": "sq",
+      "value": "Canna"
+    },
+    "ko": {
+      "language": "ko",
+      "value": "김창동"
+    },
+    "de": {
+      "language": "de",
+      "value": "Kim Chang-dong"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "金彰東"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Canna (esport)"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "South Korean progamer"
+    },
+    "ko": {
+      "language": "ko",
+      "value": "대한민국의 리그 오브 레전드 프로게이머"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "xugador profesional de videoxuegos surcoreanu"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "joueur professionnel d'esport"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "দক্ষিণ কোরীয় পেশাদার গেমার"
+    },
+    "as": {
+      "language": "as",
+      "value": "দক্ষিণ কোৰিয়ান প্ৰ'গামাৰ"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "韓國《英雄聯盟》電競選手"
+    }
+  },
+  "aliases": {
+    "de": [
+      {
+        "language": "de",
+        "value": "Canna"
+      }
+    ],
+    "ko": [
+      {
+        "language": "ko",
+        "value": "Canna"
+      },
+      {
+        "language": "ko",
+        "value": "칸나"
+      }
+    ],
+    "en": [
+      {
+        "language": "en",
+        "value": "Kim Chang-dong"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q96374369$0769f564-18b7-4f28-bd17-3bfc60525023",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q96374369$d0ba62ff-8348-4c0f-978e-d68a4916d7eb",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P569": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P569",
+          "hash": "f5539a2e5dda16fec065590c168b1ed9896ef0fc",
+          "datavalue": {
+            "value": {
+              "time": "+2000-02-11T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q96374369$d29f19e2-4389-47d4-85d1-63dad40fa7bc",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "de5102a9c0bdc5f9befc84af1b550e6cb2c4aa77",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4379701,
+              "id": "Q4379701"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q96374369$a0a63ba6-7ace-4673-a6dd-bec571c22e33",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "c88bc438bef1e0369928f7dacc18d06b2353282d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 300920,
+              "id": "Q300920"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q96374369$ee28300a-3a93-4cbd-aae2-8c111db90ce9",
+        "rank": "normal"
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "339b62525a7b199b803a5bc82386201888578f1a",
+          "datavalue": {
+            "value": "/g/11ftz_x4tl",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q96374369$7ACEFE9E-A357-4DE0-BF21-5055559FBC09",
+        "rank": "normal"
+      }
+    ],
+    "P742": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P742",
+          "hash": "d84d106127bbffcff975c4b6525686b10b265ae7",
+          "datavalue": {
+            "value": "Canna",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 1860,
+                  "id": "Q1860"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P407"],
+        "id": "Q96374369$f2e26624-4195-f353-6180-71b19aaa034d",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P742",
+          "hash": "45efb7bb36f1b50f98296aba637e9e7a6d47cd7b",
+          "datavalue": {
+            "value": "칸나",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "a10335a425d19169dd856e0a5f71735853eab0ab",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 9176,
+                  "id": "Q9176"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P407"],
+        "id": "Q96374369$498947a9-4123-a3e6-d76c-cb0d0e9fb220",
+        "rank": "normal"
+      }
+    ],
+    "P735": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P735",
+          "hash": "5e1851bb86f74c7caf3c5bcef1b36bb991fd7830",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 69514453,
+              "id": "Q69514453"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q96374369$96d39df1-4f0f-e96b-936c-58c0bb59abd8",
+        "rank": "normal"
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "4c8732ed5fd2efcd7e616db0ae504388e4456649",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 884,
+              "id": "Q884"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q96374369$bb1bed0c-4abf-c5dd-9269-e1853ecc07ab",
+        "rank": "normal"
+      }
+    ],
+    "P734": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P734",
+          "hash": "f0de3c119ee29193e6ec78b53db195ea96c5e60f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 13083721,
+              "id": "Q13083721"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q96374369$6093751f-4f69-8580-f1c6-1eed5194525d",
+        "rank": "normal"
+      }
+    ],
+    "P1412": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1412",
+          "hash": "cd3065908b0f9333c71f9bbd2cd50858b2ec3c7c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 9176,
+              "id": "Q9176"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q96374369$C0377B3D-A847-4125-AEB2-5F8CAF891B45",
+        "rank": "normal"
+      }
+    ],
+    "P103": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P103",
+          "hash": "a782aa39ff80cdabd1ce57f4cebb8bddb6dfa442",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 9176,
+              "id": "Q9176"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q96374369$97DB3CDE-B02F-4B4B-A117-7597BDBF67B4",
+        "rank": "normal"
+      }
+    ],
+    "P5797": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5797",
+          "hash": "9b461aa3d40f1597ac657b8a8dfaa43d80a8d12a",
+          "datavalue": {
+            "value": "canna",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P12229": [
+            {
+              "snaktype": "value",
+              "property": "P12229",
+              "hash": "e6c84c903c1f314cb55d236812d9c6f0705e682b",
+              "datavalue": {
+                "value": "476354382",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ],
+          "P580": [
+            {
+              "snaktype": "value",
+              "property": "P580",
+              "hash": "aea91590552fff2c34affece75d333291da4c527",
+              "datavalue": {
+                "value": {
+                  "time": "+2019-12-06T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P12229", "P580"],
+        "id": "Q96374369$2AAEA950-4F2C-46E2-88A2-B2BB73BB4DCC",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "cff4c5e1abc9cb9cf4d17362858fa9c471af2049",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "0534ef6f9df6545c4a7302ed5d92e03dc496602c",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Canna_(gamer)&oldid=1041944544",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P6262": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6262",
+          "hash": "9075b9770b6031e42f5ad9f19764b2d7b299f03a",
+          "datavalue": {
+            "value": "lol:Canna",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 1860,
+                  "id": "Q1860"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "f1c602d06352ef03fbd016e4dd2fa19422c75f22",
+              "datavalue": {
+                "value": "Canna",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P407", "P1810"],
+        "id": "Q96374369$E2B8502D-8D1E-47BC-8897-E064DC6B366A",
+        "rank": "normal"
+      }
+    ],
+    "P10803": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10803",
+          "hash": "883cb80773008caaecf038924039d3eaebd511a1",
+          "datavalue": {
+            "value": "76229",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q96374369$55540a89-43e5-9d8c-a0aa-e6ff297c7b17",
+        "rank": "normal"
+      }
+    ],
+    "P10918": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10918",
+          "hash": "fb3b001e5596b646fb9ae4a080304530bc125d19",
+          "datavalue": {
+            "value": "leagueoflegends/Canna",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9675": [
+            {
+              "snaktype": "value",
+              "property": "P9675",
+              "hash": "4ab1dc346c3da2da1184f549c22ec8c3c2500c99",
+              "datavalue": {
+                "value": "49460",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9675"],
+        "id": "Q96374369$45842805-4eb8-b0e2-b2c9-411d2262a9b6",
+        "rank": "normal"
+      }
+    ],
+    "P2416": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2416",
+          "hash": "9831c8f652243fa6e904cbdd87ae6302e8cdc3aa",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 223341,
+              "id": "Q223341"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q96374369$b063b29e-b70f-48ab-93fa-4002598e15f7",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d29746929ad4165e962615664859c87457d66769",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "28e734435addf004717860e22a206aa2c2c9869d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 112144524,
+                      "id": "Q112144524"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P10803": [
+                {
+                  "snaktype": "value",
+                  "property": "P10803",
+                  "hash": "883cb80773008caaecf038924039d3eaebd511a1",
+                  "datavalue": {
+                    "value": "76229",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a1958fb0b6c3fb14d1d014a4339f83813a2e99ce",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-04-06T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P10803", "P813"]
+          }
+        ]
+      }
+    ],
+    "P18": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "b4988a9b343598ae082ea23f0f175e1a9d5668bc",
+          "datavalue": {
+            "value": "Canna in 2020 interview.jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q96374369$bdb19fa9-45c9-debc-a106-6837a20c55fc",
+        "rank": "normal"
+      }
+    ],
+    "P11721": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11721",
+          "hash": "4b2406729b6b38b0dcdc6079851e6454cf449bba",
+          "datavalue": {
+            "value": "league-of-legends/canna",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q96374369$2283A836-BE55-459C-BF5F-898D3BAB1618",
+        "rank": "normal"
+      }
+    ],
+    "P373": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P373",
+          "hash": "5630fd71e93997f3693874d4e31fbf0aac841a1e",
+          "datavalue": {
+            "value": "Canna (gamer)",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q96374369$9689169c-4877-4898-df3c-74d3bccc7b3a",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Canna (gamer)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Canna_(gamer)"
+    },
+    "kowiki": {
+      "site": "kowiki",
+      "title": "칸나 (프로게이머)",
+      "badges": [],
+      "url": "https://ko.wikipedia.org/wiki/%EC%B9%B8%EB%82%98_(%ED%94%84%EB%A1%9C%EA%B2%8C%EC%9D%B4%EB%A8%B8)"
+    },
+    "commonswiki": {
+      "site": "commonswiki",
+      "title": "Category:Canna (gamer)",
+      "badges": [],
+      "url": "https://commons.wikimedia.org/wiki/Category:Canna_(gamer)"
+    },
+    "frwiki": {
+      "site": "frwiki",
+      "title": "Canna (esport)",
+      "badges": [],
+      "url": "https://fr.wikipedia.org/wiki/Canna_(esport)"
+    }
+  }
+}

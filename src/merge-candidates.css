@@ -1341,6 +1341,17 @@ a.chip-id:hover {
 .modal-blockers > .conflict-hint {
   margin: 0.55rem 0 0;
 }
+/* "Criterion used" picker in the different-from dialog; the preset labels are
+   long, so the select takes the dialog's width rather than its content's. */
+.criterion-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.criterion-fields select {
+  width: 100%;
+  min-width: 0;
+}
 .modal-error {
   margin: 0.6rem 0 0;
   padding: 0.55rem 0.7rem;

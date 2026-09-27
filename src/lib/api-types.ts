@@ -162,6 +162,12 @@ export interface DifferentFromEdit {
   error?: string;
 }
 
+/** Body of `POST /api/candidates/:id/different`; may be omitted. */
+export interface CandidateDifferentRequest {
+  /** An item to add as the "criterion used" (P1013) qualifier on both statements. */
+  criterion?: string;
+}
+
 export interface CandidateDifferentResponse {
   candidate: CandidateSummary;
   edits: DifferentFromEdit[];

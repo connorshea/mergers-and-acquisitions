@@ -17,6 +17,7 @@
 // user assertion) drops the stored tokens so the user is asked to log in again.
 // The network / token / clock dependencies are injectable for the unit tests;
 // production callers use the defaults.
+import { randomUUID } from "node:crypto";
 import { DEFAULT_WIKIDATA_API_URL, wikidataApiUrl } from "./auth/config.ts";
 import { deleteTokens, getAccessToken, TokenError } from "./auth/tokens.ts";
 import { userAgent } from "./auth/user-agent.ts";
@@ -420,27 +421,54 @@ export async function removeSitelink(
 }
 
 /**
- * `wbcreateclaim`: add an item-valued statement `qid` → `property` → `target`.
- * Used for "different from" (P1889) in each direction.
+ * Add an item-valued statement `qid` → `property` → `target`, optionally with
+ * one item-valued qualifier. Used for "different from" (P1889) in each
+ * direction, with an optional "criterion used" (P1013).
+ *
+ * Without a qualifier this is a plain `wbcreateclaim`. `wbcreateclaim` can't
+ * carry qualifiers, so with one it is a `wbsetclaim` of the whole statement
+ * under a fresh GUID: still one revision, summarised by Wikibase as a created
+ * claim, rather than a create followed by a separate `wbsetqualifier`.
  */
 export async function addItemClaim(
   user: EditUser,
-  opts: { qid: string; property: string; target: string; summary: string },
+  opts: {
+    qid: string;
+    property: string;
+    target: string;
+    qualifier?: { property: string; target: string };
+    summary: string;
+  },
   deps: WikidataClientDeps = defaultDeps,
 ): Promise<{ revid: number }> {
-  const body = await editRequest(
-    user,
-    {
-      action: "wbcreateclaim",
-      entity: opts.qid,
-      property: opts.property,
-      snaktype: "value",
-      value: JSON.stringify({ "entity-type": "item", id: opts.target }),
-      summary: opts.summary,
-    },
-    deps,
-    INTERACTIVE,
-  );
+  const itemSnak = (property: string, id: string) => ({
+    snaktype: "value",
+    property,
+    datavalue: { type: "wikibase-entityid", value: { "entity-type": "item", id } },
+  });
+  const params: Record<string, string> = opts.qualifier
+    ? {
+        action: "wbsetclaim",
+        claim: JSON.stringify({
+          id: `${opts.qid}$${randomUUID()}`,
+          type: "statement",
+          rank: "normal",
+          mainsnak: itemSnak(opts.property, opts.target),
+          qualifiers: {
+            [opts.qualifier.property]: [itemSnak(opts.qualifier.property, opts.qualifier.target)],
+          },
+        }),
+        summary: opts.summary,
+      }
+    : {
+        action: "wbcreateclaim",
+        entity: opts.qid,
+        property: opts.property,
+        snaktype: "value",
+        value: JSON.stringify({ "entity-type": "item", id: opts.target }),
+        summary: opts.summary,
+      };
+  const body = await editRequest(user, params, deps, INTERACTIVE);
   const revid = (body.pageinfo as { lastrevid?: number } | undefined)?.lastrevid;
   if (typeof revid !== "number") {
     throw new WikidataEditError(

@@ -18,6 +18,7 @@ import {
 import type {
   CandidateCreationsResponse,
   CandidateDetailResponse,
+  CandidateDifferentRequest,
   CandidateDifferentResponse,
   CandidateDismissResponse,
   CandidateMergeResponse,
@@ -641,8 +642,27 @@ function MergeDialog({
   );
 }
 
+// "Criterion used" (P1013) values offered for a "different from" statement:
+// the most used ones on Wikidata for P1889 between creative works, people and
+// organisations (by a QLever count of existing qualifiers), plus the
+// work-vs-series case this tool's pairs often are. Anything else goes in the
+// "Other" item-id field.
+const CRITERIA: { qid: string; label: string }[] = [
+  { qid: "Q55761780", label: "title refers to multiple creative works" },
+  { qid: "Q126045708", label: "name of creative work is identical to name of the series" },
+  { qid: "Q107214772", label: "same or similar name" },
+  { qid: "Q1361758", label: "publication date" },
+  { qid: "Q55773103", label: "personal name refers to multiple people" },
+  {
+    qid: "Q55806838",
+    label: "brand, trademark, band name or organization name refers to multiple entities",
+  },
+];
+const OTHER_CRITERION = "other";
+
 // Confirm dialog for "different from": one P1889 statement in each direction,
-// then the candidate is dismissed.
+// optionally qualified with a "criterion used" (P1013), then the candidate is
+// dismissed.
 function DifferentDialog({
   id,
   candidate,
@@ -656,12 +676,25 @@ function DifferentDialog({
 }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+  // "" for no qualifier, a preset's QID, or OTHER_CRITERION for the free field.
+  const [choice, setChoice] = useState("");
+  const [otherQid, setOtherQid] = useState("");
+
+  const other = otherQid.trim().toUpperCase();
+  const otherValid = /^Q[1-9]\d*$/.test(other);
+  const criterion = choice === OTHER_CRITERION ? (otherValid ? other : null) : choice;
 
   async function submit() {
+    if (criterion === null) return;
     setBusy(true);
     setError(null);
     try {
-      const res = await fetch("/api/candidates/:id/different", { method: "POST", params: { id } });
+      const body: CandidateDifferentRequest = criterion ? { criterion } : {};
+      const res = await fetch("/api/candidates/:id/different", {
+        method: "POST",
+        params: { id },
+        body,
+      });
       onDone(res as CandidateDifferentResponse);
     } catch (e: unknown) {
       setError(e instanceof Error ? e : new Error("Edit failed."));
@@ -678,13 +711,57 @@ function DifferentDialog({
           <b>{side(candidate.intoLabel, candidate.intoQid)}</b>, and the reverse. This candidate is
           then dismissed, and the hunt will not pair these two again.
         </p>
+        <div className="modal-section criterion-fields">
+          <label className="field">
+            <span>
+              Criterion used (
+              <a
+                href="https://www.wikidata.org/wiki/Property:P1013"
+                target="_blank"
+                rel="noreferrer"
+              >
+                P1013
+              </a>
+              ), optional
+            </span>
+            <select value={choice} onChange={(e) => setChoice(e.target.value)} disabled={busy}>
+              <option value="">None</option>
+              {CRITERIA.map((c) => (
+                <option key={c.qid} value={c.qid}>
+                  {c.label} ({c.qid})
+                </option>
+              ))}
+              <option value={OTHER_CRITERION}>Other item…</option>
+            </select>
+          </label>
+          {choice === OTHER_CRITERION && (
+            <label className="field">
+              <span>Item id</span>
+              <input
+                className="creator-input"
+                type="text"
+                value={otherQid}
+                onChange={(e) => setOtherQid(e.target.value)}
+                placeholder="e.g. Q55761780"
+                disabled={busy}
+                aria-invalid={(other !== "" && !otherValid) || undefined}
+              />
+            </label>
+          )}
+        </div>
         {error && <EditErrorNote error={error} id={id} />}
       </div>
       <div className="modal-actions">
         <button type="button" className="btn-secondary" onClick={onClose} disabled={busy}>
           Cancel
         </button>
-        <button type="button" className="btn-primary" onClick={submit} disabled={busy}>
+        <button
+          type="button"
+          className="btn-primary"
+          onClick={submit}
+          disabled={busy || criterion === null}
+          title={criterion === null ? "Enter an item id like Q55761780" : undefined}
+        >
           {busy ? "Saving…" : "Add statements"}
         </button>
       </div>

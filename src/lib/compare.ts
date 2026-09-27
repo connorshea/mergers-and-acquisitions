@@ -1016,6 +1016,9 @@ export function isSeriesSequelPair(a: Item, b: Item): boolean {
 /** Wikidata "different from" — an explicit statement that two items are distinct. */
 export const DIFFERENT_FROM = "P1889";
 
+/** Wikidata "criterion used" — the qualifier saying why a `different from` holds. */
+export const CRITERION_USED = "P1013";
+
 /**
  * True when either item carries a `different from` (P1889) statement pointing at
  * the other. Editors add this precisely to stop two look-alike items being

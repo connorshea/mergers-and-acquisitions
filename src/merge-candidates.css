@@ -1434,7 +1434,9 @@ a.chip-id:hover {
   border: 1px solid transparent;
   border-radius: 6px;
   background: var(--focus);
-  color: #fff;
+  /* White on the light theme's blue; dark on the dark theme's lighter blue,
+     where white text would fall to ~2.5:1 contrast. */
+  color: var(--surface);
   font: inherit;
   font-weight: 600;
   cursor: pointer;

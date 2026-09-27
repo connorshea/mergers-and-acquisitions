@@ -136,6 +136,21 @@ describe.skipIf(!DB_TEST)("outside merges", () => {
       { from: "Q7", into: "Q8", status: "open", resolution: null },
       { from: "Q8", into: "Q2", status: "dismissed", resolution: null },
     ]);
+    // Settled pairs keep both items as mirrored; open and already-resolved ones don't.
+    const snapshots = await db
+      .select({ snapshot: mergeCandidates.snapshot })
+      .from(mergeCandidates)
+      .orderBy(asc(mergeCandidates.id));
+    expect(snapshots.map((r) => r.snapshot && [r.snapshot.from.id, r.snapshot.into.id])).toEqual([
+      ["Q2", "Q1"],
+      ["Q7", "Q2"],
+      ["Q3", "Q4"],
+      ["Q6", "Q5"],
+      null,
+      null,
+    ]);
+    expect(snapshots[0].snapshot?.from.labels.en).toBe("Game 2");
+
     const qids = (rows: { qid: string }[]) => rows.map((r) => r.qid).sort();
     expect(qids(await db.select({ qid: items.qid }).from(items))).toEqual([
       "Q1",

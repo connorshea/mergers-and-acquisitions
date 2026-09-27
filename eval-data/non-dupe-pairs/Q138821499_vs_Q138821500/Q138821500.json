@@ -1,0 +1,302 @@
+{
+  "pageid": 132287939,
+  "ns": 0,
+  "title": "Q138821500",
+  "lastrevid": 2531813354,
+  "modified": "2026-08-16T00:43:01Z",
+  "type": "item",
+  "id": "Q138821500",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "You and I Are Polar Opposites, season 2"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "正反対な君と僕 第2期"
+    },
+    "es": {
+      "language": "es",
+      "value": "Anexo:Segunda temporada de Seihantai na Kimi to Boku"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "season of You and I Are Polar Opposites"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "Seihantai na Kimi to Boku, season 2"
+      }
+    ]
+  },
+  "claims": {
+    "P179": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P179",
+          "hash": "87a5a4a25f5e089142238ac67f9e07747681d044",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 131316156,
+              "id": "Q131316156"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1545": [
+            {
+              "snaktype": "value",
+              "property": "P1545",
+              "hash": "7241753c62a310cf84895620ea82250dcea65835",
+              "datavalue": {
+                "value": "2",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ],
+          "P155": [
+            {
+              "snaktype": "value",
+              "property": "P155",
+              "hash": "b909df1aff75b71956d152b93db2e82e2f145202",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 138821499,
+                  "id": "Q138821499"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P156": [
+            {
+              "snaktype": "novalue",
+              "property": "P156",
+              "hash": "e01eaadff052ac16e704398f5ebddbd9542b15fa",
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1545", "P155", "P156"],
+        "id": "Q138821500$1344DBDE-0441-4B9B-81DD-D952E91B2633",
+        "rank": "normal"
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "79852297cc68e70458872b0ad7e29e0d6bbe229c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 100269041,
+              "id": "Q100269041"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138821500$DEC94B99-38B4-4A55-9489-29C383CADA8D",
+        "rank": "normal"
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "1e4159d33220b24363c9fac23a859f5146a755fb",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 15712145,
+              "id": "Q15712145"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138821500$D3CB071D-9D2B-4921-8D57-D15FF1220608",
+        "rank": "normal"
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "e9d62405b1bb9b7b979f00006a344891e4c4f072",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 17,
+              "id": "Q17"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138821500$ACB53A37-6AFC-47DA-9FCD-2410C30C995F",
+        "rank": "normal"
+      }
+    ],
+    "P364": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P364",
+          "hash": "e837a5e5691aacf2a7eca565824d57545629d7fa",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5287,
+              "id": "Q5287"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138821500$6B6AF9C0-F755-4618-A9A1-DB837F7B7B35",
+        "rank": "normal"
+      }
+    ],
+    "P580": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P580",
+          "hash": "6bb127a0d1b873066f9687e176673dc5a432f5de",
+          "datavalue": {
+            "value": {
+              "time": "+2026-07-05T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q138821500$921d95a2-41b3-3d2e-28a1-0d26ebb708d4",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "c185bf8f326883ed93afb83a34fbd9d079db4df3",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "4fa2070cbe4596d95daa57a414ab3d5959335431",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=You_and_I_Are_Polar_Opposites&oldid=1356088265",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P11648": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11648",
+          "hash": "112ba6ad65bb179660f38fc667705f84938f0902",
+          "datavalue": {
+            "value": "7825",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q138821500$859BDD02-CBD3-4E64-BFE8-A12E2F2862CE",
+        "rank": "normal"
+      }
+    ],
+    "P5732": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5732",
+          "hash": "2df226fb4ff11adfdea77f23bb9dd517d3f95707",
+          "datavalue": {
+            "value": "638497",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q138821500$E25624EE-9244-4E4B-835C-6180B3CAAD3C",
+        "rank": "normal"
+      }
+    ],
+    "P8729": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8729",
+          "hash": "13f8c6e9b4aa536097504e7936d32d8d6ba9cf76",
+          "datavalue": {
+            "value": "210031",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q138821500$495fb149-42a4-6d31-31d1-00d6395f1422",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "eswiki": {
+      "site": "eswiki",
+      "title": "Anexo:Segunda temporada de Seihantai na Kimi to Boku",
+      "badges": [],
+      "url": "https://es.wikipedia.org/wiki/Anexo:Segunda_temporada_de_Seihantai_na_Kimi_to_Boku"
+    }
+  }
+}

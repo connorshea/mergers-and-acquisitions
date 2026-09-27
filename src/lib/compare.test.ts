@@ -1208,6 +1208,28 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(result.reasons[0]).toContain("per-title identifiers differ");
   });
 
+  it("treats differing MyAnimeList + AniList ids as two works, for anime and manga", () => {
+    // Q137844249 vs. Q137844250: Robotan, the 1966 anime and its 1986 remake.
+    // Q133738050 vs. Q133738052: Magic User's Club, two manga series.
+    for (const [mal, anilist] of [
+      ["P4086", "P8729"],
+      ["P4087", "P8731"],
+    ]) {
+      const item = (id: string, value: string): Item => ({
+        ...base,
+        id,
+        labels: { en: "Robotan" },
+        statements: stmt({
+          [mal]: [{ type: "external-id" as const, value }],
+          [anilist]: [{ type: "external-id" as const, value }],
+        }),
+      });
+      const result = scoreCandidate(item("Q60", "19875"), item("Q61", "5223"));
+      expect(result.confidence).toBeLessThanOrEqual(0.1);
+      expect(result.reasons[0]).toContain(`per-title identifiers differ (${mal}, ${anilist})`);
+    }
+  });
+
   it("counts itch.io URL (a url-typed value, not an ExternalId) toward the per-title rule", () => {
     // itch.io URL (P7294) is a `url` datatype; paired with a differing Steam id
     // that's two distinct per-title pages, so the cap fires by property id even

@@ -1791,7 +1791,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       expect(isWorkEditionPair(a, b)).toBe(true);
       const result = scoreCandidate(a, b);
       expect(result.confidence).toBeLessThanOrEqual(0.1);
-      expect(result.reasons[0]).toContain("edition or reissue");
+      expect(result.reasons[0]).toContain("reissue or recording");
       expect(result.reasons.some((r) => r.startsWith("one item references the other"))).toBe(false);
     }
   });

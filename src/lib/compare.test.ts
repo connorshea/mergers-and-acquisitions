@@ -1796,6 +1796,30 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     }
   });
 
+  it("caps a recording and its composition (P2550) below the candidate floor", () => {
+    const work: Item = {
+      ...base,
+      id: "Q600",
+      labels: { en: "Blue Champagne" },
+      statements: stmt({ P577: [{ type: "time", value: "+1941-00-00T00:00:00Z" }] }),
+    };
+    const recording: Item = {
+      ...work,
+      id: "Q601",
+      statements: { ...work.statements, P2550: [{ type: "item" as const, value: "Q600" }] },
+    };
+    for (const [a, b] of [
+      [recording, work],
+      [work, recording],
+    ]) {
+      expect(isWorkEditionPair(a, b)).toBe(true);
+      const result = scoreCandidate(a, b);
+      expect(result.confidence).toBeLessThanOrEqual(0.1);
+      expect(result.reasons[0]).toContain("reissue or recording");
+      expect(result.reasons.some((r) => r.startsWith("one item references the other"))).toBe(false);
+    }
+  });
+
   it("caps a whole and its part (P527 / P361) below the candidate floor", () => {
     // An album and its same-titled track share a label, P31-level type and date.
     const album: Item = {

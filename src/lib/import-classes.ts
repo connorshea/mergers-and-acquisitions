@@ -136,7 +136,11 @@ export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
   },
   {
     name: "WikiProject Companies",
-    classes: [{ qid: "Q783794", label: "company" }],
+    classes: [
+      { qid: "Q4830453", label: "business" },
+      { qid: "Q6881511", label: "enterprise" },
+      { qid: "Q783794", label: "company" },
+    ],
   },
   {
     name: "WikiProject Fictional universes",

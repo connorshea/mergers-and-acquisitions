@@ -1767,6 +1767,59 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(isWorkEditionPair(elsewhere, work)).toBe(false);
   });
 
+  it("caps a reissue and its original (P9237) below the candidate floor", () => {
+    // Q135092461 (1984 reissue) vs. Q135092435 (1983 original): same label, artist.
+    const original: Item = {
+      ...base,
+      id: "Q135092435",
+      labels: { en: "Kärlek" },
+      statements: stmt({ P577: [{ type: "time", value: "+1983-00-00T00:00:00Z" }] }),
+    };
+    const reissue: Item = {
+      ...original,
+      id: "Q135092461",
+      statements: {
+        ...original.statements,
+        P577: [{ type: "time", value: "+1984-00-00T00:00:00Z" }],
+        P9237: [{ type: "item" as const, value: "Q135092435" }],
+      },
+    };
+    for (const [a, b] of [
+      [reissue, original],
+      [original, reissue],
+    ]) {
+      expect(isWorkEditionPair(a, b)).toBe(true);
+      const result = scoreCandidate(a, b);
+      expect(result.confidence).toBeLessThanOrEqual(0.1);
+      expect(result.reasons[0]).toContain("reissue or recording");
+      expect(result.reasons.some((r) => r.startsWith("one item references the other"))).toBe(false);
+    }
+  });
+
+  it("caps a recording and its composition (P2550) below the candidate floor", () => {
+    const work: Item = {
+      ...base,
+      id: "Q600",
+      labels: { en: "Blue Champagne" },
+      statements: stmt({ P577: [{ type: "time", value: "+1941-00-00T00:00:00Z" }] }),
+    };
+    const recording: Item = {
+      ...work,
+      id: "Q601",
+      statements: { ...work.statements, P2550: [{ type: "item" as const, value: "Q600" }] },
+    };
+    for (const [a, b] of [
+      [recording, work],
+      [work, recording],
+    ]) {
+      expect(isWorkEditionPair(a, b)).toBe(true);
+      const result = scoreCandidate(a, b);
+      expect(result.confidence).toBeLessThanOrEqual(0.1);
+      expect(result.reasons[0]).toContain("reissue or recording");
+      expect(result.reasons.some((r) => r.startsWith("one item references the other"))).toBe(false);
+    }
+  });
+
   it("caps a whole and its part (P527 / P361) below the candidate floor", () => {
     // An album and its same-titled track share a label, P31-level type and date.
     const album: Item = {

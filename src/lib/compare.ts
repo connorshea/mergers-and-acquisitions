@@ -1459,18 +1459,20 @@ export function isPermanentDuplicatePair(a: Item, b: Item): boolean {
 export const EDITION_OF = "P629";
 /** Wikidata "has edition or translation" — the inverse, a work naming its editions. */
 export const HAS_EDITION = "P747";
+/** Wikidata "reissue of" — a re-release (e.g. an album reissue) naming the original. */
+export const REISSUE_OF = "P9237";
 
 /**
  * True when the pair is explicitly linked as a work and one of its editions:
- * either item's "edition or translation of" (P629) or "has edition or
- * translation" (P747) names the other. An edition is modelled as its own item
+ * either item's "edition or translation of" (P629), "has edition or
+ * translation" (P747) or "reissue of" (P9237) names the other. An edition is modelled as its own item
  * on purpose (a regional release, a translation, a remaster's disc), so two
  * such items share a title, date and creator by design — yet the link is an
  * editor stating they are distinct. Like P1889, it is authoritative.
  */
 export function isWorkEditionPair(a: Item, b: Item): boolean {
   const points = (from: Item, toId: string) =>
-    [EDITION_OF, HAS_EDITION].some((pid) =>
+    [EDITION_OF, HAS_EDITION, REISSUE_OF].some((pid) =>
       (from.statements[pid] ?? []).some((v) => v.type === "item" && v.value === toId),
     );
   return points(a, b.id) || points(b, a.id);
@@ -1572,7 +1574,7 @@ export function yearDisambiguatedWikis(a: Item, b: Item): string[] {
  * item — e.g. a game's "part of the series" (P179) naming the series it is being
  * compared against, or "based on" / "followed by" pointing across the pair. An
  * item doesn't reference itself, so any such link means the two are related but
- * distinct subjects. (P1889, P2959, P629/P747 and P527/P361 are excluded: they
+ * distinct subjects. (P1889, P2959, P629/P747/P9237 and P527/P361 are excluded: they
  * are handled, more strongly, by isDeclaredDifferent, isPermanentDuplicatePair,
  * isWorkEditionPair and isPartWholePair.)
  */
@@ -1585,6 +1587,7 @@ export function crossReferenceProps(a: Item, b: Item): Set<string> {
         pid === PERMANENT_DUPLICATE ||
         pid === EDITION_OF ||
         pid === HAS_EDITION ||
+        pid === REISSUE_OF ||
         pid === HAS_PART ||
         pid === PART_OF
       )
@@ -2138,12 +2141,14 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     score = Math.min(score, 0.1);
   }
 
-  // A work and its edition (P629 / P747 linking the pair) are distinct items by
+  // A work and its edition (P629 / P747 / P9237 linking the pair) are distinct items by
   // design: they share a title, date and creator, so everything else reads as a
   // near-perfect match. The link says otherwise — cap below the persistence
   // floor so the pair never surfaces, overriding even shared ids.
   if (isWorkEditionPair(a, b)) {
-    reasons.unshift("linked as a work and its edition on Wikidata (P629/P747), not a duplicate");
+    reasons.unshift(
+      "linked as a work and its edition or reissue on Wikidata (P629/P747/P9237), not a duplicate",
+    );
     score = Math.min(score, 0.1);
   }
 

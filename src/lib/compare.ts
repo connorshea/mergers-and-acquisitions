@@ -2156,6 +2156,21 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     score = Math.min(score, 0.1);
   }
 
+  // An id one item declares "shared with" (P4070) the other is an editor saying
+  // one identifier legitimately covers two distinct items (a company and its
+  // successor, a game and its re-release), which is precisely the shape of a
+  // pair that looks like a duplicate. It's already ignored as evidence above;
+  // the declaration also says they are separate, so cap below the persistence
+  // floor like the other explicit links.
+  if (sharedWithOther.size > 0) {
+    reasons.unshift(
+      `an identifier is declared shared between the two items (P4070), which are distinct: ${[
+        ...sharedWithOther,
+      ].join(", ")}`,
+    );
+    score = Math.min(score, 0.1);
+  }
+
   // A whole and one of its parts (P527 / P361 linking the pair) — e.g. an
   // album and its title track — share a label, date and often an id, but
   // nothing is part of itself. Cap below the persistence floor, like editions.

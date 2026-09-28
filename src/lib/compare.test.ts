@@ -1971,6 +1971,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(qualified.reasons.some((r) => r.includes("shared between the two items (P4070)"))).toBe(
       true,
     );
+    expect(qualified.confidence).toBeLessThanOrEqual(0.1);
     expect(qualified.confidence).toBeLessThan(unqualified.confidence);
     // The ignored id must not inflate the statement-agreement term either.
     expect(qualified.reasons.some((r) => r.includes("shared statements agree"))).toBe(false);

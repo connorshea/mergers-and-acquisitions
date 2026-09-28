@@ -312,6 +312,18 @@ export function safeHttpUrl(raw: string): string | null {
   return url.protocol === "http:" || url.protocol === "https:" ? raw : null;
 }
 
+/** The URL without its http(s) scheme or trailing slashes. */
+const schemelessUrl = (raw: string): string =>
+  raw
+    .trim()
+    .replace(/^https?:\/\//i, "")
+    .replace(/\/+$/, "");
+
+/** Whether two URLs differ at most by http vs https and a trailing slash. */
+function sameUrlIgnoringScheme(a: string, b: string): boolean {
+  return schemelessUrl(a) === schemelessUrl(b);
+}
+
 /**
  * The DOI a doi.org resolver link points at, lowercased (DOIs are
  * case-insensitive), else null. The resolver answers on several hosts —
@@ -394,9 +406,10 @@ export function compareValues(x: Value, y: Value, pid?: string): [Status, string
     case "external-id":
       return ["distinct"]; // must match exactly
     case "url":
-      // A trailing slash alone ("https://x.cat/" vs "https://x.cat") is the
-      // same page, so count it as an exact match.
-      if (x.value.replace(/\/+$/, "") === y.value.replace(/\/+$/, "")) return ["identical"];
+      // The scheme ("http://x.cat" vs "https://x.cat") or a trailing slash alone
+      // ("https://x.cat/" vs "https://x.cat") is the same page, so count it as an
+      // exact match.
+      if (sameUrlIgnoringScheme(x.value, y.value)) return ["identical"];
       if (normalize(x.value) === normalize(y.value)) return ["similar", "same host and path"];
       {
         const da = doiOf(x.value);

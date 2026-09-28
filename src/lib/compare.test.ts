@@ -263,11 +263,17 @@ describe("compareValues", () => {
     ).toBe("distinct");
   });
 
-  it("treats URLs differing only by a trailing slash as identical", () => {
+  it("treats URLs differing only by http vs https or a trailing slash as identical", () => {
     expect(
       compareValues(
         { type: "url", value: "https://paisinvisible.cat/" },
         { type: "url", value: "https://paisinvisible.cat" },
+      ),
+    ).toEqual(["identical"]);
+    expect(
+      compareValues(
+        { type: "url", value: "http://example.com/a" },
+        { type: "url", value: "https://example.com/a/" },
       ),
     ).toEqual(["identical"]);
     expect(

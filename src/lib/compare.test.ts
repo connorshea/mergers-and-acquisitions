@@ -263,7 +263,7 @@ describe("compareValues", () => {
     ).toBe("distinct");
   });
 
-  it("treats URLs differing only by a trailing slash as identical", () => {
+  it("treats URLs differing only by http vs https or a trailing slash as identical", () => {
     expect(
       compareValues(
         { type: "url", value: "https://paisinvisible.cat/" },
@@ -272,10 +272,32 @@ describe("compareValues", () => {
     ).toEqual(["identical"]);
     expect(
       compareValues(
+        { type: "url", value: "http://example.com/a" },
+        { type: "url", value: "https://example.com/a/" },
+      ),
+    ).toEqual(["identical"]);
+    expect(
+      compareValues(
         { type: "url", value: "http://www.example.com/a" },
         { type: "url", value: "https://example.com/a/" },
       ),
     ).toEqual(["similar", "same host and path"]);
+  });
+
+  it("treats doi.org links to the same DOI as similar", () => {
+    // Q141438571 vs Q125525593: the same book via doi.org and dx.doi.org.
+    expect(
+      compareValues(
+        { type: "url", value: "https://doi.org/10.1017/cbo9780511585340" },
+        { type: "url", value: "http://dx.doi.org/10.1017/CBO9780511585340" },
+      ),
+    ).toEqual(["similar", "same DOI"]);
+    expect(
+      compareValues(
+        { type: "url", value: "https://doi.org/10.1017/cbo9780511585340" },
+        { type: "url", value: "https://doi.org/10.1017/cbo9780511585341" },
+      )[0],
+    ).toBe("distinct");
   });
 
   it("treats different types as distinct", () => {

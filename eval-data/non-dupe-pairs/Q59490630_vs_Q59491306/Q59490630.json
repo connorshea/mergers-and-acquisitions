@@ -1,0 +1,910 @@
+{
+  "pageid": 59391871,
+  "ns": 0,
+  "title": "Q59490630",
+  "lastrevid": 2550449477,
+  "modified": "2026-09-28T10:40:42Z",
+  "type": "item",
+  "id": "Q59490630",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Island Records Ltd."
+    },
+    "an": {
+      "language": "an",
+      "value": "Island Records Ltd."
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Island Records Ltd."
+    },
+    "ca": {
+      "language": "ca",
+      "value": "Island Records Ltd."
+    },
+    "da": {
+      "language": "da",
+      "value": "Island Records Ltd."
+    },
+    "de": {
+      "language": "de",
+      "value": "Island Records Ltd."
+    },
+    "es": {
+      "language": "es",
+      "value": "Island Records Ltd."
+    },
+    "eu": {
+      "language": "eu",
+      "value": "Island Records Ltd."
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Island Records Ltd."
+    },
+    "gl": {
+      "language": "gl",
+      "value": "Island Records Ltd."
+    },
+    "hu": {
+      "language": "hu",
+      "value": "Island Records Ltd."
+    },
+    "it": {
+      "language": "it",
+      "value": "Island Records Ltd."
+    },
+    "nb": {
+      "language": "nb",
+      "value": "Island Records Ltd."
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Island Records Ltd."
+    },
+    "nn": {
+      "language": "nn",
+      "value": "Island Records Ltd."
+    },
+    "pl": {
+      "language": "pl",
+      "value": "Island Records Ltd."
+    },
+    "pt": {
+      "language": "pt",
+      "value": "Island Records Ltd."
+    },
+    "sv": {
+      "language": "sv",
+      "value": "Island Records Ltd."
+    },
+    "sl": {
+      "language": "sl",
+      "value": "Island Records Ltd."
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Island Records Ltd."
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "UK record company 1962-1999"
+    },
+    "sl": {
+      "language": "sl",
+      "value": "britansko snemalno podjetje in glasbena založba (1962–1999)"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "Island Records Limited"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "923e40723841966dc089eced04d47ead98803ed4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2442401,
+              "id": "Q2442401"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q59490630$a11d6d5a-487c-8924-37fe-5d4b0cf71978",
+        "rank": "normal"
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "a44880420787fb348836dc51d3babc5227c4ef7e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 145,
+              "id": "Q145"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q59490630$f8302a08-4ee2-b1d9-4a0d-7fbbbdcffd92",
+        "rank": "normal"
+      }
+    ],
+    "P1454": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1454",
+          "hash": "411179a6899a55ae5536ddbc7591ca3c6f6e7725",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6832945,
+              "id": "Q6832945"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q59490630$163d51b1-4a01-a713-9dcc-61d4e0cf776e",
+        "rank": "normal"
+      }
+    ],
+    "P1448": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1448",
+          "hash": "9f82a70945e0bb4182d4f40164275ac536652bac",
+          "datavalue": {
+            "value": {
+              "text": "Island Records Limited",
+              "language": "en"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q59490630$56f2d266-4c89-6673-7916-746233ac6010",
+        "rank": "normal"
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "2562c9f3bd7c792c706978520162c860dfa9d453",
+          "datavalue": {
+            "value": {
+              "time": "+1962-05-08T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q59490630$208aa981-48da-0a39-2b24-ea6343306ee5",
+        "rank": "normal"
+      }
+    ],
+    "P576": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P576",
+          "hash": "d52da83932fb6dae82568b251253b2e29dcc6232",
+          "datavalue": {
+            "value": {
+              "time": "+1999-03-29T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q59490630$b8429430-4b6f-ee96-d4e3-e78b9e217b88",
+        "rank": "normal"
+      }
+    ],
+    "P2622": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2622",
+          "hash": "53d7f645a8dc9d39af85b6777680b5ec851038cb",
+          "datavalue": {
+            "value": "00723336",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "b756d73c58902018842e1ef42e079328ad7eef3d",
+              "datavalue": {
+                "value": "ISLAND RECORDS LIMITED",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ],
+          "P4070": [
+            {
+              "snaktype": "value",
+              "property": "P4070",
+              "hash": "2c2bed5f4ec0ad32c428bfafdeb549e22cd5d8b1",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 59490474,
+                  "id": "Q59490474"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            {
+              "snaktype": "value",
+              "property": "P4070",
+              "hash": "fd0e855fe9e38c7313b42c58d2491d6faccc30a6",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 59491306,
+                  "id": "Q59491306"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810", "P4070"],
+        "id": "Q59490630$634872f1-40bb-f576-17ae-bfa77853bb73",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a10f6c89c8e56836b61a74c587feb1cf54be6ccd",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "bb8b6a8c9f68f061441df77def72e85043544b06",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2018-12-06T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P813"]
+          }
+        ]
+      }
+    ],
+    "P1955": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1955",
+          "hash": "f13b30f45c565b3ccced4aa4382b51f4f4174ae2",
+          "datavalue": {
+            "value": "63313",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "fd500afe70aaae028051d63a89eb5e38277f3bdb",
+              "datavalue": {
+                "value": "Island Records Ltd.",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q59490630$66225b8c-4003-55fa-f9c5-f5f6448c6c44",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a10f6c89c8e56836b61a74c587feb1cf54be6ccd",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "bb8b6a8c9f68f061441df77def72e85043544b06",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2018-12-06T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P813"]
+          }
+        ]
+      }
+    ],
+    "P112": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P112",
+          "hash": "4878c34d1ec91560ba46809b299d95af9e73ac36",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 861129,
+              "id": "Q861129"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q59490630$cdc3d62d-4623-b598-c72a-f65fb9ef68be",
+        "rank": "normal"
+      }
+    ],
+    "P966": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P966",
+          "hash": "131b4dc404f44f1f0ba7b0b385ca3a90373e6a8c",
+          "datavalue": {
+            "value": "cc92b855-5ed8-4004-90ae-922442716f7a",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "fd500afe70aaae028051d63a89eb5e38277f3bdb",
+              "datavalue": {
+                "value": "Island Records Ltd.",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q59490630$4ef475e5-4241-5259-2cb6-fe66ab4a9227",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a10f6c89c8e56836b61a74c587feb1cf54be6ccd",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "bb8b6a8c9f68f061441df77def72e85043544b06",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2018-12-06T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P813"]
+          }
+        ]
+      }
+    ],
+    "P199": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P199",
+          "hash": "5a63fe85571f044a3489987c3be60e38a1766bbc",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 190585,
+              "id": "Q190585"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P3831": [
+            {
+              "snaktype": "value",
+              "property": "P3831",
+              "hash": "218c8a17e48567e9588e470260e02784af616c6d",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 18127,
+                  "id": "Q18127"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P3831"],
+        "id": "Q59490630$cf7dc0e6-4bc7-3b24-1937-266fa3e7d5da",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a10f6c89c8e56836b61a74c587feb1cf54be6ccd",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "bb8b6a8c9f68f061441df77def72e85043544b06",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2018-12-06T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P813"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P199",
+          "hash": "c506c27fb22f824b01a5767054d41bc53297b359",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 83954970,
+              "id": "Q83954970"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P3831": [
+            {
+              "snaktype": "value",
+              "property": "P3831",
+              "hash": "218c8a17e48567e9588e470260e02784af616c6d",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 18127,
+                  "id": "Q18127"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P3831"],
+        "id": "Q59490630$c21d6252-476f-bb65-d10b-22e7c49e3b49",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "82f5a49b852da9fe23e04652bde8b933092424fc",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "7c61aac6c6281537ad2f11c0ec89aba86a399b1b",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2020-01-29T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P813"]
+          }
+        ]
+      }
+    ],
+    "P1366": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1366",
+          "hash": "8173de28863855269dfbfbc8f391837207d69935",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 59490474,
+              "id": "Q59490474"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P585": [
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "7f282577ef67ae74d97a89ae99fdb241ff8f2f04",
+              "datavalue": {
+                "value": {
+                  "time": "+1999-03-29T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P585"],
+        "id": "Q59490630$63b42a62-459a-42ee-bb5a-ea1b83088e44",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a10f6c89c8e56836b61a74c587feb1cf54be6ccd",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "bb8b6a8c9f68f061441df77def72e85043544b06",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2018-12-06T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P813"]
+          }
+        ]
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "58070ca36e9a0387a9aeffc2fbcd962556d86e94",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 423833,
+              "id": "Q423833"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1013": [
+            {
+              "snaktype": "value",
+              "property": "P1013",
+              "hash": "82864c6fc480800281dce215b9daae0539a34ca8",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 55806838,
+                  "id": "Q55806838"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1013"],
+        "id": "Q59490630$83487725-4271-9928-696e-d99fc2aa96f5",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a10f6c89c8e56836b61a74c587feb1cf54be6ccd",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "bb8b6a8c9f68f061441df77def72e85043544b06",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2018-12-06T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P813"]
+          }
+        ]
+      }
+    ],
+    "P159": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P159",
+          "hash": "2af16b395e120a14a68ac0e70ccfbcd5d2abfafb",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 84,
+              "id": "Q84"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q59490630$D9AFEEC8-B2AD-482C-8C98-1797B8B22DE4",
+        "rank": "normal"
+      }
+    ],
+    "P214": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P214",
+          "hash": "94dfe29bb00e5704ce74a60a7df513b3caa0e78c",
+          "datavalue": {
+            "value": "154961070",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q59490630$84AD5CFE-E330-4A00-B6A2-714F4FFF4BA0",
+        "rank": "normal"
+      }
+    ],
+    "P269": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P269",
+          "hash": "b1871f5d2b404b00fb08acc484cd31fe8f43e185",
+          "datavalue": {
+            "value": "158304225",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q59490630$5859B0CE-FE60-45C2-9B26-0FCC77046D2F",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "231e501ccb1c9f71e5e5c05de012dbf1098a3208",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "6b7d4330c4aac4caec4ede9de0311ce273f88ecd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 54919,
+                      "id": "Q54919"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "9c07da73b84889803ebd6601ba04b4579c39577d",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-07-06T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P214": [
+                {
+                  "snaktype": "value",
+                  "property": "P214",
+                  "hash": "94dfe29bb00e5704ce74a60a7df513b3caa0e78c",
+                  "datavalue": {
+                    "value": "154961070",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813", "P214"]
+          }
+        ]
+      }
+    ],
+    "P1320": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1320",
+          "hash": "da2f7765533b3f547511e15b8f452057df613f35",
+          "datavalue": {
+            "value": "gb/00723336",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P4070": [
+            {
+              "snaktype": "value",
+              "property": "P4070",
+              "hash": "fd0e855fe9e38c7313b42c58d2491d6faccc30a6",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 59491306,
+                  "id": "Q59491306"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P4070"],
+        "id": "Q59490630$EB125E27-C6BC-4B5C-BEE7-AA2300D3D842",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "61e8fabac4148f4ad55a7385895d50c87895304c",
+            "snaks": {
+              "P3452": [
+                {
+                  "snaktype": "value",
+                  "property": "P3452",
+                  "hash": "938d366fd165f19d1c02ee017483d912bf8dbd34",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 257303,
+                      "id": "Q257303"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P3452"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {}
+}

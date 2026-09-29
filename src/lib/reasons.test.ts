@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vite-plus/test";
-import { capIdReason, reasonTone } from "./reasons.ts";
+import { capIdReason, confidenceVerdict, groupReasons, reasonPids, reasonTone } from "./reasons.ts";
 
 describe("capIdReason", () => {
   it("splits an identifier list past the cap", () => {
@@ -54,5 +54,48 @@ describe("reasonTone", () => {
   it("scales shared-statement agreement by the share that agrees", () => {
     expect(reasonTone("4 of 18 shared statements agree").strength).toBe(1);
     expect(reasonTone("9 of 10 shared statements agree").strength).toBe(2);
+  });
+});
+
+describe("groupReasons", () => {
+  it("splits signals by polarity, strongest first, and pulls out the ceiling note", () => {
+    const g = groupReasons([
+      "same instance of (P31)",
+      "shares external identifier: P8383",
+      "different developer",
+      "identifier declared shared between the two items (P4070), not counted: P1",
+      "held below near-certain: the names only loosely match",
+    ]);
+    expect(g.positive.map((r) => r.text)).toEqual([
+      "shares external identifier: P8383",
+      "same instance of (P31)",
+    ]);
+    expect(g.negative.map((r) => r.text)).toEqual(["different developer"]);
+    expect(g.notes).toEqual([
+      "identifier declared shared between the two items (P4070), not counted: P1",
+    ]);
+    expect(g.heldBelow).toBe("the names only loosely match");
+    expect(groupReasons(["held below near-certain — corroboration is thin"]).heldBelow).toBe(
+      "corroboration is thin",
+    );
+  });
+});
+
+describe("confidenceVerdict", () => {
+  it("reads the score in words", () => {
+    expect(confidenceVerdict(0.95)).toBe("Almost certainly the same item");
+    expect(confidenceVerdict(0.6)).toBe("Likely the same item");
+    expect(confidenceVerdict(0.45)).toBe("Possibly the same item");
+    expect(confidenceVerdict(0.1)).toBe("Probably different items");
+  });
+});
+
+describe("reasonPids", () => {
+  it("lists each property id once", () => {
+    expect(reasonPids("one item references the other (P155, P156, P155)")).toEqual([
+      "P155",
+      "P156",
+    ]);
+    expect(reasonPids("identical label")).toEqual([]);
   });
 });

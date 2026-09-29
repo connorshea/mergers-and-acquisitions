@@ -1249,6 +1249,13 @@ const COUNTRY_PROP_LABELS: Record<(typeof COUNTRY_PROPS)[number], string> = {
 const YEAR_GAP_PROPS = ["P577", "P571", "P569"] as const;
 
 /**
+ * Start of work period: the founding-year equivalent for a band or studio
+ * that records it instead of inception. Not for people, whose career starts
+ * decades after the birth year the other item may carry.
+ */
+const WORK_PERIOD_START = "P2031";
+
+/**
  * Same-wiki sitelink clashes (two different, non-redirect pages on one wiki) at
  * or beyond this are treated as near-conclusive that the items are different
  * subjects: several independent wiki communities each keep a separate article
@@ -2113,10 +2120,12 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // the two items, so a re-release date listed on one side doesn't trip it.
   // Inception (P571) and date of birth (P569) count alongside publication date
   // (P577): they are the equivalent date for bands, companies and people.
-  // Wikibase times are signed (`+1993-08-31T00:00:00Z`), so read the year up to
-  // its first dash rather than a fixed four characters.
+  // Start of work period (P2031) counts too, except for people. Wikibase times
+  // are signed (`+1993-08-31T00:00:00Z`), so read the year up to its first dash
+  // rather than a fixed four characters.
   const years = (item: Item): number[] =>
-    YEAR_GAP_PROPS.flatMap((pid) => item.statements[pid] ?? [])
+    [...YEAR_GAP_PROPS, ...(isHuman(item) ? [] : [WORK_PERIOD_START])]
+      .flatMap((pid) => item.statements[pid] ?? [])
       .filter((v) => v.type === "time")
       .map((v) => parseInt(/^[+-]?\d+/.exec(v.value)?.[0] ?? "", 10))
       .filter((n) => Number.isFinite(n));

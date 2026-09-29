@@ -1,0 +1,257 @@
+{
+  "pageid": 54798813,
+  "ns": 0,
+  "title": "Q54638870",
+  "lastrevid": 2400635831,
+  "modified": "2025-09-04T23:35:48Z",
+  "type": "item",
+  "id": "Q54638870",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Adams Family Correspondence, Volume 8: March 1787-December 1789"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "Adams Family Hogan, Margaret A. Taylor, C. James Rodrique, Jessie May Woodward, Hobson Lint, Gregg L. Claffey, Mary T. - 2007"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "boek"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5963e3cad5eee4ae1cffbefbac15327800b9a7e6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7725634,
+              "id": "Q7725634"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q54638870$AD763FE2-096B-4A17-811C-DE098E678451",
+        "rank": "normal"
+      }
+    ],
+    "P123": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P123",
+          "hash": "00c28a1185570a8fad752025a7d6f76fbc810563",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1587900,
+              "id": "Q1587900"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q54638870$CE27D4BE-E862-45CD-B8E4-4EA0F25F25ED",
+        "rank": "normal"
+      }
+    ],
+    "P724": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P724",
+          "hash": "64dc8a85f04ca5fca9e65f47e1ef1da90aaf8846",
+          "datavalue": {
+            "value": "adamsfamilycorre03butt",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q54638870$CAA83A0A-FD91-421D-A854-5BCF07F752F7",
+        "rank": "normal"
+      }
+    ],
+    "P8383": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8383",
+          "hash": "867462c6aeba2ba28f04c38ed9e56ec5c74ea476",
+          "datavalue": {
+            "value": "1137907",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q54638870$65fff73c-19fd-42f4-b7b8-e94ca370c6ea",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "beae309597a1e2b2989578457715da79a4a354fe",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "8eff9352009a4ea5ac974ecbfc5102c6a56bc237",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2020-09-18T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "a0e84923b8d99fc8a5013954ac16befd8e4f4696",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 2359213,
+                      "id": "Q2359213"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P813", "P248"]
+          }
+        ]
+      }
+    ],
+    "P747": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P747",
+          "hash": "724e568e1527aaaa4b22a1a6c4b9850d4e20462a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 136026999,
+              "id": "Q136026999"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P577": [
+            {
+              "snaktype": "value",
+              "property": "P577",
+              "hash": "0a3e99f4227f0f2947d2b587a8fdcbd2ce106dd2",
+              "datavalue": {
+                "value": {
+                  "time": "+2007-03-31T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P437": [
+            {
+              "snaktype": "value",
+              "property": "P437",
+              "hash": "eb73f22cda56fbbf865734ef0b8374fbaa075ca7",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 193955,
+                  "id": "Q193955"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 1860,
+                  "id": "Q1860"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P577", "P437", "P407"],
+        "id": "Q54638870$F5D227BA-9721-4EE4-B228-EE1E71551E39",
+        "rank": "normal"
+      }
+    ],
+    "P1085": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1085",
+          "hash": "0238cd879cd4cee4411f6108db8653ef4ddcd01a",
+          "datavalue": {
+            "value": "5586071",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q54638870$FAACC990-3DBE-4658-A8FA-FDCA0396B9D8",
+        "rank": "normal"
+      }
+    ],
+    "P648": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P648",
+          "hash": "0f12857f938cac8b4337c9408f560b1b18b7b039",
+          "datavalue": {
+            "value": "OL8275382W",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q54638870$457DF573-10FE-40A8-A3DE-9265BB635948",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

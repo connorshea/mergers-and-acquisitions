@@ -1414,6 +1414,87 @@ export function isSeriesSequelPair(a: Item, b: Item): boolean {
   return ia.num !== ib.num;
 }
 
+/** Division words that number the parts of a set, folded to one spelling each. */
+const DIVISION_WORDS: Record<string, string> = {
+  volume: "volume",
+  vol: "volume",
+  tome: "volume",
+  tomo: "volume",
+  band: "volume",
+  bd: "volume",
+  part: "part",
+  pt: "part",
+  teil: "part",
+  book: "book",
+  issue: "issue",
+  season: "season",
+  episode: "episode",
+  chapter: "chapter",
+};
+const DIVISION_RE = new RegExp(
+  `(?<![\\p{L}\\p{N}])(${Object.keys(DIVISION_WORDS).join("|")})\\.?\\s*(\\d{1,4}|[IVXLC]+)(?![\\p{L}\\p{N}])`,
+  "giu",
+);
+
+/**
+ * The numbered divisions a title names anywhere in it, e.g. "Walter Benjamin:
+ * Selected Writings, Volume 2: Part 1: 1927-1930" → volume {2}, part {1}.
+ * Abbreviations fold together ("Vol. 3" is volume 3). Roman numerals must be
+ * uppercase ("Volume IV"), so a word like "mix" after "Book" isn't read as one.
+ */
+export function titleDivisions(label: string): Map<string, Set<number>> {
+  const out = new Map<string, Set<number>>();
+  for (const m of label.normalize("NFKC").matchAll(DIVISION_RE)) {
+    const word = DIVISION_WORDS[m[1].toLowerCase()];
+    const tok = m[2];
+    const num = /^\d+$/.test(tok)
+      ? parseInt(tok, 10)
+      : tok === tok.toUpperCase()
+        ? romanToInt(tok)
+        : null;
+    if (num === null) continue;
+    if (!out.has(word)) out.set(word, new Set());
+    out.get(word)!.add(num);
+  }
+  return out;
+}
+
+/**
+ * True when the two labels number the same division differently — "The
+ * Letters of Henry James, Volume I: 1843-1875" vs "…, Volume IV: 1895-1916".
+ * Volumes of one set share a title, publisher, authors and often a scan of the
+ * whole set, so they otherwise read as a near-perfect match. Unlike
+ * `isSeriesSequelPair` the number may sit anywhere in the label. A division
+ * named on only one side says nothing (one item may just be labelled more
+ * fully).
+ */
+export function isDifferentVolumePair(a: Item, b: Item): boolean {
+  const da = titleDivisions(bestLabel(a));
+  const db = titleDivisions(bestLabel(b));
+  for (const [word, na] of da) {
+    const nb = db.get(word);
+    if (nb && ![...na].some((n) => nb.has(n))) return true;
+  }
+  return false;
+}
+
+/**
+ * True when both labels carry a span of years (two or more years, "1843-1875",
+ * "March 1787-December 1789") and the spans don't overlap: two volumes of
+ * letters, diaries or collected writings covering different periods. Spans
+ * that merely differ ("1913-1926" vs "1913-1927") could be one item's typo, so
+ * they don't count.
+ */
+export function isDisjointYearRangePair(a: Item, b: Item): boolean {
+  const span = (item: Item) => {
+    const years = [...titleYears(bestLabel(item))].map(Number);
+    return years.length >= 2 ? [Math.min(...years), Math.max(...years)] : null;
+  };
+  const sa = span(a);
+  const sb = span(b);
+  return !!sa && !!sb && (sa[1] < sb[0] || sb[1] < sa[0]);
+}
+
 /** Wikidata "different from" — an explicit statement that two items are distinct. */
 export const DIFFERENT_FROM = "P1889";
 
@@ -2194,6 +2275,18 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // never surface as candidates.
   if (isSeriesSequelPair(a, b)) {
     reasons.unshift("different entries in a series (sequel), not a duplicate");
+    score = Math.min(score, 0.1);
+  }
+
+  // Volumes of one set (letters, collected writings) share a title, publisher,
+  // authors and often a scan of the whole set. A different volume or part
+  // number, or year spans that don't overlap, say they are separate books.
+  if (isDifferentVolumePair(a, b)) {
+    reasons.unshift("different volume or part numbers in the titles, not a duplicate");
+    score = Math.min(score, 0.1);
+  }
+  if (isDisjointYearRangePair(a, b)) {
+    reasons.unshift("titles cover different, non-overlapping year ranges, not a duplicate");
     score = Math.min(score, 0.1);
   }
 

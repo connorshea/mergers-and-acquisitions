@@ -1,0 +1,292 @@
+{
+  "pageid": 54799686,
+  "ns": 0,
+  "title": "Q54639764",
+  "lastrevid": 1618373573,
+  "modified": "2022-04-13T18:58:21Z",
+  "type": "item",
+  "id": "Q54639764",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "The Letters of Henry James, Volume IV: 1895-1916"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "James, Henry Edel, Leon - 1984"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "boek"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5963e3cad5eee4ae1cffbefbac15327800b9a7e6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7725634,
+              "id": "Q7725634"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q54639764$F1DC0C39-AA88-4128-A6C2-BAD89A8AF730",
+        "rank": "normal"
+      }
+    ],
+    "P212": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P212",
+          "hash": "e82513b330defe2b435318669e386002b92f043c",
+          "datavalue": {
+            "value": "978-0-674-38783-6",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q54639764$11395DBD-D336-45AB-BADD-556EE2CC4AAF",
+        "rank": "normal"
+      }
+    ],
+    "P123": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P123",
+          "hash": "00c28a1185570a8fad752025a7d6f76fbc810563",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1587900,
+              "id": "Q1587900"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q54639764$A12342D1-8DBE-4E1B-9285-AD684F088E25",
+        "rank": "normal"
+      }
+    ],
+    "P724": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P724",
+          "hash": "ae60dfdad0b62011760fdd37185b55e0d95ea1d5",
+          "datavalue": {
+            "value": "letters0000jame",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q54639764$AA441DF2-CF77-405C-8EFA-4B4E4E7F3CE3",
+        "rank": "normal"
+      }
+    ],
+    "P2969": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2969",
+          "hash": "6734c5062c4749e782cd73f3a02dfc3936add137",
+          "datavalue": {
+            "value": "1876059",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "fe67b445a6af3242a3d53e1e55f2df6fa31147dd",
+              "datavalue": {
+                "value": "The Letters of Henry James, Volume IV: 1895-1916",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ],
+          "P585": [
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "1ae804543ca7aa56a3e668c3db93966a6f1e88a4",
+              "datavalue": {
+                "value": {
+                  "time": "+2020-10-16T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810", "P585"],
+        "id": "Q54639764$9D6ACE48-6246-4A9B-867D-E3D190D432EF",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "5672704d01827216e4d335555ad8f2facbc3771f",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "a0e84923b8d99fc8a5013954ac16befd8e4f4696",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 2359213,
+                      "id": "Q2359213"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P3452": [
+                {
+                  "snaktype": "value",
+                  "property": "P3452",
+                  "hash": "545d9b8648933e56e3044cdcc8d1dc9938754e01",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 33057,
+                      "id": "Q33057"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "2289fd06db8d3961c6fd8c2574b5d413521555d4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2020-09-04T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P3452", "P813"]
+          }
+        ]
+      }
+    ],
+    "P8383": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8383",
+          "hash": "a1137454dde2d25e35e11f749a104db3e72e97a2",
+          "datavalue": {
+            "value": "1877025",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q54639764$a1ce599d-3622-48b8-9cdc-f2939a99f860",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "1c7fd39626c5865c063ef2df067954fb84e7f2dd",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "aa6b7dada542db626049ea7a60d4c27532b2d1da",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2020-09-19T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "a0e84923b8d99fc8a5013954ac16befd8e4f4696",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 2359213,
+                      "id": "Q2359213"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P813", "P248"]
+          }
+        ]
+      }
+    ],
+    "P648": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P648",
+          "hash": "6419c95fb884e66887060b3500b954246c2dffb1",
+          "datavalue": {
+            "value": "OL7692690M",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q54639764$DAA29321-3E7A-49BF-AB11-F0EFE6951864",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

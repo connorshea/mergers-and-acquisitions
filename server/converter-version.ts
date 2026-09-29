@@ -11,6 +11,11 @@
 // when their hash isn't the last entry, with the new hash to append. Never edit
 // or remove an entry; only append. Adding fixture lines changes the hash too:
 // append then as well, which costs one import that parses every item.
-export const CONVERTER_OUTPUTS = ["de985f695de771a2287e8af38bd1e307161a062c"] as const;
+export const CONVERTER_OUTPUTS = [
+  "de985f695de771a2287e8af38bd1e307161a062c",
+  // Year/month-precision dates zeroed (#145); its fixtures held pre-zeroed times,
+  // so the hash didn't move then — the Q107532735 fixture line moves it now.
+  "1414b22fcbbf537d7308d7a6f5b5f41ee05440d0",
+] as const;
 
 export const CONVERTER_VERSION = CONVERTER_OUTPUTS.length;

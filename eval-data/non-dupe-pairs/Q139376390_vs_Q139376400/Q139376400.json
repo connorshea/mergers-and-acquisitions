@@ -1,0 +1,327 @@
+{
+  "pageid": 132833772,
+  "ns": 0,
+  "title": "Q139376400",
+  "lastrevid": 2482384731,
+  "modified": "2026-04-17T08:59:15Z",
+  "type": "item",
+  "id": "Q139376400",
+  "labels": {
+    "de": {
+      "language": "de",
+      "value": "Marsch G-Dur"
+    },
+    "en": {
+      "language": "en",
+      "value": "March in G major"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "keyboard work by Carl Philipp Emanuel Bach"
+    },
+    "de": {
+      "language": "de",
+      "value": "Werk für Tasteninstrument von Carl Philipp Emanuel Bach"
+    }
+  },
+  "aliases": {
+    "mul": [
+      {
+        "language": "mul",
+        "value": "H 1.3"
+      },
+      {
+        "language": "mul",
+        "value": "BR-CPEB A-Juv 4"
+      },
+      {
+        "language": "mul",
+        "value": "BWV Anh 124"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5be109d8a3cbbd062357a9d210d4ef00ef25244e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 105543609,
+              "id": "Q105543609"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q139376400$EDFCB687-044B-44B9-99EB-5DED7590DB99",
+        "rank": "normal"
+      }
+    ],
+    "P14192": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P14192",
+          "hash": "4b984d908c46539c3b639804f0c4395608b411c9",
+          "datavalue": {
+            "value": "00001435",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q139376400$19A0CE6F-2A4E-4F83-B81F-13A200A1352F",
+        "rank": "normal"
+      }
+    ],
+    "P528": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P528",
+          "hash": "20f30abef1353433c08b8252e965e534314648ff",
+          "datavalue": {
+            "value": "1.3",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P972": [
+            {
+              "snaktype": "value",
+              "property": "P972",
+              "hash": "d37024728d1452518ca367fbd1743027c9959fa2",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 138770768,
+                  "id": "Q138770768"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P972"],
+        "id": "Q139376400$ED9D37A7-E94E-455D-907D-D08D22062D27",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P528",
+          "hash": "36b1d0b65206b5c43f82c39142fa531cefdbde85",
+          "datavalue": {
+            "value": "A-Juv 4",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P972": [
+            {
+              "snaktype": "value",
+              "property": "P972",
+              "hash": "2148c4603f91d127cd2f9e6bd2189e50ed28cb80",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 139309403,
+                  "id": "Q139309403"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P972"],
+        "id": "Q139376400$B112A849-81C2-452D-83BC-150902907459",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P528",
+          "hash": "5fb84b1b3ed73ba1059cfbdf1b4dfb1d7b256d9b",
+          "datavalue": {
+            "value": "Anh 124",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P972": [
+            {
+              "snaktype": "value",
+              "property": "P972",
+              "hash": "c3c07f37bdf9c94c7591af942845ffd4aa0cfa87",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 214203,
+                  "id": "Q214203"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P972"],
+        "id": "Q139376400$3008BD4B-8430-4E1F-B40A-933E8341DA85",
+        "rank": "normal"
+      }
+    ],
+    "P839": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P839",
+          "hash": "5171b31a439d9a1cec8c5a516a3d7e0cc98fec01",
+          "datavalue": {
+            "value": "4_Pieces_for_Anna_Magdalena_Bach,_H.1_(Bach,_Carl_Philipp_Emanuel)",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q139376400$561E1F24-2F74-4183-AF0C-FDC3088FE31D",
+        "rank": "normal"
+      }
+    ],
+    "P826": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P826",
+          "hash": "3115df279e2d7fe131b5901d99579aa72fd1fa52",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5728362,
+              "id": "Q5728362"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q139376400$797A14B8-E8FB-492A-A26E-3269513F0813",
+        "rank": "normal"
+      }
+    ],
+    "P870": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P870",
+          "hash": "e57ffa4bb85d321986253a1dd0080a2120c0c4ad",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 52954,
+              "id": "Q52954"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q139376400$444D5D06-5220-4F84-9DF4-B2A4D3C439CD",
+        "rank": "normal"
+      }
+    ],
+    "P86": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P86",
+          "hash": "4f443fdeef8f7060abc32564c99cacf3f86293c5",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 76428,
+              "id": "Q76428"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q139376400$2721126E-7A2C-4B5E-84BE-C720ECCF6419",
+        "rank": "normal"
+      }
+    ],
+    "P1343": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1343",
+          "hash": "8a1b6854e062000e7c8054478beef1c4b9e0f482",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5040646,
+              "id": "Q5040646"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P953": [
+            {
+              "snaktype": "value",
+              "property": "P953",
+              "hash": "121d49e6a9e442d980234c0c626f128e34d66348",
+              "datavalue": {
+                "value": "https://www.cpebach.org/pdfs/works/Series%20I/I-8-2/I-8-2-BWV-Anh124.pdf",
+                "type": "string"
+              },
+              "datatype": "url"
+            }
+          ]
+        },
+        "qualifiers-order": ["P953"],
+        "id": "Q139376400$4300B2BA-0DB1-429C-B18C-AD4335C43940",
+        "rank": "normal"
+      }
+    ],
+    "P7937": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7937",
+          "hash": "44ae9343808dbe18f65887eaff3adfeec66b0e1b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 211025,
+              "id": "Q211025"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q139376400$7152668F-3BE2-49C1-B33E-4C59A2B68578",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

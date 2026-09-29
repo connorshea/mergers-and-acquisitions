@@ -1,0 +1,309 @@
+{
+  "pageid": 54797263,
+  "ns": 0,
+  "title": "Q54637290",
+  "lastrevid": 1449058926,
+  "modified": "2021-06-26T07:40:05Z",
+  "type": "item",
+  "id": "Q54637290",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Walter Benjamin: Selected Writings, Volume 1: 1913-1926"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "Benjamin, Walter Bullock, Marcus Jennings, Michael W. - 2004"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "boek"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5963e3cad5eee4ae1cffbefbac15327800b9a7e6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7725634,
+              "id": "Q7725634"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q54637290$8A2974BB-1748-46BA-986C-5D82815CC631",
+        "rank": "normal"
+      }
+    ],
+    "P212": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P212",
+          "hash": "6c768c3a640cacaa1e204b5699e4ab6e64bb6b33",
+          "datavalue": {
+            "value": "978-0-674-01355-1",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q54637290$4F7A6B56-4178-4854-8433-DF7338A9A041",
+        "rank": "normal"
+      }
+    ],
+    "P123": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P123",
+          "hash": "00c28a1185570a8fad752025a7d6f76fbc810563",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1587900,
+              "id": "Q1587900"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q54637290$4F40D3FB-AB31-4081-A91E-BC1E91154F1F",
+        "rank": "normal"
+      }
+    ],
+    "P724": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P724",
+          "hash": "329f75135364848ad205be374cd71ff0945578b2",
+          "datavalue": {
+            "value": "selectedwritings0004benj_a3y0",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q54637290$B4EC565F-BE74-4587-9913-CD17BD5FAB2B",
+        "rank": "normal"
+      }
+    ],
+    "P2969": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2969",
+          "hash": "53120bf97d9f1d66e1d05d287173edc66e7f7255",
+          "datavalue": {
+            "value": "1048030",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "f8ff0a911984b89f1c917b192c4902a7319089e5",
+              "datavalue": {
+                "value": "Walter Benjamin: Selected Writings, 1: 1913-1926",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ],
+          "P585": [
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "33415601d5df14acfdcfd9f87983067f9d2ec1f9",
+              "datavalue": {
+                "value": {
+                  "time": "+2020-10-15T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810", "P585"],
+        "id": "Q54637290$58413F31-94A3-49D4-903C-6E8B7C2892A9",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "6a5934e5a7dad38048306d9e1d3d63301d33c96b",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "a0e84923b8d99fc8a5013954ac16befd8e4f4696",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 2359213,
+                      "id": "Q2359213"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P3452": [
+                {
+                  "snaktype": "value",
+                  "property": "P3452",
+                  "hash": "545d9b8648933e56e3044cdcc8d1dc9938754e01",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 33057,
+                      "id": "Q33057"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "eff9c01e821279d519855efc7309c0401c575d7e",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2020-09-03T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P3452", "P813"]
+          }
+        ]
+      }
+    ],
+    "P8383": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8383",
+          "hash": "d1aa1860b9f59dbb2fdcd05796a8eea6f6f77c00",
+          "datavalue": {
+            "value": "1034466",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q54637290$914138e6-3e1b-4d9a-9405-e76e6eacb428",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "beae309597a1e2b2989578457715da79a4a354fe",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "8eff9352009a4ea5ac974ecbfc5102c6a56bc237",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2020-09-18T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "a0e84923b8d99fc8a5013954ac16befd8e4f4696",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 2359213,
+                      "id": "Q2359213"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P813", "P248"]
+          }
+        ]
+      }
+    ],
+    "P957": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P957",
+          "hash": "486936dce6b29b7cc01bd9d8c4b9b6466c28731d",
+          "datavalue": {
+            "value": "0-674-01355-7",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q54637290$E660C8C9-D9FF-4D45-A173-5B087B569FFF",
+        "rank": "normal"
+      }
+    ],
+    "P648": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P648",
+          "hash": "ce07ca2c3693f4cca49f5e438d13b3baeddab804",
+          "datavalue": {
+            "value": "OL7671092M",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q54637290$F91AF4DE-B73A-4769-B8CE-55128EDF4092",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

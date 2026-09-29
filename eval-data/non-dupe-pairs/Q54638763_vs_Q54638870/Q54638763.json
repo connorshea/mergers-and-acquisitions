@@ -1,0 +1,221 @@
+{
+  "pageid": 54798707,
+  "ns": 0,
+  "title": "Q54638763",
+  "lastrevid": 2391351501,
+  "modified": "2025-08-13T02:02:45Z",
+  "type": "item",
+  "id": "Q54638763",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Adams Family Correspondence, Volume 9: January 1790 – December 1793"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "Adams Family Hogan, Margaret A. Taylor, C. James Barzilay, Karen N. Woodward, Hobson Claffey, Mary T. Karachuk, Robert F. Sikes, Sara B. Lint, Gregg L. - 2009"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "boek"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5963e3cad5eee4ae1cffbefbac15327800b9a7e6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7725634,
+              "id": "Q7725634"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q54638763$426193AE-5725-4282-853B-1423038E9BEE",
+        "rank": "normal"
+      }
+    ],
+    "P123": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P123",
+          "hash": "00c28a1185570a8fad752025a7d6f76fbc810563",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1587900,
+              "id": "Q1587900"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q54638763$B4483609-92A7-449C-A6F7-A79962C224A4",
+        "rank": "normal"
+      }
+    ],
+    "P724": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P724",
+          "hash": "64dc8a85f04ca5fca9e65f47e1ef1da90aaf8846",
+          "datavalue": {
+            "value": "adamsfamilycorre03butt",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q54638763$620B6E2B-9028-4758-8326-12918682DE7D",
+        "rank": "normal"
+      }
+    ],
+    "P8383": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8383",
+          "hash": "bb60de64a1b14be10d38913b80c4b7bc7bc3bedd",
+          "datavalue": {
+            "value": "5108594",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q54638763$b7fb1ae3-3b79-4ba5-a3d9-e0bdc64a63e5",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "1c7fd39626c5865c063ef2df067954fb84e7f2dd",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "aa6b7dada542db626049ea7a60d4c27532b2d1da",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2020-09-19T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "a0e84923b8d99fc8a5013954ac16befd8e4f4696",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 2359213,
+                      "id": "Q2359213"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P813", "P248"]
+          }
+        ]
+      }
+    ],
+    "P747": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P747",
+          "hash": "621ddfafb892e11b6a3973eb959b11edbbedcf33",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 135405567,
+              "id": "Q135405567"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P437": [
+            {
+              "snaktype": "value",
+              "property": "P437",
+              "hash": "eb73f22cda56fbbf865734ef0b8374fbaa075ca7",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 193955,
+                  "id": "Q193955"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 1860,
+                  "id": "Q1860"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P437", "P407"],
+        "id": "Q54638763$4270A487-872F-4D4C-9CB5-ADAE702539D8",
+        "rank": "normal"
+      }
+    ],
+    "P648": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P648",
+          "hash": "797cc2f48d23280f0b21781d5b1e74ba49a525f4",
+          "datavalue": {
+            "value": "OL21019828W",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q54638763$021EEE40-962C-49F8-989F-7E9A49CA87E6",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

@@ -21,6 +21,9 @@ import {
   isWorkEditionPair,
   isPartWholePair,
   isCollectionSiblingPair,
+  isDifferentVolumePair,
+  isDisjointYearRangePair,
+  titleDivisions,
   isCatalogSiblingPair,
   isDifferentKeyPair,
   isConflationPair,
@@ -2319,6 +2322,74 @@ describe("musical work siblings", () => {
     const b = sonata("Q2", 5, "Q277793");
     delete b.statements.P826;
     expect(isDifferentKeyPair(sonata("Q1", 6, "Q795134"), b)).toBe(false);
+  });
+});
+
+describe("volumes of one set", () => {
+  const base = { descriptions: {}, aliases: {}, sitelinks: {} };
+  // Harvard University Press volumes that share one Internet Archive scan (P724).
+  const book = (id: string, label: string): Item => ({
+    ...base,
+    id,
+    labels: { en: label },
+    statements: {
+      P31: [{ type: "item", value: "Q7725634" }],
+      P123: [{ type: "item", value: "Q1587900" }],
+      P724: [{ type: "external-id", value: "letters0000jame" }],
+    },
+  });
+  const pair = (x: string, y: string) => [book("Q1", x), book("Q2", y)] as const;
+
+  it("reads numbered divisions anywhere in a title", () => {
+    expect(
+      titleDivisions("Walter Benjamin: Selected Writings, Volume 2: Part 1: 1927-1930"),
+    ).toEqual(
+      new Map([
+        ["volume", new Set([2])],
+        ["part", new Set([1])],
+      ]),
+    );
+    expect(titleDivisions("Letters, Vol. IV")).toEqual(new Map([["volume", new Set([4])]]));
+    expect(titleDivisions("Book mix")).toEqual(new Map());
+    expect(titleDivisions("Partition 3")).toEqual(new Map());
+  });
+
+  it("flags different volume numbers, and caps the pair", () => {
+    const [a, b] = pair(
+      "The Letters of Henry James, Volume I: 1843-1875",
+      "The Letters of Henry James, Volume IV: 1895-1916",
+    );
+    expect(isDifferentVolumePair(a, b)).toBe(true);
+    const result = scoreCandidate(a, b, { isIdentifierProp: (pid) => pid === "P724" });
+    expect(result.confidence).toBeLessThanOrEqual(0.1);
+    expect(result.reasons.join("\n")).toContain("different volume or part numbers");
+  });
+
+  it("ignores a division named on one side only, or numbered alike", () => {
+    expect(isDifferentVolumePair(...pair("Selected Writings, Volume 2", "Selected Writings"))).toBe(
+      false,
+    );
+    expect(isDifferentVolumePair(...pair("Letters, Vol. 2", "Letters, Volume II"))).toBe(false);
+  });
+
+  it("flags year spans that don't overlap", () => {
+    expect(
+      isDisjointYearRangePair(
+        ...pair(
+          "Adams Family Correspondence: March 1787-December 1789",
+          "Adams Family Correspondence: January 1790 – December 1793",
+        ),
+      ),
+    ).toBe(true);
+    const [a, b] = pair("Diaries 1915-1919", "Diaries 1920-1924");
+    expect(scoreCandidate(a, b).reasons[0]).toContain("non-overlapping year ranges");
+  });
+
+  it("ignores overlapping spans and single years", () => {
+    expect(isDisjointYearRangePair(...pair("Writings 1913-1926", "Writings 1913-1927"))).toBe(
+      false,
+    );
+    expect(isDisjointYearRangePair(...pair("Doom (1993)", "Doom (2016)"))).toBe(false);
   });
 });
 

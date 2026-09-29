@@ -1,0 +1,292 @@
+{
+  "pageid": 54797140,
+  "ns": 0,
+  "title": "Q54637166",
+  "lastrevid": 1618369020,
+  "modified": "2022-04-13T18:50:13Z",
+  "type": "item",
+  "id": "Q54637166",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Walter Benjamin: Selected Writings, Volume 2: Part 1: 1927-1930"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "Benjamin, Walter Jennings, Michael W. Eiland, Howard Smith, Gary - 2005"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "boek"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5963e3cad5eee4ae1cffbefbac15327800b9a7e6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7725634,
+              "id": "Q7725634"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q54637166$98F2BD37-1027-4309-9657-02C321DDF5C0",
+        "rank": "normal"
+      }
+    ],
+    "P212": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P212",
+          "hash": "9afa2b8eac29d216d3a111ef914579840c1b0287",
+          "datavalue": {
+            "value": "978-0-674-01588-3",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q54637166$DB9293C4-AE97-4BB2-B060-E723DC1E1CCE",
+        "rank": "normal"
+      }
+    ],
+    "P123": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P123",
+          "hash": "00c28a1185570a8fad752025a7d6f76fbc810563",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1587900,
+              "id": "Q1587900"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q54637166$FDE43096-D5D4-4AB6-B5C9-F6ABEFFDFB8D",
+        "rank": "normal"
+      }
+    ],
+    "P724": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P724",
+          "hash": "329f75135364848ad205be374cd71ff0945578b2",
+          "datavalue": {
+            "value": "selectedwritings0004benj_a3y0",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q54637166$A35E65C9-22DF-4868-B22B-97809F38F1F4",
+        "rank": "normal"
+      }
+    ],
+    "P2969": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2969",
+          "hash": "8968d15dbedfd519f61b7ba2d1d2023756f062fe",
+          "datavalue": {
+            "value": "52222",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "7cade916979e8cd59932496e2ae3e1a5dc7f812e",
+              "datavalue": {
+                "value": "Walter Benjamin: Selected Writings, Volume 2, Part 1, 1927-1930",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ],
+          "P585": [
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "9b5b35052fe8d78021ac9ad20521de22243c972c",
+              "datavalue": {
+                "value": {
+                  "time": "+2020-10-14T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810", "P585"],
+        "id": "Q54637166$20E88455-E70B-4B8B-BD88-9C0E0A0BE765",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "6a5934e5a7dad38048306d9e1d3d63301d33c96b",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "a0e84923b8d99fc8a5013954ac16befd8e4f4696",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 2359213,
+                      "id": "Q2359213"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P3452": [
+                {
+                  "snaktype": "value",
+                  "property": "P3452",
+                  "hash": "545d9b8648933e56e3044cdcc8d1dc9938754e01",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 33057,
+                      "id": "Q33057"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "eff9c01e821279d519855efc7309c0401c575d7e",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2020-09-03T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P3452", "P813"]
+          }
+        ]
+      }
+    ],
+    "P8383": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8383",
+          "hash": "67daf17317a34aeefe858d2d695a3690dcfa8e8f",
+          "datavalue": {
+            "value": "13550845",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q54637166$28f8259d-1a9a-4868-8e62-ac46340e1232",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "beae309597a1e2b2989578457715da79a4a354fe",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "8eff9352009a4ea5ac974ecbfc5102c6a56bc237",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2020-09-18T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "a0e84923b8d99fc8a5013954ac16befd8e4f4696",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 2359213,
+                      "id": "Q2359213"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P813", "P248"]
+          }
+        ]
+      }
+    ],
+    "P648": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P648",
+          "hash": "675304afa2c7584646e07e2f6cfea92f2e8d46a3",
+          "datavalue": {
+            "value": "OL7671220M",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q54637166$621F20E9-1279-45E7-A221-039E9024F944",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

@@ -1,0 +1,416 @@
+{
+  "pageid": 32214615,
+  "ns": 0,
+  "title": "Q30603901",
+  "lastrevid": 2547405861,
+  "modified": "2026-09-18T11:42:22Z",
+  "type": "item",
+  "id": "Q30603901",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Mouna Ragam"
+    },
+    "ta": {
+      "language": "ta",
+      "value": "மௌன ராகம்"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Mouna Ragam"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "Mouna Ragam"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "television series"
+    },
+    "it": {
+      "language": "it",
+      "value": "serie televisiva"
+    },
+    "hu": {
+      "language": "hu",
+      "value": "televíziós sorozat"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "sèrie de televisió"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "série télévisée"
+    },
+    "eo": {
+      "language": "eo",
+      "value": "televida serio"
+    },
+    "es": {
+      "language": "es",
+      "value": "serie de televisión"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "sraith theilifíse"
+    },
+    "fa": {
+      "language": "fa",
+      "value": "مجموعهٔ تلویزیونی ساخته‌شده در هند"
+    },
+    "hy": {
+      "language": "hy",
+      "value": "հեռուստասերիալ"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "televisieserie uit India"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "টেলিভিশন ধারাবাহিক"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "телевізійний серіал"
+    },
+    "ta": {
+      "language": "ta",
+      "value": "இந்த தொலைக்காட்சி நன்றாகவே தெரியும்"
+    },
+    "as": {
+      "language": "as",
+      "value": "টেলিভিছন ধাৰাবাহিক"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P4312": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4312",
+          "hash": "4e5ecf369d099dc4f6451991a502bea2e4825d52",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 738160,
+              "id": "Q738160"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q30603901$B19E8C3F-EA6F-4EDD-A458-A93B366000C9",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "caf72bec5305e378daabed952f108ffabaef57f4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 668,
+              "id": "Q668"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q30603901$7F0AD593-B59D-44CD-AA12-75633B660E47",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "077d7ebb0dd5690cc39d9583b14b575ae79575b5",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "e6436c36db435f87e44962f82d84f35707ad7d7f",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Mouna_Ragam_(TV_series)&oldid=854987335",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "40a93c25a36e6a07478de6eca4ba68f5b9aaa85f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5398426,
+              "id": "Q5398426"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q30603901$9181AEF7-0A41-43A7-8C55-066B1901CFEC",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "4a477100e2c842fff6d9974f47457f993872bc8a",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "c2406d1e1bde0681ff9673e27b0ba902e67071f7",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2018-08-21T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P813"]
+          }
+        ]
+      }
+    ],
+    "P407": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P407",
+          "hash": "1be7be4b4f264a9f18704c9ad0455111ead9f51b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5885,
+              "id": "Q5885"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q30603901$91ADA0FD-D198-4D60-9359-D986755C29C0",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "e04ecbcce41ee61bf0653536474169a9fc782c72",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "4509c2ecd39d9bea9bc5acbaab2ccc5028b7f449",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Mouna_Ragam_(TV_series)&oldid=866723385",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "3e23c0188d9350d8e74ce2b4c95757b811752086",
+          "datavalue": {
+            "value": "http://www.hotstar.com/tv/mouna-raagam/13874",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q30603901$1BDE8ACE-F048-47E5-B654-7AA6F82BEA46",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "b040e63666fc87c16a79959bf2ec8705db1e8194",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "eb1c6344a135116fb3a94255a8d08df9b834047e",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Mouna_Ragam_(TV_series)&oldid=918578797",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "57f03bfc99d400708b1f372715b091071f3058bd",
+          "datavalue": {
+            "value": "/g/11dxs9p75b",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q30603901$65D7DDB0-A900-4249-92DD-F8D6075A3D3C",
+        "rank": "normal"
+      }
+    ],
+    "P345": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P345",
+          "hash": "286ab038e97535ec571b16d1a1050232f3521cb2",
+          "datavalue": {
+            "value": "tt12587892",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q30603901$E6A499AE-4F81-4B1B-A461-C7C0B6B64309",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "tawiki": {
+      "site": "tawiki",
+      "title": "மௌன ராகம் (தொலைக்காட்சித் தொடர்)",
+      "badges": [],
+      "url": "https://ta.wikipedia.org/wiki/%E0%AE%AE%E0%AF%8C%E0%AE%A9_%E0%AE%B0%E0%AE%BE%E0%AE%95%E0%AE%AE%E0%AF%8D_(%E0%AE%A4%E0%AF%8A%E0%AE%B2%E0%AF%88%E0%AE%95%E0%AF%8D%E0%AE%95%E0%AE%BE%E0%AE%9F%E0%AF%8D%E0%AE%9A%E0%AE%BF%E0%AE%A4%E0%AF%8D_%E0%AE%A4%E0%AF%8A%E0%AE%9F%E0%AE%B0%E0%AF%8D)"
+    },
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Mouna Raagam (Tamil TV series)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Mouna_Raagam_(Tamil_TV_series)"
+    }
+  }
+}

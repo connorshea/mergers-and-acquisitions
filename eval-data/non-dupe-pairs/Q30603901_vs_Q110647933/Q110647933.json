@@ -1,0 +1,141 @@
+{
+  "pageid": 105691304,
+  "ns": 0,
+  "title": "Q110647933",
+  "lastrevid": 1889735443,
+  "modified": "2023-05-05T12:39:05Z",
+  "type": "item",
+  "id": "Q110647933",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Mouna Raagam 2"
+    },
+    "ta": {
+      "language": "ta",
+      "value": "மௌன ராகம் 2"
+    }
+  },
+  "descriptions": {
+    "ar": {
+      "language": "ar",
+      "value": "مسلسل تلفزيوني"
+    },
+    "en": {
+      "language": "en",
+      "value": "Indian TV series or program"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "40a93c25a36e6a07478de6eca4ba68f5b9aaa85f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5398426,
+              "id": "Q5398426"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q110647933$0d2124c1-c72d-408a-9ac7-a0f95a8ab48f",
+        "rank": "normal"
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "caf72bec5305e378daabed952f108ffabaef57f4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 668,
+              "id": "Q668"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q110647933$65BEF825-282D-4362-8EA7-76B7BEDE3E37",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "285983ae007a2761408455d6656ead8a139c0807",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "8e7a67847f27a1253a5052a21463bc36f8cd2422",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Mouna_Raagam_2&oldid=1097556548",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P345": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P345",
+          "hash": "286ab038e97535ec571b16d1a1050232f3521cb2",
+          "datavalue": {
+            "value": "tt12587892",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q110647933$0DFB095F-E51F-45F7-82EF-121C90DC55B1",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "tawiki": {
+      "site": "tawiki",
+      "title": "மௌன ராகம் 2",
+      "badges": [],
+      "url": "https://ta.wikipedia.org/wiki/%E0%AE%AE%E0%AF%8C%E0%AE%A9_%E0%AE%B0%E0%AE%BE%E0%AE%95%E0%AE%AE%E0%AF%8D_2"
+    },
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Mouna Raagam 2",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Mouna_Raagam_2"
+    }
+  }
+}

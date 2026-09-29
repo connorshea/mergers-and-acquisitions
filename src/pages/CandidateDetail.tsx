@@ -222,6 +222,25 @@ export default function CandidateDetail() {
             </a>
           </div>
         )}
+        {candidate && status === "merged" && (resolution || resolvedBy) && (
+          <div className="merged-banner" role="status">
+            <svg
+              className="merged-banner-icon"
+              viewBox="0 0 16 16"
+              width="14"
+              height="14"
+              aria-hidden="true"
+            >
+              <path
+                fill="currentColor"
+                d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1Zm3.28 5.28-3.75 3.75a.75.75 0 0 1-1.06 0l-1.75-1.75a.75.75 0 1 1 1.06-1.06l1.22 1.22 3.22-3.22a.75.75 0 1 1 1.06 1.06Z"
+              />
+            </svg>
+            <span>
+              <Resolution resolution={resolution} resolvedBy={resolvedBy} capitalize />
+            </span>
+          </div>
+        )}
         {candidate && (
           <EvidenceLedger
             confidence={candidate.confidence}
@@ -234,21 +253,10 @@ export default function CandidateDetail() {
             {status && status !== "open" ? (
               <>
                 <span className="flag flag-status">{status}</span>
-                {(resolution || resolvedBy) && (
+                {/* A merged pair's details get the banner above the ledger. */}
+                {status !== "merged" && (resolution || resolvedBy) && (
                   <span className="detail-resolution">
-                    {resolution}
-                    {resolvedBy && (
-                      <>
-                        {resolution ? " · by " : "by "}
-                        <a
-                          href={wikiPageUrl(`User:${encodeURIComponent(resolvedBy)}`)}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          {resolvedBy}
-                        </a>
-                      </>
-                    )}
+                    <Resolution resolution={resolution} resolvedBy={resolvedBy} />
                   </span>
                 )}
                 {/* A merged pair stays merged (it happened on Wikidata); a
@@ -755,4 +763,63 @@ function DifferentDialog({
       </div>
     </Dialog>
   );
+}
+
+/**
+ * A pair's stored resolution text ("merged into Q2 (rev 123)…") and who
+ * resolved it, with the QIDs and the revision linked to Wikidata.
+ */
+function Resolution({
+  resolution,
+  resolvedBy,
+  capitalize = false,
+}: {
+  resolution: string | null;
+  resolvedBy: string | null;
+  capitalize?: boolean;
+}) {
+  const text =
+    resolution && capitalize
+      ? resolution.charAt(0).toUpperCase() + resolution.slice(1)
+      : resolution;
+  return (
+    <>
+      {text && linkifyResolution(text)}
+      {resolvedBy && (
+        <>
+          {text ? " · by " : "by "}
+          <a
+            href={wikiPageUrl(`User:${encodeURIComponent(resolvedBy)}`)}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {resolvedBy}
+          </a>
+        </>
+      )}
+    </>
+  );
+}
+
+/** Splits resolution text around QIDs and "rev N", linking each to Wikidata. */
+function linkifyResolution(text: string): ReactNode[] {
+  const parts: ReactNode[] = [];
+  let last = 0;
+  for (const m of text.matchAll(/\b(Q\d+)\b|\brev (\d+)\b/g)) {
+    parts.push(text.slice(last, m.index));
+    const [match, qid, revid] = m;
+    parts.push(
+      <a
+        key={m.index}
+        href={wikiPageUrl(qid ?? `Special:Diff/${revid}`)}
+        target="_blank"
+        rel="noreferrer"
+      >
+        {match}
+      </a>,
+    );
+    last = m.index + match.length;
+  }
+  parts.push(text.slice(last));
+  return parts;
 }

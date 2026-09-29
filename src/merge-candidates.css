@@ -1666,6 +1666,33 @@ a.chip-id:hover {
   text-decoration-color: currentColor;
 }
 
+/* How a merged pair was merged, above the ledger. */
+.merged-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--identical) 35%, var(--rule));
+  border-radius: 6px;
+  background: var(--identical-bg);
+  color: var(--ink);
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+.merged-banner-icon {
+  flex: none;
+  color: var(--identical);
+}
+.merged-banner a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--identical) 45%, transparent);
+  text-underline-offset: 2px;
+}
+.merged-banner a:hover {
+  text-decoration-color: currentColor;
+}
+
 /* ---------- Auth ---------- */
 .auth-bar {
   display: flex;

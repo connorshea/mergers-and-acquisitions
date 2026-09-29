@@ -18,6 +18,7 @@ eval-data/
       <TARGET>.pre.json         target item's full entity blob, pre-merge
       meta.json                 the pair's record (same shape as an index line)
       sitelink-redirects.json   (optional) where clashing sitelinks redirect
+  subject-types.json            subject type constraints + class ancestors (see below)
   non-dupe-pairs/               negative examples — pairs that are NOT duplicates
     index.jsonl                 one JSON record per pair (the manifest)
     <A>_vs_<B>/                 (A/B ordered by QID number, lower first)
@@ -78,6 +79,24 @@ and re-run:
 ```sh
 pnpm eval:resolve-redirects                          # every pair
 pnpm eval:resolve-redirects Q4700160_vs_Q137330193   # named pair dirs
+```
+
+### `subject-types.json`
+
+One file for the whole dataset (not per pair): the subject type constraints
+(P2302 = Q21503250) of every external id both items of some pair carry, and
+each eval item class's ancestors among the constraint classes. Production
+syncs these into `properties.subject_types` and `class_ancestors`, and the
+scorer ignores an id whose constraint rules out both items (a person id
+copied onto two of the author's works, say). This file lets the eval apply
+the same check offline.
+
+It's append-only like the redirects: a re-run only adds properties and
+classes not recorded yet, so later edits on Wikidata don't shift the eval.
+Run it after adding pairs, and delete the file to re-record from scratch:
+
+```sh
+pnpm eval:resolve-subject-types
 ```
 
 ## Positive examples — how they're built

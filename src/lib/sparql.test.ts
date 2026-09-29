@@ -1,7 +1,9 @@
 import { afterEach, describe, expect, it, vi } from "vite-plus/test";
 import {
   type EntityLabelRow,
+  fetchClassAncestors,
   fetchEntityLabels,
+  fetchSubjectTypes,
   parseSparqlResults,
   SparqlError,
   sparqlSelectWithRetry,
@@ -150,5 +152,72 @@ describe("fetchEntityLabels", () => {
     await expect(fetchEntityLabels(qids(10), async () => {}, FAST)).rejects.toBeInstanceOf(
       SparqlError,
     );
+  });
+});
+
+const WD = "http://www.wikidata.org/entity/";
+const uri = (id: string) => ({ type: "uri", value: `${WD}${id}` });
+const results = (bindings: object[]) =>
+  new Response(JSON.stringify({ results: { bindings } }), { status: 200 });
+
+describe("fetchSubjectTypes", () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it("groups classes, relation, and exceptions by constraint statement", async () => {
+    const st1 = uri("statement/P2799-1");
+    const st2 = uri("statement/P2799-2");
+    const fetch = vi
+      .fn<typeof globalThis.fetch>()
+      .mockResolvedValueOnce(
+        results([
+          { p: uri("P2799"), st: st1, cls: uri("Q5"), rel: uri("Q21503252") },
+          { p: uri("P2799"), st: st1, cls: uri("Q16334295"), rel: uri("Q21503252") },
+          { p: uri("P2799"), st: st2, cls: uri("Q43229") },
+          // A somevalue class is a blank node, not an item: skipped.
+          { p: uri("P1"), st: uri("statement/P1-1"), cls: { type: "bnode", value: "b0" } },
+        ]),
+      )
+      .mockResolvedValueOnce(
+        results([
+          { st: st1, exc: uri("Q42") },
+          { st: uri("statement/P9-9"), exc: uri("Q1") },
+        ]),
+      );
+    vi.stubGlobal("fetch", fetch);
+    const byPid = await fetchSubjectTypes();
+    expect([...byPid]).toEqual([
+      [
+        "P2799",
+        [
+          { classes: ["Q5", "Q16334295"], relation: "instance", exceptions: ["Q42"] },
+          { classes: ["Q43229"], relation: "either", exceptions: [] },
+        ],
+      ],
+    ]);
+  });
+});
+
+describe("fetchClassAncestors", () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it("records each class as its own ancestor, and skips a chunk that keeps failing", async () => {
+    const fetch = vi.fn<typeof globalThis.fetch>(async (_url, init) => {
+      const [first] = requestedQids(init);
+      if (first === "Q1001") return OOM();
+      return results([
+        { c: uri("Q1"), anc: uri("Q386724") },
+        { c: uri("Q1"), anc: uri("Q1") },
+      ]);
+    });
+    vi.stubGlobal("fetch", fetch);
+    const { ancestors, failed } = await fetchClassAncestors(qids(1500), { ...FAST, tries: 1 });
+    expect(ancestors.get("Q1")).toEqual(["Q1", "Q386724"]);
+    expect(ancestors.get("Q2")).toEqual(["Q2"]);
+    expect(ancestors.size).toBe(1000);
+    expect(failed).toEqual(qids(500, 1001));
   });
 });

@@ -1,0 +1,158 @@
+{
+  "pageid": 21059442,
+  "ns": 0,
+  "title": "Q19452674",
+  "lastrevid": 1717208112,
+  "modified": "2022-08-30T20:36:12Z",
+  "type": "item",
+  "id": "Q19452674",
+  "labels": {
+    "es": {
+      "language": "es",
+      "value": "La sirena negra"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "La sirena negra"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "La sirena negra"
+    }
+  },
+  "descriptions": {
+    "it": {
+      "language": "it",
+      "value": "romanzo scritto da Emilia Pardo Bazán"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P50": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P50",
+          "hash": "d5fa7bb2dde163134446375f1f1e434589fdcc2c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 275929,
+              "id": "Q275929"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q19452674$896de96a-4b6d-e66c-2cc7-b2927263a20c",
+        "rank": "normal"
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "0907767ec006ad03d77d82ef3eb964ed1a48247e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 29,
+              "id": "Q29"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q19452674$1AEDCB52-35DE-48BA-A825-CC3B894E0555",
+        "rank": "normal"
+      }
+    ],
+    "P407": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P407",
+          "hash": "ffe70325d10cfc55f0dca807ed80ca0b5b97c472",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1321,
+              "id": "Q1321"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q19452674$C5088678-C50C-41C7-8BF3-60DFFAED5140",
+        "rank": "normal"
+      }
+    ],
+    "P3976": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3976",
+          "hash": "f6e42f9153851042a28ca0bed9ba8e0f236dca67",
+          "datavalue": {
+            "value": "20547",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q19452674$5FA3923C-6B6C-4922-A798-0A9797FB5A01",
+        "rank": "normal"
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5963e3cad5eee4ae1cffbefbac15327800b9a7e6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7725634,
+              "id": "Q7725634"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q19452674$2eaa0888-4b8d-bebe-261c-ac90d4358550",
+        "rank": "normal"
+      }
+    ],
+    "P2799": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2799",
+          "hash": "38d4807783b812e795c801f27cf3eb798c6c9840",
+          "datavalue": {
+            "value": "70",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q19452674$d4a6587a-4c00-d536-0a3a-5c70ddd899ff",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "eswikisource": {
+      "site": "eswikisource",
+      "title": "La sirena negra",
+      "badges": [],
+      "url": "https://es.wikisource.org/wiki/La_sirena_negra"
+    }
+  }
+}

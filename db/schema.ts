@@ -215,10 +215,32 @@ export const properties = mysqlTable("properties", {
   // subjects. Synced from Wikidata; the hunt feeds this into scoreCandidate so
   // such ids count neither for a match nor against one (see MIRRORED_ID_PROPS).
   mirrorsWikidata: boolean("mirrors_wikidata").notNull().default(false),
+  // The property's subject type constraints (P2302 = Q21503250): allowed
+  // classes, relation, exceptions. Null when it has none. With
+  // `class_ancestors`, the hunt ignores an id on an item every constraint
+  // rules out, such as an author's person id copied onto their works (see
+  // src/lib/subject-types.ts).
+  subjectTypes:
+    json<import("../src/lib/subject-types.ts").SubjectTypeConstraint[]>("subject_types"),
   syncedAt: datetime("synced_at", { mode: "string" })
     .notNull()
     .default(sql`CURRENT_TIMESTAMP`),
 });
+
+// For every class our items are an instance of (P31) or subclass of (P279),
+// its ancestors along P279* (itself included) that some subject type
+// constraint names — not the whole subclass tree, just enough to tell whether
+// a constraint on a superclass covers the item. Rebuilt weekly by
+// jobs/sync-properties.ts (server/class-ancestors.ts). A class with no rows
+// hasn't been looked up, and the constraint check treats it as unknown.
+export const classAncestors = mysqlTable(
+  "class_ancestors",
+  {
+    class: varchar("class", { length: 32 }).notNull(), // e.g. "Q7725634"
+    ancestor: varchar("ancestor", { length: 32 }).notNull(), // e.g. "Q47461344"
+  },
+  (t) => [primaryKey({ columns: [t.class, t.ancestor] })],
+);
 
 // Human-readable labels for Wikidata *items* that appear as statement values
 // (genre, platform, developer, instance of, …), synced from Wikidata (see

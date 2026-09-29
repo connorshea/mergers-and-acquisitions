@@ -46,7 +46,9 @@ Layout:
   paths (`*-sync.ts`); the hunt (`hunt.ts`, scan→score→upsert in one pass); and
   the dump import (`dump-import.ts`: streams the Wikidata entity JSON dump from
   Toolforge's `/public/dumps` NFS mount, pre-filters on `"numeric-id":7889`,
-  upserts items + external ids + properties, prunes what left the dump).
+  upserts items + external ids + properties, prunes what left the dump);
+  `class-ancestors.ts` rebuilds `class_ancestors` (our items' classes →
+  ancestors named by subject type constraints) after the weekly property sync.
 - `server/auth/` — Wikimedia OAuth 2.0 login (`oauth.ts` routes), cookie
   sessions + `requireUser` (`session.ts`), encrypted token
   storage + refresh (`tokens.ts`, `crypto.ts`), and the same-origin CSRF guard.
@@ -55,6 +57,9 @@ Layout:
 - `jobs/` — Toolforge scheduled jobs (`hunt.ts`, `import-dump.ts`, `sync-*.ts`),
   run via `node` (native TS type-stripping). Declared in `jobs.yaml`
   (`toolforge jobs load`); `import-dump` needs `mount: all` to see the dump.
+- `src/lib/subject-types.ts` — the subject type constraint check behind
+  `ScoreOptions.isInapplicableId`: an external id whose constraint excludes both
+  items (a person id on two works) is ignored; fails open on unsynced data.
 - `src/lib/wikibase.ts` — the Wikibase entity-JSON → `Item` adapter shared by
   the dump import, `scripts/import-items.ts`, and the eval script (datatype-exact
   ids, time precision kept, descriptions/aliases/sitelinks carried).

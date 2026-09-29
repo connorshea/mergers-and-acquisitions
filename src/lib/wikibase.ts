@@ -13,6 +13,11 @@ import type { Item, Value, ValueType } from "./compare.ts";
 import { IDENTIFIER_SHARED_WITH } from "./compare.ts";
 import { coordinateValue, EARTH } from "./coordinates.ts";
 import type { PropertyRow } from "./sparql.ts";
+import {
+  RELATION_QIDS,
+  SUBJECT_TYPE_CONSTRAINT,
+  type SubjectTypeConstraint,
+} from "./subject-types.ts";
 
 // ---------- entity JSON wire types (the subset we read) ----------
 
@@ -227,6 +232,40 @@ export const RECIPROCAL_WIKIDATA_CLASS = "Q24075706";
 /** "formatter URL" — turns an external-id value into a link. */
 const FORMATTER_URL = "P1630";
 
+/** The item QIDs among a statement's qualifier snaks for `pid`. */
+const qualifierItems = (statement: Statement, pid: string): string[] =>
+  (statement.qualifiers?.[pid] ?? [])
+    .map((q) => snakValue(q))
+    .filter((v): v is Value => v !== null && v.type === "item")
+    .map((v) => v.value);
+
+/**
+ * A property's subject type constraints (P2302 = Q21503250): the allowed
+ * classes (P2308), the relation (P2309), and the exceptions (P2303). Every
+ * non-deprecated constraint statement counts, not just the best-rank ones, as
+ * Wikidata's constraint checks do. A constraint with no class is skipped.
+ * Null when the property has none.
+ */
+export function subjectTypesFromEntity(entity: Entity): SubjectTypeConstraint[] | null {
+  const constraints: SubjectTypeConstraint[] = [];
+  for (const statement of entity.claims?.P2302 ?? []) {
+    if (statement.rank === "deprecated") continue;
+    const kind = snakValue(statement.mainsnak);
+    if (kind?.type !== "item" || kind.value !== SUBJECT_TYPE_CONSTRAINT) continue;
+    const classes = qualifierItems(statement, "P2308");
+    if (classes.length === 0) continue;
+    const relation = qualifierItems(statement, "P2309")
+      .map((q) => RELATION_QIDS[q])
+      .find((r) => r !== undefined);
+    constraints.push({
+      classes,
+      relation: relation ?? "either",
+      exceptions: qualifierItems(statement, "P2303"),
+    });
+  }
+  return constraints.length > 0 ? constraints : null;
+}
+
 /**
  * The `properties` row for a property entity, or null when it has no English
  * label (the SPARQL sync skipped those too) or is not a property at all.
@@ -246,5 +285,6 @@ export function propertyRowFromEntity(entity: Entity): PropertyRow | null {
     mirrorsWikidata: propertyValues(entity, "P31").some(
       (v) => v.type === "item" && v.value === RECIPROCAL_WIKIDATA_CLASS,
     ),
+    subjectTypes: subjectTypesFromEntity(entity),
   };
 }

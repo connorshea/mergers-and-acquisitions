@@ -1392,6 +1392,39 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(withMirror.reasons.some((r) => r.includes("external identifiers differ"))).toBe(false);
   });
 
+  it("ignores an id whose subject type constraint excludes both items (isInapplicableId)", () => {
+    // Two works sharing their author's person id (P2799), copied onto each.
+    const mk = (id: string, label: string): Item => ({
+      ...base,
+      id,
+      labels: { en: label },
+      statements: stmt({ P2799: [{ type: "external-id" as const, value: "70" }] }),
+    });
+    const a = mk("Q70", "Dulce dueño");
+    const b = mk("Q71", "La sirena negra");
+    const isId = (pid: string) => pid === "P2799";
+
+    const without = scoreCandidate(a, b, { isIdentifierProp: isId });
+    expect(without.reasons).toContain("shares external identifier: P2799");
+
+    const ruledOut = scoreCandidate(a, b, {
+      isIdentifierProp: isId,
+      isInapplicableId: (pid) => pid === "P2799",
+    });
+    expect(ruledOut.reasons.some((r) => r.startsWith("shares external identifier"))).toBe(false);
+    expect(ruledOut.reasons).toContain(
+      "identifier whose subject type constraint excludes both items, not counted: P2799",
+    );
+    expect(ruledOut.confidence).toBeLessThan(without.confidence);
+
+    // Still evidence when the id fits one of the two items.
+    const oneSide = scoreCandidate(a, b, {
+      isIdentifierProp: isId,
+      isInapplicableId: (pid, item) => pid === "P2799" && item.id === "Q70",
+    });
+    expect(oneSide.reasons).toContain("shares external identifier: P2799");
+  });
+
   it("caps a pair hard when two+ per-subject ids differ, even with a shared id and identical name", () => {
     // Identical name, same P31 and a *shared* IGDB id would score very high, but
     // two per-subject store pages differ (Steam + MobyGames) — distinct games.

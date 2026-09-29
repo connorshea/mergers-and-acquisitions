@@ -1,0 +1,117 @@
+{
+  "pageid": 76797315,
+  "ns": 0,
+  "title": "Q77330893",
+  "lastrevid": 1069438058,
+  "modified": "2019-12-04T18:05:11Z",
+  "type": "item",
+  "id": "Q77330893",
+  "labels": {
+    "es": {
+      "language": "es",
+      "value": "Dulce dueño"
+    }
+  },
+  "descriptions": {},
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5963e3cad5eee4ae1cffbefbac15327800b9a7e6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7725634,
+              "id": "Q7725634"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q77330893$eaaca7bc-4388-e2a5-32e7-e48011e05ff8",
+        "rank": "normal"
+      }
+    ],
+    "P50": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P50",
+          "hash": "d5fa7bb2dde163134446375f1f1e434589fdcc2c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 275929,
+              "id": "Q275929"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q77330893$019e7c2f-47f1-9fb9-2739-975c945920e8",
+        "rank": "normal"
+      }
+    ],
+    "P2799": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2799",
+          "hash": "38d4807783b812e795c801f27cf3eb798c6c9840",
+          "datavalue": {
+            "value": "70",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q77330893$2f0e6b2c-414b-baa8-18ff-4ac140961b08",
+        "rank": "normal"
+      }
+    ],
+    "P3976": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3976",
+          "hash": "c70728dfca6bb234d36d24a21e4827d52df634e3",
+          "datavalue": {
+            "value": "9597",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q77330893$811a9661-4f27-3513-30a8-151563834fb1",
+        "rank": "normal"
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "279f54cfda23d13d106169dc73ab5b8528081bb9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 8253,
+              "id": "Q8253"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q77330893$95287e29-4d6a-641e-93b5-7729cf57cef0",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

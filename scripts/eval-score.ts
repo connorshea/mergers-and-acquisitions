@@ -31,7 +31,9 @@
 // pairs whose only mirror-Wikidata ids are sync-detected (untagged in the floor)
 // could score marginally differently in production. Resolved sitelink redirects
 // (Item.sitelinkRedirects) come from each pair's sitelink-redirects.json, when
-// recorded (scripts/eval-redirects.ts). The threshold mirrors the hunt's
+// recorded (scripts/eval-redirects.ts). Subject type constraints and class
+// ancestors (`isInapplicableId`) come from eval-data/subject-types.json
+// (scripts/eval-subject-types.ts). The threshold mirrors the hunt's
 // MIN_CONFIDENCE (0.4).
 
 import { readFile, readdir, writeFile } from "node:fs/promises";
@@ -40,6 +42,7 @@ import type { Item, ScoreOptions } from "../src/lib/compare.ts";
 import { orderByAge, scoreCandidate } from "../src/lib/compare.ts";
 import { type Entity, entityToItem } from "../src/lib/wikibase.ts";
 import { applyRedirects } from "./eval-redirects.ts";
+import { loadInapplicableIdCheck } from "./eval-subject-types.ts";
 
 const EVAL_DIR = "eval-data";
 const BASELINE_PATH = join(EVAL_DIR, "score-baseline.json");
@@ -114,9 +117,13 @@ interface Scored extends Pair {
   reasons: string[];
 }
 
-function scorePair(pair: Pair, threshold: number): Scored {
+function scorePair(
+  pair: Pair,
+  threshold: number,
+  isInapplicableId: ScoreOptions["isInapplicableId"],
+): Scored {
   const idProps = identifierProps(pair.a, pair.b);
-  const opts: ScoreOptions = {};
+  const opts: ScoreOptions = { isInapplicableId };
   if (idProps.size > 0) opts.isIdentifierProp = (pid) => idProps.has(pid);
   const [from, into] = orderByAge(pair.a, pair.b);
   const { confidence, reasons } = scoreCandidate(from, into, opts);
@@ -289,7 +296,8 @@ async function main() {
   if (Number.isNaN(threshold)) throw new Error("--threshold expects a number");
 
   const pairs = [...(await loadPositives()), ...(await loadNegatives())];
-  const scored = pairs.map((p) => scorePair(p, threshold));
+  const isInapplicableId = await loadInapplicableIdCheck();
+  const scored = pairs.map((p) => scorePair(p, threshold, isInapplicableId));
   const m = computeMetrics(scored);
 
   console.log(`Eval harness — threshold ${threshold} (duplicate if confidence ≥ threshold)\n`);

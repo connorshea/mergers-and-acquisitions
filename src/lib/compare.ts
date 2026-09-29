@@ -1529,6 +1529,58 @@ export function isCollectionSiblingPair(a: Item, b: Item): boolean {
   return na.length > 0 && nb.length > 0 && !na.some((n) => nb.includes(n));
 }
 
+/** Wikidata "tonality" — the key a musical work is in. */
+export const TONALITY = "P826";
+/** Wikidata "catalog code" — a work's number in a catalogue (BWV, K., Hob., …). */
+export const CATALOG_CODE = "P528";
+
+/**
+ * True when both items state a tonality (P826) and share none: a composition
+ * has one key, so "Sonata No. 5 in A major" and "No. 6 in B-flat major" are
+ * two works. Sibling pieces of one published set (a composer's Op. 20 sonatas)
+ * otherwise share a composer, instrumentation, near-identical names and the
+ * set's one IMSLP page, and so read as a near-perfect match.
+ */
+export function isDifferentKeyPair(a: Item, b: Item): boolean {
+  const keys = (item: Item) =>
+    (item.statements[TONALITY] ?? []).filter((v) => v.type === "item").map((v) => v.value);
+  const ka = keys(a);
+  const kb = keys(b);
+  return ka.length > 0 && kb.length > 0 && !ka.some((k) => kb.includes(k));
+}
+
+/**
+ * True when both items carry a catalog code (P528) from the same catalogue —
+ * judged by the code's letter prefix, "YB 26" vs "YB 25", "BWV 1007" vs "BWV
+ * 1008" — with no code in common: a catalogue numbers each work once, so these
+ * are two works. Codes are compared ignoring case and punctuation. Prefix-less
+ * codes are skipped (a bare "25" names no catalogue), and so are opus numbers,
+ * which publishers assigned independently (one set is Preston op. 19 and
+ * Hummel op. 20), so two opus numbers can name one work.
+ *
+ * Only created works count — both items need a composer (P86), author (P50) or
+ * creator (P170). Astronomical catalogues give one star several same-catalogue
+ * codes (components "WDS J07523-2938A" vs "…AB"), so there a differing code
+ * says nothing.
+ */
+export function isCatalogSiblingPair(a: Item, b: Item): boolean {
+  const isWork = (item: Item) => ["P86", "P50", "P170"].some((pid) => item.statements[pid]?.length);
+  if (!isWork(a) || !isWork(b)) return false;
+  const codes = (item: Item) =>
+    (item.statements[CATALOG_CODE] ?? [])
+      .filter((v) => v.type === "string" || v.type === "external-id")
+      .map((v) => v.value.toLowerCase().replace(/[^\p{L}\p{N}]/gu, ""))
+      .filter((c) => c !== "");
+  const ca = codes(a);
+  const cb = codes(b);
+  if (ca.some((c) => cb.includes(c))) return false;
+  const prefix = (c: string) => /^\p{L}+/u.exec(c)?.[0] ?? "";
+  const catalogues = (cs: string[]) =>
+    new Set(cs.map(prefix).filter((p) => p !== "" && p !== "op" && p !== "opus"));
+  const pa = catalogues(ca);
+  return [...catalogues(cb)].some((p) => pa.has(p));
+}
+
 /** Wikidata "conflation" — an item knowingly covering several distinct subjects. */
 export const CONFLATION = "Q14946528";
 
@@ -2186,6 +2238,18 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     reasons.unshift(
       "different inventory numbers (P217) in the same collection (P195), separate objects",
     );
+    score = Math.min(score, 0.1);
+  }
+
+  // Sibling works of one published set (sonatas 1–6 of an opus) share a
+  // composer, instrumentation, near-identical names and the set's IMSLP page.
+  // Different catalogue numbers or different keys say they are separate works.
+  if (isCatalogSiblingPair(a, b)) {
+    reasons.unshift("different catalog codes (P528) in the same catalogue, not a duplicate");
+    score = Math.min(score, 0.1);
+  }
+  if (isDifferentKeyPair(a, b)) {
+    reasons.unshift("different tonality (P826), separate musical works, not a duplicate");
     score = Math.min(score, 0.1);
   }
 

@@ -1905,6 +1905,16 @@ export interface ScoreOptions {
    * `properties.mirrors_wikidata`; omitted before the first property sync.
    */
   isMirroredIdProp?: (pid: string) => boolean;
+  /**
+   * Predicate for whether a property's subject type constraints rule the item
+   * out, such as a BVMC *person* ID (P2799) copied from the author onto a
+   * literary work. When they rule out both items, the id is a misplaced copy
+   * rather than evidence about either, and counts neither for a match nor
+   * against one. Built by the hunt from the synced constraints and class
+   * ancestors (makeInapplicableIdCheck in subject-types.ts), which fails open
+   * on anything not synced yet; omitted before the first sync.
+   */
+  isInapplicableId?: (pid: string, item: Item) => boolean;
 }
 
 export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): CandidateScore {
@@ -1926,8 +1936,15 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // An id either item declares shared with the other (the P4070 qualifier) is
   // likewise non-evidence: the editor is telling us one id covers both items.
   const sharedWithOther = sharedIdentifierProps(a, b);
+  // So is an id whose subject type constraint fits neither item's class.
+  const inapplicable = opts.isInapplicableId;
+  const isInapplicable = (pid: string): boolean =>
+    inapplicable !== undefined && inapplicable(pid, a) && inapplicable(pid, b);
   const isNonEvidence = (pid: string): boolean =>
-    isMirrored(pid) || CLASSIFICATION_PROPS.has(pid) || sharedWithOther.has(pid);
+    isMirrored(pid) ||
+    CLASSIFICATION_PROPS.has(pid) ||
+    sharedWithOther.has(pid) ||
+    isInapplicable(pid);
   const sharedExtIds = rows.filter(
     (r) =>
       r.kind === "statement" &&
@@ -1967,6 +1984,23 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   if (declaredShared.length > 0) {
     reasons.push(
       `identifier declared shared between the two items (P4070), not counted: ${declaredShared
+        .map((r) => r.key)
+        .join(", ")}`,
+    );
+  }
+  // And a value the pair agrees on under a property meant for another kind of
+  // subject: worth fixing on Wikidata, so say which.
+  const misplaced = rows.filter(
+    (r) =>
+      r.kind === "statement" &&
+      r.status === "identical" &&
+      r.a.some((v) => v.type === "external-id") &&
+      !sharedWithOther.has(r.key) &&
+      isInapplicable(r.key),
+  );
+  if (misplaced.length > 0) {
+    reasons.push(
+      `identifier whose subject type constraint excludes both items, not counted: ${misplaced
         .map((r) => r.key)
         .join(", ")}`,
     );

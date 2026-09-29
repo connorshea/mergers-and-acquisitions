@@ -26,6 +26,7 @@
     "eval:fetch-nondupes": "node scripts/fetch-nondupe-pairs.ts",
     "eval:score": "node scripts/eval-score.ts",
     "eval:resolve-redirects": "node scripts/resolve-eval-redirects.ts",
+    "eval:resolve-subject-types": "node scripts/resolve-eval-subject-types.ts",
     "knip": "knip"
   },
   "dependencies": {

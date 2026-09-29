@@ -29,9 +29,9 @@ import {
   type Connection as CoreConnection,
 } from "mysql2";
 import { drizzle, type MySql2Database } from "drizzle-orm/mysql2";
-import { and, eq, inArray, notInArray, sql } from "drizzle-orm";
+import { and, eq, inArray, isNotNull, notInArray, sql } from "drizzle-orm";
 import * as schema from "../db/schema.ts";
-import { mergeCandidates, properties, syncState } from "../db/schema.ts";
+import { classAncestors, mergeCandidates, properties, syncState } from "../db/schema.ts";
 import { connConfig } from "./db-config.ts";
 import { STALE_CLAIM_SECONDS } from "./import-claims.ts";
 import type { Item, ScoreOptions } from "../src/lib/compare.ts";
@@ -42,6 +42,7 @@ import {
   storedBlockingKey,
 } from "../src/lib/compare.ts";
 import { primaryLabel, primaryType } from "../src/lib/wikidata.ts";
+import { makeInapplicableIdCheck, type SubjectTypeConstraint } from "../src/lib/subject-types.ts";
 import { encodeLanguageList, pairLanguages } from "../src/lib/languages.ts";
 import { refreshCandidateItemInfo } from "./candidate-item-info.ts";
 import { attachSitelinkRedirects } from "./sitelink-overlay.ts";
@@ -129,6 +130,37 @@ async function loadMirroredIdProps(db: Db): Promise<Set<string>> {
     .from(properties)
     .where(eq(properties.mirrorsWikidata, true));
   return new Set(rows.map((r) => r.pid));
+}
+
+/**
+ * Build the scorer's subject-type check from the synced subject type
+ * constraints of the identifier properties and the `class_ancestors` table,
+ * so an id on an item its property can't describe (a person id on a work)
+ * counts neither for nor against a match. Null before the first sync; the
+ * check itself fails open on anything not synced yet.
+ */
+async function loadInapplicableIdCheck(db: Db): Promise<ScoreOptions["isInapplicableId"] | null> {
+  const [constraintRows, ancestorRows] = await Promise.all([
+    db
+      .select({ pid: properties.pid, subjectTypes: properties.subjectTypes })
+      .from(properties)
+      .where(and(eq(properties.datatype, "ExternalId"), isNotNull(properties.subjectTypes))),
+    db
+      .select({ cls: classAncestors.class, ancestor: classAncestors.ancestor })
+      .from(classAncestors),
+  ]);
+  if (constraintRows.length === 0 || ancestorRows.length === 0) return null;
+  const constraints = new Map<string, SubjectTypeConstraint[]>();
+  for (const { pid, subjectTypes } of constraintRows) {
+    if (subjectTypes) constraints.set(pid, subjectTypes);
+  }
+  const ancestors = new Map<string, string[]>();
+  for (const { cls, ancestor } of ancestorRows) {
+    const list = ancestors.get(cls);
+    if (list) list.push(ancestor);
+    else ancestors.set(cls, [ancestor]);
+  }
+  return makeInapplicableIdCheck(constraints, ancestors);
 }
 
 /** Items whose blocking key is filled in per round of `fillBlockingKeys`. */
@@ -656,9 +688,10 @@ async function score(
   if (pairCount === 0) return stats;
   const start = performance.now();
 
-  const [idProps, mirroredProps] = await Promise.all([
+  const [idProps, mirroredProps, inapplicableId] = await Promise.all([
     loadIdentifierProps(db),
     loadMirroredIdProps(db),
+    loadInapplicableIdCheck(db),
   ]);
   // Only count real ExternalId properties as shared identifiers once synced;
   // before that, fall back to legacy value-shape scoring (no predicate). The
@@ -667,6 +700,7 @@ async function score(
   const scoreOpts: ScoreOptions = {};
   if (idProps.size > 0) scoreOpts.isIdentifierProp = (pid) => idProps.has(pid);
   if (mirroredProps.size > 0) scoreOpts.isMirroredIdProp = (pid) => mirroredProps.has(pid);
+  if (inapplicableId) scoreOpts.isInapplicableId = inapplicableId;
 
   // Counted before scoring, for the mass-prune guard below: rows the scoring
   // creates are all in hunt_pairs, so they can never be orphans.

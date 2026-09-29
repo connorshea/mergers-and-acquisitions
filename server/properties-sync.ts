@@ -10,7 +10,7 @@ import type { PropertyRow } from "../src/lib/sparql.ts";
 // 100-param cap forced.
 const ROWS_PER_STMT = 500;
 
-/** Upsert fetched property rows, refreshing label/datatype/formatterUrl/syncedAt. */
+/** Upsert fetched property rows, refreshing every synced column and syncedAt. */
 export async function syncProperties(rows: PropertyRow[]): Promise<number> {
   for (let i = 0; i < rows.length; i += ROWS_PER_STMT) {
     const chunk = rows.slice(i, i + ROWS_PER_STMT).map((r) => ({
@@ -19,6 +19,7 @@ export async function syncProperties(rows: PropertyRow[]): Promise<number> {
       datatype: r.datatype,
       formatterUrl: r.formatterUrl,
       mirrorsWikidata: r.mirrorsWikidata,
+      subjectTypes: r.subjectTypes,
     }));
     if (chunk.length === 0) continue;
     await db
@@ -30,6 +31,7 @@ export async function syncProperties(rows: PropertyRow[]): Promise<number> {
           datatype: sql`values(${properties.datatype})`,
           formatterUrl: sql`values(${properties.formatterUrl})`,
           mirrorsWikidata: sql`values(${properties.mirrorsWikidata})`,
+          subjectTypes: sql`values(${properties.subjectTypes})`,
           syncedAt: sql`CURRENT_TIMESTAMP`,
         },
       });

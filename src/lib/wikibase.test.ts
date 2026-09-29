@@ -201,6 +201,7 @@ describe("propertyRowFromEntity", () => {
       datatype: "ExternalId",
       formatterUrl: "https://store.steampowered.com/app/$1/",
       mirrorsWikidata: true,
+      subjectTypes: null,
     });
   });
 
@@ -215,6 +216,44 @@ describe("propertyRowFromEntity", () => {
       formatterUrl: null,
       mirrorsWikidata: false,
     });
+  });
+
+  const qualifier = (property: string, qid: string) => ({
+    snaktype: "value" as const,
+    property,
+    datatype: "wikibase-item",
+    datavalue: itemRef(qid),
+  });
+  const constraint = (
+    kind: string,
+    qualifiers: Statement["qualifiers"],
+    rank: Statement["rank"] = "normal",
+  ) => claim("P2302", "wikibase-item", itemRef(kind), rank, qualifiers);
+
+  it("reads subject type constraints: classes, relation, and exceptions", () => {
+    const bvmc: Entity = {
+      ...steam,
+      id: "P2799",
+      claims: {
+        P2302: [
+          constraint("Q21503250", {
+            P2308: [qualifier("P2308", "Q5"), qualifier("P2308", "Q16334295")],
+            P2309: [qualifier("P2309", "Q21503252")],
+            P2303: [qualifier("P2303", "Q42")],
+          }),
+          // No relation: read leniently as instance-or-subclass.
+          constraint("Q21503250", { P2308: [qualifier("P2308", "Q43229")] }),
+          // Other constraint kinds, deprecated ones, and classless ones are skipped.
+          constraint("Q21503247", { P2308: [qualifier("P2308", "Q1")] }),
+          constraint("Q21503250", { P2308: [qualifier("P2308", "Q2")] }, "deprecated"),
+          constraint("Q21503250", { P2309: [qualifier("P2309", "Q21503252")] }),
+        ],
+      },
+    };
+    expect(propertyRowFromEntity(bvmc)?.subjectTypes).toEqual([
+      { classes: ["Q5", "Q16334295"], relation: "instance", exceptions: ["Q42"] },
+      { classes: ["Q43229"], relation: "either", exceptions: [] },
+    ]);
   });
 });
 

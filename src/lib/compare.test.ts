@@ -982,15 +982,15 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     const score = (a: Item, b: Item) =>
       scoreCandidate(a, b, { isIdentifierProp: (pid) => pid === "P5794" });
 
-    it("caps the pair when three or more wikis keep a separate article for each", () => {
-      const wikis = ["enwiki", "kowiki", "ptwiki"];
+    it("caps the pair when two or more wikis keep a separate article for each", () => {
+      const wikis = ["enwiki", "kowiki"];
       const result = score(mk("Q1", pages("", wikis)), mk("Q2", pages(" (series)", wikis)));
       expect(result.confidence).toBeLessThanOrEqual(0.1);
-      expect(result.reasons[0]).toMatch(/^3 wikis have a separate article/);
+      expect(result.reasons[0]).toMatch(/^2 wikis have a separate article/);
     });
 
-    it("tolerates one or two clashes", () => {
-      const wikis = ["enwiki", "kowiki"];
+    it("tolerates a single clash", () => {
+      const wikis = ["enwiki"];
       const result = score(mk("Q1", pages("", wikis)), mk("Q2", pages(" (series)", wikis)));
       expect(result.confidence).toBeGreaterThan(0.4);
       expect(result.reasons.some((r) => r.includes("separate article"))).toBe(false);

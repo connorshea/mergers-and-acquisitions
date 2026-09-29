@@ -1258,12 +1258,13 @@ const WORK_PERIOD_START = "P2031";
 /**
  * Same-wiki sitelink clashes (two different, non-redirect pages on one wiki) at
  * or beyond this are treated as near-conclusive that the items are different
- * subjects: several independent wiki communities each keep a separate article
- * for them. One or two clashes are tolerated — a wiki can carry a duplicated
- * article — but none of the eval set's real merges has even one. See
- * scoreCandidate.
+ * subjects: independent wiki communities each keep a separate article for
+ * them (a TV series and its sequel, each with its own page on enwiki and
+ * tawiki). One clash is tolerated — a wiki can carry a duplicated article, or
+ * an unbadged redirect — but two wikis agreeing is a pattern, and none of the
+ * eval set's real merges has even one. See scoreCandidate.
  */
-const MANY_SITELINK_CLASHES = 3;
+const MANY_SITELINK_CLASHES = 2;
 
 /**
  * Per-subject identifiers where each distinct subject has exactly one page: a
@@ -2371,7 +2372,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
 
   // Many wikis each holding a *separate* article for the two items means those
   // communities treat them as different subjects (e.g. a game and its series,
-  // each with its own page on enwiki, kowiki, ptwiki, …). A clash where either
+  // each with its own page on enwiki and kowiki). A clash where either
   // side is a badged redirect is the classic duplicate shape, so it doesn't
   // count. Cap below the persistence floor, overriding even a shared id.
   const separateArticleWikis = rows.filter(

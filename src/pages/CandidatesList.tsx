@@ -485,7 +485,7 @@ export default function CandidatesList() {
             </button>
           </nav>
           <p className="list-warning" role="note">
-            Reminder: Always review before merging.
+            Reminder: Always review before merging. If you aren't sure, don't merge it!
           </p>
         </>
       )}

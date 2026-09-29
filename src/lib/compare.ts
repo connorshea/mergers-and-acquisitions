@@ -2094,14 +2094,29 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // word theirs differently, so it's shown to the reviewer but not weighed.
   // Word overlap counts alongside edit distance, so an inserted word ("1977
   // short story" vs "1977 short story collection") still reads as similar.
+  // An identical match outside English names its language, since a reviewer
+  // reading the English descriptions would otherwise not see it. English goes
+  // first so it wins a tie.
   let descSim = 0;
-  for (const lang of Object.keys(a.descriptions)) {
+  let descLang = "";
+  const descLangs = Object.keys(a.descriptions).sort(
+    (x, y) => Number(x !== "en") - Number(y !== "en"),
+  );
+  for (const lang of descLangs) {
     const da = a.descriptions[lang];
     const db = b.descriptions[lang];
-    if (da && db) descSim = Math.max(descSim, stringSimilarity(da, db), wordOverlap(da, db));
+    if (!da || !db) continue;
+    const sim = Math.max(stringSimilarity(da, db), wordOverlap(da, db));
+    if (sim > descSim) {
+      descSim = sim;
+      descLang = lang;
+    }
   }
-  if (descSim >= 0.995) reasons.push("identical description");
-  else if (descSim >= 0.75) reasons.push(`similar descriptions (${Math.round(descSim * 100)}%)`);
+  if (descSim >= 0.995) {
+    reasons.push(
+      descLang === "en" ? "identical description" : `identical description (${descLang})`,
+    );
+  } else if (descSim >= 0.75) reasons.push(`similar descriptions (${Math.round(descSim * 100)}%)`);
 
   // How much of the shared statement set agrees, over *discriminative* properties
   // only (P31 counted above; low-entropy props like genre/game mode/country

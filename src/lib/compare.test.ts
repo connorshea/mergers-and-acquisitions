@@ -2870,6 +2870,20 @@ describe("scoreCandidate description reason", () => {
     expect(similar.confidence).toBe(plain.confidence);
   });
 
+  it("names the language of an identical description outside English", () => {
+    const dutch = scoreCandidate(
+      book("Q1", { en: "1977 short story", nl: "boek van Ramachandra Guha" }),
+      book("Q2", { en: "1978 novella", nl: "boek van Ramachandra Guha" }),
+    );
+    expect(dutch.reasons).toContain("identical description (nl)");
+    // English wins a tie, and then goes unnamed.
+    const both = scoreCandidate(
+      book("Q1", { en: "1977 short story", nl: "kort verhaal" }),
+      book("Q2", { en: "1977 short story", nl: "kort verhaal" }),
+    );
+    expect(both.reasons).toContain("identical description");
+  });
+
   it("only compares descriptions within a shared language", () => {
     const result = scoreCandidate(
       book("Q1", { en: "video game" }),

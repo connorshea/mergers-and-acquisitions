@@ -12,6 +12,7 @@ import {
   safeHttpUrl,
   sharedIdentifierProps,
 } from "./lib/compare.ts";
+import { coordinateTooltip, formatCoordinate, geohackUrl } from "./lib/coordinates.ts";
 import { describeDifference } from "./lib/text-difference.ts";
 import { sitelinkUrl, wikiPageUrl } from "./lib/wiki.ts";
 import { displayLabel } from "./lib/wikidata.ts";
@@ -54,6 +55,7 @@ function displayValue(v: AnnotatedValue): string {
     if (m) return m[1].replace(/^\+/, "").replace(/-00$/, "").replace(/-00$/, "");
   }
   if (v.type === "quantity" && v.unit) return `${v.value} ${v.unitLabel ?? v.unit}`;
+  if (v.type === "coordinate") return formatCoordinate(v);
   return v.value;
 }
 
@@ -87,8 +89,8 @@ function ValueChip({
   // (e.g. an itch.io page), and an external identifier with a formatter URL
   // (P1630) resolves to its source database, e.g. a Steam app ID → store page.
   // So does a string with one: Commons media (P18 image, …) gets a Commons
-  // file-page template from the server. A sitelink title opens its page on that wiki. Special (unknown/no) values
-  // are placeholders, never links.
+  // file-page template from the server. A sitelink title opens its page on that wiki. A
+  // coordinate opens GeoHack's map page. Special (unknown/no) values are placeholders, never links.
   const idUrl = special
     ? null
     : site
@@ -97,12 +99,17 @@ function ValueChip({
         ? safeHttpUrl(v.value)
         : v.type === "external-id" || v.type === "string"
           ? formatIdUrl(formatter, v.value)
-          : null;
+          : v.type === "coordinate"
+            ? geohackUrl(v)
+            : null;
+  // A coordinate's tooltip always gives its raw numbers and precision, plus
+  // the distance note when there is one.
+  const title =
+    v.type === "coordinate"
+      ? [coordinateTooltip(v), v.note].filter(Boolean).join(" · ")
+      : (v.note ?? (v.type === "item" || v.type === "time" ? v.value : undefined));
   return (
-    <span
-      className={`chip chip-${v.status}${special ? " chip-special" : ""}`}
-      title={v.note ?? (v.type === "item" ? v.value : v.type === "time" ? v.value : undefined)}
-    >
+    <span className={`chip chip-${v.status}${special ? " chip-special" : ""}`} title={title}>
       {idUrl ? (
         <a className="chip-link" href={idUrl} target="_blank" rel="noreferrer">
           {text}

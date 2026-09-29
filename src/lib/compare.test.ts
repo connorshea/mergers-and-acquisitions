@@ -40,6 +40,7 @@ import {
   sharedIdentifierProps,
   stringSimilarity,
 } from "./compare.ts";
+import { coordinateValue } from "./coordinates.ts";
 import { EXAMPLES } from "./fixtures.ts";
 
 const byName = Object.fromEntries(EXAMPLES.map((e) => [e.name, e]));
@@ -2786,4 +2787,60 @@ describe("scoreCandidate description reason", () => {
     );
     expect(result.reasons.some((r) => r.includes("description"))).toBe(false);
   });
+});
+
+describe("coordinates", () => {
+  const bigBen = coordinateValue(51.5007292, -0.1246254, 0.0001);
+  const londonEye = coordinateValue(51.5032973, -0.1195537, 0.0001);
+
+  it("calls identical coordinates identical", () => {
+    expect(compareValues(bigBen, coordinateValue(51.5007292, -0.1246254))).toEqual(["identical"]);
+  });
+
+  it("calls nearby coordinates distinct, with the distance", () => {
+    expect(compareValues(bigBen, londonEye)).toEqual(["distinct", "453 m apart"]);
+    const [status, note] = compareValues(bigBen, coordinateValue(51.95, -0.1246254));
+    expect(status).toBe("distinct");
+    expect(note).toBe("50 km apart");
+  });
+
+  it("calls the same numbers on different globes distinct", () => {
+    expect(compareValues(coordinateValue(1, 2), coordinateValue(1, 2, undefined, "Q111"))).toEqual([
+      "distinct",
+    ]);
+  });
+
+  it("keeps the nearest distance note on a distinct row", () => {
+    const [row] = buildRows(
+      { ...empty("Q1"), statements: { P625: [bigBen] } },
+      {
+        ...empty("Q2"),
+        statements: { P625: [coordinateValue(40, -3), londonEye] },
+      },
+    ).filter((r) => r.key === "P625");
+    expect(row.status).toBe("distinct");
+    expect(row.a[0].note).toBe("453 m apart");
+  });
+
+  it("backfills a globe label", () => {
+    const mars = coordinateValue(18.65, 226.2, 0.01, "Q111");
+    const [row] = buildRows(
+      { ...empty("Q1"), statements: { P625: [mars] } },
+      { ...empty("Q2"), statements: { P625: [mars] } },
+      {},
+      { Q111: "Mars" },
+    ).filter((r) => r.key === "P625");
+    expect(row.a[0].globeLabel).toBe("Mars");
+  });
+
+  it("never counts matching coordinates as a shared identifier", () => {
+    const a = { ...empty("Q1"), labels: { en: "Place" }, statements: { P625: [bigBen] } };
+    const b = { ...empty("Q2"), labels: { en: "Place" }, statements: { P625: [bigBen] } };
+    const score = scoreCandidate(a, b);
+    expect(score.reasons.join(" ")).not.toMatch(/external identifier/);
+  });
+
+  function empty(id: string): Item {
+    return { id, labels: {}, descriptions: {}, aliases: {}, sitelinks: {}, statements: {} };
+  }
 });

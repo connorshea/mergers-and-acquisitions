@@ -4,6 +4,7 @@
 // by the React UI, the server routes, and the background jobs (sync +
 // candidate hunting). Keep it that way — no React, no browser globals.
 
+import { coordinateDistance, formatMeters, globeOf } from "./coordinates.ts";
 import { sitelinkHost } from "./wiki.ts";
 
 // ---------- Types ----------
@@ -19,6 +20,7 @@ export type ValueType =
   | "quantity"
   | "url"
   | "external-id"
+  | "coordinate"
   | "somevalue"
   | "novalue";
 
@@ -35,6 +37,21 @@ export interface Value {
   unit?: string;
   /** Human label for `unit`, backfilled for display like `label`. */
   unitLabel?: string;
+  /** Coordinate values only: latitude and longitude, in degrees. */
+  latitude?: number;
+  longitude?: number;
+  /**
+   * Coordinate values only: the precision in degrees, as Wikibase stores it.
+   * Absent when unknown: on the SPARQL path, and for Wikibase's null precision.
+   */
+  precision?: number;
+  /**
+   * Coordinate values only: the QID of the globe (Mars is "Q111"). Absent for
+   * Earth, like `unit` for unitless quantities. See src/lib/coordinates.ts.
+   */
+  globe?: string;
+  /** Human label for `globe`, backfilled for display like `unitLabel`. */
+  globeLabel?: string;
   /**
    * QIDs of the *other* items this identifier is declared to also cover —
    * Wikidata's "identifier shared with" (P4070) qualifier on the statement. An
@@ -363,6 +380,8 @@ export function compareValues(x: Value, y: Value, pid?: string): [Status, string
   if (x.type === "novalue") return ["identical"];
   // The same amount in different units (90 minutes vs 90 seconds) differs.
   if (x.type === "quantity" && x.unit !== y.unit) return ["distinct"];
+  // Points on different globes never match, whatever their numbers.
+  if (x.type === "coordinate" && globeOf(x) !== globeOf(y)) return ["distinct"];
   if (x.value === y.value) return ["identical"];
 
   switch (x.type) {
@@ -405,6 +424,11 @@ export function compareValues(x: Value, y: Value, pid?: string): [Status, string
     case "quantity":
     case "external-id":
       return ["distinct"]; // must match exactly
+    case "coordinate": {
+      // Distinct unless identical for now, but say how far apart they are.
+      const d = coordinateDistance(x, y);
+      return d === null ? ["distinct"] : ["distinct", `${formatMeters(d)} apart`];
+    }
     case "url":
       // The scheme ("http://x.cat" vs "https://x.cat") or a trailing slash alone
       // ("https://x.cat/" vs "https://x.cat") is the same page, so count it as an
@@ -434,12 +458,21 @@ export function compareSets(
     side.map((v) => {
       let best: Status = "distinct";
       let note: string | undefined;
+      // A distinct coordinate keeps the note of the nearest point on the other side.
+      let nearest = Infinity;
       for (const o of other) {
         const [s, n] = compareValues(v, o, pid);
         if (s === "identical") return { ...v, status: s };
         if (s === "similar" && best !== "similar") {
           best = "similar";
           note = n;
+        }
+        if (s === "distinct" && n && best === "distinct" && v.type === "coordinate") {
+          const d = coordinateDistance(v, o) ?? Infinity;
+          if (d < nearest) {
+            nearest = d;
+            note = n;
+          }
         }
       }
       return { ...v, status: best, note };
@@ -461,7 +494,8 @@ export function compareSets(
  * PROPERTY_LABELS map and finally to the bare property id. `valueLabels` (Qxxx →
  * human label) backfills the display label of item-valued statements whose
  * label the sync didn't resolve, so genre/platform/etc. show a name instead of
- * a bare QID, and likewise the unit of quantity values.
+ * a bare QID, and likewise the unit of quantity values and the globe of
+ * non-Earth coordinates.
  */
 export function buildRows(
   a: Item,
@@ -471,15 +505,17 @@ export function buildRows(
 ): Row[] {
   const rows: Row[] = [];
 
-  // Backfill a display label for item values missing one, and for quantity
-  // units, from valueLabels.
+  // Backfill a display label for item values missing one, for quantity
+  // units, and for coordinate globes, from valueLabels.
   const withLabels = (values: Value[]): Value[] =>
     values.map((v) =>
       v.type === "item" && !v.label && valueLabels[v.value]
         ? { ...v, label: valueLabels[v.value] }
         : v.unit && !v.unitLabel && valueLabels[v.unit]
           ? { ...v, unitLabel: valueLabels[v.unit] }
-          : v,
+          : v.globe && !v.globeLabel && valueLabels[v.globe]
+            ? { ...v, globeLabel: valueLabels[v.globe] }
+            : v,
     );
 
   /**

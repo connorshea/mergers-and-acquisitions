@@ -192,3 +192,63 @@ describe("derived DB fields", () => {
     ]);
   });
 });
+
+describe("classifyValue — WKT coordinates", () => {
+  const WKT = "http://www.opengis.net/ont/geosparql#wktLiteral";
+
+  it("parses Point(lon lat) with latitude and longitude the right way round", () => {
+    expect(
+      classifyValue(
+        { type: "literal", value: "Point(-0.1246254 51.5007292)", datatype: WKT },
+        "P625",
+      ),
+    ).toEqual({
+      type: "coordinate",
+      value: "51.5007292,-0.1246254",
+      latitude: 51.5007292,
+      longitude: -0.1246254,
+    });
+  });
+
+  it("parses a globe-prefixed point", () => {
+    expect(
+      classifyValue(
+        {
+          type: "literal",
+          value: "<http://www.wikidata.org/entity/Q111> Point(226.2 18.65)",
+          datatype: WKT,
+        },
+        "P625",
+      ),
+    ).toEqual({
+      type: "coordinate",
+      value: "18.65,226.2,Q111",
+      latitude: 18.65,
+      longitude: 226.2,
+      globe: "Q111",
+    });
+  });
+
+  it("never yields an external id or an external_ids row", () => {
+    const item = mapDumpGame({
+      wikidata_id: 1,
+      qid: "Q1",
+      label: "x",
+      en_label: "x",
+      mul_label: null,
+      properties: {
+        P625: [{ type: "literal", value: "Point(2 1)", datatype: WKT }],
+        P5140: [
+          {
+            type: "literal",
+            value: "<http://www.wikidata.org/entity/Q405> Point(3 4)",
+            datatype: WKT,
+          },
+        ],
+      },
+    });
+    expect(item.statements.P625[0].type).toBe("coordinate");
+    expect(item.statements.P5140[0].type).toBe("coordinate");
+    expect(externalIdRows(item)).toEqual([]);
+  });
+});

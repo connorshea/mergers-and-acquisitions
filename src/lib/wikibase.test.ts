@@ -217,3 +217,80 @@ describe("propertyRowFromEntity", () => {
     });
   });
 });
+
+describe("snakValue — globe coordinates", () => {
+  const coord = (value: Record<string, unknown>) =>
+    snakValue({
+      snaktype: "value",
+      property: "P625",
+      datatype: "globe-coordinate",
+      datavalue: { type: "globecoordinate", value },
+    });
+
+  it("keeps an Earth point's numbers and precision, omitting the globe", () => {
+    expect(
+      coord({
+        latitude: 51.5007292,
+        longitude: -0.1246254,
+        altitude: null,
+        precision: 0.0001,
+        globe: "http://www.wikidata.org/entity/Q2",
+      }),
+    ).toEqual({
+      type: "coordinate",
+      value: "51.5007292,-0.1246254",
+      latitude: 51.5007292,
+      longitude: -0.1246254,
+      precision: 0.0001,
+    });
+  });
+
+  it("keeps a non-Earth globe, in the value string too", () => {
+    expect(
+      coord({
+        latitude: 18.65,
+        longitude: 226.2,
+        precision: 0.01,
+        globe: "http://www.wikidata.org/entity/Q111",
+      }),
+    ).toEqual({
+      type: "coordinate",
+      value: "18.65,226.2,Q111",
+      latitude: 18.65,
+      longitude: 226.2,
+      precision: 0.01,
+      globe: "Q111",
+    });
+  });
+
+  it("leaves a null precision unset", () => {
+    const v = coord({
+      latitude: 1,
+      longitude: 2,
+      precision: null,
+      globe: "http://www.wikidata.org/entity/Q2",
+    });
+    expect(v).toEqual({ type: "coordinate", value: "1,2", latitude: 1, longitude: 2 });
+  });
+
+  it("keeps an arcsecond precision as stored", () => {
+    const v = coord({
+      latitude: 47.6062,
+      longitude: -122.3321,
+      precision: 0.00027777777777778,
+      globe: "http://www.wikidata.org/entity/Q2",
+    });
+    expect(v?.precision).toBe(0.00027777777777778);
+  });
+
+  it("still maps unknown and no value to the special types", () => {
+    expect(snakValue({ snaktype: "somevalue", property: "P625" })).toEqual({
+      type: "somevalue",
+      value: "",
+    });
+    expect(snakValue({ snaktype: "novalue", property: "P625" })).toEqual({
+      type: "novalue",
+      value: "",
+    });
+  });
+});

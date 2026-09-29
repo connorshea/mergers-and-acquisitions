@@ -9,6 +9,7 @@
 // key that off the property id via EXTERNAL_ID_PROPERTIES below.
 
 import type { Item, Value, ValueType } from "./compare.ts";
+import { parseWktPoint } from "./coordinates.ts";
 
 // ---------- dump / query wire format ----------
 
@@ -58,7 +59,8 @@ export interface WikidataDump {
 // by their *shape*, which is unambiguous in practice. Measured over ~1.18M
 // values from the real video-game dump: literals are either time (xsd:dateTime),
 // quantity (xsd:decimal), monolingual text (a language tag), or — 93% of them —
-// a bare literal with neither, which is an external identifier. Most genuine
+// a bare literal with neither, which is an external identifier. (A coordinate,
+// geo:wktLiteral, is recognised by its datatype in classifyBare.) Most genuine
 // string-datatype properties landing in "external-id" is harmless for shared-id
 // blocking, but a few plain-string properties carry values that *look* like an
 // id and collide across unrelated games (see NON_ID_STRING_PROPS); those are
@@ -115,6 +117,10 @@ function classifyBare(node: DumpValue, pid?: string): Value {
         ? { type: "somevalue", value: "" }
         : { type: "url", value: node.value };
     default:
+      // A coordinate (P625 and co.) is a WKT point, not an identifier.
+      if (node.datatype?.endsWith("#wktLiteral")) {
+        return parseWktPoint(node.value) ?? { type: "string", value: node.value };
+      }
       return { type: literalType(node, pid), value: node.value };
   }
 }

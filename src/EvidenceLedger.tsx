@@ -179,6 +179,7 @@ function Signal({
               if (!row) return;
               e.preventDefault();
               row.scrollIntoView({ behavior: "smooth", block: "center" });
+              flashRow(row);
             }}
           >
             {pid}
@@ -191,6 +192,17 @@ function Signal({
       </span>
     </li>
   );
+}
+
+/**
+ * Briefly tint a comparison row so the eye lands on it after the scroll.
+ * Re-adding the class restarts the animation on a repeat click.
+ */
+function flashRow(row: HTMLElement) {
+  row.classList.remove("is-flashing");
+  void row.offsetWidth; // force a reflow so the animation starts over
+  row.classList.add("is-flashing");
+  row.addEventListener("animationend", () => row.classList.remove("is-flashing"), { once: true });
 }
 
 function SignalIcon({ polarity, filled }: { polarity: "positive" | "negative"; filled: boolean }) {

@@ -2268,6 +2268,28 @@ describe("scoreCandidate — creators, loose names, clashes and aggregator ids",
     expect(scoreCandidate(a, c).reasons).toContain("different country of citizenship (P27)");
   });
 
+  it("compares a band's start of work period (P2031) with the other's inception", () => {
+    // Eyes: a Japanese band active from 2005 and a US band founded in 1977.
+    const a = mk("Q1", "Eyes", { P2031: [{ type: "time", value: "+2005-00-00T00:00:00Z" }] });
+    const b = mk("Q2", "Eyes", { P571: [{ type: "time", value: "+1977-00-00T00:00:00Z" }] });
+    const result = scoreCandidate(a, b);
+    expect(result.confidence).toBeLessThanOrEqual(0.1);
+    expect(result.reasons[0]).toContain("years differ by 28");
+  });
+
+  it("doesn't compare a person's career start with a birth year", () => {
+    const human = { P31: [{ type: "item" as const, value: "Q5" }] };
+    const a = mk("Q1", "Jane Doe", {
+      ...human,
+      P2031: [{ type: "time", value: "+1990-00-00T00:00:00Z" }],
+    });
+    const b = mk("Q2", "Jane Doe", {
+      ...human,
+      P569: [{ type: "time", value: "+1965-00-00T00:00:00Z" }],
+    });
+    expect(scoreCandidate(a, b).reasons.some((r) => r.includes("years differ"))).toBe(false);
+  });
+
   it("caps a pair whose slug ids differ only by a --N suffix", () => {
     const a = mk("Q1", "Bug Attack!", { P11307: ext("t-1"), P5794: ext("bug-attack--1") });
     const b = mk("Q2", "Bug Attack", { P11307: ext("t-1"), P5794: ext("bug-attack") });

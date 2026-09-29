@@ -1,0 +1,253 @@
+{
+  "pageid": 133476516,
+  "ns": 0,
+  "title": "Q140032795",
+  "lastrevid": 2501136095,
+  "modified": "2026-06-02T16:23:13Z",
+  "type": "item",
+  "id": "Q140032795",
+  "labels": {
+    "de": {
+      "language": "de",
+      "value": "Sonate Nr. 6 B-Dur (op. 20,6)"
+    },
+    "en": {
+      "language": "en",
+      "value": "Sonata No. 6 in B-flat major (op. 20,6)"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "composition possibly by Johann Christian Bach (Warb YB 26)"
+    },
+    "de": {
+      "language": "de",
+      "value": "Komposition vielleicht von Johann Christian Bach (Warb YB 26)"
+    }
+  },
+  "aliases": {
+    "mul": [
+      {
+        "language": "mul",
+        "value": "Warb YB 26"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5be109d8a3cbbd062357a9d210d4ef00ef25244e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 105543609,
+              "id": "Q105543609"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q140032795$AD4FB709-1DF2-44BC-AB7A-AE7CD6D919DF",
+        "rank": "normal"
+      }
+    ],
+    "P14192": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P14192",
+          "hash": "311df61c199e4c5976e6a30f175d457b6ace8bde",
+          "datavalue": {
+            "value": "00003152",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q140032795$1A5300B4-7AF3-4EF6-BB8E-918A8FBEC78E",
+        "rank": "normal"
+      }
+    ],
+    "P528": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P528",
+          "hash": "1e916058179897ec80f7ee1bddd9afd7dac34e61",
+          "datavalue": {
+            "value": "YB 26",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P972": [
+            {
+              "snaktype": "value",
+              "property": "P972",
+              "hash": "84936ba0239386863f4aefb8844faf58658c4b70",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 139743120,
+                  "id": "Q139743120"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P972"],
+        "id": "Q140032795$BDF57C3D-73BC-4AC9-B717-A952548C9840",
+        "rank": "normal"
+      }
+    ],
+    "P839": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P839",
+          "hash": "dc0342ae340773362fb4c1cf341a631f79dfab73",
+          "datavalue": {
+            "value": "3_Violin_Sonatas,_Op.21_(Bach,_Johann_Christian)",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q140032795$C0E8278D-6B7F-4228-B3CC-5DE648DA4058",
+        "rank": "normal"
+      }
+    ],
+    "P826": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P826",
+          "hash": "d45c5157b83d4d4bceba8c58cb4eecba0c28f356",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 795134,
+              "id": "Q795134"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q140032795$B5F99F68-A2B0-45F4-8FFD-373B37653D88",
+        "rank": "normal"
+      }
+    ],
+    "P86": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P86",
+          "hash": "ea138e30b9372048de4eba0a0c92b5feda71910b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 106641,
+              "id": "Q106641"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1480": [
+            {
+              "snaktype": "value",
+              "property": "P1480",
+              "hash": "f0239a3b7ccff42287c860abeb33afd1f10fd23f",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 30230067,
+                  "id": "Q30230067"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1480"],
+        "id": "Q140032795$2A048ACE-1CA9-492F-95E2-AE976BD68F9E",
+        "rank": "normal"
+      }
+    ],
+    "P7937": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7937",
+          "hash": "661040f9bde574147451d79462410fb3f6b0b539",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7933385,
+              "id": "Q7933385"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q140032795$FF0C87DC-8920-4541-893B-A304CC289A3C",
+        "rank": "normal"
+      }
+    ],
+    "P870": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P870",
+          "hash": "70467da1f2c9cc05941579f6f1930f74fd9670c8",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 8355,
+              "id": "Q8355"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q140032795$3F38F8B2-71B8-4BD3-8A16-509C2E949B0D",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P870",
+          "hash": "e57ffa4bb85d321986253a1dd0080a2120c0c4ad",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 52954,
+              "id": "Q52954"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q140032795$619DE8BE-99EB-42B1-84E6-4026ACAB716D",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

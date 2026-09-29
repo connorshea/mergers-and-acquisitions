@@ -21,6 +21,8 @@ import {
   isWorkEditionPair,
   isPartWholePair,
   isCollectionSiblingPair,
+  isCatalogSiblingPair,
+  isDifferentKeyPair,
   isConflationPair,
   titleYears,
   yearDisambiguatedWikis,
@@ -2249,6 +2251,74 @@ describe("isCollectionSiblingPair", () => {
     const unnumbered = leaf("Q2", "x");
     delete unnumbered.statements.P217;
     expect(isCollectionSiblingPair(leaf("Q1", "1966.218.z"), unnumbered)).toBe(false);
+  });
+});
+
+describe("musical work siblings", () => {
+  const base = { descriptions: {}, aliases: {}, sitelinks: {} };
+  // Two sonatas of J. C. Bach's Op. 20 set, sharing the set's one IMSLP page.
+  const sonata = (id: string, n: number, key: string, codes = [`YB ${20 + n}`]): Item => ({
+    ...base,
+    id,
+    labels: { en: `Sonata No. ${n} (op. 20,${n})` },
+    descriptions: { en: "composition possibly by Johann Christian Bach" },
+    statements: {
+      P31: [{ type: "item", value: "Q105543609" }],
+      P86: [{ type: "item", value: "Q106641" }],
+      P528: codes.map((value) => ({ type: "string" as const, value })),
+      P826: [{ type: "item", value: key }],
+      P839: [{ type: "external-id", value: "3_Violin_Sonatas,_Op.21_(Bach,_Johann_Christian)" }],
+    },
+  });
+
+  it("flags different keys, and caps the pair", () => {
+    const a = sonata("Q1", 6, "Q795134");
+    const b = sonata("Q2", 5, "Q277793", ["YB 26"]);
+    expect(isDifferentKeyPair(a, b)).toBe(true);
+    expect(isCatalogSiblingPair(a, b)).toBe(false); // a shared code
+    const result = scoreCandidate(a, b, { isIdentifierProp: (pid) => pid === "P839" });
+    expect(result.confidence).toBeLessThanOrEqual(0.1);
+    expect(result.reasons[0]).toContain("different tonality (P826)");
+  });
+
+  it("flags different codes in one catalogue, and caps the pair", () => {
+    const a = sonata("Q1", 6, "Q795134");
+    const b = sonata("Q2", 5, "Q795134");
+    expect(isDifferentKeyPair(a, b)).toBe(false);
+    expect(isCatalogSiblingPair(a, b)).toBe(true);
+    const result = scoreCandidate(a, b, { isIdentifierProp: (pid) => pid === "P839" });
+    expect(result.confidence).toBeLessThanOrEqual(0.1);
+    expect(result.reasons[0]).toContain("different catalog codes (P528)");
+  });
+
+  it("ignores other catalogues, bare numbers and opus numbers", () => {
+    const k = "Q795134";
+    expect(isCatalogSiblingPair(sonata("Q1", 1, k, ["BWV 1"]), sonata("Q2", 1, k, ["K. 2"]))).toBe(
+      false,
+    );
+    expect(isCatalogSiblingPair(sonata("Q1", 1, k, ["308/4"]), sonata("Q2", 1, k, ["307/4"]))).toBe(
+      false,
+    );
+    expect(
+      isCatalogSiblingPair(sonata("Q1", 1, k, ["Op. 19,1"]), sonata("Q2", 1, k, ["op. 20,1"])),
+    ).toBe(false);
+    expect(isCatalogSiblingPair(sonata("Q1", 1, k, ["B.61"]), sonata("Q2", 1, k, ["b 61"]))).toBe(
+      false,
+    );
+  });
+
+  it("only compares catalogue codes of created works", () => {
+    const k = "Q795134";
+    const a = sonata("Q1", 6, k);
+    const b = sonata("Q2", 5, k);
+    delete b.statements.P86;
+    expect(isCatalogSiblingPair(a, b)).toBe(false);
+  });
+
+  it("needs a key on both sides", () => {
+    const b = sonata("Q2", 5, "Q277793");
+    delete b.statements.P826;
+    expect(isDifferentKeyPair(sonata("Q1", 6, "Q795134"), b)).toBe(false);
   });
 });
 

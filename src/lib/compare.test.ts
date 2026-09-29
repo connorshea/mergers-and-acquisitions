@@ -12,6 +12,7 @@ import {
   formatIdUrl,
   installment,
   type Item,
+  type Value,
   crossReferenceProps,
   isAutoIgnoredConflict,
   levenshtein,
@@ -20,6 +21,7 @@ import {
   isSeriesSequelPair,
   isWorkEditionPair,
   isPartWholePair,
+  isSequencedPair,
   isCollectionSiblingPair,
   isDifferentVolumePair,
   isDisjointYearRangePair,
@@ -2843,4 +2845,49 @@ describe("coordinates", () => {
   function empty(id: string): Item {
     return { id, labels: {}, descriptions: {}, aliases: {}, sitelinks: {}, statements: {} };
   }
+});
+
+describe("isSequencedPair (follows / followed by)", () => {
+  // Q119850903 / Q119850755: two sides of Fragment's Note 2, separate games that
+  // share store listings (App Store, Google Play, …) and link each other with
+  // P155 / P156. They scored 0.88 before the link capped them.
+  const shared = {
+    P31: [{ type: "item" as const, value: "Q7889" }],
+    P178: [{ type: "item" as const, value: "Q18455941" }],
+    P179: [{ type: "item" as const, value: "Q119851053" }],
+    P3861: [{ type: "external-id" as const, value: "1107571023" }],
+    P3418: [{ type: "external-id" as const, value: "com.ullucus.fragmentsnote2en" }],
+    P5794: [{ type: "external-id" as const, value: "fragments-note-2" }],
+    P7597: [{ type: "external-id" as const, value: "fragments-note-2" }],
+  };
+  const side = (id: string, label: string, link: Record<string, Value[]>): Item => ({
+    id,
+    labels: { en: label },
+    descriptions: { en: "visual novel video game" },
+    aliases: {},
+    sitelinks: {},
+    statements: { ...shared, ...link },
+  });
+  const yukitsuki = side("Q119850903", "Fragment’s Note 2 Side: Yukitsuki", {
+    P155: [{ type: "item", value: "Q119850755" }],
+  });
+  const shizuku = side("Q119850755", "Fragment’s Note 2 Side: Shizuku", {
+    P156: [{ type: "item", value: "Q119850903" }],
+  });
+
+  it("detects a follows or followed-by link in either direction", () => {
+    expect(isSequencedPair(yukitsuki, shizuku)).toBe(true);
+    expect(isSequencedPair(shizuku, yukitsuki)).toBe(true);
+    const { P155: _, ...unlinked } = yukitsuki.statements;
+    expect(isSequencedPair({ ...yukitsuki, statements: unlinked }, shizuku)).toBe(true);
+    expect(
+      isSequencedPair({ ...yukitsuki, statements: unlinked }, { ...shizuku, statements: shared }),
+    ).toBe(false);
+  });
+
+  it("caps the pair below the persistence floor despite shared store ids", () => {
+    const score = scoreCandidate(yukitsuki, shizuku);
+    expect(score.confidence).toBeLessThanOrEqual(0.1);
+    expect(score.reasons[0]).toMatch(/follows \/ followed by/);
+  });
 });

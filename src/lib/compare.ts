@@ -1617,6 +1617,25 @@ export function isPartWholePair(a: Item, b: Item): boolean {
   return points(a, b.id) || points(b, a.id);
 }
 
+/** Wikidata "follows" — the previous item in a sequence (the prior game in a series). */
+export const FOLLOWS = "P155";
+/** Wikidata "followed by" — the next item in a sequence. */
+export const FOLLOWED_BY = "P156";
+
+/**
+ * True when the pair is explicitly linked as consecutive entries: either item's
+ * "follows" (P155) or "followed by" (P156) names the other — e.g. two routes of
+ * one visual novel released as separate games. Nothing comes before or after
+ * itself, so like P527/P361 the link is an editor stating the two are distinct.
+ */
+export function isSequencedPair(a: Item, b: Item): boolean {
+  const points = (from: Item, toId: string) =>
+    [FOLLOWS, FOLLOWED_BY].some((pid) =>
+      (from.statements[pid] ?? []).some((v) => v.type === "item" && v.value === toId),
+    );
+  return points(a, b.id) || points(b, a.id);
+}
+
 /** Wikidata "collection" — the museum/library/archive holding an object. */
 export const COLLECTION = "P195";
 /** Wikidata "inventory number" — the holding collection's accession number. */
@@ -1746,9 +1765,9 @@ export function yearDisambiguatedWikis(a: Item, b: Item): string[] {
  * item — e.g. a game's "part of the series" (P179) naming the series it is being
  * compared against, or "based on" / "followed by" pointing across the pair. An
  * item doesn't reference itself, so any such link means the two are related but
- * distinct subjects. (P1889, P2959, P629/P747/P9237/P2550 and P527/P361 are excluded: they
- * are handled, more strongly, by isDeclaredDifferent, isPermanentDuplicatePair,
- * isWorkEditionPair and isPartWholePair.)
+ * distinct subjects. (P1889, P2959, P629/P747/P9237/P2550, P527/P361 and P155/P156 are
+ * excluded: they are handled, more strongly, by isDeclaredDifferent,
+ * isPermanentDuplicatePair, isWorkEditionPair, isPartWholePair and isSequencedPair.)
  */
 export function crossReferenceProps(a: Item, b: Item): Set<string> {
   const out = new Set<string>();
@@ -1762,7 +1781,9 @@ export function crossReferenceProps(a: Item, b: Item): Set<string> {
         pid === REISSUE_OF ||
         pid === RECORDING_OF ||
         pid === HAS_PART ||
-        pid === PART_OF
+        pid === PART_OF ||
+        pid === FOLLOWS ||
+        pid === FOLLOWED_BY
       )
         continue;
       if (values.some((v) => v.type === "item" && v.value === toId)) out.add(pid);
@@ -2357,6 +2378,17 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // nothing is part of itself. Cap below the persistence floor, like editions.
   if (isPartWholePair(a, b)) {
     reasons.unshift("linked as a whole and its part on Wikidata (P527/P361), not a duplicate");
+    score = Math.min(score, 0.1);
+  }
+
+  // One item following the other (P155 / P156 linking the pair) — e.g. two
+  // routes of a visual novel sold as separate games, sharing a store listing —
+  // are consecutive entries, and nothing follows itself. Cap below the
+  // persistence floor, overriding even shared ids.
+  if (isSequencedPair(a, b)) {
+    reasons.unshift(
+      "linked as consecutive entries on Wikidata (follows / followed by, P155/P156), not a duplicate",
+    );
     score = Math.min(score, 0.1);
   }
 

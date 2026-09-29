@@ -4,12 +4,11 @@ import { fetch, FetchError } from "../lib/client.ts";
 import { useAuth } from "../lib/auth-context.ts";
 import { loginUrl } from "../lib/auth-url.ts";
 import { listHref } from "../lib/list-state.ts";
-import { reasonTone } from "../lib/reasons.ts";
 import AuthBar from "../AuthBar.tsx";
 import Dialog from "../Dialog.tsx";
+import EvidenceLedger from "../EvidenceLedger.tsx";
 import { LogoMark } from "../Logo.tsx";
 import MergeCandidates from "../MergeCandidates.tsx";
-import ReasonText from "../ReasonText.tsx";
 import {
   AUTO_IGNORED_CONFLICTS,
   type Item,
@@ -30,7 +29,7 @@ import type {
 } from "../lib/api-types.ts";
 import { wikiPageUrl } from "../lib/wiki.ts";
 
-// Detail view for one candidate: a summary bar (confidence, reasons, actions)
+// Detail view for one candidate: a summary card (confidence, evidence, actions)
 // over the full field-by-field comparison. The API returns the pair already
 // ordered (from = merged away, into = survivor), so it feeds straight into
 // MergeCandidates without re-ordering. Merge and "different from" go to
@@ -216,110 +215,82 @@ export default function CandidateDetail() {
           </div>
         )}
         {candidate && (
-          <div className="detail-bar">
-            <div className="detail-score">
-              <span
-                className={`confidence conf-${
-                  candidate.confidence >= 0.6
-                    ? "identical"
-                    : candidate.confidence >= 0.4
-                      ? "similar"
-                      : "distinct"
-                }`}
-              >
-                {Math.round(candidate.confidence * 100)}%
-              </span>
-              <span className="detail-score-label">confidence</span>
-            </div>
-            {candidate.reasons.length > 0 && (
-              <ul className="detail-reasons">
-                {candidate.reasons.map((r) => {
-                  const tone = reasonTone(r);
-                  return (
-                    <li
-                      key={r}
-                      className={`reason-${tone.polarity} reason-strength-${tone.strength}`}
-                    >
-                      <ReasonText text={r} propertyLabels={data?.propertyLabels} />
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
-            <div className="detail-actions">
-              {/* Merge / "different from" only make sense on an open pair; once
-                  it's dismissed or merged they're hidden. */}
-              {(!status || status === "open") && (
-                <>
+          <EvidenceLedger
+            confidence={candidate.confidence}
+            reasons={candidate.reasons}
+            sharedType={candidate.sharedType?.label}
+            propertyLabels={data?.propertyLabels}
+            footer={outcome && <EditOutcomePanel outcome={outcome} />}
+          >
+            {status && status !== "open" ? (
+              <>
+                <span className="flag flag-status">{status}</span>
+                {(resolution || resolvedBy) && (
+                  <span className="detail-resolution">
+                    {resolution}
+                    {resolvedBy && (
+                      <>
+                        {resolution ? " · by " : "by "}
+                        <a
+                          href={wikiPageUrl(`User:${encodeURIComponent(resolvedBy)}`)}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {resolvedBy}
+                        </a>
+                      </>
+                    )}
+                  </span>
+                )}
+                {/* A merged pair stays merged (it happened on Wikidata); a
+                    dismissed one, or a merge claim that was abandoned, can
+                    come back. */}
+                {(status === "dismissed" || status === "merging") && (
                   <button
                     type="button"
-                    className="btn-merge"
-                    onClick={() => setDialog("merge")}
-                    disabled={!user}
-                    title={user ? undefined : "Log in to merge"}
+                    className="btn-dismiss"
+                    onClick={reopen}
+                    disabled={dismissing || !user}
+                    title={user ? undefined : "Log in to reopen"}
                   >
-                    Merge
+                    {dismissing ? "Reopening…" : status === "dismissed" ? "Un-dismiss" : "Reopen"}
                   </button>
-                  <button
-                    type="button"
-                    className="btn-different"
-                    onClick={() => setDialog("different")}
-                    disabled={!user}
-                    title={user ? undefined : "Log in to mark as different"}
-                  >
-                    Mark as different from
-                  </button>
-                </>
-              )}
-              {status && status !== "open" ? (
-                <>
-                  <span className="flag flag-status">{status}</span>
-                  {(resolution || resolvedBy) && (
-                    <span className="detail-resolution">
-                      {resolution}
-                      {resolvedBy && (
-                        <>
-                          {resolution ? " · by " : "by "}
-                          <a
-                            href={wikiPageUrl(`User:${encodeURIComponent(resolvedBy)}`)}
-                            target="_blank"
-                            rel="noreferrer"
-                          >
-                            {resolvedBy}
-                          </a>
-                        </>
-                      )}
-                    </span>
-                  )}
-                  {/* A merged pair stays merged (it happened on Wikidata); a
-                      dismissed one, or a merge claim that was abandoned, can
-                      come back. */}
-                  {(status === "dismissed" || status === "merging") && (
-                    <button
-                      type="button"
-                      className="btn-dismiss"
-                      onClick={reopen}
-                      disabled={dismissing || !user}
-                      title={user ? undefined : "Log in to reopen"}
-                    >
-                      {dismissing ? "Reopening…" : status === "dismissed" ? "Un-dismiss" : "Reopen"}
-                    </button>
-                  )}
-                </>
-              ) : (
+                )}
+              </>
+            ) : (
+              // Merge / "different from" only make sense on an open pair; once
+              // it's dismissed or merged they're hidden.
+              <>
                 <button
                   type="button"
-                  className="btn-dismiss"
+                  className="btn-dismiss is-quiet"
                   onClick={dismiss}
                   disabled={dismissing || !user}
                   title={user ? undefined : "Log in to dismiss"}
                 >
                   {dismissing ? "Dismissing…" : "Dismiss"}
                 </button>
-              )}
-            </div>
-            {outcome && <EditOutcomePanel outcome={outcome} />}
-          </div>
+                <button
+                  type="button"
+                  className="btn-different"
+                  onClick={() => setDialog("different")}
+                  disabled={!user}
+                  title={user ? undefined : "Log in to mark as different"}
+                >
+                  Mark as different
+                </button>
+                <button
+                  type="button"
+                  className="btn-merge"
+                  onClick={() => setDialog("merge")}
+                  disabled={!user}
+                  title={user ? undefined : "Log in to merge"}
+                >
+                  Merge
+                </button>
+              </>
+            )}
+          </EvidenceLedger>
         )}
         {data?.snapshot && (
           <p className="detail-note">

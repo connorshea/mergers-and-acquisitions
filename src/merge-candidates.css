@@ -1233,67 +1233,198 @@ a.chip-id:hover {
   margin-top: 0.4rem;
   color: var(--muted);
 }
-.detail-bar {
+/* The summary card: score, verdict and actions in a header, then the
+   evidence ledger — signals for the pair being one item on the left, against
+   on the right. */
+.evidence {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+}
+.evidence-head {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 1rem;
-  padding: 0.9rem 1.1rem;
-  background: var(--surface);
-  border: 1px solid var(--rule);
-  border-radius: 6px;
+  gap: 1rem 1.75rem;
+  padding: 1.1rem 1.4rem;
 }
-.detail-score {
+.evidence-score {
   display: flex;
   align-items: baseline;
   gap: 0.4rem;
 }
-.detail-score .confidence {
-  font-size: 1rem;
+.evidence-pct {
+  font-size: 2.6rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--tone);
 }
-.detail-score-label {
+.evidence-score-label {
   color: var(--muted);
-  font-size: 0.85rem;
 }
-.detail-reasons {
-  flex: 1;
+.tone-identical {
+  --tone: var(--identical);
+}
+.tone-similar {
+  --tone: var(--similar);
+}
+.tone-distinct {
+  --tone: var(--distinct);
+}
+.evidence-verdict {
+  flex: 1 1 18rem;
+  min-width: 0;
+}
+.evidence-verdict-text {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.3rem 0.5rem;
+  align-items: baseline;
+  gap: 0.2rem 1.25rem;
+}
+.evidence-verdict-text strong {
+  font-size: 1.05rem;
+}
+.evidence-held {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.evidence-meter {
+  height: 6px;
+  margin-top: 0.55rem;
+  border-radius: 999px;
+  background: var(--rule);
+  overflow: hidden;
+}
+.evidence-meter span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--tone);
+}
+.evidence > .edit-result {
+  margin: 0 1.4rem 1rem;
+}
+.evidence-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--rule);
+}
+.evidence-col {
+  min-width: 0;
+  padding: 1.1rem 1.4rem 1.25rem;
+}
+.evidence-col + .evidence-col {
+  border-left: 1px solid var(--rule);
+}
+.evidence-col.is-positive {
+  --tone: var(--identical);
+}
+.evidence-col.is-negative {
+  --tone: var(--distinct);
+}
+.evidence-col-title {
+  margin: 0 0 0.4rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tone);
+}
+.evidence-empty {
+  margin: 0.5rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.evidence-list {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+.evidence-signal {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.evidence-signal:last-child {
+  border-bottom: none;
+}
+.evidence-icon {
+  flex: none;
+  fill: none;
+  stroke: var(--tone);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.evidence-icon.is-filled circle {
+  fill: var(--tone);
+}
+.evidence-icon.is-filled path {
+  stroke: var(--surface);
+  stroke-width: 2;
+}
+.evidence-signal-text {
+  display: block;
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+/* The scorer writes reasons as lowercase fragments; capitalize them as lines. */
+.evidence-signal-text::first-letter,
+.evidence-notes li::first-letter {
+  text-transform: uppercase;
+}
+.evidence-signal.strength-3 .evidence-signal-text {
+  font-weight: 500;
+}
+.evidence-signal-text .reason-prop {
+  color: inherit;
+}
+.evidence-signal-meta {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
   font-size: 0.85rem;
+}
+.evidence-pid {
+  color: var(--tone);
+  text-underline-offset: 2px;
+  font-variant-numeric: tabular-nums;
+}
+.evidence-pid-more {
   color: var(--muted);
 }
-.detail-reasons li {
-  background: var(--bg);
-  border: 1px solid var(--rule);
-  border-radius: 999px;
-  padding: 0.1rem 0.55rem;
+.evidence-strength {
+  min-width: 5.5em;
+  text-align: right;
+  color: var(--muted);
 }
-/* Reason chips tinted by which way the signal pushes the score (green for,
-   red against) and how hard: a faint outline for a weak nudge, a light fill
-   for a medium one, a deeper fill with bold text for a strong one. */
-.detail-reasons li.reason-positive {
-  --tone: var(--identical);
-}
-.detail-reasons li.reason-negative {
-  --tone: var(--distinct);
-}
-.detail-reasons li:is(.reason-positive, .reason-negative) {
-  border-color: color-mix(in srgb, var(--tone) 40%, var(--rule));
-}
-.detail-reasons li:is(.reason-positive, .reason-negative).reason-strength-2 {
-  background: color-mix(in srgb, var(--tone) 12%, var(--surface));
-  border-color: color-mix(in srgb, var(--tone) 55%, var(--rule));
-  color: var(--ink);
-}
-.detail-reasons li:is(.reason-positive, .reason-negative).reason-strength-3 {
-  background: color-mix(in srgb, var(--tone) 26%, var(--surface));
-  border-color: var(--tone);
-  color: var(--ink);
+.evidence-signal.strength-3 .evidence-strength {
+  min-width: 0;
+  padding: 0.1rem 0.5rem;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--tone) 14%, var(--surface));
+  color: var(--tone);
   font-weight: 600;
+}
+.evidence-notes {
+  margin: 0;
+  padding: 0.75rem 1.4rem 0.9rem;
+  list-style: none;
+  border-top: 1px solid var(--rule);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.evidence-notes li + li {
+  margin-top: 0.25rem;
+}
+.evidence-notes .reason-prop {
+  color: inherit;
 }
 /* A property id inside a reason, hoverable to reveal the property's name. */
 .reason-prop {
@@ -1303,7 +1434,6 @@ a.chip-id:hover {
   cursor: help;
 }
 .detail-actions {
-  margin-left: auto;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -1346,6 +1476,20 @@ a.chip-id:hover {
 }
 .btn-different:hover:not(:disabled) {
   border-color: var(--muted);
+}
+/* Dismiss sits beside the two edits as a plain text button. */
+.btn-dismiss.is-quiet {
+  border-color: transparent;
+  background: none;
+  color: var(--muted);
+}
+.btn-dismiss.is-quiet:hover:not(:disabled) {
+  border-color: transparent;
+  color: var(--ink);
+}
+.btn-dismiss.is-quiet:disabled {
+  background: none;
+  border-color: transparent;
 }
 
 /* ---------- Modal ---------- */
@@ -1923,22 +2067,32 @@ a.auth-login {
     min-height: 2.25rem;
   }
 
-  /* Detail summary: one column — score, then each reason and each action
-     full-width. */
-  .detail-bar {
+  /* Detail summary: one column — score, verdict, the actions full-width,
+     then the two evidence columns stacked. */
+  .evidence-head {
     flex-direction: column;
     align-items: stretch;
     gap: 0.75rem;
+    padding: 1rem;
   }
-  .detail-reasons {
-    flex-direction: column;
+  .evidence-verdict {
+    flex: none;
   }
-  .detail-reasons li {
-    border-radius: 6px;
-    padding: 0.3rem 0.6rem;
+  .evidence-body {
+    grid-template-columns: 1fr;
   }
-  .detail-actions {
-    margin-left: 0;
+  .evidence-col {
+    padding: 1rem;
+  }
+  .evidence-col + .evidence-col {
+    border-left: none;
+    border-top: 1px solid var(--rule);
+  }
+  .evidence-notes {
+    padding: 0.75rem 1rem;
+  }
+  .evidence > .edit-result {
+    margin: 0 1rem 1rem;
   }
   .detail-actions > button {
     flex: 1 1 100%;

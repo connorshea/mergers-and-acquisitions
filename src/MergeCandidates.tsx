@@ -486,6 +486,8 @@ export default function MergeCandidates({
                       return (
                         <tr
                           key={r.key}
+                          // The evidence ledger's property links scroll here.
+                          id={r.kind === "statement" ? `row-${r.key}` : undefined}
                           className={
                             [
                               isBlocker(r) ? "is-blocker" : "",

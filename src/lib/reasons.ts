@@ -78,3 +78,54 @@ export function reasonTone(text: string): ReasonTone {
   }
   return { polarity: "neutral", strength: 1 };
 }
+
+/** A one-line reading of a confidence score, for the detail page's header. */
+export function confidenceVerdict(confidence: number): string {
+  if (confidence >= 0.9) return "Almost certainly the same item";
+  if (confidence >= 0.6) return "Likely the same item";
+  if (confidence >= 0.4) return "Possibly the same item";
+  return "Probably different items";
+}
+
+// Older hunts wrote "held below near-certain — …"; current ones use a colon.
+const HELD_BELOW = /^held below near-certain(?::| —) (.+)$/;
+
+/**
+ * Sort a candidate's reasons for the evidence ledger: signals for and against
+ * the pair being one item, the rest (ids not counted, unknown reasons) as
+ * notes, and the scorer's "held below near-certain" explanation pulled out on
+ * its own (just the why, e.g. "the names only loosely match").
+ */
+export function groupReasons(reasons: string[]): {
+  positive: { text: string; tone: ReasonTone }[];
+  negative: { text: string; tone: ReasonTone }[];
+  notes: string[];
+  heldBelow: string | null;
+} {
+  const positive: { text: string; tone: ReasonTone }[] = [];
+  const negative: { text: string; tone: ReasonTone }[] = [];
+  const notes: string[] = [];
+  let heldBelow: string | null = null;
+  for (const text of reasons) {
+    const held = HELD_BELOW.exec(text);
+    if (held) {
+      heldBelow = held[1];
+      continue;
+    }
+    const tone = reasonTone(text);
+    if (tone.polarity === "neutral") notes.push(text);
+    else (tone.polarity === "positive" ? positive : negative).push({ text, tone });
+  }
+  // Strongest first; Array.sort is stable, so the scorer's order holds within
+  // a strength.
+  const byStrength = (x: { tone: ReasonTone }, y: { tone: ReasonTone }) =>
+    y.tone.strength - x.tone.strength;
+  positive.sort(byStrength);
+  negative.sort(byStrength);
+  return { positive, negative, notes, heldBelow };
+}
+
+/** The property ids a reason names, in order, without repeats. */
+export function reasonPids(text: string): string[] {
+  return [...new Set(text.match(/\bP\d+\b/g) ?? [])];
+}

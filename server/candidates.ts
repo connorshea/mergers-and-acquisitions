@@ -297,7 +297,8 @@ candidates.get("/:id", async (c) => {
   // Resolve human labels for just the property ids present on this pair.
   const pids = [...new Set(present.flatMap((i) => Object.keys(i.statements)))];
   // Item-valued statements reference other Qids that need a display label too
-  // (genre, platform, developer, …), as do quantity units (minute, gigabyte, …).
+  // (genre, platform, developer, …), as do quantity units (minute, gigabyte, …)
+  // and the globes of non-Earth coordinates (Mars, …).
   // Collect them from both items' statements.
   const valueQids = new Set<string>();
   for (const item of present) {
@@ -305,6 +306,7 @@ candidates.get("/:id", async (c) => {
       for (const v of values) {
         if (v.type === "item" && !v.label) valueQids.add(v.value);
         if (v.unit && !v.unitLabel) valueQids.add(v.unit);
+        if (v.globe && !v.globeLabel) valueQids.add(v.globe);
       }
     }
   }

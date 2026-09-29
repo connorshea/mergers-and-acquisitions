@@ -16,6 +16,8 @@ export const CONVERTER_OUTPUTS = [
   // Year/month-precision dates zeroed (#145); its fixtures held pre-zeroed times,
   // so the hash didn't move then — the Q107532735 fixture line moves it now.
   "1414b22fcbbf537d7308d7a6f5b5f41ee05440d0",
+  // Globe coordinates stored as a `coordinate` value instead of a "lat,lon" string (#191).
+  "67bcc726f2deb6e0003a1252433338bba960aa96",
 ] as const;
 
 export const CONVERTER_VERSION = CONVERTER_OUTPUTS.length;

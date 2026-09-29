@@ -11,6 +11,7 @@
 
 import type { Item, Value, ValueType } from "./compare.ts";
 import { IDENTIFIER_SHARED_WITH } from "./compare.ts";
+import { coordinateValue, EARTH } from "./coordinates.ts";
 import type { PropertyRow } from "./sparql.ts";
 
 // ---------- entity JSON wire types (the subset we read) ----------
@@ -67,6 +68,10 @@ export function timeAtPrecision(time: string, precision?: number): string {
   return precision === 10 ? `${y}-${mo}-00${rest}` : `${y}-00-00${rest}`;
 }
 
+/** The QID of a Wikidata entity URI ("http://www.wikidata.org/entity/Q2"), else undefined. */
+const entityUriQid = (uri: string): string | undefined =>
+  /^https?:\/\/www\.wikidata\.org\/entity\/(Q\d+)$/.exec(uri)?.[1];
+
 /** Convert one snak into a scorer Value. Preserves Wikidata's special snak
  * types: "somevalue" (unknown value) and "novalue" (explicit no value). */
 export function snakValue(snak: Snak): Value | null {
@@ -86,15 +91,26 @@ export function snakValue(snak: Snak): Value | null {
       // they read (and compare) like the SPARQL path's plain literals. The
       // unit is an entity URI, or "1" for a unitless quantity.
       const q = value as { amount: string; unit: string };
-      const unit = /^https?:\/\/www\.wikidata\.org\/entity\/(Q\d+)$/.exec(q.unit)?.[1];
+      const unit = entityUriQid(q.unit);
       const amount = q.amount.replace(/^\+/, "");
       return unit ? { type: "quantity", value: amount, unit } : { type: "quantity", value: amount };
     }
     case "monolingualtext":
       return { type: "string", value: (value as { text: string }).text };
     case "globecoordinate": {
-      const c = value as { latitude: number; longitude: number };
-      return { type: "string", value: `${c.latitude},${c.longitude}` };
+      // The globe is an entity URI like a quantity's unit; precision may be null.
+      const c = value as {
+        latitude: number;
+        longitude: number;
+        precision?: number | null;
+        globe?: string;
+      };
+      return coordinateValue(
+        c.latitude,
+        c.longitude,
+        c.precision,
+        (c.globe && entityUriQid(c.globe)) || EARTH,
+      );
     }
     case "string": {
       // The one case where the property datatype disambiguates the literal.

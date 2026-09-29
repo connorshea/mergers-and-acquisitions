@@ -68,7 +68,9 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
         { descriptions: { en: "2019 video game" } },
       ),
     );
-    await insertItem(makeItem("Q20", "Alpha Quest"));
+    await insertItem(
+      makeItem("Q20", "Alpha Quest", { P18: [{ type: "string", value: "Alpha Quest cover.png" }] }),
+    );
     await insertItem(makeItem("Q30", "Beta Blast", { P31: ENGINE }));
     await insertItem(makeItem("Q40", "Beta Blast", { P31: ENGINE }));
 
@@ -106,6 +108,7 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
         mirrorsWikidata: true,
       },
       { pid: "P1733", label: "Steam application ID", datatype: "ExternalId" },
+      { pid: "P18", label: "image", datatype: "CommonsMedia" },
     ]);
     await db.insert(entityLabels).values({ qid: "Q744038", label: "role-playing video game" });
   });
@@ -302,8 +305,12 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       expect(body.prevId).toBeNull();
       expect(body.nextId).toBe(beta);
       // Only properties present on this pair are resolved.
-      expect(body.propertyLabels).toEqual({ P31: "instance of", P136: "genre" });
-      expect(body.propertyFormatters).toEqual({ P136: "https://example.org/genre/$1" });
+      expect(body.propertyLabels).toEqual({ P18: "image", P31: "instance of", P136: "genre" });
+      // Commons media has no P1630 of its own; it links to the file page.
+      expect(body.propertyFormatters).toEqual({
+        P18: "https://commons.wikimedia.org/wiki/File:$1",
+        P136: "https://example.org/genre/$1",
+      });
       expect(body.propertyMirrors).toEqual(["P136"]);
       expect(body.valueLabels).toEqual({ Q744038: "role-playing video game" });
       // The synced description is backfilled onto the item.

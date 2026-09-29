@@ -44,6 +44,17 @@ const MAX_TEXT_FILTER = 250;
 const ID_CHUNK = 1000;
 /** Property ids embedded in a reason string. */
 const PID_RE = /\bP\d+\b/g;
+/**
+ * Link templates for property datatypes whose values are pages on Commons but
+ * which carry no formatter URL (P1630) of their own: a file name for media
+ * (P18 image, P154 logo, …), a full "Data:…" page title for geo shapes and
+ * tabular data.
+ */
+const COMMONS_FORMATTERS: Record<string, string> = {
+  CommonsMedia: "https://commons.wikimedia.org/wiki/File:$1",
+  GeoShape: "https://commons.wikimedia.org/wiki/$1",
+  TabularData: "https://commons.wikimedia.org/wiki/$1",
+};
 
 function parseIntParam(value: string | undefined, fallback: number): number {
   const n = Number(value);
@@ -305,6 +316,7 @@ candidates.get("/:id", async (c) => {
           .select({
             pid: properties.pid,
             label: properties.label,
+            datatype: properties.datatype,
             formatterUrl: properties.formatterUrl,
             mirrorsWikidata: properties.mirrorsWikidata,
           })
@@ -330,7 +342,8 @@ candidates.get("/:id", async (c) => {
   const propertyMirrors: string[] = [];
   for (const r of propertyChunks.flat()) {
     propertyLabels[r.pid] = r.label;
-    if (r.formatterUrl) propertyFormatters[r.pid] = r.formatterUrl;
+    const formatter = r.formatterUrl ?? COMMONS_FORMATTERS[r.datatype ?? ""];
+    if (formatter) propertyFormatters[r.pid] = formatter;
     if (r.mirrorsWikidata) propertyMirrors.push(r.pid);
   }
   const valueLabels: Record<string, string> = {};

@@ -86,7 +86,8 @@ function ValueChip({
   // Link out where the value points somewhere: a `url` value is itself a URL
   // (e.g. an itch.io page), and an external identifier with a formatter URL
   // (P1630) resolves to its source database, e.g. a Steam app ID → store page.
-  // A sitelink title opens its page on that wiki. Special (unknown/no) values
+  // So does a string with one: Commons media (P18 image, …) gets a Commons
+  // file-page template from the server. A sitelink title opens its page on that wiki. Special (unknown/no) values
   // are placeholders, never links.
   const idUrl = special
     ? null
@@ -94,7 +95,7 @@ function ValueChip({
       ? sitelinkUrl(site, v.value)
       : v.type === "url"
         ? safeHttpUrl(v.value)
-        : v.type === "external-id"
+        : v.type === "external-id" || v.type === "string"
           ? formatIdUrl(formatter, v.value)
           : null;
   return (
@@ -470,8 +471,8 @@ export default function MergeCandidates({
                   </thead>
                   <tbody>
                     {groupRows.map((r) => {
-                      // External-id rows link their values via the property's
-                      // formatter URL; other kinds have none.
+                      // External-id (and Commons media) rows link their values
+                      // via the property's formatter URL; other kinds have none.
                       const formatter =
                         r.kind === "statement" ? propertyFormatters?.[r.key] : undefined;
                       const diffCaption = rowDiffCaption(r);

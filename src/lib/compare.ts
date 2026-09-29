@@ -1238,6 +1238,13 @@ const DAY_MATCH_DATES = [
   { pid: "P570", bonus: 0.15, what: "date of death" },
 ] as const;
 
+/** Country properties whose disagreement is a penalty (see scoreCandidate). */
+const COUNTRY_PROPS = ["P495", "P27"] as const;
+const COUNTRY_PROP_LABELS: Record<(typeof COUNTRY_PROPS)[number], string> = {
+  P495: "country of origin",
+  P27: "country of citizenship",
+};
+
 /** Date properties compared for the release/founding/birth year gap. */
 const YEAR_GAP_PROPS = ["P577", "P571", "P569"] as const;
 
@@ -2152,6 +2159,14 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   };
   const diffDeveloper = disjoint("P178");
   const diffPublisher = disjoint("P123");
+  // Country of origin and citizenship are low-entropy as *agreement* (half the
+  // mirror is American or Japanese), but a disagreement is telling: namesake
+  // bands and people from two countries (The Professionals, US / UK). No real
+  // merge in the eval set differs on either; ~1 in 6 non-duplicate pairs with
+  // P495 on both sides does, and half of those with P27. Country (P17) is left
+  // out: it is noisier on organisations (a French institute placed in
+  // Luxembourg on one side of a real merge).
+  const diffCountries = COUNTRY_PROPS.filter((pid) => disjoint(pid));
   const diffCreators = CREATOR_PROPS.filter((pid) => disjointCreators(a, b, pid));
   const modestYearGap = Number.isFinite(yearGap) && yearGap >= 2 && yearGap < LARGE_YEAR_GAP;
 
@@ -2175,6 +2190,16 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
       score -= 0.2;
       reasons.push("different publisher");
     }
+  }
+
+  // Like a different creator, a different country isn't excused by a shared
+  // id: two namesake bands pick up each other's library authority records
+  // (VIAF, ISNI) far more often than a real duplicate disagrees on its country.
+  if (diffCountries.length > 0) {
+    score -= 0.2;
+    reasons.push(
+      `different ${diffCountries.map((pid) => `${COUNTRY_PROP_LABELS[pid]} (${pid})`).join(", ")}`,
+    );
   }
 
   // A different author/performer/composer/director is the classic shape of two
@@ -2548,6 +2573,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     diffCreators.length > 0 ||
     diffDeveloper ||
     diffPublisher ||
+    diffCountries.length > 0 ||
     modestYearGap ||
     largeYearGap ||
     distinctSubjectPageIds.length > 0 ||
@@ -2563,6 +2589,9 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // near-certain, even though the score penalty above is small.
   if (sitelinkClash) ceiling = Math.min(ceiling, 0.85);
   if (diffCreators.length > 0) ceiling = Math.min(ceiling, 0.5);
+  // Namesakes from two countries that share a library authority record
+  // (Bamboo, Sweden / Philippines, on one VIAF cluster) stay a judgement call.
+  if (diffCountries.length > 0) ceiling = Math.min(ceiling, 0.6);
   if (score > ceiling) {
     score = ceiling;
     // Only explain the clamp when the ceiling actually held the pair *below*

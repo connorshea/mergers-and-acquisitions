@@ -2237,6 +2237,37 @@ describe("scoreCandidate — creators, loose names, clashes and aggregator ids",
     }
   });
 
+  it("drops namesake bands from different countries below the floor", () => {
+    // The Professionals: a US band and a UK band.
+    const a = mk("Q1", "The Professionals", { P495: [{ type: "item", value: "Q30" }] });
+    const b = mk("Q2", "The Professionals", { P495: [{ type: "item", value: "Q145" }] });
+    const result = scoreCandidate(a, b);
+    expect(result.confidence).toBeLessThan(0.4);
+    expect(result.reasons).toContain("different country of origin (P495)");
+  });
+
+  it("holds a shared-id pair from different countries off likely", () => {
+    // Bamboo: a Swedish and a Filipino band on one shared catalogue id.
+    const a = mk("Q1", "Bamboo", { P495: [{ type: "item", value: "Q34" }], P5794: ext("x") });
+    const b = mk("Q2", "Bamboo", { P495: [{ type: "item", value: "Q928" }], P5794: ext("x") });
+    const result = scoreCandidate(a, b, { isIdentifierProp: isId });
+    expect(result.confidence).toBeLessThanOrEqual(0.6);
+    expect(result.reasons).toContain("different country of origin (P495)");
+  });
+
+  it("ignores overlapping countries but not disjoint citizenships", () => {
+    const a = mk("Q1", "Edge", {
+      P27: [
+        { type: "item", value: "Q30" },
+        { type: "item", value: "Q884" },
+      ],
+    });
+    const b = mk("Q2", "Edge", { P27: [{ type: "item", value: "Q884" }] });
+    expect(scoreCandidate(a, b).reasons.some((r) => r.startsWith("different country"))).toBe(false);
+    const c = mk("Q3", "Edge", { P27: [{ type: "item", value: "Q408" }] });
+    expect(scoreCandidate(a, c).reasons).toContain("different country of citizenship (P27)");
+  });
+
   it("caps a pair whose slug ids differ only by a --N suffix", () => {
     const a = mk("Q1", "Bug Attack!", { P11307: ext("t-1"), P5794: ext("bug-attack--1") });
     const b = mk("Q2", "Bug Attack", { P11307: ext("t-1"), P5794: ext("bug-attack") });

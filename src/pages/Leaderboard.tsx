@@ -13,8 +13,8 @@ const PERIODS: { value: LeaderboardPeriod; label: string }[] = [
   { value: "30d", label: "Last 30 days" },
 ];
 
-// Who has resolved the most pairs through the app: merges plus pairs marked
-// "different from", weighted equally. Counted server-side from the edit audit table (see
+// Who has resolved the most pairs through the app: merges, pairs marked
+// "different from", and dismissals, weighted equally. Counted server-side (see
 // server/leaderboard.ts). The period lives in the URL so a view can be linked.
 export default function Leaderboard() {
   const { user } = useAuth();
@@ -83,7 +83,7 @@ export default function Leaderboard() {
           </nav>
         </div>
         <p className="settings-help">
-          Different-from edits and merges applied on Wikidata for each user. Make sure to always
+          Pairs each user dismissed, marked different, or merged on Wikidata. Make sure to always
           make responsible edits!
         </p>
         {current?.error ? (
@@ -94,7 +94,7 @@ export default function Leaderboard() {
           <p className="list-msg">Loading…</p>
         ) : entries.length === 0 ? (
           <p className="list-msg">
-            {period === "30d" ? "No edits in the last 30 days." : "No edits yet."}
+            {period === "30d" ? "No reviews in the last 30 days." : "No reviews yet."}
           </p>
         ) : (
           <div className="ledger-wrap">
@@ -105,6 +105,9 @@ export default function Leaderboard() {
                     #
                   </th>
                   <th scope="col">User</th>
+                  <th scope="col" className="col-count">
+                    Dismissed
+                  </th>
                   <th scope="col" className="col-count">
                     Marked different
                   </th>
@@ -130,6 +133,7 @@ export default function Leaderboard() {
                       </a>
                       {e.userId === user?.id && <span className="auth-badge">you</span>}
                     </td>
+                    <td className="col-count">{e.dismissals.toLocaleString()}</td>
                     <td className="col-count">{e.differentFrom.toLocaleString()}</td>
                     <td className="col-count">{e.merges.toLocaleString()}</td>
                     <td className="col-count col-total">{e.total.toLocaleString()}</td>
@@ -143,6 +147,7 @@ export default function Leaderboard() {
                     <th scope="row">
                       {totals.users === 1 ? "1 user" : `All ${totals.users.toLocaleString()} users`}
                     </th>
+                    <td className="col-count">{totals.dismissals.toLocaleString()}</td>
                     <td className="col-count">{totals.differentFrom.toLocaleString()}</td>
                     <td className="col-count">{totals.merges.toLocaleString()}</td>
                     <td className="col-count col-total">{totals.total.toLocaleString()}</td>

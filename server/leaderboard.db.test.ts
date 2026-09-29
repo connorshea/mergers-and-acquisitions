@@ -3,8 +3,9 @@
 import { afterAll, beforeEach, describe, expect, it } from "vite-plus/test";
 import { app } from "./app.ts";
 import { db, pool } from "./db.ts";
-import { users, wikidataEdits } from "../db/schema.ts";
+import { mergeCandidates, users, wikidataEdits } from "../db/schema.ts";
 import type { LeaderboardResponse } from "../src/lib/api-types.ts";
+import { toSqlDatetime } from "./auth/time.ts";
 import { DB_TEST, truncateAll } from "../test/db-helpers.ts";
 
 async function leaderboard(query = ""): Promise<LeaderboardResponse> {
@@ -21,6 +22,23 @@ const edit = (userId: number, candidateId: number, over: Partial<Edit> = {}): Ed
   fromQid: `Q${candidateId * 2}`,
   intoQid: `Q${candidateId * 2 + 1}`,
   ok: true,
+  ...over,
+});
+
+type Candidate = typeof mergeCandidates.$inferInsert;
+const dismissed = (
+  id: number,
+  resolvedBy: number | null,
+  over: Partial<Candidate> = {},
+): Candidate => ({
+  id,
+  fromQid: `Q${id * 2 + 1}`,
+  intoQid: `Q${id * 2}`,
+  confidence: 0.5,
+  reasons: [],
+  status: "dismissed",
+  resolvedAt: "2026-01-01 00:00:00",
+  resolvedBy,
   ...over,
 });
 
@@ -55,11 +73,11 @@ describe.skipIf(!DB_TEST)("GET /api/leaderboard", () => {
     ]);
     const { period, entries, totals } = await leaderboard();
     expect(period).toBe("all");
-    expect(totals).toEqual({ users: 3, merges: 4, differentFrom: 4, total: 8 });
+    expect(totals).toEqual({ users: 3, merges: 4, differentFrom: 4, dismissals: 0, total: 8 });
     expect(entries).toEqual([
-      { userId: 2, username: "Bob", merges: 2, differentFrom: 1, total: 3 },
-      { userId: 3, username: "Carol", merges: 0, differentFrom: 3, total: 3 },
-      { userId: 1, username: "Alice", merges: 2, differentFrom: 0, total: 2 },
+      { userId: 2, username: "Bob", merges: 2, differentFrom: 1, dismissals: 0, total: 3 },
+      { userId: 3, username: "Carol", merges: 0, differentFrom: 3, dismissals: 0, total: 3 },
+      { userId: 1, username: "Alice", merges: 2, differentFrom: 0, dismissals: 0, total: 2 },
     ]);
   });
 
@@ -72,17 +90,65 @@ describe.skipIf(!DB_TEST)("GET /api/leaderboard", () => {
         edit(2, 3),
       ]);
     expect((await leaderboard("?period=30d")).entries).toEqual([
-      { userId: 2, username: "Bob", merges: 1, differentFrom: 0, total: 1 },
+      { userId: 2, username: "Bob", merges: 1, differentFrom: 0, dismissals: 0, total: 1 },
     ]);
     const all = await leaderboard("?period=bogus");
     expect(all.period).toBe("all");
     expect(all.entries.map((e) => e.username)).toEqual(["Alice", "Bob"]);
-    expect(all.totals).toEqual({ users: 2, merges: 3, differentFrom: 0, total: 3 });
+    expect(all.totals).toEqual({ users: 2, merges: 3, differentFrom: 0, dismissals: 0, total: 3 });
+  });
+
+  it("counts plain dismissals, weighted equally, but not dismissals written by anything else", async () => {
+    await db.insert(wikidataEdits).values([edit(1, 1), edit(2, 2, { action: "different-from" })]);
+    await db.insert(mergeCandidates).values([
+      dismissed(1, 1, { status: "merged" }),
+      // Bob's "different from" pair is already counted from its edit.
+      dismissed(2, 2, { resolution: "marked as different from (P1889)" }),
+      dismissed(3, 2),
+      dismissed(4, 2),
+      dismissed(5, 3),
+      // Settled by the dump import, then dismissed again by Carol: not hers.
+      dismissed(6, 3, { resolution: "item no longer in the Wikidata dump" }),
+      dismissed(7, null, { resolution: "item no longer in the Wikidata dump" }),
+      // Dismissed, then reopened.
+      dismissed(8, null, { status: "open", resolvedAt: null }),
+    ]);
+    const { entries, totals } = await leaderboard();
+    expect(entries).toEqual([
+      { userId: 2, username: "Bob", merges: 0, differentFrom: 1, dismissals: 2, total: 3 },
+      { userId: 1, username: "Alice", merges: 1, differentFrom: 0, dismissals: 0, total: 1 },
+      { userId: 3, username: "Carol", merges: 0, differentFrom: 0, dismissals: 1, total: 1 },
+    ]);
+    expect(totals).toEqual({ users: 3, merges: 1, differentFrom: 1, dismissals: 3, total: 5 });
+  });
+
+  it("limits dismissals to the last 30 days by when they were dismissed", async () => {
+    await db
+      .insert(mergeCandidates)
+      .values([dismissed(1, 1), dismissed(2, 1, { resolvedAt: toSqlDatetime(new Date()) })]);
+    const recent = await leaderboard("?period=30d");
+    expect(recent.entries).toEqual([
+      { userId: 1, username: "Alice", merges: 0, differentFrom: 0, dismissals: 1, total: 1 },
+    ]);
+    expect(recent.totals).toEqual({
+      users: 1,
+      merges: 0,
+      differentFrom: 0,
+      dismissals: 1,
+      total: 1,
+    });
+    expect((await leaderboard()).totals.dismissals).toBe(2);
   });
 
   it("is public", async () => {
     const empty = await leaderboard();
     expect(empty.entries).toEqual([]);
-    expect(empty.totals).toEqual({ users: 0, merges: 0, differentFrom: 0, total: 0 });
+    expect(empty.totals).toEqual({
+      users: 0,
+      merges: 0,
+      differentFrom: 0,
+      dismissals: 0,
+      total: 0,
+    });
   });
 });

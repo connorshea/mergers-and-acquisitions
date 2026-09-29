@@ -230,7 +230,9 @@ export interface LeaderboardEntry {
   merges: number;
   /** Pairs marked "different from" (P1889) through the app. */
   differentFrom: number;
-  /** Pairs resolved: `merges + differentFrom`, the ranking key. */
+  /** Pairs dismissed through the app (and not since reopened). */
+  dismissals: number;
+  /** Pairs resolved: `merges + differentFrom + dismissals`, the ranking key. */
   total: number;
 }
 
@@ -238,14 +240,15 @@ export interface LeaderboardResponse {
   period: LeaderboardPeriod;
   /** Best first: by total, then merges. */
   entries: LeaderboardEntry[];
-  /** Summed over every user with an edit in the period, not only the listed ones. */
+  /** Summed over every user with an edit or dismissal in the period, not only the listed ones. */
   totals: LeaderboardTotals;
 }
 
 export interface LeaderboardTotals {
-  /** Users with at least one successful edit in the period. */
+  /** Users with at least one successful edit or dismissal in the period. */
   users: number;
   merges: number;
   differentFrom: number;
+  dismissals: number;
   total: number;
 }

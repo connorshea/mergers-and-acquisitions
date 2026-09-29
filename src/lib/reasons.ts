@@ -40,6 +40,8 @@ const REASON_TONES: [RegExp, ReasonTone["polarity"], ReasonTone["strength"]][] =
     3,
   ],
   [/^different instance of/, "negative", 3],
+  // Doesn't move the score by itself, but the merge can't go through as-is.
+  [/would block the merge$/, "negative", 3],
   [/^different names in native script/, "negative", 2],
   [/^different names \(/, "negative", 3],
   [/^different social-media accounts/, "negative", 2],
@@ -47,7 +49,6 @@ const REASON_TONES: [RegExp, ReasonTone["polarity"], ReasonTone["strength"]][] =
   [/^one item references the other/, "negative", 2],
   [/^different /, "negative", 2], // developer, publisher, author, …
   [/^a per-subject identifier differs/, "negative", 1],
-  [/would block the merge$/, "negative", 1],
   [/not counted/, "neutral", 1],
   [/^shares external identifier/, "positive", 3],
   [/^identical label|^label matches the other item's alias/, "positive", 3],

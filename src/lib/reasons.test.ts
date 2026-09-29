@@ -48,6 +48,10 @@ describe("reasonTone", () => {
       polarity: "negative",
       strength: 3,
     });
+    expect(reasonTone("1 conflict would block the merge")).toMatchObject({
+      polarity: "negative",
+      strength: 3,
+    });
     expect(reasonTone("something new")).toMatchObject({ polarity: "neutral" });
   });
 

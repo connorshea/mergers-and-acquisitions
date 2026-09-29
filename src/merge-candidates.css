@@ -493,7 +493,7 @@ a.site-link:hover {
    An inset shadow sits above each cell's own background (blocker, discounted)
    and below its text, so the tint shows on every kind of row. */
 .ledger tr.is-flashing td {
-  animation: row-flash 1.8s ease-out;
+  animation: row-flash 3.3s ease-out;
 }
 @keyframes row-flash {
   0%,

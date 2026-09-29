@@ -22,6 +22,7 @@ import {
   isWorkEditionPair,
   isPartWholePair,
   isSequencedPair,
+  isDerivativePair,
   isCollectionSiblingPair,
   isDifferentVolumePair,
   isDisjointYearRangePair,
@@ -2889,5 +2890,39 @@ describe("isSequencedPair (follows / followed by)", () => {
     const score = scoreCandidate(yukitsuki, shizuku);
     expect(score.confidence).toBeLessThanOrEqual(0.1);
     expect(score.reasons[0]).toMatch(/follows \/ followed by/);
+  });
+});
+
+describe("isDerivativePair (based on / derivative work)", () => {
+  // Q139737789 / Q139737788: a keyboard piece and the prelude derived from it,
+  // both "Keyboard Piece/Prelude in C minor", sharing an IMSLP id (P839) and
+  // linked with P144 / P4969. They scored 0.90 before the link capped them.
+  const common = {
+    P31: [{ type: "item" as const, value: "Q105543609" }],
+    P86: [{ type: "item" as const, value: "Q1339" }],
+    P839: [{ type: "external-id" as const, value: "Keyboard_Piece/Prelude_in_C_minor" }],
+  };
+  const work = (id: string, extra: Record<string, Value[]>): Item => ({
+    id,
+    labels: { en: "Keyboard Piece/Prelude in C minor" },
+    descriptions: { en: "composition by Johann Sebastian Bach" },
+    aliases: {},
+    sitelinks: {},
+    statements: { ...common, ...extra },
+  });
+  const original = work("Q139737788", { P4969: [{ type: "item", value: "Q139737789" }] });
+  const derived = work("Q139737789", { P144: [{ type: "item", value: "Q139737788" }] });
+
+  it("detects based on or derivative work in either direction", () => {
+    expect(isDerivativePair(original, derived)).toBe(true);
+    expect(isDerivativePair(derived, work("Q139737788", {}))).toBe(true);
+    expect(isDerivativePair(work("Q139737789", {}), original)).toBe(true);
+    expect(isDerivativePair(work("Q139737789", {}), work("Q139737788", {}))).toBe(false);
+  });
+
+  it("caps the pair below the persistence floor despite a shared id", () => {
+    const score = scoreCandidate(original, derived);
+    expect(score.confidence).toBeLessThanOrEqual(0.1);
+    expect(score.reasons[0]).toMatch(/based on \/ derivative work/);
   });
 });

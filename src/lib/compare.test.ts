@@ -6,6 +6,7 @@ import {
   collapseRepeatedRows,
   compareRowRank,
   compareValues,
+  countDistinctStatements,
   differingNativeNames,
   differingPersonalAccounts,
   foldNativeName,
@@ -3010,5 +3011,38 @@ describe("isDerivativePair (based on / derivative work)", () => {
     const score = scoreCandidate(original, derived);
     expect(score.confidence).toBeLessThanOrEqual(0.1);
     expect(score.reasons[0]).toMatch(/based on \/ derivative work/);
+  });
+});
+
+describe("countDistinctStatements", () => {
+  const base = { labels: {}, descriptions: {}, aliases: {}, sitelinks: {} };
+  const mk = (id: string, statements: Item["statements"]): Item => ({ ...base, id, statements });
+  const id = (value: string, sharedWith?: string[]) => [
+    { type: "external-id" as const, value, ...(sharedWith && { sharedWith }) },
+  ];
+
+  it("counts differing statements, not agreeing or one-sided ones", () => {
+    const a = mk("Q1", { P2031: [{ type: "string", value: "1997" }], P136: id("x"), P50: id("y") });
+    const b = mk("Q2", { P2031: [{ type: "string", value: "2006" }], P136: id("x") });
+    expect(countDistinctStatements(a, b)).toBe(1);
+  });
+
+  it("leaves out ids that are evidence in neither direction", () => {
+    const a = mk("Q1", {
+      P8351: id("vglist-1"), // hardcoded mirror
+      P214: id("viaf-1"), // synced mirror
+      P436: id("mbrg-1", ["Q2"]), // declared shared with the partner
+      P1036: id("813.54"), // Dewey classification
+      P1733: id("steam-1"),
+    });
+    const b = mk("Q2", {
+      P8351: id("vglist-2"),
+      P214: id("viaf-2"),
+      P436: id("mbrg-2"),
+      P1036: id("823.91"),
+      P1733: id("steam-2"),
+    });
+    expect(countDistinctStatements(a, b)).toBe(2);
+    expect(countDistinctStatements(a, b, (pid) => pid === "P214")).toBe(1);
   });
 });

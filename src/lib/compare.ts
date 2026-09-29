@@ -1864,6 +1864,31 @@ export function sharedIdentifierProps(a: Item, b: Item): Set<string> {
   return out;
 }
 
+/**
+ * How many statements differ outright between the two items (the comparison's
+ * "distinct" statement rows), leaving out properties that are evidence in
+ * neither direction: ids that mirror Wikidata (the hardcoded floor, plus
+ * `isMirroredIdProp` for the synced set), ids declared shared between the pair
+ * (P4070), and library classifications. The evidence ledger mentions the count
+ * when it has no signal against the pair.
+ */
+export function countDistinctStatements(
+  a: Item,
+  b: Item,
+  isMirroredIdProp?: (pid: string) => boolean,
+): number {
+  const shared = sharedIdentifierProps(a, b);
+  return buildRows(a, b).filter(
+    (r) =>
+      r.kind === "statement" &&
+      r.status === "distinct" &&
+      !MIRRORED_ID_PROPS.has(r.key) &&
+      !(isMirroredIdProp?.(r.key) ?? false) &&
+      !CLASSIFICATION_PROPS.has(r.key) &&
+      !shared.has(r.key),
+  ).length;
+}
+
 export interface CandidateScore {
   /** 0–1 likelihood the two items are the same subject and should be merged. */
   confidence: number;

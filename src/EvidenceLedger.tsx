@@ -12,6 +12,7 @@ export default function EvidenceLedger({
   reasons,
   sharedType,
   propertyLabels,
+  distinctStatements = 0,
   children,
   footer,
 }: {
@@ -20,6 +21,11 @@ export default function EvidenceLedger({
   /** The class both items are an instance of, named in the P31 signal. */
   sharedType?: string | null;
   propertyLabels?: Record<string, string>;
+  /**
+   * Statements that differ between the items, not counting non-evidence ids
+   * (countDistinctStatements). Mentioned when no signal counts against the pair.
+   */
+  distinctStatements?: number;
   /** The actions, at the right of the header. */
   children: ReactNode;
   /** Shown under the header, e.g. the result of an edit made from the page. */
@@ -74,7 +80,13 @@ export default function EvidenceLedger({
         <SignalColumn
           polarity="negative"
           title="Different items"
-          empty="Nothing strongly points to these being different items."
+          empty={
+            distinctStatements > 0
+              ? `No strong signal, but ${distinctStatements} ${
+                  distinctStatements === 1 ? "statement differs" : "statements differ"
+                } between the items.`
+              : "Nothing strongly points to these being different items."
+          }
           signals={negative}
           display={display}
           propertyLabels={propertyLabels}

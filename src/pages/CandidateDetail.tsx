@@ -11,6 +11,7 @@ import { LogoMark } from "../Logo.tsx";
 import MergeCandidates from "../MergeCandidates.tsx";
 import {
   AUTO_IGNORED_CONFLICTS,
+  countDistinctStatements,
   type Item,
   type MergeConflict,
   mergeConflicts,
@@ -145,6 +146,13 @@ export default function CandidateDetail() {
     () => (data?.from && data.into ? mergeConflicts(data.from, data.into) : []),
     [data],
   );
+  // Statements that differ, for the ledger to mention when no signal counts
+  // against the pair.
+  const distinctStatements = useMemo(() => {
+    if (!data?.from || !data.into) return 0;
+    const mirrors = new Set(data.propertyMirrors ?? []);
+    return countDistinctStatements(data.from, data.into, (pid) => mirrors.has(pid));
+  }, [data]);
 
   const candidate = data?.candidate;
 
@@ -220,6 +228,7 @@ export default function CandidateDetail() {
             reasons={candidate.reasons}
             sharedType={candidate.sharedType?.label}
             propertyLabels={data?.propertyLabels}
+            distinctStatements={distinctStatements}
             footer={outcome && <EditOutcomePanel outcome={outcome} />}
           >
             {status && status !== "open" ? (

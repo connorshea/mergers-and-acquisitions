@@ -1636,6 +1636,26 @@ export function isSequencedPair(a: Item, b: Item): boolean {
   return points(a, b.id) || points(b, a.id);
 }
 
+/** Wikidata "based on" — the work this one is derived from (an adaptation, arrangement, remake). */
+export const BASED_ON = "P144";
+/** Wikidata "derivative work" — the inverse, a work naming what was derived from it. */
+export const DERIVATIVE_WORK = "P4969";
+
+/**
+ * True when one item is declared derived from the other: either item's "based
+ * on" (P144) or "derivative work" (P4969) names the other — e.g. a keyboard
+ * piece and the prelude arranged from it, or a game and its remake. They share
+ * a title and creator, but nothing is based on itself, so like P155/P156 the
+ * link is an editor stating the two are distinct.
+ */
+export function isDerivativePair(a: Item, b: Item): boolean {
+  const points = (from: Item, toId: string) =>
+    [BASED_ON, DERIVATIVE_WORK].some((pid) =>
+      (from.statements[pid] ?? []).some((v) => v.type === "item" && v.value === toId),
+    );
+  return points(a, b.id) || points(b, a.id);
+}
+
 /** Wikidata "collection" — the museum/library/archive holding an object. */
 export const COLLECTION = "P195";
 /** Wikidata "inventory number" — the holding collection's accession number. */
@@ -1765,9 +1785,10 @@ export function yearDisambiguatedWikis(a: Item, b: Item): string[] {
  * item — e.g. a game's "part of the series" (P179) naming the series it is being
  * compared against, or "based on" / "followed by" pointing across the pair. An
  * item doesn't reference itself, so any such link means the two are related but
- * distinct subjects. (P1889, P2959, P629/P747/P9237/P2550, P527/P361 and P155/P156 are
- * excluded: they are handled, more strongly, by isDeclaredDifferent,
- * isPermanentDuplicatePair, isWorkEditionPair, isPartWholePair and isSequencedPair.)
+ * distinct subjects. (P1889, P2959, P629/P747/P9237/P2550, P527/P361, P155/P156 and
+ * P144/P4969 are excluded: they are handled, more strongly, by isDeclaredDifferent,
+ * isPermanentDuplicatePair, isWorkEditionPair, isPartWholePair, isSequencedPair and
+ * isDerivativePair.)
  */
 export function crossReferenceProps(a: Item, b: Item): Set<string> {
   const out = new Set<string>();
@@ -1783,7 +1804,9 @@ export function crossReferenceProps(a: Item, b: Item): Set<string> {
         pid === HAS_PART ||
         pid === PART_OF ||
         pid === FOLLOWS ||
-        pid === FOLLOWED_BY
+        pid === FOLLOWED_BY ||
+        pid === BASED_ON ||
+        pid === DERIVATIVE_WORK
       )
         continue;
       if (values.some((v) => v.type === "item" && v.value === toId)) out.add(pid);
@@ -2388,6 +2411,16 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   if (isSequencedPair(a, b)) {
     reasons.unshift(
       "linked as consecutive entries on Wikidata (follows / followed by, P155/P156), not a duplicate",
+    );
+    score = Math.min(score, 0.1);
+  }
+
+  // One item derived from the other (P144 / P4969 linking the pair) — a piece
+  // and its arrangement, a game and its remake — shares a title and creator,
+  // but nothing is based on itself. Cap below the persistence floor.
+  if (isDerivativePair(a, b)) {
+    reasons.unshift(
+      "linked as a work and its derivative on Wikidata (based on / derivative work, P144/P4969), not a duplicate",
     );
     score = Math.min(score, 0.1);
   }

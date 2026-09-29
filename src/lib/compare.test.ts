@@ -2116,7 +2116,7 @@ describe("scoreCandidate — creators, loose names, clashes and aggregator ids",
     ...extra,
   });
   const ext = (value: string) => [{ type: "external-id" as const, value }];
-  const isId = (pid: string) => /^P(1954|8383|4549|5794|646|2671|12570)$/.test(pid);
+  const isId = (pid: string) => /^P(1954|8383|4549|5794|646|2671|12570|213)$/.test(pid);
 
   it("drops a title-only pair with different authors below the floor", () => {
     const a = mk("Q1", "Imagine", { P50: [{ type: "item", value: "Q10" }] });
@@ -2227,8 +2227,8 @@ describe("scoreCandidate — creators, loose names, clashes and aggregator ids",
     expect(result.confidence).toBeGreaterThan(0.4);
   });
 
-  it("scores a shared Freebase / Knowledge Graph id as weak evidence", () => {
-    for (const pid of ["P646", "P2671"]) {
+  it("scores a shared Freebase / Knowledge Graph / ISNI id as weak evidence", () => {
+    for (const pid of ["P646", "P2671", "P213"]) {
       const a = mk("Q1", "Yu-Gi-Oh! Online", { [pid]: ext("/m/0abc") });
       const b = mk("Q2", "Yu-Gi-Oh! Online", { [pid]: ext("/m/0abc") });
       const result = scoreCandidate(a, b, { isIdentifierProp: isId });

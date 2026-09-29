@@ -896,15 +896,19 @@ const WEAK_ID_PROPS = new Set<string>([
 ]);
 
 /**
- * Aggregator ids built by machine-matching many sources — Freebase (P646) and
- * the Google Knowledge Graph (P2671). Their entities are notoriously conflated
- * (a game's regional release folded into its sibling, two albums sharing one
- * mid), so a shared value is weak evidence, like an account id. A *differing*
- * Freebase id still counts as a per-subject difference (SUBJECT_PAGE_ID_PROPS).
+ * Aggregator ids built by machine-matching many sources — Freebase (P646), the
+ * Google Knowledge Graph (P2671) and ISNI (P213). Their entities are notoriously
+ * conflated (a game's regional release folded into its sibling, two albums
+ * sharing one mid, namesake authors or a publisher and its imprint clustered
+ * under one ISNI), so a shared value is weak evidence, like an account id. A
+ * *differing* Freebase id still counts as a per-subject difference
+ * (SUBJECT_PAGE_ID_PROPS); a differing ISNI never does, as ISNI keeps duplicate
+ * records of its own.
  */
 const CONFLATED_AGGREGATOR_ID_PROPS = new Set<string>([
   "P646", // Freebase ID
   "P2671", // Google Knowledge Graph ID
+  "P213", // ISNI
 ]);
 
 /**

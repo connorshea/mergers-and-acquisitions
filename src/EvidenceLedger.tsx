@@ -74,7 +74,7 @@ export default function EvidenceLedger({
         <SignalColumn
           polarity="negative"
           title="Different items"
-          empty="Nothing points to these being different items."
+          empty="Nothing strongly points to these being different items."
           signals={negative}
           display={display}
           propertyLabels={propertyLabels}

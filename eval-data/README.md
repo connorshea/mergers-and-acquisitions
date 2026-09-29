@@ -18,7 +18,7 @@ eval-data/
       <TARGET>.pre.json         target item's full entity blob, pre-merge
       meta.json                 the pair's record (same shape as an index line)
       sitelink-redirects.json   (optional) where clashing sitelinks redirect
-  subject-types.json            subject type constraints + class ancestors (see below)
+  subject-types.json            subject type constraints, class ancestors, mirror flags (see below)
   non-dupe-pairs/               negative examples — pairs that are NOT duplicates
     index.jsonl                 one JSON record per pair (the manifest)
     <A>_vs_<B>/                 (A/B ordered by QID number, lower first)
@@ -88,8 +88,11 @@ One file for the whole dataset (not per pair): the subject type constraints
 each eval item class's ancestors among the constraint classes. Production
 syncs these into `properties.subject_types` and `class_ancestors`, and the
 scorer ignores an id whose constraint rules out both items (a person id
-copied onto two of the author's works, say). This file lets the eval apply
-the same check offline.
+copied onto two of the author's works, say). It also records, for each of
+those shared ids, whether the property mirrors Wikidata (P31 = Q24075706, as
+production's `properties.mirrors_wikidata` holds it — VIAF, MusicBrainz, …):
+such an id is no evidence either way. This file lets the eval apply the same
+checks offline.
 
 It's append-only like the redirects: a re-run only adds properties and
 classes not recorded yet, so later edits on Wikidata don't shift the eval.
@@ -213,6 +216,6 @@ baseline, or a non-default `--threshold`, disables gating (report-only).
 
 The default threshold (0.4) mirrors the hunt's `MIN_CONFIDENCE`. Because the full
 entity blobs carry real property datatypes, external identifiers are classified
-exactly and `isIdentifierProp` is reproduced faithfully; the sync-only
-`isMirroredIdProp` predicate isn't available offline, so only compare.ts's
-hardcoded mirror-Wikidata floor applies (see the harness header for detail).
+exactly and `isIdentifierProp` is reproduced faithfully; the synced `isMirroredIdProp`
+flags come from `subject-types.json`, alongside compare.ts's hardcoded floor
+for services Wikidata hasn't tagged.

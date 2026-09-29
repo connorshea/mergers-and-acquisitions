@@ -26,14 +26,12 @@
 // Scoring parity with production: the full entity JSON carries real property
 // datatypes, so external identifiers are classified exactly (not by value-shape
 // as the dump path must), and `isIdentifierProp` is reproduced faithfully from
-// them. `isMirroredIdProp` (from the synced properties table) is NOT available
-// offline, so only compare.ts's hardcoded MIRRORED_ID_PROPS floor applies here —
-// pairs whose only mirror-Wikidata ids are sync-detected (untagged in the floor)
-// could score marginally differently in production. Resolved sitelink redirects
+// them. Resolved sitelink redirects
 // (Item.sitelinkRedirects) come from each pair's sitelink-redirects.json, when
 // recorded (scripts/eval-redirects.ts). Subject type constraints and class
-// ancestors (`isInapplicableId`) come from eval-data/subject-types.json
-// (scripts/eval-subject-types.ts). The threshold mirrors the hunt's
+// ancestors (`isInapplicableId`), and which shared ids mirror Wikidata
+// (`isMirroredIdProp`, production's synced `properties.mirrors_wikidata`), come
+// from eval-data/subject-types.json (scripts/eval-subject-types.ts). The threshold mirrors the hunt's
 // MIN_CONFIDENCE (0.4).
 
 import { readFile, readdir, writeFile } from "node:fs/promises";
@@ -42,7 +40,7 @@ import type { Item, ScoreOptions } from "../src/lib/compare.ts";
 import { orderByAge, scoreCandidate } from "../src/lib/compare.ts";
 import { type Entity, entityToItem } from "../src/lib/wikibase.ts";
 import { applyRedirects } from "./eval-redirects.ts";
-import { loadInapplicableIdCheck } from "./eval-subject-types.ts";
+import { loadInapplicableIdCheck, loadMirroredIdCheck } from "./eval-subject-types.ts";
 
 const EVAL_DIR = "eval-data";
 const BASELINE_PATH = join(EVAL_DIR, "score-baseline.json");
@@ -121,9 +119,10 @@ function scorePair(
   pair: Pair,
   threshold: number,
   isInapplicableId: ScoreOptions["isInapplicableId"],
+  isMirroredIdProp: ScoreOptions["isMirroredIdProp"],
 ): Scored {
   const idProps = identifierProps(pair.a, pair.b);
-  const opts: ScoreOptions = { isInapplicableId };
+  const opts: ScoreOptions = { isInapplicableId, isMirroredIdProp };
   if (idProps.size > 0) opts.isIdentifierProp = (pid) => idProps.has(pid);
   const [from, into] = orderByAge(pair.a, pair.b);
   const { confidence, reasons } = scoreCandidate(from, into, opts);
@@ -297,7 +296,8 @@ async function main() {
 
   const pairs = [...(await loadPositives()), ...(await loadNegatives())];
   const isInapplicableId = await loadInapplicableIdCheck();
-  const scored = pairs.map((p) => scorePair(p, threshold, isInapplicableId));
+  const isMirroredIdProp = await loadMirroredIdCheck();
+  const scored = pairs.map((p) => scorePair(p, threshold, isInapplicableId, isMirroredIdProp));
   const m = computeMetrics(scored);
 
   console.log(`Eval harness — threshold ${threshold} (duplicate if confidence ≥ threshold)\n`);

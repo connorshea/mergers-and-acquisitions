@@ -1,0 +1,402 @@
+{
+  "pageid": 7023901,
+  "ns": 0,
+  "title": "Q7127711",
+  "lastrevid": 2486233643,
+  "modified": "2026-05-01T19:35:44Z",
+  "type": "item",
+  "id": "Q7127711",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Palladium"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Palladium"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "Palladium"
+    },
+    "it": {
+      "language": "it",
+      "value": "Palladium"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Palladium"
+    },
+    "es": {
+      "language": "es",
+      "value": "Palladium"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Palladium"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "Palladium"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "Australian band from Brisbane, active from 1997 to 2003"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "طاقم موسيقي من أستراليا"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "muziekgroep uit Australië"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "3c9f9d423bb4b1080c7bbebd83a3f9cce18cb443",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 215380,
+              "id": "Q215380"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7127711$DEDB7F59-F77C-4655-B567-A64CA735EB5C",
+        "rank": "normal"
+      }
+    ],
+    "P264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P264",
+          "hash": "ccbe72f6cd592834fb7ad986336119748509654c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7969735,
+              "id": "Q7969735"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7127711$0A831C91-1478-4684-B0B4-83599E7FDF98",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "6e4abe49f0e96500ca923d4535bced4ea177ae66",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 183504,
+              "id": "Q183504"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7127711$5CA40491-F43E-40DD-8A4E-579710CDB7B7",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P213": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P213",
+          "hash": "2c3098648e741f7daa1ad7a4e6ddc7f450413294",
+          "datavalue": {
+            "value": "0000000106665669",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q7127711$5DB8BDFF-64AF-4CA0-83E8-D441A19E6077",
+        "rank": "normal"
+      }
+    ],
+    "P2013": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2013",
+          "hash": "4857f4acd1a56b6315aa08b90f72b557d8362220",
+          "datavalue": {
+            "value": "Palladium-8121820847",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q7127711$9A3EC6DC-4108-4BDF-90F5-EB6F2AD2F71C",
+        "rank": "normal"
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "daf9296529645e160700c1030defaaf6ba7da3b7",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 408,
+              "id": "Q408"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7127711$4C054ACD-4159-4F66-9548-B3D3AF06AF92",
+        "rank": "normal"
+      }
+    ],
+    "P740": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P740",
+          "hash": "b148ba42a7b84769b17766d3033fe4e50c3bb79e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 34932,
+              "id": "Q34932"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7127711$7ADB8FE2-6E07-4509-A781-1D77C6B98D9E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "87f7d43a94da4fb5c6f71c0baa6389663fb85780",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "d313152e39912b52d5814960f68476f3b313a2a5",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Palladium_(Australian_band)&oldid=921264146",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P2031": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2031",
+          "hash": "f73292ac1fc4c7497043616b1bb105ad2686a6ee",
+          "datavalue": {
+            "value": {
+              "time": "+1997-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q7127711$C263A340-7DDA-437D-84D4-C425D8161A3A",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "87f7d43a94da4fb5c6f71c0baa6389663fb85780",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "d313152e39912b52d5814960f68476f3b313a2a5",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Palladium_(Australian_band)&oldid=921264146",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P214": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P214",
+          "hash": "2b5f12a2021d556147869b05c2100e3368840f92",
+          "datavalue": {
+            "value": "140865010",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q7127711$36BA841A-8300-47C2-BA2D-3382C3F56910",
+        "rank": "normal"
+      }
+    ],
+    "P6927": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6927",
+          "hash": "bf18555538da4e83448687ad05fc004f13c57b66",
+          "datavalue": {
+            "value": "palladium",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q7127711$121CB4DC-AF8A-4628-AC0B-7FB89E0B3447",
+        "rank": "normal"
+      }
+    ],
+    "P11705": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11705",
+          "hash": "a97df000986df8a6d40cb6c45181780ed479c983",
+          "datavalue": {
+            "value": "8121820847",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q7127711$4BE4A6D8-97F3-46AB-A442-89412BE3B9E4",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Palladium (Australian band)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Palladium_(Australian_band)"
+    }
+  }
+}

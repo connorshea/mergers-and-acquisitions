@@ -424,6 +424,18 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       expect((await list()).total).toBe(2);
     });
 
+    it("leaves an already-dismissed pair with whoever dismissed it", async () => {
+      expect((await post(`/api/candidates/${alpha}/dismiss`, editor)).status).toBe(200);
+      const [first] = await db.select().from(mergeCandidates).where(eq(mergeCandidates.id, alpha));
+      const other = await loginAs(EDITOR_ID + 1, "Other");
+      const again = await post<CandidateDismissResponse>(`/api/candidates/${alpha}/dismiss`, other);
+      expect(again.status).toBe(200);
+      expect(again.body.candidate).toMatchObject({ status: "dismissed", resolvedBy: "Editor" });
+      const [after] = await db.select().from(mergeCandidates).where(eq(mergeCandidates.id, alpha));
+      expect(after.resolvedBy).toBe(EDITOR_ID);
+      expect(after.resolvedAt).toBe(first.resolvedAt);
+    });
+
     it("404s for an unknown candidate", async () => {
       expect((await post("/api/candidates/999999/dismiss", editor)).status).toBe(404);
       expect((await post("/api/candidates/999999/reopen", editor)).status).toBe(404);

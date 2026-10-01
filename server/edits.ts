@@ -14,7 +14,7 @@
 // both reach Wikidata. The claim's timestamp rides in `resolved_at`; a claim
 // older than MERGING_STALE_SECONDS is treated as abandoned (the process died
 // mid-edit) and may be taken over.
-import { type Context, Hono } from "hono";
+import { type Context, Hono, type MiddlewareHandler } from "hono";
 import { and, eq, inArray, lt, or } from "drizzle-orm";
 import { db } from "./db.ts";
 import { type AuthEnv, type AuthUser, requireUser } from "./auth/session.ts";
@@ -66,6 +66,77 @@ export const edits = new Hono<AuthEnv>();
 
 edits.use("/:id/merge", requireUser);
 edits.use("/:id/different", requireUser);
+
+/**
+ * Edit requests still running, so a shutdown that can't wait for them can
+ * leave a record (see recordInterruptedEdits).
+ */
+const inFlightEdits = new Set<{
+  userId: number;
+  candidateId: number;
+  action: AuditBase["action"];
+}>();
+
+function trackInFlight(action: AuditBase["action"]): MiddlewareHandler<AuthEnv> {
+  return async (c, next) => {
+    const user = c.get("user");
+    const id = parseId(c.req.param("id") ?? "");
+    if (!user || id === null) return next();
+    const entry = { userId: user.id, candidateId: id, action };
+    inFlightEdits.add(entry);
+    try {
+      await next();
+    } finally {
+      inFlightEdits.delete(entry);
+    }
+  };
+}
+
+edits.use("/:id/merge", trackInFlight("merge"));
+edits.use("/:id/different", trackInFlight("different-from"));
+
+/**
+ * Called by the server when it has to exit with edits still running: write a
+ * failed audit row for each candidate still claimed by one, since the edit may
+ * already have landed on Wikidata with nothing here to say so. The claim is
+ * left held; it goes stale after MERGING_STALE_SECONDS like any abandoned one.
+ * Returns how many were recorded.
+ */
+export async function recordInterruptedEdits(): Promise<number> {
+  const seen = new Set<number>();
+  let recorded = 0;
+  for (const { userId, candidateId, action } of inFlightEdits) {
+    if (seen.has(candidateId)) continue;
+    seen.add(candidateId);
+    try {
+      const [row] = await db
+        .select({
+          fromQid: mergeCandidates.fromQid,
+          intoQid: mergeCandidates.intoQid,
+          status: mergeCandidates.status,
+        })
+        .from(mergeCandidates)
+        .where(eq(mergeCandidates.id, candidateId));
+      // Not claimed (refused, released, or already finished): nothing to flag.
+      if (row?.status !== "merging") continue;
+      await db.insert(wikidataEdits).values({
+        userId,
+        candidateId,
+        action,
+        fromQid: row.fromQid,
+        intoQid: row.intoQid,
+        ok: false,
+        errorCode: "interrupted",
+        errorText:
+          "The server shut down before this edit finished; it may still have gone through on Wikidata.",
+      });
+      recorded++;
+    } catch (err) {
+      console.error(`shutdown: could not record interrupted edit of candidate ${candidateId}`, err);
+    }
+  }
+  return recorded;
+}
 
 function errorResponse(
   c: EditContext,
@@ -680,13 +751,43 @@ edits.post("/:id/different", async (c) => {
     return c.json({ error: `Item data missing for: ${missing}` }, 404);
   }
 
+  // Which legs already exist is read from live Wikidata, not the mirror: a
+  // previous attempt whose request timed out after Wikidata saved the
+  // statement left no trace here (its claim was released), and a retry judged
+  // by the mirror would add a second copy.
+  let live: Map<string, Item>;
+  try {
+    const [liveFrom, liveInto] = await fetchItemsForMergeCheck(user, [from.qid, into.qid]);
+    live = new Map([
+      [from.qid, liveFrom],
+      [into.qid, liveInto],
+    ]);
+  } catch (err) {
+    // Only a read: nothing was written, so hand the claim back.
+    await releaseClaim(id);
+    return failedEdit(
+      c,
+      await auditFailure(
+        {
+          userId: user.id,
+          candidateId: id,
+          action: "different-from",
+          fromQid: from.qid,
+          intoQid: into.qid,
+          ...(criterion ? { params: { criterion } } : {}),
+        },
+        err,
+      ),
+    );
+  }
+
   const results: DifferentFromEdit[] = [];
   let succeeded = 0;
   for (const [item, target] of [
     [from, into],
     [into, from],
   ] as const) {
-    if (hasDifferentFrom(item.data, target.qid)) {
+    if (hasDifferentFrom(live.get(item.qid)!, target.qid)) {
       results.push({ qid: item.qid, target: target.qid, skipped: true });
       continue;
     }

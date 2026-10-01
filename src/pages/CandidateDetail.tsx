@@ -35,8 +35,18 @@ import { wikiPageUrl } from "../lib/wiki.ts";
 // ordered (from = merged away, into = survivor), so it feeds straight into
 // MergeCandidates without re-ordering. Merge and "different from" go to
 // Wikidata through the server, under the logged-in user's account.
+//
+// Keyed on the id so moving to another candidate starts from a blank page
+// rather than reusing this one's state: the previous pair's data (and its
+// Merge / Dismiss buttons) never shows while the next one loads with actions
+// aimed at the new id, and a late response to an edit made on the previous
+// pair lands on the unmounted page instead of this one.
 export default function CandidateDetail() {
   const { id } = useParams();
+  return <CandidateDetailPage key={id} id={id} />;
+}
+
+function CandidateDetailPage({ id }: { id: string | undefined }) {
   const { user, configured } = useAuth();
   const [data, setData] = useState<CandidateDetailResponse | null>(null);
   const [status, setStatus] = useState<string | null>(null);

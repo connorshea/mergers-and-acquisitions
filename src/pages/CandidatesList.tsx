@@ -203,6 +203,11 @@ export default function CandidatesList() {
   const [loading, setLoading] = useState(true);
   // Candidates dismissed in-place this session, hidden without a full refetch.
   const [dismissedIds, setDismissedIds] = useState<Set<number>>(new Set());
+  // Bumped to refetch the current page once every row on it has been dismissed
+  // in place: the rows after it move up to fill it.
+  const [reload, setReload] = useState(0);
+  const dismissedRef = useRef<Set<number>>(new Set());
+  const pageRowsRef = useRef<number[]>([]);
   useEffect(() => {
     // Wait for the session: it decides the language filter, and fetching
     // before it lands would flash the unfiltered list.
@@ -211,7 +216,6 @@ export default function CandidatesList() {
     async function load() {
       setLoading(true);
       setError(null);
-      setDismissedIds(new Set());
       const query: Record<string, string> = {
         status,
         sort,
@@ -225,7 +229,15 @@ export default function CandidatesList() {
       if (langFilter) query.lang = langFilter;
       try {
         const res = await fetch("/api/candidates", { query });
-        if (!cancelled) setData(res as CandidateListResponse);
+        if (!cancelled) {
+          const list = res as CandidateListResponse;
+          setData(list);
+          // Cleared only once the new rows are here, so a refetch after
+          // dismissals never flashes the dismissed rows back.
+          setDismissedIds(new Set());
+          dismissedRef.current = new Set();
+          pageRowsRef.current = list.candidates.map((c) => c.id);
+        }
       } catch (e: unknown) {
         if (!cancelled) {
           setError(e instanceof FetchError ? `Request failed (${e.status})` : "Request failed");
@@ -238,7 +250,19 @@ export default function CandidatesList() {
     return () => {
       cancelled = true;
     };
-  }, [q, creator, noBlockers, status, sort, typeParam, page, langFilter, authLoading]);
+  }, [q, creator, noBlockers, status, sort, typeParam, page, langFilter, authLoading, reload]);
+
+  // A page past the end (its rows all dismissed, here or elsewhere, or an old
+  // link): go to the last page that has rows rather than show an empty one.
+  const pastEnd = data !== null && data.candidates.length === 0 && data.total > 0 && page > 1;
+  const lastPageWithRows = Math.max(1, Math.ceil((data?.total ?? 0) / PAGE_SIZE));
+  useEffect(() => {
+    // Already heading there: the empty page's data stays until the new one loads.
+    if (!pastEnd || page === lastPageWithRows) return;
+    const next = new URLSearchParams(params);
+    next.set("page", String(lastPageWithRows));
+    setParams(next, { replace: true });
+  }, [pastEnd, page, lastPageWithRows, params, setParams]);
 
   // Dismiss straight from the list; the row hides itself on success.
   async function dismissCandidate(id: number): Promise<void> {
@@ -247,7 +271,15 @@ export default function CandidatesList() {
       params: { id: String(id) },
     });
     void (res as CandidateDismissResponse);
-    setDismissedIds((prev) => new Set(prev).add(id));
+    // Read through refs: another dismissal may have landed since this click.
+    const dismissed = new Set(dismissedRef.current).add(id);
+    dismissedRef.current = dismissed;
+    setDismissedIds(dismissed);
+    // Every row on the page dismissed in place: fetch it again, which brings
+    // up the rows after it (or steps back a page, via pastEnd, if none are left).
+    if (pageRowsRef.current.length > 0 && pageRowsRef.current.every((r) => dismissed.has(r))) {
+      setReload((n) => n + 1);
+    }
   }
 
   // Merge params; any filter change resets pagination unless page is set explicitly.
@@ -268,10 +300,13 @@ export default function CandidatesList() {
   }
 
   const visible = (data?.candidates ?? []).filter((c) => !dismissedIds.has(c.id));
-  const total = data?.total ?? 0;
+  const allDismissed = data !== null && data.candidates.length > 0 && visible.length === 0;
+  // Less the rows dismissed in place since the page loaded (open rows only:
+  // a dismissed row can't be dismissed again from here).
+  const total = Math.max(0, (data?.total ?? 0) - dismissedIds.size);
   const lastPage = Math.max(1, Math.ceil(total / PAGE_SIZE));
-  const firstRow = total === 0 ? 0 : (page - 1) * PAGE_SIZE + 1;
-  const lastRow = Math.min(total, page * PAGE_SIZE);
+  const firstRow = visible.length === 0 ? 0 : (page - 1) * PAGE_SIZE + 1;
+  const lastRow = firstRow === 0 ? 0 : firstRow + visible.length - 1;
 
   // Per-route <title> reflecting the active filters. The default (open) view is
   // just the app name; other statuses carry their own "<Status> candidates"
@@ -418,12 +453,12 @@ export default function CandidatesList() {
           {error}
         </p>
       )}
-      {loading && !data && (
+      {loading && (!data || allDismissed) && (
         <p className="list-msg">
           <Spinner label="Loading…" />
         </p>
       )}
-      {data && visible.length === 0 && !loading && (
+      {data && data.candidates.length === 0 && !loading && !pastEnd && (
         <p className="list-msg">
           {hasFilters || langFilter
             ? "No candidates for these filters, please modify your filters."

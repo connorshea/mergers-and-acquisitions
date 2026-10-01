@@ -247,16 +247,16 @@ candidates.get("/:id", async (c) => {
   }
   const { snapshot, ...row } = found;
 
-  // Neighbours for prev/next navigation, within the same status and using the
-  // list's default order (confidence desc, then id asc as a stable tiebreak).
+  // Neighbours for prev/next navigation, within the same status and in the
+  // list's default order: confidence desc, then id desc within a tie.
   const sameStatus = eq(mergeCandidates.status, row.status);
   const afterCurrent = or(
     lt(mergeCandidates.confidence, row.confidence),
-    and(eq(mergeCandidates.confidence, row.confidence), gt(mergeCandidates.id, row.id)),
+    and(eq(mergeCandidates.confidence, row.confidence), lt(mergeCandidates.id, row.id)),
   );
   const beforeCurrent = or(
     gt(mergeCandidates.confidence, row.confidence),
-    and(eq(mergeCandidates.confidence, row.confidence), lt(mergeCandidates.id, row.id)),
+    and(eq(mergeCandidates.confidence, row.confidence), gt(mergeCandidates.id, row.id)),
   );
 
   const [labels, itemRows, nextRows, prevRows] = await Promise.all([
@@ -272,13 +272,13 @@ candidates.get("/:id", async (c) => {
       .select({ id: mergeCandidates.id })
       .from(mergeCandidates)
       .where(and(sameStatus, afterCurrent))
-      .orderBy(desc(mergeCandidates.confidence), asc(mergeCandidates.id))
+      .orderBy(desc(mergeCandidates.confidence), desc(mergeCandidates.id))
       .limit(1),
     db
       .select({ id: mergeCandidates.id })
       .from(mergeCandidates)
       .where(and(sameStatus, beforeCurrent))
-      .orderBy(asc(mergeCandidates.confidence), desc(mergeCandidates.id))
+      .orderBy(asc(mergeCandidates.confidence), asc(mergeCandidates.id))
       .limit(1),
   ]);
 
@@ -391,7 +391,10 @@ candidates.get("/:id/creations", async (c) => {
 // A merged candidate stays merged (dismiss → reopen would otherwise revive a
 // pair whose source item is already a redirect), and one being edited right
 // now keeps its claim until it goes stale. The status check lives in the
-// UPDATE itself so a concurrent merge claim can't slip in between.
+// UPDATE itself so a concurrent merge claim can't slip in between. Dismissing
+// an already-dismissed pair is a no-op that answers with it as it stands: it
+// never re-stamps who resolved it (the leaderboard credits `resolvedBy`, and
+// a second user's click must not take over the first one's dismissal).
 candidates.post("/:id/dismiss", async (c) => {
   const id = Number(c.req.param("id"));
   if (!Number.isInteger(id)) {
@@ -410,7 +413,7 @@ candidates.post("/:id/dismiss", async (c) => {
       and(
         eq(mergeCandidates.id, id),
         or(
-          inArray(mergeCandidates.status, ["open", "dismissed"]),
+          eq(mergeCandidates.status, "open"),
           and(eq(mergeCandidates.status, "merging"), lt(mergeCandidates.resolvedAt, staleBefore)),
         ),
       ),
@@ -424,7 +427,7 @@ candidates.post("/:id/dismiss", async (c) => {
   if (!row) {
     return c.json({ error: "Candidate not found" }, 404);
   }
-  if (result.affectedRows === 0) {
+  if (result.affectedRows === 0 && row.status !== "dismissed") {
     return c.json(
       {
         error:

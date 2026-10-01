@@ -324,6 +324,20 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       expect(body.nextId).toBeNull();
     });
 
+    it("walks a confidence tie in the list's order", async () => {
+      // Two more at alpha's 0.9, so three tie; the list puts the newest first.
+      const tied = [
+        await insertCandidate({ fromQid: "Q30", intoQid: "Q10", confidence: 0.9, reasons: [] }),
+        await insertCandidate({ fromQid: "Q40", intoQid: "Q10", confidence: 0.9, reasons: [] }),
+      ];
+      const order = (await list()).candidates.map((c) => c.id);
+      expect(order).toEqual([tied[1], tied[0], alpha, beta]);
+      for (const [i, id] of order.entries()) {
+        const { body } = await get<CandidateDetailResponse>(`/api/candidates/${id}`);
+        expect([body.prevId, body.nextId]).toEqual([order[i - 1] ?? null, order[i + 1] ?? null]);
+      }
+    });
+
     it("404s for unknown or malformed ids", async () => {
       expect(await get("/api/candidates/999999")).toEqual({
         status: 404,
@@ -422,6 +436,18 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       expect(detail.body.snapshot).toBe(false);
       expect(detail.body.from?.labels.en).toBe("Alpha Quest");
       expect((await list()).total).toBe(2);
+    });
+
+    it("leaves an already-dismissed pair with whoever dismissed it", async () => {
+      expect((await post(`/api/candidates/${alpha}/dismiss`, editor)).status).toBe(200);
+      const [first] = await db.select().from(mergeCandidates).where(eq(mergeCandidates.id, alpha));
+      const other = await loginAs(EDITOR_ID + 1, "Other");
+      const again = await post<CandidateDismissResponse>(`/api/candidates/${alpha}/dismiss`, other);
+      expect(again.status).toBe(200);
+      expect(again.body.candidate).toMatchObject({ status: "dismissed", resolvedBy: "Editor" });
+      const [after] = await db.select().from(mergeCandidates).where(eq(mergeCandidates.id, alpha));
+      expect(after.resolvedBy).toBe(EDITOR_ID);
+      expect(after.resolvedAt).toBe(first.resolvedAt);
     });
 
     it("404s for an unknown candidate", async () => {

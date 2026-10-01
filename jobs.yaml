@@ -27,10 +27,14 @@
   schedule: "0 2 * * 0" # Sundays 02:00 UTC
   emails: onfailure
 
+# Label the value QIDs the weekly dump import brought in. It runs after the
+# import (Wednesdays 06:00, usually done in 30-40 min, 3 h timeout) so new
+# pairs show names, not QIDs, by the time Thursday's hunt surfaces them; the
+# detail page reads labels per request, so nothing needs rescoring.
 - name: sync-entity-labels
   command: node jobs/sync-entity-labels.ts
   image: tool-mna/tool-mna:latest
-  schedule: "15 2 * * 0" # Sundays 02:15 UTC
+  schedule: "0 10 * * 3" # Wednesdays 10:00 UTC
   emails: onfailure
 
 - name: prune-sessions

@@ -17,6 +17,7 @@ import {
   crossReferenceProps,
   isAutoIgnoredConflict,
   levenshtein,
+  phoneDigits,
   isDeclaredDifferent,
   isPermanentDuplicatePair,
   isSeriesSequelPair,
@@ -193,6 +194,24 @@ describe("bestNameSimilarity", () => {
   });
 });
 
+describe("phoneDigits", () => {
+  it("keeps the digits and an international plus", () => {
+    expect(phoneDigits("+33 1 47 27 56 52")).toBe("+33147275652");
+    expect(phoneDigits("+33-1-47-27-56-52")).toBe("+33147275652");
+    expect(phoneDigits("tel:+1-201-555-0123")).toBe("+12015550123");
+    expect(phoneDigits("01 47 27 56 52")).toBe("0147275652");
+  });
+
+  it("drops the (0) trunk prefix after a country code", () => {
+    expect(phoneDigits("+33(0)147275652")).toBe("+33147275652");
+    expect(phoneDigits("+44 (0)20 7946 0018")).toBe("+442079460018");
+  });
+
+  it("reads a leading 00 as the international prefix", () => {
+    expect(phoneDigits("0033 1 47 27 56 52")).toBe("+33147275652");
+  });
+});
+
 describe("compareValues", () => {
   it("skips the similar-label hint for sex or gender", () => {
     const female = { type: "item" as const, value: "Q6581072", label: "female" };
@@ -201,6 +220,42 @@ describe("compareValues", () => {
     expect(compareValues(female, male, "P50")).toEqual([
       "similar",
       "different items with similar labels",
+    ]);
+  });
+
+  it("compares phone numbers by digits, not by string similarity", () => {
+    const phone = (value: string) => ({ type: "string" as const, value });
+    const same = ["similar", "same number, different formatting"];
+    // The same number, formatted differently.
+    expect(compareValues(phone("+33(0)147275652"), phone("+33(0)1 47 27 56 52"), "P1329")).toEqual(
+      same,
+    );
+    expect(compareValues(phone("+33 1 47 27 56 52"), phone("+33-1-47-27-56-52"), "P1329")).toEqual(
+      same,
+    );
+    expect(compareValues(phone("+33 1 47 27 56 52"), phone("0033 147275652"), "P2900")).toEqual(
+      same,
+    );
+    // Domestic vs international form of the same number.
+    expect(compareValues(phone("01 47 27 56 52"), phone("+33 1 47 27 56 52"), "P1329")).toEqual([
+      "similar",
+      "same number, one without the country code",
+    ]);
+    // Different lines on one switchboard: a string match would call these 76% similar.
+    expect(compareValues(phone("+33 1 47 27 93 29"), phone("+33 1 47 27 56 52"), "P1329")).toEqual([
+      "distinct",
+    ]);
+    expect(compareValues(phone("+33(0)147279329"), phone("+33(0)1 47 27 56 52"), "P1329")).toEqual([
+      "distinct",
+    ]);
+    // A domestic number that is only a short tail of the other doesn't match.
+    expect(compareValues(phone("056 52"), phone("+33 1 47 27 56 52"), "P1329")).toEqual([
+      "distinct",
+    ]);
+    // Other string properties keep the fuzzy comparison.
+    expect(compareValues(phone("+33 1 47 27 93 29"), phone("+33 1 47 27 56 52"), "P1476")).toEqual([
+      "similar",
+      "76% string match",
     ]);
   });
 

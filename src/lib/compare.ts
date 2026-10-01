@@ -366,9 +366,59 @@ const NO_FUZZY_ITEM_LABELS = new Set<string>([
 ]);
 
 /**
+ * Phone-number string properties. Their values are free text, so one number is
+ * written many ways ("+33 1 47 27 56 52", "+33(0)147275652"), and two
+ * different numbers often share most of their characters (one switchboard's
+ * lines). Compared by digits, never by string similarity.
+ */
+const PHONE_PROPS = new Set<string>([
+  "P1329", // phone number
+  "P2900", // fax number
+]);
+
+/**
+ * A phone number reduced to its digits, with a leading "+" when it is in
+ * international form: "+33 (0)1 47-27-56-52" → "+33147275652". The "(0)" some
+ * writers put after the country code is the domestic trunk prefix, not part of
+ * the number, and a leading "00" is the international prefix, i.e. "+".
+ */
+export function phoneDigits(value: string): string {
+  const s = value
+    .trim()
+    .replace(/^tel:/i, "")
+    .replace(/^(\+\d{1,3})[\s.-]*\(0\)/, "$1")
+    .replace(/^00(?=\d)/, "+");
+  return (s.startsWith("+") ? "+" : "") + s.replace(/\D/g, "");
+}
+
+/**
+ * Two phone numbers: the same digits are the same number whatever the
+ * formatting. A domestic number ("01 47 27 56 52") matches an international one
+ * ("+33 1 47 27 56 52") when it is the latter's tail behind a trunk "0"; the
+ * country code can't be checked, so that is only similar. Any other difference,
+ * even one digit, is a different line.
+ */
+function comparePhones(a: string, b: string): [Status, string?] {
+  const da = phoneDigits(a);
+  const db = phoneDigits(b);
+  if (da.length === 0 || db.length === 0) return ["distinct"];
+  if (da === db) return ["similar", "same number, different formatting"];
+  const [intl, domestic] = da.startsWith("+") ? [da, db] : [db, da];
+  if (
+    intl.startsWith("+") &&
+    !domestic.startsWith("+") &&
+    /^0[1-9]/.test(domestic) &&
+    domestic.length >= 8 &&
+    intl.endsWith(domestic.slice(1))
+  )
+    return ["similar", "same number, one without the country code"];
+  return ["distinct"];
+}
+
+/**
  * Returns [status, note] for a pair of values of the same property. `pid`, when
  * given, is that property; it turns off the fuzzy item-label hint for
- * NO_FUZZY_ITEM_LABELS.
+ * NO_FUZZY_ITEM_LABELS and compares PHONE_PROPS values by digits.
  */
 export function compareValues(x: Value, y: Value, pid?: string): [Status, string?] {
   if (x.type !== y.type) return ["distinct"];
@@ -441,6 +491,7 @@ export function compareValues(x: Value, y: Value, pid?: string): [Status, string
       }
       return ["distinct"];
     case "string": {
+      if (pid && PHONE_PROPS.has(pid)) return comparePhones(x.value, y.value);
       const s = stringSimilarity(x.value, y.value);
       if (s === 1) return ["similar", "equal after normalization"];
       if (s >= 0.75) return ["similar", `${Math.round(s * 100)}% string match`];

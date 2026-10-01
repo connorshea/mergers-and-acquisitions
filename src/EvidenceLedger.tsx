@@ -186,11 +186,15 @@ function Signal({
             title={`Show ${propertyLabels?.[pid] ?? pid} in the comparison below`}
             onClick={(e) => {
               // Scroll without touching the URL; a row in a hidden group
-              // isn't in the DOM, so fall back to the plain anchor.
+              // isn't in the DOM, so fall back to the plain anchor. Focus
+              // follows, so the next Tab continues from the row and a screen
+              // reader reads it out.
               const row = document.getElementById(`row-${pid}`);
               if (!row) return;
               e.preventDefault();
-              row.scrollIntoView({ behavior: "smooth", block: "center" });
+              const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+              row.scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "center" });
+              row.focus({ preventScroll: true });
               flashRow(row);
             }}
           >

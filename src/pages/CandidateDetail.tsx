@@ -202,146 +202,154 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
           </div>
           <AuthBar />
         </nav>
-
-        {loading && <p className="list-msg">Loading…</p>}
-        {error && !loading && (
-          <p className="list-msg is-error" role="alert">
-            {error}
-          </p>
-        )}
-
-        {/* Every action below edits state (here or on Wikidata) on the user's
-            behalf, so all of them need a login. */}
-        {candidate && !user && configured && (
-          <div className="login-callout">
-            <svg
-              className="login-callout-icon"
-              viewBox="0 0 16 16"
-              width="14"
-              height="14"
-              aria-hidden="true"
-            >
-              <path
-                fill="currentColor"
-                d="M8 1a3.5 3.5 0 0 0-3.5 3.5V6H4a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-.5V4.5A3.5 3.5 0 0 0 8 1Zm2 5H6V4.5a2 2 0 1 1 4 0V6Z"
-              />
-            </svg>
-            <span>Log in with your Wikimedia account to review this pair.</span>
-            <a className="login-callout-btn" href={loginUrl(`/candidates/${id ?? ""}`)}>
-              Log in
-            </a>
-          </div>
-        )}
-        {candidate && status === "merged" && (resolution || resolvedBy) && (
-          <div className="merged-banner" role="status">
-            <svg
-              className="merged-banner-icon"
-              viewBox="0 0 16 16"
-              width="14"
-              height="14"
-              aria-hidden="true"
-            >
-              <path
-                fill="currentColor"
-                d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1Zm3.28 5.28-3.75 3.75a.75.75 0 0 1-1.06 0l-1.75-1.75a.75.75 0 1 1 1.06-1.06l1.22 1.22 3.22-3.22a.75.75 0 1 1 1.06 1.06Z"
-              />
-            </svg>
-            <span>
-              <Resolution resolution={resolution} resolvedBy={resolvedBy} capitalize />
-            </span>
-          </div>
-        )}
-        {candidate && (
-          <EvidenceLedger
-            confidence={candidate.confidence}
-            reasons={candidate.reasons}
-            sharedType={candidate.sharedType?.label}
-            propertyLabels={data?.propertyLabels}
-            distinctStatements={distinctStatements}
-            footer={outcome && <EditOutcomePanel outcome={outcome} />}
-          >
-            {status && status !== "open" ? (
-              <>
-                <span className="flag flag-status">{status}</span>
-                {/* A merged pair's details get the banner above the ledger. */}
-                {status !== "merged" && (resolution || resolvedBy) && (
-                  <span className="detail-resolution">
-                    <Resolution resolution={resolution} resolvedBy={resolvedBy} />
-                  </span>
-                )}
-                {/* A merged pair stays merged (it happened on Wikidata); a
-                    dismissed one, or a merge claim that was abandoned, can
-                    come back. */}
-                {(status === "dismissed" || status === "merging") && (
-                  <button
-                    type="button"
-                    className="btn-dismiss"
-                    onClick={reopen}
-                    disabled={dismissing || !user}
-                    title={user ? undefined : "Log in to reopen"}
-                  >
-                    {dismissing ? "Reopening…" : status === "dismissed" ? "Un-dismiss" : "Reopen"}
-                  </button>
-                )}
-              </>
-            ) : (
-              // Merge / "different from" only make sense on an open pair; once
-              // it's dismissed or merged they're hidden.
-              <>
-                <button
-                  type="button"
-                  className="btn-dismiss is-quiet"
-                  onClick={dismiss}
-                  disabled={dismissing || !user}
-                  title={user ? undefined : "Log in to dismiss"}
-                >
-                  {dismissing ? "Dismissing…" : "Dismiss"}
-                </button>
-                <button
-                  type="button"
-                  className="btn-different"
-                  onClick={() => setDialog("different")}
-                  disabled={!user}
-                  title={user ? undefined : "Log in to mark as different"}
-                >
-                  Mark as different
-                </button>
-                <button
-                  type="button"
-                  className="btn-merge"
-                  onClick={() => setDialog("merge")}
-                  disabled={!user}
-                  title={user ? undefined : "Log in to merge"}
-                >
-                  Merge
-                </button>
-              </>
-            )}
-          </EvidenceLedger>
-        )}
-        {data?.snapshot && (
-          <p className="detail-note">
-            Showing both items as they were when this pair was{" "}
-            {candidate?.status === "merged" ? "merged" : "marked as different"}. Wikidata may have
-            changed them since.
-          </p>
-        )}
-        {data && candidate && (!data.from || !data.into) && (
-          <MissingItemsNote candidate={candidate} from={data.from} into={data.into} />
-        )}
       </div>
 
-      {data?.from && data.into && candidate && (
-        <MergeCandidates
-          from={data.from}
-          into={data.into}
-          propertyLabels={data.propertyLabels}
-          propertyFormatters={data.propertyFormatters}
-          propertyMirrors={data.propertyMirrors}
-          valueLabels={data.valueLabels}
-          creations={creations}
-        />
-      )}
+      <main>
+        <div className="detail-top detail-body">
+          {/* The pair is the page's subject; the plates below show it visually. */}
+          <h1 className="visually-hidden">
+            {candidate ? `Merge candidate: ${titleLead}` : titleLead}
+          </h1>
+          {loading && <p className="list-msg">Loading…</p>}
+          {error && !loading && (
+            <p className="list-msg is-error" role="alert">
+              {error}
+            </p>
+          )}
+
+          {/* Every action below edits state (here or on Wikidata) on the user's
+            behalf, so all of them need a login. */}
+          {candidate && !user && configured && (
+            <div className="login-callout">
+              <svg
+                className="login-callout-icon"
+                viewBox="0 0 16 16"
+                width="14"
+                height="14"
+                aria-hidden="true"
+              >
+                <path
+                  fill="currentColor"
+                  d="M8 1a3.5 3.5 0 0 0-3.5 3.5V6H4a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-.5V4.5A3.5 3.5 0 0 0 8 1Zm2 5H6V4.5a2 2 0 1 1 4 0V6Z"
+                />
+              </svg>
+              <span>Log in with your Wikimedia account to review this pair.</span>
+              <a className="login-callout-btn" href={loginUrl(`/candidates/${id ?? ""}`)}>
+                Log in
+              </a>
+            </div>
+          )}
+          {candidate && status === "merged" && (resolution || resolvedBy) && (
+            <div className="merged-banner" role="status">
+              <svg
+                className="merged-banner-icon"
+                viewBox="0 0 16 16"
+                width="14"
+                height="14"
+                aria-hidden="true"
+              >
+                <path
+                  fill="currentColor"
+                  d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1Zm3.28 5.28-3.75 3.75a.75.75 0 0 1-1.06 0l-1.75-1.75a.75.75 0 1 1 1.06-1.06l1.22 1.22 3.22-3.22a.75.75 0 1 1 1.06 1.06Z"
+                />
+              </svg>
+              <span>
+                <Resolution resolution={resolution} resolvedBy={resolvedBy} capitalize />
+              </span>
+            </div>
+          )}
+          {candidate && (
+            <EvidenceLedger
+              confidence={candidate.confidence}
+              reasons={candidate.reasons}
+              sharedType={candidate.sharedType?.label}
+              propertyLabels={data?.propertyLabels}
+              distinctStatements={distinctStatements}
+              footer={outcome && <EditOutcomePanel outcome={outcome} />}
+            >
+              {status && status !== "open" ? (
+                <>
+                  <span className="flag flag-status">{status}</span>
+                  {/* A merged pair's details get the banner above the ledger. */}
+                  {status !== "merged" && (resolution || resolvedBy) && (
+                    <span className="detail-resolution">
+                      <Resolution resolution={resolution} resolvedBy={resolvedBy} />
+                    </span>
+                  )}
+                  {/* A merged pair stays merged (it happened on Wikidata); a
+                    dismissed one, or a merge claim that was abandoned, can
+                    come back. */}
+                  {(status === "dismissed" || status === "merging") && (
+                    <button
+                      type="button"
+                      className="btn-dismiss"
+                      onClick={reopen}
+                      disabled={dismissing || !user}
+                      title={user ? undefined : "Log in to reopen"}
+                    >
+                      {dismissing ? "Reopening…" : status === "dismissed" ? "Un-dismiss" : "Reopen"}
+                    </button>
+                  )}
+                </>
+              ) : (
+                // Merge / "different from" only make sense on an open pair; once
+                // it's dismissed or merged they're hidden.
+                <>
+                  <button
+                    type="button"
+                    className="btn-dismiss is-quiet"
+                    onClick={dismiss}
+                    disabled={dismissing || !user}
+                    title={user ? undefined : "Log in to dismiss"}
+                  >
+                    {dismissing ? "Dismissing…" : "Dismiss"}
+                  </button>
+                  <button
+                    type="button"
+                    className="btn-different"
+                    onClick={() => setDialog("different")}
+                    disabled={!user}
+                    title={user ? undefined : "Log in to mark as different"}
+                  >
+                    Mark as different
+                  </button>
+                  <button
+                    type="button"
+                    className="btn-merge"
+                    onClick={() => setDialog("merge")}
+                    disabled={!user}
+                    title={user ? undefined : "Log in to merge"}
+                  >
+                    Merge
+                  </button>
+                </>
+              )}
+            </EvidenceLedger>
+          )}
+          {data?.snapshot && (
+            <p className="detail-note">
+              Showing both items as they were when this pair was{" "}
+              {candidate?.status === "merged" ? "merged" : "marked as different"}. Wikidata may have
+              changed them since.
+            </p>
+          )}
+          {data && candidate && (!data.from || !data.into) && (
+            <MissingItemsNote candidate={candidate} from={data.from} into={data.into} />
+          )}
+        </div>
+
+        {data?.from && data.into && candidate && (
+          <MergeCandidates
+            from={data.from}
+            into={data.into}
+            propertyLabels={data.propertyLabels}
+            propertyFormatters={data.propertyFormatters}
+            propertyMirrors={data.propertyMirrors}
+            valueLabels={data.valueLabels}
+            creations={creations}
+          />
+        )}
+      </main>
 
       {dialog === "merge" && data?.from && data.into && candidate && id && (
         <MergeDialog

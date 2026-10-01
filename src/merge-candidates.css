@@ -155,7 +155,7 @@ a {
   font-size: 1.5rem;
   font-weight: 600;
   line-height: 1.2;
-  margin-top: 0.15rem;
+  margin: 0.15rem 0 0;
 }
 .plate-label-lang {
   margin-left: 0.5rem;
@@ -492,6 +492,11 @@ a.site-link:hover {
 /* A row the evidence ledger just scrolled to flashes a tint that fades out.
    An inset shadow sits above each cell's own background (blocker, discounted)
    and below its text, so the tint shows on every kind of row. */
+/* A row focused from the evidence ledger: an outline outside a row would be
+   clipped by the table's scroll wrapper, so draw it inside. */
+.ledger tr:focus-visible {
+  outline-offset: -2px;
+}
 .ledger tr.is-flashing td {
   animation: row-flash 3.3s ease-out;
 }
@@ -1190,6 +1195,10 @@ a.chip-id:hover {
   margin: 0 auto;
   padding: 1.5rem 1.25rem 0;
 }
+/* The detail page's content under the nav: same column, no second top gap. */
+.detail-top.detail-body {
+  padding-top: 0;
+}
 .detail-nav {
   display: flex;
   flex-wrap: wrap;
@@ -1508,24 +1517,25 @@ a.chip-id:hover {
 }
 
 /* ---------- Modal ---------- */
-.modal-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 50;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.25rem;
+/* A native <dialog> opened with showModal(): the browser centers it in the top
+   layer (margin: auto) and caps its height, scrolling it when it's taller. */
+.modal::backdrop {
   background: rgb(0 0 0 / 45%);
 }
 .modal {
-  width: 100%;
+  width: calc(100% - 2.5rem);
   max-width: 26rem;
   padding: 1.25rem 1.4rem 1.1rem;
+  color: var(--ink);
   background: var(--surface);
   border: 1px solid var(--rule);
   border-radius: 8px;
   box-shadow: 0 12px 40px rgb(0 0 0 / 25%);
+}
+/* Focus lands on the dialog itself when it opens; its title is announced, and
+   a ring around the whole box would only be noise. */
+.modal:focus {
+  outline: none;
 }
 .modal-title {
   font-size: 1.15rem;

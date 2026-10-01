@@ -268,7 +268,7 @@ function ItemPlate({
   return (
     <div className={`plate plate-${side}`}>
       <div className="plate-role">{side === "from" ? "merge from" : "merge into"}</div>
-      <div className="plate-label">
+      <h2 className="plate-label">
         {label?.text ?? item.id}
         {label && label.lang !== "en" && label.lang !== "mul" && (
           <span
@@ -278,7 +278,7 @@ function ItemPlate({
             {label.lang}
           </span>
         )}
-      </div>
+      </h2>
       <div className="plate-meta">
         <a className="plate-id" href={wikiPageUrl(item.id)} target="_blank" rel="noreferrer">
           {item.id}
@@ -488,6 +488,9 @@ export default function MergeCandidates({
                           key={r.key}
                           // The evidence ledger's property links scroll here.
                           id={r.kind === "statement" ? `row-${r.key}` : undefined}
+                          // Focusable from script only, so the ledger's links can
+                          // move keyboard and screen-reader focus to the row.
+                          tabIndex={r.kind === "statement" ? -1 : undefined}
                           className={
                             [
                               isBlocker(r) ? "is-blocker" : "",

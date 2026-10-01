@@ -324,6 +324,20 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       expect(body.nextId).toBeNull();
     });
 
+    it("walks a confidence tie in the list's order", async () => {
+      // Two more at alpha's 0.9, so three tie; the list puts the newest first.
+      const tied = [
+        await insertCandidate({ fromQid: "Q30", intoQid: "Q10", confidence: 0.9, reasons: [] }),
+        await insertCandidate({ fromQid: "Q40", intoQid: "Q10", confidence: 0.9, reasons: [] }),
+      ];
+      const order = (await list()).candidates.map((c) => c.id);
+      expect(order).toEqual([tied[1], tied[0], alpha, beta]);
+      for (const [i, id] of order.entries()) {
+        const { body } = await get<CandidateDetailResponse>(`/api/candidates/${id}`);
+        expect([body.prevId, body.nextId]).toEqual([order[i - 1] ?? null, order[i + 1] ?? null]);
+      }
+    });
+
     it("404s for unknown or malformed ids", async () => {
       expect(await get("/api/candidates/999999")).toEqual({
         status: 404,

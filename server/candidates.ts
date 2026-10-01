@@ -247,16 +247,16 @@ candidates.get("/:id", async (c) => {
   }
   const { snapshot, ...row } = found;
 
-  // Neighbours for prev/next navigation, within the same status and using the
-  // list's default order (confidence desc, then id asc as a stable tiebreak).
+  // Neighbours for prev/next navigation, within the same status and in the
+  // list's default order: confidence desc, then id desc within a tie.
   const sameStatus = eq(mergeCandidates.status, row.status);
   const afterCurrent = or(
     lt(mergeCandidates.confidence, row.confidence),
-    and(eq(mergeCandidates.confidence, row.confidence), gt(mergeCandidates.id, row.id)),
+    and(eq(mergeCandidates.confidence, row.confidence), lt(mergeCandidates.id, row.id)),
   );
   const beforeCurrent = or(
     gt(mergeCandidates.confidence, row.confidence),
-    and(eq(mergeCandidates.confidence, row.confidence), lt(mergeCandidates.id, row.id)),
+    and(eq(mergeCandidates.confidence, row.confidence), gt(mergeCandidates.id, row.id)),
   );
 
   const [labels, itemRows, nextRows, prevRows] = await Promise.all([
@@ -272,13 +272,13 @@ candidates.get("/:id", async (c) => {
       .select({ id: mergeCandidates.id })
       .from(mergeCandidates)
       .where(and(sameStatus, afterCurrent))
-      .orderBy(desc(mergeCandidates.confidence), asc(mergeCandidates.id))
+      .orderBy(desc(mergeCandidates.confidence), desc(mergeCandidates.id))
       .limit(1),
     db
       .select({ id: mergeCandidates.id })
       .from(mergeCandidates)
       .where(and(sameStatus, beforeCurrent))
-      .orderBy(asc(mergeCandidates.confidence), desc(mergeCandidates.id))
+      .orderBy(asc(mergeCandidates.confidence), asc(mergeCandidates.id))
       .limit(1),
   ]);
 

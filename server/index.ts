@@ -4,6 +4,7 @@
 import { serve } from "@hono/node-server";
 import { app } from "./app.ts";
 import { pool } from "./db.ts";
+import { recordInterruptedEdits } from "./edits.ts";
 import { preflight } from "./preflight.ts";
 
 // Refuse to serve against a database with pending migrations (or none at all);
@@ -20,8 +21,13 @@ const server = serve({ fetch: app.fetch, port }, (info) => {
 // pod a grace period before SIGKILL. Stop accepting new connections, let
 // in-flight requests finish, close the DB pool, then exit. If draining hangs
 // (a stuck query, a client holding a connection open), give up before k8s does
-// so the exit is still ours and logged.
-const SHUTDOWN_TIMEOUT_MS = Number(process.env.SHUTDOWN_TIMEOUT_MS ?? 10_000);
+// so the exit is still ours and logged. The drain gets most of Kubernetes'
+// default 30s grace: a merge makes several Wikidata calls and shouldn't be cut
+// off needlessly. A merge or "different from" still running when it runs out
+// gets a failed audit row first (recordInterruptedEdits), since it may already
+// have landed on Wikidata; that write gets RECORD_TIMEOUT_MS of the remainder.
+const SHUTDOWN_TIMEOUT_MS = Number(process.env.SHUTDOWN_TIMEOUT_MS ?? 25_000);
+const RECORD_TIMEOUT_MS = 3_000;
 let shuttingDown = false;
 
 function shutdown(signal: NodeJS.Signals): void {
@@ -31,7 +37,13 @@ function shutdown(signal: NodeJS.Signals): void {
 
   const forceExit = setTimeout(() => {
     console.error(`shutdown: still draining after ${SHUTDOWN_TIMEOUT_MS}ms, exiting anyway`);
-    process.exit(1);
+    const giveUp = new Promise<void>((resolve) => setTimeout(resolve, RECORD_TIMEOUT_MS));
+    void Promise.race([
+      recordInterruptedEdits().then((n) => {
+        if (n > 0) console.error(`shutdown: recorded ${n} interrupted edit(s)`);
+      }),
+      giveUp,
+    ]).finally(() => process.exit(1));
   }, SHUTDOWN_TIMEOUT_MS);
   // Don't let this timer alone keep the process alive once everything else is done.
   forceExit.unref();

@@ -39,7 +39,7 @@ import {
 import { storeTokens } from "./auth/tokens.ts";
 import { addSeconds, toSqlDatetime } from "./auth/time.ts";
 import { editLimiter } from "./rate-limit.ts";
-import { MERGING_STALE_SECONDS } from "./edits.ts";
+import { MERGING_STALE_SECONDS, recordInterruptedEdits } from "./edits.ts";
 
 const API = "https://wd.test/w/api.php";
 const ENV = {
@@ -888,18 +888,19 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       expect((await candidateRow(alpha)).status).toBe("open");
     });
 
-    it("skips a direction the mirror already has", async () => {
-      const [q20] = await db.select({ data: items.data }).from(items).where(eq(items.qid, "Q20"));
-      await db
-        .update(items)
-        .set({
-          data: {
-            ...q20.data,
-            statements: { ...q20.data.statements, P1889: [{ type: "item", value: "Q10" }] },
-          },
-        })
-        .where(eq(items.qid, "Q20"));
-      const calls = stubWikidata(() => claimOk(300));
+    it("skips a direction Wikidata already has, even when the mirror doesn't", async () => {
+      // A first attempt whose request timed out after Wikidata saved the
+      // statement: reported as failed, the claim released, the mirror untouched.
+      stubWikidata(() => new Response("", { status: 504 }));
+      const first = await post<EditErrorResponse>(`/api/candidates/${alpha}/different`, editor);
+      expect(first.status).toBe(502);
+      expect((await candidateRow(alpha)).status).toBe("open");
+      vi.unstubAllGlobals();
+
+      // The retry reads live Wikidata, sees Q20's statement, and doesn't add another.
+      const calls = stubWikidata(() => claimOk(300), {
+        Q20: { claims: itemClaims("P1889", "Q10") },
+      });
       const { body } = await post<CandidateDifferentResponse>(
         `/api/candidates/${alpha}/different`,
         editor,
@@ -918,6 +919,24 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       ]);
       expect(calls.filter((c) => c.method === "POST")).toHaveLength(1);
       expect(body.candidate.status).toBe("dismissed");
+    });
+
+    it("changes nothing when Wikidata can't be read first", async () => {
+      const calls = stubWikidata(() => claimOk(300));
+      vi.stubGlobal(
+        "fetch",
+        vi.fn<typeof fetch>(async () => {
+          throw new TypeError("fetch failed");
+        }),
+      );
+      const { status } = await post<EditErrorResponse>(
+        `/api/candidates/${alpha}/different`,
+        editor,
+      );
+      expect(status).toBe(502);
+      expect(calls).toHaveLength(0);
+      expect((await candidateRow(alpha)).status).toBe("open");
+      expect((await db.select().from(wikidataEdits)).map((a) => a.ok)).toEqual([false]);
     });
 
     it("changes nothing when the first claim fails, but dismisses after a second-leg failure", async () => {
@@ -1140,6 +1159,44 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       const audits = await db.select().from(wikidataEdits);
       expect(audits).toHaveLength(1);
       expect(audits[0]).toMatchObject({ ok: false, errorCode: "network" });
+    });
+  });
+
+  describe("recordInterruptedEdits", () => {
+    it("records a failed audit row for a merge still waiting on Wikidata", async () => {
+      stubWikidata(() => mergeOk());
+      const stubbed = globalThis.fetch;
+      let release!: () => void;
+      const gate = new Promise<void>((resolve) => (release = resolve));
+      let posted!: () => void;
+      const reachedPost = new Promise<void>((resolve) => (posted = resolve));
+      vi.stubGlobal(
+        "fetch",
+        vi.fn<typeof fetch>(async (input, init) => {
+          if (init?.method === "POST") {
+            posted();
+            await gate;
+          }
+          return stubbed(input, init);
+        }),
+      );
+
+      const pending = post(`/api/candidates/${alpha}/merge`, editor, {});
+      await reachedPost;
+      expect(await recordInterruptedEdits()).toBe(1);
+      const [audit] = await db.select().from(wikidataEdits);
+      expect(audit).toMatchObject({
+        ok: false,
+        errorCode: "interrupted",
+        action: "merge",
+        fromQid: "Q20",
+        intoQid: "Q10",
+      });
+
+      release();
+      expect((await pending).status).toBe(200);
+      // Finished: nothing is in flight any more.
+      expect(await recordInterruptedEdits()).toBe(0);
     });
   });
 

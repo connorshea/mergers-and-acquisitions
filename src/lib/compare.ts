@@ -163,6 +163,25 @@ function clashExplainedByRedirect(a: Item, b: Item, wiki: string): boolean {
   return explains(a, b) || explains(b, a);
 }
 
+/**
+ * The item whose sitelink on `wiki` is the redirect side of a clash still
+ * waiting for the resolve-sitelinks job: badged as a redirect (not an
+ * intentional one) with no known target, facing a page that isn't a redirect.
+ * That page is most likely the partner's, and the merge flow asks the wiki
+ * before merging (removing the sitelink if so, refusing if not), so the clash
+ * isn't one the user has to fix by hand. Undefined when the clash isn't that
+ * shape.
+ */
+export function pendingRedirectSitelink(a: Item, b: Item, wiki: string): Item | undefined {
+  const unchecked = (item: Item) =>
+    isRedirectSitelink(item, wiki) &&
+    !isIntentionalRedirect(item, wiki) &&
+    sitelinkRedirectTarget(item, wiki) === undefined;
+  if (unchecked(a) && !isRedirectSitelink(b, wiki)) return a;
+  if (unchecked(b) && !isRedirectSitelink(a, wiki)) return b;
+  return undefined;
+}
+
 export type Status = "identical" | "similar" | "distinct";
 /** Row-level category: a row is one-sided when only one item has any value for it. */
 export type RowStatus = Status | "one-sided";
@@ -686,7 +705,7 @@ export function buildRows(
       const [id, target] = redirectA ? [a.id, targetA] : [b.id, targetB];
       note = target
         ? `${id}'s page redirects to “${target}”, not the other item's page. One will need to be removed manually before merging.`
-        : `${id}'s page is a redirect (likely to the other page). Remove that sitelink before merging.`;
+        : `${id}'s page is a redirect, likely to the other item's page. The merge checks the wiki first and removes ${id}'s sitelink if so.`;
     } else if (clash)
       note =
         "Two different pages on the same wiki. One will need to be removed manually before merging.";
@@ -842,6 +861,50 @@ export function redirectSitelinkFixes(a: Item, b: Item): SitelinkFix[] | null {
   return fixes;
 }
 
+/** A badge-only redirect sitelink the merge checks against the wiki first. */
+export interface PendingSitelinkCheck {
+  /** The item whose sitelink is badged as a redirect. */
+  qid: string;
+  wiki: string;
+  /** The badged page. */
+  title: string;
+  /** The partner's page, which it most likely redirects to. */
+  partnerTitle: string;
+}
+
+/**
+ * The mirror's view of how a merge clears `a` and `b`'s sitelink clashes, for
+ * the confirm dialog: the redirects it already knows point at the partner's
+ * page (`fixes`, see redirectSitelinkFixes), and badge-only redirects it will
+ * check against the wiki first (`pending`, see pendingRedirectSitelink). Null
+ * when some clash is neither and needs a person. The server always decides on
+ * a live check of its own (server/edits.ts), never on this.
+ */
+export function plannedSitelinkFixes(
+  a: Item,
+  b: Item,
+): { fixes: SitelinkFix[]; pending: PendingSitelinkCheck[] } | null {
+  const fixes: SitelinkFix[] = [];
+  const pending: PendingSitelinkCheck[] = [];
+  for (const [wiki, titleA] of Object.entries(a.sitelinks)) {
+    const titleB = b.sitelinks[wiki];
+    if (titleB === undefined || titleB === titleA) continue;
+    const unchecked = pendingRedirectSitelink(a, b, wiki);
+    if (redirectsToPartner(a, b, wiki))
+      fixes.push({ qid: a.id, wiki, title: titleA, target: titleB });
+    else if (redirectsToPartner(b, a, wiki))
+      fixes.push({ qid: b.id, wiki, title: titleB, target: titleA });
+    else if (unchecked)
+      pending.push(
+        unchecked === a
+          ? { qid: a.id, wiki, title: titleA, partnerTitle: titleB }
+          : { qid: b.id, wiki, title: titleB, partnerTitle: titleA },
+      );
+    else return null;
+  }
+  return { fixes, pending };
+}
+
 /**
  * Whether a comparison `Row` is an auto-ignored conflict (see
  * `AUTO_IGNORED_CONFLICTS`). Keyed off the row key so both the scorer and the UI
@@ -854,15 +917,22 @@ export function isAutoIgnoredConflict(rowKey: string): boolean {
 /**
  * Whether a comparison `Row` of `a` vs `b` is a conflict the user has to
  * resolve before merging. Not the ones the merge flow handles itself: an
- * auto-ignored conflict (isAutoIgnoredConflict), or a sitelink clash where one
+ * auto-ignored conflict (isAutoIgnoredConflict), a sitelink clash where one
  * page redirects to the other's (its sitelink is removed first — see
- * redirectSitelinkFixes).
+ * redirectSitelinkFixes), or one where a page badged as a redirect hasn't been
+ * resolved yet (pendingRedirectSitelink): the merge asks the wiki before going
+ * ahead, so a fresh pair isn't flagged as blocked for the day until the
+ * resolve-sitelinks job has looked.
  */
 export function isMergeBlocker(row: Row, a: Item, b: Item): boolean {
   if (!row.blocker || isAutoIgnoredConflict(row.key)) return false;
   if (row.kind !== "sitelink") return true;
   const wiki = row.key.slice("sitelink:".length);
-  return !redirectsToPartner(a, b, wiki) && !redirectsToPartner(b, a, wiki);
+  return (
+    !redirectsToPartner(a, b, wiki) &&
+    !redirectsToPartner(b, a, wiki) &&
+    pendingRedirectSitelink(a, b, wiki) === undefined
+  );
 }
 
 /**
@@ -2346,6 +2416,17 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   if (blockers.length > 0) {
     reasons.push(
       `${blockers.length} conflict${blockers.length > 1 ? "s" : ""} would block the merge`,
+    );
+  }
+  // A page badged as a redirect that the resolve-sitelinks job hasn't checked
+  // yet: neither a blocker nor (until it's known to be the partner's page)
+  // evidence, just said so.
+  const uncheckedRedirectWikis = rows.filter(
+    (r) => r.kind === "sitelink" && r.blocker && pendingRedirectSitelink(a, b, r.label),
+  );
+  if (uncheckedRedirectWikis.length > 0) {
+    reasons.push(
+      `sitelink is a redirect, likely to the other item's page, on ${uncheckedRedirectWikis.map((r) => r.label).join(", ")}`,
     );
   }
 

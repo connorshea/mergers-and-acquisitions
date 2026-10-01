@@ -15,7 +15,7 @@ import {
   type Item,
   type MergeConflict,
   mergeConflicts,
-  redirectSitelinkFixes,
+  plannedSitelinkFixes,
 } from "../lib/compare.ts";
 import type {
   CandidateCreationsResponse,
@@ -568,10 +568,15 @@ function MergeDialog({
   // Clashes where one page is a redirect to the other item's page (per the
   // nightly replica check) are removed by the server before merging, after it
   // re-checks them against the wiki; if that re-check disagrees, it refuses.
-  const sitelinkFixes = useMemo(() => redirectSitelinkFixes(from, into) ?? [], [from, into]);
+  // Badge-only redirects not yet resolved are asked of the wiki at merge time,
+  // where the server removes them if they point at the partner's page and
+  // refuses the merge if not.
+  const sitelinkPlan = useMemo(() => plannedSitelinkFixes(from, into), [from, into]);
+  const sitelinkFixes = sitelinkPlan?.fixes ?? [];
+  const pendingChecks = sitelinkPlan?.pending ?? [];
   const blockers = detected.filter(
     (k): k is Exclude<MergeConflict, "description"> =>
-      !AUTO_IGNORED_CONFLICTS.includes(k) && !(k === "sitelink" && sitelinkFixes.length > 0),
+      !AUTO_IGNORED_CONFLICTS.includes(k) && !(k === "sitelink" && sitelinkPlan !== null),
   );
 
   async function submit() {
@@ -609,6 +614,21 @@ function MergeDialog({
               {sitelinkFixes.map((f) => (
                 <li key={`${f.qid}:${f.wiki}`}>
                   {f.qid}'s {f.wiki} sitelink “{f.title}” → “{f.target}”
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {pendingChecks.length > 0 && (
+          <div className="modal-note">
+            {pendingChecks.length === 1 ? "A sitelink is" : "These sitelinks are"} badged as a
+            redirect, likely to the other item's page. The merge asks the wiki first: if so,{" "}
+            {pendingChecks.length === 1 ? "it is" : "they are"} removed in a separate edit; if not,
+            the merge is refused.
+            <ul className="conflict-list">
+              {pendingChecks.map((p) => (
+                <li key={`${p.qid}:${p.wiki}`}>
+                  {p.qid}'s {p.wiki} sitelink “{p.title}”, likely → “{p.partnerTitle}”
                 </li>
               ))}
             </ul>

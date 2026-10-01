@@ -35,6 +35,8 @@ import {
   yearDisambiguatedWikis,
   mergeConflicts,
   redirectSitelinkFixes,
+  plannedSitelinkFixes,
+  isMergeBlocker,
   rowDisplayRank,
   withFragment,
   normalize,
@@ -46,6 +48,7 @@ import {
 } from "./compare.ts";
 import { coordinateValue } from "./coordinates.ts";
 import { EXAMPLES } from "./fixtures.ts";
+import { reasonTone } from "./reasons.ts";
 
 const byName = Object.fromEntries(EXAMPLES.map((e) => [e.name, e]));
 
@@ -372,6 +375,63 @@ describe("buildRows (behavior-preserving extraction)", () => {
       expect(r.b.map((v) => v.redirect)).toEqual([true]);
       expect(r.note).toMatch(/^Q1145650's page is a redirect/);
       expect(mergeConflicts(article, redirect)).toContain("sitelink");
+    });
+
+    it("doesn't make an unchecked badged redirect a blocker; the merge checks it first", () => {
+      // The Nippon Light Metal shape: one page badged as a redirect, its target
+      // not yet resolved by the nightly job, facing an ordinary article.
+      for (const [a, b] of [
+        [article, redirect],
+        [redirect, article],
+      ]) {
+        const r = row(a, b);
+        expect(r.blocker).toBe(true); // still a conflict Wikidata would raise
+        expect(isMergeBlocker(r, a, b)).toBe(false);
+      }
+      expect(row(article, redirect).note).toBe(
+        "Q1145650's page is a redirect, likely to the other item's page. The merge checks the wiki first and removes Q1145650's sitelink if so.",
+      );
+      expect(plannedSitelinkFixes(article, redirect)).toEqual({
+        fixes: [],
+        pending: [
+          {
+            qid: "Q1145650",
+            wiki: "enwiki",
+            title: "Loud and Dangerous: Live from Hollywood",
+            partnerTitle: "Loud & Dangerous: Live from Hollywood",
+          },
+        ],
+      });
+      // The server's live plan is unchanged: it acts only on a resolved target.
+      expect(redirectSitelinkFixes(article, redirect)).toBeNull();
+      expect(mergeConflicts(article, redirect)).toContain("sitelink");
+    });
+
+    it("still blocks a badged redirect once it's known to point elsewhere, or when both are redirects", () => {
+      const elsewhere = { ...redirect, sitelinkRedirects: { enwiki: "Loud (album)" } };
+      expect(isMergeBlocker(row(article, elsewhere), article, elsewhere)).toBe(true);
+      expect(plannedSitelinkFixes(article, elsewhere)).toBeNull();
+      const both = { ...article, sitelinkBadges: { enwiki: ["Q70893996"] } };
+      expect(isMergeBlocker(row(both, redirect), both, redirect)).toBe(true);
+      expect(plannedSitelinkFixes(both, redirect)).toBeNull();
+      const intentional = { ...redirect, sitelinkBadges: { enwiki: ["Q70894304"] } };
+      expect(isMergeBlocker(row(article, intentional), article, intentional)).toBe(true);
+      expect(plannedSitelinkFixes(article, intentional)).toBeNull();
+    });
+
+    it("plans a resolved redirect as a fix, not a pending check", () => {
+      const toArticle = { ...redirect, sitelinkRedirects: { enwiki: article.sitelinks.enwiki } };
+      expect(plannedSitelinkFixes(article, toArticle)).toEqual({
+        fixes: [
+          {
+            qid: "Q1145650",
+            wiki: "enwiki",
+            title: "Loud and Dangerous: Live from Hollywood",
+            target: "Loud & Dangerous: Live from Hollywood",
+          },
+        ],
+        pending: [],
+      });
     });
 
     it("accepts the intentional-redirect badge too", () => {
@@ -1001,6 +1061,16 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       const redirects = mk("Q2", pages(" (series)", wikis), ["Q70893996"]);
       const result = score(mk("Q1", pages("", wikis)), redirects);
       expect(result.confidence).toBeGreaterThan(0.4);
+      // Not flagged as blocking before the nightly job resolves the targets:
+      // the merge checks them against the wikis itself.
+      expect(result.hasBlocker).toBe(false);
+      expect(result.reasons.some((r) => r.includes("would block the merge"))).toBe(false);
+      expect(result.reasons).toContain(
+        "sitelink is a redirect, likely to the other item's page, on enwiki, kowiki, ptwiki",
+      );
+      expect(reasonTone(result.reasons.find((r) => r.startsWith("sitelink is"))!).polarity).toBe(
+        "neutral",
+      );
     });
 
     it("rewards a page resolved as a redirect to the other item's page", () => {

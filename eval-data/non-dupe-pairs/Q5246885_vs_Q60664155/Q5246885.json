@@ -1,0 +1,613 @@
+{
+  "pageid": 5016499,
+  "ns": 0,
+  "title": "Q5246885",
+  "lastrevid": 2547425581,
+  "modified": "2026-09-18T13:23:09Z",
+  "type": "item",
+  "id": "Q5246885",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Dear Life"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Rien que la vie"
+    },
+    "de": {
+      "language": "de",
+      "value": "Liebes Leben"
+    },
+    "fa": {
+      "language": "fa",
+      "value": "زندگی عزیز"
+    },
+    "it": {
+      "language": "it",
+      "value": "Uscirne vivi"
+    },
+    "da": {
+      "language": "da",
+      "value": "Livet"
+    },
+    "he": {
+      "language": "he",
+      "value": "חיים יקרים"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "Estimada vida"
+    },
+    "ka": {
+      "language": "ka",
+      "value": "ძვირფასი სიცოცხლე"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "Dear Life"
+    },
+    "sr": {
+      "language": "sr",
+      "value": "Голи живот (књига)"
+    },
+    "sl": {
+      "language": "sl",
+      "value": "Dear Life"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "حياتي العزيزة"
+    }
+  },
+  "descriptions": {
+    "de": {
+      "language": "de",
+      "value": "Buch von Alice Munro"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "boek van Alice Munro"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "كتاب من تأليف آليس مونرو"
+    },
+    "fa": {
+      "language": "fa",
+      "value": "مجموعه داستانی از آلیس مونرو"
+    },
+    "en": {
+      "language": "en",
+      "value": "book by Alice Munro"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "livre d'Alice Munro"
+    },
+    "es": {
+      "language": "es",
+      "value": "libro de Alice Munro"
+    },
+    "da": {
+      "language": "da",
+      "value": "Novelle fra 2012 af Alice Munro"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "книга"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "llibre d'Alice Munro"
+    },
+    "sl": {
+      "language": "sl",
+      "value": "knjiga Alice Munro (2012)"
+    },
+    "it": {
+      "language": "it",
+      "value": "raccolta di racconti di Alice Munro"
+    }
+  },
+  "aliases": {
+    "da": [
+      {
+        "language": "da",
+        "value": "Dear Life"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5963e3cad5eee4ae1cffbefbac15327800b9a7e6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7725634,
+              "id": "Q7725634"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q5246885$C7FE1EA5-B828-4BDB-AD35-76A1B6C723F5",
+        "rank": "normal"
+      }
+    ],
+    "P123": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P123",
+          "hash": "855e7ca6630b902d382427da9e72eddbb1d2e3bd",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6800322,
+              "id": "Q6800322"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q5246885$208E1301-BFE2-43A3-9584-E64EED68444E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P50": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P50",
+          "hash": "86ba0c7757af437f991aaa2673f738db4aee593b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 234819,
+              "id": "Q234819"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q5246885$0b0f60b0-4894-b2df-34fd-bb14ff451bce",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P407": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P407",
+          "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1860,
+              "id": "Q1860"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q5246885$3D723135-3AC0-4D8C-8561-9353C4F035C6",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "e65372cf39f868dd8f2040ca874cd9632f1e02aa",
+          "datavalue": {
+            "value": {
+              "time": "+2012-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q5246885$C14FE621-C315-47FC-ACDE-2D9A884AA3B5",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d5847b9b6032aa8b13dae3c2dfd9ed5d114d21b3",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "5a343e7e758a4282a01316d3e959b6e653b767fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11920,
+                      "id": "Q11920"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "8ce7020b3a7cc8df1fb419a989a1c88db64e49e8",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 16,
+              "id": "Q16"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q5246885$19A39E0C-A0D5-4325-8923-A02503F0EB0F",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "4b8050529dd4ab27318c5a0ec9fed8ce49a9583b",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "e02063e2084bdf64450fba6234ba4e3d6656b953",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Dear_Life_(book)&oldid=857116343",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "ac6f73e35f5b50cc8bb9bf9f5d7309fbc6756a2d",
+          "datavalue": {
+            "value": {
+              "text": "Dear Life",
+              "language": "en"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q5246885$87C75EE5-A018-40CE-AE6B-D9EB86BD97A4",
+        "rank": "normal"
+      }
+    ],
+    "P155": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P155",
+          "hash": "f8f6cbff17488414258db3ef0da1e7b7ca0ef01c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 760771,
+              "id": "Q760771"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q5246885$99416ac6-4dca-aa65-918f-4f1de0cfcfbf",
+        "rank": "normal"
+      }
+    ],
+    "P1417": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1417",
+          "hash": "ad69d6218779d9e8bafb032026f2c52a02c7ba70",
+          "datavalue": {
+            "value": "topic/Dear-Life",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "61b2ec4fbaea23d7636483f9a9592e8120fa2a15",
+              "datavalue": {
+                "value": "Dear Life",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q5246885$BC4444B4-F460-4D5C-9E20-04F55BE9D76A",
+        "rank": "normal"
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "9c8dd6634b6a6939c68fdfe44ccf7c1bc9949fa6",
+          "datavalue": {
+            "value": "/m/0n8fw6p",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q5246885$A230B637-DB2D-492E-98D4-3CE1ECDA11E5",
+        "rank": "normal"
+      }
+    ],
+    "P7937": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7937",
+          "hash": "b42f51ac982e4a2841302ad835a78dc6687cb8ea",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1279564,
+              "id": "Q1279564"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q5246885$BB3DE128-D69B-43B9-87DD-6890C3EAE5BD",
+        "rank": "normal"
+      }
+    ],
+    "P9818": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P9818",
+          "hash": "a7be7e39060c0a66e4e7357a4cc22c6344b1c37d",
+          "datavalue": {
+            "value": "209867",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q5246885$A7A0834B-4900-46FC-826F-C47C2C6A4554",
+        "rank": "normal"
+      }
+    ],
+    "P648": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P648",
+          "hash": "b260705ea1a321ddec9605e4cfa862b436fa0383",
+          "datavalue": {
+            "value": "OL16813370W",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q5246885$80F14C23-2E68-4871-B513-05C3411CAF02",
+        "rank": "normal"
+      }
+    ],
+    "P747": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P747",
+          "hash": "f07d1c1bc28a610788d50097eb7e485bff55a32c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 141154599,
+              "id": "Q141154599"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P437": [
+            {
+              "snaktype": "value",
+              "property": "P437",
+              "hash": "80cc37ca4e1f3be6b79d98202a68a24ce98001c6",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 106833,
+                  "id": "Q106833"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P437"],
+        "id": "Q5246885$76B2E324-F396-4149-A73E-48FFA4DCDD69",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "dewiki": {
+      "site": "dewiki",
+      "title": "Liebes Leben",
+      "badges": [],
+      "url": "https://de.wikipedia.org/wiki/Liebes_Leben"
+    },
+    "fawiki": {
+      "site": "fawiki",
+      "title": "زندگی عزیز",
+      "badges": [],
+      "url": "https://fa.wikipedia.org/wiki/%D8%B2%D9%86%D8%AF%DA%AF%DB%8C_%D8%B9%D8%B2%DB%8C%D8%B2"
+    },
+    "fawikiquote": {
+      "site": "fawikiquote",
+      "title": "زندگی عزیز",
+      "badges": [],
+      "url": "https://fa.wikiquote.org/wiki/%D8%B2%D9%86%D8%AF%DA%AF%DB%8C_%D8%B9%D8%B2%DB%8C%D8%B2"
+    },
+    "itwiki": {
+      "site": "itwiki",
+      "title": "Uscirne vivi",
+      "badges": [],
+      "url": "https://it.wikipedia.org/wiki/Uscirne_vivi"
+    },
+    "srwiki": {
+      "site": "srwiki",
+      "title": "Голи живот (књига)",
+      "badges": [],
+      "url": "https://sr.wikipedia.org/wiki/%D0%93%D0%BE%D0%BB%D0%B8_%D0%B6%D0%B8%D0%B2%D0%BE%D1%82_(%D0%BA%D1%9A%D0%B8%D0%B3%D0%B0)"
+    },
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Dear Life (Munro book)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Dear_Life_(Munro_book)"
+    },
+    "arwiki": {
+      "site": "arwiki",
+      "title": "حياتي العزيزة (مجموعة قصصية)",
+      "badges": [],
+      "url": "https://ar.wikipedia.org/wiki/%D8%AD%D9%8A%D8%A7%D8%AA%D9%8A_%D8%A7%D9%84%D8%B9%D8%B2%D9%8A%D8%B2%D8%A9_(%D9%85%D8%AC%D9%85%D9%88%D8%B9%D8%A9_%D9%82%D8%B5%D8%B5%D9%8A%D8%A9)"
+    }
+  }
+}

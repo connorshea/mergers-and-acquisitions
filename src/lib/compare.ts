@@ -1851,6 +1851,22 @@ export function isDerivativePair(a: Item, b: Item): boolean {
   return points(a, b.id) || points(b, a.id);
 }
 
+/** Wikidata "published in" — the larger work (collection, anthology, periodical) carrying this one. */
+export const PUBLISHED_IN = "P1433";
+
+/**
+ * True when one item is declared published in the other: either item's
+ * "published in" (P1433) names the other — e.g. a short story and the
+ * same-titled collection it appears in. They share a title, author and often
+ * a catalogue id, but nothing is published in itself, so like P527/P361 the
+ * link is an editor stating the two are distinct.
+ */
+export function isPublishedInPair(a: Item, b: Item): boolean {
+  const points = (from: Item, toId: string) =>
+    (from.statements[PUBLISHED_IN] ?? []).some((v) => v.type === "item" && v.value === toId);
+  return points(a, b.id) || points(b, a.id);
+}
+
 /** Wikidata "collection" — the museum/library/archive holding an object. */
 export const COLLECTION = "P195";
 /** Wikidata "inventory number" — the holding collection's accession number. */
@@ -1980,10 +1996,10 @@ export function yearDisambiguatedWikis(a: Item, b: Item): string[] {
  * item — e.g. a game's "part of the series" (P179) naming the series it is being
  * compared against, or "based on" / "followed by" pointing across the pair. An
  * item doesn't reference itself, so any such link means the two are related but
- * distinct subjects. (P1889, P2959, P629/P747/P9237/P2550, P527/P361, P155/P156 and
- * P144/P4969 are excluded: they are handled, more strongly, by isDeclaredDifferent,
- * isPermanentDuplicatePair, isWorkEditionPair, isPartWholePair, isSequencedPair and
- * isDerivativePair.)
+ * distinct subjects. (P1889, P2959, P629/P747/P9237/P2550, P527/P361, P155/P156,
+ * P144/P4969 and P1433 are excluded: they are handled, more strongly, by
+ * isDeclaredDifferent, isPermanentDuplicatePair, isWorkEditionPair, isPartWholePair,
+ * isSequencedPair, isDerivativePair and isPublishedInPair.)
  */
 export function crossReferenceProps(a: Item, b: Item): Set<string> {
   const out = new Set<string>();
@@ -2001,7 +2017,8 @@ export function crossReferenceProps(a: Item, b: Item): Set<string> {
         pid === FOLLOWS ||
         pid === FOLLOWED_BY ||
         pid === BASED_ON ||
-        pid === DERIVATIVE_WORK
+        pid === DERIVATIVE_WORK ||
+        pid === PUBLISHED_IN
       )
         continue;
       if (values.some((v) => v.type === "item" && v.value === toId)) out.add(pid);
@@ -2779,6 +2796,17 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
       "linked as a work and its derivative on Wikidata (based on / derivative work, P144/P4969), not a duplicate",
     );
     cap("derivative-p144-p4969", 0.1);
+  }
+
+  // One item published in the other (P1433 linking the pair) — a short story
+  // and the same-titled collection it appears in — shares a title, author and
+  // catalogue ids, but nothing is published in itself. Cap below the
+  // persistence floor.
+  if (isPublishedInPair(a, b)) {
+    reasons.unshift(
+      "one item is published in the other on Wikidata (published in, P1433), not a duplicate",
+    );
+    cap("published-in-p1433", 0.1);
   }
 
   // Two objects in one collection under different inventory numbers are two

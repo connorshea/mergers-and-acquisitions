@@ -26,6 +26,7 @@ import {
   isPartWholePair,
   isSequencedPair,
   isDerivativePair,
+  isPublishedInPair,
   isCollectionSiblingPair,
   isDifferentVolumePair,
   isDisjointYearRangePair,
@@ -3322,6 +3323,49 @@ describe("isDerivativePair (based on / derivative work)", () => {
     const score = scoreCandidate(original, derived);
     expect(score.confidence).toBeLessThanOrEqual(0.1);
     expect(score.reasons[0]).toMatch(/based on \/ derivative work/);
+  });
+});
+
+describe("isPublishedInPair (published in)", () => {
+  // Q5246885 / Q60664155: Alice Munro's collection "Dear Life" and its title
+  // story, which is published in it (P1433). Same label, author, type and
+  // Open Library-style id (P9818); they scored 0.85 before the link capped them.
+  const common = {
+    P31: [{ type: "item" as const, value: "Q7725634" }],
+    P50: [{ type: "item" as const, value: "Q234819" }],
+    P9818: [{ type: "external-id" as const, value: "209867" }],
+  };
+  const work = (id: string, extra: Record<string, Value[]>): Item => ({
+    id,
+    labels: { en: "Dear Life" },
+    descriptions: { en: "book by Alice Munro" },
+    aliases: {},
+    sitelinks: {},
+    statements: { ...common, ...extra },
+  });
+  const collection = work("Q5246885", {});
+  const story = work("Q60664155", {
+    P1433: [
+      { type: "item", value: "Q5246885" },
+      { type: "item", value: "Q217305" },
+    ],
+  });
+
+  it("detects published in pointing either way, and only at the partner", () => {
+    expect(isPublishedInPair(collection, story)).toBe(true);
+    expect(isPublishedInPair(story, collection)).toBe(true);
+    expect(isPublishedInPair(collection, work("Q60664155", {}))).toBe(false);
+    // Published in a third work (a magazine) says nothing about the pair.
+    const elsewhere = work("Q60664155", { P1433: [{ type: "item", value: "Q217305" }] });
+    expect(isPublishedInPair(collection, elsewhere)).toBe(false);
+  });
+
+  it("caps the pair below the persistence floor despite a shared id", () => {
+    const score = scoreCandidate(collection, story);
+    expect(score.confidence).toBeLessThanOrEqual(0.1);
+    expect(score.reasons[0]).toMatch(/published in, P1433/);
+    // Handled by the cap, so not also listed as a generic cross-reference.
+    expect(score.reasons.join("\n")).not.toMatch(/references the other/);
   });
 });
 

@@ -42,16 +42,23 @@ const VIDEO_GAME_CLASSES: readonly ImportClass[] = [
 ];
 
 /**
- * The humans the mirror imports, out of Wikidata's ~13M: ~290k in all
- * (September 2026). Game people (~20k, ~11k of them linked from games): the
- * video game occupations under "game designer" / "video game developer" (not
- * board game, tabletop RPG or crossword designers), professional gamers, and
- * the game databases' person ids. Anime staff (~17k more): anyone with an
- * AniList or MyAnimeList person id, which covers directors, animators,
- * writers, composers and voice actors. Olympians (~254k more): anyone with an
- * id in one of the multi-sport Olympic databases, which bulk imports each
- * created their own items from. Other athletes (~1.4M under the "athlete"
- * occupation) are left out for size.
+ * The humans the mirror imports, out of Wikidata's ~13M: ~290k before
+ * authors and musicians, ~760k with them (October 2026). Game people (~20k,
+ * ~11k of them linked from games): the video game occupations under "game
+ * designer" / "video game developer", professional gamers, and the game
+ * databases' person ids. Anime staff (~17k more): anyone with an AniList or
+ * MyAnimeList person id, which covers directors, animators, writers,
+ * composers and voice actors. Olympians (~254k more): anyone with an id in one
+ * of the multi-sport Olympic databases, which bulk imports each created their
+ * own items from. Authors, musicians and other creators (~470k more): the
+ * occupations below plus the book, comics and music databases' person ids.
+ *
+ * Left out for size (each is ~8-12 KB a person in the mirror, against a 25 GB
+ * ToolsDB guideline, #192): other athletes (~1.4M under "athlete"), film and
+ * TV people (~560k more with an IMDb id), the bare "writer" occupation (~450k
+ * more: journalists, academics) and composers (~130k more). MusicBrainz
+ * (~230k more) is left out too, though only for size: as a filter it would be
+ * fine, since it isn't used as evidence.
  */
 const PEOPLE: SelectiveImport = {
   linkedFrom: VIDEO_GAME_CLASSES.map((c) => c.qid),
@@ -69,6 +76,16 @@ const PEOPLE: SelectiveImport = {
     "Q9357633", // game tester
     "Q2872378", // video game author
     "Q4379701", // professional gamer
+    "Q1544133", // board game designer
+    "Q54845077", // role-playing game designer
+    "Q2405480", // voice actor
+    "Q266569", // animator
+    "Q191633", // mangaka
+    "Q715301", // comics artist
+    "Q6625963", // novelist
+    "Q18844224", // science fiction writer
+    "Q4853732", // children's writer
+    "Q49757", // poet
   ],
   idProperties: [
     "P3913", // MobyGames person ID
@@ -82,6 +99,17 @@ const PEOPLE: SelectiveImport = {
     "P1447", // Sports-Reference.com Olympic athlete ID (archived)
     "P14105", // InterSportStats athlete ID
     "P4391", // The-Sports.org athlete ID
+    "P1233", // ISFDB author ID
+    "P2963", // Goodreads author ID
+    "P7400", // LibraryThing author ID
+    "P2607", // BookBrainz author ID
+    "P5408", // Fantastic Fiction author ID
+    "P5905", // Comic Vine ID
+    "P5035", // Lambiek Comiclopedia artist ID
+    "P1982", // Anime News Network person ID
+    "P3505", // BoardGameGeek designer ID
+    "P1953", // Discogs artist ID
+    "P1728", // AllMusic artist ID
   ],
 };
 

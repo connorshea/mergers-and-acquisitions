@@ -257,6 +257,19 @@ describe("propertyRowFromEntity", () => {
   });
 });
 
+describe("snakValue — musical notation", () => {
+  it("types a musical-notation string by its datatype", () => {
+    expect(
+      snakValue({
+        snaktype: "value",
+        property: "P6670",
+        datatype: "musical-notation",
+        datavalue: { type: "string", value: "\\relative c' { c4 }" },
+      }),
+    ).toEqual({ type: "musical-notation", value: "\\relative c' { c4 }" });
+  });
+});
+
 describe("snakValue — globe coordinates", () => {
   const coord = (value: Record<string, unknown>) =>
     snakValue({

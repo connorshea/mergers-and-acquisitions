@@ -193,6 +193,15 @@ describe("derived DB fields", () => {
   });
 });
 
+describe("classifyValue — musical notation", () => {
+  it("doesn't mistake a P6670 LilyPond literal for an identifier", () => {
+    expect(classifyValue({ type: "literal", value: "\\relative c' { c4 }" }, "P6670")).toEqual({
+      type: "musical-notation",
+      value: "\\relative c' { c4 }",
+    });
+  });
+});
+
 describe("classifyValue — WKT coordinates", () => {
   const WKT = "http://www.opengis.net/ont/geosparql#wktLiteral";
 

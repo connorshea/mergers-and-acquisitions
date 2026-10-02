@@ -32,11 +32,13 @@ import {
 
 /**
  * Wikidata's special snaks: an *unknown* value (somevalue) and an explicit *no*
- * value (novalue). Both are placeholders with no real value to show.
+ * value (novalue). Both are placeholders with no real value to show. Musical
+ * notation (LilyPond source) gets a placeholder too, since we can't render it.
  */
 function specialValueText(v: AnnotatedValue): string | null {
   if (v.type === "somevalue") return "unknown value";
   if (v.type === "novalue") return "no value";
+  if (v.type === "musical-notation") return "this app can't render music notation";
   return null;
 }
 

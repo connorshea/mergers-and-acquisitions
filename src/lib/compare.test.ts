@@ -3156,6 +3156,36 @@ describe("coordinates", () => {
   }
 });
 
+describe("musical notation", () => {
+  const score = (value: string) => ({ type: "musical-notation" as const, value });
+  const c = score("\\relative c' { \\time 2/8 c8 d e f }");
+  const d = score("\\relative c' { \\time 2/8 c8 d e g }");
+
+  it("calls near-identical LilyPond source distinct, not similar", () => {
+    expect(compareValues(c, d)).toEqual(["distinct"]);
+    expect(compareValues(c, score(c.value))).toEqual(["identical"]);
+  });
+
+  it("notes the row and leaves it out of the score", () => {
+    const base = {
+      ...empty("Q1"),
+      labels: { en: "Self Portrait" },
+      statements: { P86: [{ type: "item" as const, value: "Q5" }] },
+    };
+    const a = { ...base, statements: { ...base.statements, P6670: [c] } };
+    const b = { ...base, id: "Q2", statements: { ...base.statements, P6670: [d] } };
+    const [row] = buildRows(a, b).filter((r) => r.key === "P6670");
+    expect(row.status).toBe("distinct");
+    expect(row.note).toMatch(/musical notation isn't compared/);
+    expect(countDistinctStatements(a, b)).toBe(0);
+    expect(scoreCandidate(a, b)).toEqual(scoreCandidate(base, { ...base, id: "Q2" }));
+  });
+
+  function empty(id: string): Item {
+    return { id, labels: {}, descriptions: {}, aliases: {}, sitelinks: {}, statements: {} };
+  }
+});
+
 describe("isSequencedPair (follows / followed by)", () => {
   // Q119850903 / Q119850755: two sides of Fragment's Note 2, separate games that
   // share store listings (App Store, Google Play, …) and link each other with

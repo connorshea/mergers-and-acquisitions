@@ -1,0 +1,365 @@
+{
+  "pageid": 18552780,
+  "ns": 0,
+  "title": "Q16949923",
+  "lastrevid": 2482211285,
+  "modified": "2026-04-16T18:34:28Z",
+  "type": "item",
+  "id": "Q16949923",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Back"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Back"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Back"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Back"
+    },
+    "es": {
+      "language": "es",
+      "value": "Back"
+    }
+  },
+  "descriptions": {
+    "nl": {
+      "language": "nl",
+      "value": "single"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "cantar de Colt Ford"
+    },
+    "en": {
+      "language": "en",
+      "value": "2012 single by Colt Ford with Jake Owen"
+    }
+  },
+  "aliases": {
+    "ast": [
+      {
+        "language": "ast",
+        "value": "Back (cantar de Colt Ford)"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "2862fff89e858ee03e1a8fa3aaab1b1cc0fe4da6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7366,
+              "id": "Q7366"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16949923$96E4625B-7741-45E4-B050-0CFCBE975F48",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "33d81754a79b2dab75d17c156313b0f8f0f4f086",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 134556,
+              "id": "Q134556"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16949923$2ACDD01C-DB10-4A26-8405-A4FD691920EC",
+        "rank": "normal"
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "9dd78357680af2d493218408760ea9a51e0833b8",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 83440,
+              "id": "Q83440"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16949923$E1685F9A-CA45-418B-96DC-D75BC52D66A7",
+        "rank": "normal"
+      }
+    ],
+    "P2624": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2624",
+          "hash": "0a02777d4063b1a911056fbd2314ac0f0ffa0af7",
+          "datavalue": {
+            "value": "back-lyrics-colt-ford",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q16949923$6AE3376C-F7A5-46F9-869B-B7C81286DC2F",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "ec60a585386824638c05a52cc85ca5817c0c62c2",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1111988,
+              "id": "Q1111988"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16949923$66D71F07-F65D-41A9-9386-D10B533786DE",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P264",
+          "hash": "d4a43777d761f7ffde1b6dc67ef8cb53dbc76ee1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4828256,
+              "id": "Q4828256"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16949923$EE268220-D887-46C0-8D18-8D05C2484D9E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P2581": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2581",
+          "hash": "4da0230f326676a0331a06cc60d5f2119187a2c5",
+          "datavalue": {
+            "value": "14895865n",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q16949923$9DD166F5-1069-4CC2-94F8-F0FE3FB5DBCA",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "248ac337a217a5f5eed7139a82a4e60931611af0",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "25b816aab41db18565946259c950aed6de05dd1e",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 4837690,
+                      "id": "Q4837690"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P248"]
+          }
+        ]
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "e65372cf39f868dd8f2040ca874cd9632f1e02aa",
+          "datavalue": {
+            "value": {
+              "time": "+2012-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q16949923$4d531fea-673e-4762-a3c0-40ee5a26bed9",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P13602": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P13602",
+          "hash": "0240476a9360319736984be5fc2ef5e7b9620220",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5249424,
+              "id": "Q5249424"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16949923$165599AB-8CDC-4F1A-B729-CDEC69E81703",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Back (song)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Back_(song)"
+    }
+  }
+}

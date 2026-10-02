@@ -2489,6 +2489,53 @@ describe("scoreCandidate — creators, loose names, clashes and aggregator ids",
     expect(scoreCandidate(a, c).reasons).toContain("different country of citizenship (P27)");
   });
 
+  it("docks coordinate locations a continent apart, and lists it as evidence against", () => {
+    // Agilent Technologies' Swedish (Kista) and Brazilian (Barueri) subsidiaries.
+    const a = mk("Q1", "Agilent Technologies", {
+      P625: [coordinateValue(59.398805, 17.94804, 0.00001)],
+    });
+    const b = mk("Q2", "Agilent Technologies", {
+      P625: [coordinateValue(-23.505289, -46.838085, 0.000001)],
+    });
+    const result = scoreCandidate(a, b);
+    const reason = result.reasons.find((r) => r.startsWith("coordinate locations"));
+    expect(reason).toBe("coordinate locations (P625) are 10,931 km apart");
+    expect(reasonTone(reason!)).toEqual({ polarity: "negative", strength: 1 });
+    const near = mk("Q3", "Agilent Technologies", {
+      P625: [coordinateValue(59.4, 17.95, 0.00001)],
+    });
+    expect(scoreCandidate(a, near).reasons.some((r) => r.startsWith("coordinate"))).toBe(false);
+    expect(result.confidence).toBeLessThan(scoreCandidate(a, near).confidence);
+  });
+
+  it("holds a corroborated pair with far-apart coordinates below near-certain", () => {
+    const ids = { P5794: ext("x"), P11307: ext("y"), P8383: ext("z") };
+    const a = mk("Q1", "Agilent Technologies", {
+      ...ids,
+      P625: [coordinateValue(59.398805, 17.94804, 0.00001)],
+    });
+    const far = mk("Q2", "Agilent Technologies", {
+      ...ids,
+      P625: [coordinateValue(-23.505289, -46.838085, 0.000001)],
+    });
+    const near = mk("Q3", "Agilent Technologies", {
+      ...ids,
+      P625: [coordinateValue(59.4, 17.95, 0.00001)],
+    });
+    expect(scoreCandidate(a, near, { isIdentifierProp: isId }).confidence).toBeGreaterThan(0.9);
+    expect(scoreCandidate(a, far, { isIdentifierProp: isId }).confidence).toBeLessThanOrEqual(0.9);
+  });
+
+  it("measures the closest pair of coordinate locations", () => {
+    const a = mk("Q1", "Jarahi River", {
+      P625: [coordinateValue(30.5, 48.5, 0.0001), coordinateValue(31.0, 49.0, 0.0001)],
+    });
+    const b = mk("Q2", "Jarahi River", { P625: [coordinateValue(10.0, 0.0, 0.0001)] });
+    const c = mk("Q3", "Jarahi River", { P625: [coordinateValue(31.2, 49.1, 0.0001)] });
+    expect(scoreCandidate(a, b).reasons.some((r) => r.startsWith("coordinate"))).toBe(true);
+    expect(scoreCandidate(a, c).reasons.some((r) => r.startsWith("coordinate"))).toBe(false);
+  });
+
   it("compares a band's start of work period (P2031) with the other's inception", () => {
     // Eyes: a Japanese band active from 2005 and a US band founded in 1977.
     const a = mk("Q1", "Eyes", { P2031: [{ type: "time", value: "+2005-00-00T00:00:00Z" }] });

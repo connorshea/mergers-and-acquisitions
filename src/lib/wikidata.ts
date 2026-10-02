@@ -79,12 +79,19 @@ const NON_ID_STRING_PROPS = new Set<string>([
   "P348", // software version identifier
 ]);
 
+// Musical-notation-datatype properties: a bare LilyPond literal over SPARQL,
+// which would otherwise be shape-classified as an identifier.
+const MUSICAL_NOTATION_PROPS = new Set<string>([
+  "P6670", // musical quotation or excerpt
+]);
+
 function literalType(node: DumpValueLiteral, pid?: string): ValueType {
   const xsd = node.datatype?.split("#")[1] ?? "";
   if (TIME_XSD.includes(xsd)) return "time";
   if (QUANTITY_XSD.includes(xsd)) return "quantity";
   if (node.lang) return "string"; // monolingual text (e.g. title P1476, native label P1705)
   if (pid && NON_ID_STRING_PROPS.has(pid)) return "string"; // known plain-string prop, not an id
+  if (pid && MUSICAL_NOTATION_PROPS.has(pid)) return "musical-notation";
   return "external-id"; // bare literal — an identifier in practice
 }
 

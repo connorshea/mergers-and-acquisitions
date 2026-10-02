@@ -12,7 +12,8 @@ import { sitelinkHost } from "./wiki.ts";
 // "somevalue" / "novalue" mirror Wikidata's special snak types: an *unknown*
 // value (a value exists but isn't recorded — a blank node on the wire) and an
 // explicit *no* value (the property is asserted to have none). They carry no
-// meaningful `value` string.
+// meaningful `value` string. "musical-notation" is a LilyPond score (P6670
+// musical quotation or excerpt): kept and shown, but never compared.
 export type ValueType =
   | "item"
   | "string"
@@ -21,6 +22,7 @@ export type ValueType =
   | "url"
   | "external-id"
   | "coordinate"
+  | "musical-notation"
   | "somevalue"
   | "novalue";
 
@@ -501,6 +503,10 @@ export function compareValues(x: Value, y: Value, pid?: string): [Status, string
     case "quantity":
     case "external-id":
       return ["distinct"]; // must match exactly
+    case "musical-notation":
+      // LilyPond source: string similarity says nothing about whether two
+      // scores are the same music, so only an exact match (above) counts.
+      return ["distinct"];
     case "coordinate": {
       // Distinct unless identical for now, but say how far apart they are.
       const d = coordinateDistance(x, y);
@@ -747,11 +753,21 @@ export function buildRows(
       b: cmp.b,
       note: sharedProps.has(pid)
         ? "declared shared between these two items (P4070), so agreeing on it is not evidence of a duplicate"
-        : undefined,
+        : [...va, ...vb].some((v) => v.type === "musical-notation")
+          ? "musical notation isn't compared, so it doesn't count toward the score"
+          : undefined,
     });
   }
 
   return rows;
+}
+
+/**
+ * Whether a statement row holds musical notation, which is shown but left out of
+ * scoring: neither agreement nor a difference says anything about the pair.
+ */
+export function isUncomparedRow(r: Row): boolean {
+  return r.kind === "statement" && [...r.a, ...r.b].some((v) => v.type === "musical-notation");
 }
 
 /**
@@ -2012,6 +2028,7 @@ export function countDistinctStatements(
     (r) =>
       r.kind === "statement" &&
       r.status === "distinct" &&
+      !isUncomparedRow(r) &&
       !MIRRORED_ID_PROPS.has(r.key) &&
       !(isMirroredIdProp?.(r.key) ?? false) &&
       !CLASSIFICATION_PROPS.has(r.key) &&
@@ -2261,7 +2278,8 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // "Different from" (P1889) is excluded too: both items naming the same third
   // item as distinct only says editors confused each with it, not that the pair
   // is one subject (two unrelated bands called Halo both point at a third Halo).
-  // "Permanent duplicated item" (P2959) is handled on its own below.
+  // "Permanent duplicated item" (P2959) is handled on its own below, and
+  // musical notation isn't compared at all (isUncomparedRow).
   const stmtRows = rows.filter(
     (r) =>
       r.kind === "statement" &&
@@ -2269,7 +2287,8 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
       r.key !== DIFFERENT_FROM &&
       r.key !== PERMANENT_DUPLICATE &&
       !LOW_ENTROPY_PROPS.has(r.key) &&
-      !sharedWithOther.has(r.key),
+      !sharedWithOther.has(r.key) &&
+      !isUncomparedRow(r),
   );
   const agreeing = stmtRows.filter((r) => r.status === "identical" || r.status === "similar");
   if (stmtRows.length > 0 && agreeing.length > 0) {

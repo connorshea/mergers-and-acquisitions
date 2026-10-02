@@ -18,6 +18,8 @@ export const CONVERTER_OUTPUTS = [
   "1414b22fcbbf537d7308d7a6f5b5f41ee05440d0",
   // Globe coordinates stored as a `coordinate` value instead of a "lat,lon" string (#191).
   "67bcc726f2deb6e0003a1252433338bba960aa96",
+  // Musical notation (P6670) stored as a `musical-notation` value instead of a string.
+  "c3f167c9205618016c2efd6eaff84e7b2be7dccc",
 ] as const;
 
 export const CONVERTER_VERSION = CONVERTER_OUTPUTS.length;

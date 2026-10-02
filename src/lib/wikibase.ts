@@ -124,7 +124,9 @@ export function snakValue(snak: Snak): Value | null {
           ? "external-id"
           : snak.datatype === "url"
             ? "url"
-            : "string";
+            : snak.datatype === "musical-notation"
+              ? "musical-notation"
+              : "string";
       return { type: t, value: value as string };
     }
     default:

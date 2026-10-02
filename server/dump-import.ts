@@ -1200,8 +1200,16 @@ export function dumpIdFor(path: string): string {
 // Segment work queue (`dump_import_segments`)
 // ---------------------------------------------------------------------------
 
-/** Segments a worker pass splits the dump into (~2.5 GB of .gz each). */
-export const DEFAULT_SEGMENTS = 64;
+/**
+ * Segments a worker pass splits the dump into (~600 MB of .gz each). Matches
+ * are spread unevenly through the dump (at 64, one segment matched 126k items
+ * and another 1k), and a dense segment takes far longer to write, so small
+ * segments keep the pass from waiting on one dense segment at the end: at 64,
+ * one segment took 7 of the pass's 8.6 minutes. Sets are keyed by their
+ * segment count, so changing this re-imports a dump already imported under the
+ * old count.
+ */
+export const DEFAULT_SEGMENTS = 256;
 /** How often a worker refreshes its claim while it scans. */
 const HEARTBEAT_MS = 60_000;
 /** How often a worker with nothing to claim checks on the segments still being scanned. */

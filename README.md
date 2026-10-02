@@ -218,8 +218,8 @@ independent gzip members (the generator gzips each 65k-entity batch on its own
 and `cat`s them together), so the file can be read in slices, each widened to
 whole members so that the slices cover the file exactly once.
 
-The weekly jobs are six identical **workers** sharing a queue of 64 such
-slices ("segments", ~2.5 GB of `.gz` each) in `dump_import_segments`. Each
+The weekly jobs are six identical **workers** sharing a queue of 256 such
+slices ("segments", ~600 MB of `.gz` each, about 8 gzip members) in `dump_import_segments`. Each
 worker claims the lowest free segment, scans it, marks it done, and claims the
 next until none is left, so a worker on a fast node takes on more of the file
 instead of sitting idle while one on a busy node finishes a fixed share. To
@@ -250,7 +250,7 @@ same token, and a new one for the next: the set is reset once per token, so a
 worker that starts after the others have finished (it sat Pending, or it's a
 retry) doesn't start the whole dump over, and neither does a `DUMP_REDO` left
 behind in the tool's envvars. Every worker must agree on the segment
-count (`DUMP_SEGMENTS`, default 64).
+count (`DUMP_SEGMENTS`, default 256).
 
 Two CPUs per worker let the inflate (on libuv's threadpool) and the line scan
 (on the main thread) overlap rather than take turns on one core, and a worker

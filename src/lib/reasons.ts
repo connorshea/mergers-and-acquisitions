@@ -49,6 +49,7 @@ const REASON_TONES: [RegExp, ReasonTone["polarity"], ReasonTone["strength"]][] =
   [/^one item references the other/, "negative", 2],
   [/^different /, "negative", 2], // developer, publisher, author, …
   [/^a per-subject identifier differs/, "negative", 1],
+  [/^coordinate locations .* apart$/, "negative", 1],
   [/^(an|\d+) external identifiers? differs?/, "negative", 2],
   [/not counted/, "neutral", 1],
   [/^shares external identifier/, "positive", 3],

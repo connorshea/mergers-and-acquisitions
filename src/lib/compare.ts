@@ -1320,6 +1320,21 @@ const PERSONAL_ACCOUNT_PROPS = [
 ];
 
 /**
+ * Distance in metres between the closest pair of coordinate locations (P625)
+ * on the two items, or null when either has none (or none comparable).
+ */
+function nearestCoordinateDistance(a: Item, b: Item): number | null {
+  let nearest: number | null = null;
+  for (const x of a.statements.P625 ?? [])
+    for (const y of b.statements.P625 ?? []) {
+      if (x.type !== "coordinate" || y.type !== "coordinate") continue;
+      const d = coordinateDistance(x, y);
+      if (d !== null && (nearest === null || d < nearest)) nearest = d;
+    }
+  return nearest;
+}
+
+/**
  * The personal-account properties on which two people each have a handle but
  * share none. Handles compare case-insensitively, ignoring a leading "@".
  */
@@ -1395,6 +1410,16 @@ const COUNTRY_PROP_LABELS: Record<(typeof COUNTRY_PROPS)[number], string> = {
   P495: "country of origin",
   P27: "country of citizenship",
 };
+
+/**
+ * Coordinate locations (P625) whose nearest pair is at least this far apart
+ * (in metres) put the two items in different places: a company's Swedish and
+ * Brazilian subsidiaries, two namesake castles. Set high because one subject's
+ * coordinates can legitimately sit far apart — a river's mouth vs. its source
+ * (a real merge in the eval set is 39 km apart), a large region's centroid vs.
+ * its capital, a value rounded to a whole degree (≈111 km).
+ */
+const FAR_COORDINATES_M = 1_000_000;
 
 /** Date properties compared for the release/founding/birth year gap. */
 const YEAR_GAP_PROPS = ["P577", "P571", "P569"] as const;
@@ -2433,6 +2458,15 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     );
   }
 
+  // Coordinate locations a continent apart. Only a nudge (see
+  // FAR_COORDINATES_M), but it holds the pair off near-certain.
+  const coordinateGap = nearestCoordinateDistance(a, b);
+  const farCoordinates = coordinateGap !== null && coordinateGap >= FAR_COORDINATES_M;
+  if (farCoordinates) {
+    score -= 0.1;
+    reasons.push(`coordinate locations (P625) are ${formatMeters(coordinateGap)} apart`);
+  }
+
   // A different author/performer/composer/director is the classic shape of two
   // works that merely share a title ("Imagine" the novel vs. the non-fiction
   // book, two albums called "The Collection", cover recordings of one song).
@@ -2838,7 +2872,8 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     distinctSubjectPageIds.length > 0 ||
     distinctExtIdRows.length > 0 ||
     nativeNameDiff !== null ||
-    accountDiffs.length > 0;
+    accountDiffs.length > 0 ||
+    farCoordinates;
   if (hasConcreteDifference) ceiling = Math.min(ceiling, 0.9);
   if (distinctSubjectPageIds.length === 1) ceiling = Math.min(ceiling, 0.8);
   // Several ordinary ids disagreeing is more than a stray data slip.

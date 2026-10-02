@@ -96,7 +96,21 @@ const COMMON_PARAMS = { format: "json", formatversion: "2", errorformat: "plaint
 /** One error out of the API's `errors` (plaintext format) or legacy `error` shape. */
 interface ApiError {
   code: string;
+  /** The first error's text: what `kindOf` classifies on. */
   text: string;
+  /**
+   * The rest of the response's messages. Wikibase answers a refused save with a
+   * generic `failed-modify` ("Attempted modification of the Item failed.") and
+   * puts the actual reason in later `errors` entries or their `data.messages`.
+   */
+  details: string[];
+}
+
+interface PlaintextError {
+  code?: string;
+  text?: string;
+  "*"?: string;
+  data?: { messages?: { text?: string; html?: string; name?: string }[] };
 }
 
 interface ApiResponse {
@@ -109,17 +123,24 @@ function apiError(res: ApiResponse): ApiError | null {
   const { body } = res;
   const errors = body.errors;
   if (Array.isArray(errors) && errors.length > 0) {
-    const first = errors[0] as { code?: string; text?: string; "*"?: string };
-    return { code: first.code ?? "unknown", text: first.text ?? first["*"] ?? "" };
+    const all = errors as PlaintextError[];
+    const first = all[0];
+    const text = first.text ?? first["*"] ?? "";
+    const details = [
+      ...all.slice(1).map((e) => e.text ?? e["*"] ?? e.code ?? ""),
+      ...all.flatMap((e) => (e.data?.messages ?? []).map((m) => m.text ?? m.html ?? m.name ?? "")),
+    ].filter((d, i, ds) => d !== "" && d !== text && ds.indexOf(d) === i);
+    return { code: first.code ?? "unknown", text, details };
   }
   const legacy = body.error as { code?: string; info?: string } | undefined;
   if (legacy && typeof legacy === "object") {
-    return { code: legacy.code ?? "unknown", text: legacy.info ?? "" };
+    return { code: legacy.code ?? "unknown", text: legacy.info ?? "", details: [] };
   }
   if (res.status >= 400) {
     return {
       code: `http-${res.status}`,
       text: res.status === 429 ? "Too many requests; try again shortly" : `HTTP ${res.status}`,
+      details: [],
     };
   }
   return null;
@@ -207,7 +228,8 @@ async function fail(user: EditUser, err: ApiError, deps: WikidataClientDeps): Pr
       "Wikidata no longer accepts this app's authorization for your account; log in again.",
     );
   }
-  throw new WikidataEditError(kind, err.code, err.text || err.code);
+  const message = [err.text || err.code, ...err.details].join(" — ");
+  throw new WikidataEditError(kind, err.code, message);
 }
 
 async function fetchCsrfToken(

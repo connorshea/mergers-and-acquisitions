@@ -266,6 +266,36 @@ describe("mergeItems", () => {
     }
   });
 
+  it("appends the reason Wikibase gives after its generic failed-modify", async () => {
+    const generic = "Attempted modification of the Item failed.";
+    const { deps } = makeDeps([
+      {
+        errors: [
+          {
+            code: "failed-modify",
+            text: generic,
+            module: "wbmergeitems",
+            data: { messages: [{ name: "wikibase-api-failed-modify", text: generic }] },
+          },
+          {
+            code: "modification-failed",
+            text: 'Item Q1 already has label "Duetto" associated with language code en.',
+            module: "wbmergeitems",
+            data: { messages: [{ name: "wikibase-validator-label-with-description-conflict" }] },
+          },
+        ],
+      },
+    ]);
+    const err = await failure(editRequest(USER, { action: "x" }, deps));
+    expect(err.code).toBe("failed-modify");
+    // Classified on the first entry alone: a later "conflict" mention must not make it a 409.
+    expect(err.kind).toBe("wikidata-error");
+    expect(err.message).toBe(
+      `${generic} — Item Q1 already has label "Duetto" associated with language code en.` +
+        ` — wikibase-validator-label-with-description-conflict`,
+    );
+  });
+
   it("treats a non-JSON HTTP failure and a thrown fetch as network problems", async () => {
     const { deps } = makeDeps([new Response("<html>", { status: 503 })]);
     const err = await failure(editRequest(USER, { action: "x" }, deps));

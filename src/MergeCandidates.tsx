@@ -79,13 +79,19 @@ function ValueChip({
   v,
   formatter,
   site,
+  partner,
 }: {
   v: AnnotatedValue;
   formatter?: string;
   /** Sitelink rows only: the site id (e.g. "enwiki"), so the title links to its page. */
   site?: string;
+  /** The other item in the pair, so a value pointing at it can be flagged. */
+  partner?: string;
 }) {
   const text = displayValue(v);
+  // Wikibase refuses to merge two items when either links to the other, and
+  // this tool never overrides that, so a value naming the partner stands out.
+  const isPartner = v.type === "item" && v.value === partner;
   const special = specialValueText(v) != null;
   // Link out where the value points somewhere: a `url` value is itself a URL
   // (e.g. an itch.io page), and an external identifier with a formatter URL
@@ -109,9 +115,19 @@ function ValueChip({
   const title =
     v.type === "coordinate"
       ? [coordinateTooltip(v), v.note].filter(Boolean).join(" · ")
-      : (v.note ?? (v.type === "item" || v.type === "time" ? v.value : undefined));
+      : isPartner
+        ? `${v.value} is the other item in this pair. Wikidata won't merge two items when one links to the other; remove this statement first.`
+        : (v.note ?? (v.type === "item" || v.type === "time" ? v.value : undefined));
   return (
-    <span className={`chip chip-${v.status}${special ? " chip-special" : ""}`} title={title}>
+    <span
+      className={`chip chip-${v.status}${special ? " chip-special" : ""}${isPartner ? " chip-partner" : ""}`}
+      title={title}
+    >
+      {isPartner && (
+        <span className="chip-partner-mark" role="img" aria-label="the other item in this pair">
+          ⇄
+        </span>
+      )}
       {idUrl ? (
         <a className="chip-link" href={idUrl} target="_blank" rel="noreferrer">
           {text}
@@ -588,6 +604,7 @@ export default function MergeCandidates({
                                   v={v}
                                   formatter={formatter}
                                   site={sitelinkSite(r)}
+                                  partner={into.id}
                                 />
                               ))
                             )}
@@ -602,6 +619,7 @@ export default function MergeCandidates({
                                   v={v}
                                   formatter={formatter}
                                   site={sitelinkSite(r)}
+                                  partner={from.id}
                                 />
                               ))
                             )}

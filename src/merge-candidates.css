@@ -556,6 +556,15 @@ a.site-link:hover {
   font-size: 0.75em;
   opacity: 0.7;
 }
+/* An item value that is the pair's other item: Wikidata won't merge through it. */
+.chip-partner {
+  outline: 2px solid var(--distinct);
+  outline-offset: -1px;
+  font-weight: 600;
+}
+.chip-partner-mark {
+  font-weight: 700;
+}
 /* Unknown / no value: a placeholder, not a real value — de-emphasize it. */
 .chip-special {
   font-style: italic;

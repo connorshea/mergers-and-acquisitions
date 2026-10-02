@@ -1,0 +1,295 @@
+{
+  "pageid": 62863645,
+  "ns": 0,
+  "title": "Q63091986",
+  "lastrevid": 1339834564,
+  "modified": "2021-01-12T22:46:57Z",
+  "type": "item",
+  "id": "Q63091986",
+  "labels": {
+    "it": {
+      "language": "it",
+      "value": "Bowi"
+    },
+    "en": {
+      "language": "en",
+      "value": "Bowi"
+    },
+    "es": {
+      "language": "es",
+      "value": "Bowi"
+    }
+  },
+  "descriptions": {
+    "it": {
+      "language": "it",
+      "value": "EP di Nick Lowe del 1977"
+    },
+    "en": {
+      "language": "en",
+      "value": "1977 EP by Nick Lowe"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5d6afdec0d3d20f81a75a6abf3ed9258163f861f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 169930,
+              "id": "Q169930"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q63091986$662CB9F1-7FDB-4012-BD5E-BC71CFF99F63",
+        "rank": "normal"
+      }
+    ],
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "384b114a6529e747b7cd27e6cbfdc23462667311",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 962095,
+              "id": "Q962095"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q63091986$EC54BC93-F80A-48CD-B630-7C1BF7032175",
+        "rank": "normal"
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "cbe7e848be62e9ca2af340eb4b7626ee258bc092",
+          "datavalue": {
+            "value": {
+              "time": "+1977-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q63091986$E6F6674E-EC41-44EE-9924-E326B398E47F",
+        "rank": "normal"
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "bb1c33144e4a3c4df471dbe4ded119d16087f1e3",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11399,
+              "id": "Q11399"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q63091986$A055A09E-CF26-418D-A725-957A15D1A1EE",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P1954": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1954",
+          "hash": "c30c12255cbaba653408a51e18f3605db7800f7e",
+          "datavalue": {
+            "value": "321867",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q63091986$370ED460-74AB-4B3E-9D33-395426D45455",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "8c8b5f0f4325f451d09721e7c85b34f9da63dcb2",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "c34208b35b041d6758e6b68814cd263cacdabb10",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 504063,
+                      "id": "Q504063"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "40d5524e739d6ea9fd0a12758720b06f57f582eb",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2019-08-27T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P264",
+          "hash": "6e70a085a054ca3c6e2ad672f27bdf1b053a42b3",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1750746,
+              "id": "Q1750746"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q63091986$88E9A283-B945-42A0-A54F-E27D18C2BA1F",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "49d786073428b701ca17fdd3d289bae6c23968b2",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "427e4164c3e21c3ceafd0d9e877044b7dc20ba76",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Bowi&oldid=942304952",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "4b82433c3302c8f4763193d1ec411cb5043dc592",
+          "datavalue": {
+            "value": "/m/02rnsm8",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q63091986$8A15DF03-98D9-496A-8E5B-14E986A6D006",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "itwiki": {
+      "site": "itwiki",
+      "title": "Bowi",
+      "badges": [],
+      "url": "https://it.wikipedia.org/wiki/Bowi"
+    },
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Bowi",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Bowi"
+    }
+  }
+}

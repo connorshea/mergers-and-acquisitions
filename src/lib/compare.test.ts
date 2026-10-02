@@ -1317,7 +1317,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     const isId = (pid: string) => pid.startsWith("P900");
     const result = scoreCandidate(a, b, { isIdentifierProp: isId });
     expect(result.confidence).toBeLessThanOrEqual(0.05);
-    expect(result.reasons[0]).toContain("external identifiers differ");
+    expect(result.reasons[0]).toContain("external identifiers differ across the pair");
   });
 
   it("penalises a differing release year for same-named games (no shared id)", () => {
@@ -1447,7 +1447,9 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     const b: Item = { ...base, id: "Q4", labels: { en: "Echo" }, statements: stmt(stmts("b")) };
     const isId = (pid: string) => pid.startsWith("P700") || pid === "P8351" || pid === "P12001";
     const distinct = scoreCandidate(a, b, { isIdentifierProp: isId });
-    expect(distinct.reasons.some((r) => r.includes("external identifiers differ"))).toBe(false);
+    expect(
+      distinct.reasons.some((r) => r.includes("external identifiers differ across the pair")),
+    ).toBe(false);
   });
 
   it("ignores library subject classifications (Dewey, LCC, UDC) as match or distinction evidence", () => {
@@ -1481,7 +1483,9 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     const a: Item = { ...base, id: "Q3", labels: { en: "Echo" }, statements: stmt(stmts("a")) };
     const b: Item = { ...base, id: "Q4", labels: { en: "Echo" }, statements: stmt(stmts("b")) };
     const distinct = scoreCandidate(a, b, { isIdentifierProp: isId });
-    expect(distinct.reasons.some((r) => r.includes("external identifiers differ"))).toBe(false);
+    expect(
+      distinct.reasons.some((r) => r.includes("external identifiers differ across the pair")),
+    ).toBe(false);
   });
 
   it("ignores synced mirrors-Wikidata ids (P31=Q24075706) via isMirroredIdProp", () => {
@@ -1507,7 +1511,9 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
 
     // Without the mirrored predicate the seven differing ids disqualify the pair.
     const withoutMirror = scoreCandidate(a, b, { isIdentifierProp: isId });
-    expect(withoutMirror.reasons.some((r) => r.includes("external identifiers differ"))).toBe(true);
+    expect(
+      withoutMirror.reasons.some((r) => r.includes("external identifiers differ across the pair")),
+    ).toBe(true);
 
     // With it, all seven are mirrors, so none count and the disqualifier must not
     // fire — differing Wikidata-sourced ids are not evidence of distinct subjects.
@@ -1515,7 +1521,9 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       isIdentifierProp: isId,
       isMirroredIdProp: (pid) => pids.includes(pid),
     });
-    expect(withMirror.reasons.some((r) => r.includes("external identifiers differ"))).toBe(false);
+    expect(
+      withMirror.reasons.some((r) => r.includes("external identifiers differ across the pair")),
+    ).toBe(false);
   });
 
   it("ignores an id whose subject type constraint excludes both items (isInapplicableId)", () => {
@@ -1549,6 +1557,63 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       isInapplicableId: (pid, item) => pid === "P2799" && item.id === "Q70",
     });
     expect(oneSide.reasons).toContain("shares external identifier: P2799");
+  });
+
+  it("names a few differing ids as evidence against, even ones misplaced for the item's class", () => {
+    // Two "Self Portrait" compositions sharing an IMSLP collection page (P839),
+    // each with its own recording's ISRC / Spotify / Deezer / SoundCloud id —
+    // track ids whose constraints rule out a musical work, but two different
+    // recordings still tell the works apart (Q90582232 / Q69011223).
+    const differing = ["P1243", "P2207", "P2724", "P3040"];
+    const mk = (id: string, prefix: string): Item => ({
+      ...base,
+      id,
+      labels: { en: "Self Portrait" },
+      statements: stmt({
+        P31: [{ type: "item", value: "Q105543609" }],
+        P839: [{ type: "external-id", value: "Self_Portraits_(DeLaney,_Brian_Alan)" }],
+        ...Object.fromEntries(
+          differing.map((p) => [p, [{ type: "external-id" as const, value: `${prefix}-${p}` }]]),
+        ),
+      }),
+    });
+    const isId = (pid: string) => pid === "P839" || differing.includes(pid);
+    const result = scoreCandidate(mk("Q90582232", "a"), mk("Q69011223", "b"), {
+      isIdentifierProp: isId,
+      isInapplicableId: (pid) => differing.includes(pid),
+    });
+    expect(result.reasons).toContain("4 external identifiers differ (P1243, P2207, P2724, P3040)");
+    expect(reasonTone("4 external identifiers differ (P1243, P2207, P2724, P3040)").polarity).toBe(
+      "negative",
+    );
+    expect(result.confidence).toBeLessThanOrEqual(0.7);
+
+    // One differing id is named too, but only holds the pair off near-certain.
+    const one = scoreCandidate(
+      {
+        ...mk("Q1", "a"),
+        statements: stmt({
+          P839: [{ type: "external-id", value: "x" }],
+          P1243: [{ type: "external-id", value: "a" }],
+        }),
+      },
+      {
+        ...mk("Q2", "b"),
+        statements: stmt({
+          P839: [{ type: "external-id", value: "x" }],
+          P1243: [{ type: "external-id", value: "b" }],
+        }),
+      },
+      { isIdentifierProp: isId },
+    );
+    expect(one.reasons).toContain("an external identifier differs (P1243)");
+
+    // Mirrored ids still don't count against.
+    const mirrored = scoreCandidate(mk("Q90582232", "a"), mk("Q69011223", "b"), {
+      isIdentifierProp: isId,
+      isMirroredIdProp: (pid) => differing.includes(pid),
+    });
+    expect(mirrored.reasons.some((r) => r.includes("identifiers differ"))).toBe(false);
   });
 
   it("caps a pair hard when two+ per-subject ids differ, even with a shared id and identical name", () => {
@@ -2180,11 +2245,15 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     });
     const isId = (pid: string) => pids.includes(pid);
     const plain = scoreCandidate(mk("Q300", "a"), mk("Q301", "b"), { isIdentifierProp: isId });
-    expect(plain.reasons.some((r) => r.includes("external identifiers differ"))).toBe(true);
+    expect(
+      plain.reasons.some((r) => r.includes("external identifiers differ across the pair")),
+    ).toBe(true);
     const shared = scoreCandidate(mk("Q300", "a", ["Q301"]), mk("Q301", "b"), {
       isIdentifierProp: isId,
     });
-    expect(shared.reasons.some((r) => r.includes("external identifiers differ"))).toBe(false);
+    expect(
+      shared.reasons.some((r) => r.includes("external identifiers differ across the pair")),
+    ).toBe(false);
   });
 
   it("reaches near-certain (1.0) for a well-corroborated identical pair, with no 'held below' reason", () => {

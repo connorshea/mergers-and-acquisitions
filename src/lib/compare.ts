@@ -2110,6 +2110,13 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     CLASSIFICATION_PROPS.has(pid) ||
     sharedWithOther.has(pid) ||
     isInapplicable(pid);
+  // Disagreement is judged more broadly: an id misplaced under a property meant
+  // for another kind of subject (a recording's ISRC on a musical work) still
+  // names one distinct thing per item, so two different values — two
+  // recordings, two authors — still tell the items apart. Only ids that are
+  // circular or declared shared are ignored as evidence against.
+  const isNonEvidenceAgainst = (pid: string): boolean =>
+    isMirrored(pid) || CLASSIFICATION_PROPS.has(pid) || sharedWithOther.has(pid);
   const sharedExtIds = rows.filter(
     (r) =>
       r.kind === "statement" &&
@@ -2492,14 +2499,31 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
       r.status === "distinct" &&
       r.a.some((v) => v.type === "external-id") &&
       r.b.some((v) => v.type === "external-id") &&
-      !isNonEvidence(r.key) &&
+      !isNonEvidenceAgainst(r.key) &&
       (isId ? isId(r.key) : true),
+  );
+  // A few differing ids are a real but softer signal: a duplicate sometimes
+  // carries one mis-entered or stale id. Name them so they show as evidence
+  // against, dock a little per id, and (via the ceiling below) hold the pair
+  // further off near-certain the more of them disagree. Account/franchise and
+  // section ids are low-signal, and per-subject page ids get their own reason
+  // below, so neither is listed here.
+  const otherDistinctIds = distinctExtIdRows.filter(
+    (r) => !isWeakId(r) && !SUBJECT_PAGE_ID_PROPS.has(r.key),
   );
   if (distinctExtIdRows.length > 6) {
     reasons.unshift(
       `${distinctExtIdRows.length} external identifiers differ across the pair, almost certainly different subjects`,
     );
     score = Math.min(score, 0.05);
+  } else if (otherDistinctIds.length > 0) {
+    score -= Math.min(0.2, 0.05 * otherDistinctIds.length);
+    const pids = otherDistinctIds.map((r) => r.key).join(", ");
+    reasons.push(
+      otherDistinctIds.length === 1
+        ? `an external identifier differs (${pids})`
+        : `${otherDistinctIds.length} external identifiers differ (${pids})`,
+    );
   }
 
   // Many wikis each holding a *separate* article for the two items means those
@@ -2533,7 +2557,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
       r.kind === "statement" &&
       r.status === "distinct" &&
       SUBJECT_PAGE_ID_PROPS.has(r.key) &&
-      !isNonEvidence(r.key),
+      !isNonEvidenceAgainst(r.key),
   );
   if (distinctSubjectPageIds.length >= 2) {
     reasons.unshift(
@@ -2562,7 +2586,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     (r) =>
       r.kind === "statement" &&
       r.status === "distinct" &&
-      !isNonEvidence(r.key) &&
+      !isNonEvidenceAgainst(r.key) &&
       r.a.some((x) => r.b.some((y) => isSlugSuffixSplit(x, y))),
   );
   if (suffixSplitIds.length > 0) {
@@ -2764,6 +2788,9 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     accountDiffs.length > 0;
   if (hasConcreteDifference) ceiling = Math.min(ceiling, 0.9);
   if (distinctSubjectPageIds.length === 1) ceiling = Math.min(ceiling, 0.8);
+  // Several ordinary ids disagreeing is more than a stray data slip.
+  if (otherDistinctIds.length >= 4) ceiling = Math.min(ceiling, 0.7);
+  else if (otherDistinctIds.length >= 2) ceiling = Math.min(ceiling, 0.8);
   if (largeYearGap) ceiling = Math.min(ceiling, 0.6);
   if (nativeNameDiff) ceiling = Math.min(ceiling, 0.6);
   // Two separate (non-redirect) pages on one wiki usually mean two subjects,

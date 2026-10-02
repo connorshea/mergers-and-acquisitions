@@ -6,7 +6,14 @@ import { eq } from "drizzle-orm";
 import { app } from "./app.ts";
 import { db, pool } from "./db.ts";
 import { refreshCandidateItemInfo } from "./candidate-item-info.ts";
-import { entityLabels, itemCreations, items, mergeCandidates, properties } from "../db/schema.ts";
+import {
+  classAncestors,
+  entityLabels,
+  itemCreations,
+  items,
+  mergeCandidates,
+  properties,
+} from "../db/schema.ts";
 import type { Value } from "../src/lib/compare.ts";
 import type {
   CandidateDetailResponse,
@@ -312,10 +319,47 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
         P136: "https://example.org/genre/$1",
       });
       expect(body.propertyMirrors).toEqual(["P136"]);
+      // No subject type constraints synced, so nothing is marked misplaced.
+      expect(body.propertyInapplicable).toEqual({});
       expect(body.valueLabels).toEqual({ Q744038: "role-playing video game" });
       // The synced description is backfilled onto the item.
       expect(body.into?.descriptions.en).toBe("2019 video game");
       expect(body.from?.descriptions.en).toBeUndefined();
+    });
+
+    it("marks identifiers whose subject type constraint rules out the item", async () => {
+      // A recording's ISRC on a musical work: the constraint only allows audio
+      // tracks, and the work's class doesn't descend from one.
+      const work: Value[] = [{ type: "item", value: "Q105543609" }];
+      await insertItem(
+        makeItem("Q80", "Self Portrait", {
+          P31: work,
+          P1243: [{ type: "external-id", value: "QZDA82079431" }],
+        }),
+      );
+      await insertItem(
+        makeItem("Q70", "Self Portrait", {
+          P31: [{ type: "item", value: "Q7302866" }],
+          P1243: [{ type: "external-id", value: "QZDA82079430" }],
+        }),
+      );
+      await db.insert(properties).values({
+        pid: "P1243",
+        label: "ISRC",
+        datatype: "ExternalId",
+        subjectTypes: [{ classes: ["Q7302866"], relation: "either", exceptions: [] }],
+      });
+      await db.insert(classAncestors).values({ class: "Q105543609", ancestor: "Q2188189" });
+      const id = await insertCandidate({
+        fromQid: "Q80",
+        intoQid: "Q70",
+        confidence: 0.5,
+        reasons: [],
+      });
+
+      const { body } = await get<CandidateDetailResponse>(`/api/candidates/${id}`);
+      // Only the work is ruled out; the track is the property's own subject.
+      expect(body.propertyInapplicable).toEqual({ P1243: ["Q80"] });
     });
 
     it("links the last candidate back to the previous one", async () => {

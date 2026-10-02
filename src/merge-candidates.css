@@ -437,7 +437,8 @@ a.site-link:hover {
    vglist or GamerProfiles): a shared value is circular and a differing one only
    means one side is out of sync, so it's evidence neither way. */
 .prop-mirror,
-.prop-shared {
+.prop-shared,
+.prop-inapplicable {
   display: inline-block;
   margin-left: 0.4rem;
   padding: 0.02rem 0.4rem;
@@ -459,6 +460,12 @@ a.site-link:hover {
   color: var(--shared);
   background: var(--shared-bg);
 }
+/* Marker for an identifier whose subject type constraint rules out the item
+   carrying it (a recording's ISRC on a musical work): likely misplaced. */
+.prop-inapplicable {
+  color: var(--similar);
+  background: var(--similar-bg);
+}
 .prop-key {
   display: flex;
   align-items: center;
@@ -468,10 +475,13 @@ a.site-link:hover {
 /* Push the markers to the bottom-right of the cell, past the property id. When
    both apply, only the first takes the slack; the second sits beside it. */
 .prop-key .prop-mirror,
-.prop-key .prop-shared {
+.prop-key .prop-shared,
+.prop-key .prop-inapplicable {
   margin-left: auto;
 }
-.prop-key .prop-mirror + .prop-shared {
+.prop-key .prop-mirror + .prop-inapplicable,
+.prop-key .prop-mirror + .prop-shared,
+.prop-key .prop-inapplicable + .prop-shared {
   margin-left: 0.4rem;
 }
 .prop-key a {

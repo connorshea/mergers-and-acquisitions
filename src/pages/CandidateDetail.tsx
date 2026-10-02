@@ -345,6 +345,7 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
             propertyLabels={data.propertyLabels}
             propertyFormatters={data.propertyFormatters}
             propertyMirrors={data.propertyMirrors}
+            propertyInapplicable={data.propertyInapplicable}
             valueLabels={data.valueLabels}
             creations={creations}
           />

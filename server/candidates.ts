@@ -12,9 +12,21 @@ import { loadLabels, summaryColumns, toSummary } from "./candidate-summary.ts";
 import { attachSitelinkRedirects } from "./sitelink-overlay.ts";
 import { loadCreations } from "./item-creations.ts";
 import { cachedCount } from "./candidate-count-cache.ts";
-import { entityLabels, itemCreations, items, mergeCandidates, properties } from "../db/schema.ts";
+import {
+  classAncestors,
+  entityLabels,
+  itemCreations,
+  items,
+  mergeCandidates,
+  properties,
+} from "../db/schema.ts";
 import type { Item } from "../src/lib/compare.ts";
 import { chunk } from "../src/lib/chunk.ts";
+import {
+  itemClasses,
+  makeInapplicableIdCheck,
+  type SubjectTypeConstraint,
+} from "../src/lib/subject-types.ts";
 import { normalizeUserName } from "../src/lib/creation.ts";
 import { languageSqlPatterns, normalizeLanguages } from "../src/lib/languages.ts";
 import {
@@ -311,7 +323,8 @@ candidates.get("/:id", async (c) => {
     }
   }
 
-  const [propertyChunks, valueChunks] = await Promise.all([
+  const classes = [...new Set(present.flatMap(itemClasses))];
+  const [propertyChunks, valueChunks, ancestorChunks] = await Promise.all([
     Promise.all(
       chunk(pids, ID_CHUNK).map((ids) =>
         db
@@ -321,6 +334,7 @@ candidates.get("/:id", async (c) => {
             datatype: properties.datatype,
             formatterUrl: properties.formatterUrl,
             mirrorsWikidata: properties.mirrorsWikidata,
+            subjectTypes: properties.subjectTypes,
           })
           .from(properties)
           .where(inArray(properties.pid, ids)),
@@ -332,6 +346,14 @@ candidates.get("/:id", async (c) => {
           .select({ qid: entityLabels.qid, label: entityLabels.label })
           .from(entityLabels)
           .where(inArray(entityLabels.qid, ids)),
+      ),
+    ),
+    Promise.all(
+      chunk(classes, ID_CHUNK).map((ids) =>
+        db
+          .select({ cls: classAncestors.class, ancestor: classAncestors.ancestor })
+          .from(classAncestors)
+          .where(inArray(classAncestors.class, ids)),
       ),
     ),
   ]);
@@ -351,6 +373,32 @@ candidates.get("/:id", async (c) => {
   const valueLabels: Record<string, string> = {};
   for (const r of valueChunks.flat()) valueLabels[r.qid] = r.label;
 
+  // Identifiers whose subject type constraint rules out the item carrying them
+  // (a recording's ISRC on a musical work), by the same check the hunt scores
+  // with. The UI marks them; skipped until class ancestors are synced, since
+  // the check fails open on unknown classes anyway.
+  const propertyInapplicable: Record<string, string[]> = {};
+  const ancestorRows = ancestorChunks.flat();
+  if (ancestorRows.length > 0) {
+    const constraints = new Map<string, SubjectTypeConstraint[]>();
+    for (const r of propertyChunks.flat()) {
+      if (r.datatype === "ExternalId" && r.subjectTypes) constraints.set(r.pid, r.subjectTypes);
+    }
+    const ancestors = new Map<string, string[]>();
+    for (const { cls, ancestor } of ancestorRows) {
+      const list = ancestors.get(cls);
+      if (list) list.push(ancestor);
+      else ancestors.set(cls, [ancestor]);
+    }
+    const inapplicable = makeInapplicableIdCheck(constraints, ancestors);
+    for (const pid of constraints.keys()) {
+      const qids = present
+        .filter((i) => pid in i.statements && inapplicable(pid, i))
+        .map((i) => i.id);
+      if (qids.length > 0) propertyInapplicable[pid] = qids;
+    }
+  }
+
   const payload: CandidateDetailResponse = {
     candidate: toSummary(row, labels),
     from,
@@ -359,6 +407,7 @@ candidates.get("/:id", async (c) => {
     propertyLabels,
     propertyFormatters,
     propertyMirrors,
+    propertyInapplicable,
     valueLabels,
     prevId: prevRows[0]?.id ?? null,
     nextId: nextRows[0]?.id ?? null,

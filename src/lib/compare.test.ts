@@ -13,6 +13,7 @@ import {
   formatIdUrl,
   installment,
   type Item,
+  type ScoreTrace,
   type Value,
   crossReferenceProps,
   isAutoIgnoredConflict,
@@ -1914,6 +1915,11 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(result.reasons[0]).toContain("different from");
     // Symmetric: the declaration counts from whichever side holds it.
     expect(scoreCandidate(b, a).confidence).toBe(0);
+    // The trace names the rule and the score it would otherwise have had.
+    const trace: ScoreTrace = { caps: [] };
+    scoreCandidate(a, b, { trace });
+    expect(trace.caps.map((c) => c.rule)).toEqual(["different-from-p1889"]);
+    expect(trace.caps[0].before).toBeGreaterThan(0.4);
   });
 
   describe('"permanent duplicated item" (P2959)', () => {

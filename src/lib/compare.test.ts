@@ -2537,6 +2537,60 @@ describe("scoreCandidate — creators, loose names, clashes and aggregator ids",
     expect(scoreCandidate(a, c).reasons.some((r) => r.startsWith("coordinate"))).toBe(false);
   });
 
+  describe("point places", () => {
+    const station = (id: string, lat: number, lon: number, extra: Item["statements"] = {}) =>
+      mk(id, "Central Station", {
+        P31: [{ type: "item", value: "Q55488" }],
+        P625: [coordinateValue(lat, lon, 0.0001)],
+        ...extra,
+      });
+
+    it("counts two stations a short walk apart as evidence for", () => {
+      const result = scoreCandidate(station("Q1", 52.3791, 4.9003), station("Q2", 52.3789, 4.9))!;
+      const reason = result.reasons.find((r) => r.startsWith("nearby coordinate"));
+      expect(reason).toBe("nearby coordinate locations (P625), 30 m apart");
+      expect(reasonTone(reason!)).toEqual({ polarity: "positive", strength: 2 });
+      const far = scoreCandidate(station("Q1", 52.3791, 4.9003), station("Q3", 52.39, 4.95))!;
+      expect(result.confidence).toBeGreaterThan(far.confidence);
+    });
+
+    it("caps two same-name stations in different cities below the floor", () => {
+      // Amsterdam Centraal and Rotterdam Centraal.
+      const result = scoreCandidate(
+        station("Q1", 52.3791, 4.9003),
+        station("Q2", 51.9249, 4.4689),
+      )!;
+      expect(result.reasons[0]).toBe(
+        "coordinate locations (P625) are 58 km apart, almost certainly different places",
+      );
+      expect(result.confidence).toBeLessThanOrEqual(0.1);
+    });
+
+    it("makes a shared id against distant places a contest, not a cap", () => {
+      const ids = { P5794: ext("x") };
+      const a = station("Q1", 52.3791, 4.9003, ids);
+      const result = scoreCandidate(a, station("Q2", 51.9249, 4.4689, ids), {
+        isIdentifierProp: isId,
+      })!;
+      expect(result.confidence).toBeGreaterThan(0.1);
+      expect(result.confidence).toBeLessThanOrEqual(0.6);
+    });
+
+    it("docks two stations a couple of kilometres apart", () => {
+      const result = scoreCandidate(station("Q1", 52.3791, 4.9003), station("Q2", 52.36, 4.9))!;
+      expect(result.reasons).toContain(
+        "coordinate locations (P625) are 2.1 km apart, likely different places",
+      );
+    });
+
+    it("leaves classes that aren't point places to the continent rule", () => {
+      const river = (id: string, lat: number) =>
+        mk(id, "Jarahi River", { P625: [coordinateValue(lat, 48.5, 0.0001)] });
+      const result = scoreCandidate(river("Q1", 30.5), river("Q2", 31.5));
+      expect(result.reasons.some((r) => r.includes("coordinate"))).toBe(false);
+    });
+  });
+
   it("compares a band's start of work period (P2031) with the other's inception", () => {
     // Eyes: a Japanese band active from 2005 and a US band founded in 1977.
     const a = mk("Q1", "Eyes", { P2031: [{ type: "time", value: "+2005-00-00T00:00:00Z" }] });
@@ -3169,7 +3223,14 @@ describe("coordinates", () => {
     expect(compareValues(bigBen, coordinateValue(51.5007292, -0.1246254))).toEqual(["identical"]);
   });
 
-  it("calls nearby coordinates distinct, with the distance", () => {
+  it("calls coordinates a short walk apart similar, with the distance", () => {
+    expect(compareValues(bigBen, coordinateValue(51.5009, -0.1246254))).toEqual([
+      "similar",
+      "19 m apart",
+    ]);
+  });
+
+  it("calls coordinates further apart distinct, with the distance", () => {
     expect(compareValues(bigBen, londonEye)).toEqual(["distinct", "453 m apart"]);
     const [status, note] = compareValues(bigBen, coordinateValue(51.95, -0.1246254));
     expect(status).toBe("distinct");

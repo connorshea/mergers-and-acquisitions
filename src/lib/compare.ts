@@ -5,6 +5,7 @@
 // candidate hunting). Keep it that way — no React, no browser globals.
 
 import { coordinateDistance, formatMeters, globeOf } from "./coordinates.ts";
+import { POINT_PLACE_CLASSES } from "./import-classes.ts";
 import { sitelinkHost } from "./wiki.ts";
 
 // ---------- Types ----------
@@ -512,9 +513,12 @@ export function compareValues(x: Value, y: Value, pid?: string): [Status, string
       // scores are the same music, so only an exact match (above) counts.
       return ["distinct"];
     case "coordinate": {
-      // Distinct unless identical for now, but say how far apart they are.
+      // Points a short walk apart are one spot given different precision or a
+      // different entrance; anything further is distinct. Either way, say how
+      // far apart they are.
       const d = coordinateDistance(x, y);
-      return d === null ? ["distinct"] : ["distinct", `${formatMeters(d)} apart`];
+      if (d === null) return ["distinct"];
+      return [d <= NEAR_COORDINATES_M ? "similar" : "distinct", `${formatMeters(d)} apart`];
     }
     case "url":
       // The scheme ("http://x.cat" vs "https://x.cat") or a trailing slash alone
@@ -1420,6 +1424,26 @@ const COUNTRY_PROP_LABELS: Record<(typeof COUNTRY_PROPS)[number], string> = {
  * its capital, a value rounded to a whole degree (≈111 km).
  */
 const FAR_COORDINATES_M = 1_000_000;
+
+/**
+ * Coordinates this close are one spot: the same building given at different
+ * precision, or placed on a different entrance or platform.
+ */
+const NEAR_COORDINATES_M = 250;
+
+/**
+ * Two point places (POINT_PLACE_CLASSES) at least this far apart are two
+ * places: on QLever, ~90% of same-name stations, museums and stadiums are
+ * 25 km or more apart, and under 10% within 5 km.
+ */
+const DISTANT_PLACES_M = 5_000;
+
+/** Two point places this far apart (but under DISTANT_PLACES_M) are probably two. */
+const SEPARATE_PLACES_M = 1_000;
+
+/** Whether an item is a point place: a museum, station or stadium (POINT_PLACE_CLASSES). */
+const isPointPlace = (item: Item): boolean =>
+  (item.statements.P31 ?? []).some((v) => v.type === "item" && POINT_PLACE_CLASSES.has(v.value));
 
 /** Date properties compared for the release/founding/birth year gap. */
 const YEAR_GAP_PROPS = ["P577", "P571", "P569"] as const;
@@ -2475,13 +2499,39 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     );
   }
 
-  // Coordinate locations a continent apart. Only a nudge (see
-  // FAR_COORDINATES_M), but it holds the pair off near-certain.
+  // Coordinate locations. For two point places (a museum, a station) they
+  // pin the place down, so the distance between them is strong evidence
+  // either way, like the year gap: a few hundred metres is one place, several
+  // kilometres is two that share a name ("Central Station", "City Museum").
+  // For anything else one subject's coordinates can sit far apart (see
+  // FAR_COORDINATES_M), so only a continent apart counts, and only as a nudge
+  // that holds the pair off near-certain.
   const coordinateGap = nearestCoordinateDistance(a, b);
-  const farCoordinates = coordinateGap !== null && coordinateGap >= FAR_COORDINATES_M;
-  if (farCoordinates) {
+  const gapText = coordinateGap === null ? "" : formatMeters(coordinateGap);
+  const places = coordinateGap !== null && isPointPlace(a) && isPointPlace(b);
+  const nearPlaces = places && coordinateGap <= NEAR_COORDINATES_M;
+  const distantPlaces = places && coordinateGap >= DISTANT_PLACES_M;
+  const separatePlaces = places && !distantPlaces && coordinateGap >= SEPARATE_PLACES_M;
+  const farCoordinates = !places && coordinateGap !== null && coordinateGap >= FAR_COORDINATES_M;
+  if (nearPlaces) {
+    score += 0.15;
+    reasons.push(`nearby coordinate locations (P625), ${gapText} apart`);
+  } else if (distantPlaces && strongIds.length > 0) {
+    // As with the year gap, a shared id makes it a contest, not a cap: the id
+    // may be a copy, or one side's point may be wrong.
+    score -= 0.3;
+    reasons.push(`coordinate locations (P625) are ${gapText} apart, likely different places`);
+  } else if (distantPlaces) {
+    reasons.unshift(
+      `coordinate locations (P625) are ${gapText} apart, almost certainly different places`,
+    );
+    cap("distant-places", 0.1);
+  } else if (separatePlaces) {
+    score -= 0.15;
+    reasons.push(`coordinate locations (P625) are ${gapText} apart, likely different places`);
+  } else if (farCoordinates) {
     score -= 0.1;
-    reasons.push(`coordinate locations (P625) are ${formatMeters(coordinateGap)} apart`);
+    reasons.push(`coordinate locations (P625) are ${gapText} apart`);
   }
 
   // A different author/performer/composer/director is the classic shape of two
@@ -2869,7 +2919,15 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   const propAgreement = stmtRows.filter(
     (r) => r.status === "identical" && !r.a.some((v) => v.type === "external-id"),
   ).length;
-  const strongSignals = strongIds.length + propAgreement + (redirectWikis.length > 0 ? 1 : 0);
+  // Two nearby places corroborate like an agreeing statement, unless their
+  // points are identical and propAgreement already counted them.
+  const nearPlaceSignal =
+    nearPlaces && !stmtRows.some((r) => r.key === "P625" && r.status === "identical");
+  const strongSignals =
+    strongIds.length +
+    propAgreement +
+    (redirectWikis.length > 0 ? 1 : 0) +
+    (nearPlaceSignal ? 1 : 0);
   let ceiling: number;
   if (strongSignals >= 3) ceiling = 1;
   else if (strongSignals === 2) ceiling = 0.93;
@@ -2901,13 +2959,15 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     distinctExtIdRows.length > 0 ||
     nativeNameDiff !== null ||
     accountDiffs.length > 0 ||
-    farCoordinates;
+    farCoordinates ||
+    separatePlaces ||
+    distantPlaces;
   if (hasConcreteDifference) ceiling = Math.min(ceiling, 0.9);
   if (distinctSubjectPageIds.length === 1) ceiling = Math.min(ceiling, 0.8);
   // Several ordinary ids disagreeing is more than a stray data slip.
   if (otherDistinctIds.length >= 4) ceiling = Math.min(ceiling, 0.7);
   else if (otherDistinctIds.length >= 2) ceiling = Math.min(ceiling, 0.8);
-  if (largeYearGap) ceiling = Math.min(ceiling, 0.6);
+  if (largeYearGap || distantPlaces) ceiling = Math.min(ceiling, 0.6);
   if (nativeNameDiff) ceiling = Math.min(ceiling, 0.6);
   // Two separate (non-redirect) pages on one wiki usually mean two subjects,
   // and the merge can't go through without resolving it anyway — never

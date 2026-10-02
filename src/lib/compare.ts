@@ -1154,9 +1154,11 @@ const MIRRORED_ID_PROPS = new Set<string>([
  * Library subject classifications. Wikidata types them as external ids, but a
  * value names a subject, not a work: unrelated books share a Dewey number (813.54
  * is most post-war American fiction), and two editions of one work can be
- * classed differently. So they are evidence in neither direction.
+ * classed differently. So they are evidence in neither direction, and the hunt
+ * doesn't block on them either (a shared value would pair every book on the
+ * subject).
  */
-const CLASSIFICATION_PROPS = new Set<string>([
+export const CLASSIFICATION_PROPS: ReadonlySet<string> = new Set<string>([
   "P1036", // Dewey Decimal Classification
   "P1149", // Library of Congress Classification
   "P1190", // Universal Decimal Classification

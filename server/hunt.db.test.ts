@@ -343,6 +343,25 @@ describe.skipIf(!DB_TEST)("runHunt", () => {
       expect(await dupeKeys()).toEqual([["P1733", "2"]]);
     });
 
+    it("never keys on a library classification, and drops keys stored before", async () => {
+      // Two books on one subject: the same Dewey number, nothing else shared.
+      const dewey: Record<string, Value[]> = { P1036: [{ type: "external-id", value: "499.221" }] };
+      await insertItem(makeItem("Q100", "Struktur bahasa Manui", dewey));
+      await insertItem(makeItem("Q200", "Struktur bahasa Mekongga", dewey));
+      expect(await rebuiltOn(async () => expect((await runHunt()).pairs).toBe(0))).toBe(true);
+      expect(await dupeKeys()).toEqual([]);
+
+      // New rows above the watermark aren't keyed either.
+      await insertItem(makeItem("Q300", "Struktur bahasa Baru", dewey));
+      expect(await rebuiltOn(async () => expect((await runHunt()).pairs).toBe(0))).toBe(false);
+      expect(await dupeKeys()).toEqual([]);
+
+      // A key an earlier hunt stored is dropped without a rebuild.
+      await db.insert(externalIdDupes).values({ property: "P1036", value: "499.221" });
+      expect(await rebuiltOn(async () => expect((await runHunt()).pairs).toBe(0))).toBe(false);
+      expect(await dupeKeys()).toEqual([]);
+    });
+
     it("keeps the watermark back while a dump import is running", async () => {
       await insertItem(makeItem("Q100", "Alpha", steam("1")));
       await insertItem(makeItem("Q200", "Beta", steam("1")));

@@ -57,10 +57,11 @@ const ID_CHUNK = 1000;
 /** Property ids embedded in a reason string. */
 const PID_RE = /\bP\d+\b/g;
 /**
- * Link templates for property datatypes whose values are pages on Commons but
- * which carry no formatter URL (P1630) of their own: a file name for media
- * (P18 image, P154 logo, …), a full "Data:…" page title for geo shapes and
- * tabular data.
+ * Link templates for property datatypes whose values are pages on Commons: a
+ * file name for media (P18 image, P154 logo, …), a full "Data:…" page title for
+ * geo shapes and tabular data. These win over the property's own formatter URL
+ * (P1630) — editors have given some media properties one without the `File:`
+ * namespace (P18's is ".../wiki/$1"), which links to a nonexistent page.
  */
 const COMMONS_FORMATTERS: Record<string, string> = {
   CommonsMedia: "https://commons.wikimedia.org/wiki/File:$1",
@@ -366,7 +367,7 @@ candidates.get("/:id", async (c) => {
   const propertyMirrors: string[] = [];
   for (const r of propertyChunks.flat()) {
     propertyLabels[r.pid] = r.label;
-    const formatter = r.formatterUrl ?? COMMONS_FORMATTERS[r.datatype ?? ""];
+    const formatter = COMMONS_FORMATTERS[r.datatype ?? ""] ?? r.formatterUrl;
     if (formatter) propertyFormatters[r.pid] = formatter;
     if (r.mirrorsWikidata) propertyMirrors.push(r.pid);
   }

@@ -419,6 +419,11 @@ function classHits(
   other?: (id: number, start: number, at: number) => boolean,
 ): void {
   let from = 0;
+  // The line holding the current hit, found once per line: a big item's line
+  // has hundreds of `"numeric-id":` mentions, and searching back to its start
+  // from each one made the scan quadratic in the line's length.
+  let start = 0;
+  let end = -1;
   while (from < region.length) {
     const idx = region.indexOf(NUMERIC_ID_NEEDLE, from);
     if (idx === -1) break;
@@ -430,12 +435,14 @@ function classHits(
       from = at;
       continue;
     }
-    const start = region.lastIndexOf(NL, idx) + 1;
+    if (idx > end) {
+      start = region.lastIndexOf(NL, idx) + 1;
+      end = region.indexOf(NL, at);
+    }
     if (!ids.has(id) && !other?.(id, start, at)) {
       from = at;
       continue;
     }
-    const end = region.indexOf(NL, at);
     into.set(start, end);
     from = end + 1;
   }

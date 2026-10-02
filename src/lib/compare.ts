@@ -329,6 +329,8 @@ export function storedBlockingKey(label: string | null | undefined): string | nu
   return label == null ? null : blockingLabelKey(label).slice(0, BLOCKING_KEY_MAX);
 }
 
+const COMMONS_WIKI = "https://commons.wikimedia.org/wiki/";
+
 /**
  * Build the external URL for an identifier value from a Wikidata formatter URL
  * (P1630), substituting the value for the `$1` placeholder — e.g.
@@ -336,11 +338,13 @@ export function storedBlockingKey(label: string | null | undefined): string | nu
  * "https://store.steampowered.com/app/268220/". Returns null when there is no
  * template or it has no placeholder, so callers can fall back to plain text.
  * P1630 is a plain string anyone can edit, so the result must pass
- * `safeHttpUrl` too.
+ * `safeHttpUrl` too. A Commons page title is written MediaWiki-style, with
+ * underscores for spaces ("Foo bar.jpg" → ".../wiki/File:Foo_bar.jpg").
  */
 export function formatIdUrl(template: string | undefined, value: string): string | null {
   if (!template || !template.includes("$1")) return null;
-  return safeHttpUrl(template.split("$1").join(value));
+  const v = template.startsWith(COMMONS_WIKI) ? value.replaceAll(" ", "_") : value;
+  return safeHttpUrl(template.split("$1").join(v));
 }
 
 /**

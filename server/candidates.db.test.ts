@@ -115,7 +115,13 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
         mirrorsWikidata: true,
       },
       { pid: "P1733", label: "Steam application ID", datatype: "ExternalId" },
-      { pid: "P18", label: "image", datatype: "CommonsMedia" },
+      // P18's real P1630 lacks the File: namespace; the Commons template wins.
+      {
+        pid: "P18",
+        label: "image",
+        datatype: "CommonsMedia",
+        formatterUrl: "https://commons.wikimedia.org/wiki/$1",
+      },
     ]);
     await db.insert(entityLabels).values({ qid: "Q744038", label: "role-playing video game" });
   });
@@ -313,7 +319,7 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       expect(body.nextId).toBe(beta);
       // Only properties present on this pair are resolved.
       expect(body.propertyLabels).toEqual({ P18: "image", P31: "instance of", P136: "genre" });
-      // Commons media has no P1630 of its own; it links to the file page.
+      // Commons media links to the file page, whatever its own P1630 says.
       expect(body.propertyFormatters).toEqual({
         P18: "https://commons.wikimedia.org/wiki/File:$1",
         P136: "https://example.org/genre/$1",

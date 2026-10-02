@@ -921,6 +921,13 @@ describe("blockingLabelKey / punctuation-insensitive blocking", () => {
     expect(formatIdUrl("javascript:alert(1)//$1", "268220")).toBeNull();
     expect(formatIdUrl(" JavaScript:alert(1)//$1", "268220")).toBeNull();
     expect(formatIdUrl("data:text/html,$1", "<script>")).toBeNull();
+    // A Commons file name links with underscores for spaces, as MediaWiki writes it.
+    expect(
+      formatIdUrl(
+        "https://commons.wikimedia.org/wiki/File:$1",
+        "HartwigVogel AG DresdenA um1925.jpg",
+      ),
+    ).toBe("https://commons.wikimedia.org/wiki/File:HartwigVogel_AG_DresdenA_um1925.jpg");
   });
 
   it("only passes absolute http(s) URLs through safeHttpUrl", () => {

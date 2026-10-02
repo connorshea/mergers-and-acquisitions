@@ -23,6 +23,7 @@ const TABLES = [
   "entity_labels",
   "sync_state",
   "dump_import_segments",
+  "dump_import_linked",
   "sitelink_pages",
   "item_creations",
 ];

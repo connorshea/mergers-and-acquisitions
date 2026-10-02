@@ -179,7 +179,9 @@ with an Olympedia, Olympics.com, Sports-Reference, InterSportStats or
 The-Sports.org id. The lists are `PEOPLE` in
 `src/lib/import-classes.ts`. The linked set is read from the mirror before each
 pass, so a newly linked person arrives with the next week's dump and one that
-no longer qualifies is pruned a week later. After a complete pass it deletes items the dump no longer
+no longer qualifies is pruned a week later. Reading it is a minute-long
+`JSON_TABLE` query on a full mirror, so the pass's first worker runs it and
+stores the result (`dump_import_linked`) for the others. After a complete pass it deletes items the dump no longer
 contains (merged away, deleted, retyped) and settles their open candidates; it
 refuses to drop more than 20% of the mirror at once unless `DUMP_PRUNE_FORCE=1`.
 

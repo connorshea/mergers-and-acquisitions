@@ -66,10 +66,18 @@ import { createHash, randomBytes } from "node:crypto";
 import { basename } from "node:path";
 import { Readable } from "node:stream";
 import { constants as zlibConstants, crc32, createGunzip, inflateRawSync } from "node:zlib";
-import { and, asc, count, eq, gt, inArray, isNotNull, isNull, lt, ne, or, sql } from "drizzle-orm";
-import { db } from "./db.ts";
+import { and, asc, count, eq, gt, inArray, isNull, lt, ne, or, sql } from "drizzle-orm";
+import { db, pool } from "./db.ts";
 import { refreshCandidateItemInfo } from "./candidate-item-info.ts";
-import { dumpImportSegments, externalIds, items, mergeCandidates } from "../db/schema.ts";
+import {
+  dumpImportLinked,
+  dumpImportSegments,
+  externalIds,
+  items,
+  mergeCandidates,
+} from "../db/schema.ts";
+import type { Connection as CoreConnection } from "mysql2";
+import type { RowDataPacket } from "mysql2/promise";
 import { syncProperties } from "./properties-sync.ts";
 import { CONVERTER_VERSION } from "./converter-version.ts";
 import { toSqlDatetime } from "./auth/time.ts";
@@ -850,8 +858,63 @@ export async function loadLinkedQids(sources: readonly string[]): Promise<Set<nu
   return out;
 }
 
-/** Rows paged per read when loading the revision index. */
-const REVISION_PAGE = 20000;
+/** How long a worker waits for another to finish reading the set's linked QIDs. */
+const LINKED_LOCK_WAIT_SECONDS = 900;
+
+/**
+ * loadLinkedQids, read once per worker pass and shared: the first worker of a
+ * segment set to get here runs the query (about a minute on a full mirror)
+ * under a named lock and stores the result in `dump_import_linked`; the rest
+ * wait on the lock and read it back. The pass reads the mirror as it stood
+ * before the pass either way, since no worker scans (or writes) until it has
+ * the set. A redo of the set (resetFinishedSet) drops the stored one. A worker
+ * that times out waiting on the lock reads the mirror itself.
+ */
+export async function sharedLinkedQids(
+  dump: string,
+  segments: number,
+  sources: readonly string[],
+): Promise<{ qids: Set<number>; shared: boolean }> {
+  if (sources.length === 0) return { qids: new Set(), shared: false };
+  const key = [...sources].sort().join(",");
+  const linkedRow = and(eq(dumpImportLinked.dump, dump), eq(dumpImportLinked.segments, segments));
+  // GET_LOCK belongs to the session that took it: hold one connection throughout.
+  const conn = await pool.getConnection();
+  const lock = `mna:linked:${dump}:${segments}`;
+  try {
+    const [[{ got }]] = await conn.query<({ got: number | null } & RowDataPacket)[]>(
+      "select get_lock(?, ?) as got",
+      [lock, LINKED_LOCK_WAIT_SECONDS],
+    );
+    if (got !== 1) return { qids: await loadLinkedQids(sources), shared: false };
+    try {
+      const [stored] = await db
+        .select({ sources: dumpImportLinked.sources, qids: dumpImportLinked.qids })
+        .from(dumpImportLinked)
+        .where(linkedRow);
+      if (stored?.sources === key) {
+        const qids = new Set<number>();
+        for (const id of stored.qids.split(",")) if (id) qids.add(Number(id));
+        return { qids, shared: true };
+      }
+      const qids = await loadLinkedQids(sources);
+      const row = { dump, segments, sources: key, qids: [...qids].sort((a, b) => a - b).join(",") };
+      await db
+        .insert(dumpImportLinked)
+        .values(row)
+        .onDuplicateKeyUpdate({
+          set: { sources: row.sources, qids: row.qids, createdAt: sql`CURRENT_TIMESTAMP` },
+        });
+      // Earlier dumps' sets are done with theirs.
+      await db.delete(dumpImportLinked).where(ne(dumpImportLinked.dump, dump));
+      return { qids, shared: false };
+    } finally {
+      await conn.query("select release_lock(?)", [lock]);
+    }
+  } finally {
+    conn.release();
+  }
+}
 
 /**
  * Load the revision index for a dump pass: every item stored at a known
@@ -861,32 +924,43 @@ const REVISION_PAGE = 20000;
  * found out of scope, and pruned. (primaryType is a best-rank P31 value, so a
  * row whose type is a class really is in scope at that revision.) An item left
  * out for any reason is only parsed as before, never skipped wrongly.
- * Reads idx_items_revision alone.
+ *
+ * One streamed read of idx_items_revision alone (it covers the query), as
+ * arrays rather than row objects: on a 2.9M-item mirror this takes ~0.6s,
+ * against ~1.6s keyset-paged 20k rows at a time.
  */
 export async function loadRevisionIndex(classQids: readonly string[]): Promise<RevisionIndex> {
   const qids: number[] = [];
   const revids: number[] = [];
-  let after = "";
-  for (;;) {
-    const page = await db
-      .select({ qid: items.qid, revid: items.sourceRevid })
-      .from(items)
-      .where(
-        and(
-          eq(items.converterVersion, CONVERTER_VERSION),
-          after ? gt(items.qid, after) : sql`1 = 1`,
-          isNotNull(items.sourceRevid),
-          inArray(items.primaryType, [...classQids]),
-        ),
-      )
-      .orderBy(asc(items.qid))
-      .limit(REVISION_PAGE);
-    for (const r of page) {
-      qids.push(Number(r.qid.slice(1)));
-      revids.push(r.revid!);
+  if (classQids.length === 0) return RevisionIndex.from(qids, revids);
+  const conn = await pool.getConnection();
+  // The callback-API connection under the promise wrapper, which alone can stream.
+  const core = conn.connection as unknown as CoreConnection;
+  const stream = core
+    .query({
+      sql: `select qid, source_revid from items
+            where converter_version = ? and source_revid is not null and primary_type in (?)`,
+      values: [CONVERTER_VERSION, classQids],
+      rowsAsArray: true,
+    })
+    .stream({ highWaterMark: 5000 });
+  // A stream-mode query reports a dropped connection only on the connection
+  // (see streamRows in server/hunt.ts); forward it, or the loop would wait on
+  // rows that never come.
+  const onError = (err: Error) => stream.destroy(err);
+  core.on("error", onError);
+  let ok = false;
+  try {
+    for await (const [qid, revid] of stream as AsyncIterable<[string, number | string]>) {
+      qids.push(Number(qid.slice(1)));
+      revids.push(Number(revid));
     }
-    if (page.length < REVISION_PAGE) break;
-    after = page[page.length - 1].qid;
+    ok = true;
+  } finally {
+    core.off("error", onError);
+    // A connection whose stream failed part-way isn't fit to go back in the pool.
+    if (ok) conn.release();
+    else conn.destroy();
   }
   return RevisionIndex.from(qids, revids);
 }
@@ -1262,6 +1336,10 @@ async function resetFinishedSet(dump: string, segments: number, token: string): 
         pass: token,
       })
       .where(inSet(dump, segments));
+    // The redo reads the mirror afresh for its linked QIDs (sharedLinkedQids).
+    await tx
+      .delete(dumpImportLinked)
+      .where(and(eq(dumpImportLinked.dump, dump), eq(dumpImportLinked.segments, segments)));
     return true;
   });
 }
@@ -1558,15 +1636,20 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
   // The items the mirror's items of the selective classes' sources link to:
   // one way in for a selective class's instance. All selective classes share
   // one set, drawn from all their sources.
+  // Workers share one read of them per pass (sharedLinkedQids); a worker with
+  // nothing to scan needs neither load.
   let selective: SelectiveScan | undefined;
-  if (selectiveClasses.length > 0) {
+  if (selectiveClasses.length > 0 && !alreadyDone) {
     const loadStart = performance.now();
-    const linkedQids = await loadLinkedQids([
-      ...new Set(selectiveClasses.flatMap((c) => c.linkedFrom)),
-    ]);
+    const sources = [...new Set(selectiveClasses.flatMap((c) => c.linkedFrom))];
+    const { qids: linkedQids, shared } =
+      worker !== undefined
+        ? await sharedLinkedQids(dump, segments, sources)
+        : { qids: await loadLinkedQids(sources), shared: false };
     selective = { classes: selectiveClasses, linkedQids };
     log(
-      `${tag} ${linkedQids.size} items linked from the mirror, loaded in ` +
+      `${tag} ${linkedQids.size} items linked from the mirror, ` +
+        `${shared ? "read from the pass's first worker" : "loaded"} in ` +
         `${((performance.now() - loadStart) / 1000).toFixed(1)}s; instances of ` +
         `${selectiveClasses.map((c) => c.qid).join(", ")} among them are imported, ` +
         "as are those with one of the class's occupations or id properties",
@@ -1576,7 +1659,9 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
   // Items the mirror already holds at a known revision, converted by the
   // current converter: a hit at the same revision is skipped unparsed.
   let revisions: RevisionIndex | undefined;
-  if (!opts.full) {
+  if (alreadyDone) {
+    // Nothing to scan.
+  } else if (!opts.full) {
     const loadStart = performance.now();
     revisions = await loadRevisionIndex([...classQids, ...selectiveClasses.map((c) => c.qid)]);
     log(

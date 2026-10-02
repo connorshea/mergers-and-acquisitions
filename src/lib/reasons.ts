@@ -49,6 +49,7 @@ const REASON_TONES: [RegExp, ReasonTone["polarity"], ReasonTone["strength"]][] =
   [/^one item references the other/, "negative", 2],
   [/^different /, "negative", 2], // developer, publisher, author, …
   [/^a per-subject identifier differs/, "negative", 1],
+  [/^coordinate locations .* apart, likely different places$/, "negative", 2],
   [/^coordinate locations .* apart$/, "negative", 1],
   [/^(an|\d+) external identifiers? differs?/, "negative", 2],
   [/not counted/, "neutral", 1],
@@ -56,6 +57,7 @@ const REASON_TONES: [RegExp, ReasonTone["polarity"], ReasonTone["strength"]][] =
   [/^identical label|^label matches the other item's alias/, "positive", 3],
   [/^very similar names/, "positive", 2],
   [/^same date of (birth|death)/, "positive", 2],
+  [/^nearby coordinate locations/, "positive", 2],
   [/^sitelink redirects to the other item's page/, "positive", 2],
   [/^shares /, "positive", 1], // account/social, aggregator, page-section ids
   [/^loosely similar names/, "positive", 1],

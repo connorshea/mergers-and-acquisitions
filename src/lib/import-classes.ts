@@ -27,6 +27,12 @@ export interface ImportClass {
   label: string;
   /** Import only some instances (see SelectiveImport); SELECTIVE_IMPORT_CLASSES. */
   selective?: SelectiveImport;
+  /**
+   * A place at one spot, whose coordinate location (P625) pins it down: two
+   * of them far apart are two places, however alike the names (see
+   * POINT_PLACE_CLASSES).
+   */
+  pointPlace?: boolean;
 }
 
 /** The WikiProject Video Games classes; games link in the people they name. */
@@ -193,6 +199,13 @@ export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
     ],
   },
   {
+    name: "WikiProject Museums",
+    classes: [
+      { qid: "Q33506", label: "museum", pointPlace: true },
+      { qid: "Q207694", label: "art museum", pointPlace: true },
+    ],
+  },
+  {
     name: "WikiProject Music",
     classes: [
       { qid: "Q134556", label: "single" },
@@ -210,6 +223,14 @@ export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
   {
     name: "WikiProject Podcasts",
     classes: [{ qid: "Q24634210", label: "podcast show" }],
+  },
+  {
+    name: "WikiProject Railways",
+    classes: [{ qid: "Q55488", label: "railway station", pointPlace: true }],
+  },
+  {
+    name: "WikiProject Sports",
+    classes: [{ qid: "Q483110", label: "stadium", pointPlace: true }],
   },
   {
     name: "WikiProject Video Games",
@@ -240,3 +261,12 @@ export interface SelectiveImportClass extends SelectiveImport {
 /** The `selective` classes, each with the lists that pick its instances. */
 export const SELECTIVE_IMPORT_CLASSES: readonly SelectiveImportClass[] =
   IMPORT_CLASS_OPTIONS.flatMap((c) => (c.selective ? [{ qid: c.qid, ...c.selective }] : []));
+
+/**
+ * The point-place classes (ImportClass.pointPlace): museums, stations,
+ * stadiums. Not rivers, mountains or regions, whose one coordinate can be any
+ * of several far-apart points (a river's source or mouth).
+ */
+export const POINT_PLACE_CLASSES: ReadonlySet<string> = new Set(
+  IMPORT_CLASS_OPTIONS.filter((c) => c.pointPlace).map((c) => c.qid),
+);

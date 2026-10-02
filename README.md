@@ -163,7 +163,8 @@ consumer must list `testwikidatawiki`; QIDs there won't match the mirror).
 `pnpm job:import-dump` (`jobs/import-dump.ts` → `server/dump-import.ts`) streams
 the Wikidata **entity JSON dump** once and upserts every item whose `instance of`
 (best rank) is one of the classes in `src/lib/import-classes.ts` (video games,
-films and TV series, music, anime and manga, companies, …; exact QIDs, no
+films and TV series, music, anime and manga, companies, museums, railway
+stations, stadiums, …; exact QIDs, no
 subclasses), together with its external ids and the
 `properties` table (labels, datatypes, formatter URLs). Items carry their
 descriptions, aliases and sitelinks (so there is no separate description sync:

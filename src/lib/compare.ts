@@ -2109,12 +2109,32 @@ export interface ScoreOptions {
    * on anything not synced yet; omitted before the first sync.
    */
   isInapplicableId?: (pid: string, item: Item) => boolean;
+  /**
+   * Filled in with every hard cap and the confidence ceiling that lowered the
+   * score, and the score each one found, so an audit can tell which rule
+   * dropped a pair (the reasons alone don't say what it would have scored).
+   */
+  trace?: ScoreTrace;
+}
+
+/** The rules that pulled a pair's score down, in the order they applied (see ScoreOptions.trace). */
+export interface ScoreTrace {
+  /** Hard caps (and the zeroing rules) that lowered the score: the rule and the score before it. */
+  caps: { rule: string; before: number }[];
+  /** The confidence ceiling, when it lowered the score. */
+  ceiling?: { limit: number; before: number };
 }
 
 export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): CandidateScore {
   const rows = buildRows(a, b);
   const reasons: string[] = [];
   let score = 0;
+  const trace = opts.trace;
+  /** Hold the score at or below `limit`, noting the rule in the trace when it bites. */
+  const cap = (rule: string, limit: number): void => {
+    if (trace && score > limit) trace.caps.push({ rule, before: score });
+    score = Math.min(score, limit);
+  };
 
   // Shared external identifiers are the strongest single signal — but only
   // genuine per-subject identifiers. Restrict to real ExternalId properties when
@@ -2352,7 +2372,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     reasons.unshift(
       `publication/inception/birth years differ by ${yearGap}, almost certainly different subjects`,
     );
-    score = Math.min(score, 0.1);
+    cap("large-year-gap", 0.1);
   }
 
   // Concrete disagreements on discriminative facts. Computed unconditionally (a
@@ -2546,7 +2566,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     reasons.unshift(
       `${distinctExtIdRows.length} external identifiers differ across the pair, almost certainly different subjects`,
     );
-    score = Math.min(score, 0.05);
+    cap("many-differing-ids", 0.05);
   } else if (otherDistinctIds.length > 0) {
     score -= Math.min(0.2, 0.05 * otherDistinctIds.length);
     const pids = otherDistinctIds.map((r) => r.key).join(", ");
@@ -2573,7 +2593,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     reasons.unshift(
       `${separateArticleWikis.length} wikis have a separate article for each item, almost certainly different subjects`,
     );
-    score = Math.min(score, 0.1);
+    cap("many-sitelink-clashes", 0.1);
   }
 
   // Two or more *per-subject* identifiers (Steam, MobyGames, Discogs, IMDb, …; see
@@ -2596,7 +2616,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
         .map((r) => r.key)
         .join(", ")}), almost certainly different subjects`,
     );
-    score = Math.min(score, 0.1);
+    cap("differing-subject-page-ids", 0.1);
   } else if (distinctSubjectPageIds.length === 1) {
     // A single differing per-subject id (e.g. two different Steam or itch.io pages)
     // is a real discrepancy — usually different games, occasionally a data slip
@@ -2624,7 +2644,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     reasons.unshift(
       `${suffixSplitIds.map((r) => r.key).join(", ")} lists the two as separate same-named entries (a "--N" slug), not a duplicate`,
     );
-    score = Math.min(score, 0.1);
+    cap("slug-suffix-split", 0.1);
   }
 
   // A wiki that titles the two items' pages with different years has two
@@ -2636,7 +2656,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     reasons.unshift(
       `sitelinks on ${yearWikis.join(", ")} are disambiguated by different years, not a duplicate`,
     );
-    score = Math.min(score, 0.1);
+    cap("year-disambiguated-sitelinks", 0.1);
   }
 
   // One item referencing the other (a game's "part of the series" naming the
@@ -2655,7 +2675,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // never surface as candidates.
   if (isSeriesSequelPair(a, b)) {
     reasons.unshift("different entries in a series (sequel), not a duplicate");
-    score = Math.min(score, 0.1);
+    cap("series-sequel", 0.1);
   }
 
   // Volumes of one set (letters, collected writings) share a title, publisher,
@@ -2663,11 +2683,11 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // number, or year spans that don't overlap, say they are separate books.
   if (isDifferentVolumePair(a, b)) {
     reasons.unshift("different volume or part numbers in the titles, not a duplicate");
-    score = Math.min(score, 0.1);
+    cap("different-volume", 0.1);
   }
   if (isDisjointYearRangePair(a, b)) {
     reasons.unshift("titles cover different, non-overlapping year ranges, not a duplicate");
-    score = Math.min(score, 0.1);
+    cap("disjoint-year-range", 0.1);
   }
 
   // A work and its edition (P629 / P747 / P9237 / P2550 linking the pair) are distinct items by
@@ -2678,7 +2698,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     reasons.unshift(
       "linked as a work and its edition, reissue or recording on Wikidata (P629/P747/P9237/P2550), not a duplicate",
     );
-    score = Math.min(score, 0.1);
+    cap("work-edition", 0.1);
   }
 
   // An id one item declares "shared with" (P4070) the other is an editor saying
@@ -2693,7 +2713,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
         ...sharedWithOther,
       ].join(", ")}`,
     );
-    score = Math.min(score, 0.1);
+    cap("shared-with-p4070", 0.1);
   }
 
   // A whole and one of its parts (P527 / P361 linking the pair) — e.g. an
@@ -2701,7 +2721,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // nothing is part of itself. Cap below the persistence floor, like editions.
   if (isPartWholePair(a, b)) {
     reasons.unshift("linked as a whole and its part on Wikidata (P527/P361), not a duplicate");
-    score = Math.min(score, 0.1);
+    cap("part-whole", 0.1);
   }
 
   // One item following the other (P155 / P156 linking the pair) — e.g. two
@@ -2712,7 +2732,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     reasons.unshift(
       "linked as consecutive entries on Wikidata (follows / followed by, P155/P156), not a duplicate",
     );
-    score = Math.min(score, 0.1);
+    cap("sequenced-p155-p156", 0.1);
   }
 
   // One item derived from the other (P144 / P4969 linking the pair) — a piece
@@ -2722,7 +2742,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     reasons.unshift(
       "linked as a work and its derivative on Wikidata (based on / derivative work, P144/P4969), not a duplicate",
     );
-    score = Math.min(score, 0.1);
+    cap("derivative-p144-p4969", 0.1);
   }
 
   // Two objects in one collection under different inventory numbers are two
@@ -2732,7 +2752,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     reasons.unshift(
       "different inventory numbers (P217) in the same collection (P195), separate objects",
     );
-    score = Math.min(score, 0.1);
+    cap("collection-sibling-p217", 0.1);
   }
 
   // Sibling works of one published set (sonatas 1–6 of an opus) share a
@@ -2740,18 +2760,18 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // Different catalogue numbers or different keys say they are separate works.
   if (isCatalogSiblingPair(a, b)) {
     reasons.unshift("different catalog codes (P528) in the same catalogue, not a duplicate");
-    score = Math.min(score, 0.1);
+    cap("catalog-sibling-p528", 0.1);
   }
   if (isDifferentKeyPair(a, b)) {
     reasons.unshift("different tonality (P826), separate musical works, not a duplicate");
-    score = Math.min(score, 0.1);
+    cap("different-key-p826", 0.1);
   }
 
   // A conflation (P31 = Q14946528) already mixes several subjects; merging
   // anything into it compounds the problem, so the pair never surfaces.
   if (isConflationPair(a, b)) {
     reasons.unshift("one item is marked as a conflation (Q14946528), not a merge target");
-    score = 0;
+    cap("conflation", 0);
   }
 
   // A "different from" (P1889) statement is an editor explicitly declaring the
@@ -2759,7 +2779,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // force the score to zero so the pair can never surface as a candidate.
   if (isDeclaredDifferent(a, b)) {
     reasons.unshift('marked "different from" on Wikidata (P1889), not a duplicate');
-    score = 0;
+    cap("different-from-p1889", 0);
   }
 
   // A "permanent duplicated item" (P2959) link — direct, or via a shared third
@@ -2768,7 +2788,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // merge anyway, so the pair can never be acted on: force it to zero.
   if (isPermanentDuplicatePair(a, b)) {
     reasons.unshift('marked "permanent duplicated item" on Wikidata (P2959), can\'t be merged');
-    score = 0;
+    cap("permanent-duplicate-p2959", 0);
   }
 
   // Confidence ceiling. A near-certain (≈1.0) score is reserved for pairs with a
@@ -2833,6 +2853,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // (Bamboo, Sweden / Philippines, on one VIAF cluster) stay a judgement call.
   if (diffCountries.length > 0) ceiling = Math.min(ceiling, 0.6);
   if (score > ceiling) {
+    if (trace) trace.ceiling = { limit: ceiling, before: score };
     score = ceiling;
     // Only explain the clamp when the ceiling actually held the pair *below*
     // near-certain. A ceiling of 1.0 (very similar name + 3+ corroborating

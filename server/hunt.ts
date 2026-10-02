@@ -23,6 +23,9 @@
 // All writes are idempotent upserts, so re-running is always safe, and a pair a
 // human already resolved (dismissed/merged, or mid-merge) is never rescored or resurrected
 // (see `upsertCandidates`).
+import { createWriteStream, mkdirSync, type WriteStream } from "node:fs";
+import { once } from "node:events";
+import { join } from "node:path";
 import mysql from "mysql2/promise";
 import {
   createConnection as createCoreConnection,
@@ -34,7 +37,7 @@ import * as schema from "../db/schema.ts";
 import { classAncestors, mergeCandidates, properties, syncState } from "../db/schema.ts";
 import { connConfig } from "./db-config.ts";
 import { STALE_CLAIM_SECONDS } from "./import-claims.ts";
-import type { Item, ScoreOptions } from "../src/lib/compare.ts";
+import type { Item, ScoreOptions, ScoreTrace } from "../src/lib/compare.ts";
 import {
   BLOCKING_KEY_MAX,
   orderByAge,
@@ -89,6 +92,43 @@ export interface HuntStats {
    */
   pruned: number;
   failed: number;
+}
+
+/**
+ * `AUDIT=1` mode: JSONL records of what the hunt drops, for reviewing rules
+ * that may be too strict (see issue #185). `blocks.jsonl` gets every oversized
+ * blocking group skipped; `pairs.jsonl` gets every scored pair with its
+ * confidence, the caps that lowered it (and the score before each), and
+ * whether it cleared the floor. Written under `AUDIT_DIR` (default tmp/audit).
+ */
+class AuditLog {
+  private readonly blocks: WriteStream;
+  private readonly pairs: WriteStream;
+
+  constructor(dir: string) {
+    mkdirSync(dir, { recursive: true });
+    this.blocks = createWriteStream(join(dir, "blocks.jsonl"));
+    this.pairs = createWriteStream(join(dir, "pairs.jsonl"));
+  }
+
+  static fromEnv(): AuditLog | null {
+    return process.env.AUDIT === "1" ? new AuditLog(process.env.AUDIT_DIR ?? "tmp/audit") : null;
+  }
+
+  block(record: object): void {
+    this.blocks.write(JSON.stringify(record) + "\n");
+  }
+
+  /** Write a pair record, waiting for the stream to drain when its buffer is full. */
+  async pair(record: object): Promise<void> {
+    if (!this.pairs.write(JSON.stringify(record) + "\n")) await once(this.pairs, "drain");
+  }
+
+  async close(): Promise<void> {
+    await Promise.all(
+      [this.blocks, this.pairs].map((s) => new Promise<void>((resolve) => s.end(resolve))),
+    );
+  }
 }
 
 /** Seconds since `start` (a `performance.now()` reading), for progress logs. */
@@ -345,16 +385,19 @@ const PAIR_INSERT_CHUNK = 1000;
 class PairSink {
   private buffer: [number, number][] = [];
   private readonly conn: mysql.Connection;
+  private readonly audit: AuditLog | null;
 
-  constructor(conn: mysql.Connection) {
+  constructor(conn: mysql.Connection, audit: AuditLog | null) {
     this.conn = conn;
+    this.audit = audit;
   }
 
   /** Expand a blocking group of qids into unordered pairs, if not oversized. */
-  async addGroup(group: BlockRow, kind: string): Promise<void> {
+  async addGroup(group: BlockRow, kind: string, key: object): Promise<void> {
     if (group.n < 2) return;
     if (group.n > MAX_BLOCK_GROUP) {
       console.warn(`hunt: skipping oversized ${kind} block of ${group.n} qids`);
+      this.audit?.block({ kind, ...key, n: group.n, qids: group.qids.split(",").slice(0, 20) });
       return;
     }
     const nums = Array.from(new Set(group.qids.split(",")), qidNum);
@@ -385,7 +428,12 @@ async function countPairs(conn: mysql.Connection): Promise<number> {
  * score. Both strategies group in SQL and only groups of two or more come back
  * (streamed), so memory doesn't grow with the size of the mirror.
  */
-async function scan(db: Db, conn: mysql.Connection, reader: CoreConnection): Promise<number> {
+async function scan(
+  db: Db,
+  conn: mysql.Connection,
+  reader: CoreConnection,
+  audit: AuditLog | null,
+): Promise<number> {
   const start = performance.now();
   await conn.query("drop temporary table if exists hunt_pairs");
   await conn.query(`
@@ -397,7 +445,7 @@ async function scan(db: Db, conn: mysql.Connection, reader: CoreConnection): Pro
       stale tinyint not null default 0,
       unique key (a, b)
     ) engine = InnoDB`);
-  const sink = new PairSink(conn);
+  const sink = new PairSink(conn, audit);
 
   // 1. Shared external id: same (property, value) held by more than one qid.
   // Only the keys in external_id_dupes are grouped; each is re-counted here, and
@@ -443,7 +491,10 @@ async function scan(db: Db, conn: mysql.Connection, reader: CoreConnection): Pro
       continue;
     }
     extGroups++;
-    await sink.addGroup(group, "shared-external-id");
+    await sink.addGroup(group, "shared-external-id", {
+      property: group.property,
+      value: group.value,
+    });
   }
   await dropUnshared();
   if (dropped > 0) console.log(`hunt scan: dropped ${dropped} no-longer-shared id keys`);
@@ -460,16 +511,19 @@ async function scan(db: Db, conn: mysql.Connection, reader: CoreConnection): Pro
   if (filled > 0)
     console.log(`hunt scan: filled ${filled} missing blocking keys (${secondsSince(start)})`);
   let labelGroups = 0;
-  for await (const group of streamRows<BlockRow>(
+  for await (const group of streamRows<BlockRow & { blocking_key: string; primary_type: string }>(
     reader,
-    `select group_concat(qid) as qids, count(*) as n
+    `select blocking_key, primary_type, group_concat(qid) as qids, count(*) as n
      from items
      where blocking_key is not null and primary_type is not null
      group by blocking_key, primary_type
      having n > 1`,
   )) {
     labelGroups++;
-    await sink.addGroup(group, "label+type");
+    await sink.addGroup(group, "label+type", {
+      key: group.blocking_key,
+      type: group.primary_type,
+    });
   }
   await sink.flush();
   const total = await countPairs(conn);
@@ -674,6 +728,7 @@ async function score(
   itemConn: mysql.Connection,
   pairCount: number,
   windowSize: number,
+  audit: AuditLog | null,
 ): Promise<HuntStats> {
   const stats: HuntStats = {
     pairs: pairCount,
@@ -759,7 +814,23 @@ async function score(
 
       try {
         const [from, into] = orderByAge(a, b);
-        const result = scoreCandidate(from, into, scoreOpts);
+        const trace: ScoreTrace | undefined = audit ? { caps: [] } : undefined;
+        const result = scoreCandidate(from, into, trace ? { ...scoreOpts, trace } : scoreOpts);
+        if (audit && trace) {
+          await audit.pair({
+            from: from.id,
+            into: into.id,
+            fromLabel: primaryLabel(from) ?? null,
+            intoLabel: primaryLabel(into) ?? null,
+            fromType: primaryType(from) ?? null,
+            intoType: primaryType(into) ?? null,
+            confidence: result.confidence,
+            kept: result.confidence >= MIN_CONFIDENCE,
+            caps: trace.caps,
+            ceiling: trace.ceiling ?? null,
+            reasons: result.reasons,
+          });
+        }
         if (result.confidence < MIN_CONFIDENCE) {
           // A pair that no longer clears the floor (e.g. after a heuristic
           // change that exposed it as a false positive) must not linger with a
@@ -919,6 +990,7 @@ export async function runHunt(opts: { scoreWindow?: number } = {}): Promise<Hunt
   // stream (see streamRows) and fail the hunt through the normal path.
   reader.on("error", (err) => console.warn(`hunt: reader connection error: ${err.message}`));
   let itemConn: mysql.Connection | undefined;
+  const audit = AuditLog.fromEnv();
   const endItemConn = () => itemConn?.end().catch(() => {});
   const endReader = () =>
     reader
@@ -928,7 +1000,7 @@ export async function runHunt(opts: { scoreWindow?: number } = {}): Promise<Hunt
   try {
     await reader.promise().query("SET SESSION group_concat_max_len = 1048576");
     const db = drizzle(conn, { schema, mode: "default" });
-    const pairCount = await scan(db, conn, reader);
+    const pairCount = await scan(db, conn, reader, audit);
     // The reader is only for blocking; don't hold it idle through scoring.
     await endReader();
     // Scoring reads items on its own connection, busy every window, so the
@@ -937,7 +1009,14 @@ export async function runHunt(opts: { scoreWindow?: number } = {}): Promise<Hunt
     // Same reason as the reader's listener: a dropped socket must fail the
     // hunt through the pending query, not crash the process.
     itemConn.on("error", (err) => console.warn(`hunt: item connection error: ${err.message}`));
-    const stats = await score(db, conn, itemConn, pairCount, opts.scoreWindow ?? SCORE_WINDOW);
+    const stats = await score(
+      db,
+      conn,
+      itemConn,
+      pairCount,
+      opts.scoreWindow ?? SCORE_WINDOW,
+      audit,
+    );
     await endItemConn();
     await conn.query("drop temporary table if exists hunt_pairs");
     // Pairs the hunt didn't rescore (resolved ones, or ones whose blocking
@@ -951,6 +1030,6 @@ export async function runHunt(opts: { scoreWindow?: number } = {}): Promise<Hunt
     console.log(`hunt: finished in ${secondsSince(start)}`);
     return stats;
   } finally {
-    await Promise.allSettled([conn.end(), endReader(), endItemConn()]);
+    await Promise.allSettled([conn.end(), endReader(), endItemConn(), audit?.close()]);
   }
 }

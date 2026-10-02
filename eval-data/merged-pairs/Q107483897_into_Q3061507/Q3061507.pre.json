@@ -1,0 +1,1644 @@
+{
+  "pageid": 2926247,
+  "ns": 0,
+  "title": "Q3061507",
+  "lastrevid": 2486681020,
+  "modified": "2026-05-02T21:20:16Z",
+  "type": "item",
+  "id": "Q3061507",
+  "labels": {
+    "fr": {
+      "language": "fr",
+      "value": "Everybody's Free (To Feel Good)"
+    },
+    "en": {
+      "language": "en",
+      "value": "Everybody's Free (To Feel Good)"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Everybody's Free (To Feel Good)"
+    },
+    "de": {
+      "language": "de",
+      "value": "Everybody's Free (To Feel Good)"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Everybody's Free (To Feel Good)"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "Everybody's Free (To Feel Good)"
+    },
+    "da": {
+      "language": "da",
+      "value": "Everybody's Free (To Feel Good)"
+    },
+    "es": {
+      "language": "es",
+      "value": "Everybody's Free (To Feel Good)"
+    },
+    "eu": {
+      "language": "eu",
+      "value": "Everybody's Free (To Feel Good)"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "Everybody's Free (To Feel Good)"
+    },
+    "hu": {
+      "language": "hu",
+      "value": "Everybody's Free (To Feel Good)"
+    },
+    "it": {
+      "language": "it",
+      "value": "Everybody's Free (To Feel Good)"
+    },
+    "nb": {
+      "language": "nb",
+      "value": "Everybody's Free (To Feel Good)"
+    },
+    "nn": {
+      "language": "nn",
+      "value": "Everybody's Free (To Feel Good)"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "Everybody's Free (To Feel Good)"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "Everybody's Free (To Feel Good)"
+    },
+    "ro": {
+      "language": "ro",
+      "value": "Everybody's Free (To Feel Good)"
+    },
+    "se": {
+      "language": "se",
+      "value": "Everybody's Free (To Feel Good)"
+    },
+    "sq": {
+      "language": "sq",
+      "value": "Everybody's Free (To Feel Good)"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "Everybody's Free (To Feel Good)"
+    },
+    "tr": {
+      "language": "tr",
+      "value": "Everybody's Free (To Feel Good)"
+    },
+    "he": {
+      "language": "he",
+      "value": "Everybody's Free (To Feel Good)"
+    }
+  },
+  "descriptions": {
+    "de": {
+      "language": "de",
+      "value": "Lied von Rozalla"
+    },
+    "en": {
+      "language": "en",
+      "value": "1991 single by Rozalla"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "lied van Rozalla"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "cantar de Rozalla"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "chanson de Rozalla, sortie en 1991"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "singel av Rozalla från 1991"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "a3b1c81a200ebd171cfe0197edc2228aa7d3162d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 465199,
+              "id": "Q465199"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P805": [
+            {
+              "snaktype": "value",
+              "property": "P805",
+              "hash": "4b52877682c58ab8da7fcd81c5de3177958735ad",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 107484071,
+                  "id": "Q107484071"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P577": [
+            {
+              "snaktype": "value",
+              "property": "P577",
+              "hash": "78900812102608180c79f2feb02b2ea7840b3fd1",
+              "datavalue": {
+                "value": {
+                  "time": "+1991-00-00T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 9,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P805", "P577"],
+        "id": "q3061507$59859C8B-61E4-4F86-A81F-2F827C636C54",
+        "rank": "preferred",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "f26d8f336722fb9004dbde5c6c6c90a35a7e007d",
+          "datavalue": {
+            "value": {
+              "time": "+1991-08-26T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q3061507$6E36280D-C1A0-42F6-A27B-5CA3B9BEFD6A",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "6bc32f2441ca2da152a10297ba6c3487e286ae77",
+          "datavalue": {
+            "value": "/m/02r6chv",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q3061507$DFD94F2F-D4D7-43BC-8507-17AAC6DC148C",
+        "rank": "normal"
+      }
+    ],
+    "P435": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P435",
+          "hash": "f31c5d9b7b6590dbb41e3c1d8e16660489adbdfb",
+          "datavalue": {
+            "value": "765208b6-5059-3f20-bd69-be8c6e7df0da",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "b975a29aae77757b48d9913546b4b0f6b0b420ed",
+              "datavalue": {
+                "value": "Everybody’s Free (to Feel Good)",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q3061507$523406ab-461b-f6b7-7101-96316e4f4ca7",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2824a387fd39770c5350dc499d35d17424fe48e7",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "623cc8f0e2f65afe4d66b91962d354a2f3aa9a27",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 14005,
+                      "id": "Q14005"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "248391a76f67172f584676e35764f8e1ca4d3f8b",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-07-11T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "33d81754a79b2dab75d17c156313b0f8f0f4f086",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 134556,
+              "id": "Q134556"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3061507$e93b95ba-48b6-b6c7-6b46-d579407a0398",
+        "rank": "normal"
+      }
+    ],
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "54479d3a9b8e4d9c70fb6a36cd7fc27eea1ec246",
+          "datavalue": {
+            "value": {
+              "text": "Everybody's Free (To Feel Good)",
+              "language": "en"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q3061507$7937ed87-415d-4805-cbc9-73cbd0babee1",
+        "rank": "normal"
+      }
+    ],
+    "P407": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P407",
+          "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1860,
+              "id": "Q1860"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3061507$b7e53599-4f6d-4386-5627-ae0486c8619a",
+        "rank": "normal"
+      }
+    ],
+    "P2908": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2908",
+          "hash": "6214494b215a3b00f1676b04f9b32b273195a569",
+          "datavalue": {
+            "value": "19068",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "d9660f3ec4da2eabf0ce6ecfea50bb5624951696",
+              "datavalue": {
+                "value": "Everybody's Free (To Feel Good)",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q3061507$8fda2660-4cb5-a6aa-e578-aecafb55d91c",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "4733a98bd4660394f315609a29cf0bc1dc35fc16",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "847f6a0df0c033421ff7ac71a236eb1fab6edd2e",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 39871790,
+                      "id": "Q39871790"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "248391a76f67172f584676e35764f8e1ca4d3f8b",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-07-11T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P1827": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1827",
+          "hash": "1eb2af9be661aadc414618dc363c3fa39d7a6054",
+          "datavalue": {
+            "value": "T0101432863",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "f71efb700ac5913d9af80fb08dea99ea8ea461f0",
+              "datavalue": {
+                "value": "EVERYBODY'S FREE (TO FEEL GOOD)",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q3061507$8407719d-464f-845c-9c99-6ed033997c55",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "81083290bb68132a08437a740bfc2ea2aa27dba1",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "af862b26ef430bd625da6804c7782b0a3932f531",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 82271165,
+                      "id": "Q82271165"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "248391a76f67172f584676e35764f8e1ca4d3f8b",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-07-11T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1827",
+          "hash": "58b6a46f66f55f9554237f49880100ad0e558b58",
+          "datavalue": {
+            "value": "T0101593605",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "731a80dbf621b57bd16904a2d805bf13d3d4c677",
+              "datavalue": {
+                "value": "EVERYBODY S FREE TO FEEL GOOD",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q3061507$ccf03950-4858-8d87-d5eb-6c7a8d6e6079",
+        "rank": "preferred",
+        "references": [
+          {
+            "hash": "81083290bb68132a08437a740bfc2ea2aa27dba1",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "af862b26ef430bd625da6804c7782b0a3932f531",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 82271165,
+                      "id": "Q82271165"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "248391a76f67172f584676e35764f8e1ca4d3f8b",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-07-11T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P86": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P86",
+          "hash": "8099ea5e4ef5b09309b1652037877262463a5a8b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 107483948,
+              "id": "Q107483948"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3061507$27158f59-46d6-949e-4bdb-7ac5d6721177",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "e11e0922c1e20ea201f70a3b47656b2237acb624",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "af862b26ef430bd625da6804c7782b0a3932f531",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 82271165,
+                      "id": "Q82271165"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P1827": [
+                {
+                  "snaktype": "value",
+                  "property": "P1827",
+                  "hash": "1eb2af9be661aadc414618dc363c3fa39d7a6054",
+                  "datavalue": {
+                    "value": "T0101432863",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "248391a76f67172f584676e35764f8e1ca4d3f8b",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-07-11T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P1827", "P813"]
+          },
+          {
+            "hash": "604ac37c08ec9ca6323ef86675fa26994be83f85",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "af862b26ef430bd625da6804c7782b0a3932f531",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 82271165,
+                      "id": "Q82271165"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P1827": [
+                {
+                  "snaktype": "value",
+                  "property": "P1827",
+                  "hash": "58b6a46f66f55f9554237f49880100ad0e558b58",
+                  "datavalue": {
+                    "value": "T0101593605",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "248391a76f67172f584676e35764f8e1ca4d3f8b",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-07-11T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P1827", "P813"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P86",
+          "hash": "4d1eaeae7025d87d0d258335ec30ca6b6a2689c9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 107483978,
+              "id": "Q107483978"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3061507$b320ee8b-489e-830f-8a5b-78f7869b7b58",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "e11e0922c1e20ea201f70a3b47656b2237acb624",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "af862b26ef430bd625da6804c7782b0a3932f531",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 82271165,
+                      "id": "Q82271165"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P1827": [
+                {
+                  "snaktype": "value",
+                  "property": "P1827",
+                  "hash": "1eb2af9be661aadc414618dc363c3fa39d7a6054",
+                  "datavalue": {
+                    "value": "T0101432863",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "248391a76f67172f584676e35764f8e1ca4d3f8b",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-07-11T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P1827", "P813"]
+          },
+          {
+            "hash": "604ac37c08ec9ca6323ef86675fa26994be83f85",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "af862b26ef430bd625da6804c7782b0a3932f531",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 82271165,
+                      "id": "Q82271165"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P1827": [
+                {
+                  "snaktype": "value",
+                  "property": "P1827",
+                  "hash": "58b6a46f66f55f9554237f49880100ad0e558b58",
+                  "datavalue": {
+                    "value": "T0101593605",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "248391a76f67172f584676e35764f8e1ca4d3f8b",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-07-11T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P1827", "P813"]
+          }
+        ]
+      }
+    ],
+    "P676": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P676",
+          "hash": "cc2a3af4fa6012474d355b359b2340c1f2fc00d6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 107483948,
+              "id": "Q107483948"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3061507$68f2b5ca-4a04-7cf9-4347-9b34f10a655b",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "e11e0922c1e20ea201f70a3b47656b2237acb624",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "af862b26ef430bd625da6804c7782b0a3932f531",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 82271165,
+                      "id": "Q82271165"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P1827": [
+                {
+                  "snaktype": "value",
+                  "property": "P1827",
+                  "hash": "1eb2af9be661aadc414618dc363c3fa39d7a6054",
+                  "datavalue": {
+                    "value": "T0101432863",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "248391a76f67172f584676e35764f8e1ca4d3f8b",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-07-11T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P1827", "P813"]
+          },
+          {
+            "hash": "604ac37c08ec9ca6323ef86675fa26994be83f85",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "af862b26ef430bd625da6804c7782b0a3932f531",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 82271165,
+                      "id": "Q82271165"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P1827": [
+                {
+                  "snaktype": "value",
+                  "property": "P1827",
+                  "hash": "58b6a46f66f55f9554237f49880100ad0e558b58",
+                  "datavalue": {
+                    "value": "T0101593605",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "248391a76f67172f584676e35764f8e1ca4d3f8b",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-07-11T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P1827", "P813"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P676",
+          "hash": "7ad76dc62e61b7d57c0cbfb3893a24f2d09bed22",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 107483978,
+              "id": "Q107483978"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3061507$1cf2ec5b-411c-37cf-0692-c188073193f9",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "e11e0922c1e20ea201f70a3b47656b2237acb624",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "af862b26ef430bd625da6804c7782b0a3932f531",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 82271165,
+                      "id": "Q82271165"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P1827": [
+                {
+                  "snaktype": "value",
+                  "property": "P1827",
+                  "hash": "1eb2af9be661aadc414618dc363c3fa39d7a6054",
+                  "datavalue": {
+                    "value": "T0101432863",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "248391a76f67172f584676e35764f8e1ca4d3f8b",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-07-11T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P1827", "P813"]
+          },
+          {
+            "hash": "604ac37c08ec9ca6323ef86675fa26994be83f85",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "af862b26ef430bd625da6804c7782b0a3932f531",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 82271165,
+                      "id": "Q82271165"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P1827": [
+                {
+                  "snaktype": "value",
+                  "property": "P1827",
+                  "hash": "58b6a46f66f55f9554237f49880100ad0e558b58",
+                  "datavalue": {
+                    "value": "T0101593605",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "248391a76f67172f584676e35764f8e1ca4d3f8b",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-07-11T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P1827", "P813"]
+          }
+        ]
+      }
+    ],
+    "P162": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P162",
+          "hash": "3f24f544e57d89224db0ab4bb4468dae6e916b95",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 106010005,
+              "id": "Q106010005"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3061507$e8294bed-4363-cdc3-c149-4580bbdcbbc4",
+        "rank": "normal"
+      }
+    ],
+    "P4969": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4969",
+          "hash": "544c67804d8644d4146fcfe8e90c649960930ae9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 107483769,
+              "id": "Q107483769"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P3831": [
+            {
+              "snaktype": "value",
+              "property": "P3831",
+              "hash": "d39f3529e64b09006dd27b50eda0ca97d1073bdb",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 91192165,
+                  "id": "Q91192165"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P3831"],
+        "id": "Q3061507$e38dc5ab-443e-b54a-fc6c-83402b969a72",
+        "rank": "normal"
+      }
+    ],
+    "P1651": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1651",
+          "hash": "169272fbc851536bb2883ad6a5793527022b776f",
+          "datavalue": {
+            "value": "hHvfOeS5SwA",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1476": [
+            {
+              "snaktype": "value",
+              "property": "P1476",
+              "hash": "61ac9f4cc22f97e9fa36123e4d2bf756b4efa05d",
+              "datavalue": {
+                "value": {
+                  "text": "Rozalla - Everybody's Free (To Feel Good) [Official Video UK/European Version, 1991]",
+                  "language": "en"
+                },
+                "type": "monolingualtext"
+              },
+              "datatype": "monolingualtext"
+            }
+          ],
+          "P5436": [
+            {
+              "snaktype": "value",
+              "property": "P5436",
+              "hash": "a7a92c3a35fe0e397267c78f36baf65a9a8e52b2",
+              "datavalue": {
+                "value": {
+                  "amount": "+10984",
+                  "unit": "1"
+                },
+                "type": "quantity"
+              },
+              "datatype": "quantity"
+            }
+          ],
+          "P577": [
+            {
+              "snaktype": "value",
+              "property": "P577",
+              "hash": "8c1aff5c098237fa171575450836497020f8a0f2",
+              "datavalue": {
+                "value": {
+                  "time": "+2015-09-13T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P2047": [
+            {
+              "snaktype": "value",
+              "property": "P2047",
+              "hash": "0ca9a4f7ab2571a372c8eba8c5cea640418be235",
+              "datavalue": {
+                "value": {
+                  "amount": "+211.0",
+                  "unit": "http://www.wikidata.org/entity/Q11574"
+                },
+                "type": "quantity"
+              },
+              "datatype": "quantity"
+            }
+          ],
+          "P2397": [
+            {
+              "snaktype": "value",
+              "property": "P2397",
+              "hash": "08f5ba1f14c5cf2bad903ba8cd58560aa616df8b",
+              "datavalue": {
+                "value": "UC1RkhzWLKiP_UrVe5PilPGw",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ],
+          "P585": [
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "0749571d41df7f1b1d67e2d1a7c329ebce4b6fc3",
+              "datavalue": {
+                "value": {
+                  "time": "+2021-11-17T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1476", "P5436", "P577", "P2047", "P2397", "P585"],
+        "id": "Q3061507$0c31154b-4729-f5d5-19bc-177b58b14758",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1651",
+          "hash": "c666b0a7802c66b1bedcf73c48945f9542e6d33c",
+          "datavalue": {
+            "value": "LM9kN4v065Y",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1476": [
+            {
+              "snaktype": "value",
+              "property": "P1476",
+              "hash": "8aaeeaa0cb2bb79b2cca6ab56c246521a2b6f43b",
+              "datavalue": {
+                "value": {
+                  "text": "Rozalla - Everybody's Free (To Feel Good) [Official Video US Version, 1991]",
+                  "language": "en"
+                },
+                "type": "monolingualtext"
+              },
+              "datatype": "monolingualtext"
+            }
+          ],
+          "P5436": [
+            {
+              "snaktype": "value",
+              "property": "P5436",
+              "hash": "c89628d6366ef55443a39a7966b04d5a72a89314",
+              "datavalue": {
+                "value": {
+                  "amount": "+492425",
+                  "unit": "1"
+                },
+                "type": "quantity"
+              },
+              "datatype": "quantity"
+            }
+          ],
+          "P577": [
+            {
+              "snaktype": "value",
+              "property": "P577",
+              "hash": "8c1aff5c098237fa171575450836497020f8a0f2",
+              "datavalue": {
+                "value": {
+                  "time": "+2015-09-13T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P2047": [
+            {
+              "snaktype": "value",
+              "property": "P2047",
+              "hash": "a39cddfe2cbe391b9528d52e5a909d0c979e2015",
+              "datavalue": {
+                "value": {
+                  "amount": "+210.0",
+                  "unit": "http://www.wikidata.org/entity/Q11574"
+                },
+                "type": "quantity"
+              },
+              "datatype": "quantity"
+            }
+          ],
+          "P2397": [
+            {
+              "snaktype": "value",
+              "property": "P2397",
+              "hash": "08f5ba1f14c5cf2bad903ba8cd58560aa616df8b",
+              "datavalue": {
+                "value": "UC1RkhzWLKiP_UrVe5PilPGw",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ],
+          "P585": [
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "b9d6987707542a4a05d73a64c6d936e60d9af7c7",
+              "datavalue": {
+                "value": {
+                  "time": "+2021-11-24T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1476", "P5436", "P577", "P2047", "P2397", "P585"],
+        "id": "Q3061507$a0132939-42f3-2afc-f3ff-b5b5d6c4ca92",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "a50bf034809de27f4184f427043328f7bc917a3f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5417654,
+              "id": "Q5417654"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3061507$ce81bc24-4f3e-dfef-fa10-691f1e733e54",
+        "rank": "normal"
+      }
+    ],
+    "P264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P264",
+          "hash": "2c609d6ff4584aebcbddebaa55edbb3d88b5144f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 107484311,
+              "id": "Q107484311"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3061507$a426bce5-4fd0-c1b5-2a5f-0933ffb9ecef",
+        "rank": "normal"
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "ef904f3eb6dddb3dd2098846b77a2a6571266b10",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 216961,
+              "id": "Q216961"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3061507$740dbbf9-4915-f3b7-8b22-adbc5e6c4916",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "b6aa28d7daa9251de521e2735a6edec68205ae2b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 663519,
+              "id": "Q663519"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3061507$de36fd6a-4870-9e9e-82cb-0baa7974cf12",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "e6b7161282e52a65b83de079334fd94333cd44f5",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 898709,
+              "id": "Q898709"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3061507$f0eede1c-4049-a194-6d4f-2672975d9595",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "011aa62ee943064e00acf9856287e82ddae0aed2",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 30917612,
+              "id": "Q30917612"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3061507$3234d10c-4da5-38c8-c30d-fcd5c6f4ea88",
+        "rank": "normal"
+      }
+    ],
+    "P1954": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1954",
+          "hash": "eb6a86ede427bafb1c3e66b64176e99f74a2c44f",
+          "datavalue": {
+            "value": "101795",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q3061507$56fcb0d3-4109-c8f2-b51f-9740905f5903",
+        "rank": "normal"
+      }
+    ],
+    "P436": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P436",
+          "hash": "4068501cecf3a1c5f2381da656c0ad5b2b2d7a4b",
+          "datavalue": {
+            "value": "93ea9a65-a337-359c-8c23-1af439ce2672",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q3061507$97a0e2b5-4789-6ada-ee68-e6c95b9e09d0",
+        "rank": "normal"
+      }
+    ],
+    "P13602": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P13602",
+          "hash": "270cf0fa6894dcd0bb01e1c57d25528ac6573483",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 56280572,
+              "id": "Q56280572"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3061507$E9BF8E18-5ACD-4ABD-BAB3-D3AE13DCD5AD",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "frwiki": {
+      "site": "frwiki",
+      "title": "Everybody's Free (To Feel Good)",
+      "badges": [],
+      "url": "https://fr.wikipedia.org/wiki/Everybody%27s_Free_(To_Feel_Good)"
+    },
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Everybody's Free (To Feel Good)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Everybody%27s_Free_(To_Feel_Good)"
+    },
+    "nlwiki": {
+      "site": "nlwiki",
+      "title": "Everybody's Free (To Feel Good)",
+      "badges": [],
+      "url": "https://nl.wikipedia.org/wiki/Everybody%27s_Free_(To_Feel_Good)"
+    },
+    "hewiki": {
+      "site": "hewiki",
+      "title": "Everybody's Free (To Feel Good)",
+      "badges": [],
+      "url": "https://he.wikipedia.org/wiki/Everybody%27s_Free_(To_Feel_Good)"
+    },
+    "svwiki": {
+      "site": "svwiki",
+      "title": "Everybody's Free (To Feel Good)",
+      "badges": [],
+      "url": "https://sv.wikipedia.org/wiki/Everybody%27s_Free_(To_Feel_Good)"
+    }
+  }
+}

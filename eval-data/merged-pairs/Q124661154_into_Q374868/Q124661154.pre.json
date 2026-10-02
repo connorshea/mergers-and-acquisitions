@@ -1,0 +1,202 @@
+{
+  "pageid": 118811765,
+  "ns": 0,
+  "title": "Q124661154",
+  "lastrevid": 2087563676,
+  "modified": "2024-02-26T07:44:42Z",
+  "type": "item",
+  "id": "Q124661154",
+  "labels": {
+    "nl": {
+      "language": "nl",
+      "value": "Myrkskog"
+    },
+    "en": {
+      "language": "en",
+      "value": "Myrkskog"
+    },
+    "en-us": {
+      "language": "en-us",
+      "value": "Myrkskog"
+    },
+    "de": {
+      "language": "de",
+      "value": "Myrkskog"
+    }
+  },
+  "descriptions": {
+    "nl": {
+      "language": "nl",
+      "value": "Muziekgroep uit Noorwegen"
+    },
+    "en": {
+      "language": "en",
+      "value": "Band from Norway"
+    },
+    "de": {
+      "language": "de",
+      "value": "Norwegische Band"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "3c9f9d423bb4b1080c7bbebd83a3f9cce18cb443",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 215380,
+              "id": "Q215380"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q124661154$b925422b-4f13-866e-8a37-59d7a75b422c",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9a5f1e4c2cba51f5c893dee7c24174bb325d0bc3",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "e31c2a8713212debfbc4bb07f1e8b65c9ec21953",
+                  "datavalue": {
+                    "value": "https://www.metal-archives.com/bands/Myrkskog/1134",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "aedee50c025bda74b01554c4130277c62e5661dd",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 20,
+              "id": "Q20"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P131": [
+            {
+              "snaktype": "value",
+              "property": "P131",
+              "hash": "233f43afa83ba08ed985adeb1366bae977c2a61a",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 56407178,
+                  "id": "Q56407178"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            {
+              "snaktype": "value",
+              "property": "P131",
+              "hash": "62409d07870c51a600f3806e7d82bb3ee84d428e",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 26525,
+                  "id": "Q26525"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P131"],
+        "id": "Q124661154$7aca25b0-4690-058f-08fd-90b7ecd27111",
+        "rank": "normal"
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "0e5554408666eddf5d44477cd4adc2892fa01b1b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 132438,
+              "id": "Q132438"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q124661154$48def99a-4691-18eb-c4a4-268fca78f67b",
+        "rank": "normal"
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "c792e78bdeb0d29b0a32333c6d7b6b9afc37957e",
+          "datavalue": {
+            "value": {
+              "time": "+1993-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q124661154$3d4cd4ff-44cd-e63e-3cc8-552a359213b5",
+        "rank": "normal"
+      }
+    ],
+    "P1953": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1953",
+          "hash": "ec65df724a4a1f6f1ed2c846770851924be0749d",
+          "datavalue": {
+            "value": "272778",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q124661154$61c19c77-4510-0046-09d3-b265920c55f6",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

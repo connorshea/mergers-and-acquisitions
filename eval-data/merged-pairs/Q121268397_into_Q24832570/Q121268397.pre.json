@@ -1,0 +1,265 @@
+{
+  "pageid": 115686805,
+  "ns": 0,
+  "title": "Q121268397",
+  "lastrevid": 1948237033,
+  "modified": "2023-08-06T20:02:10Z",
+  "type": "item",
+  "id": "Q121268397",
+  "labels": {
+    "zh": {
+      "language": "zh",
+      "value": "上海莉莉丝科技股份有限公司"
+    }
+  },
+  "descriptions": {
+    "zh": {
+      "language": "zh",
+      "value": "公司"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "شركة صينية"
+    }
+  },
+  "aliases": {
+    "zh": [
+      {
+        "language": "zh",
+        "value": "莉莉丝游戏"
+      },
+      {
+        "language": "zh",
+        "value": "王信文"
+      }
+    ],
+    "en": [
+      {
+        "language": "en",
+        "value": "Shanghai Lilith Technology Corporation"
+      },
+      {
+        "language": "en",
+        "value": "Lilith Games"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "326e3d41d1e9c34715e880be6e1c6a1e822e4317",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4830453,
+              "id": "Q4830453"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q121268397$121e7065-4670-1555-f5e3-61e7bde0a001",
+        "rank": "normal"
+      }
+    ],
+    "P159": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P159",
+          "hash": "3b1054ac9e77aeebff5bd38fe62f3e6754b7f0c6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 662101,
+              "id": "Q662101"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P6375": [
+            {
+              "snaktype": "value",
+              "property": "P6375",
+              "hash": "9eb95c154503bd686b50e8e64738f7f80405cc2b",
+              "datavalue": {
+                "value": {
+                  "text": "胜辛南路500号15幢2055室",
+                  "language": "zh-hans"
+                },
+                "type": "monolingualtext"
+              },
+              "datatype": "monolingualtext"
+            }
+          ]
+        },
+        "qualifiers-order": ["P6375"],
+        "id": "Q121268397$10a8908b-454f-43f6-be7f-b5db31d65cbe",
+        "rank": "normal"
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "30e172796b0726589e92b001c327f5d55fa0782e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 148,
+              "id": "Q148"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q121268397$15b94c41-433f-532c-920a-539174162f40",
+        "rank": "normal"
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "c535e1568c81ca57776e21787b0755e7768043e2",
+          "datavalue": {
+            "value": {
+              "time": "+2013-05-10T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q121268397$6b63401a-4b13-774f-4f66-5fe814a53b71",
+        "rank": "normal"
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "b7160e31bb73ce43311f2a989c74ccd79539e065",
+          "datavalue": {
+            "value": "https://www.lilith.sh/",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q121268397$d123a131-46d9-5bcf-31fc-fc8b66eafe48",
+        "rank": "normal"
+      }
+    ],
+    "P1454": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1454",
+          "hash": "7467be367477779474c61b7f03a8da2cace7187a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 97174998,
+              "id": "Q97174998"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q121268397$82d8e007-47e9-0314-0315-bf6d2e821622",
+        "rank": "normal"
+      }
+    ],
+    "P452": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P452",
+          "hash": "fee5501462a034704662eb852d98092dba1c8821",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1368944,
+              "id": "Q1368944"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q121268397$6ec89ea0-4108-b56f-789a-57e600c41857",
+        "rank": "normal"
+      }
+    ],
+    "P6795": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6795",
+          "hash": "2596fc5e683e1b8d38988bc4f232f06dd61062d0",
+          "datavalue": {
+            "value": "91310114067818616X",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q121268397$2b3df4ce-47ae-b5a9-143a-84968e744010",
+        "rank": "normal"
+      }
+    ],
+    "P7650": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7650",
+          "hash": "4202f6ddc9af73c0b19cbbfc57c1fea137833854",
+          "datavalue": {
+            "value": "LilithGames",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q121268397$31921b11-42bc-aae4-cef7-630bb724a8b9",
+        "rank": "normal"
+      }
+    ],
+    "P7477": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7477",
+          "hash": "e22a9b00c23c83b3884e3af1e56cab46dd4f0be5",
+          "datavalue": {
+            "value": "沪ICP备15032787号-1",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q121268397$355efd2a-4c97-3973-1871-fb504191d7d6",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

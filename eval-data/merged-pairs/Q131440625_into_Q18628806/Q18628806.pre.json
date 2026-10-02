@@ -1,0 +1,429 @@
+{
+  "pageid": 20160056,
+  "ns": 0,
+  "title": "Q18628806",
+  "lastrevid": 2332564046,
+  "modified": "2025-03-30T15:58:10Z",
+  "type": "item",
+  "id": "Q18628806",
+  "labels": {
+    "de": {
+      "language": "de",
+      "value": "Lost & Found Records"
+    },
+    "en": {
+      "language": "en",
+      "value": "Lost & Found Records"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Lost & Found Records"
+    },
+    "ksh": {
+      "language": "ksh",
+      "value": "Lost & Found Records"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "Lost & Found Records"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "Lost & Found Records"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "Lost & Found Records"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "German record label"
+    },
+    "de": {
+      "language": "de",
+      "value": "deutsches Plattenlabel"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "discogràfica alemanya"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "ef7247b704f4ec0a7df39e83306bb388fea17d5f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 183,
+              "id": "Q183"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q18628806$814D7B05-C3AC-47F3-8EE3-E83624E0DC4A",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9a24f7c0208b05d6be97077d855671d1dfdbc0dd",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 48183,
+                      "id": "Q48183"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "0a32ee3827c9ccab7081419f58b4d3a0601d6b62",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 18127,
+              "id": "Q18127"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q18628806$38e8bc34-4baa-bc34-082d-de566a355f06",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "e39928b26d6c1a2c7ed294e07be70ccfc9473f5b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1542343,
+              "id": "Q1542343"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q18628806$0bc5481a-4fee-ecf1-39fd-819029e7cbdc",
+        "rank": "normal"
+      }
+    ],
+    "P159": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P159",
+          "hash": "bf152743147e2048e9eb11b5579538b79a1069e6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 505948,
+              "id": "Q505948"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q18628806$563cef4d-463b-3f9f-e422-6648f07b7e6d",
+        "rank": "normal"
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "77dab1ec710e284a2ae853b11d62ba95f3dcaddb",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3071,
+              "id": "Q3071"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q18628806$1bee4943-4508-e6c8-0981-aaa8ece592e5",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "1dc54252c03dbf231424919e43cf5ddde7fc2b14",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 10922,
+              "id": "Q10922"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q18628806$2d2ac0f5-411a-f687-8812-1d79c1d94046",
+        "rank": "normal"
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "46345a9314af56c92ec0f5722eb57836d7ad4a18",
+          "datavalue": {
+            "value": {
+              "time": "+1988-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q18628806$7cc1b7c8-4ede-9de6-3089-1517976170f3",
+        "rank": "normal"
+      }
+    ],
+    "P1955": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1955",
+          "hash": "852fa5125fd474d438fc4f56396b3a8a18ef96ea",
+          "datavalue": {
+            "value": "37476",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q18628806$c58ab4ac-4f7a-dfa9-42c3-40ab74f69f93",
+        "rank": "normal"
+      }
+    ],
+    "P6375": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6375",
+          "hash": "01808363706a6534eee9546d4e3ea6d2bbc9939e",
+          "datavalue": {
+            "value": {
+              "text": "Lost & Found Records GmbH, Oegenbosteler Str. 9, 30900 Wedemark, Germany",
+              "language": "de"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q18628806$5522f216-43db-0e76-a3a5-54ea330764d8",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "6b2b737e3fc3895b0179ec423e22e4b115c83f9a",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "053d7680481b536145ff53898ed129bd304bb193",
+                  "datavalue": {
+                    "value": "https://www.discogs.com/label/37476",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P968": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P968",
+          "hash": "65f799f98c229446a40b7b6db81c54d36a4e2baa",
+          "datavalue": {
+            "value": "mailto:info@LOSTandFOUND-RECORDS.de",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q18628806$f9282b97-4d5b-bea0-589a-0c5b54783d79",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "6b2b737e3fc3895b0179ec423e22e4b115c83f9a",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "053d7680481b536145ff53898ed129bd304bb193",
+                  "datavalue": {
+                    "value": "https://www.discogs.com/label/37476",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "2496583c4b901538bdbe643dfe13caeed19f5884",
+          "datavalue": {
+            "value": "https://lostandfound-records.de/",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "46bfd327b830f66f7061ea92d1be430c135fa91f",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 188,
+                  "id": "Q188"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P407"],
+        "id": "Q18628806$635eb697-4485-37d1-9cf2-945a4df84701",
+        "rank": "normal"
+      }
+    ],
+    "P973": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P973",
+          "hash": "bbdbfaacc62facf0b0e3a474c4547d2d3fdbd215",
+          "datavalue": {
+            "value": "http://hardcorediscography.tripod.com/id11.html",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 1860,
+                  "id": "Q1860"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P407"],
+        "id": "Q18628806$4c3223f3-48f7-680c-1950-83923211e6b5",
+        "rank": "normal"
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "667c52c34d2d27b89c09feb0d2c653857a5d8318",
+          "datavalue": {
+            "value": "/m/0dp5d4k",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q18628806$DBDCBF92-8BF8-40CF-A990-2B802C6325E1",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "dewiki": {
+      "site": "dewiki",
+      "title": "Lost & Found Records",
+      "badges": [],
+      "url": "https://de.wikipedia.org/wiki/Lost_%26_Found_Records"
+    },
+    "frwiki": {
+      "site": "frwiki",
+      "title": "Lost & Found Records",
+      "badges": [],
+      "url": "https://fr.wikipedia.org/wiki/Lost_%26_Found_Records"
+    },
+    "cawiki": {
+      "site": "cawiki",
+      "title": "Lost & Found Records",
+      "badges": [],
+      "url": "https://ca.wikipedia.org/wiki/Lost_%26_Found_Records"
+    }
+  }
+}

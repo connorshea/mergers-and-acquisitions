@@ -1,0 +1,401 @@
+{
+  "pageid": 133793280,
+  "ns": 0,
+  "title": "Q140356096",
+  "lastrevid": 2531051001,
+  "modified": "2026-08-13T22:14:47Z",
+  "type": "item",
+  "id": "Q140356096",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Aiden Pearce"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Aiden Pearce"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "protagonist of the videogame Watch Dogs"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "f963dc19bd5650f5822ec55162163e4a826d8cf0",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 15632617,
+              "id": "Q15632617"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q140356096$63d5bb00-46ac-6f64-a2d9-a6f641dbcd6f",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "8783a9391733b599aef753a56b06af750c22b23b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1569167,
+              "id": "Q1569167"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q140356096$aa411c6e-4a26-d3e7-b8c9-b9890469e75a",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q140356096$3343301e-47d9-24fe-0861-6ab91a6a8daf",
+        "rank": "normal"
+      }
+    ],
+    "P1441": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1441",
+          "hash": "c3b7330e7674ecede7eb234663d5efa19de3b503",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1371726,
+              "id": "Q1371726"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P5800": [
+            {
+              "snaktype": "value",
+              "property": "P5800",
+              "hash": "afed9751e23af2354b04716a9670fe0529577675",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 215972,
+                  "id": "Q215972"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P5800"],
+        "id": "Q140356096$950602d6-471e-581b-bc6e-b09181901db1",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1441",
+          "hash": "d01c1996a13defba99d13579e5517ca6be9e455c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 24455756,
+              "id": "Q24455756"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P5800": [
+            {
+              "snaktype": "value",
+              "property": "P5800",
+              "hash": "9c08d8680a1d0b919903cf3ca0a0cf2510ffef64",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 27623618,
+                  "id": "Q27623618"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P5800"],
+        "id": "Q140356096$9d1bcdd3-4144-1fd7-536b-21a0766472a1",
+        "rank": "normal"
+      }
+    ],
+    "P735": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P735",
+          "hash": "d6b669b6e50ee48a6dfc14c4b6ff6a10668445e9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 18655678,
+              "id": "Q18655678"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q140356096$d27507c5-485d-2992-2468-f5756f8ceabe",
+        "rank": "normal"
+      }
+    ],
+    "P734": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P734",
+          "hash": "fd317912fcf94d3e32749c68fae14e3e54e3cfc4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 15897006,
+              "id": "Q15897006"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q140356096$722424b1-441b-c277-08d7-12f73aa8f864",
+        "rank": "normal"
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "52d0408c7915122e0519a22577f0cbdcb28f749b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 30,
+              "id": "Q30"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q140356096$b0105323-4301-9d3e-2667-62acdb362f4c",
+        "rank": "normal"
+      }
+    ],
+    "P2541": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2541",
+          "hash": "a2295021dc62843068537d806b8cfd6f778e0a7f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1297,
+              "id": "Q1297"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q140356096$1b32bfe0-4108-23bf-95d8-b101a1087884",
+        "rank": "normal"
+      }
+    ],
+    "P13632": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P13632",
+          "hash": "cc4a47d8bc270154b635721a655b6112d10527d4",
+          "datavalue": {
+            "value": "Pyrkon 2026 88 - Aiden Pierce.jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q140356096$ec020704-467b-d019-6590-2183b161f856",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P13632",
+          "hash": "8e6427ada5ca466e80143470fa751ce7e3d50d16",
+          "datavalue": {
+            "value": "Otakuthon 2014- Aiden Pearce (14843192077).jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q140356096$8cfa2910-40fd-80b2-f555-5a930756209c",
+        "rank": "normal"
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "b1c46e340418bd188e97751828cad56fb83bdac9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1487,
+              "id": "Q1487"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q140356096$cbf1963c-4462-9e09-5d50-53cc242b3920",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "d4c681bbe2684b50d1abe2e27d7d74d82e11b122",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3190387,
+              "id": "Q3190387"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q140356096$e559ddf1-40d9-2acb-8af8-646da1520bec",
+        "rank": "normal"
+      }
+    ],
+    "P6262": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6262",
+          "hash": "41282736a377effa7bfa2c560e4378bac23b53b1",
+          "datavalue": {
+            "value": "watchdogs:Aiden_Pearce",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "501e994fe545e401caa8981a9583500b9a06301b",
+              "datavalue": {
+                "value": "Aiden Pearce",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ],
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 1860,
+                  "id": "Q1860"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P9675": [
+            {
+              "snaktype": "value",
+              "property": "P9675",
+              "hash": "7765b3a72e9a47557d311c48677674461e4a59e3",
+              "datavalue": {
+                "value": "2411",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810", "P407", "P9675"],
+        "id": "Q140356096$4d6e7557-4c87-165e-bf25-dc9868eee8f9",
+        "rank": "normal"
+      }
+    ],
+    "P14750": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P14750",
+          "hash": "cda273514d090e535a0a34ece7e35c355ab6bebf",
+          "datavalue": {
+            "value": "1413-3C09-8C87-B08A-A83E",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q140356096$1E22B373-E83E-457E-9824-E05CB2F1597B",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

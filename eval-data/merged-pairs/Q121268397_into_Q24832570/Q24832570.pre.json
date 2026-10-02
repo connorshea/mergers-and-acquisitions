@@ -1,0 +1,233 @@
+{
+  "pageid": 26794249,
+  "ns": 0,
+  "title": "Q24832570",
+  "lastrevid": 2252726066,
+  "modified": "2024-09-25T10:46:16Z",
+  "type": "item",
+  "id": "Q24832570",
+  "labels": {
+    "zh": {
+      "language": "zh",
+      "value": "莉莉丝游戏"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "上海莉莉絲網絡科技"
+    },
+    "en": {
+      "language": "en",
+      "value": "Shanghai Lilith Technology Corporation"
+    }
+  },
+  "descriptions": {
+    "zh": {
+      "language": "zh",
+      "value": "中国大陆游戏官司"
+    }
+  },
+  "aliases": {
+    "zh": [
+      {
+        "language": "zh",
+        "value": "上海莉莉丝网络科技有限公司"
+      }
+    ],
+    "en": [
+      {
+        "language": "en",
+        "value": "Lilith Games"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "b7fc6c9f46efeede3bf483f3a5b0c45c7be77936",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 783794,
+              "id": "Q783794"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q24832570$45200C61-A464-4274-9B47-DBF52B52828B",
+        "rank": "normal"
+      }
+    ],
+    "P1454": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1454",
+          "hash": "7467be367477779474c61b7f03a8da2cace7187a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 97174998,
+              "id": "Q97174998"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q24832570$CE637BE9-EF43-4713-A66F-22A6E4456552",
+        "rank": "normal"
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "f0c45ef368cff7299c46a422656385d6c82d4d7a",
+          "datavalue": {
+            "value": "/g/11cn9zqm_0",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q24832570$330E5F2B-56BE-4C82-BF63-34712E4E41EF",
+        "rank": "normal"
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "30e172796b0726589e92b001c327f5d55fa0782e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 148,
+              "id": "Q148"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q24832570$b9e26bf7-49e1-6103-5b02-103914c6ebb5",
+        "rank": "normal"
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "c535e1568c81ca57776e21787b0755e7768043e2",
+          "datavalue": {
+            "value": {
+              "time": "+2013-05-10T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q24832570$06162cd3-4004-adac-c125-b8d204beeb7d",
+        "rank": "normal"
+      }
+    ],
+    "P159": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P159",
+          "hash": "3b1054ac9e77aeebff5bd38fe62f3e6754b7f0c6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 662101,
+              "id": "Q662101"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q24832570$14c46237-4c07-0b66-7aac-97b685ec2834",
+        "rank": "normal"
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "6a132e8898bc25ff5bdb175b9fad22ac47dbda83",
+          "datavalue": {
+            "value": "https://www.lilithgames.com/cn/",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q24832570$599f91ad-45f8-5633-2468-f28b0cc9a6e0",
+        "rank": "normal"
+      }
+    ],
+    "P452": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P452",
+          "hash": "fee5501462a034704662eb852d98092dba1c8821",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1368944,
+              "id": "Q1368944"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q24832570$1fa3877c-4b7a-c1ca-0cee-7626986731c8",
+        "rank": "normal"
+      }
+    ],
+    "P6795": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6795",
+          "hash": "2596fc5e683e1b8d38988bc4f232f06dd61062d0",
+          "datavalue": {
+            "value": "91310114067818616X",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q24832570$5829bb54-4926-0cbd-a39a-078d2fc4c701",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "zhwiki": {
+      "site": "zhwiki",
+      "title": "莉莉丝游戏",
+      "badges": [],
+      "url": "https://zh.wikipedia.org/wiki/%E8%8E%89%E8%8E%89%E4%B8%9D%E6%B8%B8%E6%88%8F"
+    }
+  }
+}

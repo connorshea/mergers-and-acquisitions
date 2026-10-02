@@ -1,0 +1,152 @@
+{
+  "pageid": 124883387,
+  "ns": 0,
+  "title": "Q130979018",
+  "lastrevid": 2432699637,
+  "modified": "2025-11-23T01:13:00Z",
+  "type": "item",
+  "id": "Q130979018",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Lancer"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "mecha tabletop role-playing game"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "f60a5976d9ab95b85336a02cf39dab2f3f971a28",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11410,
+              "id": "Q11410"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q130979018$7295f607-5d86-4e85-a6f4-1f909dd5f56e",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "8c4c136ea29ee738e36d831558de1d82aec00b52",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1643932,
+              "id": "Q1643932"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q130979018$279C652E-C140-4CAE-B9C9-AF1AA24E8B44",
+        "rank": "normal"
+      }
+    ],
+    "P12969": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12969",
+          "hash": "c288eaf40b1f7414cee5ee4ecda93d47ac9a3cad",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 61978556,
+              "id": "Q61978556"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1932": [
+            {
+              "snaktype": "value",
+              "property": "P1932",
+              "hash": "a2755ca30be86498a8cf624a9fb51975d996f4ca",
+              "datavalue": {
+                "value": "Tom Parkinson Morgan",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1932"],
+        "id": "Q130979018$89A4CE48-10BA-4E37-A87D-9EF5145294A7",
+        "rank": "normal"
+      }
+    ],
+    "P7226": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7226",
+          "hash": "03a89bf1a2eac302d13482dc8e0f080b10447b3c",
+          "datavalue": {
+            "value": "rpg/57798",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q130979018$f181767d-46b4-a6d9-2b36-dddb9abed960",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "35e7672653507d6eb07dd30569eb2a961387bb5a",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "9c5e4cd814e272ef5594154b203b6deeeaa93f8f",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2025-11-23T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P813"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Lancer (role-playing game)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Lancer_(role-playing_game)"
+    }
+  }
+}

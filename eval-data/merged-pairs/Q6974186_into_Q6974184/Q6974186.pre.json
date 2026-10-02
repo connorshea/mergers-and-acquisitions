@@ -1,0 +1,479 @@
+{
+  "pageid": 6844369,
+  "ns": 0,
+  "title": "Q6974186",
+  "lastrevid": 2450573353,
+  "modified": "2026-01-02T15:36:29Z",
+  "type": "item",
+  "id": "Q6974186",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "National Life Group"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "National Life Insurance Company"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "American Life Insurance and annuities company"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "National Life Insurance Company"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "1624b01353ad87ad1fbc8c847e84b71d4d9cd331",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2143354,
+              "id": "Q2143354"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q6974186$9E6CE28D-A02F-4A94-9331-DE25CA695BB9",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "326e3d41d1e9c34715e880be6e1c6a1e822e4317",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4830453,
+              "id": "Q4830453"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q6974186$1981ac8f-495a-a6e3-084c-93187f1b8ce8",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "51d1a52d64486a8753cb683566e6bb141b7dd7d2",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3591545,
+              "id": "Q3591545"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q6974186$43da83db-4885-e1cd-0385-ac82fb2b1b43",
+        "rank": "normal"
+      }
+    ],
+    "P159": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P159",
+          "hash": "32d497e9913f57f8d293a298147c877306e8018c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 26426,
+              "id": "Q26426"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q6974186$4c122822-4837-c904-4fce-af127b37dcf4",
+        "rank": "normal"
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "1db740aa16cbffd787d938f7313905398a16d1a3",
+          "datavalue": {
+            "value": "https://www.nationallife.com/",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q6974186$cb517633-48a9-7f06-65a0-52d80ab8b774",
+        "rank": "normal"
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "f542f48b5887fa9fe99619eb6439241769bb660b",
+          "datavalue": {
+            "value": {
+              "time": "+1848-11-13T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q6974186$1a4a003f-448c-de9f-0ed1-b5cc5fea44b6",
+        "rank": "normal"
+      }
+    ],
+    "P1278": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1278",
+          "hash": "0de7ce1d04cc17666525a56cb8dfa2c03fa87471",
+          "datavalue": {
+            "value": "0JRPR7R1EOV4Z2M47L22",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q6974186$1AE5A499-B831-4D36-8951-CFE8596A1230",
+        "rank": "normal"
+      }
+    ],
+    "P2088": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2088",
+          "hash": "96f7f793950ceb57934500c65ea170722efda15b",
+          "datavalue": {
+            "value": "national-life-group",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q6974186$3BBC740D-E5A9-491E-B791-51E2E7713B46",
+        "rank": "normal"
+      }
+    ],
+    "P452": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P452",
+          "hash": "b6873b567289fc6694515ced6fe8d38faa6d27f0",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 626608,
+              "id": "Q626608"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q6974186$c310748c-43d5-d5e7-7743-afe4657332e8",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P452",
+          "hash": "b45cb29ad5b08d5faa02ff01116c670d77e94950",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 837171,
+              "id": "Q837171"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q6974186$93891d62-465b-0238-8ff8-9fdec923633b",
+        "rank": "normal"
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "be4c6eafa2984964f04be85667263f5642ba1a72",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 30,
+              "id": "Q30"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q6974186$e9308ff5-4e72-335a-ec8b-95a4d0774f4f",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "8adfdf96101d5c32b6b769c4633401ec06e02307",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "88b1aea91b49e7281dc2608b867987d014c88992",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 55259097,
+                      "id": "Q55259097"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "e89ed975a583a10e83aa56ce16069435a04494bf",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2024-09-17T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P740": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P740",
+          "hash": "227d0c2ade26ff52300b1928cb02e251405586a9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 26426,
+              "id": "Q26426"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q6974186$e86dc9fb-42e6-7db2-c9ac-1ae277d660fa",
+        "rank": "normal"
+      }
+    ],
+    "P366": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P366",
+          "hash": "fa1466317485d9e5cd6f6cfd95c10a29fd055274",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6501288,
+              "id": "Q6501288"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q6974186$997083e2-4c01-c505-d2bb-dad3f83f6437",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P366",
+          "hash": "fe572fd1a53c24f9b5c5ca33221a55277f5b2ed4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 626608,
+              "id": "Q626608"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q6974186$bb4639df-41e4-73c2-b995-befec9d83b38",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P366",
+          "hash": "0951a9e6059da8ad8c14b6c9ccc2097c05908bc7",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3428249,
+              "id": "Q3428249"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q6974186$3c4e9238-43b9-8b5b-9ffd-bc03d0fd01ed",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P366",
+          "hash": "e1342fab9b8b239505d6bb6bf53ad76d16067134",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 475000,
+              "id": "Q475000"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q6974186$25cb5242-4301-25ab-7794-1374951a47f5",
+        "rank": "normal"
+      }
+    ],
+    "P2013": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2013",
+          "hash": "6fd6fea0079815b66d23a19d4cdce65901121c1f",
+          "datavalue": {
+            "value": "NationalLife",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q6974186$638f105b-4b0d-b5fa-7c8b-a54f266e3dcb",
+        "rank": "normal"
+      }
+    ],
+    "P2003": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2003",
+          "hash": "9dbf633a6140745e022b3a4755aa3e451a7aa360",
+          "datavalue": {
+            "value": "national_life_group",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q6974186$bb4c9480-4314-b722-7faf-3154f3625ffa",
+        "rank": "normal"
+      }
+    ],
+    "P4264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4264",
+          "hash": "c27a09bd4e136c8d5d73cb302a729c7796aa3bf7",
+          "datavalue": {
+            "value": "national-life-group",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q6974186$94711711-4840-39d5-a283-890ce88699f8",
+        "rank": "normal"
+      }
+    ],
+    "P13591": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P13591",
+          "hash": "90c75f0cae4614f399f7715a54fb491c3c5bd95a",
+          "datavalue": {
+            "value": "group/55709646-afd2-4e17-ad0f-b11947196933",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q6974186$DB08AD58-6659-4B05-B8FD-E7959FC74A8F",
+        "rank": "normal"
+      }
+    ],
+    "P11892": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11892",
+          "hash": "da10035a743cc58b27f03677e364fca7a140b3bd",
+          "datavalue": {
+            "value": "national_life_group",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q6974186$161D5E49-13A6-483D-8FEF-D585DDF79B29",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

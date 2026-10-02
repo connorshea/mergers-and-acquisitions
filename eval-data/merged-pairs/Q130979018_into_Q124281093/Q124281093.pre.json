@@ -1,0 +1,148 @@
+{
+  "pageid": 118456612,
+  "ns": 0,
+  "title": "Q124281093",
+  "lastrevid": 2068014962,
+  "modified": "2024-02-03T13:31:10Z",
+  "type": "item",
+  "id": "Q124281093",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Lancer"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "tabletop role-playing game"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "настільна рольова гра"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "8c4c136ea29ee738e36d831558de1d82aec00b52",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1643932,
+              "id": "Q1643932"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q124281093$be03ecd7-4253-0118-30d3-711d60b36983",
+        "rank": "normal"
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "f1087ad5fb461448a3889ec06049dbd3a6b779f1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1643932,
+              "id": "Q1643932"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q124281093$327b0156-4664-904a-df22-72d45006eecd",
+        "rank": "normal"
+      }
+    ],
+    "P7226": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7226",
+          "hash": "03a89bf1a2eac302d13482dc8e0f080b10447b3c",
+          "datavalue": {
+            "value": "rpg/57798",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q124281093$640b54a0-4c11-8e1b-b936-e5ed7f949cfc",
+        "rank": "normal"
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "15c545892699da6ecded9e849eb6e15fdcbdd4b7",
+          "datavalue": {
+            "value": "https://massif-press.itch.io/",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 1860,
+                  "id": "Q1860"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P407"],
+        "id": "Q124281093$10338085-4e41-7afa-dc12-81dffff44285",
+        "rank": "normal"
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "f62076b84573f05500321ef280c21c3e90f38c41",
+          "datavalue": {
+            "value": {
+              "time": "+2019-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q124281093$59e60fd8-40bf-e587-91d1-cad486ba7c80",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

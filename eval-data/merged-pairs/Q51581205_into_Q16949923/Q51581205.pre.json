@@ -1,0 +1,350 @@
+{
+  "pageid": 52496605,
+  "ns": 0,
+  "title": "Q51581205",
+  "lastrevid": 2482363311,
+  "modified": "2026-04-17T07:08:17Z",
+  "type": "item",
+  "id": "Q51581205",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Back"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Back"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Back"
+    },
+    "es": {
+      "language": "es",
+      "value": "Back"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "バック"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "Back"
+    }
+  },
+  "descriptions": {
+    "nl": {
+      "language": "nl",
+      "value": "single van Colt Ford"
+    },
+    "en": {
+      "language": "en",
+      "value": "single by Colt Ford"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "コルト・フォードによる2012年のシングル"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "33d81754a79b2dab75d17c156313b0f8f0f4f086",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 134556,
+              "id": "Q134556"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q51581205$D6166C5F-239A-4805-A58D-D4C114367F65",
+        "rank": "normal"
+      }
+    ],
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "ec60a585386824638c05a52cc85ca5817c0c62c2",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1111988,
+              "id": "Q1111988"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q51581205$B53C4A9A-5EB2-4FAD-8D97-06CCD5D59D93",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P2624": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2624",
+          "hash": "0a02777d4063b1a911056fbd2314ac0f0ffa0af7",
+          "datavalue": {
+            "value": "back-lyrics-colt-ford",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q51581205$DFA2A448-3BD6-45D9-BC09-02F4209D9807",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P156": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P156",
+          "hash": "81f3e2ca5b70c9e60d339b50cdc3166d8034acd0",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 17005202,
+              "id": "Q17005202"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q51581205$2884876E-BB4B-40F1-8F4B-138B99C41E04",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "0b03533243fffa78bfc77007b1dd5cf02b7c2ecc",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "121c1573733c055d76251ff6b741a57469e766c3",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Back_(Colt_Ford_song)&oldid=834361297",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P264",
+          "hash": "d4a43777d761f7ffde1b6dc67ef8cb53dbc76ee1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4828256,
+              "id": "Q4828256"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q51581205$E64115EA-7D8F-40DB-ABCF-5D43B519CB19",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "0b03533243fffa78bfc77007b1dd5cf02b7c2ecc",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "121c1573733c055d76251ff6b741a57469e766c3",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Back_(Colt_Ford_song)&oldid=834361297",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "d9055dd2bc078778a99d237e655223766e6f0b90",
+          "datavalue": {
+            "value": {
+              "time": "+2012-01-01T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q51581205$A645D612-063A-489A-8F91-96275B67A125",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P13602": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P13602",
+          "hash": "0240476a9360319736984be5fc2ef5e7b9620220",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5249424,
+              "id": "Q5249424"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q51581205$4C1E25AD-48CC-46A5-B4F4-F50391EFD5C8",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Back (Colt Ford song)",
+      "badges": ["Q70893996"],
+      "url": "https://en.wikipedia.org/wiki/Back_(Colt_Ford_song)"
+    }
+  }
+}

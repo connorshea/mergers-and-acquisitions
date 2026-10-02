@@ -212,6 +212,42 @@ describe("scanDump", () => {
     expect(matched).toEqual(["Q40", "Q41", "Q42", "Q43", "Q44"]);
   });
 
+  it("imports authors and musicians by occupation or book/music database id", async () => {
+    const claim = (property: string, qid: string): Statement => ({
+      ...p31(qid),
+      mainsnak: { ...p31(qid).mainsnak, property },
+    });
+    const externalId = (property: string, value: string): Statement => ({
+      mainsnak: {
+        snaktype: "value",
+        property,
+        datatype: "external-id",
+        datavalue: { type: "string", value },
+      },
+      rank: "normal",
+    });
+    const human = (id: string, claims: Record<string, Statement[]> = {}) =>
+      item(id, { P31: [p31("Q5")], ...claims });
+    const entities = [
+      human("Q50", { P106: [claim("P106", "Q6625963")] }), // novelist
+      human("Q51", { P106: [claim("P106", "Q191633")] }), // mangaka
+      human("Q52", { P1233: [externalId("P1233", "1234")] }), // ISFDB author
+      human("Q53", { P1953: [externalId("P1953", "272778")] }), // Discogs artist
+      human("Q54", { P3505: [externalId("P3505", "8")] }), // BoardGameGeek designer
+      human("Q55", { P106: [claim("P106", "Q36180")] }), // writer: too broad, not imported
+      human("Q56", { P434: [externalId("P434", "a74b1b7f")] }), // MusicBrainz: not imported
+    ];
+    const matched: string[] = [];
+    await scanDump(Readable.from([Buffer.from(dumpText(entities))]), {
+      classQids: IMPORT_CLASSES,
+      selective: { classes: SELECTIVE_IMPORT_CLASSES, linkedQids: new Set() },
+      onItem: (i) => {
+        matched.push(i.id);
+      },
+    });
+    expect(matched).toEqual(["Q50", "Q51", "Q52", "Q53", "Q54"]);
+  });
+
   it("matches any of several classes in one pass, by the whole number", async () => {
     const entities = [
       item("Q10", { P31: [p31("Q11424")] }),

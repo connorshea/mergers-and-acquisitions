@@ -6,6 +6,7 @@ import {
   double,
   index,
   int,
+  mediumtext,
   mysqlTable,
   primaryKey,
   text,
@@ -351,6 +352,25 @@ export const dumpImportSegments = mysqlTable(
     pass: varchar("pass", { length: 32 }),
   },
   (t) => [primaryKey({ columns: [t.dump, t.segments, t.segment] })],
+);
+
+// The linked QIDs (loadLinkedQids) of one worker pass over a segment set, read
+// from the mirror once by the first worker to start and shared with the rest,
+// so N workers don't each run the same minute-long JSON_TABLE query. `qids` is
+// the sorted numeric ids, comma-separated; `sources` the classes they were
+// drawn from, so a pass with a different class list reads the mirror afresh.
+export const dumpImportLinked = mysqlTable(
+  "dump_import_linked",
+  {
+    dump: varchar("dump", { length: 32 }).notNull(),
+    segments: int("segments").notNull(),
+    sources: varchar("sources", { length: 1024 }).notNull(),
+    qids: mediumtext("qids").notNull(),
+    createdAt: datetime("created_at", { mode: "string" })
+      .notNull()
+      .default(sql`CURRENT_TIMESTAMP`),
+  },
+  (t) => [primaryKey({ columns: [t.dump, t.segments] })],
 );
 
 // ---------------------------------------------------------------------------

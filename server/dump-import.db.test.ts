@@ -17,7 +17,8 @@ import {
   mergeCandidates,
   properties,
 } from "../db/schema.ts";
-import { MAX_PRUNE_FRACTION, runDumpImport, upsertItems } from "./dump-import.ts";
+import { MAX_PRUNE_FRACTION, runDumpImport, sharedLinkedQids, upsertItems } from "./dump-import.ts";
+import { SELECTIVE_IMPORT_CLASSES } from "../src/lib/import-classes.ts";
 import { CONVERTER_VERSION } from "./converter-version.ts";
 import type { Entity, Statement } from "../src/lib/wikibase.ts";
 import { DB_TEST, insertItem, makeItem, truncateAll } from "../test/db-helpers.ts";
@@ -481,6 +482,50 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
       // A new token is a new re-import.
       const next = await worker(path, "d", { redo: "t2" });
       expect(next.segmentsScanned).toBe(SEGMENTS);
+    });
+
+    it("reads the linked QIDs once per pass for all its workers, and afresh on a redo", async () => {
+      const designedBy = (qid: string) => ({ P287: [{ type: "item" as const, value: qid }] });
+      await insertItem(makeItem("Q900", "Names Q20", designedBy("Q20")));
+      const path = await writeDump();
+      const lines: string[] = [];
+      const log = (m: string) => void lines.push(m);
+      const linkedLines = () => lines.filter((l) => l.includes("items linked from the mirror"));
+
+      await Promise.all([worker(path, "a", { log }), worker(path, "b", { log })]);
+      // Every item-valued statement counts: Q20, and Q7889 from the P31.
+      expect(
+        linkedLines()
+          .map((l) => l.replace(/^import-dump \w+: /, "").replace(/ in .*/, ""))
+          .sort(),
+      ).toEqual([
+        "2 items linked from the mirror, loaded",
+        "2 items linked from the mirror, read from the pass's first worker",
+      ]);
+
+      // The pass keeps the set it started with, whatever the mirror says now.
+      await insertItem(
+        makeItem("Q901", "Names Q21 and Q22", {
+          P287: [...designedBy("Q21").P287, ...designedBy("Q22").P287],
+        }),
+      );
+      const sources = [...new Set(SELECTIVE_IMPORT_CLASSES.flatMap((c) => c.linkedFrom))];
+      expect(await sharedLinkedQids(DUMP, SEGMENTS, sources)).toEqual({
+        qids: new Set([20, 7889]),
+        shared: true,
+      });
+
+      // A redo is a new pass: it reads the mirror again (Q900 was pruned).
+      lines.length = 0;
+      await worker(path, "c", { log, redo: "t1" });
+      expect(linkedLines()).toEqual([
+        expect.stringMatching(/: 3 items linked from the mirror, loaded in /),
+      ]);
+
+      // A worker with nothing left to scan reads nothing.
+      lines.length = 0;
+      await worker(path, "d", { log });
+      expect(linkedLines()).toEqual([]);
     });
 
     it("takes over a stale claim, and waits out a live one until it goes stale", async () => {

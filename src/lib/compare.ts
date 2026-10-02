@@ -238,10 +238,18 @@ export const PROPERTY_LABELS: Record<string, string> = {
 
 // ---------- Comparison ----------
 
+/**
+ * Apostrophe look-alikes: curly quotes (’ ‘), the modifier letter (ʼ), prime
+ * (′), grave/acute accents (` ´), and the fullwidth form (＇). Titles type them
+ * interchangeably ("Foo '97" vs "Foo ’97"), so normalize() folds them to "'".
+ */
+const APOSTROPHES_RE = /[\u2018\u2019\u201B\u02BC\u2032\u0060\u00B4\uFF07]/g;
+
 export function normalize(s: string): string {
   return s
     .toLowerCase()
     .trim()
+    .replace(APOSTROPHES_RE, "'")
     .replace(/^https?:\/\/(www\.)?/, "")
     .replace(/\/+$/, "")
     .replace(/\s+/g, " ");

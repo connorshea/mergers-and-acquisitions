@@ -59,6 +59,13 @@ describe("normalize / stringSimilarity", () => {
     expect(normalize("  Foo   Bar ")).toBe("foo bar");
   });
 
+  it("folds apostrophe variants", () => {
+    expect(normalize("Foo ’97")).toBe("foo '97");
+    expect(normalize("Foo ʼ97")).toBe(normalize("Foo '97"));
+    expect(stringSimilarity("Foo '97", "Foo ’97")).toBe(1);
+    expect(stringSimilarity("Assassin`s Creed", "Assassin's Creed")).toBe(1);
+  });
+
   it("treats normalized-equal strings as identical", () => {
     expect(stringSimilarity("https://meridiangames.com", "https://www.meridiangames.com/")).toBe(1);
   });
@@ -159,6 +166,12 @@ describe("bestNameSimilarity", () => {
     const a = named("Q1", { en: "  The   Legend of Zelda " });
     const b = named("Q2", { fr: "the legend of zelda" });
     expect(bestNameSimilarity(a, b)).toBe(1);
+    expect(bestNameSimilarity(a, b, false)).toBe(1);
+  });
+
+  it("treats straight and curly apostrophes as the same", () => {
+    const a = named("Q1", { en: "Foo '97" });
+    const b = named("Q2", { en: "Foo ’97" });
     expect(bestNameSimilarity(a, b, false)).toBe(1);
   });
 

@@ -40,6 +40,7 @@ import { STALE_CLAIM_SECONDS } from "./import-claims.ts";
 import type { Item, ScoreOptions, ScoreTrace } from "../src/lib/compare.ts";
 import {
   BLOCKING_KEY_MAX,
+  CLASSIFICATION_PROPS,
   orderByAge,
   scoreCandidate,
   storedBlockingKey,
@@ -320,6 +321,11 @@ async function importRunning(conn: mysql.Connection): Promise<boolean> {
  * Rebuilt from a full GROUP BY instead when there's no watermark yet, when the
  * table's ids have gone backwards (it was truncated and re-imported), or when
  * `HUNT_REBUILD_DUPES=1` is set.
+ *
+ * Library classifications (CLASSIFICATION_PROPS: Dewey, LCC, …) are never
+ * keys: a value names a subject, so it groups unrelated books on it (one LCC
+ * value held 1,463 items on the full dump). Keys stored before they were left
+ * out are deleted here, so no rebuild is needed to drop them.
  */
 async function refreshDupeKeys(db: Db, conn: mysql.Connection): Promise<void> {
   const start = performance.now();
@@ -335,22 +341,33 @@ async function refreshDupeKeys(db: Db, conn: mysql.Connection): Promise<void> {
     .from(syncState)
     .where(eq(syncState.scope, DUPE_KEYS_SCOPE));
   const rebuild = !state || maxId < state.cursor || process.env.HUNT_REBUILD_DUPES === "1";
+  const excluded = [...CLASSIFICATION_PROPS];
   if (rebuild) {
     console.log("hunt scan: rebuilding the shared id keys from every external id");
     await conn.query("truncate table external_id_dupes");
-    await conn.query(`
-      insert into external_id_dupes (property, value)
-      select property, value from external_ids
-      group by property, value
-      having count(distinct qid) > 1`);
+    await conn.query(
+      `insert into external_id_dupes (property, value)
+       select property, value from external_ids
+       where property not in (?)
+       group by property, value
+       having count(distinct qid) > 1`,
+      [excluded],
+    );
   } else {
+    const [removed] = await conn.query<mysql.ResultSetHeader>(
+      "delete from external_id_dupes where property in (?)",
+      [excluded],
+    );
+    if (removed.affectedRows > 0) {
+      console.log(`hunt scan: dropped ${removed.affectedRows} library classification keys`);
+    }
     await conn.query(
       `insert ignore into external_id_dupes (property, value)
        select n.property, n.value from external_ids n
-       where n.id > ? and exists (
+       where n.id > ? and n.property not in (?) and exists (
          select 1 from external_ids o
          where o.property = n.property and o.value = n.value and o.qid <> n.qid)`,
-      [state.cursor],
+      [state.cursor, excluded],
     );
   }
   await db

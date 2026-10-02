@@ -73,6 +73,9 @@ export interface CandidateDetailResponse {
   /** Pxxx that source their ids from Wikidata (synced `mirrors_wikidata`); the UI
    * unions this with its hardcoded floor to mark Wikidata-sourced identifiers. */
   propertyMirrors: string[];
+  /** Pxxx → the Qids on this pair whose class its subject type constraint
+   * rules out (a recording's ISRC on a musical work); the UI marks these. */
+  propertyInapplicable: Record<string, string[]>;
   /** Qxxx → human label, for the item values present on this pair. */
   valueLabels: Record<string, string>;
   /** Neighbour candidate ids for prev/next navigation (same status, confidence order). */

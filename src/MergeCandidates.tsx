@@ -309,6 +309,7 @@ export default function MergeCandidates({
   propertyLabels,
   propertyFormatters,
   propertyMirrors,
+  propertyInapplicable,
   valueLabels,
   creations,
 }: {
@@ -320,6 +321,8 @@ export default function MergeCandidates({
   propertyFormatters?: Record<string, string>;
   /** Pxxx that source their ids from Wikidata (synced `mirrors_wikidata`). */
   propertyMirrors?: string[];
+  /** Pxxx → the Qids whose class its subject type constraint rules out. */
+  propertyInapplicable?: Record<string, string[]>;
   /** Qxxx → human label, from the DB-backed entity_labels table. */
   valueLabels?: Record<string, string>;
   /** Qxxx → who created it and how; loaded after the rest, so absent at first. */
@@ -336,6 +339,24 @@ export default function MergeCandidates({
   // is not evidence of a duplicate. Flagged and sunk like mirrored ids.
   const sharedSet = useMemo(() => sharedIdentifierProps(from, into), [from, into]);
   const isShared = (pid: string): boolean => sharedSet.has(pid);
+  // Identifiers used on an item their subject type constraint rules out (a
+  // recording's ISRC on a musical work): likely misplaced, so a shared value
+  // isn't counted as a match, though a differing one still counts against.
+  const inapplicableNote = (pid: string): string | null => {
+    const qids = propertyInapplicable?.[pid];
+    if (!qids || qids.length === 0) return null;
+    const subject =
+      qids.length >= 2
+        ? "either item"
+        : qids[0] === from.id
+          ? `${from.id} (left)`
+          : `${into.id} (right)`;
+    return `This property's subject type constraint doesn't allow ${subject}, so the identifier is probably about something else (a recording, an author, …). ${
+      qids.length >= 2
+        ? "A matching value isn't counted as evidence the items are the same; a differing value still counts against."
+        : "It still counts as evidence, since it fits the other item."
+    }`;
+  };
   // Either kind of non-evidence identifier sinks to the bottom of its group.
   const isDiscounted = (r: { kind: string; key: string }): boolean =>
     r.kind === "statement" && (isMirrored(r.key) || isShared(r.key));
@@ -526,6 +547,14 @@ export default function MergeCandidates({
                                   title="Identifier is for a database based on Wikidata, these may be distinct values but they tell us nothing about whether these are distinct entities."
                                 >
                                   ↺ Wikidata-sourced
+                                </span>
+                              )}
+                              {r.kind === "statement" && inapplicableNote(r.key) && (
+                                <span
+                                  className="prop-inapplicable"
+                                  title={inapplicableNote(r.key)!}
+                                >
+                                  ⊘ wrong subject type
                                 </span>
                               )}
                               {r.kind === "statement" && isShared(r.key) && (

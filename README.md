@@ -207,7 +207,7 @@ only sees with `--mount all`:
 # quick timing/validation run: stop after 2000 items, no pruning
 toolforge envvars create DUMP_LIMIT 2000
 toolforge jobs run import-dump-test --image tool-mna/tool-mna:latest \
-  --command "node --max-old-space-size=3072 jobs/import-dump.ts" --mount all --mem 4Gi --cpu 1 --emails onfinish
+  --command "node --max-old-space-size=3072 jobs/import-dump.ts" --mount all --mem 4Gi --cpu 1 --emails onfailure
 toolforge envvars delete DUMP_LIMIT
 ```
 

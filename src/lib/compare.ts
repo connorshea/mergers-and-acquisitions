@@ -1445,6 +1445,53 @@ const SEPARATE_PLACES_M = 1_000;
 const isPointPlace = (item: Item): boolean =>
   (item.statements.P31 ?? []).some((v) => v.type === "item" && POINT_PLACE_CLASSES.has(v.value));
 
+/** State of use (P5817) values meaning the subject is operating now. */
+const IN_USE_STATES: ReadonlyMap<string, string> = new Map([
+  ["Q55654238", "in use"],
+  ["Q55570821", "open to the public"],
+  ["Q109551035", "in partial operation"],
+  ["Q29415466", "active"],
+]);
+
+/**
+ * State of use (P5817) values meaning the subject is gone for good. Temporary
+ * states (temporarily closed, out of service, under reconstruction) are left
+ * out: a building in either can be the same one as an item marked in use.
+ */
+const GONE_STATES: ReadonlyMap<string, string> = new Map([
+  ["Q11639308", "decommissioned"],
+  ["Q104664889", "permanently closed"],
+  ["Q63065035", "abandoned"],
+  ["Q56556915", "demolished or destroyed"],
+  ["Q125582222", "abolished"],
+  ["Q11486291", "permanently closed school"],
+  ["Q56557159", "ruinous"],
+  ["Q109607", "ruins"],
+  ["Q15893266", "former entity"],
+  ["Q29933838", "service retirement"],
+]);
+
+/**
+ * When one item is in use and the other gone for good (by state of use, P5817),
+ * the gone item's state ("decommissioned"), else null. An item listing both
+ * kinds (a history with qualifiers) doesn't count either way.
+ */
+function stateOfUseClash(a: Item, b: Item): string | null {
+  const states = (item: Item) => {
+    const values = (item.statements.P5817 ?? []).flatMap((v) =>
+      v.type === "item" ? [v.value] : [],
+    );
+    const inUse = values.some((q) => IN_USE_STATES.has(q));
+    const gone = values.flatMap((q) => GONE_STATES.get(q) ?? []);
+    return { inUse: inUse && gone.length === 0, gone: inUse ? undefined : gone[0] };
+  };
+  const sa = states(a);
+  const sb = states(b);
+  if (sa.inUse && sb.gone) return sb.gone;
+  if (sb.inUse && sa.gone) return sa.gone;
+  return null;
+}
+
 /** Date properties compared for the release/founding/birth year gap. */
 const YEAR_GAP_PROPS = ["P577", "P571", "P569"] as const;
 
@@ -2534,6 +2581,17 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     reasons.push(`coordinate locations (P625) are ${gapText} apart`);
   }
 
+  // One item in use and the other decommissioned, demolished or permanently
+  // closed is the shape of a place and its predecessor on (nearly) the same
+  // spot under the same name: the 1845 Stalybridge station, in use, and the
+  // one closed in 1917, 90 m away. Not a cap, as a stale state of use on a
+  // real duplicate is possible; the ceiling below keeps it well off certain.
+  const goneState = stateOfUseClash(a, b);
+  if (goneState) {
+    score -= 0.3;
+    reasons.push(`different state of use (P5817): in use vs. ${goneState}`);
+  }
+
   // A different author/performer/composer/director is the classic shape of two
   // works that merely share a title ("Imagine" the novel vs. the non-fiction
   // book, two albums called "The Collection", cover recordings of one song).
@@ -2961,13 +3019,14 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     accountDiffs.length > 0 ||
     farCoordinates ||
     separatePlaces ||
-    distantPlaces;
+    distantPlaces ||
+    goneState !== null;
   if (hasConcreteDifference) ceiling = Math.min(ceiling, 0.9);
   if (distinctSubjectPageIds.length === 1) ceiling = Math.min(ceiling, 0.8);
   // Several ordinary ids disagreeing is more than a stray data slip.
   if (otherDistinctIds.length >= 4) ceiling = Math.min(ceiling, 0.7);
   else if (otherDistinctIds.length >= 2) ceiling = Math.min(ceiling, 0.8);
-  if (largeYearGap || distantPlaces) ceiling = Math.min(ceiling, 0.6);
+  if (largeYearGap || distantPlaces || goneState) ceiling = Math.min(ceiling, 0.6);
   if (nativeNameDiff) ceiling = Math.min(ceiling, 0.6);
   // Two separate (non-redirect) pages on one wiki usually mean two subjects,
   // and the merge can't go through without resolving it anyway — never

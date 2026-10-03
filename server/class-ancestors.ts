@@ -8,10 +8,15 @@ import { db } from "./db.ts";
 import { classAncestors, items } from "../db/schema.ts";
 import { chunk } from "../src/lib/chunk.ts";
 import { fetchClassAncestors } from "../src/lib/sparql.ts";
+import { elapsed, progress } from "./progress.ts";
 
 /** Items scanned per DB page when collecting their classes (keyset-paged). */
 const READ_PAGE = 5000;
 const ROWS_PER_STMT = 1000;
+/** Log scan progress every this many pages. */
+const LOG_EVERY_PAGES = 20;
+/** Log QLever lookup progress every this many chunks. */
+const LOG_EVERY_CHUNKS = 10;
 
 /**
  * The distinct instance of (P31) and subclass of (P279) values across every
@@ -20,9 +25,13 @@ const ROWS_PER_STMT = 1000;
  * `qid` primary key keeps this O(n).
  */
 export async function collectItemClasses(pageSize = READ_PAGE): Promise<string[]> {
+  const started = Date.now();
+  const [[{ total }]] = (await db.execute(
+    sql`select count(*) as total from ${items}`,
+  )) as unknown as [{ total: number }[]];
   const set = new Set<string>();
   let after = "";
-  for (;;) {
+  for (let page = 1; ; page++) {
     // The page's last qid, or none when fewer than `pageSize` rows remain.
     const [bounds] = (await db.execute(sql`
       select qid from ${items} where qid > ${after}
@@ -42,6 +51,11 @@ export async function collectItemClasses(pageSize = READ_PAGE): Promise<string[]
     for (const row of rows) set.add(row.qid);
     if (bound === undefined) break;
     after = bound;
+    if (page % LOG_EVERY_PAGES === 0) {
+      console.log(
+        `class ancestors: scanned ${progress(page * pageSize, total)} items, ${set.size} classes, ${elapsed(started)} elapsed`,
+      );
+    }
   }
   return [...set];
 }
@@ -67,7 +81,16 @@ export async function syncClassAncestors(): Promise<ClassAncestorsSyncResult> {
   const classes = await collectItemClasses();
   console.log(`class ancestors: ${classes.length} item classes collected in ${elapsed(started)}`);
   const lookupStarted = Date.now();
-  const { ancestors, failed } = await fetchClassAncestors(classes);
+  let chunks = 0;
+  const { ancestors, failed } = await fetchClassAncestors(classes, {
+    onProgress: (done, total) => {
+      if (++chunks % LOG_EVERY_CHUNKS === 0 || done === total) {
+        console.log(
+          `class ancestors: looked up ${progress(done, total)} classes, ${elapsed(lookupStarted)} elapsed`,
+        );
+      }
+    },
+  });
   if (ancestors.size === 0 && classes.length > 0) {
     throw new Error(`Class-ancestor lookup failed for all ${classes.length} classes`);
   }
@@ -79,6 +102,8 @@ export async function syncClassAncestors(): Promise<ClassAncestorsSyncResult> {
     `class ancestors: ${ancestors.size} classes looked up (${rows.length} rows) in ` +
       `${elapsed(lookupStarted)}, ${failed.length} failed`,
   );
+  const writeStarted = Date.now();
+  console.log(`class ancestors: replacing class_ancestors rows`);
   await db.transaction(async (tx) => {
     const existing = await tx.selectDistinct({ cls: classAncestors.class }).from(classAncestors);
     const stale = existing.map((r) => r.cls).filter((cls) => !keep.has(cls));
@@ -89,7 +114,6 @@ export async function syncClassAncestors(): Promise<ClassAncestorsSyncResult> {
       await tx.insert(classAncestors).values(values);
     }
   });
+  console.log(`class ancestors: rows replaced in ${elapsed(writeStarted)}`);
   return { classes: ancestors.size, rows: rows.length, failed: failed.length };
 }
-
-const elapsed = (since: number): string => `${Math.round((Date.now() - since) / 1000)}s`;

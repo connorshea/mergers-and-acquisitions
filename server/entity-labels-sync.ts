@@ -5,6 +5,7 @@ import { db } from "./db.ts";
 import { entityLabels, items } from "../db/schema.ts";
 import { chunk } from "../src/lib/chunk.ts";
 import { fetchEntityLabels, type EntityLabelRow } from "../src/lib/sparql.ts";
+import { elapsed, progress } from "./progress.ts";
 
 const ROWS_PER_STMT = 1000;
 /** Items scanned per DB page when collecting referenced QIDs (keyset-paged). */
@@ -236,11 +237,4 @@ export async function runEntityLabelsSync(): Promise<EntityLabelsSyncResult> {
   return { synced, failed: failedQids.length };
 }
 
-/** "done/total (pct%)", with `done` capped at `total` (the last page or chunk is short). */
-function progress(done: number, total: number): string {
-  const n = Math.min(done, total);
-  return `${n}/${total} (${((n / total) * 100).toFixed(1)}%)`;
-}
-
 const seconds = (ms: number): string => `${Math.round(ms / 1000)}s`;
-const elapsed = (since: number): string => seconds(Date.now() - since);

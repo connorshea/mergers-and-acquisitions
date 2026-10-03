@@ -20,11 +20,14 @@ import type { ItemCreation } from "../src/lib/api-types.ts";
 import { replicaConnConfig } from "./sitelink-redirects.ts";
 import { DEFAULT_WIKIDATA_API_URL } from "./auth/config.ts";
 import { userAgent } from "./auth/user-agent.ts";
+import { elapsed, progress } from "./progress.ts";
 
 /** Open candidates read per keyset page when collecting qids. */
 const READ_PAGE = 1000;
 /** Qids per replica `IN (…)` lookup / rows per upsert. */
 const LOOKUP_CHUNK = 500;
+/** Log lookup progress every this many chunks. */
+const LOG_EVERY_CHUNKS = 20;
 /** A row checked more recently than this isn't looked up again by the job. */
 const REFRESH_DAYS = 30;
 /** Give up on the Action API after this long. */
@@ -345,10 +348,17 @@ export async function runItemCreationSync(
   if (qids.size > 0) {
     const conn = await connect();
     try {
-      for (const batch of chunk([...qids], LOOKUP_CHUNK)) {
+      let done = 0;
+      for (const [i, batch] of chunk([...qids], LOOKUP_CHUNK).entries()) {
         const rows = await lookUpCreations(conn, batch);
         await upsertCreations(rows);
         found += rows.length;
+        done += batch.length;
+        if ((i + 1) % LOG_EVERY_CHUNKS === 0) {
+          console.log(
+            `item creations: checked ${progress(done, qids.size)} items, ${found} found, ${elapsed(started)} elapsed`,
+          );
+        }
       }
     } finally {
       await conn.end().catch(() => {});

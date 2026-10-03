@@ -22,11 +22,14 @@ import { items, mergeCandidates, sitelinkPages } from "../db/schema.ts";
 import type { Item } from "../src/lib/compare.ts";
 import { chunk } from "../src/lib/chunk.ts";
 import { sitelinkClashes } from "./sitelink-overlay.ts";
+import { elapsed, progress } from "./progress.ts";
 
 /** Open candidates read per keyset page when collecting clashes. */
 const READ_PAGE = 1000;
 /** Titles per replica `IN (…)` lookup / rows per upsert. */
 const LOOKUP_CHUNK = 500;
+/** Log progress every this many wikis. */
+const LOG_EVERY_WIKIS = 25;
 /** A page checked more recently than this is not looked up again. */
 const REFRESH_DAYS = 7;
 /** Rows not re-checked for this long no longer back an open clash; drop them. */
@@ -157,8 +160,14 @@ function redirectTargetTitle(r: RowDataPacket): string | null {
  * missing) — most such titles are main-namespace pages ("Halo: Reach") and are
  * found normally.
  */
-export async function lookUpPages(conn: Connection, titles: string[]): Promise<PageInfo[]> {
+export async function lookUpPages(
+  conn: Connection,
+  titles: string[],
+  /** Called after each lookup chunk with the titles looked up so far. */
+  onProgress?: (done: number) => void,
+): Promise<PageInfo[]> {
   const out: PageInfo[] = [];
+  let done = 0;
   for (const batch of chunk(titles, LOOKUP_CHUNK)) {
     // page_title and the redirect columns are VARBINARY on the replicas.
     const [rows] = await conn.query<RowDataPacket[]>(
@@ -197,6 +206,8 @@ export async function lookUpPages(conn: Connection, titles: string[]): Promise<P
         redirectFragment: target !== null && r.fragment ? String(r.fragment) : null,
       });
     }
+    done += batch.length;
+    onProgress?.(done);
   }
   return out;
 }
@@ -265,7 +276,13 @@ export async function runSitelinkRedirectSync(
   let checked = 0;
   let redirects = 0;
   const failedWikis: string[] = [];
-  for (const [wiki, set] of todo) {
+  for (const [i, [wiki, set]] of todo.entries()) {
+    if (i > 0 && i % LOG_EVERY_WIKIS === 0) {
+      console.log(
+        `sitelink redirects: ${progress(i, todo.length)} wikis done, ${checked} titles checked, ` +
+          `${elapsed(started)} elapsed`,
+      );
+    }
     let conn: Connection | undefined;
     try {
       conn = await connect(wiki);

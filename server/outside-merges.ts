@@ -18,9 +18,12 @@ import { chunk } from "../src/lib/chunk.ts";
 import { toSqlDatetime } from "./auth/time.ts";
 import { collectOpenQids } from "./item-creations.ts";
 import { lookUpPages, replicaConnConfig } from "./sitelink-redirects.ts";
+import { elapsed, progress } from "./progress.ts";
 
 /** Qids per settle transaction. */
 const SETTLE_CHUNK = 500;
+/** Log lookup and settle progress every this many items. */
+const LOG_EVERY_ITEMS = 10_000;
 /**
  * Refuse to treat more than this fraction of the items as deleted (and at
  * least MISSING_GUARD_MIN of them): that many missing pages means a replica
@@ -88,8 +91,17 @@ export function settlement(
 
 /** The fates of the qids that are no longer plain items, per the replica. */
 async function lookUpFates(conn: Connection, qids: string[]): Promise<ItemFate[]> {
+  const started = Date.now();
   const fates: ItemFate[] = [];
-  for (const page of await lookUpPages(conn, qids)) {
+  let logged = 0;
+  const pages = await lookUpPages(conn, qids, (done) => {
+    if (done - logged < LOG_EVERY_ITEMS) return;
+    logged = done;
+    console.log(
+      `outside merges: looked up ${progress(done, qids.length)} items, ${elapsed(started)} elapsed`,
+    );
+  });
+  for (const page of pages) {
     if (page.missing) fates.push({ qid: page.title, deleted: true });
     else if (page.isRedirect) {
       const target = page.redirectTarget;
@@ -190,9 +202,22 @@ export async function runOutsideMergeSync(
   }
 
   const byQid = new Map(fates.map((f) => [f.qid, f]));
+  console.log(
+    `outside merges: ${redirects} redirects, ${deleted} deleted; settling ${byQid.size} items`,
+  );
   let settled = 0;
+  let done = 0;
+  let logged = 0;
   for (const batch of chunk([...byQid.keys()], SETTLE_CHUNK)) {
     settled += await settle(batch, byQid);
+    done += batch.length;
+    if (done - logged >= LOG_EVERY_ITEMS) {
+      logged = done;
+      console.log(
+        `outside merges: settled ${progress(done, byQid.size)} items, ${settled} candidates, ` +
+          `${elapsed(started)} elapsed`,
+      );
+    }
   }
 
   console.log(

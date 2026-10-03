@@ -2576,6 +2576,45 @@ describe("scoreCandidate — creators, loose names, clashes and aggregator ids",
       expect(result.confidence).toBeLessThanOrEqual(0.6);
     });
 
+    describe("state of use", () => {
+      const state = (qid: string) => ({ P5817: [{ type: "item" as const, value: qid }] });
+      const IN_USE = "Q55654238";
+      const DECOMMISSIONED = "Q11639308";
+
+      it("docks one in use against one decommissioned, and holds it off certain", () => {
+        const plain = scoreCandidate(
+          station("Q1", 53.4847, -2.0563),
+          station("Q2", 53.4841, -2.0563),
+        )!;
+        const result = scoreCandidate(
+          station("Q1", 53.4847, -2.0563, state(DECOMMISSIONED)),
+          station("Q2", 53.4841, -2.0563, state(IN_USE)),
+        )!;
+        const reason = "different state of use (P5817): in use vs. decommissioned";
+        expect(result.reasons).toContain(reason);
+        expect(reasonTone(reason)).toEqual({ polarity: "negative", strength: 2 });
+        expect(result.confidence).toBeLessThan(plain.confidence - 0.2);
+        expect(result.confidence).toBeLessThanOrEqual(0.6);
+      });
+
+      it("ignores matching, temporary or mixed states", () => {
+        const pairs: [Item["statements"], Item["statements"]][] = [
+          [state(IN_USE), state(IN_USE)],
+          [state(DECOMMISSIONED), state(DECOMMISSIONED)],
+          [state(IN_USE), state("Q55653430")], // temporarily closed
+          [state(IN_USE), {}],
+          [state(IN_USE), { P5817: [...state(IN_USE).P5817, ...state(DECOMMISSIONED).P5817] }],
+        ];
+        for (const [x, y] of pairs) {
+          const result = scoreCandidate(
+            station("Q1", 53.4847, -2.0563, x),
+            station("Q2", 53.4841, -2.0563, y),
+          )!;
+          expect(result.reasons.some((r) => r.startsWith("different state of use"))).toBe(false);
+        }
+      });
+    });
+
     it("docks two stations a couple of kilometres apart", () => {
       const result = scoreCandidate(station("Q1", 52.3791, 4.9003), station("Q2", 52.36, 4.9))!;
       expect(result.reasons).toContain(

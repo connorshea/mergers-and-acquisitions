@@ -78,6 +78,11 @@ export interface CandidateDetailResponse {
   propertyInapplicable: Record<string, string[]>;
   /** Qxxx → human label, for the item values present on this pair. */
   valueLabels: Record<string, string>;
+  /**
+   * The EditGroups page for the edits that resolved this pair from the app
+   * (its merge, or its "different from" statements); null when none did.
+   */
+  editGroupUrl: string | null;
   /** Neighbour candidate ids for prev/next navigation (same status, confidence order). */
   prevId: number | null;
   nextId: number | null;
@@ -141,6 +146,8 @@ export interface CandidateMergeResponse {
    * other item's page (the one sitelink clash the merge clears by itself).
    */
   removedSitelinks?: RemovedSitelink[];
+  /** The EditGroups page for this merge's edits. */
+  editGroupUrl: string;
 }
 
 /** A sitelink to a redirect, removed so the merge could go through. */
@@ -176,6 +183,8 @@ export interface CandidateDifferentRequest {
 export interface CandidateDifferentResponse {
   candidate: CandidateSummary;
   edits: DifferentFromEdit[];
+  /** The EditGroups page for the statements added; absent when none were. */
+  editGroupUrl?: string;
 }
 
 /**

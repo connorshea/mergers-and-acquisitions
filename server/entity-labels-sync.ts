@@ -86,7 +86,7 @@ export async function collectReferencedItemQids(pageSize = READ_PAGE): Promise<s
     for (const row of rows) set.add(row.qid);
     if (++done % LOG_EVERY_PAGES === 0) {
       console.log(
-        `entity labels: scanned ${Math.min(done * pageSize, total)}/${total} items, ${set.size} referenced QIDs, ${elapsed(started)} elapsed`,
+        `entity labels: scanned ${progress(done * pageSize, total)} items, ${set.size} referenced QIDs, ${elapsed(started)} elapsed`,
       );
     }
   });
@@ -176,7 +176,7 @@ export async function labelsFromMirror(qids: string[]): Promise<MirrorLabels> {
     result.written += await syncEntityLabels(changed);
     if (++done % LOG_EVERY_CHUNKS === 0) {
       console.log(
-        `entity labels: checked ${Math.min(done * MIRROR_CHUNK, qids.length)}/${qids.length} QIDs against the mirror, ` +
+        `entity labels: checked ${progress(done * MIRROR_CHUNK, qids.length)} QIDs against the mirror, ` +
           `${result.written} labels written, ${elapsed(started)} elapsed`,
       );
     }
@@ -234,6 +234,12 @@ export async function runEntityLabelsSync(): Promise<EntityLabelsSyncResult> {
     `entity labels: done in ${elapsed(started)}: ${synced} labels written, ${failedQids.length} QIDs skipped`,
   );
   return { synced, failed: failedQids.length };
+}
+
+/** "done/total (pct%)", with `done` capped at `total` (the last page or chunk is short). */
+function progress(done: number, total: number): string {
+  const n = Math.min(done, total);
+  return `${n}/${total} (${((n / total) * 100).toFixed(1)}%)`;
 }
 
 const seconds = (ms: number): string => `${Math.round(ms / 1000)}s`;

@@ -32,10 +32,13 @@
 # pairs show names, not QIDs, by the time Thursday's hunt surfaces them; the
 # detail page reads labels per request, so nothing needs rescoring.
 - name: sync-entity-labels
-  command: node jobs/sync-entity-labels.ts
+  command: node --max-old-space-size=768 jobs/sync-entity-labels.ts
   image: tool-mna/tool-mna:latest
   schedule: "0 10 * * 3" # Wednesdays 10:00 UTC
   emails: onfailure
+  # The 512Mi default (a ~270 MB heap) ran out at 3.6M items: the 2.77M
+  # referenced QIDs plus the 1.89M left to look up on QLever, and its copy.
+  mem: 1Gi
 
 - name: prune-sessions
   command: node jobs/prune-sessions.ts

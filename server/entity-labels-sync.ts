@@ -195,11 +195,13 @@ export async function labelsFromMirror(qids: string[]): Promise<MirrorLabels> {
  */
 export async function runEntityLabelsSync(): Promise<EntityLabelsSyncResult> {
   const started = Date.now();
-  const qids = await collectReferencedItemQids();
+  let qids = await collectReferencedItemQids();
   console.log(`entity labels: ${qids.length} referenced QIDs collected in ${elapsed(started)}`);
 
   const mirrorStarted = Date.now();
   const mirror = await labelsFromMirror(qids);
+  // Let the full list (millions of strings) be collected before the QLever pass.
+  qids = [];
   let synced = mirror.written;
   console.log(
     `entity labels: ${mirror.written} labels written from the mirror, ${mirror.unchanged} unchanged ` +

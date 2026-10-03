@@ -469,6 +469,9 @@ export const wikidataEdits = mysqlTable(
     // wbmergeitems only redirects the source when the merge emptied it; with
     // ignored sitelink conflicts it can survive as a stub (null for claims).
     redirected: boolean("redirected"),
+    // The EditGroups batch (https://editgroups.toolforge.org) the request's
+    // edits were tagged with; one per merge or "different from" request.
+    editGroup: varchar("edit_group", { length: 32 }),
     createdAt: datetime("created_at", { mode: "string" })
       .notNull()
       .default(sql`CURRENT_TIMESTAMP`),
@@ -476,5 +479,6 @@ export const wikidataEdits = mysqlTable(
   (t) => [
     index("idx_wikidata_edits_user_id").on(t.userId),
     index("idx_wikidata_edits_candidate_id").on(t.candidateId),
+    index("idx_wikidata_edits_edit_group").on(t.editGroup),
   ],
 );

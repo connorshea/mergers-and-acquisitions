@@ -14,6 +14,7 @@
 // both reach Wikidata. The claim's timestamp rides in `resolved_at`; a claim
 // older than MERGING_STALE_SECONDS is treated as abandoned (the process died
 // mid-edit) and may be taken over.
+import { randomBytes } from "node:crypto";
 import { type Context, Hono, type MiddlewareHandler } from "hono";
 import { and, eq, inArray, lt, or } from "drizzle-orm";
 import { db } from "./db.ts";
@@ -57,6 +58,52 @@ import { attachLiveSitelinkRedirects } from "./live-sitelinks.ts";
 
 /** Appended to every edit summary so the edits are traceable to this tool. */
 export const TOOL_CREDIT = "M&A merge assistant";
+
+/**
+ * A fresh EditGroups batch id (https://editgroups.toolforge.org): 16 random
+ * hex digits, made per request so every edit one merge or "different from"
+ * makes shares a group — except the post-merge `wbcreateredirect`, which
+ * takes no summary. There is nothing to request from EditGroups; it
+ * finds the batch by the link `editSummary` puts in each summary.
+ */
+export function newEditGroup(): string {
+  return randomBytes(8).toString("hex");
+}
+
+/** The EditGroups page for a batch, where its edits can be reviewed or undone. */
+export function editGroupUrl(editGroup: string): string {
+  return `https://editgroups.toolforge.org/b/CB/${editGroup}/`;
+}
+
+/**
+ * Our share of Wikidata's 500-character summary limit, leaving room for the
+ * autocomment the API module prepends (e.g. `/* wbmergeitems-to:0||Q10 *\/`).
+ */
+const MAX_SUMMARY_CHARS = 400;
+
+/**
+ * An edit summary crediting the tool and linking its EditGroups batch. Uses
+ * the generic "CB" (custom bot) tool id, which EditGroups tracks without
+ * registration; the link text must be exactly "details".
+ */
+export function editSummary(text: string, editGroup: string): string {
+  const tail = ` (${TOOL_CREDIT}) ([[:toolforge:editgroups/b/CB/${editGroup}|details]])`;
+  // Wikidata cuts summaries at 500 characters, autocomment included, and a cut
+  // through the link would drop the edit from its group. Only the sitelink
+  // removal can get long (two page titles), so shorten the text, never the tail.
+  // UTF-16 length overcounts Wikidata's code points, so this errs short; the
+  // cut lands on a grapheme boundary so it can't split an accented letter.
+  const room = MAX_SUMMARY_CHARS - tail.length;
+  if (text.length <= room) return text + tail;
+  let head = "";
+  for (const { segment } of new Intl.Segmenter().segment(text)) {
+    if (head.length + segment.length > room - 1) break;
+    head += segment;
+  }
+  return `${head}…${tail}`;
+}
+/** The resolution a pair marked "different from" is dismissed with. */
+export const DIFFERENT_FROM_RESOLUTION = "marked as different from (P1889)";
 /** A `merging` claim older than this is presumed abandoned and can be re-taken. */
 export const MERGING_STALE_SECONDS = 10 * 60;
 
@@ -204,6 +251,7 @@ interface AuditBase {
   action: "merge" | "different-from";
   fromQid: string;
   intoQid: string;
+  editGroup: string;
   params?: Record<string, unknown>;
 }
 
@@ -368,12 +416,14 @@ edits.post("/:id/merge", async (c) => {
     .from(mergeCandidates)
     .where(eq(mergeCandidates.id, id));
   const { fromQid, intoQid } = row;
+  const editGroup = newEditGroup();
   const audit: AuditBase = {
     userId: user.id,
     candidateId: id,
     action: "merge",
     fromQid,
     intoQid,
+    editGroup,
     params: { ignoreConflicts },
   };
 
@@ -453,9 +503,11 @@ edits.post("/:id/merge", async (c) => {
       const { revid } = await removeSitelink(user, {
         qid: fix.qid,
         wiki: fix.wiki,
-        summary:
+        summary: editSummary(
           `Remove ${fix.wiki} sitelink "${fix.title}", a redirect to ${other}'s page ` +
-          `"${fix.target}", to merge ${fromQid} → ${intoQid} (${TOOL_CREDIT})`,
+            `"${fix.target}", to merge ${fromQid} → ${intoQid}`,
+          editGroup,
+        ),
       });
       removedSitelinks.push({ ...fix, revid, url: revisionUrl(revid) });
       audit.params = { ...audit.params, removedSitelinks };
@@ -471,7 +523,7 @@ edits.post("/:id/merge", async (c) => {
       fromQid,
       intoQid,
       ignoreConflicts,
-      summary: `Merge duplicate items ${fromQid} → ${intoQid} (${TOOL_CREDIT})`,
+      summary: editSummary(`Merge duplicate items ${fromQid} → ${intoQid}`, editGroup),
     });
   } catch (err) {
     // A network failure — the request timeout included — says nothing about
@@ -523,7 +575,7 @@ edits.post("/:id/merge", async (c) => {
         fromQid,
         intoQid,
         baseRevid: result.fromRevid,
-        summary: `Redirect ${fromQid} to ${intoQid} after merge (${TOOL_CREDIT})`,
+        summary: editSummary(`Redirect ${fromQid} to ${intoQid} after merge`, editGroup),
       });
       result = { ...result, redirected: true };
       audit.params = { ...audit.params, autoRedirected: true };
@@ -614,6 +666,7 @@ edits.post("/:id/merge", async (c) => {
     into: { qid: intoQid, revid: result.intoRevid, url: revisionUrl(result.intoRevid) },
     redirected: result.redirected,
     ...(removedSitelinks.length > 0 ? { removedSitelinks } : {}),
+    editGroupUrl: editGroupUrl(editGroup),
   };
   return c.json(payload);
 });
@@ -751,6 +804,9 @@ edits.post("/:id/different", async (c) => {
     return c.json({ error: `Item data missing for: ${missing}` }, 404);
   }
 
+  // Both legs share one EditGroups batch.
+  const editGroup = newEditGroup();
+
   // Which legs already exist is read from live Wikidata, not the mirror: a
   // previous attempt whose request timed out after Wikidata saved the
   // statement left no trace here (its claim was released), and a retry judged
@@ -774,6 +830,7 @@ edits.post("/:id/different", async (c) => {
           action: "different-from",
           fromQid: from.qid,
           intoQid: into.qid,
+          editGroup,
           ...(criterion ? { params: { criterion } } : {}),
         },
         err,
@@ -797,6 +854,7 @@ edits.post("/:id/different", async (c) => {
       action: "different-from",
       fromQid: item.qid,
       intoQid: target.qid,
+      editGroup,
       ...(criterion ? { params: { criterion } } : {}),
     };
     // Only the Wikidata call decides whether this leg failed. Once the
@@ -810,7 +868,7 @@ edits.post("/:id/different", async (c) => {
         property: DIFFERENT_FROM,
         target: target.qid,
         ...(criterion ? { qualifier: { property: CRITERION_USED, target: criterion } } : {}),
-        summary: `Not a duplicate of ${target.qid} (${TOOL_CREDIT})`,
+        summary: editSummary(`Not a duplicate of ${target.qid}`, editGroup),
       }));
     } catch (err) {
       if (succeeded === 0 && results.every((r) => r.skipped)) {
@@ -879,13 +937,15 @@ edits.post("/:id/different", async (c) => {
       resolvedBy: user.id,
       // Both items as the reviewer saw them, before the statements above.
       snapshot: { from: from.data, into: into.data },
-      resolution: "marked as different from (P1889)",
+      resolution: DIFFERENT_FROM_RESOLUTION,
     })
     .where(and(eq(mergeCandidates.id, id), eq(mergeCandidates.status, "merging")));
 
   const payload: CandidateDifferentResponse = {
     candidate: (await summaryFor(id))!,
     edits: results,
+    // Only when this request wrote something; both legs may have been there already.
+    ...(succeeded > 0 ? { editGroupUrl: editGroupUrl(editGroup) } : {}),
   };
   return c.json(payload);
 });

@@ -7,7 +7,7 @@ import { and, asc, count, desc, eq, gt, gte, inArray, lt, or, sql } from "drizzl
 import { db } from "./db.ts";
 import { type AuthEnv, requireUser } from "./auth/session.ts";
 import { addSeconds, toSqlDatetime } from "./auth/time.ts";
-import { MERGING_STALE_SECONDS } from "./edits.ts";
+import { DIFFERENT_FROM_RESOLUTION, editGroupUrl, MERGING_STALE_SECONDS } from "./edits.ts";
 import { loadLabels, summaryColumns, toSummary } from "./candidate-summary.ts";
 import { attachSitelinkRedirects } from "./sitelink-overlay.ts";
 import { loadCreations } from "./item-creations.ts";
@@ -19,6 +19,7 @@ import {
   items,
   mergeCandidates,
   properties,
+  wikidataEdits,
 } from "../db/schema.ts";
 import type { Item } from "../src/lib/compare.ts";
 import { chunk } from "../src/lib/chunk.ts";
@@ -272,7 +273,17 @@ candidates.get("/:id", async (c) => {
     and(eq(mergeCandidates.confidence, row.confidence), gt(mergeCandidates.id, row.id)),
   );
 
-  const [labels, itemRows, nextRows, prevRows] = await Promise.all([
+  // The edit that resolved the pair from the app, if one did: its merge, or
+  // its "different from" statements. A pair dismissed by hand, or merged
+  // elsewhere, has none — and an old one from before a reopen doesn't count.
+  const resolvingAction =
+    row.status === "merged"
+      ? "merge"
+      : row.status === "dismissed" && row.resolution === DIFFERENT_FROM_RESOLUTION
+        ? "different-from"
+        : null;
+
+  const [labels, itemRows, nextRows, prevRows, groupRows] = await Promise.all([
     loadLabels([row]),
     // A resolved pair shows the snapshot saved when it was resolved instead.
     snapshot
@@ -293,7 +304,22 @@ candidates.get("/:id", async (c) => {
       .where(and(sameStatus, beforeCurrent))
       .orderBy(asc(mergeCandidates.confidence), asc(mergeCandidates.id))
       .limit(1),
+    resolvingAction
+      ? db
+          .select({ editGroup: wikidataEdits.editGroup })
+          .from(wikidataEdits)
+          .where(
+            and(
+              eq(wikidataEdits.candidateId, row.id),
+              eq(wikidataEdits.action, resolvingAction),
+              eq(wikidataEdits.ok, true),
+            ),
+          )
+          .orderBy(desc(wikidataEdits.id))
+          .limit(1)
+      : [],
   ]);
+  const editGroup = groupRows[0]?.editGroup;
 
   const dataByQid = new Map(itemRows.map((r) => [r.qid, r.data as Item]));
   const from = snapshot?.from ?? dataByQid.get(row.fromQid) ?? null;
@@ -410,6 +436,7 @@ candidates.get("/:id", async (c) => {
     propertyMirrors,
     propertyInapplicable,
     valueLabels,
+    editGroupUrl: editGroup ? editGroupUrl(editGroup) : null,
     prevId: prevRows[0]?.id ?? null,
     nextId: nextRows[0]?.id ?? null,
   };

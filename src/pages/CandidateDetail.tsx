@@ -255,6 +255,7 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
               </svg>
               <span>
                 <Resolution resolution={resolution} resolvedBy={resolvedBy} capitalize />
+                {data?.editGroupUrl && <EditGroupLink url={data.editGroupUrl} separated />}
               </span>
             </div>
           )}
@@ -274,6 +275,7 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
                   {status !== "merged" && (resolution || resolvedBy) && (
                     <span className="detail-resolution">
                       <Resolution resolution={resolution} resolvedBy={resolvedBy} />
+                      {data?.editGroupUrl && <EditGroupLink url={data.editGroupUrl} separated />}
                     </span>
                   )}
                   {/* A merged pair stays merged (it happened on Wikidata); a
@@ -431,7 +433,7 @@ type EditOutcome =
 /** What an edit made from this page did on Wikidata, with links to the revisions. */
 function EditOutcomePanel({ outcome }: { outcome: EditOutcome }) {
   if (outcome.kind === "merge") {
-    const { from, into, redirected, removedSitelinks } = outcome.res;
+    const { from, into, redirected, removedSitelinks, editGroupUrl } = outcome.res;
     return (
       <div className={`edit-result${redirected ? "" : " is-partial"}`} role="status">
         Merged {from.qid} into {into.qid}:{" "}
@@ -462,10 +464,13 @@ function EditOutcomePanel({ outcome }: { outcome: EditOutcome }) {
             .
           </div>
         ))}
+        <div>
+          <EditGroupLink url={editGroupUrl} />
+        </div>
       </div>
     );
   }
-  const { edits } = outcome.res;
+  const { edits, editGroupUrl } = outcome.res;
   const partial = edits.some((e) => e.error);
   return (
     <div className={`edit-result${partial ? " is-partial" : ""}`} role="status">
@@ -486,7 +491,23 @@ function EditOutcomePanel({ outcome }: { outcome: EditOutcome }) {
           </li>
         ))}
       </ul>
+      {editGroupUrl && <EditGroupLink url={editGroupUrl} />}
     </div>
+  );
+}
+
+/**
+ * A link to the EditGroups batch holding an action's edits, where they can be
+ * reviewed or undone together. `separated` prefixes the " · " used inline.
+ */
+function EditGroupLink({ url, separated = false }: { url: string; separated?: boolean }) {
+  return (
+    <>
+      {separated && " · "}
+      <a href={url} target="_blank" rel="noreferrer">
+        View in EditGroups
+      </a>
+    </>
   );
 }
 

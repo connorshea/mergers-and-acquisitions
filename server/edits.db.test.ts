@@ -24,6 +24,7 @@ import {
   wikidataEdits,
 } from "../db/schema.ts";
 import type {
+  CandidateDetailResponse,
   CandidateDifferentResponse,
   CandidateMergeResponse,
   EditErrorResponse,
@@ -53,6 +54,8 @@ const ENV = {
 };
 
 const EDITOR_ID = 7;
+/** The EditGroups batch link every edit summary ends with; captures the id. */
+const EDIT_GROUP_LINK = /\(\[\[:toolforge:editgroups\/b\/CB\/([0-9a-f]+)\|details\]\]\)$/;
 
 interface Call {
   method: string;
@@ -151,6 +154,10 @@ const claimOk = (revid: number) => ({
   claim: { id: "x" },
 });
 const apiError = (code: string, text: string) => ({ errors: [{ code, text, module: "m" }] });
+
+async function get<T>(path: string): Promise<T> {
+  return (await (await app.request(path)).json()) as T;
+}
 
 async function post<T>(path: string, headers: Record<string, string>, body?: unknown) {
   const res = await app.request(path, {
@@ -378,6 +385,22 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
 
       const audits = await db.select().from(wikidataEdits);
       expect(audits[0]).toMatchObject({ redirected: true, params: { autoRedirected: true } });
+
+      // The merge and the clear share one EditGroups batch, recorded on the
+      // audit row. (wbcreateredirect takes no summary, so it can't join.)
+      expect(redirect.params.has("summary")).toBe(false);
+      const groups = calls
+        .filter((c) => c.params.has("summary"))
+        .map((c) => c.params.get("summary")!.match(EDIT_GROUP_LINK)?.[1]);
+      expect(groups).toHaveLength(2);
+      expect(groups[0]).toMatch(/^[0-9a-f]{16}$/);
+      expect(new Set(groups).size).toBe(1);
+      expect(audits[0].editGroup).toBe(groups[0]);
+      expect(body.editGroupUrl).toBe(`https://editgroups.toolforge.org/b/CB/${groups[0]}/`);
+
+      // The detail page links the same batch once the pair is merged.
+      const detail = await get<CandidateDetailResponse>(`/api/candidates/${alpha}`);
+      expect(detail.editGroupUrl).toBe(body.editGroupUrl);
     });
 
     it("notes when the source is not redirected and finishing it also fails", async () => {
@@ -848,6 +871,15 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
         ["different-from", "Q20", "Q10", true, 201],
         ["different-from", "Q10", "Q20", true, 202],
       ]);
+
+      // Both legs share one EditGroups batch, recorded on each audit row.
+      const groups = posts.map((p) => p.summary.match(EDIT_GROUP_LINK)?.[1]);
+      expect(groups[0]).toMatch(/^[0-9a-f]{16}$/);
+      expect(groups[1]).toBe(groups[0]);
+      expect(audits.map((a) => a.editGroup)).toEqual([groups[0], groups[0]]);
+      expect(body.editGroupUrl).toBe(`https://editgroups.toolforge.org/b/CB/${groups[0]}/`);
+      const detail = await get<CandidateDetailResponse>(`/api/candidates/${alpha}`);
+      expect(detail.editGroupUrl).toBe(body.editGroupUrl);
     });
 
     it("qualifies both statements with a criterion when one is given", async () => {

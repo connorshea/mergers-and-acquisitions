@@ -1,0 +1,74 @@
+{
+  "pageid": 95108111,
+  "ns": 0,
+  "title": "Q96397439",
+  "lastrevid": 2194704291,
+  "modified": "2024-07-03T17:50:01Z",
+  "type": "item",
+  "id": "Q96397439",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "One"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "One"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "2019 single by Måns Zelmerlöw"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "33d81754a79b2dab75d17c156313b0f8f0f4f086",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 134556,
+              "id": "Q134556"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q96397439$EF8D8248-1A53-4E0F-980F-4CF46B102437",
+        "rank": "normal"
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "14187d29d9d66ff5676eab0efd31b648cde0f147",
+          "datavalue": {
+            "value": "/g/11j4s_5cby",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q96397439$B6591B29-24A2-430C-8549-832A7D596A37",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "One (Måns Zelmerlöw song)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/One_(M%C3%A5ns_Zelmerl%C3%B6w_song)"
+    }
+  }
+}

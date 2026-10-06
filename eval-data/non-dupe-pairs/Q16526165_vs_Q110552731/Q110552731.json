@@ -1,0 +1,57 @@
+{
+  "pageid": 105593715,
+  "ns": 0,
+  "title": "Q110552731",
+  "lastrevid": 1576674325,
+  "modified": "2022-02-13T06:15:38Z",
+  "type": "item",
+  "id": "Q110552731",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Absence"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "2021 studio album by Terence Blanchard"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "ألبوم"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "dc16d32b615bf1c6edf1919941065eedccacb8e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 482994,
+              "id": "Q482994"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q110552731$e1838112-514c-4da8-ba8e-90083f220f72",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Absence (Terence Blanchard album)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Absence_(Terence_Blanchard_album)"
+    }
+  }
+}

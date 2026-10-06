@@ -1,0 +1,537 @@
+{
+  "pageid": 76563396,
+  "ns": 0,
+  "title": "Q77084021",
+  "lastrevid": 2474420875,
+  "modified": "2026-03-22T05:46:22Z",
+  "type": "item",
+  "id": "Q77084021",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Biocartis (Switzerland)"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Biocartis (Suisse)"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Biocartis"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "company in Lausanne, Switzerland"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "société à Lausanne, Suisse"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "bedrijf uit Zwitserland"
+    }
+  },
+  "aliases": {
+    "fr": [
+      {
+        "language": "fr",
+        "value": "Biocartis"
+      }
+    ],
+    "en": [
+      {
+        "language": "en",
+        "value": "Biocartis"
+      }
+    ]
+  },
+  "claims": {
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "72649de3bac2e56da4b2eca1af96de4a619af9bc",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 39,
+              "id": "Q39"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q77084021$9658C087-8031-4CC9-B45C-83CA02F46A23",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "cf3baeafe2591b503f636b662ef952480d58a3ff",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "236f4fcf5420729537547b5baea678d1c7fc5265",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 74702602,
+                      "id": "Q74702602"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P2427": [
+                {
+                  "snaktype": "value",
+                  "property": "P2427",
+                  "hash": "04c2fd53624e15e8729aba4bece1d6fcae743e5a",
+                  "datavalue": {
+                    "value": "grid.507302.3",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P2427"]
+          }
+        ]
+      }
+    ],
+    "P2427": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2427",
+          "hash": "04c2fd53624e15e8729aba4bece1d6fcae743e5a",
+          "datavalue": {
+            "value": "grid.507302.3",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q77084021$B8BA9CB8-B622-48FF-BDEC-A1B9B12CC91B",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "cf3baeafe2591b503f636b662ef952480d58a3ff",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "236f4fcf5420729537547b5baea678d1c7fc5265",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 74702602,
+                      "id": "Q74702602"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P2427": [
+                {
+                  "snaktype": "value",
+                  "property": "P2427",
+                  "hash": "04c2fd53624e15e8729aba4bece1d6fcae743e5a",
+                  "datavalue": {
+                    "value": "grid.507302.3",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P2427"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "326e3d41d1e9c34715e880be6e1c6a1e822e4317",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4830453,
+              "id": "Q4830453"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q77084021$E00B11B8-B571-41BF-8B29-93FD91362CC7",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "cf3baeafe2591b503f636b662ef952480d58a3ff",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "236f4fcf5420729537547b5baea678d1c7fc5265",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 74702602,
+                      "id": "Q74702602"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P2427": [
+                {
+                  "snaktype": "value",
+                  "property": "P2427",
+                  "hash": "04c2fd53624e15e8729aba4bece1d6fcae743e5a",
+                  "datavalue": {
+                    "value": "grid.507302.3",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P2427"]
+          }
+        ]
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "09eb0995a693bb14ec1331d2d9564e86ca04ab84",
+          "datavalue": {
+            "value": {
+              "time": "+2007-01-01T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q77084021$6E3104E1-5295-411A-8904-6E718C26C3CB",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "cf3baeafe2591b503f636b662ef952480d58a3ff",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "236f4fcf5420729537547b5baea678d1c7fc5265",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 74702602,
+                      "id": "Q74702602"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P2427": [
+                {
+                  "snaktype": "value",
+                  "property": "P2427",
+                  "hash": "04c2fd53624e15e8729aba4bece1d6fcae743e5a",
+                  "datavalue": {
+                    "value": "grid.507302.3",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P2427"]
+          }
+        ]
+      }
+    ],
+    "P625": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P625",
+          "hash": "9440128fdfe7af67a15848efee5f3efbf2ff857a",
+          "datavalue": {
+            "value": {
+              "latitude": 46.517635,
+              "longitude": 6.561198,
+              "altitude": null,
+              "precision": 0.000001,
+              "globe": "http://www.wikidata.org/entity/Q2"
+            },
+            "type": "globecoordinate"
+          },
+          "datatype": "globe-coordinate"
+        },
+        "type": "statement",
+        "id": "Q77084021$3554C477-A829-41EB-BDF3-9F480D8E27F3",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "cf3baeafe2591b503f636b662ef952480d58a3ff",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "236f4fcf5420729537547b5baea678d1c7fc5265",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 74702602,
+                      "id": "Q74702602"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P2427": [
+                {
+                  "snaktype": "value",
+                  "property": "P2427",
+                  "hash": "04c2fd53624e15e8729aba4bece1d6fcae743e5a",
+                  "datavalue": {
+                    "value": "grid.507302.3",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P2427"]
+          }
+        ]
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "6ca85c9fa7f96b7dad032664fa0c9dbab82f0005",
+          "datavalue": {
+            "value": "https://www.biocartis.com",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q77084021$EFD6A86E-BB6A-490E-968A-96B0C776AD07",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "cf3baeafe2591b503f636b662ef952480d58a3ff",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "236f4fcf5420729537547b5baea678d1c7fc5265",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 74702602,
+                      "id": "Q74702602"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P2427": [
+                {
+                  "snaktype": "value",
+                  "property": "P2427",
+                  "hash": "04c2fd53624e15e8729aba4bece1d6fcae743e5a",
+                  "datavalue": {
+                    "value": "grid.507302.3",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P2427"]
+          }
+        ]
+      }
+    ],
+    "P6782": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6782",
+          "hash": "e3666ad9df7e242a0e2a7decd03a5d56d0423dab",
+          "datavalue": {
+            "value": "04hjhj186",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q77084021$41D21E8F-5D9D-4DF7-AB5A-4F1EEAB78922",
+        "rank": "normal"
+      }
+    ],
+    "P159": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P159",
+          "hash": "57d881c5f4b96ee7710a1504bb32f794b5e5a52d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 807,
+              "id": "Q807"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q77084021$07224DC7-EA25-45CD-82FD-8B1770366823",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "3c40b5e8139d13f9d3f93642bc06fafedad453ce",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "17a1ade096ec6676bae150c72c4530761da346c6",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 10846831,
+                      "id": "Q10846831"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "1c73fbf59e9cd168ba15ead9320abd8abb960fb2",
+                  "datavalue": {
+                    "value": "http://www.crunchbase.com/organization/biocartis",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P854"]
+          }
+        ]
+      }
+    ],
+    "P2088": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2088",
+          "hash": "e384e72dfd16cb6eb543e04f8428887d6a4caf7a",
+          "datavalue": {
+            "value": "biocartis",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q77084021$AA42F820-F36A-4A52-A426-29D47854AD20",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "3c40b5e8139d13f9d3f93642bc06fafedad453ce",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "17a1ade096ec6676bae150c72c4530761da346c6",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 10846831,
+                      "id": "Q10846831"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "1c73fbf59e9cd168ba15ead9320abd8abb960fb2",
+                  "datavalue": {
+                    "value": "http://www.crunchbase.com/organization/biocartis",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P854"]
+          }
+        ]
+      }
+    ],
+    "P14075": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P14075",
+          "hash": "072d3840db4f33c709f5e1f04a1756a9853e6bc5",
+          "datavalue": {
+            "value": "96932",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q77084021$70951AF6-F675-4FD7-B612-03686521D56A",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

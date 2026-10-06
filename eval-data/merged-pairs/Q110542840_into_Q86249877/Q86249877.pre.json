@@ -1,0 +1,1020 @@
+{
+  "pageid": 85507175,
+  "ns": 0,
+  "title": "Q86249877",
+  "lastrevid": 1533812647,
+  "modified": "2021-11-25T12:43:15Z",
+  "type": "item",
+  "id": "Q86249877",
+  "labels": {
+    "it": {
+      "language": "it",
+      "value": "The Crucible"
+    },
+    "en": {
+      "language": "en",
+      "value": "The Crucible"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "The Crucible"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "The Crucible"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "The Crucible"
+    },
+    "da": {
+      "language": "da",
+      "value": "The Crucible"
+    },
+    "de": {
+      "language": "de",
+      "value": "The Crucible"
+    },
+    "es": {
+      "language": "es",
+      "value": "The Crucible"
+    },
+    "eu": {
+      "language": "eu",
+      "value": "The Crucible"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "The Crucible"
+    },
+    "hu": {
+      "language": "hu",
+      "value": "The Crucible"
+    },
+    "nb": {
+      "language": "nb",
+      "value": "The Crucible"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "The Crucible"
+    },
+    "nn": {
+      "language": "nn",
+      "value": "The Crucible"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "The Crucible"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "The Crucible"
+    },
+    "ro": {
+      "language": "ro",
+      "value": "The Crucible"
+    },
+    "se": {
+      "language": "se",
+      "value": "The Crucible"
+    },
+    "sq": {
+      "language": "sq",
+      "value": "The Crucible"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "The Crucible"
+    },
+    "tr": {
+      "language": "tr",
+      "value": "The Crucible"
+    }
+  },
+  "descriptions": {
+    "it": {
+      "language": "it",
+      "value": "album dei Motorpsycho del 2019"
+    },
+    "en": {
+      "language": "en",
+      "value": "2019 studio album by Motorpsycho"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "album de Motorpsycho, sorti en 2019"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "muziekalbum van Motorpsycho"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "04375530b6b09f5787d4f3a5ded62962de50afd8",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1949910,
+              "id": "Q1949910"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q86249877$277d24eb-478a-49d5-d9af-774efad9b993",
+        "rank": "normal"
+      }
+    ],
+    "P1729": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1729",
+          "hash": "48b8055d4448739992b2e861c7d06cecaedcc54f",
+          "datavalue": {
+            "value": "mw0003244948",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "b2c9f9f3cdf87f1cd8b8ff7cf66b6d0938a676e4",
+              "datavalue": {
+                "value": "The Crucible",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q86249877$8003b372-42e6-a5f4-3183-2bcb68a0f0fa",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "4810c1b91356c0d0e6d3ee125f61fe7aaeaaa0dc",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "fa28758dedb471bbd17a5773562e57ccb962622d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 31181,
+                      "id": "Q31181"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "b112d2add91ebeaaf53a6effeb45b8218ad2a369",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2020-09-16T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "0912929cc39449c6cf153f29b01566291f171b7b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11366,
+              "id": "Q11366"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q86249877$77569c6f-f049-40e0-b41c-90df5d789194",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d5847b9b6032aa8b13dae3c2dfd9ed5d114d21b3",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "5a343e7e758a4282a01316d3e959b6e653b767fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11920,
+                      "id": "Q11920"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "1a8b8e8030dc9e6aa726a7c27b518ad072ac70e8",
+          "datavalue": {
+            "value": {
+              "time": "+2019-02-15T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q86249877$421328dd-d4ff-4674-92a6-597192cada0e",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "058518bdd70bb6d90c348ce7a2154a1c557d3a5a",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "5a343e7e758a4282a01316d3e959b6e653b767fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11920,
+                      "id": "Q11920"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "b112d2add91ebeaaf53a6effeb45b8218ad2a369",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2020-09-16T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P813"]
+          }
+        ]
+      }
+    ],
+    "P361": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P361",
+          "hash": "93864f9e3ac80a109021cda286df47923d546e0b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 99385976,
+              "id": "Q99385976"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P156": [
+            {
+              "snaktype": "value",
+              "property": "P156",
+              "hash": "6cf908fe60349c43bdaec4efddc65ba42e1f69cb",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 86674525,
+                  "id": "Q86674525"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P156"],
+        "id": "Q86249877$8b4a26ce-4026-a94b-01c3-9211eb0ba4cc",
+        "rank": "normal"
+      }
+    ],
+    "P7937": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7937",
+          "hash": "b736d0ddd58350a6f636c0daf4befdb4b6346897",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 208569,
+              "id": "Q208569"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q86249877$65026155-8482-4B52-BE0D-B32025AE2305",
+        "rank": "normal"
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "dc16d32b615bf1c6edf1919941065eedccacb8e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 482994,
+              "id": "Q482994"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q86249877$757a6cfd-4734-032c-a6f9-dea2c9e23f5f",
+        "rank": "normal"
+      }
+    ],
+    "P436": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P436",
+          "hash": "4786488603fe6625f18397cd56672ba1d7a5ee44",
+          "datavalue": {
+            "value": "84b1c4ca-8fa7-4eb2-9159-d1a3fec48f77",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "b2c9f9f3cdf87f1cd8b8ff7cf66b6d0938a676e4",
+              "datavalue": {
+                "value": "The Crucible",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q86249877$9735efba-48fa-10cf-7634-01411dad2e22",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "197276755bd7c81c0e7b43cbc8127e9b5c7856bb",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "623cc8f0e2f65afe4d66b91962d354a2f3aa9a27",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 14005,
+                      "id": "Q14005"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "b112d2add91ebeaaf53a6effeb45b8218ad2a369",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2020-09-16T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "2525f53bde72f26ce1bb2bc6d70a477ac78df488",
+          "datavalue": {
+            "value": {
+              "text": "The Crucible",
+              "language": "en"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q86249877$cd92625d-4ddd-b82c-042b-355e721af502",
+        "rank": "normal"
+      }
+    ],
+    "P407": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P407",
+          "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1860,
+              "id": "Q1860"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q86249877$89aeb364-4943-ac6c-3995-e26d288ee50f",
+        "rank": "normal"
+      }
+    ],
+    "P2635": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2635",
+          "hash": "5ec265b017f31174216dee42f87e001b2bcce16e",
+          "datavalue": {
+            "value": {
+              "amount": "+3",
+              "unit": "http://www.wikidata.org/entity/Q7302866"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q86249877$0e9f1f3d-4bf0-c44e-a48b-f310400680fc",
+        "rank": "normal"
+      }
+    ],
+    "P2205": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2205",
+          "hash": "8f9805b6a703c673fc0a2dddd94a002a675937b4",
+          "datavalue": {
+            "value": "2MJ7TzoTvmi2WrIDpQAeak",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "b2c9f9f3cdf87f1cd8b8ff7cf66b6d0938a676e4",
+              "datavalue": {
+                "value": "The Crucible",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q86249877$59f1cb66-4667-ce11-9d76-c9d14d86a1d8",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "1671be0d72b72ffdf3dfec647c89199aefd04822",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "9ec10385b824daea40c2c192394a4ce1f4346c03",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 689141,
+                      "id": "Q689141"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "b112d2add91ebeaaf53a6effeb45b8218ad2a369",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2020-09-16T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "311109308bc96705714484191629227e38ae25d6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 26269078,
+              "id": "Q26269078"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1013": [
+            {
+              "snaktype": "value",
+              "property": "P1013",
+              "hash": "758a8defa0676780ff8d05bf8a0a446b946af704",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 55761780,
+                  "id": "Q55761780"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1013"],
+        "id": "Q86249877$c0fe4f65-4bd6-349b-cdd7-70aeb45c0324",
+        "rank": "normal"
+      }
+    ],
+    "P444": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P444",
+          "hash": "6a490345d705b2751fcf96e73709973344b056a4",
+          "datavalue": {
+            "value": "4",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P447": [
+            {
+              "snaktype": "value",
+              "property": "P447",
+              "hash": "71b9202c6b8ecfe90d32a87ea63c87faf5b26651",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 31181,
+                  "id": "Q31181"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P50": [
+            {
+              "snaktype": "value",
+              "property": "P50",
+              "hash": "1ad7cc9f9522719e432ae291fb99e1981c3623d0",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 98210600,
+                  "id": "Q98210600"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P447", "P50"],
+        "id": "Q86249877$d751fa02-4e7e-3923-c463-dd330730d6de",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "7d883b0315047535ff90e401858c567dea5e59a1",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "fa28758dedb471bbd17a5773562e57ccb962622d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 31181,
+                      "id": "Q31181"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P1729": [
+                {
+                  "snaktype": "value",
+                  "property": "P1729",
+                  "hash": "48b8055d4448739992b2e861c7d06cecaedcc54f",
+                  "datavalue": {
+                    "value": "mw0003244948",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "b112d2add91ebeaaf53a6effeb45b8218ad2a369",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2020-09-16T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P1729", "P813"]
+          }
+        ]
+      }
+    ],
+    "P162": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P162",
+          "hash": "c2dab1e80ce356be5bc56505313d80163689f526",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 925551,
+              "id": "Q925551"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q86249877$9BCDD1E9-9492-45DA-9CDE-A260D3FF3D2C",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "058518bdd70bb6d90c348ce7a2154a1c557d3a5a",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "5a343e7e758a4282a01316d3e959b6e653b767fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11920,
+                      "id": "Q11920"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "b112d2add91ebeaaf53a6effeb45b8218ad2a369",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2020-09-16T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P813"]
+          }
+        ]
+      }
+    ],
+    "P1954": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1954",
+          "hash": "bc39214b8e3ce9d3a19634b436a2f07926a32fb4",
+          "datavalue": {
+            "value": "1500896",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "b2c9f9f3cdf87f1cd8b8ff7cf66b6d0938a676e4",
+              "datavalue": {
+                "value": "The Crucible",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q86249877$9b6bd6e6-4133-3dad-9560-026df02a1c59",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "abc6c576217bebc75f55b75f3a8e821bf415885a",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "c34208b35b041d6758e6b68814cd263cacdabb10",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 504063,
+                      "id": "Q504063"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "b112d2add91ebeaaf53a6effeb45b8218ad2a369",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2020-09-16T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P264",
+          "hash": "6b2a7460d071010240e6e612818e3c42cafea390",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 954763,
+              "id": "Q954763"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q86249877$78f0b85c-4947-ac65-fd69-6d398e11e27f",
+        "rank": "normal"
+      }
+    ],
+    "P291": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P291",
+          "hash": "22c469bc6482bc99c189c28d45aea11ae770d8fe",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 20,
+              "id": "Q20"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q86249877$031c9a14-4fc3-1055-922c-730f374ce0cc",
+        "rank": "normal"
+      }
+    ],
+    "P437": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P437",
+          "hash": "f70c6290b338c4f54eeef6975007ab67318c09c8",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 15982450,
+              "id": "Q15982450"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q86249877$C6502557-F642-4187-9123-EF508A9E8882",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "b540210f90ecf4f344aa721d6e37a7b95e92c94e",
+            "snaks": {
+              "P3452": [
+                {
+                  "snaktype": "value",
+                  "property": "P3452",
+                  "hash": "b25a1b4c0caa02085cd8e18ee09cee896556c5c1",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 689141,
+                      "id": "Q689141"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "df58c8406ee8438a97075f3a8f10d046d7559f14",
+                  "datavalue": {
+                    "value": "https://www.wikidata.org/wiki/Q86249877#P2205",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                },
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "17f23fed18b5b9d0e463b22dee910f6db4c88427",
+                  "datavalue": {
+                    "value": "https://www.wikidata.org/wiki/Property:P2205#P2302",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P3452", "P4656"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {
+    "itwiki": {
+      "site": "itwiki",
+      "title": "The Crucible (Motorpsycho)",
+      "badges": [],
+      "url": "https://it.wikipedia.org/wiki/The_Crucible_(Motorpsycho)"
+    }
+  }
+}

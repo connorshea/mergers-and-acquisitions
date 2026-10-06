@@ -2063,6 +2063,154 @@ export function yearDisambiguatedWikis(a: Item, b: Item): string[] {
 }
 
 /**
+ * A page title split into its base and trailing parenthetical disambiguator:
+ * "The Crucible (Motorpsycho album)" → "The Crucible" + "Motorpsycho album".
+ * A title without one has a null qualifier.
+ */
+export function splitDisambiguator(title: string): { base: string; qualifier: string | null } {
+  const m = /^(.+?)\s*\(([^()]+)\)\s*$/.exec(title);
+  return m ? { base: m[1], qualifier: m[2] } : { base: title, qualifier: null };
+}
+
+/**
+ * Words that say what *kind* of subject a disambiguator names, or where it is
+ * from, rather than which one: "(1944 film)" and "(1918 film)", or "(British
+ * band)" and "(Australian band)", share a word but are namesakes the wikis are
+ * telling apart. Only capitalized words are considered at all (see
+ * qualifierNames), so this mostly lists what English capitalizes (demonyms)
+ * and German capitalizes (every noun). Lowercase.
+ */
+const GENERIC_QUALIFIER_WORDS = new Set<string>([
+  // English
+  "the",
+  "and",
+  "album",
+  "band",
+  "film",
+  "game",
+  "song",
+  "single",
+  "series",
+  "novel",
+  "book",
+  "video",
+  "computer",
+  "tv",
+  "television",
+  "ep",
+  "soundtrack",
+  "musical",
+  "play",
+  "opera",
+  "manga",
+  "anime",
+  "comics",
+  "comic",
+  "character",
+  "group",
+  "magazine",
+  "newspaper",
+  "company",
+  "ship",
+  "software",
+  "station",
+  "river",
+  "american",
+  "british",
+  "english",
+  "scottish",
+  "welsh",
+  "irish",
+  "australian",
+  "canadian",
+  "japanese",
+  "korean",
+  "chinese",
+  "german",
+  "french",
+  "italian",
+  "spanish",
+  "swedish",
+  "dutch",
+  "russian",
+  "polish",
+  "brazilian",
+  "mexican",
+  "indian",
+  "new",
+  "zealand",
+  "us",
+  "uk",
+  // German
+  "der",
+  "die",
+  "das",
+  "computerspiel",
+  "videospiel",
+  "spiel",
+  "lied",
+  "roman",
+  "fernsehserie",
+  "zeitschrift",
+  "zeitung",
+  "unternehmen",
+  "schiff",
+  "musikgruppe",
+  "sänger",
+  "sängerin",
+  "schauspieler",
+  "schauspielerin",
+  "begriffsklärung",
+]);
+
+/**
+ * The distinctive names in a title's disambiguator: capitalized words (a
+ * proper noun — an artist, a place, a franchise) that aren't generic type or
+ * nationality words. Years and other numbers never count: the year-gap rules
+ * judge dates, and two namesakes often share one.
+ */
+function qualifierNames(qualifier: string): Set<string> {
+  const out = new Set<string>();
+  for (const word of qualifier.split(/[^\p{L}\p{N}]+/u)) {
+    if (word.length < 3 || !/^\p{Lu}/u.test(word)) continue;
+    const lower = word.toLowerCase();
+    if (!GENERIC_QUALIFIER_WORDS.has(lower)) out.add(lower);
+  }
+  return out;
+}
+
+/**
+ * A name the two items' page titles agree on in their disambiguators, under
+ * the same base title: enwiki's "The Crucible (Motorpsycho album)" and itwiki's
+ * "The Crucible (Motorpsycho)" both say *which* The Crucible — Motorpsycho's.
+ * Two wikis independently qualifying a title by the same artist, author or
+ * place is the shape of one subject. Generic qualifiers ("(film)", "(American
+ * band)") and years don't count (see qualifierNames). Returns the shared name
+ * and the two titles that show it, or null.
+ */
+export function sharedTitleQualifier(
+  a: Item,
+  b: Item,
+): { name: string; titleA: string; titleB: string } | null {
+  const qualified = (item: Item) =>
+    Object.values(item.sitelinks).flatMap((title) => {
+      const { base, qualifier } = splitDisambiguator(title);
+      return qualifier === null
+        ? []
+        : [{ title, base: normalize(base), names: qualifierNames(qualifier) }];
+    });
+  const qb = qualified(b);
+  for (const x of qualified(a)) {
+    for (const y of qb) {
+      if (x.base !== y.base || x.title === y.title) continue;
+      const name = [...x.names].find((n) => y.names.has(n));
+      if (name) return { name, titleA: x.title, titleB: y.title };
+    }
+  }
+  return null;
+}
+
+/**
  * Property ids on which either item has a statement whose value *is* the other
  * item — e.g. a game's "part of the series" (P179) naming the series it is being
  * compared against, or "based on" / "followed by" pointing across the pair. An
@@ -2699,6 +2847,18 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     );
   }
 
+  // Page titles that disambiguate the same base title by the same name —
+  // "The Crucible (Motorpsycho album)" / "The Crucible (Motorpsycho)" — are two
+  // wikis each saying which subject it is, and naming the same one. Sparse
+  // items (a stub created from one article) often carry little else to agree on.
+  const titleQualifier = sharedTitleQualifier(a, b);
+  if (titleQualifier) {
+    score += 0.15;
+    reasons.push(
+      `page titles are disambiguated by the same name ("${titleQualifier.titleA}" / "${titleQualifier.titleB}")`,
+    );
+  }
+
   // Many external identifiers held by *both* items with entirely different
   // values are near-conclusive evidence of two distinct subjects: a single game
   // has one Steam/GOG/MobyGames/etc. page, so if each item carries its own set of
@@ -2972,8 +3132,9 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // any concrete disagreement — a differing developer/publisher, a release-year
   // gap, or a conflicting per-subject id — caps it further. Corroborating signals
   // are the shared strong ids plus the discriminative statements (non-id) that
-  // agree, plus a wiki redirecting one item's page to the other's. This clamp
-  // only ever lowers a score; it cannot make a non-duplicate look like one.
+  // agree, plus a wiki redirecting one item's page to the other's, plus page
+  // titles disambiguated by the same name. This clamp only ever lowers a
+  // score; it cannot make a non-duplicate look like one.
   const propAgreement = stmtRows.filter(
     (r) => r.status === "identical" && !r.a.some((v) => v.type === "external-id"),
   ).length;
@@ -2985,6 +3146,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     strongIds.length +
     propAgreement +
     (redirectWikis.length > 0 ? 1 : 0) +
+    (titleQualifier ? 1 : 0) +
     (nearPlaceSignal ? 1 : 0);
   let ceiling: number;
   if (strongSignals >= 3) ceiling = 1;

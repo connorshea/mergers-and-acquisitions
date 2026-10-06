@@ -1,0 +1,61 @@
+{
+  "pageid": 105585177,
+  "ns": 0,
+  "title": "Q110542840",
+  "lastrevid": 1888297800,
+  "modified": "2023-05-03T14:01:01Z",
+  "type": "item",
+  "id": "Q110542840",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "The Crucible"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "album"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "ألبوم"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "музичний альбом"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "dc16d32b615bf1c6edf1919941065eedccacb8e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 482994,
+              "id": "Q482994"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q110542840$de6abae2-6278-41ad-b77b-2e028006b911",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "The Crucible (Motorpsycho album)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/The_Crucible_(Motorpsycho_album)"
+    }
+  }
+}

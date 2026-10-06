@@ -1,0 +1,288 @@
+{
+  "pageid": 49851258,
+  "ns": 0,
+  "title": "Q48833642",
+  "lastrevid": 2104598105,
+  "modified": "2024-03-18T07:57:31Z",
+  "type": "item",
+  "id": "Q48833642",
+  "labels": {
+    "it": {
+      "language": "it",
+      "value": "R.I.P."
+    },
+    "en": {
+      "language": "en",
+      "value": "R.I.P."
+    },
+    "fr": {
+      "language": "fr",
+      "value": "R.I.P."
+    },
+    "es": {
+      "language": "es",
+      "value": "R.I.P."
+    },
+    "nl": {
+      "language": "nl",
+      "value": "R.I.P."
+    },
+    "ga": {
+      "language": "ga",
+      "value": "R.I.P."
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "2008 mixtape by MadMan"
+    },
+    "it": {
+      "language": "it",
+      "value": "mixtape di MadMan del 2008"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "mixtape de MadMan, sortie en 2008"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "muziekalbum van MadMan"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "53a5c2c486e0cfc3051af458aa99515aab2f62de",
+          "datavalue": {
+            "value": {
+              "time": "+2008-11-27T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q48833642$DA451580-FB2C-4BFC-B42D-77ED5CCA3D2F",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d5847b9b6032aa8b13dae3c2dfd9ed5d114d21b3",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "5a343e7e758a4282a01316d3e959b6e653b767fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11920,
+                      "id": "Q11920"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "47bf8df71354d2a132d6b82d0a42e3bd49512d8c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 18016296,
+              "id": "Q18016296"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q48833642$d9a887c6-4c2d-819e-3720-b5e5bdd2b2f8",
+        "rank": "normal"
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "52265b2e70e7a321739678d88e0d009e6004d2e6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11401,
+              "id": "Q11401"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q48833642$0dc0cd79-4938-8e85-a3d4-778bd9af4cdf",
+        "rank": "normal"
+      }
+    ],
+    "P2206": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2206",
+          "hash": "002d96519394f99eb5c210638dc374b1e321b46c",
+          "datavalue": {
+            "value": "7134287",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q48833642$c1e82038-4738-44c7-7329-b2f5cbc3f635",
+        "rank": "normal"
+      }
+    ],
+    "P361": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P361",
+          "hash": "2bdebf567f2f03268394975ad24eabf2c69c3597",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 56328356,
+              "id": "Q56328356"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q48833642$f2883410-419e-9b74-20b0-bc303baa7bd7",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P361",
+          "hash": "9613682a12d06e88f584412ee9fa8f7cf6d3c0ef",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 117787702,
+              "id": "Q117787702"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P155": [
+            {
+              "snaktype": "value",
+              "property": "P155",
+              "hash": "18beba7dc8a191189401a61be0e1fabd658810e1",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 86661421,
+                  "id": "Q86661421"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P156": [
+            {
+              "snaktype": "value",
+              "property": "P156",
+              "hash": "60707f359dbacc030f36bcf843514a886e57b0df",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 20008521,
+                  "id": "Q20008521"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P155", "P156"],
+        "id": "Q48833642$E831C8C6-00CC-4A13-BE89-5B066B9FE3A7",
+        "rank": "normal"
+      }
+    ],
+    "P7937": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7937",
+          "hash": "bb72ee518df6f49fe16584fd2f3ec114acfa2dc9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1892995,
+              "id": "Q1892995"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q48833642$E0AC241F-8E44-4329-8F05-5D7FB28EA437",
+        "rank": "normal"
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "dc16d32b615bf1c6edf1919941065eedccacb8e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 482994,
+              "id": "Q482994"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q48833642$79B43F24-31EF-4030-97F9-BF1A18A2B55D",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "itwiki": {
+      "site": "itwiki",
+      "title": "R.I.P. (MadMan)",
+      "badges": [],
+      "url": "https://it.wikipedia.org/wiki/R.I.P._(MadMan)"
+    }
+  }
+}

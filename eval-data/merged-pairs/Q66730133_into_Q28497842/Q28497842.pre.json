@@ -1,0 +1,383 @@
+{
+  "pageid": 30192169,
+  "ns": 0,
+  "title": "Q28497842",
+  "lastrevid": 2481057454,
+  "modified": "2026-04-13T15:52:41Z",
+  "type": "item",
+  "id": "Q28497842",
+  "labels": {
+    "fr": {
+      "language": "fr",
+      "value": "Sonate pour flûte seule de Carl Philipp Emanuel Bach"
+    },
+    "en": {
+      "language": "en",
+      "value": "Sonata in A minor for Solo Flute, Wq. 132"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "flute sonata composed by Carl Philipp Emanuel Bach"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5be109d8a3cbbd062357a9d210d4ef00ef25244e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 105543609,
+              "id": "Q105543609"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q28497842$b0e69b43-43d3-bfe4-b7d8-269978aaf734",
+        "rank": "normal"
+      }
+    ],
+    "P86": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P86",
+          "hash": "4f443fdeef8f7060abc32564c99cacf3f86293c5",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 76428,
+              "id": "Q76428"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q28497842$0fd83fe9-4fe5-5a12-158d-a4c88cb8b8c4",
+        "rank": "normal"
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "578ee51366ea96ddec2a2e8d336ccdf3e08e5071",
+          "datavalue": {
+            "value": "/g/11c2phj8y_",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q28497842$74861A41-5B64-4792-990B-299CB3545291",
+        "rank": "normal"
+      }
+    ],
+    "P7937": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7937",
+          "hash": "d75c4c2b2637fc6a115f30b8ce999815b798edec",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3070575,
+              "id": "Q3070575"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q28497842$2D625D22-51E2-4E84-8EBD-530214E24BDD",
+        "rank": "normal"
+      }
+    ],
+    "P268": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P268",
+          "hash": "e8b0bd0623778f09e9aff211ffe39a855dd1b567",
+          "datavalue": {
+            "value": "13921072n",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q28497842$fec509f5-42bf-ac9f-221a-bf5f8a53cc10",
+        "rank": "normal"
+      }
+    ],
+    "P839": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P839",
+          "hash": "7d878ef8f7ac7202e01375bbf3eb4286071e995e",
+          "datavalue": {
+            "value": "Flute_Sonata_in_A_minor,_H.562_(Bach,_Carl_Philipp_Emanuel)",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q28497842$1b5ceef8-4d60-0b95-5a32-9d1033980021",
+        "rank": "normal"
+      }
+    ],
+    "P14192": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P14192",
+          "hash": "2f9b1782ed3649e79bea97239f9e21501f973aaf",
+          "datavalue": {
+            "value": "00002453",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q28497842$f1eb26db-4899-f95f-113d-cc07342d41a5",
+        "rank": "normal"
+      }
+    ],
+    "P528": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P528",
+          "hash": "5a975aa6c9b542e3013b2076069b8c8dbee169a7",
+          "datavalue": {
+            "value": "562",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P972": [
+            {
+              "snaktype": "value",
+              "property": "P972",
+              "hash": "d37024728d1452518ca367fbd1743027c9959fa2",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 138770768,
+                  "id": "Q138770768"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P972"],
+        "id": "Q28497842$5cacfb0f-41ec-0bcb-b820-3263e96f87ee",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P528",
+          "hash": "8257604d25a2410705895d408dcda8539a4f56fe",
+          "datavalue": {
+            "value": "132",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P972": [
+            {
+              "snaktype": "value",
+              "property": "P972",
+              "hash": "fc965ee305e07137b2cd312ce89d9e09be73edaa",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 2594282,
+                  "id": "Q2594282"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P972"],
+        "id": "Q28497842$203faa81-4e89-5eff-ec95-a4f86e733f0f",
+        "rank": "normal"
+      }
+    ],
+    "P826": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P826",
+          "hash": "b680d63adbf7a89766ca56128e8cd43a21c815cb",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 277855,
+              "id": "Q277855"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q28497842$4700965e-4df9-1e5b-8c41-f4010cdf3c25",
+        "rank": "normal"
+      }
+    ],
+    "P870": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P870",
+          "hash": "b98310eac12b17a5f30dcc8eea5178cb6b862840",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11405,
+              "id": "Q11405"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q28497842$abc44c4d-49a3-8684-a589-ea313390ef53",
+        "rank": "normal"
+      }
+    ],
+    "P214": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P214",
+          "hash": "99dbfc0fd1060724741f9d67c8a6591c46388758",
+          "datavalue": {
+            "value": "199700949",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q28497842$17d605b3-4d40-6c83-7b05-5007230c7bc0",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P214",
+          "hash": "55221350392d0ef633265905466330c79fadff20",
+          "datavalue": {
+            "value": "293873713",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q28497842$3030687b-4323-f7d2-7811-ea686a103c25",
+        "rank": "normal"
+      }
+    ],
+    "P227": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P227",
+          "hash": "a118c5d2b67ea3c8a14d9599aa587463b29e4d12",
+          "datavalue": {
+            "value": "300003978",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "q28497842$b072aac2-463a-7ae9-8f42-8f66c84fa4ed",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "cf222cec823071a0140dcf7f4622eb04092eb5a0",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "6b7d4330c4aac4caec4ede9de0311ce273f88ecd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 54919,
+                      "id": "Q54919"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P214": [
+                {
+                  "snaktype": "value",
+                  "property": "P214",
+                  "hash": "99dbfc0fd1060724741f9d67c8a6591c46388758",
+                  "datavalue": {
+                    "value": "199700949",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "bc42a64f677716b6063574735dc4f3e0b47e833b",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-04-13T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P214", "P813"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {
+    "frwiki": {
+      "site": "frwiki",
+      "title": "Sonate pour flûte seule en la mineur, H.562 de Carl Philipp Emanuel Bach",
+      "badges": [],
+      "url": "https://fr.wikipedia.org/wiki/Sonate_pour_fl%C3%BBte_seule_en_la_mineur,_H.562_de_Carl_Philipp_Emanuel_Bach"
+    }
+  }
+}

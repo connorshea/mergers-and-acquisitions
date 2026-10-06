@@ -35,6 +35,7 @@ import {
   isDifferentKeyPair,
   isConflationPair,
   descriptionCreator,
+  descriptionYear,
   differingDescriptionCreators,
   nameDisambiguatedWikis,
   sharedTitleQualifier,
@@ -2264,6 +2265,57 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     ).toEqual([]);
     const redirect = { ...crusaders, sitelinkBadges: { itwiki: ["Q70893996"] } };
     expect(nameDisambiguatedWikis(genesis, redirect)).toEqual([]);
+  });
+
+  it("reads an undated stub's year from its description against the other's date", () => {
+    // Q116055820 / Q110768921: Twila Paris's 1995 EP (an enwiki stub with no
+    // date statement) vs Avraham Fried's 1982 album, which has no English
+    // description to name its artist.
+    const stub: Item = {
+      ...base,
+      id: "Q116055820",
+      labels: { en: "The Time Is Now" },
+      descriptions: { en: "1995 EP by Twila Paris" },
+      sitelinks: { enwiki: "The Time Is Now (EP)" },
+      statements: stmt({ P31: [{ type: "item", value: "Q482994" }] }),
+    };
+    const dated: Item = {
+      ...base,
+      id: "Q110768921",
+      labels: { en: "The Time Is Now" },
+      descriptions: { he: "אלבומו השני של הזמר אברהם פריד" },
+      sitelinks: { hewiki: "זה הזמן (אלבום)" },
+      statements: stmt({
+        P31: [{ type: "item", value: "Q482994" }],
+        P577: [{ type: "time", value: "+1982-00-00T00:00:00Z" }],
+      }),
+    };
+    const result = scoreCandidate(stub, dated);
+    expect(result.reasons[0]).toBe(
+      "publication/inception/birth years differ by 13 (Q116055820's year from its description), almost certainly different subjects",
+    );
+    expect(result.confidence).toBeLessThan(0.4);
+
+    expect(descriptionYear("1995 EP by Twila Paris")).toBe(1995);
+    expect(descriptionYear("1990s video game")).toBeNull();
+    expect(descriptionYear("album by Noumena")).toBeNull();
+    // A stub's own date statement wins over its description, and two
+    // descriptions' years are never compared with each other.
+    const datedStub = {
+      ...stub,
+      statements: stmt({
+        P31: [{ type: "item", value: "Q482994" }],
+        P577: [{ type: "time", value: "+1982-00-00T00:00:00Z" }],
+      }),
+    };
+    expect(scoreCandidate(datedStub, dated).reasons.some((r) => r.includes("years differ"))).toBe(
+      false,
+    );
+    const describedOnly = { ...dated, descriptions: { en: "1982 album by Avraham Fried" } };
+    describedOnly.statements = stmt({ P31: [{ type: "item", value: "Q482994" }] });
+    expect(
+      scoreCandidate(stub, describedOnly).reasons.some((r) => r.includes("years differ")),
+    ).toBe(false);
   });
 
   it("docks a pair whose English descriptions name different creators", () => {

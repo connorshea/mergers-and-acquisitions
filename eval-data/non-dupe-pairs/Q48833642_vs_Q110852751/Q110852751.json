@@ -1,0 +1,57 @@
+{
+  "pageid": 105876493,
+  "ns": 0,
+  "title": "Q110852751",
+  "lastrevid": 1590616190,
+  "modified": "2022-03-10T06:15:51Z",
+  "type": "item",
+  "id": "Q110852751",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "R.I.P."
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "1984 compilation album by Richard Hell"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "ألبوم"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "dc16d32b615bf1c6edf1919941065eedccacb8e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 482994,
+              "id": "Q482994"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q110852751$f63494fb-920c-4b35-b7f7-9d7981f9cb66",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "R.I.P. (Richard Hell album)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/R.I.P._(Richard_Hell_album)"
+    }
+  }
+}

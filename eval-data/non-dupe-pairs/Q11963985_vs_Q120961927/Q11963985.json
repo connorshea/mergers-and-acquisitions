@@ -1,0 +1,226 @@
+{
+  "pageid": 13151788,
+  "ns": 0,
+  "title": "Q11963985",
+  "lastrevid": 2260796773,
+  "modified": "2024-10-15T02:51:45Z",
+  "type": "item",
+  "id": "Q11963985",
+  "labels": {
+    "nb": {
+      "language": "nb",
+      "value": "Colors"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Colors"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "Colors"
+    },
+    "es": {
+      "language": "es",
+      "value": "Colors"
+    },
+    "en": {
+      "language": "en",
+      "value": "Colors"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "Colors"
+    }
+  },
+  "descriptions": {
+    "ar": {
+      "language": "ar",
+      "value": "ألبوم"
+    },
+    "en": {
+      "language": "en",
+      "value": "album"
+    },
+    "hy": {
+      "language": "hy",
+      "value": "երաժշտական ալբոմ"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "музичний альбом"
+    },
+    "nb": {
+      "language": "nb",
+      "value": "musikkalbum med Christine Guldbrandsen"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "dc16d32b615bf1c6edf1919941065eedccacb8e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 482994,
+              "id": "Q482994"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11963985$61730A88-08C1-48A7-933D-F2D462DD7DFB",
+        "rank": "normal"
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "67d1b75253e0d778a47e2751415aa2f6e348270d",
+          "datavalue": {
+            "value": {
+              "time": "+2011-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q11963985$e9114047-af61-4329-a7fc-2b52514e1298",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "8f6d2b4a0e3da23aca841c5dfe6b7ed894bd315a",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "c4cc8cf0417b27e19c135f9b4312453d668ab641",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 191769,
+                      "id": "Q191769"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "c98c43f691dd3834e5ed5e84264481d23e8fe407",
+          "datavalue": {
+            "value": "/m/0np4s8z",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11963985$73F383B2-D30A-40CD-B807-2D11BB14390A",
+        "rank": "normal"
+      }
+    ],
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "64d86890992b5e051c7c831aed6f5dce86d9861c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 234399,
+              "id": "Q234399"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11963985$2a47c46b-40c8-179d-49ce-1eb68a661c5d",
+        "rank": "normal"
+      }
+    ],
+    "P6211": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6211",
+          "hash": "6ab97e04a7fd60dca5b6974e961db3c87ea3ff5c",
+          "datavalue": {
+            "value": "999920444631902202",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11963985$ea03cc08-4e3e-19ff-1d34-8e7ed203c304",
+        "rank": "normal"
+      }
+    ],
+    "P5171": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5171",
+          "hash": "645cfad7d724329b79925f0763066d0220b6d33c",
+          "datavalue": {
+            "value": "colors-17733",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11963985$1fa30ab9-47e4-2a2a-2349-3bb020d5e531",
+        "rank": "normal"
+      }
+    ],
+    "P2206": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2206",
+          "hash": "1aea105447f3bafaf20a89a99bf291851ed20f89",
+          "datavalue": {
+            "value": "3916519",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11963985$999e8921-4b44-1fbf-b9cb-fcc4fc542bc5",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "nowiki": {
+      "site": "nowiki",
+      "title": "Colors (album)",
+      "badges": [],
+      "url": "https://no.wikipedia.org/wiki/Colors_(album)"
+    }
+  }
+}

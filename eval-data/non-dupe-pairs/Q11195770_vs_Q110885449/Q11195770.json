@@ -1,0 +1,543 @@
+{
+  "pageid": 12365213,
+  "ns": 0,
+  "title": "Q11195770",
+  "lastrevid": 2220774141,
+  "modified": "2024-08-04T15:41:39Z",
+  "type": "item",
+  "id": "Q11195770",
+  "labels": {
+    "ja": {
+      "language": "ja",
+      "value": "DEVIL"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "Devil"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "DEVIL"
+    },
+    "de": {
+      "language": "de",
+      "value": "Devil"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Devil"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "Devil"
+    },
+    "es": {
+      "language": "es",
+      "value": "Devil"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Devil"
+    },
+    "en": {
+      "language": "en",
+      "value": "Devil"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "Devil"
+    }
+  },
+  "descriptions": {
+    "pl": {
+      "language": "pl",
+      "value": "koreański minialbum grupy B'z"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "B'zのアルバム"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "ألبوم"
+    },
+    "en": {
+      "language": "en",
+      "value": "album by B'z"
+    },
+    "en-gb": {
+      "language": "en-gb",
+      "value": "album by B'z"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "album de B'z"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "muziekalbum van B'z"
+    },
+    "en-ca": {
+      "language": "en-ca",
+      "value": "album by B'z"
+    },
+    "br": {
+      "language": "br",
+      "value": "albom gant B'z"
+    },
+    "hy": {
+      "language": "hy",
+      "value": "երաժշտական ալբոմ"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P436": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P436",
+          "hash": "ce7b74075da4dfae791038c655f4400157100d95",
+          "datavalue": {
+            "value": "7af83dfc-47fe-4188-9b24-5d315c545d0c",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "q11195770$7E4389BF-34E9-435E-9A43-8451A8045F7A",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "706208b3024200fd0a39ad499808dd0d98d74065",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "623cc8f0e2f65afe4d66b91962d354a2f3aa9a27",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 14005,
+                      "id": "Q14005"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P248"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "dc16d32b615bf1c6edf1919941065eedccacb8e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 482994,
+              "id": "Q482994"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11195770$7D14DBC4-81E1-479B-BB74-74AC5F2FDFBB",
+        "rank": "normal"
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "c645bad369d117a2c1e7c4d33ef333729e66718b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 83270,
+              "id": "Q83270"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11195770$346EB925-F760-46F2-975F-01D6E6D28216",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "0ee3b3ba1c958f4c3dcba7ed8091fe4b57311348",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "cb49f6fa327b245e4a5aaf48c44b3f503bcd4265",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 30239,
+                      "id": "Q30239"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "977be2a3a5d4057649b00f9f9a8428d3dfd8ff9a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 150186,
+              "id": "Q150186"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11195770$fd4adc20-1372-49c6-9d7d-f07f94eb5a15",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "0ee3b3ba1c958f4c3dcba7ed8091fe4b57311348",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "cb49f6fa327b245e4a5aaf48c44b3f503bcd4265",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 30239,
+                      "id": "Q30239"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "6e4c72503964f214691496be01a2a67e98a75530",
+          "datavalue": {
+            "value": {
+              "time": "+2002-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q11195770$b827cb7e-9c29-45e7-9409-9958737ca3e9",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "0ee3b3ba1c958f4c3dcba7ed8091fe4b57311348",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "cb49f6fa327b245e4a5aaf48c44b3f503bcd4265",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 30239,
+                      "id": "Q30239"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P162": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P162",
+          "hash": "900b4bfbc19f5af090fdddafe846869d268a86ec",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1345739,
+              "id": "Q1345739"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11195770$BC59A7F7-0603-463F-A401-A8A053FF2D60",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "aef7d7c10b357c5f902807a7cf12ef3b38967f35",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 177837,
+                      "id": "Q177837"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "68c60201621089ea34439ac8f75fa73d7af16839",
+                  "datavalue": {
+                    "value": "https://jp.wikipedia.org/w/index.php?title=DEVIL_(B'zのアルバム)&oldid=76617178",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "a39178bbef43e14ba105a7c71527acd21f8016b5",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 20650497,
+              "id": "Q20650497"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11195770$2D522529-0A31-414B-B4D9-E975B2694A65",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "556ef807e8ec00fc6d480fe3499b0c07c991c257",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "39224a9c2e8ce5424defbd16603d25771956c7fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 1551807,
+                      "id": "Q1551807"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "fe67251d601efb2b2367ab3248855fe6354c052d",
+                  "datavalue": {
+                    "value": "https://pl.wikipedia.org/w/index.php?title=Devil&oldid=54314621",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P264",
+          "hash": "874ca41385f334a17b96944cfa0e9612664a149c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1059183,
+              "id": "Q1059183"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11195770$8FEE4770-AC97-4D7D-A088-E40427BA9C55",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "61b88d162af27006e0a2bc7b0ca916e40b4e5687",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "cb49f6fa327b245e4a5aaf48c44b3f503bcd4265",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 30239,
+                      "id": "Q30239"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "512ec103f205a759084b1554312828ffa92515a5",
+                  "datavalue": {
+                    "value": "https://zh.wikipedia.org/w/index.php?title=DEVIL_(B'z專輯)&oldid=68898529",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P361": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P361",
+          "hash": "d629b5fe7f4cbcfdd6892171f82c8b8751f7bfda",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 64768882,
+              "id": "Q64768882"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P155": [
+            {
+              "snaktype": "value",
+              "property": "P155",
+              "hash": "6b7406b18199896f8635f823ef0281e6823e209d",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 3280400,
+                  "id": "Q3280400"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P156": [
+            {
+              "snaktype": "value",
+              "property": "P156",
+              "hash": "385c290f3e462e34d1fcad1bf19f3810a3ff0953",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 3287603,
+                  "id": "Q3287603"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P155", "P156"],
+        "id": "Q11195770$E334501F-7D27-4D22-AC10-004D5968D334",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "plwiki": {
+      "site": "plwiki",
+      "title": "Devil",
+      "badges": [],
+      "url": "https://pl.wikipedia.org/wiki/Devil"
+    },
+    "jawiki": {
+      "site": "jawiki",
+      "title": "DEVIL (B'zのアルバム)",
+      "badges": [],
+      "url": "https://ja.wikipedia.org/wiki/DEVIL_(B%27z%E3%81%AE%E3%82%A2%E3%83%AB%E3%83%90%E3%83%A0)"
+    },
+    "zhwiki": {
+      "site": "zhwiki",
+      "title": "DEVIL (B'z專輯)",
+      "badges": [],
+      "url": "https://zh.wikipedia.org/wiki/DEVIL_(B%27z%E5%B0%88%E8%BC%AF)"
+    }
+  }
+}

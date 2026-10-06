@@ -1,0 +1,57 @@
+{
+  "pageid": 110770129,
+  "ns": 0,
+  "title": "Q116055820",
+  "lastrevid": 1827459356,
+  "modified": "2023-02-06T06:05:54Z",
+  "type": "item",
+  "id": "Q116055820",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "The Time Is Now"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "1995 EP by Twila Paris"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "ألبوم"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "dc16d32b615bf1c6edf1919941065eedccacb8e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 482994,
+              "id": "Q482994"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q116055820$bb257391-fc38-4691-a80d-d9b49bff9bb1",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "The Time Is Now (EP)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/The_Time_Is_Now_(EP)"
+    }
+  }
+}

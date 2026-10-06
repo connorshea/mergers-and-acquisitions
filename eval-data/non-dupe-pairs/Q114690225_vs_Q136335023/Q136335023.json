@@ -1,0 +1,53 @@
+{
+  "pageid": 130024494,
+  "ns": 0,
+  "title": "Q136335023",
+  "lastrevid": 2408322956,
+  "modified": "2025-09-22T12:26:03Z",
+  "type": "item",
+  "id": "Q136335023",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "777"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "2018 album by Key! and Kenny Beats"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "dc16d32b615bf1c6edf1919941065eedccacb8e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 482994,
+              "id": "Q482994"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q136335023$cb1c684a-8af9-4cdf-91fd-462604daf434",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "777 (Key! and Kenny Beats album)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/777_(Key!_and_Kenny_Beats_album)"
+    }
+  }
+}

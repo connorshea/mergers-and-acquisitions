@@ -1,0 +1,81 @@
+{
+  "pageid": 105905951,
+  "ns": 0,
+  "title": "Q110885449",
+  "lastrevid": 2296888517,
+  "modified": "2025-01-11T06:07:03Z",
+  "type": "item",
+  "id": "Q110885449",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Devil"
+    },
+    "id": {
+      "language": "id",
+      "value": "Devil (album mini)"
+    },
+    "ko": {
+      "language": "ko",
+      "value": "Devil"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "2022 EP by Max"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "ألبوم"
+    },
+    "ko": {
+      "language": "ko",
+      "value": "최강창민의 2번째 음반"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "dc16d32b615bf1c6edf1919941065eedccacb8e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 482994,
+              "id": "Q482994"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q110885449$f6243d13-a6dd-4963-b2dc-6d617a75207a",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Devil (EP)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Devil_(EP)"
+    },
+    "idwiki": {
+      "site": "idwiki",
+      "title": "Devil (album mini)",
+      "badges": [],
+      "url": "https://id.wikipedia.org/wiki/Devil_(album_mini)"
+    },
+    "kowiki": {
+      "site": "kowiki",
+      "title": "Devil (EP)",
+      "badges": [],
+      "url": "https://ko.wikipedia.org/wiki/Devil_(EP)"
+    }
+  }
+}

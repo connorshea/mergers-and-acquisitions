@@ -1,0 +1,53 @@
+{
+  "pageid": 115406590,
+  "ns": 0,
+  "title": "Q120961927",
+  "lastrevid": 1941945050,
+  "modified": "2023-07-28T19:33:56Z",
+  "type": "item",
+  "id": "Q120961927",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Colors"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "1997 studio album by Kirk Whalum"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "dc16d32b615bf1c6edf1919941065eedccacb8e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 482994,
+              "id": "Q482994"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q120961927$900db3db-462e-4c67-a1cf-847ead04a55a",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Colors (Kirk Whalum album)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Colors_(Kirk_Whalum_album)"
+    }
+  }
+}

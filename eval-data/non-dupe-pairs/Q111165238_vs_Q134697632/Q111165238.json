@@ -1,0 +1,597 @@
+{
+  "pageid": 106155742,
+  "ns": 0,
+  "title": "Q111165238",
+  "lastrevid": 1639968307,
+  "modified": "2022-05-16T13:33:07Z",
+  "type": "item",
+  "id": "Q111165238",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Solo"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Solo"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "Solo"
+    },
+    "da": {
+      "language": "da",
+      "value": "Solo"
+    },
+    "de": {
+      "language": "de",
+      "value": "Solo"
+    },
+    "es": {
+      "language": "es",
+      "value": "Solo"
+    },
+    "eu": {
+      "language": "eu",
+      "value": "Solo"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "Solo"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Solo"
+    },
+    "hu": {
+      "language": "hu",
+      "value": "Solo"
+    },
+    "it": {
+      "language": "it",
+      "value": "Solo"
+    },
+    "nb": {
+      "language": "nb",
+      "value": "Solo"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Solo"
+    },
+    "nn": {
+      "language": "nn",
+      "value": "Solo"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "Solo"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "Solo"
+    },
+    "ro": {
+      "language": "ro",
+      "value": "Solo"
+    },
+    "se": {
+      "language": "se",
+      "value": "Solo"
+    },
+    "sq": {
+      "language": "sq",
+      "value": "Solo"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "Solo"
+    },
+    "tr": {
+      "language": "tr",
+      "value": "Solo"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "2009 studio album by Henry Grimes"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "dc16d32b615bf1c6edf1919941065eedccacb8e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 482994,
+              "id": "Q482994"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q111165238$7a32f940-4c54-6c0c-ab62-f58b69b1b243",
+        "rank": "normal"
+      }
+    ],
+    "P7937": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7937",
+          "hash": "b736d0ddd58350a6f636c0daf4befdb4b6346897",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 208569,
+              "id": "Q208569"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q111165238$23FBAE99-C5A9-4640-A914-0D2A26F87A8C",
+        "rank": "normal"
+      }
+    ],
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "a8b640525d02547de30305234c0267b8f1e8611c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 719759,
+              "id": "Q719759"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q111165238$F3CC70E1-08C6-4091-AD63-A2D7E40EF7E3",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ba8c32151457b602dfa9d755387004156ef5d31a",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "311b612d8ad1d0d91f1486ca371f6f1f02406bd3",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-05-16T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P813"]
+          }
+        ]
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "d0b146732c08215a0fe1c09ff9481930fbba797a",
+          "datavalue": {
+            "value": {
+              "time": "+2009-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q111165238$6af3a5fd-4b6a-a757-7808-041acfaef508",
+        "rank": "normal"
+      }
+    ],
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "636629f63c1d3c81659e3ea9b157fa36b16ad46d",
+          "datavalue": {
+            "value": {
+              "text": "Solo",
+              "language": "en"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q111165238$3f106b6e-4f67-8160-8917-5eb790c63959",
+        "rank": "normal"
+      }
+    ],
+    "P2635": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2635",
+          "hash": "72e939ac2c667a27e88a08d4ad76689e8e16735b",
+          "datavalue": {
+            "value": {
+              "amount": "+1",
+              "unit": "http://www.wikidata.org/entity/Q7302866"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P518": [
+            {
+              "snaktype": "value",
+              "property": "P518",
+              "hash": "3dc131c37c60e63ac9e9a182c7d0032af110a63e",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 61629664,
+                  "id": "Q61629664"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P518"],
+        "id": "Q111165238$2f790573-4289-8df4-ec66-b7f9cb1f3a40",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2635",
+          "hash": "72e939ac2c667a27e88a08d4ad76689e8e16735b",
+          "datavalue": {
+            "value": {
+              "amount": "+1",
+              "unit": "http://www.wikidata.org/entity/Q7302866"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P518": [
+            {
+              "snaktype": "value",
+              "property": "P518",
+              "hash": "cfc76b8221d4f3adb86cd4f5d7f0b730bdfb44c9",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 61629680,
+                  "id": "Q61629680"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P518"],
+        "id": "Q111165238$56448fa5-435d-5cff-8228-96d208aaf444",
+        "rank": "normal"
+      }
+    ],
+    "P437": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P437",
+          "hash": "1cf9b1937385c7ea3faae38bd1682093187133a6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 59560380,
+              "id": "Q59560380"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q111165238$1d6cf271-4017-df72-f8b2-c7e2865a1c58",
+        "rank": "normal"
+      }
+    ],
+    "P10135": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10135",
+          "hash": "420a4bc469a9052b3a4e08a95300f4fec632a8a4",
+          "datavalue": {
+            "value": {
+              "time": "+2008-03-22T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q111165238$b7ac4daa-4ed0-090e-4dd4-c3d4639d6a37",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "94eeb72f878b8e69b2e766d69c65e5b1b23b9c16",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "0dee5be1229a05d8f1b3887151ce0706e2a2d18b",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/wiki/Solo_(Henry_Grimes_album)",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "311b612d8ad1d0d91f1486ca371f6f1f02406bd3",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-05-16T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656", "P813"]
+          }
+        ]
+      }
+    ],
+    "P407": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P407",
+          "hash": "f781e9c2874ed3dd0e581a3328ff46d7e0686bc8",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 22282939,
+              "id": "Q22282939"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q111165238$e6f65347-45ec-e3b4-efda-5c51d03336ad",
+        "rank": "normal"
+      }
+    ],
+    "P1552": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1552",
+          "hash": "42b637cbed053e72d576fc37ec043f128bfd8b07",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 82384463,
+              "id": "Q82384463"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q111165238$1617abfa-4f83-1fac-ff0d-20cd471c606f",
+        "rank": "normal"
+      }
+    ],
+    "P291": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P291",
+          "hash": "0010fb5584e0c07849ad90c47cf2b29814c92490",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 35,
+              "id": "Q35"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q111165238$9f77b474-475b-43de-b70c-2c09d1dfa746",
+        "rank": "normal"
+      }
+    ],
+    "P436": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P436",
+          "hash": "aaa8a827441a1020dc773b55aa484d057b1c2b34",
+          "datavalue": {
+            "value": "906609b8-dfb0-49c6-b2d7-91966c93b7a5",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "1bb389de11a2ba064ef0406ba00c02b8df3a5811",
+              "datavalue": {
+                "value": "Solo",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q111165238$e667062a-4627-dfd2-d457-61f75d8e980c",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a3df3972a2af4859cd260f33d0bf1e75235d141a",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "623cc8f0e2f65afe4d66b91962d354a2f3aa9a27",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 14005,
+                      "id": "Q14005"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "311b612d8ad1d0d91f1486ca371f6f1f02406bd3",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-05-16T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P264",
+          "hash": "ad7f4f3f712a83b7b824b61a4c97b63a201c0989",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 112041547,
+              "id": "Q112041547"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q111165238$e8379115-4540-4c83-2d6f-f0169cc3cd9d",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Solo (Henry Grimes album)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Solo_(Henry_Grimes_album)"
+    }
+  }
+}

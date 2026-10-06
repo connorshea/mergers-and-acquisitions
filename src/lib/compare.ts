@@ -1438,6 +1438,15 @@ export function descriptionCreator(
 }
 
 /**
+ * The year an English description opens with ("1995 EP by Twila Paris",
+ * "2022 video game"), or null. A decade ("1990s …") isn't a year.
+ */
+export function descriptionYear(description: string | undefined): number | null {
+  const m = description && /^(1\d{3}|20\d\d)\b/.exec(description);
+  return m ? parseInt(m[1], 10) : null;
+}
+
+/**
  * The two English descriptions' makers when they name different ones, with no
  * word in common ("by Aska" / "by Måns Zelmerlöw"). A stub item created from a
  * single article often carries nothing but its type and a description like
@@ -2701,8 +2710,26 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
       .filter((v) => v.type === "time")
       .map((v) => parseInt(/^[+-]?\d+/.exec(v.value)?.[0] ?? "", 10))
       .filter((n) => Number.isFinite(n));
-  const ya = years(a);
-  const yb = years(b);
+  let ya = years(a);
+  let yb = years(b);
+  // A stub with no date statement often still has one in its description
+  // ("1995 EP by Twila Paris"). Use it against the other item's *statements*
+  // only: two descriptions' years are too loose to compare, since real
+  // duplicates' descriptions disagree on the year ("2022 video game" / "2017
+  // video game"), and an item's own statement beats its description.
+  const yearFromDescription = (item: Item): number[] => {
+    const y = descriptionYear(item.descriptions.en);
+    return y === null ? [] : [y];
+  };
+  let describedYear: Item | null = null;
+  if (ya.length === 0 && yb.length > 0) {
+    ya = yearFromDescription(a);
+    if (ya.length > 0) describedYear = a;
+  } else if (yb.length === 0 && ya.length > 0) {
+    yb = yearFromDescription(b);
+    if (yb.length > 0) describedYear = b;
+  }
+  const yearSource = describedYear ? ` (${describedYear.id}'s year from its description)` : "";
   let yearGap = Infinity;
   if (ya.length > 0 && yb.length > 0) {
     for (const x of ya) for (const y of yb) yearGap = Math.min(yearGap, Math.abs(x - y));
@@ -2719,10 +2746,10 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   const largeYearGap = Number.isFinite(yearGap) && yearGap >= LARGE_YEAR_GAP;
   if (largeYearGap && strongIds.length > 0) {
     score -= 0.3;
-    reasons.push(`publication/inception/birth years differ by ${yearGap}`);
+    reasons.push(`publication/inception/birth years differ by ${yearGap}${yearSource}`);
   } else if (largeYearGap) {
     reasons.unshift(
-      `publication/inception/birth years differ by ${yearGap}, almost certainly different subjects`,
+      `publication/inception/birth years differ by ${yearGap}${yearSource}, almost certainly different subjects`,
     );
     cap("large-year-gap", 0.1);
   }
@@ -2761,7 +2788,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     if (modestYearGap) {
       const penalty = Math.min(0.35, 0.25 + (yearGap - 2) / 30);
       score -= penalty;
-      reasons.push(`publication/inception/birth years differ by ${yearGap}`);
+      reasons.push(`publication/inception/birth years differ by ${yearGap}${yearSource}`);
     }
     if (diffDeveloper) {
       score -= 0.25;

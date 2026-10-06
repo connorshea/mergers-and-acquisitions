@@ -1,0 +1,243 @@
+{
+  "pageid": 106024244,
+  "ns": 0,
+  "title": "Q111021010",
+  "lastrevid": 2502836251,
+  "modified": "2026-06-07T02:40:32Z",
+  "type": "item",
+  "id": "Q111021010",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Catharsis"
+    },
+    "id": {
+      "language": "id",
+      "value": "Catharsis"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Catharsis"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "studio album by Deadsquad"
+    },
+    "id": {
+      "language": "id",
+      "value": "Album studio band metal Deadsquad"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "dc16d32b615bf1c6edf1919941065eedccacb8e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 482994,
+              "id": "Q482994"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q111021010$7971c8ee-4ed9-1d16-9d97-ff37a0bfb962",
+        "rank": "normal"
+      }
+    ],
+    "P155": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P155",
+          "hash": "3ba210d408f6dfd98e40609db974bec0f14120e8",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 108796939,
+              "id": "Q108796939"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q111021010$eeac3007-455f-b7a5-6f67-6725bc268503",
+        "rank": "normal"
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "eec2de00aa82d63b09e7034851b928c830dcc23e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1076092,
+              "id": "Q1076092"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q111021010$d43dc358-452e-dd0e-7718-5624cf04d234",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "912fc51d9071ed0f67a0b5ce3d0cd1a2bcbf3ab5",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 475221,
+              "id": "Q475221"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q111021010$851791f5-4cda-4b41-c7e6-ebbae1285e59",
+        "rank": "normal"
+      }
+    ],
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "369171ca3d857eea359a01446a40816130f5734d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5245712,
+              "id": "Q5245712"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q111021010$480e9b22-448f-28f0-a3de-e465ca74727f",
+        "rank": "normal"
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "e3ab4c71eb27b216c09559814f0a4f29723f3ed6",
+          "datavalue": {
+            "value": {
+              "time": "+2022-02-25T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q111021010$5a379932-4f30-435e-67ea-a396af823edd",
+        "rank": "normal"
+      }
+    ],
+    "P437": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P437",
+          "hash": "f70c6290b338c4f54eeef6975007ab67318c09c8",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 15982450,
+              "id": "Q15982450"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q111021010$95451710-4179-7ab9-c971-25be2027bb6b",
+        "rank": "normal"
+      }
+    ],
+    "P2281": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2281",
+          "hash": "4e1a187ed5f5eae85d4e48c1c5ff5fa973568ce2",
+          "datavalue": {
+            "value": "1610054589",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q111021010$2859ad2f-4bff-3e46-a4a5-4e3be2a450f3",
+        "rank": "normal"
+      }
+    ],
+    "P2205": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2205",
+          "hash": "5e9b6d98be32f6dfaf9603fe7bb002a78bca5b4b",
+          "datavalue": {
+            "value": "6A5vBVIdPZEWB99lshr45g",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q111021010$ae14810b-4831-96d6-8161-a65cba2d7b1c",
+        "rank": "normal"
+      }
+    ],
+    "P436": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P436",
+          "hash": "5551cf3d2ce7a1255f846faccd5066b83ca397c9",
+          "datavalue": {
+            "value": "6b839bdc-564c-4f69-ab09-a04e113ff056",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q111021010$c7650cf7-418d-e53b-1eca-6c98c4e6cd68",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "idwiki": {
+      "site": "idwiki",
+      "title": "Catharsis (album)",
+      "badges": [],
+      "url": "https://id.wikipedia.org/wiki/Catharsis_(album)"
+    }
+  }
+}

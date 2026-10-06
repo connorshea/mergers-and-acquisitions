@@ -1,0 +1,48 @@
+{
+  "pageid": 128527070,
+  "ns": 0,
+  "title": "Q134697632",
+  "lastrevid": 2385618525,
+  "modified": "2025-07-29T05:27:43Z",
+  "type": "item",
+  "id": "Q134697632",
+  "labels": {
+    "fr": {
+      "language": "fr",
+      "value": "Solo"
+    }
+  },
+  "descriptions": {},
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "dc16d32b615bf1c6edf1919941065eedccacb8e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 482994,
+              "id": "Q482994"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q134697632$485AEF84-2BC7-45FC-8E59-4797C7F93291",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "frwiki": {
+      "site": "frwiki",
+      "title": "Solo (album de Louane)",
+      "badges": [],
+      "url": "https://fr.wikipedia.org/wiki/Solo_(album_de_Louane)"
+    }
+  }
+}

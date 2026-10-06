@@ -1,0 +1,281 @@
+{
+  "pageid": 12982538,
+  "ns": 0,
+  "title": "Q11849687",
+  "lastrevid": 2221081334,
+  "modified": "2024-08-05T00:41:13Z",
+  "type": "item",
+  "id": "Q11849687",
+  "labels": {
+    "fi": {
+      "language": "fi",
+      "value": "Absence"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Absence"
+    },
+    "en": {
+      "language": "en",
+      "value": "Absence"
+    },
+    "es": {
+      "language": "es",
+      "value": "Absence"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Absence"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "Absence"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "album by Noumena"
+    },
+    "es": {
+      "language": "es",
+      "value": "álbum de Noumena"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "album de Noumena"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "ヌーメナのアルバム"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "ألبوم"
+    },
+    "en-gb": {
+      "language": "en-gb",
+      "value": "album by Noumena"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "muziekalbum van Noumena"
+    },
+    "en-ca": {
+      "language": "en-ca",
+      "value": "album by Noumena"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "musiikkialbumi"
+    },
+    "br": {
+      "language": "br",
+      "value": "albom gant Noumena"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "dc16d32b615bf1c6edf1919941065eedccacb8e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 482994,
+              "id": "Q482994"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11849687$DC70D735-EF69-458E-B100-592963C225D1",
+        "rank": "normal"
+      }
+    ],
+    "P2721": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2721",
+          "hash": "39b0c70b260cf0ad7c92cd2f0935f11db1628000",
+          "datavalue": {
+            "value": "74696",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11849687$C5829E57-3EB3-4166-9552-F48130AB3DE2",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "1f1ad4e8b24154f402e1afe4c76421acd00932f9",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "889b94c40f0dc1125270051a5044b24e92e7236a",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 175482,
+                      "id": "Q175482"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "8796c5c17ac07c46649b3fab69477b9c39ab5c55",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1255345,
+              "id": "Q1255345"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11849687$B4ECFE7C-4AA2-4F88-8A41-A6BC6790E0D7",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "1f1ad4e8b24154f402e1afe4c76421acd00932f9",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "889b94c40f0dc1125270051a5044b24e92e7236a",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 175482,
+                      "id": "Q175482"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P436": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P436",
+          "hash": "23c918125a1e556fee73cacfaf2d3dd57830d9e9",
+          "datavalue": {
+            "value": "576e5735-b3fb-3ab6-acef-582e15623d06",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11849687$286B243A-3CC0-4CCA-8CFC-2DD9F87D430C",
+        "rank": "normal"
+      }
+    ],
+    "P264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P264",
+          "hash": "bb5fdc135593e23a659c82c077f61596551d531a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 51794339,
+              "id": "Q51794339"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11849687$db3da4d4-4fd0-24b2-17f5-225bbeb8a663",
+        "rank": "normal"
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "014f8663c934a328019c9e31595c1a84b27a7c05",
+          "datavalue": {
+            "value": {
+              "time": "+2005-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q11849687$aee00b9b-49ba-4b12-a7fc-4f43a642dfd2",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "1f1ad4e8b24154f402e1afe4c76421acd00932f9",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "889b94c40f0dc1125270051a5044b24e92e7236a",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 175482,
+                      "id": "Q175482"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {
+    "fiwiki": {
+      "site": "fiwiki",
+      "title": "Absence (albumi)",
+      "badges": [],
+      "url": "https://fi.wikipedia.org/wiki/Absence_(albumi)"
+    }
+  }
+}

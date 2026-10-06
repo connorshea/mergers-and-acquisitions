@@ -34,6 +34,7 @@ import {
   isCatalogSiblingPair,
   isDifferentKeyPair,
   isConflationPair,
+  nameDisambiguatedWikis,
   sharedTitleQualifier,
   splitDisambiguator,
   titleYears,
@@ -2224,6 +2225,43 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     ];
     for (const [x, y] of pairs)
       expect(sharedTitleQualifier(mk("Q1", { enwiki: x }), mk("Q2", { dewiki: y }))).toBeNull();
+  });
+
+  it("caps a pair whose same-wiki sitelinks are disambiguated by different names", () => {
+    // Q3993099 / Q11704563: two songs called "Tonight, Tonight, Tonight", by
+    // Genesis and by Beat Crusaders. Dateless here, so only the titles tell.
+    const mk = (id: string, sitelinks: Record<string, string>): Item => ({
+      ...base,
+      id,
+      labels: { en: "Tonight, Tonight, Tonight" },
+      sitelinks,
+      statements: stmt({ P31: [{ type: "item", value: "Q7366" }] }),
+    });
+    const genesis = mk("Q3993099", { itwiki: "Tonight, Tonight, Tonight (Genesis)" });
+    const crusaders = mk("Q11704563", { itwiki: "Tonight, Tonight, Tonight (Beat Crusaders)" });
+    expect(nameDisambiguatedWikis(genesis, crusaders)).toEqual(["itwiki"]);
+    const result = scoreCandidate(genesis, crusaders);
+    expect(result.confidence).toBeLessThanOrEqual(0.1);
+    expect(result.reasons[0]).toContain("disambiguated by different names");
+
+    // A shared name, a generic or one-sided qualifier, another wiki (which may
+    // translate the name), or a redirect: no signal.
+    const other = (title: string, wiki = "itwiki") => mk("Q2", { [wiki]: title });
+    expect(
+      nameDisambiguatedWikis(genesis, other("Tonight, Tonight, Tonight (Genesis song)")),
+    ).toEqual([]);
+    expect(nameDisambiguatedWikis(genesis, other("Tonight, Tonight, Tonight (singolo)"))).toEqual(
+      [],
+    );
+    expect(nameDisambiguatedWikis(genesis, other("Tonight, Tonight, Tonight"))).toEqual([]);
+    expect(
+      nameDisambiguatedWikis(
+        genesis,
+        other("Tonight, Tonight, Tonight (Beat Crusaders)", "enwiki"),
+      ),
+    ).toEqual([]);
+    const redirect = { ...crusaders, sitelinkBadges: { itwiki: ["Q70893996"] } };
+    expect(nameDisambiguatedWikis(genesis, redirect)).toEqual([]);
   });
 
   it("docks 0.25 when one item references the other (e.g. a game's series)", () => {

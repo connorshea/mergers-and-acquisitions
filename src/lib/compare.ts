@@ -2192,15 +2192,8 @@ export function sharedTitleQualifier(
   a: Item,
   b: Item,
 ): { name: string; titleA: string; titleB: string } | null {
-  const qualified = (item: Item) =>
-    Object.values(item.sitelinks).flatMap((title) => {
-      const { base, qualifier } = splitDisambiguator(title);
-      return qualifier === null
-        ? []
-        : [{ title, base: normalize(base), names: qualifierNames(qualifier) }];
-    });
-  const qb = qualified(b);
-  for (const x of qualified(a)) {
+  const qb = qualifiedTitles(b);
+  for (const x of qualifiedTitles(a)) {
     for (const y of qb) {
       if (x.base !== y.base || x.title === y.title) continue;
       const name = [...x.names].find((n) => y.names.has(n));
@@ -2208,6 +2201,47 @@ export function sharedTitleQualifier(
     }
   }
   return null;
+}
+
+/** An item's disambiguated sitelink titles, with the normalized base and qualifier names. */
+function qualifiedTitles(
+  item: Item,
+): { wiki: string; title: string; base: string; names: Set<string> }[] {
+  return Object.entries(item.sitelinks).flatMap(([wiki, title]) => {
+    const { base, qualifier } = splitDisambiguator(title);
+    return qualifier === null
+      ? []
+      : [{ wiki, title, base: normalize(base), names: qualifierNames(qualifier) }];
+  });
+}
+
+/**
+ * Wikis where the two items link *different* pages with the same base title,
+ * each disambiguated by a name and none in common: ptwiki's "Universal
+ * Wrestling Federation (Herb Abrams)" and "… (Bill Watts)", or "Tonight,
+ * Tonight, Tonight (Genesis)" and "… (Beat Crusaders)". The wiki is keeping
+ * two subjects apart by who or where they belong to. Like
+ * yearDisambiguatedWikis it only looks within one wiki, since another
+ * language may translate the name ("(Vlaanderen)" / "(Flandre)"), and
+ * skips redirects, which a rename leaves behind.
+ */
+export function nameDisambiguatedWikis(a: Item, b: Item): string[] {
+  const qb = new Map(qualifiedTitles(b).map((t) => [t.wiki, t]));
+  return qualifiedTitles(a)
+    .filter((x) => {
+      const y = qb.get(x.wiki);
+      return (
+        y !== undefined &&
+        x.title !== y.title &&
+        x.base === y.base &&
+        x.names.size > 0 &&
+        y.names.size > 0 &&
+        ![...x.names].some((n) => y.names.has(n)) &&
+        !isRedirectSitelink(a, x.wiki) &&
+        !isRedirectSitelink(b, x.wiki)
+      );
+    })
+    .map((x) => x.wiki);
 }
 
 /**
@@ -2978,6 +3012,15 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
       `sitelinks on ${yearWikis.join(", ")} are disambiguated by different years, not a duplicate`,
     );
     cap("year-disambiguated-sitelinks", 0.1);
+  }
+  // Likewise a wiki that tells the two pages apart by different names: the
+  // artist ("(Genesis)" / "(Beat Crusaders)"), the founder, the country.
+  const nameWikis = nameDisambiguatedWikis(a, b);
+  if (nameWikis.length > 0) {
+    reasons.unshift(
+      `sitelinks on ${nameWikis.join(", ")} are disambiguated by different names, not a duplicate`,
+    );
+    cap("name-disambiguated-sitelinks", 0.1);
   }
 
   // One item referencing the other (a game's "part of the series" naming the

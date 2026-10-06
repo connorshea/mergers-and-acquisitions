@@ -1,0 +1,150 @@
+{
+  "pageid": 129286275,
+  "ns": 0,
+  "title": "Q135550356",
+  "lastrevid": 2386637228,
+  "modified": "2025-08-01T03:20:53Z",
+  "type": "item",
+  "id": "Q135550356",
+  "labels": {
+    "it": {
+      "language": "it",
+      "value": "Spellbound"
+    },
+    "en": {
+      "language": "en",
+      "value": "Spellbound"
+    },
+    "es": {
+      "language": "es",
+      "value": "Spellbound"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Spellbound"
+    }
+  },
+  "descriptions": {
+    "it": {
+      "language": "it",
+      "value": "album di Alphonso Johnson del 1977"
+    },
+    "en": {
+      "language": "en",
+      "value": "1977 album by Alphonso Johnson"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "ألبوم من أداء ألفونسو جونسون"
+    }
+  },
+  "aliases": {
+    "it": [
+      {
+        "language": "it",
+        "value": "Spellbound (Alphonso Johnson)"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "dc16d32b615bf1c6edf1919941065eedccacb8e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 482994,
+              "id": "Q482994"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q135550356$8b4ea147-46dd-8f60-1901-d6c6f50d79ec",
+        "rank": "normal"
+      }
+    ],
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "9df151af8c98e90b1ff4c4da780007519fefd0b7",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1378009,
+              "id": "Q1378009"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q135550356$cac461d8-4de0-405c-e781-0c127f3a5ae2",
+        "rank": "normal"
+      }
+    ],
+    "P1729": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1729",
+          "hash": "b9f9499b90eabb3fd571a9f21343dfb6253b998c",
+          "datavalue": {
+            "value": "mw0000902213",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P2093": [
+            {
+              "snaktype": "value",
+              "property": "P2093",
+              "hash": "d1f9fcc185a96982679f7e432fce5dc3d939d7e5",
+              "datavalue": {
+                "value": "Christian Genzel",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P2093"],
+        "id": "Q135550356$4c47de96-42f5-4e9a-f2ef-5a21f49f1eda",
+        "rank": "normal"
+      }
+    ],
+    "P1954": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1954",
+          "hash": "15af3e530e335ba1b9a16a0321473efdc07d708d",
+          "datavalue": {
+            "value": "145294",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q135550356$b53471de-4350-c0f7-534e-4243e021d3da",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "itwiki": {
+      "site": "itwiki",
+      "title": "Spellbound (Alphonso Johnson)",
+      "badges": [],
+      "url": "https://it.wikipedia.org/wiki/Spellbound_(Alphonso_Johnson)"
+    }
+  }
+}

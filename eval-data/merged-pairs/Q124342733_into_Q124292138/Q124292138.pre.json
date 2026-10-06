@@ -1,0 +1,1135 @@
+{
+  "pageid": 118467570,
+  "ns": 0,
+  "title": "Q124292138",
+  "lastrevid": 2499459714,
+  "modified": "2026-05-30T07:18:45Z",
+  "type": "item",
+  "id": "Q124292138",
+  "labels": {
+    "pt-br": {
+      "language": "pt-br",
+      "value": "O canto da coruja"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "O canto da coruja"
+    },
+    "en": {
+      "language": "en",
+      "value": "O canto da coruja"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "O canto da coruja"
+    }
+  },
+  "descriptions": {
+    "pt-br": {
+      "language": "pt-br",
+      "value": "composição de Emílio do Lago"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "composição de Emílio do Lago"
+    },
+    "en": {
+      "language": "en",
+      "value": "composition by Emílio do Lago"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5be109d8a3cbbd062357a9d210d4ef00ef25244e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 105543609,
+              "id": "Q105543609"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q124292138$68F2C18C-18C2-4612-96DF-507BD877B234",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d182820fad8ad5681f1a71fab0898c708a75edbe",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "163304a132de5d03ab49dd86407139bf99293204",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 10351747,
+                      "id": "Q10351747"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "81afbaf723ca94f5fd2b4e63ba6ea07dfb253abc",
+                  "datavalue": {
+                    "value": "https://musicabrasilis.org.br/partituras/emilio-do-lago-o-canto-da-coruja",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "38eab0f0140de1e1bce1fb0e53e22b3dfc5a16e8",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2024-01-15T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "65c7a81e9de548c3e85677c8025eec0fcf0419d6",
+          "datavalue": {
+            "value": {
+              "text": "O canto da coruja",
+              "language": "pt-br"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q124292138$69005207-E624-412A-B6C2-B5BC1143631E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d182820fad8ad5681f1a71fab0898c708a75edbe",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "163304a132de5d03ab49dd86407139bf99293204",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 10351747,
+                      "id": "Q10351747"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "81afbaf723ca94f5fd2b4e63ba6ea07dfb253abc",
+                  "datavalue": {
+                    "value": "https://musicabrasilis.org.br/partituras/emilio-do-lago-o-canto-da-coruja",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "38eab0f0140de1e1bce1fb0e53e22b3dfc5a16e8",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2024-01-15T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P1680": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1680",
+          "hash": "5580ed012d09f41ca1551a2fbc68875460fe6a77",
+          "datavalue": {
+            "value": {
+              "text": "Serenata para piano, Op. 4",
+              "language": "pt-br"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q124292138$571D46A2-4063-4E6D-811F-40341DB99D8A",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d182820fad8ad5681f1a71fab0898c708a75edbe",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "163304a132de5d03ab49dd86407139bf99293204",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 10351747,
+                      "id": "Q10351747"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "81afbaf723ca94f5fd2b4e63ba6ea07dfb253abc",
+                  "datavalue": {
+                    "value": "https://musicabrasilis.org.br/partituras/emilio-do-lago-o-canto-da-coruja",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "38eab0f0140de1e1bce1fb0e53e22b3dfc5a16e8",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2024-01-15T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P1208": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1208",
+          "hash": "53be5e685b937141f1fad646d5bafa25558a3602",
+          "datavalue": {
+            "value": "979-0-6965-2516-1",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q124292138$C2BF79D3-AC1D-4BE5-AC4D-5722CAE8FA23",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d182820fad8ad5681f1a71fab0898c708a75edbe",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "163304a132de5d03ab49dd86407139bf99293204",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 10351747,
+                      "id": "Q10351747"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "81afbaf723ca94f5fd2b4e63ba6ea07dfb253abc",
+                  "datavalue": {
+                    "value": "https://musicabrasilis.org.br/partituras/emilio-do-lago-o-canto-da-coruja",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "38eab0f0140de1e1bce1fb0e53e22b3dfc5a16e8",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2024-01-15T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P7937": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7937",
+          "hash": "5c54094c7111cdd785d3a1af5fa5b684f79e2e7c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1746015,
+              "id": "Q1746015"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1932": [
+            {
+              "snaktype": "value",
+              "property": "P1932",
+              "hash": "8254ad6939967e69dd1eda279677938d81a7108c",
+              "datavalue": {
+                "value": "Piano",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1932"],
+        "id": "Q124292138$A30FE3F1-1A0D-4E0F-8B1F-0581EA4060F2",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d182820fad8ad5681f1a71fab0898c708a75edbe",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "163304a132de5d03ab49dd86407139bf99293204",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 10351747,
+                      "id": "Q10351747"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "81afbaf723ca94f5fd2b4e63ba6ea07dfb253abc",
+                  "datavalue": {
+                    "value": "https://musicabrasilis.org.br/partituras/emilio-do-lago-o-canto-da-coruja",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "38eab0f0140de1e1bce1fb0e53e22b3dfc5a16e8",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2024-01-15T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "2b05a73fcf4c10f44887fb4d20eeca3bd4e034e0",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 215911,
+              "id": "Q215911"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1932": [
+            {
+              "snaktype": "value",
+              "property": "P1932",
+              "hash": "e960497c76cc22939907dcb3299432fc73fdf986",
+              "datavalue": {
+                "value": "Clássico (Serenata)",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1932"],
+        "id": "Q124292138$A8138003-CA18-4AF7-9EEA-DE5049E1FE5C",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d182820fad8ad5681f1a71fab0898c708a75edbe",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "163304a132de5d03ab49dd86407139bf99293204",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 10351747,
+                      "id": "Q10351747"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "81afbaf723ca94f5fd2b4e63ba6ea07dfb253abc",
+                  "datavalue": {
+                    "value": "https://musicabrasilis.org.br/partituras/emilio-do-lago-o-canto-da-coruja",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "38eab0f0140de1e1bce1fb0e53e22b3dfc5a16e8",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2024-01-15T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P86": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P86",
+          "hash": "526b36b090deb57a6f940e003e61da6b477b23b5",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 48866611,
+              "id": "Q48866611"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1932": [
+            {
+              "snaktype": "value",
+              "property": "P1932",
+              "hash": "787dc1d007ce0c8a14dfd4fbb66bf49f2bec7624",
+              "datavalue": {
+                "value": "Emílio do Lago",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1932"],
+        "id": "Q124292138$8C6312FB-CBD9-460A-8E69-A7DFC7F4B1E8",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d182820fad8ad5681f1a71fab0898c708a75edbe",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "163304a132de5d03ab49dd86407139bf99293204",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 10351747,
+                      "id": "Q10351747"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "81afbaf723ca94f5fd2b4e63ba6ea07dfb253abc",
+                  "datavalue": {
+                    "value": "https://musicabrasilis.org.br/partituras/emilio-do-lago-o-canto-da-coruja",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "38eab0f0140de1e1bce1fb0e53e22b3dfc5a16e8",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2024-01-15T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P870": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P870",
+          "hash": "679443dad4baff8484f00f8b2b393cc4ecb6c71c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5994,
+              "id": "Q5994"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1932": [
+            {
+              "snaktype": "value",
+              "property": "P1932",
+              "hash": "8254ad6939967e69dd1eda279677938d81a7108c",
+              "datavalue": {
+                "value": "Piano",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1932"],
+        "id": "Q124292138$30DB5AD3-1049-46C7-8AF5-95EDE377C37C",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d182820fad8ad5681f1a71fab0898c708a75edbe",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "163304a132de5d03ab49dd86407139bf99293204",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 10351747,
+                      "id": "Q10351747"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "81afbaf723ca94f5fd2b4e63ba6ea07dfb253abc",
+                  "datavalue": {
+                    "value": "https://musicabrasilis.org.br/partituras/emilio-do-lago-o-canto-da-coruja",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "38eab0f0140de1e1bce1fb0e53e22b3dfc5a16e8",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2024-01-15T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P135": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P135",
+          "hash": "a085914d300bfed0b71ac2f794a87fa1ec9e3653",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 373342,
+              "id": "Q373342"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1932": [
+            {
+              "snaktype": "value",
+              "property": "P1932",
+              "hash": "f79d2b9376524f6fa725b1f96b98651053cd852d",
+              "datavalue": {
+                "value": "Música popular urbana",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1932"],
+        "id": "Q124292138$5020D245-E5DB-4A9B-88CD-085B30CA6DC7",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d182820fad8ad5681f1a71fab0898c708a75edbe",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "163304a132de5d03ab49dd86407139bf99293204",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 10351747,
+                      "id": "Q10351747"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "81afbaf723ca94f5fd2b4e63ba6ea07dfb253abc",
+                  "datavalue": {
+                    "value": "https://musicabrasilis.org.br/partituras/emilio-do-lago-o-canto-da-coruja",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "38eab0f0140de1e1bce1fb0e53e22b3dfc5a16e8",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2024-01-15T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P5008": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5008",
+          "hash": "1a2f2759b5b261771bc5b215772b0c81645fa383",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 98099248,
+              "id": "Q98099248"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q124292138$86C06A99-F50D-426B-8D91-9AA8B85E42E3",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d182820fad8ad5681f1a71fab0898c708a75edbe",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "163304a132de5d03ab49dd86407139bf99293204",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 10351747,
+                      "id": "Q10351747"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "81afbaf723ca94f5fd2b4e63ba6ea07dfb253abc",
+                  "datavalue": {
+                    "value": "https://musicabrasilis.org.br/partituras/emilio-do-lago-o-canto-da-coruja",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "38eab0f0140de1e1bce1fb0e53e22b3dfc5a16e8",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2024-01-15T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P9116": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P9116",
+          "hash": "89642a644383617ff72dc6a9ff6663d27f2a1028",
+          "datavalue": {
+            "value": "emilio-do-lago-o-canto-da-coruja",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q124292138$FD5124CB-FDC8-4822-92F4-2FE44953C3AE",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d182820fad8ad5681f1a71fab0898c708a75edbe",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "163304a132de5d03ab49dd86407139bf99293204",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 10351747,
+                      "id": "Q10351747"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "81afbaf723ca94f5fd2b4e63ba6ea07dfb253abc",
+                  "datavalue": {
+                    "value": "https://musicabrasilis.org.br/partituras/emilio-do-lago-o-canto-da-coruja",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "38eab0f0140de1e1bce1fb0e53e22b3dfc5a16e8",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2024-01-15T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P3030": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3030",
+          "hash": "dcadc6bb6aebe984f3e67634064d39e277ba30e8",
+          "datavalue": {
+            "value": "O canto da coruja, Emílio do Lago, Musica Brasilis.pdf",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q124292138$60D04408-1248-40C1-B679-899D96C66C16",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "3b7a0fc93aef6044b202c7340216f71673ab96c3",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "5d3b16d350189b0a81818758208505444c86c127",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 565,
+                      "id": "Q565"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "14ee270b1886423162475ea2d859a5b9e0dbc96e",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2024-01-16T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "81afbaf723ca94f5fd2b4e63ba6ea07dfb253abc",
+                  "datavalue": {
+                    "value": "https://musicabrasilis.org.br/partituras/emilio-do-lago-o-canto-da-coruja",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P813", "P854"]
+          }
+        ]
+      }
+    ],
+    "P195": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P195",
+          "hash": "b52592465374400cb32e16a7ad5c47d286b76d2a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 124301252,
+              "id": "Q124301252"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q124292138$A05AEE74-F80A-4EB2-8AB0-7B410FABBB3C",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9936d1a27377fbb3659f882aa5833309ef05abd9",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "163304a132de5d03ab49dd86407139bf99293204",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 10351747,
+                      "id": "Q10351747"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "14ee270b1886423162475ea2d859a5b9e0dbc96e",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2024-01-16T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "81afbaf723ca94f5fd2b4e63ba6ea07dfb253abc",
+                  "datavalue": {
+                    "value": "https://musicabrasilis.org.br/partituras/emilio-do-lago-o-canto-da-coruja",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813", "P854"]
+          }
+        ]
+      }
+    ],
+    "P373": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P373",
+          "hash": "da61c6e16259743993a33db7241668825afa2336",
+          "datavalue": {
+            "value": "Sheet music of Emílio do Lago",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q124292138$A5460F0A-6BA8-470E-A2CA-FD126F3CE18C",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "020598f16e9a67b8e0ef4ffa46760bb6bb661cb8",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "163304a132de5d03ab49dd86407139bf99293204",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 10351747,
+                      "id": "Q10351747"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P248"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {}
+}

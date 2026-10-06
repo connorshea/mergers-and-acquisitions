@@ -311,6 +311,13 @@
         "exceptions": []
       }
     ],
+    "P1208": [
+      {
+        "classes": ["Q17537576"],
+        "relation": "instance",
+        "exceptions": []
+      }
+    ],
     "P12096": [
       {
         "classes": ["Q11424", "Q1261214", "Q15416", "Q526877", "Q5398426", "Q7889"],
@@ -1808,6 +1815,13 @@
           "Q7978994"
         ],
         "relation": "instance",
+        "exceptions": []
+      }
+    ],
+    "P9116": [
+      {
+        "classes": ["Q105543609", "Q192822", "Q2188189", "Q534932"],
+        "relation": "either",
         "exceptions": []
       }
     ],
@@ -4047,6 +4061,7 @@
     "P12054": false,
     "P12058": false,
     "P1207": false,
+    "P1208": false,
     "P12096": false,
     "P1216": false,
     "P12215": false,
@@ -4215,6 +4230,7 @@
     "P8729": false,
     "P8731": false,
     "P9075": false,
+    "P9116": false,
     "P9143": false,
     "P9618": false,
     "P9702": false,

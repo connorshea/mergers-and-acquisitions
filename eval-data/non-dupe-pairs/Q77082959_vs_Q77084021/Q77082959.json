@@ -1,0 +1,499 @@
+{
+  "pageid": 76562340,
+  "ns": 0,
+  "title": "Q77082959",
+  "lastrevid": 2474434361,
+  "modified": "2026-03-22T06:20:58Z",
+  "type": "item",
+  "id": "Q77082959",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Biocartis (Belgium)"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Biocartis (Belgique)"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Biocartis"
+    },
+    "it": {
+      "language": "it",
+      "value": "Biocartis (Belgique)"
+    },
+    "es": {
+      "language": "es",
+      "value": "Biocartis (Belgium)"
+    },
+    "de": {
+      "language": "de",
+      "value": "Biocartis (Belgïe)"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "company in Mechelen, Belgium"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "société à Malines, Belgique"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "bedrijf in Mechelen, Belgium"
+    }
+  },
+  "aliases": {
+    "fr": [
+      {
+        "language": "fr",
+        "value": "Biocartis S.A."
+      }
+    ],
+    "en": [
+      {
+        "language": "en",
+        "value": "Biocartis"
+      }
+    ],
+    "nl": [
+      {
+        "language": "nl",
+        "value": "Biocartis NV"
+      }
+    ]
+  },
+  "claims": {
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "c2859f311753176d6bdfa7da54ceeeac7acb52c8",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 31,
+              "id": "Q31"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q77082959$51DC0A60-FA52-44E5-8798-5D3B6F898599",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "281068f4c74085db9da5713f75fc3c63160e370b",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "236f4fcf5420729537547b5baea678d1c7fc5265",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 74702602,
+                      "id": "Q74702602"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P2427": [
+                {
+                  "snaktype": "value",
+                  "property": "P2427",
+                  "hash": "8186fde3fe5512fcd96bf9a485aa28577ed8c6f3",
+                  "datavalue": {
+                    "value": "grid.507163.6",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P2427"]
+          }
+        ]
+      }
+    ],
+    "P2427": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2427",
+          "hash": "8186fde3fe5512fcd96bf9a485aa28577ed8c6f3",
+          "datavalue": {
+            "value": "grid.507163.6",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q77082959$864488C7-E039-4350-99BE-2CABF604A7B3",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "281068f4c74085db9da5713f75fc3c63160e370b",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "236f4fcf5420729537547b5baea678d1c7fc5265",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 74702602,
+                      "id": "Q74702602"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P2427": [
+                {
+                  "snaktype": "value",
+                  "property": "P2427",
+                  "hash": "8186fde3fe5512fcd96bf9a485aa28577ed8c6f3",
+                  "datavalue": {
+                    "value": "grid.507163.6",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P2427"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "326e3d41d1e9c34715e880be6e1c6a1e822e4317",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4830453,
+              "id": "Q4830453"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q77082959$7627FA6D-E093-445F-AFFB-467E35236B15",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "281068f4c74085db9da5713f75fc3c63160e370b",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "236f4fcf5420729537547b5baea678d1c7fc5265",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 74702602,
+                      "id": "Q74702602"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P2427": [
+                {
+                  "snaktype": "value",
+                  "property": "P2427",
+                  "hash": "8186fde3fe5512fcd96bf9a485aa28577ed8c6f3",
+                  "datavalue": {
+                    "value": "grid.507163.6",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P2427"]
+          }
+        ]
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "09eb0995a693bb14ec1331d2d9564e86ca04ab84",
+          "datavalue": {
+            "value": {
+              "time": "+2007-01-01T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q77082959$59DA29DB-4926-4A21-8525-132ED6FA4B9B",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "281068f4c74085db9da5713f75fc3c63160e370b",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "236f4fcf5420729537547b5baea678d1c7fc5265",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 74702602,
+                      "id": "Q74702602"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P2427": [
+                {
+                  "snaktype": "value",
+                  "property": "P2427",
+                  "hash": "8186fde3fe5512fcd96bf9a485aa28577ed8c6f3",
+                  "datavalue": {
+                    "value": "grid.507163.6",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P2427"]
+          }
+        ]
+      }
+    ],
+    "P625": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P625",
+          "hash": "d1fa8e6ae4ca720e36c6bf6e230eeecc83cfe96f",
+          "datavalue": {
+            "value": {
+              "latitude": 51.054678,
+              "longitude": 4.452803,
+              "altitude": null,
+              "precision": 0.000001,
+              "globe": "http://www.wikidata.org/entity/Q2"
+            },
+            "type": "globecoordinate"
+          },
+          "datatype": "globe-coordinate"
+        },
+        "type": "statement",
+        "id": "Q77082959$A1576006-B66E-41D5-8F9D-7B31BB459A00",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "281068f4c74085db9da5713f75fc3c63160e370b",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "236f4fcf5420729537547b5baea678d1c7fc5265",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 74702602,
+                      "id": "Q74702602"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P2427": [
+                {
+                  "snaktype": "value",
+                  "property": "P2427",
+                  "hash": "8186fde3fe5512fcd96bf9a485aa28577ed8c6f3",
+                  "datavalue": {
+                    "value": "grid.507163.6",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P2427"]
+          }
+        ]
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "bd430d7c1eb27a667cb038f8014d53dafbb56cea",
+          "datavalue": {
+            "value": "https://www.biocartis.com/",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q77082959$3EDE900C-5220-427C-93A2-79072730FC80",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "281068f4c74085db9da5713f75fc3c63160e370b",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "236f4fcf5420729537547b5baea678d1c7fc5265",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 74702602,
+                      "id": "Q74702602"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P2427": [
+                {
+                  "snaktype": "value",
+                  "property": "P2427",
+                  "hash": "8186fde3fe5512fcd96bf9a485aa28577ed8c6f3",
+                  "datavalue": {
+                    "value": "grid.507163.6",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P2427"]
+          }
+        ]
+      }
+    ],
+    "P6782": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6782",
+          "hash": "057c8cdb6960ed7226ede40fd052ea8aaef55837",
+          "datavalue": {
+            "value": "030aq8r67",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q77082959$DA5464EB-6B72-42B4-BA31-3F69E4F7AF24",
+        "rank": "normal"
+      }
+    ],
+    "P213": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P213",
+          "hash": "198fb35276e9529de7dbfd938008ae2c3c7b385e",
+          "datavalue": {
+            "value": "0000000417943988",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q77082959$D9B6F0D5-D753-442B-B07F-95C4EED6CBFF",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "09aa4567cc8318e053a3d798057de83fa550c471",
+            "snaks": {
+              "P6782": [
+                {
+                  "snaktype": "value",
+                  "property": "P6782",
+                  "hash": "057c8cdb6960ed7226ede40fd052ea8aaef55837",
+                  "datavalue": {
+                    "value": "030aq8r67",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P6782"]
+          }
+        ]
+      }
+    ],
+    "P2088": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2088",
+          "hash": "e384e72dfd16cb6eb543e04f8428887d6a4caf7a",
+          "datavalue": {
+            "value": "biocartis",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q77082959$220CCDD4-154C-4F33-BD78-983C0512BA88",
+        "rank": "normal"
+      }
+    ],
+    "P14075": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P14075",
+          "hash": "33279c5c17c0d92cd4c8c3cd9785eca0086bc88f",
+          "datavalue": {
+            "value": "96793",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q77082959$14F9501A-F0C4-4996-81A1-A239AAF27AEA",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

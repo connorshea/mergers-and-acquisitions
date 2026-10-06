@@ -821,6 +821,23 @@
         "exceptions": ["Q105636906", "Q180402", "Q18658883", "Q7402342", "Q7627362"]
       }
     ],
+    "P2088": [
+      {
+        "classes": [
+          "Q1002697",
+          "Q11033",
+          "Q167270",
+          "Q19307174",
+          "Q35127",
+          "Q431289",
+          "Q43229",
+          "Q7397",
+          "Q7406919"
+        ],
+        "relation": "instance",
+        "exceptions": []
+      }
+    ],
     "P212": [
       {
         "classes": [
@@ -909,6 +926,13 @@
         ],
         "relation": "instance",
         "exceptions": ["Q18658883"]
+      }
+    ],
+    "P2427": [
+      {
+        "classes": ["Q1298668", "Q13226383", "Q43229", "Q56061", "Q732577", "Q811430"],
+        "relation": "instance",
+        "exceptions": []
       }
     ],
     "P243": [
@@ -1510,6 +1534,23 @@
     "P6774": [
       {
         "classes": ["Q7889"],
+        "relation": "either",
+        "exceptions": []
+      }
+    ],
+    "P6782": [
+      {
+        "classes": [
+          "Q13226383",
+          "Q1438053",
+          "Q22222786",
+          "Q294414",
+          "Q4164871",
+          "Q43229",
+          "Q473972",
+          "Q56061",
+          "Q895526"
+        ],
         "relation": "either",
         "exceptions": []
       }
@@ -4096,6 +4137,7 @@
     "P13554": false,
     "P13591": true,
     "P14020": false,
+    "P14075": false,
     "P14093": false,
     "P1417": false,
     "P14192": false,
@@ -4116,6 +4158,7 @@
     "P2002": false,
     "P2003": false,
     "P2013": false,
+    "P2088": false,
     "P212": false,
     "P213": false,
     "P214": true,
@@ -4123,6 +4166,7 @@
     "P227": false,
     "P236": false,
     "P2397": false,
+    "P2427": true,
     "P243": false,
     "P244": false,
     "P2529": false,
@@ -4189,6 +4233,7 @@
     "P646": false,
     "P648": true,
     "P6774": false,
+    "P6782": true,
     "P6783": false,
     "P6795": false,
     "P6827": false,

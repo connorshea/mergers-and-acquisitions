@@ -1,0 +1,77 @@
+{
+  "pageid": 132107841,
+  "ns": 0,
+  "title": "Q138632239",
+  "lastrevid": 2470902165,
+  "modified": "2026-03-10T00:33:10Z",
+  "type": "item",
+  "id": "Q138632239",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Catharsis"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "2023 studio album by Covet"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "dc16d32b615bf1c6edf1919941065eedccacb8e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 482994,
+              "id": "Q482994"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q138632239$50ae8987-71c1-408b-9f41-ab34293b146b",
+        "rank": "normal"
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "013a507c3d8b5ddf42300645e3b4ba1ccf6ee4c9",
+          "datavalue": {
+            "value": {
+              "time": "+2023-04-07T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q138632239$cae4a201-4abe-dd51-0562-1db5d0bd4b86",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Catharsis (Covet album)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Catharsis_(Covet_album)"
+    }
+  }
+}

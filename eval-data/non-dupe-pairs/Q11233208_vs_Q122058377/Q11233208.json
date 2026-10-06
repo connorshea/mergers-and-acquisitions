@@ -1,0 +1,313 @@
+{
+  "pageid": 12383278,
+  "ns": 0,
+  "title": "Q11233208",
+  "lastrevid": 2220807692,
+  "modified": "2024-08-04T16:54:05Z",
+  "type": "item",
+  "id": "Q11233208",
+  "labels": {
+    "ja": {
+      "language": "ja",
+      "value": "midnight"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "midnight"
+    },
+    "es": {
+      "language": "es",
+      "value": "midnight"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "midnight"
+    },
+    "en": {
+      "language": "en",
+      "value": "midnight"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "midnight"
+    }
+  },
+  "descriptions": {
+    "nl": {
+      "language": "nl",
+      "value": "muziekalbum"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "ألبوم"
+    },
+    "en": {
+      "language": "en",
+      "value": "album by Sonomi"
+    },
+    "hy": {
+      "language": "hy",
+      "value": "երաժշտական ալբոմ"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "музичний альбом"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "dc16d32b615bf1c6edf1919941065eedccacb8e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 482994,
+              "id": "Q482994"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11233208$15FDBF66-8636-4FAC-91A4-6E98FEAFADE0",
+        "rank": "normal"
+      }
+    ],
+    "P264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P264",
+          "hash": "f2dc8e921afbda1167bcaa0be46852441d10a268",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 513712,
+              "id": "Q513712"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11233208$b4517fcd-44ad-4448-bfe3-1e8f5ceb3d2d",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 177837,
+                      "id": "Q177837"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "a4af72ab332a04e35fd1ff4bef8549f600418a3d",
+          "datavalue": {
+            "value": {
+              "time": "+2008-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q11233208$0886e1d8-8479-401b-b46b-0b908846d2e6",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 177837,
+                      "id": "Q177837"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "ec3fc32c4efac22a1b361a3778b6ce8783eae8f1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11243943,
+              "id": "Q11243943"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11233208$EEFE98D4-BA96-4D24-8E7F-2AB8DCA0DCFB",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "82339fbfe3c49ebef78c25e72fc5b5742de421fa",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 177837,
+                      "id": "Q177837"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "63a4ef753793da61d4b1e04206b65a82da6e05cf",
+                  "datavalue": {
+                    "value": "https://jp.wikipedia.org/w/index.php?title=Midnight&oldid=74538282",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P155": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P155",
+          "hash": "aa50368e1bd2d87745b9715d03c0be7a6c66087a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11198514,
+              "id": "Q11198514"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11233208$5A304B5F-F7E8-4607-8C2F-9A65BF7B57CC",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "82339fbfe3c49ebef78c25e72fc5b5742de421fa",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 177837,
+                      "id": "Q177837"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "63a4ef753793da61d4b1e04206b65a82da6e05cf",
+                  "datavalue": {
+                    "value": "https://jp.wikipedia.org/w/index.php?title=Midnight&oldid=74538282",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "06ac0c11d71e4f4c0244c2825352887c1d52f81b",
+          "datavalue": {
+            "value": "/g/1220wdsw",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11233208$545501C3-9F66-4224-9F61-27B36EAD010A",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "jawiki": {
+      "site": "jawiki",
+      "title": "Midnight",
+      "badges": [],
+      "url": "https://ja.wikipedia.org/wiki/Midnight"
+    }
+  }
+}

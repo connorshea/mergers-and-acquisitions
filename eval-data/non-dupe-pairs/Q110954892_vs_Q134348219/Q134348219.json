@@ -1,0 +1,135 @@
+{
+  "pageid": 128197449,
+  "ns": 0,
+  "title": "Q134348219",
+  "lastrevid": 2547471341,
+  "modified": "2026-09-18T15:22:46Z",
+  "type": "item",
+  "id": "Q134348219",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Suspicion"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "2024 Nigerian film"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "২০২৪ সালের নাইজেরীয় চলচ্চিত্র"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "fa41184cb03f49f0edfbf2fc4f9d33e35afecaea",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11424,
+              "id": "Q11424"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q134348219$96DE9B61-0F20-401A-9C76-550BCF1182A8",
+        "rank": "normal"
+      }
+    ],
+    "P57": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P57",
+          "hash": "d836d24d05355e292d5a5dd3634ad3e4f20be10b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 109290497,
+              "id": "Q109290497"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q134348219$3A1E8D1F-695E-4DE9-BD2A-A462C49C6F2F",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "5f01adaf54f497651152469c24c433e2a36e97d6",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "71bb87bbf5ff585c8813df75e2af77575bfaf550",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Suspicion_(2024_film)&oldid=1289871724",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "8116beb62ea32777b0b68313efb65d9b2713adc7",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1033,
+              "id": "Q1033"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q134348219$0D4DFD67-A338-4889-8503-3959CA4E7BAF",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Suspicion (2024 film)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Suspicion_(2024_film)"
+    }
+  }
+}

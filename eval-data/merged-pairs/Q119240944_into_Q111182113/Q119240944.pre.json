@@ -1,0 +1,53 @@
+{
+  "pageid": 113733543,
+  "ns": 0,
+  "title": "Q119240944",
+  "lastrevid": 2057501986,
+  "modified": "2024-01-19T15:23:59Z",
+  "type": "item",
+  "id": "Q119240944",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Elsewhere"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "2022 album by Set It Off"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "dc16d32b615bf1c6edf1919941065eedccacb8e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 482994,
+              "id": "Q482994"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q119240944$2c744454-fcbf-4fc1-9ebe-8abdbbf40e54",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Elsewhere (Set It Off album)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Elsewhere_(Set_It_Off_album)"
+    }
+  }
+}

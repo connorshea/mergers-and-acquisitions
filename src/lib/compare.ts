@@ -2244,6 +2244,17 @@ function qualifierNames(qualifier: string): Set<string> {
 }
 
 /**
+ * Whether two disambiguators' names (see qualifierNames) name different
+ * things: both have some, and neither's are all among the other's. A shared
+ * word alone doesn't make them one name ("United States" / "United Kingdom"),
+ * but a subset does ("Herb Abrams" / "Abrams").
+ */
+function differentNames(x: Set<string>, y: Set<string>): boolean {
+  const within = (p: Set<string>, q: Set<string>) => [...p].every((n) => q.has(n));
+  return x.size > 0 && y.size > 0 && !within(x, y) && !within(y, x);
+}
+
+/**
  * A name the two items' page titles agree on in their disambiguators, under
  * the same base title: enwiki's "The Crucible (Motorpsycho album)" and itwiki's
  * "The Crucible (Motorpsycho)" both say *which* The Crucible — Motorpsycho's.
@@ -2281,7 +2292,7 @@ function qualifiedTitles(
 
 /**
  * Wikis where the two items link *different* pages with the same base title,
- * each disambiguated by a name and none in common: ptwiki's "Universal
+ * each disambiguated by a different name (see differentNames): ptwiki's "Universal
  * Wrestling Federation (Herb Abrams)" and "… (Bill Watts)", or "Tonight,
  * Tonight, Tonight (Genesis)" and "… (Beat Crusaders)". The wiki is keeping
  * two subjects apart by who or where they belong to. Like
@@ -2298,14 +2309,38 @@ export function nameDisambiguatedWikis(a: Item, b: Item): string[] {
         y !== undefined &&
         x.title !== y.title &&
         x.base === y.base &&
-        x.names.size > 0 &&
-        y.names.size > 0 &&
-        ![...x.names].some((n) => y.names.has(n)) &&
+        differentNames(x.names, y.names) &&
         !isRedirectSitelink(a, x.wiki) &&
         !isRedirectSitelink(b, x.wiki)
       );
     })
     .map((x) => x.wiki);
+}
+
+/**
+ * Languages where the two items' labels share a base name but are qualified by
+ * different names: "Biocartis (Belgium)" and "Biocartis (Switzerland)", the
+ * per-country records GRID/ROR split one company into. Label normalization
+ * drops the parenthetical, so without this the pair reads as an identical
+ * label. Same rules as nameDisambiguatedWikis: both labels qualified by
+ * different names (see differentNames), compared within one language.
+ * Returns the first such pair of labels, or null.
+ */
+export function nameDisambiguatedLabels(
+  a: Item,
+  b: Item,
+): { labelA: string; labelB: string } | null {
+  for (const [lang, la] of Object.entries(a.labels)) {
+    const lb = b.labels[lang];
+    if (!lb || la === lb) continue;
+    const x = splitDisambiguator(la);
+    const y = splitDisambiguator(lb);
+    if (x.qualifier === null || y.qualifier === null) continue;
+    if (normalize(x.base) !== normalize(y.base)) continue;
+    if (!differentNames(qualifierNames(x.qualifier), qualifierNames(y.qualifier))) continue;
+    return { labelA: la, labelB: lb };
+  }
+  return null;
 }
 
 /**
@@ -3111,6 +3146,17 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
       `sitelinks on ${nameWikis.join(", ")} are disambiguated by different names, not a duplicate`,
     );
     cap("name-disambiguated-sitelinks", 0.1);
+  }
+  // And labels qualified the same way, which is how per-country records of one
+  // company are named ("Aquinox Pharmaceuticals (United States)" / "… (United
+  // Kingdom)"). They share the company-level ids (Crunchbase, the website), so
+  // this too overrides a shared id.
+  const nameLabels = nameDisambiguatedLabels(a, b);
+  if (nameLabels) {
+    reasons.unshift(
+      `labels are disambiguated by different names ("${nameLabels.labelA}" / "${nameLabels.labelB}"), not a duplicate`,
+    );
+    cap("name-disambiguated-labels", 0.1);
   }
 
   // One item referencing the other (a game's "part of the series" naming the

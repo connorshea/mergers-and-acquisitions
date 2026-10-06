@@ -37,6 +37,7 @@ import {
   descriptionCreator,
   descriptionYear,
   differingDescriptionCreators,
+  nameDisambiguatedLabels,
   nameDisambiguatedWikis,
   sharedTitleQualifier,
   splitDisambiguator,
@@ -2265,6 +2266,43 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     ).toEqual([]);
     const redirect = { ...crusaders, sitelinkBadges: { itwiki: ["Q70893996"] } };
     expect(nameDisambiguatedWikis(genesis, redirect)).toEqual([]);
+  });
+
+  it("caps a pair whose labels are disambiguated by different names", () => {
+    // Q30268751 / Q30268759: GRID/ROR's per-country records of one company.
+    // They share its Crunchbase id, which alone would score them near-certain.
+    const mk = (id: string, label: string): Item => ({
+      ...base,
+      id,
+      labels: { en: label },
+      statements: stmt({
+        P31: [{ type: "item", value: "Q4830453" }],
+        P2088: [{ type: "external-id", value: "aquinox-pharmaceuticals" }],
+      }),
+    });
+    const us = mk("Q30268751", "Aquinox Pharmaceuticals (United States)");
+    const uk = mk("Q30268759", "Aquinox Pharmaceuticals (United Kingdom)");
+    expect(nameDisambiguatedLabels(us, uk)).toEqual({
+      labelA: "Aquinox Pharmaceuticals (United States)",
+      labelB: "Aquinox Pharmaceuticals (United Kingdom)",
+    });
+    const result = scoreCandidate(us, uk);
+    expect(result.confidence).toBeLessThanOrEqual(0.1);
+    expect(result.reasons[0]).toContain("labels are disambiguated by different names");
+
+    // One name within the other's, a generic or one-sided qualifier, a
+    // different base, or labels in different languages: no signal.
+    const other = (label: string, lang = "en"): Item => ({ ...uk, labels: { [lang]: label } });
+    for (const label of [
+      "Aquinox Pharmaceuticals (States)",
+      "Aquinox Pharmaceuticals (company)",
+      "Aquinox Pharmaceuticals",
+      "Aquinox Biotech (United Kingdom)",
+    ])
+      expect(nameDisambiguatedLabels(us, other(label))).toBeNull();
+    expect(
+      nameDisambiguatedLabels(us, other("Aquinox Pharmaceuticals (United Kingdom)", "fr")),
+    ).toBeNull();
   });
 
   it("reads an undated stub's year from its description against the other's date", () => {

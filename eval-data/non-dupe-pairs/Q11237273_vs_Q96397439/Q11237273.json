@@ -1,0 +1,441 @@
+{
+  "pageid": 12386526,
+  "ns": 0,
+  "title": "Q11237273",
+  "lastrevid": 2482051805,
+  "modified": "2026-04-16T06:34:04Z",
+  "type": "item",
+  "id": "Q11237273",
+  "labels": {
+    "ja": {
+      "language": "ja",
+      "value": "ONE (ASKAの曲)"
+    },
+    "en": {
+      "language": "en",
+      "value": "One"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "One"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "One"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "One"
+    },
+    "es": {
+      "language": "es",
+      "value": "One"
+    }
+  },
+  "descriptions": {
+    "nl": {
+      "language": "nl",
+      "value": "single van Aska"
+    },
+    "en": {
+      "language": "en",
+      "value": "1997 single by Aska"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "chanson de Aska, sortie en 1997"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "cantar d'Aska"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "ASKAの6枚目シングル"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P436": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P436",
+          "hash": "d739c8768295e8dc889b977b5f5e3d4983cf7159",
+          "datavalue": {
+            "value": "a7eb765c-1294-3fdb-bc73-208932a8b4e7",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11237273$EA688832-C658-4666-83DE-5C1F99F3AF83",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "706208b3024200fd0a39ad499808dd0d98d74065",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "623cc8f0e2f65afe4d66b91962d354a2f3aa9a27",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 14005,
+                      "id": "Q14005"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P248"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "33d81754a79b2dab75d17c156313b0f8f0f4f086",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 134556,
+              "id": "Q134556"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11237273$348CF2C9-A67D-4C84-B209-B80C60FB0219",
+        "rank": "normal"
+      }
+    ],
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "6c2c42bd80fdc1246283a87a7cb621698f1367e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 840500,
+              "id": "Q840500"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11237273$0A1781F6-2E35-463D-8442-196D30BD3F07",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 177837,
+                      "id": "Q177837"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "63f9b478d987da2e4e469476e371cb83bb3d6193",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 37073,
+              "id": "Q37073"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11237273$C28F3F80-EB1B-4B11-8873-F3FD6D77F3E4",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 177837,
+                      "id": "Q177837"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P264",
+          "hash": "01f1f7e6a501ca81c2f12daacfee7eb3a37b47e9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1365614,
+              "id": "Q1365614"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11237273$183CE109-581C-409F-89B0-E23FB952873F",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 177837,
+                      "id": "Q177837"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "bac0b373669c6de8b0911ddd401553e71444de23",
+          "datavalue": {
+            "value": {
+              "time": "+1997-04-28T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q11237273$E31F0B23-A5A8-47D0-99DC-45A9073517CB",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 177837,
+                      "id": "Q177837"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P155": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P155",
+          "hash": "b8f59e848b561e4ec217da40d166b78bb1f6237f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11223918,
+              "id": "Q11223918"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11237273$50A3BF8C-2FC6-4A31-9FDD-44BD76BBF05F",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 177837,
+                      "id": "Q177837"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P156": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P156",
+          "hash": "cc6a58e43f5e049c0a6a62e536d4d0487c909b06",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11221592,
+              "id": "Q11221592"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11237273$150C4BD4-3E3A-436E-BDFD-31AFF470A2B8",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 177837,
+                      "id": "Q177837"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "e63e4f45586bc02839615e67a44359a71d8ae5d1",
+          "datavalue": {
+            "value": "/g/123850xs",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11237273$1B571DDC-D346-416E-8E4C-3F81AF1199F2",
+        "rank": "normal"
+      }
+    ],
+    "P13602": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P13602",
+          "hash": "2d33abd5847fe49f8457780defcd0c43b1e37efd",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11237272,
+              "id": "Q11237272"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11237273$14E6FE6F-8C33-4889-A84C-567634B7749D",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "jawiki": {
+      "site": "jawiki",
+      "title": "ONE (ASKAの曲)",
+      "badges": [],
+      "url": "https://ja.wikipedia.org/wiki/ONE_(ASKA%E3%81%AE%E6%9B%B2)"
+    }
+  }
+}

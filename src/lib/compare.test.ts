@@ -34,6 +34,8 @@ import {
   isCatalogSiblingPair,
   isDifferentKeyPair,
   isConflationPair,
+  descriptionCreator,
+  differingDescriptionCreators,
   nameDisambiguatedWikis,
   sharedTitleQualifier,
   splitDisambiguator,
@@ -2262,6 +2264,44 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     ).toEqual([]);
     const redirect = { ...crusaders, sitelinkBadges: { itwiki: ["Q70893996"] } };
     expect(nameDisambiguatedWikis(genesis, redirect)).toEqual([]);
+  });
+
+  it("docks a pair whose English descriptions name different creators", () => {
+    // Q96397439 / Q11237273: two singles called "One". The Zelmerlöw item is
+    // an enwiki stub with nothing but its type and description.
+    const mk = (id: string, description: string, sitelinks: Record<string, string>): Item => ({
+      ...base,
+      id,
+      labels: { en: "One" },
+      descriptions: { en: description },
+      sitelinks,
+      statements: stmt({ P31: [{ type: "item", value: "Q134556" }] }),
+    });
+    const zelmerlow = mk("Q96397439", "2019 single by Måns Zelmerlöw", {
+      enwiki: "One (Måns Zelmerlöw song)",
+    });
+    const aska = mk("Q11237273", "1997 single by Aska", { jawiki: "ONE (ASKAの曲)" });
+    expect(differingDescriptionCreators(zelmerlow, aska)).toEqual(["Måns Zelmerlöw", "Aska"]);
+    const result = scoreCandidate(zelmerlow, aska);
+    expect(result.reasons).toContain(
+      "descriptions name different creators (Måns Zelmerlöw / Aska)",
+    );
+    expect(result.confidence).toBeLessThan(0.4);
+
+    expect(descriptionCreator("1944 film by Arthur Lubin (remake)")).toEqual({
+      name: "Arthur Lubin",
+      words: new Set(["arthur", "lubin"]),
+    });
+    // A role before "by" is not the work's maker.
+    expect(descriptionCreator("video game developed by Kazielle")).toBeNull();
+    expect(descriptionCreator("song written by Dan Hill")).toBeNull();
+    expect(descriptionCreator("video game")).toBeNull();
+    // Names sharing a word, or a role on one side: no signal.
+    const colt = mk("Q1", "2012 single by Colt Ford with Jake Owen", {});
+    expect(differingDescriptionCreators(colt, mk("Q2", "single by Colt Ford", {}))).toBeNull();
+    expect(
+      differingDescriptionCreators(aska, mk("Q3", "song performed by Måns Zelmerlöw", {})),
+    ).toBeNull();
   });
 
   it("docks 0.25 when one item references the other (e.g. a game's series)", () => {

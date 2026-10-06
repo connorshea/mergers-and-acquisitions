@@ -1398,6 +1398,61 @@ function disjointCreators(a: Item, b: Item, pid: string): boolean {
 }
 
 /**
+ * Participles that put a role, not the work's maker, before "by": "developed
+ * by" names a studio (renamed often enough to split a real duplicate),
+ * "performed by" a cover's singer. Most end in -ed; these are the rest.
+ */
+const BY_PARTICIPLES = new Set([
+  "written",
+  "drawn",
+  "sung",
+  "made",
+  "done",
+  "run",
+  "held",
+  "shown",
+]);
+
+/** Words that join names rather than being one ("by Colt Ford with Jake Owen"). */
+const NAME_JOINERS = new Set(["the", "and", "with", "feat", "featuring"]);
+
+/**
+ * The maker an English description names as "<noun> by X" — "2019 single by
+ * Måns Zelmerlöw", "1944 film by Arthur Lubin" — and its distinct lowercase
+ * words, or null. A role ("developed by", "performed by"; see BY_PARTICIPLES)
+ * doesn't count, and a trailing parenthetical or clause is dropped.
+ */
+export function descriptionCreator(
+  description: string | undefined,
+): { name: string; words: Set<string> } | null {
+  const m = description && /(\S+) by ([^,;(]+)/i.exec(description);
+  if (!m) return null;
+  const before = m[1].toLowerCase();
+  if (before.endsWith("ed") || BY_PARTICIPLES.has(before)) return null;
+  const name = m[2].trim();
+  const words = name
+    .toLowerCase()
+    .split(/[^\p{L}\p{N}]+/u)
+    .filter((w) => w.length > 0 && !NAME_JOINERS.has(w));
+  return words.length > 0 ? { name, words: new Set(words) } : null;
+}
+
+/**
+ * The two English descriptions' makers when they name different ones, with no
+ * word in common ("by Aska" / "by Måns Zelmerlöw"). A stub item created from a
+ * single article often carries nothing but its type and a description like
+ * that, so it's the only place the creator shows. Null when either side names
+ * none, or the names share a word ("by Colt Ford with Jake Owen" / "by Colt
+ * Ford").
+ */
+export function differingDescriptionCreators(a: Item, b: Item): [string, string] | null {
+  const ca = descriptionCreator(a.descriptions.en);
+  const cb = descriptionCreator(b.descriptions.en);
+  if (!ca || !cb || [...ca.words].some((w) => cb.words.has(w))) return null;
+  return [ca.name, cb.name];
+}
+
+/**
  * Life dates that, matched to the day, are strong evidence two people are one:
  * namesakes are common, a shared day of birth or death is not. Year- and
  * month-precision matches get nothing extra (they still count as agreeing
@@ -2788,6 +2843,14 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
       `different ${diffCreators.map((pid) => `${CREATOR_PROP_LABELS[pid]} (${pid})`).join(", ")}`,
     );
   }
+  // The same disagreement, read from the English descriptions when the
+  // statements don't show it: a stub item often has only its type and a
+  // description ("2019 single by Måns Zelmerlöw") to say whose work it is.
+  const descCreators = diffCreators.length === 0 ? differingDescriptionCreators(a, b) : null;
+  if (descCreators) {
+    score -= 0.3;
+    reasons.push(`descriptions name different creators (${descCreators.join(" / ")})`);
+  }
 
   // Two people whose native-script names differ (髙野綾 vs タカノ綾) are usually
   // namesakes who only collide once romanized. Not a hard cap: one person can
@@ -3213,6 +3276,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   const hasConcreteDifference =
     sitelinkClash ||
     diffCreators.length > 0 ||
+    descCreators !== null ||
     diffDeveloper ||
     diffPublisher ||
     diffCountries.length > 0 ||
@@ -3237,7 +3301,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // and the merge can't go through without resolving it anyway — never
   // near-certain, even though the score penalty above is small.
   if (sitelinkClash) ceiling = Math.min(ceiling, 0.85);
-  if (diffCreators.length > 0) ceiling = Math.min(ceiling, 0.5);
+  if (diffCreators.length > 0 || descCreators) ceiling = Math.min(ceiling, 0.5);
   // Namesakes from two countries that share a library authority record
   // (Bamboo, Sweden / Philippines, on one VIAF cluster) stay a judgement call.
   if (diffCountries.length > 0) ceiling = Math.min(ceiling, 0.6);

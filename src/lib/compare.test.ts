@@ -34,6 +34,8 @@ import {
   isCatalogSiblingPair,
   isDifferentKeyPair,
   isConflationPair,
+  sharedTitleQualifier,
+  splitDisambiguator,
   titleYears,
   yearDisambiguatedWikis,
   mergeConflicts,
@@ -2183,6 +2185,45 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     // A redirect (e.g. left behind by a year-correcting rename) doesn't count.
     const redirect = { ...y1996, sitelinkBadges: { jawiki: ["Q70893996"] } };
     expect(yearDisambiguatedWikis(y2004, redirect)).toEqual([]);
+  });
+
+  it("rewards page titles disambiguated by the same name", () => {
+    // Q110542840 / Q86249877: a bare album stub from enwiki and the full item
+    // from itwiki, each wiki qualifying "The Crucible" by the band.
+    const mk = (id: string, sitelinks: Record<string, string>): Item => ({
+      ...base,
+      id,
+      labels: { en: "The Crucible" },
+      sitelinks,
+      statements: stmt({ P31: [{ type: "item", value: "Q482994" }] }),
+    });
+    const stub = mk("Q110542840", { enwiki: "The Crucible (Motorpsycho album)" });
+    const full = mk("Q86249877", { itwiki: "The Crucible (Motorpsycho)" });
+    expect(splitDisambiguator("The Crucible (Motorpsycho album)")).toEqual({
+      base: "The Crucible",
+      qualifier: "Motorpsycho album",
+    });
+    expect(sharedTitleQualifier(stub, full)).toEqual({
+      name: "motorpsycho",
+      titleA: "The Crucible (Motorpsycho album)",
+      titleB: "The Crucible (Motorpsycho)",
+    });
+    const result = scoreCandidate(stub, full);
+    expect(result.reasons.some((r) => r.startsWith("page titles are disambiguated"))).toBe(true);
+    // Identical label + P31 + complementary articles (0.55), plus 0.15.
+    expect(result.confidence).toBeCloseTo(0.7, 5);
+
+    // Generic qualifiers, nationalities, years, or a different base title: no signal.
+    const pairs: [string, string][] = [
+      ["The Jets (Minnesota band)", "The Jets (British band)"],
+      ["The Radiators (American band)", "The Radiators (American band, 1978)"],
+      ["Ali Baba (1944 film)", "Ali Baba (film 1944)"],
+      ["Prey (2017 video game)", "Prey (Computerspiel, 2017)"],
+      ["The Crucible (Motorpsycho album)", "Crucible (Motorpsycho)"],
+      ["The Crucible (Motorpsycho album)", "The Crucible"],
+    ];
+    for (const [x, y] of pairs)
+      expect(sharedTitleQualifier(mk("Q1", { enwiki: x }), mk("Q2", { dewiki: y }))).toBeNull();
   });
 
   it("docks 0.25 when one item references the other (e.g. a game's series)", () => {

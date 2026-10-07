@@ -21,6 +21,7 @@ import {
   phoneDigits,
   isDeclaredDifferent,
   isPermanentDuplicatePair,
+  isPlusEditionPair,
   isSeriesSequelPair,
   isWorkEditionPair,
   isPartWholePair,
@@ -1073,6 +1074,23 @@ describe("installment / sequel detection", () => {
       labels: { es: "Obras completas: novelas XIII (Fernán Caballero)" },
     };
     expect(isSeriesSequelPair(v5, v13)).toBe(true);
+  });
+
+  it('recognizes a title and its "Plus" / "+" re-release', () => {
+    const base = { descriptions: {}, aliases: {}, sitelinks: {}, statements: {} };
+    const item = (id: string, en: string): Item => ({ ...base, id, labels: { en } });
+    // Q141567825 / Q141575954: an arcade game and its PLUS revision.
+    const buddies = item("Q141567825", "Maimai DX Buddies");
+    const plus = item("Q141575954", "Maimai DX Buddies Plus");
+    expect(isPlusEditionPair(buddies, plus)).toBe(true);
+    expect(isPlusEditionPair(item("Q1", "Cave Story"), item("Q2", "Cave Story+"))).toBe(true);
+    expect(isPlusEditionPair(item("Q1", "Cave Story"), item("Q2", "Cave Story +"))).toBe(true);
+    // "Plus" and "+" spell the same title; neither suffixed says nothing.
+    expect(isPlusEditionPair(item("Q1", "Cave Story+"), item("Q2", "Cave Story Plus"))).toBe(false);
+    expect(isPlusEditionPair(buddies, buddies)).toBe(false);
+    // "plus" must be its own word, and the bases must match.
+    expect(isPlusEditionPair(item("Q1", "Sur"), item("Q2", "Surplus"))).toBe(false);
+    expect(isPlusEditionPair(item("Q1", "Cave Story"), item("Q2", "Cave Quest+"))).toBe(false);
   });
 });
 

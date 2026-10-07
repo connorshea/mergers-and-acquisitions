@@ -1,0 +1,259 @@
+{
+  "pageid": 135125747,
+  "ns": 0,
+  "title": "Q141567825",
+  "lastrevid": 2553281799,
+  "modified": "2026-10-05T03:26:55Z",
+  "type": "item",
+  "id": "Q141567825",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Maimai DX Buddies"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Maimai DX BUDDiES"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "maimaiでらっくす BUDDiES"
+    },
+    "ko": {
+      "language": "ko",
+      "value": "maimai DX BUDDiES"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "maimai DX BUDDiES"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "2023 video game"
+    },
+    "hu": {
+      "language": "hu",
+      "value": "2023-as játéktermi videojáték"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "Maimai DX BUDDiES"
+      },
+      {
+        "language": "en",
+        "value": "maimai DX BUDDiES"
+      }
+    ],
+    "de": [
+      {
+        "language": "de",
+        "value": "maimai DX BUDDiES"
+      }
+    ],
+    "fr": [
+      {
+        "language": "fr",
+        "value": "maimai DX BUDDiES"
+      }
+    ],
+    "hu": [
+      {
+        "language": "hu",
+        "value": "maimai DX BUDDiES"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "03d2d8ec4a899b29435a104a9ce7c189a31ae380",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7889,
+              "id": "Q7889"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141567825$a786ffb6-464c-4a48-d814-1bd453481e1a",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "9d78aa84a423397d351803377519520f358c35d0",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 192851,
+              "id": "Q192851"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141567825$d5f20bf3-4695-5702-4b40-aa613123411e",
+        "rank": "normal"
+      }
+    ],
+    "P179": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P179",
+          "hash": "613f38b271111d26bb3e7ff351372923c70b1082",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 141514482,
+              "id": "Q141514482"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1545": [
+            {
+              "snaktype": "value",
+              "property": "P1545",
+              "hash": "a9a9c98c803f52f2debc2c74270b3bd0c1f753d9",
+              "datavalue": {
+                "value": "9",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ],
+          "P155": [
+            {
+              "snaktype": "value",
+              "property": "P155",
+              "hash": "f79dd3d9151f7e442eb01ecd2598a769311bb7c5",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 141567800,
+                  "id": "Q141567800"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P156": [
+            {
+              "snaktype": "value",
+              "property": "P156",
+              "hash": "137bb01b11d69e3c3421a50b03abfc0681f8a6e5",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 141575954,
+                  "id": "Q141575954"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1545", "P155", "P156"],
+        "id": "Q141567825$dcc13e99-4290-362b-ef84-9b91705968c4",
+        "rank": "normal"
+      }
+    ],
+    "P5794": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5794",
+          "hash": "55284d02bb275c82438d88aed22b91351f7b7ba6",
+          "datavalue": {
+            "value": "maimai-dx-buddies",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9043": [
+            {
+              "snaktype": "value",
+              "property": "P9043",
+              "hash": "41debb3772653837b431985095de4449b2b61a5d",
+              "datavalue": {
+                "value": "266558",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9043"],
+        "id": "Q141567825$5e4b5abe-4ce0-6559-3e97-59fc67450450",
+        "rank": "normal"
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "18d36101662f95524520c137d7ebff1c75c463c1",
+          "datavalue": {
+            "value": {
+              "time": "+2023-09-14T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q141567825$146938e1-4e3f-0086-5aa8-b0179152cdc1",
+        "rank": "normal"
+      }
+    ],
+    "P178": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P178",
+          "hash": "80dd184fe9fd4d486fb5326e59691ecb57c2384d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 122741,
+              "id": "Q122741"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141567825$c2354f8f-4fce-4f21-1bea-ecca0122b87f",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

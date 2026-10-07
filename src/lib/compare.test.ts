@@ -1461,7 +1461,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(result.reasons.some((r) => r.includes("shared statements agree"))).toBe(false);
   });
 
-  it("ignores Wikidata-mirrored ids (vglist, GamerProfiles) as match or distinction evidence", () => {
+  it("ignores Wikidata-mirrored ids (vglist, GamerProfiles, HAND) as match or distinction evidence", () => {
     // A shared vglist id is circular (vglist mirrors Wikidata), so it must not
     // count as a strong shared identifier.
     const mkShared = (id: string): Item => ({
@@ -1476,11 +1476,12 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(shared.reasons.some((r) => r.startsWith("shares external identifier"))).toBe(false);
 
     // And a differing mirror id must not count toward the >6 distinct-external-id
-    // disqualifier: five real differing ids plus two differing mirror ids is 7
-    // raw, but only the five real ones count, so the disqualifier must not fire.
+    // disqualifier: six real differing ids plus three differing mirror ids is 9
+    // raw, but only the six real ones count, so the disqualifier must not fire
+    // (and would, were any one mirror id counted).
     const realIds = (prefix: string) =>
       Object.fromEntries(
-        Array.from({ length: 5 }, (_, i) => [
+        Array.from({ length: 6 }, (_, i) => [
           `P700${i}`,
           [{ type: "external-id" as const, value: `${prefix}${i}` }],
         ]),
@@ -1489,10 +1490,12 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       ...realIds(prefix),
       P8351: [{ type: "external-id" as const, value: `${prefix}-vg` }],
       P12001: [{ type: "external-id" as const, value: `${prefix}-gp` }],
+      P14750: [{ type: "external-id" as const, value: `${prefix}-hand` }],
     });
     const a: Item = { ...base, id: "Q3", labels: { en: "Echo" }, statements: stmt(stmts("a")) };
     const b: Item = { ...base, id: "Q4", labels: { en: "Echo" }, statements: stmt(stmts("b")) };
-    const isId = (pid: string) => pid.startsWith("P700") || pid === "P8351" || pid === "P12001";
+    const isId = (pid: string) =>
+      pid.startsWith("P700") || ["P8351", "P12001", "P14750"].includes(pid);
     const distinct = scoreCandidate(a, b, { isIdentifierProp: isId });
     expect(
       distinct.reasons.some((r) => r.includes("external identifiers differ across the pair")),

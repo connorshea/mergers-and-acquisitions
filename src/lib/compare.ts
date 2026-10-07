@@ -1152,6 +1152,7 @@ const LOW_ENTROPY_PROPS = new Set<string>([
 const MIRRORED_ID_PROPS = new Set<string>([
   "P8351", // vglist video game ID (also tagged P31=Q24075706, so synced too)
   "P12001", // GamerProfiles game ID — mirrors Wikidata but untagged (P31≠Q24075706)
+  "P14750", // HAND ID — registry seeded from Wikidata, untagged (P31≠Q24075706)
 ]);
 
 /**

@@ -1780,6 +1780,26 @@ export function isSeriesSequelPair(a: Item, b: Item): boolean {
   return ia.num !== ib.num;
 }
 
+const PLUS_SUFFIX_RE = /(?:\s*\+|\s+plus)$/u;
+
+/**
+ * True when one title is the other with a "Plus" / "+" suffix: "maimai DX
+ * BUDDiES" vs "… BUDDiES PLUS", "Cave Story" vs "Cave Story+". That suffix
+ * names an updated re-release (an arcade revision, an enhanced port), which
+ * Wikidata models as its own item; it shares the developer, series and genre,
+ * so it otherwise reads like a sequel without a number. "X Plus" and "X+" are
+ * the same title.
+ */
+export function isPlusEditionPair(a: Item, b: Item): boolean {
+  const na = normalize(bestLabel(a).normalize("NFKC"));
+  const nb = normalize(bestLabel(b).normalize("NFKC"));
+  const pa = PLUS_SUFFIX_RE.test(na);
+  const pb = PLUS_SUFFIX_RE.test(nb);
+  if (pa === pb) return false;
+  const base = (s: string) => s.replace(PLUS_SUFFIX_RE, "").trim();
+  return base(na) !== "" && base(na) === base(nb);
+}
+
 /** Division words that number the parts of a set, folded to one spelling each. */
 const DIVISION_WORDS: Record<string, string> = {
   volume: "volume",
@@ -3176,6 +3196,11 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   if (isSeriesSequelPair(a, b)) {
     reasons.unshift("different entries in a series (sequel), not a duplicate");
     cap("series-sequel", 0.1);
+  }
+  // Likewise a "Plus" / "+" re-release of a title ("Cave Story" / "Cave Story+").
+  if (isPlusEditionPair(a, b)) {
+    reasons.unshift('one title is the other\'s "Plus" / "+" re-release, not a duplicate');
+    cap("plus-edition", 0.1);
   }
 
   // Volumes of one set (letters, collected writings) share a title, publisher,

@@ -4,6 +4,7 @@ import { fetch, FetchError } from "../lib/client.ts";
 import { useAuth } from "../lib/auth-context.ts";
 import { loginUrl } from "../lib/auth-url.ts";
 import { listHref } from "../lib/list-state.ts";
+import { useArrowKeyNav } from "../lib/use-arrow-key-nav.ts";
 import AuthBar from "../AuthBar.tsx";
 import Dialog from "../Dialog.tsx";
 import EvidenceLedger from "../EvidenceLedger.tsx";
@@ -176,6 +177,12 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
       : `Candidate ${id ?? ""}`.trim();
   const pageTitle = `${titleLead} · M&A: A Wikidata Merge Assistant`;
 
+  // ← / → step to the previous / next pair, like the Prev / Next links.
+  useArrowKeyNav(
+    data?.prevId != null ? `/candidates/${data.prevId}` : undefined,
+    data?.nextId != null ? `/candidates/${data.nextId}` : undefined,
+  );
+
   return (
     <>
       <title>{pageTitle}</title>
@@ -186,14 +193,24 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
           </Link>
           <div className="detail-siblings">
             {data?.prevId != null ? (
-              <Link className="sibling-link" to={`/candidates/${data.prevId}`} rel="prev">
+              <Link
+                className="sibling-link"
+                to={`/candidates/${data.prevId}`}
+                rel="prev"
+                aria-keyshortcuts="ArrowLeft"
+              >
                 ← Prev
               </Link>
             ) : (
               <span className="sibling-link is-disabled">← Prev</span>
             )}
             {data?.nextId != null ? (
-              <Link className="sibling-link" to={`/candidates/${data.nextId}`} rel="next">
+              <Link
+                className="sibling-link"
+                to={`/candidates/${data.nextId}`}
+                rel="next"
+                aria-keyshortcuts="ArrowRight"
+              >
                 Next →
               </Link>
             ) : (

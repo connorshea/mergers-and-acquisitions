@@ -1146,12 +1146,13 @@ const LOW_ENTROPY_PROPS = new Set<string>([
  * Wikidata") via ScoreOptions.isMirroredIdProp. The floor guarantees correct
  * behaviour before the first property sync and in callers that pass no options
  * (the unit tests), and additionally covers services Wikidata hasn't tagged
- * (GamerProfiles). Once synced, the (much larger) tagged set handles the rest —
- * including vglist — and stays current without edits here.
+ * (GamerProfiles, Scilit, HAND). Once synced, the (much larger) tagged set
+ * handles the rest — including vglist — and stays current without edits here.
  */
 const MIRRORED_ID_PROPS = new Set<string>([
   "P8351", // vglist video game ID (also tagged P31=Q24075706, so synced too)
   "P12001", // GamerProfiles game ID — mirrors Wikidata but untagged (P31≠Q24075706)
+  "P14075", // Scilit organization ID — partly sourced from ROR (which mirrors Wikidata), untagged
   "P14750", // HAND ID — registry seeded from Wikidata, untagged (P31≠Q24075706)
 ]);
 

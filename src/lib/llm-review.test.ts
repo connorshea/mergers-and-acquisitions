@@ -75,4 +75,12 @@ describe("costUsd", () => {
     expect(costUsd("claude-opus-5-5", usage, false)).toBeCloseTo(24.2);
     expect(costUsd("claude-opus-5-5", usage, true)).toBeCloseTo(12.1);
   });
+
+  it("bills a Haiku prompt over 100K tokens at the long-prompt rate", () => {
+    const short = { input_tokens: 100_000, output_tokens: 1_000_000 };
+    const long = { input_tokens: 100_001, output_tokens: 1_000_000 };
+    // $0.10 / $0.50 per MTok up to 100K tokens of prompt, $0.50 / $2.50 past it.
+    expect(costUsd("claude-haiku-5-5", short, false)).toBeCloseTo(0.01 + 0.5);
+    expect(costUsd("claude-haiku-5-5", long, false)).toBeCloseTo(0.0500005 + 2.5);
+  });
 });

@@ -237,7 +237,10 @@ pnpm eval:llm submit --models haiku,sonnet,opus --wait
 pnpm eval:llm collect                          # the latest run: fetch results, print the report
 ```
 
-`submit`, `estimate` and `collect` need `ANTHROPIC_API_KEY`. Runs are kept under
+`submit`, `estimate` and `collect` need `ANTHROPIC_API_KEY`. Before submitting,
+`submit` counts each pair's prompt exactly (`count_tokens`, free) and leaves out
+any pair over 90K tokens, for every model, so no request reaches Claude Haiku
+5.5's long-prompt rate (5x, above 100K tokens). Runs are kept under
 `tmp/llm-eval/` (gitignored). `--limit N` submits a small spot-check (half
 positives, half negatives); `--effort-<model> low|medium|high` overrides a
 model's effort.

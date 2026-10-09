@@ -26,9 +26,12 @@ import Anthropic from "@anthropic-ai/sdk";
 import {
   costUsd,
   type Effort,
+  HAIKU_LONG_PROMPT_TOKENS,
   type LabelLookup,
+  MAX_PROMPT_TOKENS,
   parseReview,
   PROMPT_VERSION,
+  promptTokens,
   type Review,
   REVIEW_MODELS,
   type ReviewModel,
@@ -182,12 +185,49 @@ async function selectPairs(argv: string[]): Promise<Pair[]> {
   return pairs;
 }
 
+/** A pair's exact prompt tokens on `model`, from count_tokens (free). */
+async function countPromptTokens(
+  client: Anthropic,
+  model: ReviewModel,
+  text: string,
+): Promise<number> {
+  const req = reviewRequest(model, REVIEW_MODELS[model].defaultEffort, text);
+  const { input_tokens } = await client.messages.countTokens({
+    model,
+    system: req.system,
+    messages: req.messages,
+    output_config: req.output_config,
+  });
+  return input_tokens;
+}
+
+/**
+ * The pairs whose prompt stays under MAX_PROMPT_TOKENS, counted exactly on
+ * Haiku, so no request crosses into Haiku's long-prompt rate. A pair over it
+ * is left out for every model, which keeps the models comparable.
+ */
+async function underPromptLimit(
+  client: Anthropic,
+  pairs: Pair[],
+  texts: Map<string, string>,
+): Promise<Pair[]> {
+  const kept: Pair[] = [];
+  for (const p of pairs) {
+    const tokens = await countPromptTokens(client, "claude-haiku-5-5", texts.get(p.name)!);
+    if (tokens <= MAX_PROMPT_TOKENS) kept.push(p);
+    else console.warn(`⚠ skipping ${p.name}: ${tokens} prompt tokens (limit ${MAX_PROMPT_TOKENS})`);
+  }
+  return kept;
+}
+
 async function submit(argv: string[]): Promise<void> {
   const client = new Anthropic();
   const models = parseModels(flag(argv, "--models"));
-  const pairs = await selectPairs(argv);
+  const selected = await selectPairs(argv);
   const labelOf = await labelLookup();
-  const texts = new Map(pairs.map((p) => [p.name, pairText(p, labelOf)]));
+  const texts = new Map(selected.map((p) => [p.name, pairText(p, labelOf)]));
+  const pairs = await underPromptLimit(client, selected, texts);
+  if (pairs.length === 0) throw new Error("no pairs left to submit");
 
   const run: Run = {
     createdAt: new Date().toISOString(),
@@ -436,6 +476,15 @@ async function report(dir: string, run: Run): Promise<void> {
   }
 
   // Cost: what this run cost, and the same per-pair rate at production scale.
+  const longPrompts = (byModel.get("claude-haiku-5-5")?.values() ?? []).filter(
+    (r) => r.usage && promptTokens(r.usage) > HAIKU_LONG_PROMPT_TOKENS,
+  );
+  for (const r of longPrompts) {
+    console.warn(
+      `⚠ ${r.pair}: ${promptTokens(r.usage!)} prompt tokens, billed at Haiku's long-prompt rate`,
+    );
+  }
+
   console.log("\nCost (Batch API prices):");
   const perPair = new Map<ReviewModel, number>();
   for (const [model, results] of byModel) {
@@ -513,21 +562,21 @@ async function estimate(argv: string[]): Promise<void> {
 
   for (const model of models) {
     let total = 0;
+    let max = 0;
+    let over = 0;
     for (const p of pairs) {
-      const req = reviewRequest(model, REVIEW_MODELS[model].defaultEffort, pairText(p, labelOf));
-      const { input_tokens } = await client.messages.countTokens({
-        model,
-        system: req.system,
-        messages: req.messages,
-        output_config: req.output_config,
-      });
-      total += input_tokens;
+      const tokens = await countPromptTokens(client, model, pairText(p, labelOf));
+      total += tokens;
+      max = Math.max(max, tokens);
+      if (tokens > MAX_PROMPT_TOKENS) over++;
     }
     const avgIn = total / pairs.length;
     const out = assumedOutput[REVIEW_MODELS[model].short];
     const each = costUsd(model, { input_tokens: avgIn, output_tokens: out }, true);
     console.log(
-      `${model}: avg ${Math.round(avgIn)} input tokens/pair (~${out} output assumed) → ` +
+      `${model}: avg ${Math.round(avgIn)} input tokens/pair, max ${max}` +
+        (over > 0 ? ` (${over} over the ${MAX_PROMPT_TOKENS} limit; submit skips them)` : "") +
+        ` (~${out} output assumed) → ` +
         `${usd(each * pairs.length)} for these ${pairs.length} pairs, ` +
         `${usd(each * 10_000)} per 10k, ${usd(each * 50_000)} per 50k`,
     );

@@ -219,3 +219,29 @@ entity blobs carry real property datatypes, external identifiers are classified
 exactly and `isIdentifierProp` is reproduced faithfully; the synced `isMirroredIdProp`
 flags come from `subject-types.json`, alongside compare.ts's hardcoded floor
 for services Wikidata hasn't tagged.
+
+## Calibrating the Claude review
+
+`pnpm eval:llm` runs the Claude merge review (`src/lib/llm-review.ts`) over the
+same pairs through the Message Batches API, so the models can be compared with
+each other and with the heuristic scorer before the review ranks real
+candidates. It reports precision/recall for each model's decided verdicts, how
+often it answered "unsure", a Haiku-first pass that escalates "unsure" pairs to
+a stronger model, the run's cost, and that cost projected to 10k and 50k pairs.
+
+```sh
+pnpm eval:llm labels                           # resolve labels (QLever) into llm-labels.json
+pnpm eval:llm show Q213911_vs_Q140140365       # print one pair's prompt
+pnpm eval:llm estimate                         # count tokens, project cost (free)
+pnpm eval:llm submit --models haiku,sonnet,opus --wait
+pnpm eval:llm collect                          # the latest run: fetch results, print the report
+```
+
+`submit`, `estimate` and `collect` need `ANTHROPIC_API_KEY`. Runs are kept under
+`tmp/llm-eval/` (gitignored). `--limit N` submits a small spot-check (half
+positives, half negatives); `--effort-<model> low|medium|high` overrides a
+model's effort.
+
+`llm-labels.json` holds the property and item labels the prompts name (the
+review job reads the same from `properties` and `entity_labels`). It's
+append-only like the other side files: re-run `labels` after adding pairs.

@@ -319,34 +319,55 @@ function toRecord(
     : { ...base, review: null, error: "unparseable answer", usage, costUsd: cost };
 }
 
+/** Fetch an ended batch's results and save them as the model's results file. */
+async function saveResults(client: Anthropic, dir: string, b: RunBatch): Promise<void> {
+  const records: ResultRecord[] = [];
+  for await (const result of await client.messages.batches.results(b.batchId)) {
+    records.push(toRecord(b.model, result));
+  }
+  await writeFile(
+    resultsPath(dir, b.model),
+    records.map((r) => JSON.stringify(r)).join("\n") + "\n",
+  );
+  console.log(`${b.model}: ${records.length} results saved`);
+}
+
+/**
+ * Check every batch of the run at once each round, saving each one's results
+ * as soon as it ends, and print the report once all have. Without `wait`, one
+ * round: whatever has ended is saved, and a re-run picks up the rest.
+ */
 async function collect(dir: string, wait: boolean): Promise<void> {
   const client = new Anthropic();
   const run = JSON.parse(await readFile(join(dir, "run.json"), "utf8")) as Run;
 
-  for (const b of run.batches) {
-    if (await readResults(dir, b.model)) continue;
-    for (;;) {
-      const batch = await client.messages.batches.retrieve(b.batchId);
-      if (batch.processing_status === "ended") break;
+  let pending: RunBatch[] = [];
+  for (const b of run.batches) if (!(await readResults(dir, b.model))) pending.push(b);
+
+  while (pending.length > 0) {
+    const batches = await Promise.all(
+      pending.map((b) => client.messages.batches.retrieve(b.batchId)),
+    );
+    const stillRunning: RunBatch[] = [];
+    for (const [i, b] of pending.entries()) {
+      const batch = batches[i];
+      if (batch.processing_status === "ended") {
+        await saveResults(client, dir, b);
+        continue;
+      }
       const c = batch.request_counts;
       console.log(
         `${b.model}: ${batch.processing_status} (${c.processing} processing, ${c.succeeded} succeeded, ${c.errored} errored)`,
       );
-      if (!wait) {
-        console.log("Not finished yet; re-run collect later (or pass --wait).");
-        return;
-      }
-      await sleep(POLL_MS);
+      stillRunning.push(b);
     }
-    const records: ResultRecord[] = [];
-    for await (const result of await client.messages.batches.results(b.batchId)) {
-      records.push(toRecord(b.model, result));
+    pending = stillRunning;
+    if (pending.length === 0) break;
+    if (!wait) {
+      console.log("Not finished yet; re-run collect later (or pass --wait).");
+      return;
     }
-    await writeFile(
-      resultsPath(dir, b.model),
-      records.map((r) => JSON.stringify(r)).join("\n") + "\n",
-    );
-    console.log(`${b.model}: ${records.length} results saved`);
+    await sleep(POLL_MS);
   }
   await report(dir, run);
 }

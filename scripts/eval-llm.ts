@@ -236,6 +236,10 @@ async function submit(argv: string[]): Promise<void> {
   };
   const dir = join(RUNS_DIR, run.createdAt.replace(/[:.]/g, "-"));
   await mkdir(dir, { recursive: true });
+  // Rewritten after every batch is created, so a failure partway through
+  // still leaves a record of the batches already running (and billing).
+  const saveRun = () => writeFile(join(dir, "run.json"), JSON.stringify(run, null, 2) + "\n");
+  await saveRun();
 
   for (const model of models) {
     const effort = (flag(argv, `--effort-${REVIEW_MODELS[model].short}`) ??
@@ -247,9 +251,9 @@ async function submit(argv: string[]): Promise<void> {
       })),
     });
     run.batches.push({ model, effort, batchId: batch.id, pairs: pairs.map((p) => p.name) });
+    await saveRun();
     console.log(`${model} (effort ${effort}): batch ${batch.id}, ${pairs.length} requests`);
   }
-  await writeFile(join(dir, "run.json"), JSON.stringify(run, null, 2) + "\n");
   console.log(`\nRun saved to ${dir}. Collect with: node scripts/eval-llm.ts collect ${dir}`);
   if (argv.includes("--wait")) await collect(dir, true);
 }
@@ -340,6 +344,9 @@ async function saveResults(client: Anthropic, dir: string, b: RunBatch): Promise
 async function collect(dir: string, wait: boolean): Promise<void> {
   const client = new Anthropic();
   const run = JSON.parse(await readFile(join(dir, "run.json"), "utf8")) as Run;
+  if (run.batches.length === 0) {
+    throw new Error(`${dir} has no batches: its submit failed before creating any`);
+  }
 
   let pending: RunBatch[] = [];
   for (const b of run.batches) if (!(await readResults(dir, b.model))) pending.push(b);

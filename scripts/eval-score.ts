@@ -34,77 +34,18 @@
 // from eval-data/subject-types.json (scripts/eval-subject-types.ts). The threshold mirrors the hunt's
 // MIN_CONFIDENCE (0.4).
 
-import { readFile, readdir, writeFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import type { Item, ScoreOptions } from "../src/lib/compare.ts";
-import { orderByAge, scoreCandidate } from "../src/lib/compare.ts";
-import { type Entity, entityToItem } from "../src/lib/wikibase.ts";
-import { applyRedirects } from "./eval-redirects.ts";
-import { loadInapplicableIdCheck, loadMirroredIdCheck } from "./eval-subject-types.ts";
+import {
+  EVAL_DIR,
+  type HeuristicScorer,
+  loadHeuristicScorer,
+  loadPairs,
+  type Pair,
+} from "./eval-pairs.ts";
 
-const EVAL_DIR = "eval-data";
 const BASELINE_PATH = join(EVAL_DIR, "score-baseline.json");
 const DEFAULT_THRESHOLD = 0.4; // mirrors hunt.ts MIN_CONFIDENCE
-
-/** Property ids classified as genuine external identifiers across both items. */
-function identifierProps(...items: Item[]): Set<string> {
-  const ids = new Set<string>();
-  for (const item of items) {
-    for (const [pid, values] of Object.entries(item.statements)) {
-      if (values.some((v) => v.type === "external-id")) ids.add(pid);
-    }
-  }
-  return ids;
-}
-
-// ---------- eval dataset loading ----------
-
-interface Pair {
-  name: string; // directory name, for reporting
-  label: "duplicate" | "distinct";
-  a: Item;
-  b: Item;
-}
-
-async function readEntity(path: string): Promise<Entity> {
-  return JSON.parse(await readFile(path, "utf8")) as Entity;
-}
-
-/** Positives: merged-pairs/<SOURCE>_into_<TARGET>/{SOURCE,TARGET}.pre.json */
-async function loadPositives(): Promise<Pair[]> {
-  const root = join(EVAL_DIR, "merged-pairs");
-  const dirs = (await readdir(root, { withFileTypes: true })).filter((d) => d.isDirectory());
-  const pairs: Pair[] = [];
-  for (const d of dirs) {
-    const meta = JSON.parse(await readFile(join(root, d.name, "meta.json"), "utf8")) as {
-      source: string;
-      target: string;
-    };
-    const a = entityToItem(await readEntity(join(root, d.name, `${meta.source}.pre.json`)));
-    const b = entityToItem(await readEntity(join(root, d.name, `${meta.target}.pre.json`)));
-    await applyRedirects(join(root, d.name), a, b);
-    pairs.push({ name: d.name, label: "duplicate", a, b });
-  }
-  return pairs;
-}
-
-/** Negatives: non-dupe-pairs/<A>_vs_<B>/{A,B}.json */
-async function loadNegatives(): Promise<Pair[]> {
-  const root = join(EVAL_DIR, "non-dupe-pairs");
-  const dirs = (await readdir(root, { withFileTypes: true })).filter((d) => d.isDirectory());
-  const pairs: Pair[] = [];
-  for (const d of dirs) {
-    const meta = JSON.parse(await readFile(join(root, d.name, "meta.json"), "utf8")) as {
-      a: string;
-      b: string;
-    };
-    const a = entityToItem(await readEntity(join(root, d.name, `${meta.a}.json`)));
-    const b = entityToItem(await readEntity(join(root, d.name, `${meta.b}.json`)));
-    await applyRedirects(join(root, d.name), a, b);
-    pairs.push({ name: d.name, label: "distinct", a, b });
-  }
-  return pairs;
-}
 
 // ---------- scoring + reporting ----------
 
@@ -115,17 +56,8 @@ interface Scored extends Pair {
   reasons: string[];
 }
 
-function scorePair(
-  pair: Pair,
-  threshold: number,
-  isInapplicableId: ScoreOptions["isInapplicableId"],
-  isMirroredIdProp: ScoreOptions["isMirroredIdProp"],
-): Scored {
-  const idProps = identifierProps(pair.a, pair.b);
-  const opts: ScoreOptions = { isInapplicableId, isMirroredIdProp };
-  if (idProps.size > 0) opts.isIdentifierProp = (pid) => idProps.has(pid);
-  const [from, into] = orderByAge(pair.a, pair.b);
-  const { confidence, reasons } = scoreCandidate(from, into, opts);
+function scorePair(pair: Pair, threshold: number, score: HeuristicScorer): Scored {
+  const { confidence, reasons } = score(pair);
   const predicted = confidence >= threshold ? "duplicate" : "distinct";
   return { ...pair, confidence, predicted, correct: predicted === pair.label, reasons };
 }
@@ -294,10 +226,9 @@ async function main() {
   const threshold = ti >= 0 ? Number(argv[ti + 1]) : DEFAULT_THRESHOLD;
   if (Number.isNaN(threshold)) throw new Error("--threshold expects a number");
 
-  const pairs = [...(await loadPositives()), ...(await loadNegatives())];
-  const isInapplicableId = await loadInapplicableIdCheck();
-  const isMirroredIdProp = await loadMirroredIdCheck();
-  const scored = pairs.map((p) => scorePair(p, threshold, isInapplicableId, isMirroredIdProp));
+  const pairs = await loadPairs();
+  const score = await loadHeuristicScorer();
+  const scored = pairs.map((p) => scorePair(p, threshold, score));
   const m = computeMetrics(scored);
 
   console.log(`Eval harness — threshold ${threshold} (duplicate if confidence ≥ threshold)\n`);

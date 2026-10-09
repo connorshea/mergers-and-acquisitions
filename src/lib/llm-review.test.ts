@@ -62,6 +62,29 @@ describe("renderItem", () => {
   });
 });
 
+describe("renderItem sitelinks", () => {
+  const many: Item = {
+    ...item,
+    sitelinkBadges: {},
+    sitelinks: Object.fromEntries(
+      Array.from({ length: 60 }, (_, i) => [`a${String(i).padStart(2, "0")}wiki`, `Page ${i}`]),
+    ),
+  };
+  many.sitelinks.zzwiki = "Late page";
+
+  it("caps the sitelinks", () => {
+    const text = renderItem(many, labelOf);
+    expect(text).not.toContain("zzwiki");
+    expect(text).toContain("  … 21 more");
+  });
+
+  it("always shows the wikis both items link, past the cap", () => {
+    const text = renderItem(many, labelOf, new Set(["zzwiki"]));
+    expect(text).toContain('  zzwiki: "Late page"');
+    expect(text).toContain("  … 21 more");
+  });
+});
+
 describe("parseReview", () => {
   it("reads a well-formed answer and clamps the probability", () => {
     expect(

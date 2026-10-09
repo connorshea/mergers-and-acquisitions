@@ -17,7 +17,7 @@ export const PROMPT_VERSION = 2;
 export const SYSTEM_PROMPT = `You review pairs of Wikidata items that an automatic duplicate finder flagged as possible duplicates. For each pair, decide whether the two items describe the same real-world subject, so that a Wikidata editor should merge them.
 
 Wikidata keeps one item per subject, and many subjects that look alike are deliberately separate items. Treat these as different subjects, even when the labels match exactly:
-- a creative work and its editions, versions, ports, remasters, remakes, or re-releases, when each has its own item
+- a work and its remaster, remake, reboot, or an edition with substantially different content (a "Game of the Year" edition that only bundles DLC is not one)
 - a work and its sequel, prequel, DLC, expansion, soundtrack, or adaptation (a manga and its anime, a novel and its film)
 - a series or franchise and one work in it
 - two different works, people, companies, or places that share a name
@@ -25,10 +25,12 @@ Wikidata keeps one item per subject, and many subjects that look alike are delib
 - a company and its subsidiary, predecessor, or successor
 - a person and a pseudonym, group, or character when Wikidata models them separately
 
+Ports and re-releases are not separate subjects. A video game, film, or book keeps one item across all its platforms, regional releases, and later digital re-releases (a 2004 PC game released on Steam in 2022, a PC game ported to Xbox): the item lists every platform and every release date. Two items for one game that differ only in platforms, release dates, publishers of a particular release, or distribution are duplicates.
+
 Evidence, from strongest to weakest:
 - Each item linking a different article on the same wiki (e.g. both have an enwiki sitelink, to different pages) usually means Wikipedia treats them as separate subjects. A sitelink marked as a redirect is weaker evidence.
 - A "different from" (P1889) statement pointing at the other item means editors already decided they are distinct. "part of", "has part(s)", "edition or translation of", "based on", "follows" and similar links between the two mean related but distinct subjects.
-- Conflicting core facts: different publication dates or years, developers, publishers, authors, platforms, countries, birth/death dates, or instance-of classes that cannot describe the same thing.
+- Conflicting core facts: different developers, authors, countries, birth/death dates, or instance-of classes that cannot describe the same thing. For a work, different platforms, publishers, or publication dates are weak evidence on their own, since one item covers all its releases; they count when the content differs too.
 - Shared external identifiers are strong evidence of a duplicate when the identifier is specific to one subject (a Steam application ID, an IGDB game ID). Some databases copy their identifiers from Wikidata, and some identifiers belong to a broader subject (a series, a company, a person) and get added to every related item, so a shared identifier is not proof on its own.
 - Matching labels alone are weak evidence. Many duplicates are a sparse item created by a bulk import next to an established item: one item having little data is not a reason to call them different.
 
@@ -88,7 +90,7 @@ export type LabelLookup = (id: string) => string | undefined;
 /** Caps that keep a heavily-described item from blowing up the prompt. */
 const MAX_TERM_GROUPS = 12; // distinct labels / descriptions / alias sets per item
 const MAX_VALUES = 12; // values per property
-const MAX_SITELINKS = 40;
+const MAX_SITELINKS = 40; // beyond the wikis both items link, which are always shown
 
 // Every string that came from Wikidata (terms, sitelink titles, free-text
 // values, the labels of referenced items) is written JSON-quoted, so editable
@@ -166,7 +168,12 @@ function termLines(terms: Record<string, string>): string[] {
 const pidNumber = (pid: string): number => Number(pid.slice(1));
 
 /** One item as plain text for the prompt. */
-export function renderItem(item: Item, labelOf: LabelLookup): string {
+export function renderItem(
+  item: Item,
+  labelOf: LabelLookup,
+  /** Wikis the other item links too: always shown, since a clash there is the strongest evidence. */
+  sharedSites: ReadonlySet<string> = new Set(),
+): string {
   const out: string[] = [`Item ${item.id}`];
 
   const labels = termLines(item.labels);
@@ -196,9 +203,15 @@ export function renderItem(item: Item, labelOf: LabelLookup): string {
   }
 
   const sites = Object.keys(item.sitelinks).sort();
+  const shared = sites.filter((site) => sharedSites.has(site));
+  const others = sites.filter((site) => !sharedSites.has(site));
+  const shown = new Set([
+    ...shared,
+    ...others.slice(0, Math.max(0, MAX_SITELINKS - shared.length)),
+  ]);
   if (sites.length > 0) out.push("Sitelinks:");
   else out.push("Sitelinks: none");
-  for (const site of sites.slice(0, MAX_SITELINKS)) {
+  for (const site of sites.filter((site) => shown.has(site))) {
     const target = item.sitelinkRedirects?.[site];
     const redirect = target
       ? ` (redirect to ${quote(target)})`
@@ -207,21 +220,22 @@ export function renderItem(item: Item, labelOf: LabelLookup): string {
         : "";
     out.push(`  ${site}: ${quote(item.sitelinks[site])}${redirect}`);
   }
-  if (sites.length > MAX_SITELINKS) out.push(`  … ${sites.length - MAX_SITELINKS} more`);
+  if (sites.length > shown.size) out.push(`  … ${sites.length - shown.size} more`);
 
   return out.join("\n");
 }
 
 /** The user turn for one pair. */
 export function renderPair(a: Item, b: Item, labelOf: LabelLookup): string {
+  const shared = new Set(Object.keys(a.sitelinks).filter((site) => site in b.sitelinks));
   return [
     "Do these two Wikidata items describe the same subject?",
     "",
     "=== Item A ===",
-    renderItem(a, labelOf),
+    renderItem(a, labelOf, shared),
     "",
     "=== Item B ===",
-    renderItem(b, labelOf),
+    renderItem(b, labelOf, shared),
   ].join("\n");
 }
 

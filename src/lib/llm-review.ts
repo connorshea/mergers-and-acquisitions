@@ -227,14 +227,28 @@ export function referencedIds(item: Item): { pids: string[]; qids: string[] } {
 export type ReviewModel = "claude-haiku-5-5" | "claude-sonnet-5-5" | "claude-opus-5-5";
 export type Effort = "low" | "medium" | "high";
 
-interface ModelInfo {
-  short: string;
+/**
+ * Claude Haiku 5.5 bills a prompt over 100K tokens at a long-prompt rate five
+ * times its standard one. Pairs average ~3K tokens, but a request is never
+ * sent past MAX_PROMPT_TOKENS, which leaves headroom below that line. (The
+ * prompt is the input side only: input, cache reads and cache writes.)
+ */
+export const HAIKU_LONG_PROMPT_TOKENS = 100_000;
+export const MAX_PROMPT_TOKENS = 90_000;
+
+interface Rates {
   /** Standard $ per million tokens; the Batch API bills half. */
   input: number;
   output: number;
+}
+
+interface ModelInfo extends Rates {
+  short: string;
   /** Cache-read rate as a fraction of `input`. */
   cacheRead: number;
   defaultEffort: Effort;
+  /** Rates for a prompt over `over` tokens, where the model has them. */
+  longPrompt?: Rates & { over: number };
 }
 
 export const REVIEW_MODELS: Record<ReviewModel, ModelInfo> = {
@@ -244,6 +258,7 @@ export const REVIEW_MODELS: Record<ReviewModel, ModelInfo> = {
     output: 0.5,
     cacheRead: 0.1,
     defaultEffort: "low",
+    longPrompt: { over: HAIKU_LONG_PROMPT_TOKENS, input: 0.5, output: 2.5 },
   },
   "claude-sonnet-5-5": {
     short: "sonnet",
@@ -268,14 +283,24 @@ export interface TokenUsage {
   cache_read_input_tokens?: number | null;
 }
 
+/** The tokens a request's prompt came to: uncached input plus cache writes and reads. */
+export function promptTokens(usage: TokenUsage): number {
+  return (
+    usage.input_tokens +
+    (usage.cache_creation_input_tokens ?? 0) +
+    (usage.cache_read_input_tokens ?? 0)
+  );
+}
+
 /** What one request cost in dollars, at Batch API prices when `batch`. */
 export function costUsd(model: ReviewModel, usage: TokenUsage, batch: boolean): number {
   const m = REVIEW_MODELS[model];
+  const rates = m.longPrompt && promptTokens(usage) > m.longPrompt.over ? m.longPrompt : m;
   const perToken =
-    usage.input_tokens * m.input +
-    (usage.cache_creation_input_tokens ?? 0) * m.input * 1.25 +
-    (usage.cache_read_input_tokens ?? 0) * m.input * m.cacheRead +
-    usage.output_tokens * m.output;
+    usage.input_tokens * rates.input +
+    (usage.cache_creation_input_tokens ?? 0) * rates.input * 1.25 +
+    (usage.cache_read_input_tokens ?? 0) * rates.input * m.cacheRead +
+    usage.output_tokens * rates.output;
   return (perToken / 1_000_000) * (batch ? 0.5 : 1);
 }
 

@@ -468,6 +468,27 @@ describe.skipIf(!DB_TEST)("the monthly Claude review job", () => {
     expect((await rowsFor("first_pass")).map((r) => r.attempts)).toEqual([3, 3, 1, 3]);
   });
 
+  it("writes back a batch bigger than one write, each result to its own row", async () => {
+    for (let i = 0; i < 501; i++) await candidate(`Q${2 * i + 2}`, `Q${2 * i + 1}`);
+    // Every third pair "same", with its index as the probability's last digits.
+    api.answer = (_model, id) => {
+      const n = Number(id.split("_")[0].slice(1));
+      return n % 3 === 0
+        ? { verdict: "same", probability: 0.5 + n / 1e6, rationale: id }
+        : { verdict: "different", probability: 0.2, rationale: id };
+    };
+    const result = await runStage(db, api, CONFIG, "first_pass", quiet);
+    expect(result.submit?.submitted).toBe(501);
+    const rows = await rowsFor("first_pass");
+    expect(rows.every((r) => r.status === "succeeded")).toBe(true);
+    for (const r of rows) {
+      const n = Number(r.qidLow.slice(1));
+      expect(r.rationale).toBe(`${r.qidLow}_${r.qidHigh}_f`);
+      expect(r.verdict).toBe(n % 3 === 0 ? "same" : "different");
+      expect(r.probability).toBeCloseTo(n % 3 === 0 ? 0.5 + n / 1e6 : 0.2, 9);
+    }
+  });
+
   it("adds a retry's cost to this month's earlier attempts, not last month's", async () => {
     await candidate("Q2", "Q1");
     await candidate("Q4", "Q3");

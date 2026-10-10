@@ -69,6 +69,8 @@ export const BATCH_LIMITS = { requests: 5000, bytes: 100 * 1024 * 1024 };
 /** Pairs rendered at a time, to bound the items held in memory. */
 const RENDER_CHUNK = 500;
 const ID_CHUNK = 1000;
+/** Results written back per UPDATE. */
+const WRITE_CHUNK = 500;
 const POLL_MS = 5 * 60_000;
 /** How long a new batch may 404 while the API catches up. */
 const NEW_BATCH_GRACE_MS = 10 * 60_000;
@@ -772,48 +774,100 @@ async function writeResults(
     .where(and(eq(llmReviews.batchId, batchId), eq(llmReviews.status, "pending")));
   const byCustomId = new Map(rows.map((r) => [r.customId, r]));
 
-  // Results come in any order; each is matched to its row by custom_id.
-  for await (const response of api.batchResults(batchId)) {
-    const row = byCustomId.get(response.custom_id);
-    if (!row) continue;
-    byCustomId.delete(response.custom_id);
-    const record = toRecord(row.model as ReviewModel, response);
-    const review = record.review;
-    const [res] = await db
+  // Results come in any order; each is matched to its row by custom_id, and
+  // written WRITE_CHUNK at a time.
+  type Row = (typeof rows)[number];
+  let buffer: { row: Row; record: ReturnType<typeof toRecord> }[] = [];
+  const flush = async () => {
+    if (buffer.length === 0) return;
+    const part = buffer;
+    buffer = [];
+    // Another collect running over the same batch may have written some of
+    // these since; the rows still pending now are the ones this run writes
+    // (and counts), and the status guard below keeps the rest as they are.
+    const pending = new Set(
+      (
+        await db
+          .select({ id: llmReviews.id })
+          .from(llmReviews)
+          .where(
+            and(
+              inArray(
+                llmReviews.id,
+                part.map((p) => p.row.id),
+              ),
+              eq(llmReviews.status, "pending"),
+            ),
+          )
+      ).map((r) => r.id),
+    );
+    const mine = part.filter((p) => pending.has(p.row.id));
+    if (mine.length === 0) return;
+    // One UPDATE for the chunk: each column a CASE on the row's id.
+    const byId = (value: (p: (typeof mine)[number]) => unknown) =>
+      sql`case ${llmReviews.id} ${sql.join(
+        mine.map((p) => sql`when ${p.row.id} then ${value(p)}`),
+        sql` `,
+      )} end`;
+    await db
       .update(llmReviews)
       .set({
-        status: review ? "succeeded" : "failed",
-        verdict: review?.verdict ?? null,
-        probability: review?.probability ?? null,
-        rationale: review?.rationale ?? null,
-        error: record.error?.slice(0, 255) ?? null,
-        inputTokens: record.usage?.input_tokens ?? null,
-        outputTokens: record.usage?.output_tokens ?? null,
-        cacheCreationInputTokens: record.usage?.cache_creation_input_tokens ?? null,
-        cacheReadInputTokens: record.usage?.cache_read_input_tokens ?? null,
+        status: byId((p) => (p.record.review ? "succeeded" : "failed")),
+        verdict: byId((p) => p.record.review?.verdict ?? null),
+        probability: byId((p) => p.record.review?.probability ?? null),
+        rationale: byId((p) => p.record.review?.rationale ?? null),
+        error: byId((p) => p.record.error?.slice(0, 255) ?? null),
+        inputTokens: byId((p) => p.record.usage?.input_tokens ?? null),
+        outputTokens: byId((p) => p.record.usage?.output_tokens ?? null),
+        cacheCreationInputTokens: byId((p) => p.record.usage?.cache_creation_input_tokens ?? null),
+        cacheReadInputTokens: byId((p) => p.record.usage?.cache_read_input_tokens ?? null),
         // Plus what earlier attempts this month cost (see claim).
-        costUsd: sql`coalesce(${llmReviews.costUsd}, 0) + ${record.costUsd}`,
+        costUsd: sql`coalesce(${llmReviews.costUsd}, 0) + ${byId((p) => p.record.costUsd)}`,
         completedAt: toSqlDatetime(now()),
       })
-      .where(and(eq(llmReviews.id, row.id), eq(llmReviews.status, "pending")));
-    if (res.affectedRows === 0) continue;
-    result.costUsd += record.costUsd;
-    if (!review) {
-      result.failed++;
-      result.errors[record.error!] = (result.errors[record.error!] ?? 0) + 1;
-      continue;
+      .where(
+        and(
+          inArray(
+            llmReviews.id,
+            mine.map((p) => p.row.id),
+          ),
+          eq(llmReviews.status, "pending"),
+        ),
+      );
+    for (const { row, record } of mine) {
+      const review = record.review;
+      result.costUsd += record.costUsd;
+      if (!review) {
+        result.failed++;
+        result.errors[record.error!] = (result.errors[record.error!] ?? 0) + 1;
+        continue;
+      }
+      result.succeeded++;
+      const stage = row.stage as ReviewStage;
+      result.verdicts[stage][review.verdict] = (result.verdicts[stage][review.verdict] ?? 0) + 1;
+      if (
+        stage === "confirmation" &&
+        review.verdict === "different" &&
+        review.probability < config.confirmMaxP
+      ) {
+        result.hidden += await hideOpenCandidates(db, row.qidLow, row.qidHigh, row.id);
+      }
     }
-    result.succeeded++;
-    const stage = row.stage as ReviewStage;
-    result.verdicts[stage][review.verdict] = (result.verdicts[stage][review.verdict] ?? 0) + 1;
-    if (
-      stage === "confirmation" &&
-      review.verdict === "different" &&
-      review.probability < config.confirmMaxP
-    ) {
-      result.hidden += await hideOpenCandidates(db, row.qidLow, row.qidHigh, row.id);
+  };
+  try {
+    for await (const response of api.batchResults(batchId)) {
+      const row = byCustomId.get(response.custom_id);
+      if (!row) continue;
+      byCustomId.delete(response.custom_id);
+      buffer.push({ row, record: toRecord(row.model as ReviewModel, response) });
+      if (buffer.length >= WRITE_CHUNK) await flush();
     }
+  } catch (err) {
+    // Keep the results already read when the stream breaks off.
+    await flush();
+    throw err;
   }
+  await flush();
 
   // An ended batch has a result for every request; anything left never got one.
   const missing = [...byCustomId.values()].map((r) => r.id);

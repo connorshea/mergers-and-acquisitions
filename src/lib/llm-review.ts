@@ -335,14 +335,69 @@ export function costUsd(model: ReviewModel, usage: TokenUsage, batch: boolean): 
 }
 
 /**
+ * The most one pair's review may cost, in dollars at Batch API prices. Every
+ * request's max_tokens is sized so that even its worst case (a full-length
+ * answer, the whole prompt billed as a cache write) stays under this. Opus
+ * averaged about $0.007 a pair in calibration, so the cap only bites on a
+ * huge prompt or a runaway answer.
+ */
+export const MAX_PAIR_COST_USD = 0.05;
+
+/** The ceiling on max_tokens (thinking and answer together); answers run ~150 tokens. */
+export const MAX_OUTPUT_TOKENS = 8000;
+
+/** Below this there's no room for thinking and an answer, so the pair isn't sent. */
+export const MIN_OUTPUT_TOKENS = 1024;
+
+/** The most a request can cost: `promptTokens` all billed as cache writes, plus `maxTokens` of output. */
+export function worstCaseCostUsd(
+  model: ReviewModel,
+  promptTokens: number,
+  maxTokens: number,
+  batch: boolean,
+): number {
+  return costUsd(
+    model,
+    { input_tokens: 0, cache_creation_input_tokens: promptTokens, output_tokens: maxTokens },
+    batch,
+  );
+}
+
+/**
+ * The max_tokens that keeps a pair's worst-case batch cost within
+ * `maxCostUsd`, capped at MAX_OUTPUT_TOKENS; null when even MIN_OUTPUT_TOKENS
+ * would go over, and the pair shouldn't be sent to this model at all.
+ */
+export function outputTokenBudget(
+  model: ReviewModel,
+  promptTokens: number,
+  maxCostUsd: number = MAX_PAIR_COST_USD,
+): number | null {
+  const fixed = worstCaseCostUsd(model, promptTokens, 0, true);
+  const perToken = worstCaseCostUsd(model, promptTokens, 1, true) - fixed;
+  // Rounded against float error, then stepped back until the bound holds exactly.
+  let affordable = Math.floor((maxCostUsd - fixed) / perToken + 1e-6);
+  while (affordable > 0 && worstCaseCostUsd(model, promptTokens, affordable, true) > maxCostUsd) {
+    affordable--;
+  }
+  if (affordable < MIN_OUTPUT_TOKENS) return null;
+  return Math.min(MAX_OUTPUT_TOKENS, affordable);
+}
+
+/**
  * The Messages API request for one pair, in the SDK's shape. The system prompt
  * is identical across requests and marked for caching; the pair follows it.
  * Thinking is left at the models' default (adaptive) and sized by `effort`.
  */
-export function reviewRequest(model: ReviewModel, effort: Effort, pairText: string) {
+export function reviewRequest(
+  model: ReviewModel,
+  effort: Effort,
+  pairText: string,
+  maxTokens: number = MAX_OUTPUT_TOKENS,
+) {
   return {
     model,
-    max_tokens: 8000,
+    max_tokens: maxTokens,
     system: [
       { type: "text" as const, text: SYSTEM_PROMPT, cache_control: { type: "ephemeral" as const } },
     ],

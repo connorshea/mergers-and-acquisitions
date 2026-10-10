@@ -1,6 +1,13 @@
 import { describe, expect, it } from "vite-plus/test";
 import type { Item } from "./compare.ts";
-import { costUsd, parseReview, renderItem } from "./llm-review.ts";
+import {
+  costUsd,
+  MAX_OUTPUT_TOKENS,
+  outputTokenBudget,
+  parseReview,
+  renderItem,
+  worstCaseCostUsd,
+} from "./llm-review.ts";
 
 const labels: Record<string, string> = {
   P31: "instance of",
@@ -117,5 +124,26 @@ describe("costUsd", () => {
     // $0.10 / $0.50 per MTok up to 100K tokens of prompt, $0.50 / $2.50 past it.
     expect(costUsd("claude-haiku-5-5", short, false)).toBeCloseTo(0.01 + 0.5);
     expect(costUsd("claude-haiku-5-5", long, false)).toBeCloseTo(0.0500005 + 2.5);
+  });
+});
+
+describe("outputTokenBudget", () => {
+  it("leaves a typical pair far more room than the ~150 tokens reviews use", () => {
+    expect(outputTokenBudget("claude-haiku-5-5", 3_000)).toBe(MAX_OUTPUT_TOKENS);
+    expect(outputTokenBudget("claude-sonnet-5-5", 3_000)).toBe(MAX_OUTPUT_TOKENS);
+    // Opus: $0.05 − $0.0075 of prompt leaves 4,250 tokens at $10/M.
+    expect(outputTokenBudget("claude-opus-5-5", 3_000)).toBe(4_250);
+  });
+
+  it("shrinks max_tokens so the worst case stays within the cap", () => {
+    // Opus at batch prices: a prompt token as a cache write is $2.50/M, an output token $10/M.
+    const tokens = outputTokenBudget("claude-opus-5-5", 15_000, 0.05)!;
+    expect(tokens).toBeLessThan(MAX_OUTPUT_TOKENS);
+    expect(worstCaseCostUsd("claude-opus-5-5", 15_000, tokens, true)).toBeLessThanOrEqual(0.05);
+    expect(worstCaseCostUsd("claude-opus-5-5", 15_000, tokens + 1, true)).toBeGreaterThan(0.05);
+  });
+
+  it("refuses a pair whose prompt alone nearly uses up the cap", () => {
+    expect(outputTokenBudget("claude-opus-5-5", 19_000, 0.05)).toBeNull();
   });
 });

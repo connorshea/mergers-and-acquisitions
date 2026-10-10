@@ -428,6 +428,24 @@ async function saveResults(client: Anthropic, dir: string, b: RunBatch): Promise
   console.log(`${b.model}: ${records.length} results saved`);
 }
 
+/** How long after submit a batch may still 404 while the API catches up. */
+const NEW_BATCH_GRACE_MS = 10 * 60_000;
+
+/**
+ * A batch's status, or null when the API doesn't know the batch yet: a batch
+ * can 404 for a short while after it's created, so `submit --wait` polling
+ * straight away would otherwise crash on a batch that's running fine.
+ */
+async function retrieveBatch(client: Anthropic, run: Run, b: RunBatch) {
+  try {
+    return await client.messages.batches.retrieve(b.batchId);
+  } catch (err) {
+    const fresh = Date.now() - Date.parse(run.createdAt) < NEW_BATCH_GRACE_MS;
+    if (err instanceof Anthropic.NotFoundError && fresh) return null;
+    throw err;
+  }
+}
+
 /**
  * Check every batch of the run at once each round, saving each one's results
  * as soon as it ends, and print the report once all have. Without `wait`, one
@@ -444,12 +462,15 @@ async function collect(dir: string, wait: boolean): Promise<void> {
   for (const b of run.batches) if (!(await readResults(dir, b.model))) pending.push(b);
 
   while (pending.length > 0) {
-    const batches = await Promise.all(
-      pending.map((b) => client.messages.batches.retrieve(b.batchId)),
-    );
+    const batches = await Promise.all(pending.map((b) => retrieveBatch(client, run, b)));
     const stillRunning: RunBatch[] = [];
     for (const [i, b] of pending.entries()) {
       const batch = batches[i];
+      if (!batch) {
+        console.log(`${b.model}: just created, not visible to the API yet`);
+        stillRunning.push(b);
+        continue;
+      }
       if (batch.processing_status === "ended") {
         await saveResults(client, dir, b);
         continue;

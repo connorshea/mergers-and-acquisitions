@@ -118,6 +118,8 @@ export function configFromEnv(env: NodeJS.ProcessEnv = process.env): ReviewConfi
 
 // ---------- the API ----------
 
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
 type BatchRequest = { custom_id: string; params: ReturnType<typeof reviewRequest> };
 
 /** The few Message Batches calls the job makes; tests pass a fake. */
@@ -126,18 +128,50 @@ export interface ReviewApi {
   countTokens(model: ReviewModel, text: string): Promise<number>;
   /** The tokens up to the cache breakpoint: the system prompt. */
   cachedTokens(): Promise<number>;
+  /**
+   * Create a batch. It must not retry once the API may have taken the request:
+   * see createdUnknown.
+   */
   createBatch(requests: BatchRequest[]): Promise<string>;
   /** Whether the batch has ended; null when the API doesn't know it. */
   batchEnded(batchId: string): Promise<boolean | null>;
+  /** The batch's results; throws ResultsGone when the API no longer has them. */
   batchResults(batchId: string): AsyncIterable<Anthropic.Messages.MessageBatchIndividualResponse>;
 }
+
+/** The API has no results for a batch: it never had it, or they've expired. */
+export class ResultsGone extends Error {}
+
+/**
+ * Whether a failed createBatch may still have made the batch: the connection
+ * dropped or timed out, or the server failed after reading the body. A 4xx,
+ * a 529 (overloaded) or any other error means the API refused it.
+ */
+export function createdUnknown(err: unknown): boolean {
+  if (err instanceof Anthropic.APIConnectionError) return true;
+  return err instanceof Anthropic.APIError && (err.status ?? 0) >= 500 && err.status !== 529;
+}
+
+const CREATE_ATTEMPTS = 5;
 
 export function anthropicApi(client = new Anthropic({ maxRetries: 5 })): ReviewApi {
   return {
     countTokens: (model, text) => countPromptTokens(client, model, text),
     cachedTokens: () => cachedPromptTokens(client),
     async createBatch(requests) {
-      return (await client.messages.batches.create({ requests })).id;
+      // The SDK's own retries would re-send a body the API may already have
+      // made a batch of, so only the refusals that say it didn't are retried.
+      for (let attempt = 1; ; attempt++) {
+        try {
+          return (await client.messages.batches.create({ requests }, { maxRetries: 0 })).id;
+        } catch (err) {
+          const refused =
+            err instanceof Anthropic.RateLimitError ||
+            (err instanceof Anthropic.APIError && err.status === 529);
+          if (!refused || attempt === CREATE_ATTEMPTS) throw err;
+          await sleep(30_000 * attempt);
+        }
+      }
     },
     async batchEnded(batchId) {
       try {
@@ -149,7 +183,12 @@ export function anthropicApi(client = new Anthropic({ maxRetries: 5 })): ReviewA
       }
     },
     async *batchResults(batchId) {
-      yield* await client.messages.batches.results(batchId);
+      try {
+        yield* await client.messages.batches.results(batchId);
+      } catch (err) {
+        if (err instanceof Anthropic.NotFoundError) throw new ResultsGone(err.message);
+        throw err;
+      }
     },
   };
 }
@@ -159,12 +198,22 @@ export function anthropicApi(client = new Anthropic({ maxRetries: 5 })): ReviewA
 const monthStart = (now: Date): string =>
   toSqlDatetime(new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)));
 
-/** What one request on `model` is budgeted at: its mean stored cost, with the margin. */
+/**
+ * What one request on `model` is budgeted at: its mean stored cost, with the
+ * margin. Failed reviews count too: one cut off at max_tokens is among the
+ * dearest.
+ */
 async function expectedCost(db: Db, model: ReviewModel): Promise<number> {
   const [row] = await db
     .select({ mean: sql<number | null>`avg(${llmReviews.costUsd})`, n: sql<number>`count(*)` })
     .from(llmReviews)
-    .where(and(eq(llmReviews.model, model), eq(llmReviews.status, "succeeded")));
+    .where(
+      and(
+        eq(llmReviews.model, model),
+        inArray(llmReviews.status, ["succeeded", "failed"]),
+        isNotNull(llmReviews.costUsd),
+      ),
+    );
   const mean =
     Number(row.n) >= MIN_COST_SAMPLES && row.mean !== null
       ? Number(row.mean)
@@ -372,6 +421,7 @@ async function promptTokensFor(
   if (
     fp?.promptTokens != null &&
     fp.lowRevid !== null &&
+    fp.highRevid !== null &&
     fp.lowRevid === rendered.lowRevid &&
     fp.highRevid === rendered.highRevid
   ) {
@@ -420,10 +470,26 @@ async function claim(db: Db, stage: ReviewStage, claims: Claim[], now: Date): Pr
       .insert(llmReviews)
       .values(part.map((c) => ({ ...values(c), qidLow: c.pick.qidLow, qidHigh: c.pick.qidHigh })));
   }
+  // A retry's row keeps what earlier attempts cost this month, which the next
+  // result adds to (an earlier month's is already spent there); the rest of
+  // the last attempt's outcome goes.
   for (const c of claims.filter((c) => c.pick.retry)) {
     await db
       .update(llmReviews)
-      .set({ ...values(c), status: "pending", attempts: sql`${llmReviews.attempts} + 1` })
+      .set({
+        ...values(c),
+        status: "pending",
+        attempts: sql`${llmReviews.attempts} + 1`,
+        costUsd: sql`case when ${llmReviews.completedAt} >= ${monthStart(now)} then ${llmReviews.costUsd} end`,
+        verdict: null,
+        probability: null,
+        rationale: null,
+        error: null,
+        inputTokens: null,
+        outputTokens: null,
+        cacheCreationInputTokens: null,
+        cacheReadInputTokens: null,
+      })
       .where(and(eq(llmReviews.id, c.pick.retry!.id), eq(llmReviews.status, "failed")));
   }
 }
@@ -468,24 +534,20 @@ async function submitStage(
   const perRequest = await expectedCost(db, model);
   const spent = await monthSpend(db, now());
   const affordable = Math.max(0, Math.floor((config.budgetUsd - spent) / perRequest));
-  const todo = picks.slice(0, Math.min(config.maxPairs, affordable));
+  // Requests this run may send; pairs skipped below don't use one up.
+  const limit = Math.min(config.maxPairs, affordable);
   const result: SubmitResult = {
     needed: picks.length,
     submitted: 0,
-    deferred: picks.length - todo.length,
+    deferred: 0,
     skipped: { missingItem: 0, tooLong: 0, overCap: 0 },
   };
   log(
     `${model}: ${picks.length} pairs need a ${stage}; month's spend so far $${spent.toFixed(2)} ` +
       `of $${config.budgetUsd}, budgeting $${perRequest.toFixed(5)} a request`,
   );
-  if (result.deferred > 0) {
-    const why = todo.length === affordable ? "the monthly budget" : "LLM_MAX_PAIRS_PER_RUN";
-    log(`${model}: ${result.deferred} pairs left for next month by ${why}`);
-  }
-  if (todo.length === 0) return result;
 
-  const cached = await api.cachedTokens();
+  const cached = limit > 0 && picks.length > 0 ? await api.cachedTokens() : 0;
   let requests: BatchRequest[] = [];
   let claims: Claim[] = [];
   let bytes = 0;
@@ -497,7 +559,13 @@ async function submitStage(
     try {
       batchId = await api.createBatch(requests);
     } catch (err) {
-      await release(db, customIds);
+      // When the batch may exist, keep the claims: re-sending would pay
+      // twice, and collect fails them as "never submitted" once they're stale.
+      if (createdUnknown(err)) {
+        log(`${model}: batch creation failed in a way that may have made it; keeping its claims`);
+      } else {
+        await release(db, customIds);
+      }
       throw err;
     }
     for (const ids of chunk(customIds, ID_CHUNK)) {
@@ -521,7 +589,12 @@ async function submitStage(
     bytes = 0;
   };
 
-  for (const part of chunk(todo, RENDER_CHUNK)) {
+  let accepted = 0;
+  let reached = 0;
+  while (reached < picks.length && accepted < limit) {
+    // Render only as many as could still be sent, so most of a chunk is used.
+    const part = picks.slice(reached, reached + Math.min(RENDER_CHUNK, limit - accepted));
+    reached += part.length;
     const rendered = await renderPicks(db, part);
     for (const [i, pick] of part.entries()) {
       const r = rendered[i];
@@ -550,9 +623,15 @@ async function submitStage(
       requests.push(request);
       claims.push({ pick, customId, rendered: r });
       bytes += size;
+      accepted++;
     }
   }
   await flush();
+  result.deferred = picks.length - reached;
+  if (result.deferred > 0) {
+    const why = affordable < config.maxPairs ? "the monthly budget" : "LLM_MAX_PAIRS_PER_RUN";
+    log(`${model}: ${result.deferred} pairs left for next month by ${why}`);
+  }
   const { missingItem, tooLong, overCap } = result.skipped;
   if (missingItem + tooLong + overCap > 0) {
     log(
@@ -577,8 +656,6 @@ interface CollectResult {
   hidden: number;
   costUsd: number;
 }
-
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 /**
  * Write back every ended batch's results, hiding the pairs Opus confirms.
@@ -633,7 +710,18 @@ export async function collect(
       } else if (!ended) {
         result.running++;
       } else {
-        await writeResults(db, api, config, batchId!, result, now);
+        try {
+          await writeResults(db, api, config, batchId!, result, now);
+        } catch (err) {
+          // One unreadable batch mustn't stop the others, or the run's submit.
+          if (err instanceof ResultsGone) {
+            await fail(eq(llmReviews.batchId, batchId!), "results gone");
+          } else {
+            log(
+              `batch ${batchId}: couldn't read its results (${(err as Error).message}); next collect tries again`,
+            );
+          }
+        }
       }
     }
     if (result.running === 0 || !opts.wait) break;
@@ -703,7 +791,8 @@ async function writeResults(
         outputTokens: record.usage?.output_tokens ?? null,
         cacheCreationInputTokens: record.usage?.cache_creation_input_tokens ?? null,
         cacheReadInputTokens: record.usage?.cache_read_input_tokens ?? null,
-        costUsd: record.costUsd,
+        // Plus what earlier attempts this month cost (see claim).
+        costUsd: sql`coalesce(${llmReviews.costUsd}, 0) + ${record.costUsd}`,
         completedAt: toSqlDatetime(now()),
       })
       .where(and(eq(llmReviews.id, row.id), eq(llmReviews.status, "pending")));

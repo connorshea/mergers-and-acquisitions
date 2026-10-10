@@ -2767,12 +2767,19 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // Start of work period (P2031) counts too, except for people. Wikibase times
   // are signed (`+1993-08-31T00:00:00Z`), so read the year up to its first dash
   // rather than a fixed four characters.
-  const years = (item: Item): number[] =>
-    [...YEAR_GAP_PROPS, ...(isHuman(item) ? [] : [WORK_PERIOD_START])]
+  const statementYears = (item: Item, pids: readonly string[]): number[] =>
+    pids
       .flatMap((pid) => item.statements[pid] ?? [])
       .filter((v) => v.type === "time")
       .map((v) => parseInt(/^[+-]?\d+/.exec(v.value)?.[0] ?? "", 10))
       .filter((n) => Number.isFinite(n));
+  const closestGap = (xs: number[], ys: number[]): number => {
+    let gap = Infinity;
+    for (const x of xs) for (const y of ys) gap = Math.min(gap, Math.abs(x - y));
+    return gap;
+  };
+  const years = (item: Item): number[] =>
+    statementYears(item, [...YEAR_GAP_PROPS, ...(isHuman(item) ? [] : [WORK_PERIOD_START])]);
   let ya = years(a);
   let yb = years(b);
   // A stub with no date statement often still has one in its description
@@ -2793,10 +2800,10 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     if (yb.length > 0) describedYear = b;
   }
   const yearSource = describedYear ? ` (${describedYear.id}'s year from its description)` : "";
-  let yearGap = Infinity;
-  if (ya.length > 0 && yb.length > 0) {
-    for (const x of ya) for (const y of yb) yearGap = Math.min(yearGap, Math.abs(x - y));
-  }
+  const yearGap = closestGap(ya, yb);
+  // Date of death (P570) is compared on its own, closest pair to closest pair:
+  // against a birth or release year its gap would mean nothing.
+  const deathGap = closestGap(statementYears(a, ["P570"]), statementYears(b, ["P570"]));
 
   // A large gap is strong evidence of different subjects. Without a shared
   // strong identifier it is near-conclusive: cap below the persistence floor so
@@ -2806,14 +2813,27 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // items carry an original and a re-release date (Blade & Sword, 2004 / 2022) —
   // so it is a heavy penalty plus a ceiling (below) that keeps the pair well
   // off near-certain, rather than a cap.
+  //
+  // A person has one birth date and one death date, so for two people a
+  // shared id excuses neither a large gap (it's still a cap) nor a modest one
+  // (still a penalty, below), as it does a game's re-release date. Here the id
+  // is the likelier slip: a name-derived slug (Film.ru's "hans-wahlgren")
+  // lands on both namesakes. No real merge in the eval set has life dates 2+
+  // years apart.
+  const lifeDatesUnexcused = isHuman(a) && isHuman(b);
   const largeYearGap = Number.isFinite(yearGap) && yearGap >= LARGE_YEAR_GAP;
-  if (largeYearGap && strongIds.length > 0) {
+  const largeDeathGap = Number.isFinite(deathGap) && deathGap >= LARGE_YEAR_GAP;
+  const largeGaps = [
+    ...(largeYearGap
+      ? [`publication/inception/birth years differ by ${yearGap}${yearSource}`]
+      : []),
+    ...(largeDeathGap ? [`death years differ by ${deathGap}`] : []),
+  ];
+  if (largeGaps.length > 0 && strongIds.length > 0 && !lifeDatesUnexcused) {
     score -= 0.3;
-    reasons.push(`publication/inception/birth years differ by ${yearGap}${yearSource}`);
-  } else if (largeYearGap) {
-    reasons.unshift(
-      `publication/inception/birth years differ by ${yearGap}${yearSource}, almost certainly different subjects`,
-    );
+    reasons.push(...largeGaps);
+  } else if (largeGaps.length > 0) {
+    reasons.unshift(...largeGaps.map((r) => `${r}, almost certainly different subjects`));
     cap("large-year-gap", 0.1);
   }
 
@@ -2840,6 +2860,16 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   const diffCountries = COUNTRY_PROPS.filter((pid) => disjoint(pid));
   const diffCreators = CREATOR_PROPS.filter((pid) => disjointCreators(a, b, pid));
   const modestYearGap = Number.isFinite(yearGap) && yearGap >= 2 && yearGap < LARGE_YEAR_GAP;
+  const modestDeathGap = Number.isFinite(deathGap) && deathGap >= 2 && deathGap < LARGE_YEAR_GAP;
+  const modestGapPenalty = (gap: number): number => Math.min(0.35, 0.25 + (gap - 2) / 30);
+  if (modestYearGap && strongIds.length > 0 && lifeDatesUnexcused) {
+    score -= modestGapPenalty(yearGap);
+    reasons.push(`birth years differ by ${yearGap}${yearSource}`);
+  }
+  if (modestDeathGap && (strongIds.length === 0 || lifeDatesUnexcused)) {
+    score -= modestGapPenalty(deathGap);
+    reasons.push(`death years differ by ${deathGap}`);
+  }
 
   // Lesser disagreement penalties. A shared strong per-subject identifier is near-
   // conclusive for these, so when we have one we trust it and skip the *penalties*
@@ -2849,8 +2879,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // merely share a title.
   if (strongIds.length === 0) {
     if (modestYearGap) {
-      const penalty = Math.min(0.35, 0.25 + (yearGap - 2) / 30);
-      score -= penalty;
+      score -= modestGapPenalty(yearGap);
       reasons.push(`publication/inception/birth years differ by ${yearGap}${yearSource}`);
     }
     if (diffDeveloper) {
@@ -3401,6 +3430,8 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     diffCountries.length > 0 ||
     modestYearGap ||
     largeYearGap ||
+    modestDeathGap ||
+    largeDeathGap ||
     distinctSubjectPageIds.length > 0 ||
     distinctExtIdRows.length > 0 ||
     nativeNameDiff !== null ||
@@ -3414,7 +3445,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // Several ordinary ids disagreeing is more than a stray data slip.
   if (otherDistinctIds.length >= 4) ceiling = Math.min(ceiling, 0.7);
   else if (otherDistinctIds.length >= 2) ceiling = Math.min(ceiling, 0.8);
-  if (largeYearGap || distantPlaces || goneState) ceiling = Math.min(ceiling, 0.6);
+  if (largeYearGap || largeDeathGap || distantPlaces || goneState) ceiling = Math.min(ceiling, 0.6);
   if (nativeNameDiff) ceiling = Math.min(ceiling, 0.6);
   // Two separate (non-redirect) pages on one wiki usually mean two subjects,
   // and the merge can't go through without resolving it anyway — never

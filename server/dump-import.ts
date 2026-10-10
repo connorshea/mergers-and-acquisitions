@@ -1060,7 +1060,9 @@ export async function upsertItems(
       // An unchanged item at a new revision (an edit the conversion drops, such
       // as a label in a language we don't keep), or first seen by this
       // converter version, stores exactly what this revision converts to now:
-      // record the revision so the next pass can skip it unparsed.
+      // record the revision so the next pass can skip it unparsed. Its stored
+      // primary_type needs no update: the hash covers the type, and every write
+      // of a hash writes the type it was taken over.
       const revised = prepared.filter((p) => {
         if (!isUnchanged(p) || p.sync.sourceRevid === null) return false;
         const s = stored.get(p.row.qid)!;
@@ -1075,10 +1077,6 @@ export async function upsertItems(
               sql` `,
             )} end`,
             converterVersion: CONVERTER_VERSION,
-            primaryType: sql`case ${itemSync.qid} ${sql.join(
-              revised.map((p) => sql`when ${p.row.qid} then ${p.sync.primaryType}`),
-              sql` `,
-            )} end`,
           })
           .where(
             inArray(

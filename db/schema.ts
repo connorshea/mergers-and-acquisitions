@@ -94,8 +94,8 @@ export const itemSync = mysqlTable(
     converterVersion: int("converter_version", { unsigned: true }),
     // A copy of `items.primary_type` as of `source_revid`, so the revision index
     // (loadRevisionIndex) is one scan of idx_item_sync_revision instead of a
-    // lookup here for every in-scope item. Written wherever `source_revid` is;
-    // the hash covers the type, so an unchanged item's type is still current.
+    // lookup here for every in-scope item. Written with `data_hash`, which
+    // covers the type, so while the hash matches the type is still current.
     primaryType: varchar("primary_type", { length: 32 }),
   },
   (t) => [

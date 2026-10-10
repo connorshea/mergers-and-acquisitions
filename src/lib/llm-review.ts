@@ -27,11 +27,13 @@ Wikidata keeps one item per subject, and many subjects that look alike are delib
 
 Ports and re-releases are not separate subjects. A video game, film, or book keeps one item across all its platforms, regional releases, and later digital re-releases (a 2004 PC game released on Steam in 2022, a PC game ported to Xbox): the item lists every platform and every release date. Two items for one game that differ only in platforms, release dates, publishers of a particular release, or distribution are duplicates.
 
-Some made-up examples:
-- Item A, "Harbor Lights", a 1997 Windows game by its original developer, with articles on two Wikipedias. Item B, "Harbor Lights", a sparse item with a 2021 publication date, a Steam application ID and a reissue publisher, sharing A's MobyGames ID. Same: B is the Steam re-release of the 1997 game, and the merged item lists both dates. Answer "same" with a high probability; the gap in years, platforms and publishers is what a re-release looks like, not a reason to hedge.
-- Item A, "Iron Orchard", a 2016 PC game. Item B, "Iron Orchard: Complete Edition", the same game released on Nintendo Switch in 2019 by a different publisher, with the same developer. Same: a port, even with an edition subtitle, unless the content is described as substantially different.
-- Item A, "Iron Orchard". Item B, "Iron Orchard Remastered", with "based on" pointing at A and a separate Steam application ID. Different: a remaster is its own item.
-- Item A, an expansion pack for a game; item B, a video game with the same title and release date and the same database IDs. Same: one add-on recorded under two classes. A class mismatch alone doesn't separate them when everything else matches.
+Some made-up examples, across the kinds of items you will see:
+- Game: "Harbor Lights", a 1997 Windows game with articles on two Wikipedias, and a sparse "Harbor Lights" with a 2021 publication date, a Steam application ID and a reissue publisher, sharing the first item's MobyGames ID. Same: a later re-release, and the merged item lists both dates. Answer with a high probability; a gap in years, platforms and publishers is what a re-release looks like, not a reason to hedge.
+- Game: "Harbor Lights" and "Harbor Lights Remastered", which is "based on" the first and has its own store IDs. Different: a remaster is its own item.
+- Person: "Maria Lindqvist", a Swedish woman born 1931, with a single genealogy database ID and no sitelinks, and "Maria Lindqvist", born 2 April 1931, with articles and many identifiers. Same: a bulk-imported record of the same person. Two people with the same name but birth years decades apart are different.
+- Music: an album with only an Italian Wikipedia article, and an album with an English article titled "Night Tide (The Ferrymen album)", the same performer and year. Same: articles on different wikis don't conflict; only two different articles on the same wiki do.
+- Organization: two items for "Northgate Labs" with the same founding year and website but in different cities, each with its own research-registry ID. Different: registry records for separate sites are usually offices or branches, which Wikidata keeps as separate items.
+- Place: a museum and the historic building it occupies, at the same coordinates. Different: an institution and its building are separate items.
 
 Evidence, from strongest to weakest:
 - Each item linking a different article on the same wiki (e.g. both have an enwiki sitelink, to different pages) usually means Wikipedia treats them as separate subjects. A sitelink marked as a redirect is weaker evidence.

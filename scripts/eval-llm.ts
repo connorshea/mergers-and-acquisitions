@@ -9,7 +9,7 @@
 //   node scripts/eval-llm.ts show <pair-dir>         # print the prompt for one pair
 //   node scripts/eval-llm.ts estimate                # count tokens and project the cost (free)
 //   node scripts/eval-llm.ts submit [--models haiku,sonnet,opus] [--limit N] [--max-pair-cost USD]
-//       [--effort-haiku low|medium|high] [--with <run-dir>] [--wait]
+//       [--effort-haiku low|medium|high] [--with <run-dir>] [--prompt-examples] [--wait]
 //   node scripts/eval-llm.ts collect [run-dir] [--wait]   # default: the latest run
 //
 // `submit` and `estimate` need ANTHROPIC_API_KEY (or an `ant auth login`
@@ -136,6 +136,36 @@ function pairText(pair: Pair, labelOf: LabelLookup): string {
   return renderPair(from, into, labelOf);
 }
 
+// ---------- TEMPORARY: --prompt-examples ----------
+// An experiment, to be removed once it's settled: does adding these made-up
+// worked examples to the system prompt help Haiku at medium effort? One run
+// each was within run-to-run noise (v2 + examples 96.4%, v2 95.6%), so
+// `submit --prompt-examples` lets repeat runs compare the two without editing
+// SYSTEM_PROMPT. If the examples win, fold them into SYSTEM_PROMPT and bump
+// PROMPT_VERSION; either way, delete this block, the flag and Run.promptExamples.
+
+const PROMPT_EXAMPLES = `Some made-up examples, across the kinds of items you will see:
+- Game: "Harbor Lights", a 1997 Windows game with articles on two Wikipedias, and a sparse "Harbor Lights" with a 2021 publication date, a Steam application ID and a reissue publisher, sharing the first item's MobyGames ID. Same: a later re-release, and the merged item lists both dates. Answer with a high probability; a gap in years, platforms and publishers is what a re-release looks like, not a reason to hedge.
+- Game: "Harbor Lights" and "Harbor Lights Remastered", which is "based on" the first and has its own store IDs. Different: a remaster is its own item.
+- Person: "Maria Lindqvist", a Swedish woman born 1931, with a single genealogy database ID and no sitelinks, and "Maria Lindqvist", born 2 April 1931, with articles and many identifiers. Same: a bulk-imported record of the same person. Two people with the same name but birth years decades apart are different.
+- Music: an album with only an Italian Wikipedia article, and an album with an English article titled "Night Tide (The Ferrymen album)", the same performer and year. Same: articles on different wikis don't conflict; only two different articles on the same wiki do.
+- Organization: two items for "Northgate Labs" with the same founding year and website but in different cities, each with its own research-registry ID. Different: registry records for separate sites are usually offices or branches, which Wikidata keeps as separate items.
+- Place: a museum and the historic building it occupies, at the same coordinates. Different: an institution and its building are separate items.
+`;
+
+/** SYSTEM_PROMPT with PROMPT_EXAMPLES inserted after the ports paragraph. */
+function systemPromptWithExamples(): string {
+  const at = SYSTEM_PROMPT.indexOf("Evidence, from strongest to weakest:");
+  if (at < 0) throw new Error("--prompt-examples: SYSTEM_PROMPT has changed shape");
+  return `${SYSTEM_PROMPT.slice(0, at)}${PROMPT_EXAMPLES}\n${SYSTEM_PROMPT.slice(at)}`;
+}
+
+/** "v2", or "v2 + examples" for a --prompt-examples run. */
+const promptLabel = (run: Run): string =>
+  `v${run.promptVersion}${run.promptExamples ? " + examples" : ""}`;
+
+// ---------- end TEMPORARY ----------
+
 // ---------- runs ----------
 
 interface RunBatch {
@@ -155,6 +185,8 @@ interface Run {
    * say, an earlier run's Opus.
    */
   withRun?: string;
+  /** TEMPORARY: the run's system prompt had PROMPT_EXAMPLES (submit --prompt-examples). */
+  promptExamples?: boolean;
   batches: RunBatch[];
 }
 
@@ -207,8 +239,9 @@ async function countPromptTokens(
   client: Anthropic,
   model: ReviewModel,
   text: string,
+  system: string = SYSTEM_PROMPT,
 ): Promise<number> {
-  const req = reviewRequest(model, REVIEW_MODELS[model].defaultEffort, text);
+  const req = reviewRequest(model, REVIEW_MODELS[model].defaultEffort, text, undefined, system);
   const { input_tokens } = await client.messages.countTokens({
     model,
     system: req.system,
@@ -222,8 +255,8 @@ async function countPromptTokens(
  * The tokens up to the cache breakpoint: the system prompt, counted with a
  * one-character pair so it slightly overstates (the safe side for the cap).
  */
-function cachedPromptTokens(client: Anthropic): Promise<number> {
-  return countPromptTokens(client, "claude-haiku-5-5", "-");
+function cachedPromptTokens(client: Anthropic, system: string = SYSTEM_PROMPT): Promise<number> {
+  return countPromptTokens(client, "claude-haiku-5-5", "-", system);
 }
 
 /**
@@ -237,11 +270,12 @@ async function underPromptLimit(
   client: Anthropic,
   pairs: Pair[],
   texts: Map<string, string>,
+  system: string = SYSTEM_PROMPT,
 ): Promise<{ pairs: Pair[]; tokens: Map<string, number> }> {
   const kept: Pair[] = [];
   const tokens = new Map<string, number>();
   for (const p of pairs) {
-    const n = await countPromptTokens(client, "claude-haiku-5-5", texts.get(p.name)!);
+    const n = await countPromptTokens(client, "claude-haiku-5-5", texts.get(p.name)!, system);
     tokens.set(p.name, n);
     if (n <= MAX_PROMPT_TOKENS) kept.push(p);
     else console.warn(`⚠ skipping ${p.name}: ${n} prompt tokens (limit ${MAX_PROMPT_TOKENS})`);
@@ -265,15 +299,18 @@ async function submit(argv: string[]): Promise<void> {
   const labelOf = await labelLookup();
   const texts = new Map(selected.map((p) => [p.name, pairText(p, labelOf)]));
   const maxCost = maxPairCost(argv);
-  const { pairs, tokens } = await underPromptLimit(client, selected, texts);
+  const examples = argv.includes("--prompt-examples"); // TEMPORARY
+  const system = examples ? systemPromptWithExamples() : SYSTEM_PROMPT;
+  const { pairs, tokens } = await underPromptLimit(client, selected, texts, system);
   if (pairs.length === 0) throw new Error("no pairs left to submit");
-  const cached = await cachedPromptTokens(client);
+  const cached = await cachedPromptTokens(client, system);
 
   const run: Run = {
     createdAt: new Date().toISOString(),
     promptVersion: PROMPT_VERSION,
     maxPairCostUsd: maxCost,
     withRun: flag(argv, "--with"),
+    ...(examples ? { promptExamples: true } : {}),
     batches: [],
   };
   const dir = join(RUNS_DIR, run.createdAt.replace(/[:.]/g, "-"));
@@ -297,7 +334,7 @@ async function submit(argv: string[]): Promise<void> {
       }
       requests.push({
         custom_id: p.name,
-        params: reviewRequest(model, effort, texts.get(p.name)!, maxTokens),
+        params: reviewRequest(model, effort, texts.get(p.name)!, maxTokens, system),
       });
     }
     if (requests.length === 0) {
@@ -493,7 +530,7 @@ async function report(dir: string, run: Run): Promise<void> {
       if (!records) continue;
       byModel.set(b.model, new Map(records.map((r) => [r.pair, r])));
       console.log(
-        `${REVIEW_MODELS[b.model].short}: results from ${run.withRun} (prompt v${other.promptVersion})`,
+        `${REVIEW_MODELS[b.model].short}: results from ${run.withRun} (prompt ${promptLabel(other)})`,
       );
     }
   }
@@ -501,7 +538,7 @@ async function report(dir: string, run: Run): Promise<void> {
   const dupCount = names.filter((n) => pairs.get(n)!.label === "duplicate").length;
 
   console.log(
-    `\nLLM review calibration — prompt v${run.promptVersion}, ${names.length} pairs ` +
+    `\nLLM review calibration — prompt ${promptLabel(run)}, ${names.length} pairs ` +
       `(${dupCount} duplicate, ${names.length - dupCount} distinct), run ${dir}\n`,
   );
 

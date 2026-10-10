@@ -58,8 +58,14 @@ export const STAGE_MODEL: Record<ReviewStage, ReviewModel> = {
 
 /** Submissions per pair and stage before a failing review is given up on. */
 export const MAX_ATTEMPTS = 3;
-/** Requests per batch: ~20 KB each with the system prompt, well under the API's 256 MB. */
-const BATCH_SIZE = 5000;
+/**
+ * What one batch may hold. The API takes up to 100,000 requests or 256 MB;
+ * these stay well under both, and the byte cap also bounds the request body
+ * the SDK builds in memory. A typical request is ~20 KB with the system
+ * prompt, so the request cap usually binds first, but a pair near
+ * MAX_PROMPT_TOKENS runs to hundreds of KB.
+ */
+export const BATCH_LIMITS = { requests: 5000, bytes: 100 * 1024 * 1024 };
 /** Pairs rendered at a time, to bound the items held in memory. */
 const RENDER_CHUNK = 500;
 const ID_CHUNK = 1000;
@@ -455,6 +461,7 @@ async function submitStage(
   picks: Pick[],
   log: (line: string) => void,
   now: () => Date,
+  limits: typeof BATCH_LIMITS,
 ): Promise<SubmitResult> {
   const model = STAGE_MODEL[stage];
   const effort = REVIEW_MODELS[model].defaultEffort;
@@ -479,36 +486,11 @@ async function submitStage(
   if (todo.length === 0) return result;
 
   const cached = await api.cachedTokens();
-  for (const group of chunk(todo, BATCH_SIZE)) {
-    const requests: BatchRequest[] = [];
-    const claims: Claim[] = [];
-    for (const part of chunk(group, RENDER_CHUNK)) {
-      const rendered = await renderPicks(db, part);
-      for (const [i, pick] of part.entries()) {
-        const r = rendered[i];
-        if (!r) {
-          result.skipped.missingItem++;
-          continue;
-        }
-        const tokens = await promptTokensFor(api, model, pick, r, cached);
-        if (tokens > MAX_PROMPT_TOKENS) {
-          result.skipped.tooLong++;
-          continue;
-        }
-        const maxTokens = outputTokenBudget(model, tokens, cached);
-        if (maxTokens === null) {
-          result.skipped.overCap++;
-          continue;
-        }
-        const customId = customIdOf(pick, stage);
-        requests.push({
-          custom_id: customId,
-          params: reviewRequest(model, effort, r.text, maxTokens),
-        });
-        claims.push({ pick, customId, rendered: r });
-      }
-    }
-    if (requests.length === 0) continue;
+  let requests: BatchRequest[] = [];
+  let claims: Claim[] = [];
+  let bytes = 0;
+  const flush = async () => {
+    if (requests.length === 0) return;
     await claim(db, stage, claims, now());
     const customIds = claims.map((c) => c.customId);
     let batchId: string;
@@ -531,8 +513,46 @@ async function submitStage(
         );
     }
     result.submitted += requests.length;
-    log(`${model}: batch ${batchId}, ${requests.length} requests`);
+    log(
+      `${model}: batch ${batchId}, ${requests.length} requests, ${(bytes / 1024 / 1024).toFixed(1)} MB`,
+    );
+    requests = [];
+    claims = [];
+    bytes = 0;
+  };
+
+  for (const part of chunk(todo, RENDER_CHUNK)) {
+    const rendered = await renderPicks(db, part);
+    for (const [i, pick] of part.entries()) {
+      const r = rendered[i];
+      if (!r) {
+        result.skipped.missingItem++;
+        continue;
+      }
+      const tokens = await promptTokensFor(api, model, pick, r, cached);
+      if (tokens > MAX_PROMPT_TOKENS) {
+        result.skipped.tooLong++;
+        continue;
+      }
+      const maxTokens = outputTokenBudget(model, tokens, cached);
+      if (maxTokens === null) {
+        result.skipped.overCap++;
+        continue;
+      }
+      const customId = customIdOf(pick, stage);
+      const request = {
+        custom_id: customId,
+        params: reviewRequest(model, effort, r.text, maxTokens),
+      };
+      // Its share of the batch's JSON body, plus a comma.
+      const size = Buffer.byteLength(JSON.stringify(request)) + 1;
+      if (requests.length >= limits.requests || bytes + size > limits.bytes) await flush();
+      requests.push(request);
+      claims.push({ pick, customId, rendered: r });
+      bytes += size;
+    }
   }
+  await flush();
   const { missingItem, tooLong, overCap } = result.skipped;
   if (missingItem + tooLong + overCap > 0) {
     log(
@@ -761,7 +781,13 @@ export async function runStage(
   api: ReviewApi,
   config: ReviewConfig,
   stage: ReviewStage,
-  opts: { wait: boolean; log?: (line: string) => void; now?: () => Date; pollMs?: number },
+  opts: {
+    wait: boolean;
+    log?: (line: string) => void;
+    now?: () => Date;
+    pollMs?: number;
+    batchLimits?: typeof BATCH_LIMITS;
+  },
 ): Promise<RunResult> {
   const log = opts.log ?? console.log;
   const now = opts.now ?? (() => new Date());
@@ -775,7 +801,16 @@ export async function runStage(
       if (Number(n) > 0) log(`${n} first passes still running; their pairs wait for next month`);
     }
     const picks = stage === "first_pass" ? await firstPassPicks(db) : await confirmPicks(db);
-    const submit = await submitStage(db, api, config, stage, picks, log, now);
+    const submit = await submitStage(
+      db,
+      api,
+      config,
+      stage,
+      picks,
+      log,
+      now,
+      opts.batchLimits ?? BATCH_LIMITS,
+    );
     if (opts.wait && submit.submitted > 0) await collect(db, api, config, opts);
     log(`month's spend so far $${(await monthSpend(db, now())).toFixed(2)}`);
     return { submit, outOfCredit: false };

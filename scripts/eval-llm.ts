@@ -209,6 +209,14 @@ async function countPromptTokens(
 }
 
 /**
+ * The tokens up to the cache breakpoint: the system prompt, counted with a
+ * one-character pair so it slightly overstates (the safe side for the cap).
+ */
+function cachedPromptTokens(client: Anthropic): Promise<number> {
+  return countPromptTokens(client, "claude-haiku-5-5", "-");
+}
+
+/**
  * The pairs whose prompt stays under MAX_PROMPT_TOKENS, with their prompt
  * tokens, counted exactly on Haiku so no request crosses into Haiku's
  * long-prompt rate. A pair over it is left out for every model, which keeps
@@ -249,6 +257,7 @@ async function submit(argv: string[]): Promise<void> {
   const maxCost = maxPairCost(argv);
   const { pairs, tokens } = await underPromptLimit(client, selected, texts);
   if (pairs.length === 0) throw new Error("no pairs left to submit");
+  const cached = await cachedPromptTokens(client);
 
   const run: Run = {
     createdAt: new Date().toISOString(),
@@ -268,7 +277,7 @@ async function submit(argv: string[]): Promise<void> {
       REVIEW_MODELS[model].defaultEffort) as Effort;
     const requests = [];
     for (const p of pairs) {
-      const maxTokens = outputTokenBudget(model, tokens.get(p.name)!, maxCost);
+      const maxTokens = outputTokenBudget(model, tokens.get(p.name)!, cached, maxCost);
       if (maxTokens === null) {
         console.warn(
           `⚠ skipping ${p.name} on ${model}: its prompt alone nearly reaches the ${usd(maxCost)} cap`,
@@ -638,6 +647,7 @@ async function estimate(argv: string[]): Promise<void> {
   const labelOf = await labelLookup();
   const assumedOutput: Record<string, number> = { haiku: 400, sonnet: 800, opus: 800 };
   const maxCost = maxPairCost(argv);
+  const cached = await cachedPromptTokens(client);
 
   for (const model of models) {
     let total = 0;
@@ -650,7 +660,7 @@ async function estimate(argv: string[]): Promise<void> {
       total += tokens;
       max = Math.max(max, tokens);
       if (tokens > MAX_PROMPT_TOKENS) over++;
-      const budget = outputTokenBudget(model, tokens, maxCost);
+      const budget = outputTokenBudget(model, tokens, cached, maxCost);
       if (budget === null) unaffordable++;
       else minMaxTokens = Math.min(minMaxTokens, budget);
     }

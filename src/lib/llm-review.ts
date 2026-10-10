@@ -347,7 +347,7 @@ export function costUsd(model: ReviewModel, usage: TokenUsage, batch: boolean): 
 /**
  * The most one pair's review may cost, in dollars at Batch API prices. Every
  * request's max_tokens is sized so that even its worst case (a full-length
- * answer, the whole prompt billed as a cache write) stays under this. Opus
+ * answer, the cached system prompt billed as a fresh write) stays under this. Opus
  * averaged under $0.01 a pair in calibration, so the cap only bites on a
  * huge prompt or a runaway answer.
  */
@@ -359,16 +359,28 @@ export const MAX_OUTPUT_TOKENS = 8000;
 /** Below this there's no room for thinking and an answer, so the pair isn't sent. */
 export const MIN_OUTPUT_TOKENS = 1024;
 
-/** The most a request can cost: `promptTokens` all billed as cache writes, plus `maxTokens` of output. */
+/**
+ * The most a request can cost: the first `cachedTokens` of its prompt (the
+ * system prompt, up to the cache breakpoint) billed as a cache write, the rest
+ * as plain input, plus `maxTokens` of output. Only the system prompt is
+ * cached, so billing the whole prompt as a write would overstate a big pair
+ * by up to 2× and refuse pairs that fit.
+ */
 export function worstCaseCostUsd(
   model: ReviewModel,
   promptTokens: number,
+  cachedTokens: number,
   maxTokens: number,
   batch: boolean,
 ): number {
+  const written = Math.min(cachedTokens, promptTokens);
   return costUsd(
     model,
-    { input_tokens: 0, cache_creation_input_tokens: promptTokens, output_tokens: maxTokens },
+    {
+      input_tokens: promptTokens - written,
+      cache_creation_input_tokens: written,
+      output_tokens: maxTokens,
+    },
     batch,
   );
 }
@@ -381,13 +393,16 @@ export function worstCaseCostUsd(
 export function outputTokenBudget(
   model: ReviewModel,
   promptTokens: number,
+  cachedTokens: number,
   maxCostUsd: number = MAX_PAIR_COST_USD,
 ): number | null {
-  const fixed = worstCaseCostUsd(model, promptTokens, 0, true);
-  const perToken = worstCaseCostUsd(model, promptTokens, 1, true) - fixed;
+  const worstCase = (maxTokens: number) =>
+    worstCaseCostUsd(model, promptTokens, cachedTokens, maxTokens, true);
+  const fixed = worstCase(0);
+  const perToken = worstCase(1) - fixed;
   // Rounded against float error, then stepped back until the bound holds exactly.
   let affordable = Math.floor((maxCostUsd - fixed) / perToken + 1e-6);
-  while (affordable > 0 && worstCaseCostUsd(model, promptTokens, affordable, true) > maxCostUsd) {
+  while (affordable > 0 && worstCase(affordable) > maxCostUsd) {
     affordable--;
   }
   if (affordable < MIN_OUTPUT_TOKENS) return null;

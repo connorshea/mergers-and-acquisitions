@@ -133,22 +133,33 @@ describe("costUsd", () => {
 });
 
 describe("outputTokenBudget", () => {
+  // At batch prices Opus bills $2/M input, $4/M for an hour-long cache write, $10/M output.
+  const system = 1_500;
+
   it("leaves a typical pair far more room than the ~150 tokens reviews use", () => {
-    expect(outputTokenBudget("claude-haiku-5-5", 3_000)).toBe(MAX_OUTPUT_TOKENS);
-    expect(outputTokenBudget("claude-sonnet-5-5", 3_000)).toBe(MAX_OUTPUT_TOKENS);
-    // Opus: $0.05 − $0.012 of prompt (as hour-long cache writes, $4/M) leaves 3,800 tokens at $10/M.
-    expect(outputTokenBudget("claude-opus-5-5", 3_000)).toBe(3_800);
+    expect(outputTokenBudget("claude-haiku-5-5", 3_000, system)).toBe(MAX_OUTPUT_TOKENS);
+    expect(outputTokenBudget("claude-sonnet-5-5", 3_000, system)).toBe(MAX_OUTPUT_TOKENS);
+    // Opus: $0.05 − $0.009 of prompt (1,500 written at $4/M, 1,500 read fresh at $2/M) leaves 4,100.
+    expect(outputTokenBudget("claude-opus-5-5", 3_000, system)).toBe(4_100);
   });
 
   it("shrinks max_tokens so the worst case stays within the cap", () => {
-    // Opus at batch prices: a prompt token as an hour-long cache write is $4/M, an output token $10/M.
-    const tokens = outputTokenBudget("claude-opus-5-5", 8_000, 0.05)!;
+    const tokens = outputTokenBudget("claude-opus-5-5", 8_000, system, 0.05)!;
     expect(tokens).toBeLessThan(MAX_OUTPUT_TOKENS);
-    expect(worstCaseCostUsd("claude-opus-5-5", 8_000, tokens, true)).toBeLessThanOrEqual(0.05);
-    expect(worstCaseCostUsd("claude-opus-5-5", 8_000, tokens + 1, true)).toBeGreaterThan(0.05);
+    expect(worstCaseCostUsd("claude-opus-5-5", 8_000, system, tokens, true)).toBeLessThanOrEqual(
+      0.05,
+    );
+    expect(worstCaseCostUsd("claude-opus-5-5", 8_000, system, tokens + 1, true)).toBeGreaterThan(
+      0.05,
+    );
+  });
+
+  it("bills only the system prompt as a cache write, not the pair after it", () => {
+    // $0.006 written + $0.021 of fresh input leaves 2,300 tokens; all 12k as writes would leave none.
+    expect(outputTokenBudget("claude-opus-5-5", 12_000, system, 0.05)).toBe(2_300);
   });
 
   it("refuses a pair whose prompt alone nearly uses up the cap", () => {
-    expect(outputTokenBudget("claude-opus-5-5", 12_000, 0.05)).toBeNull();
+    expect(outputTokenBudget("claude-opus-5-5", 20_000, system, 0.05)).toBeNull();
   });
 });

@@ -69,11 +69,13 @@ const source = (entities: object[]) =>
 const run = (entities: object[], opts: Parameters<typeof runDumpImport>[0] = {}) =>
   runDumpImport({ source: source(entities), log: () => {}, ...opts });
 
-const { qid: _qid, ...syncColumns } = getTableColumns(itemSync);
+// item_sync's copy of the type goes by its own name, so `primaryType` stays
+// the canonical items column.
+const { qid: _qid, primaryType: syncPrimaryType, ...syncColumns } = getTableColumns(itemSync);
 /** Every item with its import bookkeeping (null when it has no item_sync row). */
 const allItems = () =>
   db
-    .select({ ...getTableColumns(items), ...syncColumns })
+    .select({ ...getTableColumns(items), ...syncColumns, syncPrimaryType })
     .from(items)
     .leftJoin(itemSync, eq(itemSync.qid, items.qid))
     .orderBy(asc(items.qid));
@@ -694,9 +696,9 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
       classQids: ["Q7889", "Q865493"],
       dump: "20260914",
     });
-    expect((await allItems()).map((r) => [r.qid, r.primaryType])).toEqual([
-      ["Q100", "Q7889"],
-      ["Q300", "Q865493"],
+    expect((await allItems()).map((r) => [r.qid, r.primaryType, r.syncPrimaryType])).toEqual([
+      ["Q100", "Q7889", "Q7889"],
+      ["Q300", "Q865493", "Q865493"],
     ]);
 
     // Mods dropped: the line still passes the pre-filter (it mentions Q7889),
@@ -741,10 +743,10 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
     const first = await run(dump, { dump: "20260914", log: (m) => void lines.push(m) });
     expect(first).toMatchObject({ matched: 3, unedited: 1, parsed: 2 });
     expect(lines.some((l) => l.includes("2 items linked from the mirror"))).toBe(true);
-    expect((await allItems()).map((r) => [r.qid, r.primaryType])).toEqual([
-      ["Q100", "Q7889"],
-      ["Q20", "Q5"],
-      ["Q30", "Q5"],
+    expect((await allItems()).map((r) => [r.qid, r.primaryType, r.syncPrimaryType])).toEqual([
+      ["Q100", "Q7889", "Q7889"],
+      ["Q20", "Q5", "Q5"],
+      ["Q30", "Q5", "Q5"],
     ]);
 
     // Unedited next week, the human is skipped unparsed like any other item.

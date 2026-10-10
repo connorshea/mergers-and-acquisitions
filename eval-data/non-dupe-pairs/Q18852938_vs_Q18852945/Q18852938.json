@@ -1,0 +1,205 @@
+{
+  "pageid": 20396729,
+  "ns": 0,
+  "title": "Q18852938",
+  "lastrevid": 2436198221,
+  "modified": "2025-11-30T21:18:53Z",
+  "type": "item",
+  "id": "Q18852938",
+  "labels": {
+    "zh": {
+      "language": "zh",
+      "value": "奉和聖製送張說上集賢學士賜宴"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "poem"
+    },
+    "ml": {
+      "language": "ml",
+      "value": "കവിത"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "কবিতা"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "вірш"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5963e3cad5eee4ae1cffbefbac15327800b9a7e6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7725634,
+              "id": "Q7725634"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q18852938$7FA5F9D8-6E3B-4C50-8F63-E014C59719FB",
+        "rank": "normal"
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "f49f772d2d24b70cdec333afeebe0b5118c630fb",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3236984,
+              "id": "Q3236984"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q18852938$D4CC0B7A-4AEC-491F-A854-C76486153487",
+        "rank": "normal"
+      }
+    ],
+    "P407": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P407",
+          "hash": "63e506e38a7ce991510acc72a27dc1c9587bb2ac",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 37041,
+              "id": "Q37041"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q18852938$7E7BAA81-6C12-4178-A2EC-4D0DA8CDEA37",
+        "rank": "normal"
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "0ea8b2347a09f4e02ee58992e3cab1c82e544d68",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 9683,
+              "id": "Q9683"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q18852938$14233AB4-A40E-4D5B-B218-519170A34AB1",
+        "rank": "normal"
+      }
+    ],
+    "P6216": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6216",
+          "hash": "f69dc45ce9c48664155022498b34100d801bd549",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 19652,
+              "id": "Q19652"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1001": [
+            {
+              "snaktype": "value",
+              "property": "P1001",
+              "hash": "91dce20cb7cf8d03dc976a70e56b19939881d751",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 60332278,
+                  "id": "Q60332278"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P459": [
+            {
+              "snaktype": "value",
+              "property": "P459",
+              "hash": "8f1a08d7359ea45500b600d7ad0f13a7f032145e",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 29940705,
+                  "id": "Q29940705"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1001", "P459"],
+        "id": "Q18852938$8573B2D0-6461-41D3-97B4-B4431172DFA7",
+        "rank": "normal"
+      }
+    ],
+    "P7937": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7937",
+          "hash": "6fa42627aa5371e9e67d3943036ca626757a2cf1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5185279,
+              "id": "Q5185279"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q18852938$E057E9CB-FE86-4BB1-96EE-6AB18B567681",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "zhwikisource": {
+      "site": "zhwikisource",
+      "title": "奉和聖製送張說上集賢學士賜宴 (劉昇)",
+      "badges": [],
+      "url": "https://zh.wikisource.org/wiki/%E5%A5%89%E5%92%8C%E8%81%96%E8%A3%BD%E9%80%81%E5%BC%B5%E8%AA%AA%E4%B8%8A%E9%9B%86%E8%B3%A2%E5%AD%B8%E5%A3%AB%E8%B3%9C%E5%AE%B4_(%E5%8A%89%E6%98%87)"
+    }
+  }
+}

@@ -1158,6 +1158,46 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       expect(result.reasons.some((r) => r.includes("separate article"))).toBe(false);
     });
 
+    it("caps a single clash between two different pages on a Wikisource", () => {
+      for (const wiki of ["zhwikisource", "sourceswiki"]) {
+        const result = score(mk("Q1", pages(" (I)", [wiki])), mk("Q2", pages(" (II)", [wiki])));
+        expect(result.confidence).toBeLessThanOrEqual(0.1);
+        expect(result.reasons[0]).toBe(
+          `each item links a different page on ${wiki}, almost certainly different texts`,
+        );
+        expect(reasonTone(result.reasons[0]).polarity).toBe("negative");
+      }
+    });
+
+    it("doesn't cap a Wikisource clash where one side is a redirect", () => {
+      const wikis = ["zhwikisource"];
+      const redirect = mk("Q2", pages(" (II)", wikis), ["Q70893996"]);
+      const result = score(mk("Q1", pages(" (I)", wikis)), redirect);
+      expect(result.confidence).toBeGreaterThan(0.4);
+      expect(result.reasons.some((r) => r.startsWith("each item links"))).toBe(false);
+      const resolved = {
+        ...mk("Q2", pages(" (II)", wikis)),
+        sitelinkRedirects: { zhwikisource: "Harvest Moon (I)" },
+      };
+      expect(score(mk("Q1", pages(" (I)", wikis)), resolved).confidence).toBeGreaterThan(0.4);
+    });
+
+    it("keeps a single Wikipedia clash to the −0.1 nudge", () => {
+      // Label-only pair, so the score sits below the strong-signal cap.
+      const lone = (id: string, sitelinks: Record<string, string>): Item => ({
+        ...base,
+        id,
+        labels: { en: "Harvest Moon" },
+        sitelinks,
+        statements: {},
+      });
+      const a = lone("Q1", { enwiki: "Harvest Moon" });
+      const clash = score(a, lone("Q2", { enwiki: "Harvest Moon (series)" }));
+      const none = score(a, lone("Q2", {}));
+      expect(clash.reasons.some((r) => r.startsWith("each item links"))).toBe(false);
+      expect(none.confidence - clash.confidence).toBeCloseTo(0.1, 5);
+    });
+
     it("doesn't count clashes where one side is a badged redirect", () => {
       const wikis = ["enwiki", "kowiki", "ptwiki"];
       const redirects = mk("Q2", pages(" (series)", wikis), ["Q70893996"]);

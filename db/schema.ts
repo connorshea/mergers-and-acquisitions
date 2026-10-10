@@ -422,7 +422,7 @@ export const users = mysqlTable("users", {
 });
 
 // Server-side sessions. The browser cookie holds a random 256-bit token; this
-// table stores only its SHA-256, so a leaked ToolsDB dump does not yield live
+// table stores only its SHA-256, so a leaked database dump does not yield live
 // sessions. `expiresAt` is the absolute lifetime; the idle timeout is enforced
 // against `lastSeenAt` in server/auth/session.ts.
 export const sessions = mysqlTable(
@@ -447,8 +447,9 @@ export const sessions = mysqlTable(
 );
 
 // The user's OAuth access/refresh tokens, one row per user. Both are encrypted
-// at rest (AES-256-GCM, key from the environment — see server/auth/crypto.ts)
-// because ToolsDB is a shared server. They never leave the server process.
+// at rest (AES-256-GCM, key from the environment — see server/auth/crypto.ts),
+// so a leaked database dump does not yield them. They never leave the server
+// process.
 export const oauthTokens = mysqlTable("oauth_tokens", {
   userId: int("user_id")
     .primaryKey()

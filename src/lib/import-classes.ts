@@ -64,9 +64,8 @@ const VIDEO_GAME_CLASSES: readonly ImportClass[] = [
  * Athletes (~1.2M more beyond the Olympians): the 40 largest sports
  * occupations, listed below.
  *
- * Each person is ~8-12 KB in the mirror. These were left out to keep ToolsDB
- * under its 25 GB guideline; on Trove (#192) the limit is the volume and the
- * buffer pool instead. Still left out: the bare "writer" occupation (~450k
+ * Each person is ~8-12 KB in the mirror; the limits are the Trove volume and
+ * the buffer pool. Still left out: the bare "writer" occupation (~450k
  * more: journalists, academics, few of them duplicates), MusicBrainz (~230k
  * more; it mirrors Wikidata, so it would only bring people in, never count
  * as evidence) and the long tail of smaller sports' occupations.

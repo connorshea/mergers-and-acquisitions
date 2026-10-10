@@ -65,9 +65,9 @@ jobs:
     runs-on: ubuntu-latest
     services:
       mariadb:
-        # Keep the major in step with Toolforge's ToolsDB so the tests exercise
-        # the same SQL dialect the deploy will.
-        image: mariadb:10.6
+        # Keep the version in step with prod (MariaDB 12.2 on Trove) so the
+        # tests exercise the same SQL dialect the deploy will.
+        image: mariadb:12.2
         env:
           MARIADB_ROOT_PASSWORD: root
         ports:
@@ -93,7 +93,7 @@ jobs:
         uses: ./.github/actions/setup
 
       # The service image can't be given a default collation, so create the
-      # database explicitly with utf8mb4_bin — the same as ToolsDB and local dev.
+      # database explicitly with utf8mb4_bin — the same as prod and local dev.
       - name: Create the test database
         run: |
           mysql -h 127.0.0.1 -P 3306 -u root -proot <<'SQL'

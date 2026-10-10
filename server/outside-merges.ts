@@ -168,7 +168,7 @@ async function settle(qids: string[], fates: Map<string, ItemFate>): Promise<num
 /**
  * Check every open candidate's items against the wikidatawiki replica and
  * settle the pairs whose items were merged away or deleted. Throws on a
- * replica or ToolsDB error (the next run starts over; pairs already settled
+ * replica or database error (the next run starts over; pairs already settled
  * stay settled).
  */
 export async function runOutsideMergeSync(

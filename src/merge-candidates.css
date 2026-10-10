@@ -2527,16 +2527,3 @@ a.auth-login {
     overflow-wrap: anywhere;
   }
 }
-
-/* Maintenance page (see src/pages/Maintenance.tsx) */
-.maintenance {
-  max-width: 40rem;
-  padding-top: 4rem;
-}
-.maintenance h2 {
-  margin: 2.5rem 0 0.5rem;
-}
-.maintenance p {
-  color: var(--muted);
-  line-height: 1.5;
-}

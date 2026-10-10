@@ -1,0 +1,421 @@
+{
+  "pageid": 18201932,
+  "ns": 0,
+  "title": "Q16585573",
+  "lastrevid": 2482182308,
+  "modified": "2026-04-16T15:56:19Z",
+  "type": "item",
+  "id": "Q16585573",
+  "labels": {
+    "it": {
+      "language": "it",
+      "value": "Outside"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Outside"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Outside"
+    },
+    "en": {
+      "language": "en",
+      "value": "Outside"
+    },
+    "es": {
+      "language": "es",
+      "value": "Outside"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "album of Staind"
+    },
+    "it": {
+      "language": "it",
+      "value": "Singolo degli Staind del 2001"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "33d81754a79b2dab75d17c156313b0f8f0f4f086",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 134556,
+              "id": "Q134556"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16585573$553B75D9-328F-4CCB-82DD-DFC9486D3EA7",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d5847b9b6032aa8b13dae3c2dfd9ed5d114d21b3",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "5a343e7e758a4282a01316d3e959b6e653b767fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11920,
+                      "id": "Q11920"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "48943fff8e74324e45d65e466a0ec3236f7e37ca",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 266496,
+              "id": "Q266496"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16585573$AB28DB06-AEB7-4141-BE7B-EC114F5A94FE",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d5847b9b6032aa8b13dae3c2dfd9ed5d114d21b3",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "5a343e7e758a4282a01316d3e959b6e653b767fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11920,
+                      "id": "Q11920"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "2ebf0369e97601f2a332027f0ec74b57d0916e9d",
+          "datavalue": {
+            "value": {
+              "time": "+2001-05-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 10,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q16585573$3C9DD2E9-0A1F-4483-99BC-C0A6CE5B0AE0",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d5847b9b6032aa8b13dae3c2dfd9ed5d114d21b3",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "5a343e7e758a4282a01316d3e959b6e653b767fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11920,
+                      "id": "Q11920"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P162": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P162",
+          "hash": "126243f854fc295d1d9fcf69aa2e1be9456c19ed",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 302280,
+              "id": "Q302280"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16585573$81CCABAA-FA22-45BB-9C3B-1062F1B0DAD5",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d5847b9b6032aa8b13dae3c2dfd9ed5d114d21b3",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "5a343e7e758a4282a01316d3e959b6e653b767fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11920,
+                      "id": "Q11920"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P156": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P156",
+          "hash": "6e8ed2f6731625778d823466ff645167ed624fb9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5429161,
+              "id": "Q5429161"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16585573$239A43A8-D05D-4717-BBE9-517F9F68FCB6",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d57233d77f772c53697f104a76e9586a478c3558",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "5a343e7e758a4282a01316d3e959b6e653b767fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11920,
+                      "id": "Q11920"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "8f79a4377ed02e5e58445078f3572182c0b74244",
+                  "datavalue": {
+                    "value": "https://it.wikipedia.org/w/index.php?title=Outside_(Staind)&oldid=104596965",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P155": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P155",
+          "hash": "c93d9c424b30ce704a60e2ccd4f3648da9f46329",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6089941,
+              "id": "Q6089941"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16585573$EBEB4F6D-3E2A-427C-B072-81150EF32BD1",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "5de3dc5d6bc9142dfed696810064bc85b3490a01",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "5a343e7e758a4282a01316d3e959b6e653b767fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11920,
+                      "id": "Q11920"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "60bc9385ed9c4ba563dd02a8d0f5b46f4b2d7c3a",
+                  "datavalue": {
+                    "value": "https://it.wikipedia.org/w/index.php?title=Outside_(Staind)&oldid=111782346",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P436": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P436",
+          "hash": "de4d365d894fbeb6f4fe04255f3b6a9708bcd902",
+          "datavalue": {
+            "value": "8c6c0626-661e-36d1-940a-45567d0cb89b",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q16585573$e3325456-4704-755a-830f-a06d22daa2a4",
+        "rank": "normal"
+      }
+    ],
+    "P1954": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1954",
+          "hash": "36f5ddc846e863dab5f71900f3a9815cff2da1c6",
+          "datavalue": {
+            "value": "288337",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q16585573$ae412f2a-4363-69f8-6523-1a23b677ebf8",
+        "rank": "normal"
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "df8ee4a44e3398f02fdbc757fe7a88cd2f79405e",
+          "datavalue": {
+            "value": "/m/0gvn93",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q16585573$3A45625F-39E1-4C92-9F4B-320144A65ECB",
+        "rank": "normal"
+      }
+    ],
+    "P13602": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P13602",
+          "hash": "c46044458b50d94339a2e9474ccb22309eabe6ce",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2470344,
+              "id": "Q2470344"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q16585573$4F7ABECC-94D3-4E2D-9654-6400B243968B",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "itwiki": {
+      "site": "itwiki",
+      "title": "Outside (Staind)",
+      "badges": [],
+      "url": "https://it.wikipedia.org/wiki/Outside_(Staind)"
+    }
+  }
+}

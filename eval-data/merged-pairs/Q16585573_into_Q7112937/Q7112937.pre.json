@@ -1,0 +1,575 @@
+{
+  "pageid": 7008308,
+  "ns": 0,
+  "title": "Q7112937",
+  "lastrevid": 2481559266,
+  "modified": "2026-04-14T21:00:29Z",
+  "type": "item",
+  "id": "Q7112937",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Outside"
+    },
+    "es": {
+      "language": "es",
+      "value": "Outside (canción de Staind)"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Outside"
+    },
+    "de": {
+      "language": "de",
+      "value": "Outside"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Outside"
+    },
+    "ru": {
+      "language": "ru",
+      "value": "Outside (песня Staind)"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Outside"
+    }
+  },
+  "descriptions": {
+    "de": {
+      "language": "de",
+      "value": "Single von Staind"
+    },
+    "en": {
+      "language": "en",
+      "value": "Staind song"
+    },
+    "fa": {
+      "language": "fa",
+      "value": "تک‌آهنگی از استیند"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "single van Staind"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "chanson de Staind"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "cantar de Staind"
+    },
+    "es": {
+      "language": "es",
+      "value": "canción de Staind"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "48943fff8e74324e45d65e466a0ec3236f7e37ca",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 266496,
+              "id": "Q266496"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q7112937$AFD30E84-E94D-4768-89A4-C11A8040FFD0",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P264",
+          "hash": "06ad3ba937f66660c24ff58e003969b5330d1de3",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 726251,
+              "id": "Q726251"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q7112937$3A02F57C-DB4B-4222-9C5D-12756F05B364",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "33d81754a79b2dab75d17c156313b0f8f0f4f086",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 134556,
+              "id": "Q134556"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q7112937$0C9665CA-5E64-42C7-9B27-8F4B160158CE",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P155": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P155",
+          "hash": "c93d9c424b30ce704a60e2ccd4f3648da9f46329",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6089941,
+              "id": "Q6089941"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7112937$7D43B2CF-4C57-48E4-BFA9-9EA6B3565D06",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P156": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P156",
+          "hash": "6e8ed2f6731625778d823466ff645167ed624fb9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5429161,
+              "id": "Q5429161"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7112937$A5138E79-89B0-4DB8-89FF-116B0A57B549",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P2624": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2624",
+          "hash": "d8567860638513c0aaf3178a77095191864e4656",
+          "datavalue": {
+            "value": "outside-lyrics-staind",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q7112937$75972D01-3735-419D-83AC-E621A0CA47E9",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "2ebf0369e97601f2a332027f0ec74b57d0916e9d",
+          "datavalue": {
+            "value": {
+              "time": "+2001-05-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 10,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q7112937$AC2056A6-BBE6-4C47-8AF3-1030B4A4382D",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "fe46fe7878841be23520fdb97e58eeb663ba2b3b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 379671,
+              "id": "Q379671"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7112937$BF8DAEAF-56ED-4712-A26F-A701F353C762",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P2581": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2581",
+          "hash": "95101e54b129c6876f57cba8a3fded1f563c2512",
+          "datavalue": {
+            "value": "03547646n",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q7112937$062F9FAE-C001-420C-8773-CD754C76DABB",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "248ac337a217a5f5eed7139a82a4e60931611af0",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "25b816aab41db18565946259c950aed6de05dd1e",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 4837690,
+                      "id": "Q4837690"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P248"]
+          }
+        ]
+      }
+    ],
+    "P162": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P162",
+          "hash": "0adac7c7dedda69815b091076b3dbbec0970312a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 580507,
+              "id": "Q580507"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7112937$F27878AA-9DB8-45FA-84F9-0F50044C58E5",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "df8ee4a44e3398f02fdbc757fe7a88cd2f79405e",
+          "datavalue": {
+            "value": "/m/0gvn93",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q7112937$EF44DF7B-2B2D-47F9-825D-957A0F83DD31",
+        "rank": "normal"
+      }
+    ],
+    "P13602": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P13602",
+          "hash": "c46044458b50d94339a2e9474ccb22309eabe6ce",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2470344,
+              "id": "Q2470344"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7112937$A5A68E31-89EE-4F47-82FD-39780B2D039E",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Outside (Staind song)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Outside_(Staind_song)"
+    },
+    "eswiki": {
+      "site": "eswiki",
+      "title": "Outside (canción de Staind)",
+      "badges": [],
+      "url": "https://es.wikipedia.org/wiki/Outside_(canci%C3%B3n_de_Staind)"
+    },
+    "ruwiki": {
+      "site": "ruwiki",
+      "title": "Outside (песня Staind)",
+      "badges": [],
+      "url": "https://ru.wikipedia.org/wiki/Outside_(%D0%BF%D0%B5%D1%81%D0%BD%D1%8F_Staind)"
+    }
+  }
+}

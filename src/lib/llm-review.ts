@@ -12,7 +12,7 @@ import { type Item, isRedirectSitelink, type Value } from "./compare.ts";
  * Bumped whenever the system prompt, the rendering, or the verdict schema
  * changes, so stored verdicts record which request produced them.
  */
-export const PROMPT_VERSION = 2;
+export const PROMPT_VERSION = 3;
 
 export const SYSTEM_PROMPT = `You review pairs of Wikidata items that an automatic duplicate finder flagged as possible duplicates. For each pair, decide whether the two items describe the same real-world subject, so that a Wikidata editor should merge them.
 
@@ -26,6 +26,12 @@ Wikidata keeps one item per subject, and many subjects that look alike are delib
 - a person and a pseudonym, group, or character when Wikidata models them separately
 
 Ports and re-releases are not separate subjects. A video game, film, or book keeps one item across all its platforms, regional releases, and later digital re-releases (a 2004 PC game released on Steam in 2022, a PC game ported to Xbox): the item lists every platform and every release date. Two items for one game that differ only in platforms, release dates, publishers of a particular release, or distribution are duplicates.
+
+Some made-up examples:
+- Item A, "Harbor Lights", a 1997 Windows game by its original developer, with articles on two Wikipedias. Item B, "Harbor Lights", a sparse item with a 2021 publication date, a Steam application ID and a reissue publisher, sharing A's MobyGames ID. Same: B is the Steam re-release of the 1997 game, and the merged item lists both dates. Answer "same" with a high probability; the gap in years, platforms and publishers is what a re-release looks like, not a reason to hedge.
+- Item A, "Iron Orchard", a 2016 PC game. Item B, "Iron Orchard: Complete Edition", the same game released on Nintendo Switch in 2019 by a different publisher, with the same developer. Same: a port, even with an edition subtitle, unless the content is described as substantially different.
+- Item A, "Iron Orchard". Item B, "Iron Orchard Remastered", with "based on" pointing at A and a separate Steam application ID. Different: a remaster is its own item.
+- Item A, an expansion pack for a game; item B, a video game with the same title and release date and the same database IDs. Same: one add-on recorded under two classes. A class mismatch alone doesn't separate them when everything else matches.
 
 Evidence, from strongest to weakest:
 - Each item linking a different article on the same wiki (e.g. both have an enwiki sitelink, to different pages) usually means Wikipedia treats them as separate subjects. A sitelink marked as a redirect is weaker evidence.
@@ -77,6 +83,24 @@ export function parseReview(text: string): Review | null {
   if (typeof probability !== "number" || !Number.isFinite(probability)) return null;
   if (typeof rationale !== "string") return null;
   return { verdict, probability: Math.min(1, Math.max(0, probability)), rationale };
+}
+
+/**
+ * When a cheap first pass's verdict can stand without a stronger model: a
+ * "same" at TRUST_SAME_P or above, or a "different" under TRUST_DIFFERENT_P.
+ * In the v2 calibration Haiku's misses sat almost all in its hedged
+ * "different" answers (probability 0.1–0.3, about a quarter of them wrong),
+ * while its confident calls on either side held up; escalating everything
+ * else sent ~20% of pairs to Opus.
+ */
+export const TRUST_SAME_P = 0.7;
+export const TRUST_DIFFERENT_P = 0.1;
+
+export function trustFirstPass(review: Review | null): boolean {
+  if (!review) return false;
+  if (review.verdict === "same") return review.probability >= TRUST_SAME_P;
+  if (review.verdict === "different") return review.probability < TRUST_DIFFERENT_P;
+  return false;
 }
 
 // ---------- rendering a pair ----------

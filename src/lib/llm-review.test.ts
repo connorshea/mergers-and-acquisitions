@@ -6,6 +6,7 @@ import {
   outputTokenBudget,
   parseReview,
   renderItem,
+  trustFirstPass,
   worstCaseCostUsd,
 } from "./llm-review.ts";
 
@@ -161,5 +162,22 @@ describe("outputTokenBudget", () => {
 
   it("refuses a pair whose prompt alone nearly uses up the cap", () => {
     expect(outputTokenBudget("claude-opus-5-5", 20_000, system, 0.05)).toBeNull();
+  });
+});
+
+describe("trustFirstPass", () => {
+  const review = (verdict: "same" | "different" | "unsure", probability: number) => ({
+    verdict,
+    probability,
+    rationale: "",
+  });
+
+  it("trusts confident calls and escalates hedged ones", () => {
+    expect(trustFirstPass(review("same", 0.7))).toBe(true);
+    expect(trustFirstPass(review("same", 0.6))).toBe(false);
+    expect(trustFirstPass(review("different", 0.05))).toBe(true);
+    expect(trustFirstPass(review("different", 0.2))).toBe(false);
+    expect(trustFirstPass(review("unsure", 0.5))).toBe(false);
+    expect(trustFirstPass(null)).toBe(false);
   });
 });

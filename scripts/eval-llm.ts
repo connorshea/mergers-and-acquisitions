@@ -8,7 +8,8 @@
 //   node scripts/eval-llm.ts labels                  # resolve labels once (QLever, no API key)
 //   node scripts/eval-llm.ts show <pair-dir>         # print the prompt for one pair
 //   node scripts/eval-llm.ts estimate                # count tokens and project the cost (free)
-//   node scripts/eval-llm.ts submit [--models haiku,sonnet,opus] [--limit N] [--max-pair-cost USD] [--wait]
+//   node scripts/eval-llm.ts submit [--models haiku,sonnet,opus] [--limit N] [--max-pair-cost USD]
+//       [--effort-haiku low|medium|high] [--with <run-dir>] [--wait]
 //   node scripts/eval-llm.ts collect [run-dir] [--wait]   # default: the latest run
 //
 // `submit` and `estimate` need ANTHROPIC_API_KEY (or an `ant auth login`
@@ -45,6 +46,9 @@ import {
   renderPair,
   reviewRequest,
   SYSTEM_PROMPT,
+  TRUST_DIFFERENT_P,
+  TRUST_SAME_P,
+  trustFirstPass,
   type TokenUsage,
 } from "../src/lib/llm-review.ts";
 import { orderByAge } from "../src/lib/compare.ts";
@@ -145,6 +149,12 @@ interface Run {
   createdAt: string;
   promptVersion: number;
   maxPairCostUsd?: number;
+  /**
+   * Another run whose results stand in for models this run didn't send (from
+   * `submit --with`), so a first-pass-only run still reports escalation to,
+   * say, an earlier run's Opus.
+   */
+  withRun?: string;
   batches: RunBatch[];
 }
 
@@ -263,6 +273,7 @@ async function submit(argv: string[]): Promise<void> {
     createdAt: new Date().toISOString(),
     promptVersion: PROMPT_VERSION,
     maxPairCostUsd: maxCost,
+    withRun: flag(argv, "--with"),
     batches: [],
   };
   const dir = join(RUNS_DIR, run.createdAt.replace(/[:.]/g, "-"));
@@ -450,7 +461,7 @@ function f1(t: Tally): { precision: number; recall: number; f1: number; accuracy
 function tallyLine(name: string, t: Tally, extra = ""): string {
   const m = f1(t);
   return (
-    `  ${name.padEnd(30)} precision ${pct(t.tp, t.tp + t.fp).padStart(6)}  ` +
+    `  ${name.padEnd(34)} precision ${pct(t.tp, t.tp + t.fp).padStart(6)}  ` +
     `recall ${pct(t.tp, t.tp + t.fn).padStart(6)}  F1 ${m.f1.toFixed(3)}  ` +
     `accuracy ${(m.accuracy * 100).toFixed(1).padStart(5)}%${extra}`
   );
@@ -473,6 +484,18 @@ async function report(dir: string, run: Run): Promise<void> {
   for (const b of run.batches) {
     const records = await readResults(dir, b.model);
     if (records) byModel.set(b.model, new Map(records.map((r) => [r.pair, r])));
+  }
+  if (run.withRun) {
+    const other = JSON.parse(await readFile(join(run.withRun, "run.json"), "utf8")) as Run;
+    for (const b of other.batches) {
+      if (byModel.has(b.model)) continue;
+      const records = await readResults(run.withRun, b.model);
+      if (!records) continue;
+      byModel.set(b.model, new Map(records.map((r) => [r.pair, r])));
+      console.log(
+        `${REVIEW_MODELS[b.model].short}: results from ${run.withRun} (prompt v${other.promptVersion})`,
+      );
+    }
   }
   const names = run.batches[0]?.pairs.filter((n) => pairs.has(n)) ?? [];
   const dupCount = names.filter((n) => pairs.get(n)!.label === "duplicate").length;
@@ -524,7 +547,8 @@ async function report(dir: string, run: Run): Promise<void> {
   // Read "disagreement" with care: most eval negatives score under the
   // heuristic's threshold, but every real candidate clears it (the hunt drops
   // the rest), so in production the rule escalates every "different" verdict,
-  // as "not same" does.
+  // as "not same" does. "low confidence" trusts only the first pass's
+  // confident calls (trustFirstPass), the rule the review job would use.
   const avgCost = (model: ReviewModel): number => {
     const records = [...(byModel.get(model)?.values() ?? [])];
     return records.reduce((s, r) => s + r.costUsd, 0) / Math.max(1, records.length);
@@ -539,6 +563,7 @@ async function report(dir: string, run: Run): Promise<void> {
       "disagreement",
       (r, n) => !r || r.verdict === "unsure" || (r.verdict === "same") !== heuristicSays.get(n),
     ],
+    ["low confidence", (r) => !trustFirstPass(r)],
   ];
   const order = (Object.keys(REVIEW_MODELS) as ReviewModel[]).filter((m) => byModel.has(m));
   for (const [i, first] of order.entries()) {
@@ -568,6 +593,11 @@ async function report(dir: string, run: Run): Promise<void> {
       }
     }
   }
+
+  console.log(
+    `  (low confidence: escalate unless "same" with p ≥ ${TRUST_SAME_P} ` +
+      `or "different" with p < ${TRUST_DIFFERENT_P})`,
+  );
 
   // Cost: what this run cost, and the same per-pair rate at production scale.
   const longPrompts = (byModel.get("claude-haiku-5-5")?.values() ?? []).filter(

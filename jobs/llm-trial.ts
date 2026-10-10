@@ -29,19 +29,17 @@ import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import Anthropic from "@anthropic-ai/sdk";
 import { and, eq, gte, inArray, lt, sql } from "drizzle-orm";
-import { entityLabels, items, mergeCandidates, properties } from "../db/schema.ts";
+import { items, mergeCandidates } from "../db/schema.ts";
 import type { Item } from "../src/lib/compare.ts";
 import { chunk } from "../src/lib/chunk.ts";
 import {
   type Effort,
-  type LabelLookup,
   MAX_PROMPT_TOKENS,
   outputTokenBudget,
   PROMPT_VERSION,
   REVIEW_MODELS,
   type Review,
   type ReviewModel,
-  referencedIds,
   renderPair,
   reviewRequest,
   TRUST_DIFFERENT_P,
@@ -49,6 +47,7 @@ import {
 import {
   cachedPromptTokens,
   countPromptTokens,
+  loadLabelLookup,
   type ResultRecord,
   toRecord,
 } from "../server/llm-batch.ts";
@@ -123,47 +122,6 @@ function flag(argv: string[], name: string): string | undefined {
 }
 
 // ---------- submit ----------
-
-/**
- * Labels for every property and value item the items name: inline labels
- * first (the dump import keeps some on the values), then the synced
- * `properties` and `entity_labels` tables.
- */
-async function loadLabelLookup(
-  db: typeof import("../server/db.ts").db,
-  all: Item[],
-): Promise<LabelLookup> {
-  const labels = new Map<string, string>();
-  const pids = new Set<string>();
-  const qids = new Set<string>();
-  for (const item of all) {
-    const refs = referencedIds(item);
-    for (const pid of refs.pids) pids.add(pid);
-    for (const qid of refs.qids) qids.add(qid);
-    for (const values of Object.values(item.statements)) {
-      for (const v of values) {
-        if (v.type === "item" && v.label) labels.set(v.value, v.label);
-        if (v.unit && v.unitLabel) labels.set(v.unit, v.unitLabel);
-      }
-    }
-  }
-  for (const ids of chunk([...pids], ID_CHUNK)) {
-    const rows = await db
-      .select({ pid: properties.pid, label: properties.label })
-      .from(properties)
-      .where(inArray(properties.pid, ids));
-    for (const r of rows) labels.set(r.pid, r.label);
-  }
-  const missing = [...qids].filter((q) => !labels.has(q));
-  for (const ids of chunk(missing, ID_CHUNK)) {
-    const rows = await db
-      .select({ qid: entityLabels.qid, label: entityLabels.label })
-      .from(entityLabels)
-      .where(inArray(entityLabels.qid, ids));
-    for (const r of rows) labels.set(r.qid, r.label);
-  }
-  return (id) => labels.get(id);
-}
 
 async function submit(argv: string[]): Promise<void> {
   const perBand = Number(flag(argv, "--per-band") ?? 100);

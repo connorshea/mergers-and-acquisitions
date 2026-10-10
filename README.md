@@ -326,6 +326,37 @@ nightly before the hunt) looks every open candidate's items up in the
 `merged`; one with a side that was deleted, as `dismissed`. Those items' rows
 leave the mirror, as with a merge made in the app.
 
+## Claude review
+
+Once a month, `jobs/llm-review.ts` (→ `server/llm-review-job.ts`) asks Claude,
+through the Message Batches API, about open pairs and hides the ones two models
+agree aren't duplicates. It never edits Wikidata and never changes a score; a
+hidden pair is listed under "Hidden by automation" and can be reopened.
+
+- **1st of the month, `first-pass`:** Claude Haiku reviews every open pair
+  that has never had a review.
+- **2nd, `confirm`:** Claude Opus reviews only the pairs Haiku called
+  "different", at any probability.
+- **Hourly on the 1st to 3rd, `collect`:** writes back whatever batches have
+  ended to `llm_reviews`. When Opus also says "different" with a probability
+  under `LLM_CONFIRM_MAX_P` (0.1), the pair moves to `auto_dismissed`, unless a
+  human resolved it first.
+
+None of the jobs waits on the API: each submits or collects, then exits. A
+batch ends within 24 h, usually within the hour, so the confirm run a day
+later finds Haiku's answers in. A pair is reviewed once per stage; only a
+failed review is sent again, up to three times. Spending stops at `LLM_MONTHLY_BUDGET_USD` ($200,
+both models), counting each request at its model's average cost so far. When
+the API refuses for lack of credit or the workspace spend limit, the run logs
+it and exits cleanly; the pairs it didn't send wait for next month. Set the
+key once with `toolforge envvars create ANTHROPIC_API_KEY`. For a small first
+run, or to catch up by hand:
+
+```sh
+toolforge jobs run llm-review-once --image tool-mna/tool-mna:latest \
+  --command "node jobs/llm-review.ts first-pass --max-pairs 300 --wait" --mem 1Gi --filelog
+```
+
 ## Deploying to Toolforge
 
 The Build Service builds the image from the GitHub repo directly — it clones the

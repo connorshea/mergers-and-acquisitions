@@ -1489,6 +1489,81 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     }
   });
 
+  describe("dates of death", () => {
+    const person = (
+      id: string,
+      dates: { P569?: string; P570?: string },
+      filmRu?: string,
+    ): Item => ({
+      ...base,
+      id,
+      labels: { en: "Hans Wahlgren" },
+      statements: stmt({
+        P31: [{ type: "item" as const, value: "Q5", label: "human" }],
+        ...Object.fromEntries(
+          Object.entries(dates).map(([pid, time]) => [
+            pid,
+            [{ type: "time" as const, value: time }],
+          ]),
+        ),
+        ...(filmRu ? { P10302: [{ type: "external-id" as const, value: filmRu }] } : {}),
+      }),
+    });
+    const sharedFilmRu = { isIdentifierProp: (pid: string) => pid === "P10302" };
+
+    it("caps a large death-year gap like a birth-year gap", () => {
+      const result = scoreCandidate(
+        person("Q1", { P570: "+2024-05-10T00:00:00Z" }),
+        person("Q2", { P570: "+1974-12-10T00:00:00Z" }),
+      );
+      expect(result.confidence).toBeLessThanOrEqual(0.1);
+      expect(result.reasons[0]).toBe(
+        "death years differ by 50, almost certainly different subjects",
+      );
+    });
+
+    it("doesn't compare a date of death with a date of birth", () => {
+      const result = scoreCandidate(
+        person("Q1", { P569: "+1930-04-09T00:00:00Z" }),
+        person("Q2", { P570: "+1974-12-10T00:00:00Z" }),
+      );
+      expect(result.reasons.some((r) => r.includes("years differ"))).toBe(false);
+    });
+
+    it("doesn't excuse two people's modest birth- or death-year gap for a shared id", () => {
+      // Unlike a game's re-release date, a person has one birth and one death.
+      const result = scoreCandidate(
+        person("Q1", { P569: "+1937-06-26T00:00:00Z", P570: "+1980-01-01T00:00:00Z" }, "x"),
+        person("Q2", { P569: "+1930-04-09T00:00:00Z", P570: "+1974-12-10T00:00:00Z" }, "x"),
+        sharedFilmRu,
+      );
+      expect(result.reasons).toContain("birth years differ by 7");
+      expect(result.reasons).toContain("death years differ by 6");
+      expect(result.confidence).toBeLessThanOrEqual(0.5);
+    });
+
+    it("scores namesakes sharing a name-slug id low on their life dates (Hans Wahlgren)", () => {
+      // Q6228856 (1937–2024) and Q6228861 (1930–1974) share Film.ru "hans-wahlgren".
+      const result = scoreCandidate(
+        person(
+          "Q6228856",
+          { P569: "+1937-06-26T00:00:00Z", P570: "+2024-05-10T00:00:00Z" },
+          "hans-wahlgren",
+        ),
+        person(
+          "Q6228861",
+          { P569: "+1930-04-09T00:00:00Z", P570: "+1974-12-10T00:00:00Z" },
+          "hans-wahlgren",
+        ),
+        sharedFilmRu,
+      );
+      expect(result.reasons[0]).toBe(
+        "death years differ by 50, almost certainly different subjects",
+      );
+      expect(result.confidence).toBeLessThanOrEqual(0.1);
+    });
+  });
+
   it('does not count a shared "different from" (P1889) target as agreement', () => {
     // Two unrelated bands both marked different from a third "Halo".
     const mk = (id: string): Item => ({

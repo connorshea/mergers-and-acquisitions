@@ -926,10 +926,10 @@ export async function sharedLinkedQids(
  * row whose type is a class really is in scope at that revision.) An item left
  * out for any reason is only parsed as before, never skipped wrongly.
  *
- * One streamed read, as arrays rather than row objects. It walks
- * idx_items_primary_type (which holds the qid, so the JSON rows are never
- * read) and looks each item up in the narrow `item_sync`; the join order is
- * forced, as the other way round would read every `items` row.
+ * One streamed read of idx_item_sync_revision, as arrays rather than row
+ * objects. It holds every column the read needs, including item_sync's copy
+ * of the type; joining `items` for it instead costs a primary-key lookup per
+ * in-scope item, ~7x slower at ~3M items.
  */
 export async function loadRevisionIndex(classQids: readonly string[]): Promise<RevisionIndex> {
   const qids: number[] = [];
@@ -940,11 +940,9 @@ export async function loadRevisionIndex(classQids: readonly string[]): Promise<R
   const core = conn.connection as unknown as CoreConnection;
   const stream = core
     .query({
-      sql: `select s.qid, s.source_revid
-            from items i force index (idx_items_primary_type)
-            straight_join item_sync s on s.qid = i.qid
-            where i.primary_type in (?) and s.converter_version = ? and s.source_revid is not null`,
-      values: [classQids, CONVERTER_VERSION],
+      sql: `select qid, source_revid from item_sync force index (idx_item_sync_revision)
+            where converter_version = ? and primary_type in (?) and source_revid is not null`,
+      values: [CONVERTER_VERSION, classQids],
       rowsAsArray: true,
     })
     .stream({ highWaterMark: 5000 });
@@ -1019,6 +1017,7 @@ export async function upsertItems(
       dataHash,
       sourceRevid: revids?.get(item.id) ?? null,
       converterVersion: CONVERTER_VERSION,
+      primaryType: type,
     };
     return { row, sync, ids };
   });
@@ -1076,6 +1075,10 @@ export async function upsertItems(
               sql` `,
             )} end`,
             converterVersion: CONVERTER_VERSION,
+            primaryType: sql`case ${itemSync.qid} ${sql.join(
+              revised.map((p) => sql`when ${p.row.qid} then ${p.sync.primaryType}`),
+              sql` `,
+            )} end`,
           })
           .where(
             inArray(
@@ -1115,6 +1118,7 @@ export async function upsertItems(
               dataHash: sql`values(${itemSync.dataHash})`,
               sourceRevid: sql`values(${itemSync.sourceRevid})`,
               converterVersion: sql`values(${itemSync.converterVersion})`,
+              primaryType: sql`values(${itemSync.primaryType})`,
             },
           });
       }

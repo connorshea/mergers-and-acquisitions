@@ -69,28 +69,39 @@ export const items = mysqlTable(
 // pool far smaller than the table. These rows are ~60 bytes, so the whole
 // table stays in memory. The dump import writes one for every item it
 // inserts, and every path that deletes an item deletes its row too.
-export const itemSync = mysqlTable("item_sync", {
-  qid: varchar("qid", { length: 32 }).primaryKey(),
-  lastSyncedAt: datetime("last_synced_at", { mode: "string" })
-    .notNull()
-    .default(sql`CURRENT_TIMESTAMP`),
-  // The dump this item was last seen in (e.g. "20260914"), stamped by the dump
-  // import. Lets the prune of a sharded import work across jobs: once every
-  // shard of a dump has finished, items not stamped with it have left the dump.
-  lastDump: varchar("last_dump", { length: 32 }),
-  // SHA-1 (hex) of everything the dump import wrote for this item (see
-  // server/dump-import.ts `itemHash`), so a re-import can skip an item whose
-  // converted data hasn't changed. Null when something else rewrote `data`,
-  // which makes the next import write the item in full.
-  dataHash: varchar("data_hash", { length: 40 }),
-  // The Wikidata revision `data` was converted from, and the converter
-  // version that converted it (server/converter-version.ts). When the dump
-  // has the same revision and the version is still current, the dump import
-  // skips the item without parsing it. Null when the revision isn't known
-  // (the single-item importer without one, or a local edit to `data`).
-  sourceRevid: bigint("source_revid", { mode: "number", unsigned: true }),
-  converterVersion: int("converter_version", { unsigned: true }),
-});
+export const itemSync = mysqlTable(
+  "item_sync",
+  {
+    qid: varchar("qid", { length: 32 }).primaryKey(),
+    lastSyncedAt: datetime("last_synced_at", { mode: "string" })
+      .notNull()
+      .default(sql`CURRENT_TIMESTAMP`),
+    // The dump this item was last seen in (e.g. "20260914"), stamped by the dump
+    // import. Lets the prune of a sharded import work across jobs: once every
+    // shard of a dump has finished, items not stamped with it have left the dump.
+    lastDump: varchar("last_dump", { length: 32 }),
+    // SHA-1 (hex) of everything the dump import wrote for this item (see
+    // server/dump-import.ts `itemHash`), so a re-import can skip an item whose
+    // converted data hasn't changed. Null when something else rewrote `data`,
+    // which makes the next import write the item in full.
+    dataHash: varchar("data_hash", { length: 40 }),
+    // The Wikidata revision `data` was converted from, and the converter
+    // version that converted it (server/converter-version.ts). When the dump
+    // has the same revision and the version is still current, the dump import
+    // skips the item without parsing it. Null when the revision isn't known
+    // (the single-item importer without one, or a local edit to `data`).
+    sourceRevid: bigint("source_revid", { mode: "number", unsigned: true }),
+    converterVersion: int("converter_version", { unsigned: true }),
+    // A copy of `items.primary_type` as of `source_revid`, so the revision index
+    // (loadRevisionIndex) is one scan of idx_item_sync_revision instead of a
+    // lookup here for every in-scope item. Written wherever `source_revid` is;
+    // the hash covers the type, so an unchanged item's type is still current.
+    primaryType: varchar("primary_type", { length: 32 }),
+  },
+  (t) => [
+    index("idx_item_sync_revision").on(t.converterVersion, t.primaryType, t.qid, t.sourceRevid),
+  ],
+);
 
 // External identifiers pulled out of each item's statements. `(property, value)`
 // is the blocking key the hunt job groups on to find shared-ID duplicates

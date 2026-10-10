@@ -463,9 +463,27 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
+        },
+        "primary_type": {
+          "name": "primary_type",
+          "type": "varchar(32)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         }
       },
-      "indexes": {},
+      "indexes": {
+        "idx_item_sync_revision": {
+          "name": "idx_item_sync_revision",
+          "columns": [
+            "converter_version",
+            "primary_type",
+            "qid",
+            "source_revid"
+          ],
+          "isUnique": false
+        }
+      },
       "foreignKeys": {},
       "compositePrimaryKeys": {
         "item_sync_qid": {

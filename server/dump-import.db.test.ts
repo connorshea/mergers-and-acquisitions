@@ -664,7 +664,9 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
 
   it("parses a stored item again under a new converter version, or on a full pass", async () => {
     await run([at(10, game("Q100", "Alpha"))]);
-    await db.update(itemSync).set({ converterVersion: CONVERTER_VERSION - 1 });
+    // An older converter's row, without the type the revision index reads
+    // (as keepSeen leaves a row it creates).
+    await db.update(itemSync).set({ converterVersion: CONVERTER_VERSION - 1, primaryType: null });
     expect(await run([at(10, game("Q100", "Alpha"))])).toMatchObject({
       parsed: 1,
       unedited: 0,

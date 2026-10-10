@@ -7,8 +7,8 @@ import type { ConnectionOptions } from "mysql2/promise";
 
 /**
  * Build a mysql2 connection config from env. Defaults target a local dev DB
- * (Homebrew MariaDB, db/user `mergers`). In production these come from the
- * Toolforge tool's ToolsDB credentials.
+ * (Homebrew MariaDB, db/user `mergers`). In production they point at the
+ * tool's MariaDB 12.2 instance on Trove.
  *
  * `dateStrings: true` returns DATETIME/TIMESTAMP columns as strings (MySQL's
  * `YYYY-MM-DD HH:MM:SS`), which the wire types (`detectedAt: string`) and the
@@ -25,7 +25,7 @@ export function connConfig(): ConnectionOptions {
     database: process.env.DB_NAME ?? "mergers",
     dateStrings: true,
     charset: "utf8mb4",
-    // ToolsDB terminates idle connections; keep the pool honest.
+    // Idle connections can be dropped along the way; keep the pool honest.
     enableKeepAlive: true,
   };
 }

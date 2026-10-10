@@ -69,8 +69,10 @@ Layout:
   `src/lib/compare.ts`; the Wikidata dump→`Item` adapter in `src/lib/wikidata.ts`;
   the typed API client in `src/lib/client.ts`.
 
-DB notes: MariaDB uses Drizzle's **MySQL dialect** (`mysql-core` + `mysql2`,
-`mode: "default"`; drizzle-kit `dialect: "mysql"`) — there is no `mariadb` dialect.
+DB notes: prod is **MariaDB 12.2 on Trove** (Cloud VPS), so check SQL features
+against 12.2 (CI's `db` job runs `mariadb:12.2`). MariaDB uses Drizzle's **MySQL
+dialect** (`mysql-core` + `mysql2`, `mode: "default"`; drizzle-kit
+`dialect: "mysql"`) — there is no `mariadb` dialect.
 JSON columns use a custom type that (de)serializes in the ORM layer, because mysql2
 returns MariaDB `JSON` (a `LONGTEXT` alias) as a string. `datetime` columns are
 `mode: "string"` paired with the driver's `dateStrings: true`. The database is

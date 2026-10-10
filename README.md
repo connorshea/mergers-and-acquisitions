@@ -34,7 +34,7 @@ The database is created with the **`utf8mb4_bin`** collation (not the usual
 that differ only in case are genuinely different — and restores the binary
 comparison the original SQLite schema used. Candidate search still folds case,
 because it lowercases both sides explicitly (`lower(primary_label) LIKE …`). On
-Toolforge, create the ToolsDB database with the same `COLLATE utf8mb4_bin`.
+Trove, create the database with the same `COLLATE utf8mb4_bin`.
 
 ```sh
 cp .env.example .env   # local DB defaults match the setup above
@@ -428,9 +428,9 @@ Job and Procfile commands call `node` directly rather than `npm run …`: the
 launch image has npm but not pnpm, and npm 11 refuses to run scripts because
 `devEngines.packageManager` (set for Vite+) names pnpm.
 
-The DB is a ToolsDB MariaDB database, created with
+The DB is a MariaDB 12.2 database on Trove (Cloud VPS), created with
 `CHARACTER SET utf8mb4 COLLATE utf8mb4_bin` (see the collation note above);
-connection details come from the tool's credentials via the `DB_*` env vars.
+connection details come from the `DB_*` env vars.
 
 The server checks the schema before it binds its port (`server/preflight.ts`):
 if the database has fewer migrations applied than `db/migrations` contains, it

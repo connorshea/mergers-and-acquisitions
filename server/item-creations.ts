@@ -326,7 +326,7 @@ export interface ItemCreationOptions {
 /**
  * Record the creation of every open candidate's item that has no row, or one
  * older than REFRESH_DAYS, from the wikidatawiki replica. Throws on a replica
- * or ToolsDB error (the next run starts over; rows already written stay).
+ * or database error (the next run starts over; rows already written stay).
  */
 export async function runItemCreationSync(
   opts: ItemCreationOptions = {},

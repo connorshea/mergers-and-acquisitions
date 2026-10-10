@@ -19,8 +19,8 @@ widening it should be a data/config change rather than a rewrite.
 ## Platform & stack
 
 Runs on **[Wikimedia Toolforge]** — the mission-appropriate, free home for a
-Wikidata-editing tool, with first-class access to Wikimedia OAuth and a MariaDB
-(ToolsDB) instance.
+Wikidata-editing tool, with first-class access to Wikimedia OAuth. The database is a MariaDB 12.2
+instance on Trove (Cloud VPS's database-as-a-service).
 
 [Wikimedia Toolforge]: https://wikitech.wikimedia.org/wiki/Portal:Toolforge
 
@@ -31,10 +31,8 @@ Wikidata-editing tool, with first-class access to Wikimedia OAuth and a MariaDB
   with react-router.
 - **ORM / DB:** **Drizzle** on **MariaDB**. MariaDB is driven through Drizzle's
   **MySQL dialect** (`drizzle-orm/mysql-core` + `mysql2`) — there is no dedicated
-  `mariadb` dialect, and MariaDB is wire/SQL-compatible with MySQL. ToolsDB now;
-  a Trove MariaDB on Cloud VPS later if the full-graph data outgrows ToolsDB's
-  soft cap. Staying on one dialect keeps that future move a data migration, not a
-  rewrite.
+  `mariadb` dialect, and MariaDB is wire/SQL-compatible with MySQL. Prod runs
+  MariaDB 12.2 on Trove.
 - **SPARQL:** all Wikidata queries go through the **QLever** mirror
   (`https://qlever.dev/api/wikidata`), never WDQS — far faster, no query timeout.
 
@@ -192,14 +190,14 @@ dismissed candidates).
   `sync-properties` / `sync-entity-labels` / `sync-descriptions` (weekly) and
   `hunt` (nightly, with extra memory/CPU), plus a one-off seed/initial-load job.
   Set the Build Service `image` name in `jobs.yaml` before loading.
-- **DB:** a ToolsDB database created with the **`utf8mb4_bin`** collation,
-  connected with the tool's `replica.my.cnf` credentials.
+- **DB:** a MariaDB 12.2 database on Trove, created with the **`utf8mb4_bin`**
+  collation, connected through the `DB_*` env vars.
 
 ## Roadmap
 
 - [x] Core app: schema, seed, sync jobs, hunt, review SPA — migrated to
       Node/Hono/Drizzle+MariaDB and verified locally.
-- [ ] Deploy to Toolforge (build service, ToolsDB, load `jobs.yaml`, one-off seed).
+- [ ] Deploy to Toolforge (build service, Trove DB, load `jobs.yaml`, one-off seed).
 - [x] **Wikimedia OAuth** login (sessions, encrypted token storage, gated routes).
 - [x] Apply-merge / "different from" edits on the user's behalf (issue #5).
 - [ ] Widen the item scope beyond video games toward all non-scholarly items.

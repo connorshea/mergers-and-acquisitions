@@ -10,10 +10,10 @@
 // replica (`<wiki>_p`) has the real answer in its `page` and `redirect` tables.
 //
 // Every wiki lives on its own replica host (one of several section servers),
-// and none can join against ToolsDB, so the work goes: collect the clashing
+// and none can join against our database, so the work goes: collect the clashing
 // titles from our DB, group them by wiki, look each wiki's batch up over its own
 // connection (one wiki at a time — the replicas cap connections per tool), and
-// upsert the answers back into ToolsDB.
+// upsert the answers back into our database.
 import mysql from "mysql2/promise";
 import type { Connection, ConnectionOptions, RowDataPacket } from "mysql2/promise";
 import { and, asc, eq, gt, gte, inArray, lt, sql } from "drizzle-orm";
@@ -250,7 +250,7 @@ export interface SitelinkRedirectOptions {
 /**
  * Resolve every clashing sitelink not checked in the last REFRESH_DAYS, one
  * wiki at a time. A wiki that fails is logged and skipped so the rest still
- * land; throws only if every wiki with work failed, or on a ToolsDB error.
+ * land; throws only if every wiki with work failed, or on a database error.
  */
 export async function runSitelinkRedirectSync(
   opts: SitelinkRedirectOptions = {},

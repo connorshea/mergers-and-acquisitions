@@ -26,7 +26,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { and, asc, eq, gte, inArray, isNotNull, isNull, lt, or, sql } from "drizzle-orm";
 import type { MySql2Database } from "drizzle-orm/mysql2";
 import type * as schema from "../db/schema.ts";
-import { items, llmReviews, mergeCandidates } from "../db/schema.ts";
+import { itemSync, items, llmReviews, mergeCandidates } from "../db/schema.ts";
 import type { Item } from "../src/lib/compare.ts";
 import { chunk } from "../src/lib/chunk.ts";
 import {
@@ -379,8 +379,9 @@ async function renderPicks(db: Db, picks: Pick[]): Promise<(Rendered | null)[]> 
   const byQid = new Map<string, { data: Item; revid: number | null }>();
   for (const ids of chunk(qids, ID_CHUNK)) {
     const rows = await db
-      .select({ qid: items.qid, data: items.data, revid: items.sourceRevid })
+      .select({ qid: items.qid, data: items.data, revid: itemSync.sourceRevid })
       .from(items)
+      .leftJoin(itemSync, eq(itemSync.qid, items.qid))
       .where(inArray(items.qid, ids));
     for (const r of rows) byQid.set(r.qid, { data: r.data as Item, revid: r.revid });
   }

@@ -8,11 +8,12 @@ import { join } from "node:path";
 import { Readable } from "node:stream";
 import { gzipSync } from "node:zlib";
 import { afterAll, beforeEach, describe, expect, it } from "vite-plus/test";
-import { and, asc, eq, sql } from "drizzle-orm";
+import { and, asc, eq, getTableColumns, sql } from "drizzle-orm";
 import { db, pool } from "./db.ts";
 import {
   dumpImportSegments,
   externalIds,
+  itemSync,
   items,
   mergeCandidates,
   properties,
@@ -68,7 +69,16 @@ const source = (entities: object[]) =>
 const run = (entities: object[], opts: Parameters<typeof runDumpImport>[0] = {}) =>
   runDumpImport({ source: source(entities), log: () => {}, ...opts });
 
-const allItems = () => db.select().from(items).orderBy(asc(items.qid));
+// item_sync's copy of the type goes by its own name, so `primaryType` stays
+// the canonical items column.
+const { qid: _qid, primaryType: syncPrimaryType, ...syncColumns } = getTableColumns(itemSync);
+/** Every item with its import bookkeeping (null when it has no item_sync row). */
+const allItems = () =>
+  db
+    .select({ ...getTableColumns(items), ...syncColumns, syncPrimaryType })
+    .from(items)
+    .leftJoin(itemSync, eq(itemSync.qid, items.qid))
+    .orderBy(asc(items.qid));
 const segmentRows = async () =>
   (
     await db
@@ -181,7 +191,7 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
 
   it("writes an item in full when its stored hash is missing", async () => {
     await run([game("Q100", "Alpha", [steam("1")])]);
-    await db.update(items).set({ dataHash: null });
+    await db.update(itemSync).set({ dataHash: null });
     const stats = await run([game("Q100", "Alpha", [steam("1")])]);
     expect(stats).toMatchObject({ upserted: 1, unchanged: 0, externalIds: 1 });
     expect((await allItems())[0].dataHash).toMatch(/^[0-9a-f]{40}$/);
@@ -642,6 +652,18 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
     expect(await idsOf("Q100")).toEqual([{ property: "P1733", value: "1" }]);
   });
 
+  it("writes back an item deleted outside the import, though its revision is unchanged", async () => {
+    await run([at(10, game("Q100", "Alpha"))]);
+    // Deleted by something that only knows `items` (a manual fix, an older
+    // merge route): its item_sync row goes with it, so the next pass at the
+    // same revision doesn't skip it as unedited.
+    await db.delete(externalIds);
+    await db.delete(items);
+    expect(await db.select().from(itemSync)).toEqual([]);
+    expect(await run([at(10, game("Q100", "Alpha"))])).toMatchObject({ unedited: 0, parsed: 1 });
+    expect((await allItems()).map((r) => [r.qid, r.sourceRevid])).toEqual([["Q100", 10]]);
+  });
+
   it("records the new revision of an item whose converted data didn't change", async () => {
     await run([at(10, game("Q100", "Alpha"))]);
     const first = (await allItems())[0];
@@ -656,7 +678,8 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
 
   it("parses a stored item again under a new converter version, or on a full pass", async () => {
     await run([at(10, game("Q100", "Alpha"))]);
-    await db.update(items).set({ converterVersion: CONVERTER_VERSION - 1 });
+    // An older converter's row.
+    await db.update(itemSync).set({ converterVersion: CONVERTER_VERSION - 1 });
     expect(await run([at(10, game("Q100", "Alpha"))])).toMatchObject({
       parsed: 1,
       unedited: 0,
@@ -685,9 +708,9 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
       classQids: ["Q7889", "Q865493"],
       dump: "20260914",
     });
-    expect((await allItems()).map((r) => [r.qid, r.primaryType])).toEqual([
-      ["Q100", "Q7889"],
-      ["Q300", "Q865493"],
+    expect((await allItems()).map((r) => [r.qid, r.primaryType, r.syncPrimaryType])).toEqual([
+      ["Q100", "Q7889", "Q7889"],
+      ["Q300", "Q865493", "Q865493"],
     ]);
 
     // Mods dropped: the line still passes the pre-filter (it mentions Q7889),
@@ -732,10 +755,10 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
     const first = await run(dump, { dump: "20260914", log: (m) => void lines.push(m) });
     expect(first).toMatchObject({ matched: 3, unedited: 1, parsed: 2 });
     expect(lines.some((l) => l.includes("2 items linked from the mirror"))).toBe(true);
-    expect((await allItems()).map((r) => [r.qid, r.primaryType])).toEqual([
-      ["Q100", "Q7889"],
-      ["Q20", "Q5"],
-      ["Q30", "Q5"],
+    expect((await allItems()).map((r) => [r.qid, r.primaryType, r.syncPrimaryType])).toEqual([
+      ["Q100", "Q7889", "Q7889"],
+      ["Q20", "Q5", "Q5"],
+      ["Q30", "Q5", "Q5"],
     ]);
 
     // Unedited next week, the human is skipped unparsed like any other item.

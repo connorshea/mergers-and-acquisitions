@@ -17,6 +17,7 @@ import { app } from "./app.ts";
 import { db, pool } from "./db.ts";
 import {
   externalIds,
+  itemSync,
   items,
   mergeCandidates,
   oauthTokens,
@@ -788,7 +789,7 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
   describe("POST /api/candidates/:id/different", () => {
     it("adds P1889 both ways, mirrors it, and dismisses", async () => {
       // As if the dump import had written both items.
-      await db.update(items).set({ dataHash: "a".repeat(40) });
+      await db.update(itemSync).set({ dataHash: "a".repeat(40) });
       const calls = stubWikidata((_p, n) => claimOk(200 + n));
       const { status, body } = await post<CandidateDifferentResponse>(
         `/api/candidates/${alpha}/different`,
@@ -848,8 +849,9 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
 
       // The mirror carries the new statements (with the target's label).
       const rows = await db
-        .select({ qid: items.qid, data: items.data, dataHash: items.dataHash })
-        .from(items);
+        .select({ qid: items.qid, data: items.data, dataHash: itemSync.dataHash })
+        .from(items)
+        .innerJoin(itemSync, eq(itemSync.qid, items.qid));
       const byQid = new Map(rows.map((r) => [r.qid, r.data]));
       // The import hash no longer describes the edited items, so the next
       // import rewrites them; the untouched items keep theirs.
@@ -1027,19 +1029,21 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
 
     it("still reports a saved statement and dismisses when recording it fails", async () => {
       const calls = stubWikidata((_p, n) => claimOk(600 + n));
-      // Leg 1: the audit insert deadlocks. Leg 2: the mirror update does. The
-      // UPDATEs in order are the claim, leg 1's mirror, leg 2's mirror, dismiss.
+      // Leg 1: the audit insert deadlocks. Leg 2: the mirror update does, after
+      // both its statements ran, so its items write must roll back with it.
       const insertSpy = vi.spyOn(db, "insert").mockImplementationOnce(() => {
         throw new Error("Deadlock found when trying to get lock");
       });
-      const realUpdate = db.update.bind(db) as typeof db.update;
-      const updateSpy = vi
-        .spyOn(db, "update")
-        .mockImplementationOnce(realUpdate)
-        .mockImplementationOnce(realUpdate)
-        .mockImplementationOnce(() => {
-          throw new Error("Deadlock found when trying to get lock");
-        });
+      const realTransaction = db.transaction.bind(db) as typeof db.transaction;
+      const txSpy = vi
+        .spyOn(db, "transaction")
+        .mockImplementationOnce(realTransaction)
+        .mockImplementationOnce((fn) =>
+          realTransaction(async (tx) => {
+            await fn(tx);
+            throw new Error("Deadlock found when trying to get lock");
+          }),
+        );
       const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
       let response;
       let logged = 0;
@@ -1051,7 +1055,7 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
         logged = errorSpy.mock.calls.length;
       } finally {
         insertSpy.mockRestore();
-        updateSpy.mockRestore();
+        txSpy.mockRestore();
         errorSpy.mockRestore();
       }
       expect(response.status).toBe(200);

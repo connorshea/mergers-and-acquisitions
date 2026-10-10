@@ -383,6 +383,20 @@ migration, so restarting before migrating can break the live site:
 toolforge webservice restart
 ```
 
+A migration that drops or renames columns the running code still uses (such as
+`item_sync`, which moves the dump import's bookkeeping off `items`) breaks the
+old web service the moment it lands, and an old `import-dump-*` worker writing
+across it would leave rows the new code doesn't know about. For those, stop the
+web service and check that no `import-dump-*` job is running (`toolforge jobs
+list`) before migrating, then start it again on the new image:
+
+```sh
+toolforge webservice stop
+toolforge jobs run migrate --image tool-mna/tool-mna:latest \
+  --command "node scripts/migrate.ts" --wait
+toolforge webservice buildservice start --mount none
+```
+
 Then apply migrations as a one-off job, load the mirror with the `import-dump-1..6`
 worker jobs above, start the web service (`toolforge webservice buildservice start
 --mount none`; the build service requires an explicit mount flag, and the web

@@ -51,14 +51,40 @@ export const items = mysqlTable(
     // scans. Null when primaryLabel is.
     blockingKey: varchar("blocking_key", { length: 255 }),
     data: json<import("../src/lib/compare.ts").Item>("data").notNull(), // JSON-encoded Item
+  },
+  (t) => [
+    index("idx_items_primary_label").on(t.primaryLabel),
+    index("idx_items_primary_type").on(t.primaryType),
+    // The hunt's label+type blocking: GROUP BY (blocking_key, primary_type) →
+    // group_concat(qid), answered from this index alone; also finds the rows
+    // whose key is still null.
+    index("idx_items_blocking").on(t.blockingKey, t.primaryType, t.qid),
+  ],
+);
+
+// The dump import's bookkeeping for each `items` row, kept apart from the row
+// itself. Every weekly pass restamps nearly every item as seen and reads back
+// each changed item's hash; on `items`, whose rows carry the JSON (a few to
+// tens of KB each), that was a random page read per item against a buffer
+// pool far smaller than the table. These rows are ~60 bytes, so the whole
+// table stays in memory. The dump import writes one for every item it
+// inserts. The foreign key deletes the row with its item, whatever deletes it:
+// an orphan row would be restamped every pass as unedited, so the item would
+// never be written back.
+export const itemSync = mysqlTable(
+  "item_sync",
+  {
+    qid: varchar("qid", { length: 32 })
+      .primaryKey()
+      .references(() => items.qid, { onDelete: "cascade" }),
     lastSyncedAt: datetime("last_synced_at", { mode: "string" })
       .notNull()
       .default(sql`CURRENT_TIMESTAMP`),
-    // The dump this row was last seen in (e.g. "20260914"), stamped by the dump
+    // The dump this item was last seen in (e.g. "20260914"), stamped by the dump
     // import. Lets the prune of a sharded import work across jobs: once every
-    // shard of a dump has finished, rows not stamped with it have left the dump.
+    // shard of a dump has finished, items not stamped with it have left the dump.
     lastDump: varchar("last_dump", { length: 32 }),
-    // SHA-1 (hex) of everything the dump import wrote for this row (see
+    // SHA-1 (hex) of everything the dump import wrote for this item (see
     // server/dump-import.ts `itemHash`), so a re-import can skip an item whose
     // converted data hasn't changed. Null when something else rewrote `data`,
     // which makes the next import write the item in full.
@@ -70,21 +96,14 @@ export const items = mysqlTable(
     // (the single-item importer without one, or a local edit to `data`).
     sourceRevid: bigint("source_revid", { mode: "number", unsigned: true }),
     converterVersion: int("converter_version", { unsigned: true }),
+    // A copy of `items.primary_type` as of `source_revid`, so the revision index
+    // (loadRevisionIndex) is one scan of idx_item_sync_revision instead of a
+    // lookup here for every in-scope item. Written with `data_hash`, which
+    // covers the type, so while the hash matches the type is still current.
+    primaryType: varchar("primary_type", { length: 32 }),
   },
   (t) => [
-    index("idx_items_primary_label").on(t.primaryLabel),
-    index("idx_items_primary_type").on(t.primaryType),
-    // The hunt's label+type blocking: GROUP BY (blocking_key, primary_type) →
-    // group_concat(qid), answered from this index alone; also finds the rows
-    // whose key is still null.
-    index("idx_items_blocking").on(t.blockingKey, t.primaryType, t.qid),
-    // The dump import's prune looks for rows not stamped with the current dump;
-    // nearly every row is, so this turns a full scan into a short range read.
-    index("idx_items_last_dump").on(t.lastDump),
-    // Covers the dump import's revision index load: a keyset over qid within
-    // one converter version, read from the index alone rather than the rows
-    // (which carry the JSON).
-    index("idx_items_revision").on(t.converterVersion, t.qid, t.sourceRevid, t.primaryType),
+    index("idx_item_sync_revision").on(t.converterVersion, t.primaryType, t.qid, t.sourceRevid),
   ],
 );
 

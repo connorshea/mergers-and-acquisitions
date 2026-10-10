@@ -12,7 +12,6 @@ import { toSqlDatetime } from "./auth/time.ts";
 import type { LlmReviewSummary } from "../src/lib/api-types.ts";
 
 export type ReviewStage = LlmReviewSummary["stage"];
-export type ReviewStatus = "pending" | "succeeded" | "failed";
 
 /** The `resolution` of a pair hidden by the review with this id. */
 export const reviewResolution = (reviewId: number): string => `llm-review:${reviewId}`;

@@ -354,8 +354,11 @@ run, or to catch up by hand:
 
 ```sh
 toolforge jobs run llm-review-once --image tool-mna/tool-mna:latest \
-  --command "node jobs/llm-review.ts first-pass --max-pairs 300 --wait" --mem 1Gi --filelog
+  --command "node jobs/llm-review.ts first-pass --max-pairs 300 --wait" --mem 1Gi
+toolforge jobs logs llm-review-once -f
 ```
+
+(`--filelog` needs `--mount all`, which this job otherwise doesn't need.)
 
 ## Deploying to Toolforge
 

@@ -439,6 +439,7 @@ export function reviewRequest(
   effort: Effort,
   pairText: string,
   maxTokens: number = MAX_OUTPUT_TOKENS,
+  system: string = SYSTEM_PROMPT,
 ) {
   return {
     model,
@@ -446,7 +447,7 @@ export function reviewRequest(
     system: [
       {
         type: "text" as const,
-        text: SYSTEM_PROMPT,
+        text: system,
         cache_control: { type: "ephemeral" as const, ttl: CACHE_TTL },
       },
     ],

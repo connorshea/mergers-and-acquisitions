@@ -919,11 +919,14 @@ edits.post("/:id/different", async (c) => {
       // Clear the import hash and revision: they described the data before
       // this edit, and the next dump pass should convert the item afresh. Its
       // last_dump stays, so a pass under way doesn't prune it.
-      await db.update(items).set({ data }).where(eq(items.qid, item.qid));
-      await db
-        .update(itemSync)
-        .set({ dataHash: null, sourceRevid: null })
-        .where(eq(itemSync.qid, item.qid));
+      // One transaction, so the data never outlives the hash that vouches for it.
+      await db.transaction(async (tx) => {
+        await tx.update(items).set({ data }).where(eq(items.qid, item.qid));
+        await tx
+          .update(itemSync)
+          .set({ dataHash: null, sourceRevid: null })
+          .where(eq(itemSync.qid, item.qid));
+      });
     } catch (err) {
       console.error(
         `different-from: ${item.qid} → ${target.qid} saved as rev ${revid} but the mirror update failed`,

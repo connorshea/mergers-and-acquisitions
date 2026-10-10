@@ -1030,21 +1030,21 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
 
     it("still reports a saved statement and dismisses when recording it fails", async () => {
       const calls = stubWikidata((_p, n) => claimOk(600 + n));
-      // Leg 1: the audit insert deadlocks. Leg 2: the mirror update does. The
-      // UPDATEs in order are the claim, leg 1's mirror (items, then item_sync),
-      // leg 2's mirror, dismiss.
+      // Leg 1: the audit insert deadlocks. Leg 2: the mirror update does, after
+      // both its statements ran, so its items write must roll back with it.
       const insertSpy = vi.spyOn(db, "insert").mockImplementationOnce(() => {
         throw new Error("Deadlock found when trying to get lock");
       });
-      const realUpdate = db.update.bind(db) as typeof db.update;
-      const updateSpy = vi
-        .spyOn(db, "update")
-        .mockImplementationOnce(realUpdate)
-        .mockImplementationOnce(realUpdate)
-        .mockImplementationOnce(realUpdate)
-        .mockImplementationOnce(() => {
-          throw new Error("Deadlock found when trying to get lock");
-        });
+      const realTransaction = db.transaction.bind(db) as typeof db.transaction;
+      const txSpy = vi
+        .spyOn(db, "transaction")
+        .mockImplementationOnce(realTransaction)
+        .mockImplementationOnce((fn) =>
+          realTransaction(async (tx) => {
+            await fn(tx);
+            throw new Error("Deadlock found when trying to get lock");
+          }),
+        );
       const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
       let response;
       let logged = 0;
@@ -1056,7 +1056,7 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
         logged = errorSpy.mock.calls.length;
       } finally {
         insertSpy.mockRestore();
-        updateSpy.mockRestore();
+        txSpy.mockRestore();
         errorSpy.mockRestore();
       }
       expect(response.status).toBe(200);

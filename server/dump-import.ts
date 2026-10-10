@@ -1547,9 +1547,11 @@ async function pruneMissing(
     where s.qid is null`)) as unknown as [{ qid: string }[]];
   for (const r of unsynced) gone.push(r.qid);
   if (gone.length === 0) return [0, 0];
-  if (!opts.force && gone.length > total * MAX_PRUNE_FRACTION) {
+  // Every qid in either table: the unsynced items aren't in item_sync's count.
+  const mirrored = total + unsynced.length;
+  if (!opts.force && gone.length > mirrored * MAX_PRUNE_FRACTION) {
     opts.log(
-      `import-dump: NOT pruning ${gone.length} of ${total} items (> ${MAX_PRUNE_FRACTION * 100}%); ` +
+      `import-dump: NOT pruning ${gone.length} of ${mirrored} items (> ${MAX_PRUNE_FRACTION * 100}%); ` +
         "is the dump complete? Set DUMP_PRUNE_FORCE=1 to prune anyway.",
     );
     return [0, 0];

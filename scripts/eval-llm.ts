@@ -1,7 +1,7 @@
 // Calibrate the Claude merge review (src/lib/llm-review.ts) against the
 // labelled eval pairs (eval-data/), before it ranks real candidates: how often
 // each model gets the pairs right, how often it says "unsure", what it costs,
-// and how a cheap first pass with an escalation on "unsure" would do. Uses the
+// and how a cheap first pass that escalates some pairs to a stronger model would do. Uses the
 // Message Batches API, as the review job will (half price, results within an
 // hour or so, at most 24 h).
 //
@@ -509,32 +509,54 @@ async function report(dir: string, run: Run): Promise<void> {
     console.log(tallyLine(`${short}, probability ≥ 0.5`, forced));
   }
 
-  // Escalation: the cheapest model's verdict, with its "unsure" pairs handed
-  // to a stronger model.
-  const haiku = byModel.get("claude-haiku-5-5");
-  if (haiku) {
-    for (const [model, results] of byModel) {
-      if (model === "claude-haiku-5-5") continue;
-      const t = emptyTally();
-      let stillUnsure = 0;
-      let escalated = 0;
-      for (const n of names) {
-        const label = pairs.get(n)!.label;
-        let review = haiku.get(n)?.review ?? null;
-        if (!review || review.verdict === "unsure") {
-          escalated++;
-          review = results.get(n)?.review ?? null;
+  // Escalation: a cheaper model's first pass, with some pairs handed to a
+  // stronger one. Its errors are mostly confident "different" calls on real
+  // duplicates, so "unsure" alone escalates too little; the rules widen it.
+  // Read "disagreement" with care: most eval negatives score under the
+  // heuristic's threshold, but every real candidate clears it (the hunt drops
+  // the rest), so in production the rule escalates every "different" verdict,
+  // as "not same" does.
+  const avgCost = (model: ReviewModel): number => {
+    const records = [...(byModel.get(model)?.values() ?? [])];
+    return records.reduce((s, r) => s + r.costUsd, 0) / Math.max(1, records.length);
+  };
+  const heuristicSays = new Map(
+    names.map((n) => [n, score(pairs.get(n)!).confidence >= HEURISTIC_THRESHOLD]),
+  );
+  const rules: [string, (review: Review | null, name: string) => boolean][] = [
+    ["unsure", (r) => !r || r.verdict === "unsure"],
+    ["not same", (r) => !r || r.verdict !== "same"],
+    [
+      "disagreement",
+      (r, n) => !r || r.verdict === "unsure" || (r.verdict === "same") !== heuristicSays.get(n),
+    ],
+  ];
+  const order = (Object.keys(REVIEW_MODELS) as ReviewModel[]).filter((m) => byModel.has(m));
+  for (const [i, first] of order.entries()) {
+    for (const second of order.slice(i + 1)) {
+      for (const [rule, escalate] of rules) {
+        const t = emptyTally();
+        let stillUnsure = 0;
+        let escalated = 0;
+        for (const n of names) {
+          let review = byModel.get(first)!.get(n)?.review ?? null;
+          if (escalate(review, n)) {
+            escalated++;
+            review = byModel.get(second)!.get(n)?.review ?? null;
+          }
+          if (!review || review.verdict === "unsure") stillUnsure++;
+          else add(t, pairs.get(n)!.label, review.verdict === "same");
         }
-        if (!review || review.verdict === "unsure") stillUnsure++;
-        else add(t, label, review.verdict === "same");
+        const blended = avgCost(first) + (escalated / Math.max(1, names.length)) * avgCost(second);
+        console.log(
+          tallyLine(
+            `${REVIEW_MODELS[first].short} → ${REVIEW_MODELS[second].short} on ${rule}`,
+            t,
+            `  (${pct(escalated, names.length)} escalated, ${stillUnsure} still unsure, ` +
+              `${usd(blended * 10_000)} per 10k)`,
+          ),
+        );
       }
-      console.log(
-        tallyLine(
-          `haiku → ${REVIEW_MODELS[model].short} on unsure`,
-          t,
-          `  (${escalated} escalated, ${stillUnsure} still unsure)`,
-        ),
-      );
     }
   }
 
@@ -569,21 +591,6 @@ async function report(dir: string, run: Run): Promise<void> {
       console.log(
         `          priciest pair ${usd(priciest.costUsd)} (${priciest.pair}), most output ${maxOut} tokens` +
           (run.maxPairCostUsd === undefined ? "" : ` · cap ${usd(run.maxPairCostUsd)} per pair`),
-      );
-    }
-  }
-  if (haiku) {
-    const unsureRate =
-      names.filter((n) => {
-        const r = haiku.get(n)?.review;
-        return !r || r.verdict === "unsure";
-      }).length / Math.max(1, names.length);
-    for (const [model, each] of perPair) {
-      if (model === "claude-haiku-5-5") continue;
-      const blended = perPair.get("claude-haiku-5-5")! + unsureRate * each;
-      console.log(
-        `  haiku → ${REVIEW_MODELS[model].short} on unsure (${pct(unsureRate * names.length, names.length)} escalated): ` +
-          `${usd(blended * 10_000)} per 10k pairs, ${usd(blended * 50_000)} per 50k`,
       );
     }
   }

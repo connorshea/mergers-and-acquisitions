@@ -49,8 +49,8 @@ const VIDEO_GAME_CLASSES: readonly ImportClass[] = [
 
 /**
  * The humans the mirror imports, out of Wikidata's ~13M: ~290k before
- * authors and musicians, ~760k with them, ~1.4M with film/TV people and
- * composers (October 2026). Game people (~20k,
+ * authors and musicians, ~760k with them, ~2.6M with film/TV people,
+ * composers and athletes (October 2026). Game people (~20k,
  * ~11k of them linked from games): the video game occupations under "game
  * designer" / "video game developer", professional gamers, and the game
  * databases' person ids. Anime staff (~17k more): anyone with an AniList or
@@ -61,15 +61,15 @@ const VIDEO_GAME_CLASSES: readonly ImportClass[] = [
  * occupations below plus the book, comics and music databases' person ids.
  * Film and TV people (~560k more): anyone with an IMDb id, the cast and crew
  * of the films and series the mirror holds. Composers (~130k more).
+ * Athletes (~1.2M more beyond the Olympians): the 40 largest sports
+ * occupations, listed below.
  *
  * Each person is ~8-12 KB in the mirror. These were left out to keep ToolsDB
  * under its 25 GB guideline; on Trove (#192) the limit is the volume and the
- * buffer pool instead, so the mirror grows a step at a time. Still left out:
- * other athletes (~1.4M under "athlete"; the next candidate, once the import
- * and hunt times on Trove allow), the bare "writer" occupation (~450k more:
- * journalists, academics, few of them duplicates) and MusicBrainz (~230k
+ * buffer pool instead. Still left out: the bare "writer" occupation (~450k
+ * more: journalists, academics, few of them duplicates), MusicBrainz (~230k
  * more; it mirrors Wikidata, so it would only bring people in, never count
- * as evidence).
+ * as evidence) and the long tail of smaller sports' occupations.
  */
 const PEOPLE: SelectiveImport = {
   linkedFrom: VIDEO_GAME_CLASSES.map((c) => c.qid),
@@ -98,6 +98,49 @@ const PEOPLE: SelectiveImport = {
     "Q4853732", // children's writer
     "Q49757", // poet
     "Q36834", // composer
+    // Athletes: the 40 largest occupations under "athlete" (Q2066131), each
+    // ≥5k people (QLever, October 2026). Only exact QIDs match, so a smaller
+    // sport's players (and Olympians, already in by their ids) stay as they were.
+    "Q2066131", // athlete
+    "Q937857", // association football player
+    "Q3665646", // basketball player
+    "Q11513337", // athletics competitor
+    "Q19204627", // American football player
+    "Q2309784", // sport cyclist
+    "Q10871364", // baseball player
+    "Q11774891", // ice hockey player
+    "Q12299841", // cricketer
+    "Q13141064", // badminton player
+    "Q10873124", // chess player
+    "Q14089670", // rugby union player
+    "Q14373094", // rugby league player
+    "Q15117302", // volleyball player
+    "Q11338576", // boxer
+    "Q13382576", // rower
+    "Q10843402", // swimmer
+    "Q10833314", // tennis player
+    "Q12840545", // handball player
+    "Q12369333", // amateur wrestler
+    "Q13414980", // Australian rules football player
+    "Q6665249", // judoka
+    "Q10349745", // racing automobile driver
+    "Q17486376", // sport shooter
+    "Q378622", // racing driver
+    "Q4009406", // sprinter
+    "Q13381863", // fencer
+    "Q10843263", // field hockey player
+    "Q4144610", // alpine skier
+    "Q13219587", // figure skater
+    "Q13381572", // artistic gymnast
+    "Q476246", // sailor
+    "Q13381376", // weightlifter
+    "Q11303721", // golfer
+    "Q13382566", // canoeist
+    "Q13474373", // professional wrestler
+    "Q13382533", // taekwondo athlete
+    "Q13382608", // cross-country skier
+    "Q19841381", // Canadian football player
+    "Q3014296", // motorcycle racer
   ],
   idProperties: [
     "P3913", // MobyGames person ID

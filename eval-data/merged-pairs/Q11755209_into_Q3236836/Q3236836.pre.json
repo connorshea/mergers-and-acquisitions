@@ -1,0 +1,390 @@
+{
+  "pageid": 3089733,
+  "ns": 0,
+  "title": "Q3236836",
+  "lastrevid": 2481113105,
+  "modified": "2026-04-13T19:03:31Z",
+  "type": "item",
+  "id": "Q3236836",
+  "labels": {
+    "fr": {
+      "language": "fr",
+      "value": "Let's Dance"
+    },
+    "en": {
+      "language": "en",
+      "value": "Let's Dance"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Let's Dance"
+    },
+    "he": {
+      "language": "he",
+      "value": "Let's Dance"
+    },
+    "es": {
+      "language": "es",
+      "value": "Let's Dance"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Let's Dance"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "Let's Dance"
+    }
+  },
+  "descriptions": {
+    "fr": {
+      "language": "fr",
+      "value": "chanson de Vanessa Hudgens"
+    },
+    "en": {
+      "language": "en",
+      "value": "Vanessa Hudgens song"
+    },
+    "he": {
+      "language": "he",
+      "value": "סינגל מאת ונסה הדג'נס"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "single van Vanessa Hudgens"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "cantar de Vanessa Hudgens"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P264",
+          "hash": "6b399dcd76a2f31b642c6f092d7304bc6d352966",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 387539,
+              "id": "Q387539"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3236836$3969F099-F775-4CF5-A8E2-962495F91880",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d4bd87b862b12d99d26e86472d44f26858dee639",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "f30cbd35620c4ea6d0633aaf0210a8916130469b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8447,
+                      "id": "Q8447"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "33d81754a79b2dab75d17c156313b0f8f0f4f086",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 134556,
+              "id": "Q134556"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3236836$AB4C6FC1-109F-48CF-BD85-35F6D4B96A19",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d4bd87b862b12d99d26e86472d44f26858dee639",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "f30cbd35620c4ea6d0633aaf0210a8916130469b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8447,
+                      "id": "Q8447"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "f8e7599982cd56fe9cdddd1bebe711299439ca3e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 123174,
+              "id": "Q123174"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3236836$5218B0F2-9035-4F5A-B99E-C076BA65CE12",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d4bd87b862b12d99d26e86472d44f26858dee639",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "f30cbd35620c4ea6d0633aaf0210a8916130469b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8447,
+                      "id": "Q8447"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "6ce8334b9e3d1939ef77fe6baf39186464693bc3",
+          "datavalue": {
+            "value": {
+              "time": "+2007-01-01T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q3236836$27a22a35-42a0-4b03-a53b-520f3a52dec2",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d4bd87b862b12d99d26e86472d44f26858dee639",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "f30cbd35620c4ea6d0633aaf0210a8916130469b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8447,
+                      "id": "Q8447"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "63f9b478d987da2e4e469476e371cb83bb3d6193",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 37073,
+              "id": "Q37073"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3236836$4C2C426D-400D-46B9-B5B0-FAD591E406FA",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa4dbd42c643b5d0aa4f0c4a0e44549d2bba3c8b",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "f30cbd35620c4ea6d0633aaf0210a8916130469b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8447,
+                      "id": "Q8447"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "59842f746b889670c5117334fcb5feb2f1782f47",
+                  "datavalue": {
+                    "value": "https://fr.wikipedia.org/w/index.php?title=Let's_Dance_(chanson_de_Vanessa_Hudgens)&oldid=146163735",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P155": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P155",
+          "hash": "820c6ed2f5127a5001dc0fbe2c5d1caae4b6c159",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2448930,
+              "id": "Q2448930"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3236836$BDBCE8ED-76F7-4A5A-BD08-74C90C9562FB",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa4dbd42c643b5d0aa4f0c4a0e44549d2bba3c8b",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "f30cbd35620c4ea6d0633aaf0210a8916130469b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8447,
+                      "id": "Q8447"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "59842f746b889670c5117334fcb5feb2f1782f47",
+                  "datavalue": {
+                    "value": "https://fr.wikipedia.org/w/index.php?title=Let's_Dance_(chanson_de_Vanessa_Hudgens)&oldid=146163735",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P13602": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P13602",
+          "hash": "d22ecd0bad7719445418b40806c13a8706f0df05",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 264063,
+              "id": "Q264063"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q3236836$587FF3A9-429A-4DE6-8875-7B126929C102",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "frwiki": {
+      "site": "frwiki",
+      "title": "Let's Dance (chanson de Vanessa Hudgens)",
+      "badges": [],
+      "url": "https://fr.wikipedia.org/wiki/Let%27s_Dance_(chanson_de_Vanessa_Hudgens)"
+    }
+  }
+}

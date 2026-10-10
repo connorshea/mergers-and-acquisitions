@@ -16,7 +16,7 @@
 // Toolforge), so on Toolforge the job needs `--mount all`:
 //
 //   toolforge jobs run llm-trial --image tool-mna/tool-mna:latest --mount all \
-//     --command "node jobs/llm-trial.ts submit --wait"
+//     --command "node jobs/llm-trial.ts submit --wait" --filelog
 //
 // A run holds run.json (its batches and the open queue's size per band),
 // pairs.jsonl (each sampled candidate, with its band), prompts.jsonl (exactly

@@ -313,6 +313,16 @@ export interface TokenUsage {
   cache_read_input_tokens?: number | null;
 }
 
+/**
+ * The system prompt is cached for an hour, not the default five minutes: a
+ * batch's requests run over minutes to hours, and in the v2 calibration the
+ * Opus batch, which finished fastest, read only ~170 cached tokens a pair
+ * against ~1,440 for the others. An hour-long cache write bills at 2× the
+ * input rate (5-minute writes are 1.25×); reads are the same either way.
+ */
+export const CACHE_TTL = "1h" as const;
+const CACHE_WRITE_MULTIPLIER = 2;
+
 /** The tokens a request's prompt came to: uncached input plus cache writes and reads. */
 export function promptTokens(usage: TokenUsage): number {
   return (
@@ -328,7 +338,7 @@ export function costUsd(model: ReviewModel, usage: TokenUsage, batch: boolean): 
   const rates = m.longPrompt && promptTokens(usage) > m.longPrompt.over ? m.longPrompt : m;
   const perToken =
     usage.input_tokens * rates.input +
-    (usage.cache_creation_input_tokens ?? 0) * rates.input * 1.25 +
+    (usage.cache_creation_input_tokens ?? 0) * rates.input * CACHE_WRITE_MULTIPLIER +
     (usage.cache_read_input_tokens ?? 0) * rates.input * m.cacheRead +
     usage.output_tokens * rates.output;
   return (perToken / 1_000_000) * (batch ? 0.5 : 1);
@@ -338,7 +348,7 @@ export function costUsd(model: ReviewModel, usage: TokenUsage, batch: boolean): 
  * The most one pair's review may cost, in dollars at Batch API prices. Every
  * request's max_tokens is sized so that even its worst case (a full-length
  * answer, the whole prompt billed as a cache write) stays under this. Opus
- * averaged about $0.007 a pair in calibration, so the cap only bites on a
+ * averaged under $0.01 a pair in calibration, so the cap only bites on a
  * huge prompt or a runaway answer.
  */
 export const MAX_PAIR_COST_USD = 0.05;
@@ -386,7 +396,7 @@ export function outputTokenBudget(
 
 /**
  * The Messages API request for one pair, in the SDK's shape. The system prompt
- * is identical across requests and marked for caching; the pair follows it.
+ * is identical across requests and cached for CACHE_TTL; the pair follows it.
  * Thinking is left at the models' default (adaptive) and sized by `effort`.
  */
 export function reviewRequest(
@@ -399,7 +409,11 @@ export function reviewRequest(
     model,
     max_tokens: maxTokens,
     system: [
-      { type: "text" as const, text: SYSTEM_PROMPT, cache_control: { type: "ephemeral" as const } },
+      {
+        type: "text" as const,
+        text: SYSTEM_PROMPT,
+        cache_control: { type: "ephemeral" as const, ttl: CACHE_TTL },
+      },
     ],
     messages: [{ role: "user" as const, content: pairText }],
     output_config: {

@@ -1,0 +1,626 @@
+{
+  "pageid": 61502392,
+  "ns": 0,
+  "title": "Q61653306",
+  "lastrevid": 2549692023,
+  "modified": "2026-09-26T15:29:41Z",
+  "type": "item",
+  "id": "Q61653306",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Kino's Journey: The Beautiful World"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "キノの旅 -the Beautiful World-"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "Japanese manga series with art by Gou"
+    },
+    "id": {
+      "language": "id",
+      "value": "seri manga Jepang"
+    },
+    "es": {
+      "language": "es",
+      "value": "serie de manga"
+    },
+    "de": {
+      "language": "de",
+      "value": "Manga-Serie"
+    },
+    "it": {
+      "language": "it",
+      "value": "serie di manga"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "série de manga"
+    },
+    "sq": {
+      "language": "sq",
+      "value": "seri manga"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "серія манґи"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "日本系列漫畫"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "série de mangá japonesa"
+    },
+    "pt-br": {
+      "language": "pt-br",
+      "value": "série de mangá japonesa"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P144": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P144",
+          "hash": "9d5349647d42964e5628fe25cef2d3b84c03dd40",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 495441,
+              "id": "Q495441"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q61653306$cd97265b-45b6-ad67-1efb-7a9f1e4adf57",
+        "rank": "normal"
+      }
+    ],
+    "P4087": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4087",
+          "hash": "27e7aee0d74604c68d5eef1f1099e486f07dd462",
+          "datavalue": {
+            "value": "105916",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q61653306$fba2d45d-4cc6-54f9-82b7-4f7f1fcfb3ec",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f0b7c67097abe5bf625231a59978403e15025b88",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "e59a1eb3d80f2433d1aa8c07dc939fdee0586bfc",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-12-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "c706c99aad5aba38c64936a3961e5ddc9e19e289",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 86470198,
+                      "id": "Q86470198"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "b592224c9a8b1e008224088a7cfdfc8722e60f9b",
+                  "datavalue": {
+                    "value": "https://anilist.co/manga/100466",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P8731": [
+                {
+                  "snaktype": "value",
+                  "property": "P8731",
+                  "hash": "9ace8070168a89a80f0c2696ba78df90492b9704",
+                  "datavalue": {
+                    "value": "100466",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P813", "P248", "P854", "P8731"]
+          }
+        ]
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "e9d62405b1bb9b7b979f00006a344891e4c4f072",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 17,
+              "id": "Q17"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q61653306$937a2bfe-4f44-c246-0232-8765e11ba237",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f0b7c67097abe5bf625231a59978403e15025b88",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "e59a1eb3d80f2433d1aa8c07dc939fdee0586bfc",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-12-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "c706c99aad5aba38c64936a3961e5ddc9e19e289",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 86470198,
+                      "id": "Q86470198"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "b592224c9a8b1e008224088a7cfdfc8722e60f9b",
+                  "datavalue": {
+                    "value": "https://anilist.co/manga/100466",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P8731": [
+                {
+                  "snaktype": "value",
+                  "property": "P8731",
+                  "hash": "9ace8070168a89a80f0c2696ba78df90492b9704",
+                  "datavalue": {
+                    "value": "100466",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P813", "P248", "P854", "P8731"]
+          }
+        ]
+      }
+    ],
+    "P407": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P407",
+          "hash": "d858d1b9f6e6e383f38dfbe706d102f056c07312",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5287,
+              "id": "Q5287"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q61653306$836254fc-403b-1f67-5197-93ab7e9985ae",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f0b7c67097abe5bf625231a59978403e15025b88",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "e59a1eb3d80f2433d1aa8c07dc939fdee0586bfc",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-12-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "c706c99aad5aba38c64936a3961e5ddc9e19e289",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 86470198,
+                      "id": "Q86470198"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "b592224c9a8b1e008224088a7cfdfc8722e60f9b",
+                  "datavalue": {
+                    "value": "https://anilist.co/manga/100466",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P8731": [
+                {
+                  "snaktype": "value",
+                  "property": "P8731",
+                  "hash": "9ace8070168a89a80f0c2696ba78df90492b9704",
+                  "datavalue": {
+                    "value": "100466",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P813", "P248", "P854", "P8731"]
+          }
+        ]
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "e0790857e83c05c72c38ee13fac91f9e5790251d",
+          "datavalue": {
+            "value": {
+              "time": "+2017-05-27T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q61653306$6774f156-40ee-67d6-74db-711a427bb24d",
+        "rank": "normal"
+      }
+    ],
+    "P1433": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1433",
+          "hash": "1eca2953d649fd1a0ebe9126498de23af70dcf18",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1114420,
+              "id": "Q1114420"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q61653306$b4119d70-4cd0-d961-13a3-024401479acd",
+        "rank": "normal"
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "549c072d6be8a6a43f999d1d0e82640b16c4260e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 21198342,
+              "id": "Q21198342"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q61653306$CBF5C4C4-08B0-41F1-A24A-53F614CD3E29",
+        "rank": "normal"
+      }
+    ],
+    "P8731": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8731",
+          "hash": "9ace8070168a89a80f0c2696ba78df90492b9704",
+          "datavalue": {
+            "value": "100466",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q61653306$22BAC5FB-FE4B-4DE0-AC58-F054695355C7",
+        "rank": "normal"
+      }
+    ],
+    "P2635": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2635",
+          "hash": "8d1c0cc87da2f327bf2c4f2f0ebe314aee3a0b8d",
+          "datavalue": {
+            "value": {
+              "amount": "+5",
+              "unit": "http://www.wikidata.org/entity/Q1238720"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q61653306$41ef793d-3893-4460-8a44-35a5cbbd8f83",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "35eafaf4cc474e9ce485cf20e82a17192a62b8bd",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "e59a1eb3d80f2433d1aa8c07dc939fdee0586bfc",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-12-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "c2497a677e23c689b4634c69544cbd3481f77272",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 4044680,
+                      "id": "Q4044680"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "1247a1890135f944d51ecafcc56c6be552f7a1fe",
+                  "datavalue": {
+                    "value": "https://myanimelist.net/manga/105916",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P4087": [
+                {
+                  "snaktype": "value",
+                  "property": "P4087",
+                  "hash": "27e7aee0d74604c68d5eef1f1099e486f07dd462",
+                  "datavalue": {
+                    "value": "105916",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P813", "P248", "P854", "P4087"]
+          },
+          {
+            "hash": "f0b7c67097abe5bf625231a59978403e15025b88",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "e59a1eb3d80f2433d1aa8c07dc939fdee0586bfc",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-12-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "c706c99aad5aba38c64936a3961e5ddc9e19e289",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 86470198,
+                      "id": "Q86470198"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "b592224c9a8b1e008224088a7cfdfc8722e60f9b",
+                  "datavalue": {
+                    "value": "https://anilist.co/manga/100466",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P8731": [
+                {
+                  "snaktype": "value",
+                  "property": "P8731",
+                  "hash": "9ace8070168a89a80f0c2696ba78df90492b9704",
+                  "datavalue": {
+                    "value": "100466",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P813", "P248", "P854", "P8731"]
+          }
+        ]
+      }
+    ],
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "d197482e4de8d9e513c6aca194f50b7abe2ac01d",
+          "datavalue": {
+            "value": {
+              "text": "キノの旅 -the Beautiful World-",
+              "language": "ja"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q61653306$91A552AB-6C00-421F-A5FB-F037C6724E8F",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "2e305fa477cb0612b93f2b8e4e32c62b62d981da",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 61653272,
+              "id": "Q61653272"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q61653306$F93FE786-8E3E-4C62-96B4-FE2D1AB5BC63",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

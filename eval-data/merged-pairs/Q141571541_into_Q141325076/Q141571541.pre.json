@@ -1,0 +1,267 @@
+{
+  "pageid": 135129242,
+  "ns": 0,
+  "title": "Q141571541",
+  "lastrevid": 2549816022,
+  "modified": "2026-09-26T23:05:35Z",
+  "type": "item",
+  "id": "Q141571541",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Vida de sant Alexi"
+    },
+    "de": {
+      "language": "de",
+      "value": "Vida de sant Alexi"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Vida de sant Alexi"
+    },
+    "oc": {
+      "language": "oc",
+      "value": "Vida de sant Alexi"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "medieval Occitan version of the life of saint Alexis"
+    },
+    "de": {
+      "language": "de",
+      "value": "lateinisches literarisches Werk"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "літературний твір"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "version occitane de la vie de saint Alexis"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5963e3cad5eee4ae1cffbefbac15327800b9a7e6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7725634,
+              "id": "Q7725634"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141571541$2D84EB7B-AADB-4AEE-B622-CE866A512ED2",
+        "rank": "normal"
+      }
+    ],
+    "P4549": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4549",
+          "hash": "c7938e906c9c26c50a2eb4e497ef68ff0f572a22",
+          "datavalue": {
+            "value": "18659",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q141571541$9C5638B3-BFC3-437B-B90B-FA58E189DA28",
+        "rank": "normal"
+      }
+    ],
+    "P2348": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2348",
+          "hash": "ce8abd67b2a82eaeeaf07a32d171127e3f0f0372",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 12554,
+              "id": "Q12554"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141571541$72AEAD20-BE6B-4CE6-8469-DEA119F568F1",
+        "rank": "normal"
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "37aeea3f194932edf979e2dcd777865ba543f708",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 208628,
+              "id": "Q208628"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141571541$92BD51DC-FC30-414F-94A4-64542153D288",
+        "rank": "normal"
+      }
+    ],
+    "P921": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P921",
+          "hash": "da179d05cd8485c7fb07d0003c4a83c355b42f20",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 137947,
+              "id": "Q137947"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141571541$04245D51-4B39-4FD0-9989-8A744CE2204A",
+        "rank": "normal"
+      }
+    ],
+    "P407": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P407",
+          "hash": "3200a544567fe16657d14ed01abd390e7a7b6c07",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2779185,
+              "id": "Q2779185"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141571541$7A33A007-D195-4248-8AFA-D6308DB1AA40",
+        "rank": "normal"
+      }
+    ],
+    "P50": [
+      {
+        "mainsnak": {
+          "snaktype": "somevalue",
+          "property": "P50",
+          "hash": "550406f72367231639323fe7a9c11b2dc8f2c426",
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141571541$35914554-4b3e-e4bc-0860-144b2a1cd0e7",
+        "rank": "normal"
+      }
+    ],
+    "P2551": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2551",
+          "hash": "c3fae415e0ba28124f9832213b5d0aac863dc551",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 591099,
+              "id": "Q591099"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141571541$28a12d5b-4a37-dd51-aba3-21c24fb5c8ac",
+        "rank": "normal"
+      }
+    ],
+    "P1922": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1922",
+          "hash": "9923cf0edc4dfb39483059278e10edd5d11d5482",
+          "datavalue": {
+            "value": {
+              "text": "E nom de Dieu lo salvador / Jhesu Crist, Dieus nostre senhor!",
+              "language": "oc"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q141571541$b7f757f6-4852-483c-5c02-4600a65df8ab",
+        "rank": "normal"
+      }
+    ],
+    "P6216": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6216",
+          "hash": "f69dc45ce9c48664155022498b34100d801bd549",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 19652,
+              "id": "Q19652"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141571541$b2a807aa-4caa-514f-105c-09a7bef3251b",
+        "rank": "normal"
+      }
+    ],
+    "P629": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P629",
+          "hash": "3a5b5d1a448943e059478c7c402982f3805e5226",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 141325071,
+              "id": "Q141325071"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141571541$108c2248-4d9a-464e-bae3-d15c697c329a",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

@@ -1,0 +1,108 @@
+{
+  "pageid": 133196744,
+  "ns": 0,
+  "title": "Q139740967",
+  "lastrevid": 2551018756,
+  "modified": "2026-09-29T21:55:08Z",
+  "type": "item",
+  "id": "Q139740967",
+  "labels": {
+    "mul": {
+      "language": "mul",
+      "value": "Criminal"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "song by Eminem"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5be109d8a3cbbd062357a9d210d4ef00ef25244e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 105543609,
+              "id": "Q105543609"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q139740967$649a428a-47a2-c7d2-29d5-10d11b7d9996",
+        "rank": "normal"
+      }
+    ],
+    "P7937": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7937",
+          "hash": "95c182f3c475d9df12743fde55dc93e0a76efa11",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7366,
+              "id": "Q7366"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q139740967$9fcf8474-4a1d-213e-0e29-17fb1316f709",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "53af1bc5f7ad49eec492ebe77616c596cdbc551e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 130235698,
+              "id": "Q130235698"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q139740967$175C77D6-401F-44C9-AB4B-0F1BDE3F9618",
+        "rank": "normal"
+      }
+    ],
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "91ac66682eb1da3294d0c570a45116de69b1f8ae",
+          "datavalue": {
+            "value": {
+              "text": "Criminal",
+              "language": "en"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q139740967$a147fc62-4b93-38b5-2ffa-9f77c444c079",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

@@ -1,0 +1,261 @@
+{
+  "pageid": 120108144,
+  "ns": 0,
+  "title": "Q126029341",
+  "lastrevid": 2549749549,
+  "modified": "2026-09-26T18:50:07Z",
+  "type": "item",
+  "id": "Q126029341",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Wheel of Fortune"
+    },
+    "de": {
+      "language": "de",
+      "value": "Glücks-Rad"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Wheel of Fortune"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "1990 video game"
+    },
+    "de": {
+      "language": "de",
+      "value": "Computerspiel von 1990"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "لعبة فيديو"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "03d2d8ec4a899b29435a104a9ce7c189a31ae380",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7889,
+              "id": "Q7889"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q126029341$93af61bc-4044-aced-0d32-70824804735f",
+        "rank": "normal"
+      }
+    ],
+    "P123": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P123",
+          "hash": "52463b5ec26229da32ed54c4c6c696645ebb378e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5519804,
+              "id": "Q5519804"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q126029341$fed08007-48ee-955a-5b52-49370446fa0c",
+        "rank": "normal"
+      }
+    ],
+    "P4916": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4916",
+          "hash": "659fff6d8a67ff5c2752f4cfc9757a04fc20b94c",
+          "datavalue": {
+            "value": "4616",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q126029341$9B3358C6-BA39-4BB1-83D5-E1655F27A3DB",
+        "rank": "normal"
+      }
+    ],
+    "P12709": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12709",
+          "hash": "0ca83248af1ccafb5234ab39098db5289f4ccf9d",
+          "datavalue": {
+            "value": "7260",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q126029341$E43DBF6D-5D23-47E8-9991-695E19CF0AA1",
+        "rank": "normal"
+      }
+    ],
+    "P4816": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4816",
+          "hash": "8a0947a75e5e9a59ff83d2f75ad1cc3d55d5cde1",
+          "datavalue": {
+            "value": "1061",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q126029341$66FB0681-BBE9-47C7-A67B-222088F6561B",
+        "rank": "normal"
+      }
+    ],
+    "P4917": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4917",
+          "hash": "7c0740b3e1ed68d602f6afd042537db9cc384cc8",
+          "datavalue": {
+            "value": "3175",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q126029341$AA68D0C7-4CD7-43D2-A883-192DF194A867",
+        "rank": "normal"
+      }
+    ],
+    "P11129": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11129",
+          "hash": "035f4f82ac4c3cf4743f67a4f8bc83faa978e059",
+          "datavalue": {
+            "value": "Glücks-Rad_(Gametek)",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q126029341$EA4A593B-B5F3-4522-B2EF-F3AA68DB22A5",
+        "rank": "normal"
+      }
+    ],
+    "P400": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P400",
+          "hash": "cf425f37b07c09f5a81fd4512a5c2daa66a261ef",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 99775,
+              "id": "Q99775"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q126029341$1970C83E-1ACF-435E-8AB8-9A4D04B5BF44",
+        "rank": "normal"
+      }
+    ],
+    "P8351": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8351",
+          "hash": "24240d9c11313216e4ef30ccf0b47b836fd92074",
+          "datavalue": {
+            "value": "96593",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q126029341$54CF79AB-16D4-4F25-A68E-EDEBE0609BFD",
+        "rank": "normal"
+      }
+    ],
+    "P1933": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1933",
+          "hash": "3de0587f90d90b7f314316902febe4a40a4a6587",
+          "datavalue": {
+            "value": "wheel-of-fortune_______",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q126029341$66FDA820-2B6A-4851-A24C-28A0ADD2852A",
+        "rank": "normal"
+      }
+    ],
+    "P12001": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12001",
+          "hash": "991b4a0be62859bb9f8d47c72e0e66af0a215583",
+          "datavalue": {
+            "value": "kMg4X",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q126029341$B17A19D0-E3D9-4A93-B637-7146C155BC2E",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "d78a4de137a5145bc404ab9a9094becd2cda7407",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 126185064,
+              "id": "Q126185064"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q126029341$6503D8A9-994C-4305-8C58-EDC8994DEFB8",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

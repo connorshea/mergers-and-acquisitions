@@ -1,0 +1,601 @@
+{
+  "pageid": 17508652,
+  "ns": 0,
+  "title": "Q15882312",
+  "lastrevid": 2545148881,
+  "modified": "2026-09-13T17:53:20Z",
+  "type": "item",
+  "id": "Q15882312",
+  "labels": {
+    "nl": {
+      "language": "nl",
+      "value": "Station Mellerud"
+    },
+    "en": {
+      "language": "en",
+      "value": "Mellerud railway station"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "Melleruds station"
+    },
+    "da": {
+      "language": "da",
+      "value": "Mellerud Station"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Mellerud"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "railway station in Mellerud, Sweden"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "järnvägsstation i Melleruds kommun"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "محطة قطار في السويد"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "stacja kolejowa w Szwecji"
+    },
+    "de": {
+      "language": "de",
+      "value": "Bahnhof in Schweden"
+    },
+    "ro": {
+      "language": "ro",
+      "value": "gară din Suedia"
+    },
+    "da": {
+      "language": "da",
+      "value": "jernbanestation i Sverige"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "gare ferroviaire suédoise"
+    },
+    "el": {
+      "language": "el",
+      "value": "σιδηροδρομικός σταθμός στη Σουηδία"
+    }
+  },
+  "aliases": {
+    "sv": [
+      {
+        "language": "sv",
+        "value": "Melleruds järnvägsstation"
+      },
+      {
+        "language": "sv",
+        "value": "Mellerud järnvägsstation"
+      },
+      {
+        "language": "sv",
+        "value": "Mellerud station"
+      }
+    ],
+    "fr": [
+      {
+        "language": "fr",
+        "value": "gare de Mellerud"
+      }
+    ]
+  },
+  "claims": {
+    "P18": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "172ede48f3eb1b55d3009bb2cc0e8325c961b8e4",
+          "datavalue": {
+            "value": "SJ Y7.JPG",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q15882312$EE883B08-400E-4850-95B3-7107F69C519A",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "732ec1c90a6f0694c7db9a71bf09fe7f2b674172",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "9123b0de1cc9c3954366ba797d598e4e1ea4146f",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 10000,
+                      "id": "Q10000"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "12a4103fbfd98ec75d5d9269014f78fb822e8d00",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 55488,
+              "id": "Q55488"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q15882312$5043BC87-935E-47FC-86F5-D20C0B817B49",
+        "rank": "normal"
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "c83b0e7fbdd58e611aa93b9d84b6194c20051c09",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 34,
+              "id": "Q34"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q15882312$a977a33f-4cba-2078-4934-a6b3515a9719",
+        "rank": "normal"
+      }
+    ],
+    "P131": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P131",
+          "hash": "ff8e0ff103c05d174de0d173d6805f651b9ab0ae",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 501438,
+              "id": "Q501438"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q15882312$593138e2-4610-a65b-d612-264e6dc92586",
+        "rank": "normal"
+      }
+    ],
+    "P361": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P361",
+          "hash": "4fa7bb646542f9d8c23373ef3cd1f1ce8ca9dada",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1185739,
+              "id": "Q1185739"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q15882312$7878f89b-405d-0ead-82cf-3cd967686668",
+        "rank": "normal"
+      }
+    ],
+    "P625": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P625",
+          "hash": "0a8f9e8abfffa944c999e57935d1ea935f6c46fd",
+          "datavalue": {
+            "value": {
+              "latitude": 58.7019,
+              "longitude": 12.4648,
+              "altitude": null,
+              "precision": 0.0001,
+              "globe": "http://www.wikidata.org/entity/Q2"
+            },
+            "type": "globecoordinate"
+          },
+          "datatype": "globe-coordinate"
+        },
+        "type": "statement",
+        "id": "Q15882312$c9a50e93-4087-3481-64a1-889e90772f99",
+        "rank": "normal"
+      }
+    ],
+    "P296": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P296",
+          "hash": "d64986fbcfddc25ac24ead3a297e4981042eb83a",
+          "datavalue": {
+            "value": "Ml",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1013": [
+            {
+              "snaktype": "value",
+              "property": "P1013",
+              "hash": "e9d29286b12b77fed4fee29b726a268d70d3599e",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 1677108,
+                  "id": "Q1677108"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1013"],
+        "id": "Q15882312$da1c239d-4f43-1579-8d73-af017fd0d999",
+        "rank": "normal"
+      }
+    ],
+    "P1103": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1103",
+          "hash": "8d9e5b72d1901a994d2d3984db9bec7c567d70e8",
+          "datavalue": {
+            "value": {
+              "amount": "+3",
+              "unit": "1"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q15882312$5d02f945-40e4-5c6a-3974-695b663ead8d",
+        "rank": "normal"
+      }
+    ],
+    "P197": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P197",
+          "hash": "fd8787215cd434b7c7a2786a25409bf9a54290fa",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3429104,
+              "id": "Q3429104"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q15882312$aab08913-4958-3bb8-d4f9-c28914c6e87c",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P197",
+          "hash": "0d09a6aecdefd0952b8bd3060af4d9fda72b57fc",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 24189050,
+              "id": "Q24189050"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q15882312$1C32FF47-CDEC-42C3-9B3C-2EF58B8A339F",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "8c28203eb85dc7efee053388f11dbf0fc5bdd73d",
+            "snaks": {
+              "P3452": [
+                {
+                  "snaktype": "value",
+                  "property": "P3452",
+                  "hash": "05b452a051d771a2a5da6e7b6baca0666cf6671c",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 24189050,
+                      "id": "Q24189050"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P3452"]
+          }
+        ]
+      }
+    ],
+    "P276": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P276",
+          "hash": "b11eeb2074ddd4ed4dc8abfc149b73a796318f54",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 201182,
+              "id": "Q201182"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q15882312$a431cb79-4ace-35c0-c1e7-5251205319dc",
+        "rank": "normal"
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "0fbc5ff38ef825cb5c2f0d77bd08f8ed7c943cc0",
+          "datavalue": {
+            "value": "/g/1yqcctbhd",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q15882312$3DCF8D15-3F47-4422-B4B1-2C75B21F2B57",
+        "rank": "normal"
+      }
+    ],
+    "P722": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P722",
+          "hash": "05d0cc970e8bdb422529ce39d322f4f2dbc32580",
+          "datavalue": {
+            "value": "7400039",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q15882312$f4fba0ac-40ae-f9d0-a3d4-bda57e7b3a93",
+        "rank": "normal"
+      }
+    ],
+    "P954": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P954",
+          "hash": "d9aeafb749d750be76105cfdd624696d485a3e38",
+          "datavalue": {
+            "value": "7400009",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q15882312$62403B28-610D-4A09-A18D-1F1D8FCD6ED8",
+        "rank": "normal"
+      }
+    ],
+    "P81": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P81",
+          "hash": "4140c3a8b7ef0322a6e7d43f5a1f1e911f347215",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1185739,
+              "id": "Q1185739"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P6710": [
+            {
+              "snaktype": "value",
+              "property": "P6710",
+              "hash": "c7a4da7a14bde300184e0cfa255ae04c0c7e0141",
+              "datavalue": {
+                "value": {
+                  "amount": "+355.075",
+                  "unit": "http://www.wikidata.org/entity/Q828224"
+                },
+                "type": "quantity"
+              },
+              "datatype": "quantity"
+            }
+          ]
+        },
+        "qualifiers-order": ["P6710"],
+        "id": "Q15882312$b5f6b01d-4ec1-beca-077e-b10ce8f302a7",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "622a3c828d529a0617d76d20b8c5a409af98208c",
+            "snaks": {
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "0f5b5d524ee7273a262aac6f53c7b1d830f14d14",
+                  "datavalue": {
+                    "value": "https://de.wikipedia.org/w/index.php?title=V%C3%A4nerbanan&oldid=253302378",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P4656"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P81",
+          "hash": "3cbe91f7615e71ac744289c7c991ba4448a627c0",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2680229,
+              "id": "Q2680229"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P6710": [
+            {
+              "snaktype": "value",
+              "property": "P6710",
+              "hash": "d45ebb487251640d01cb8fe449ceda12b337f120",
+              "datavalue": {
+                "value": {
+                  "amount": "+0",
+                  "unit": "http://www.wikidata.org/entity/Q828224"
+                },
+                "type": "quantity"
+              },
+              "datatype": "quantity"
+            }
+          ]
+        },
+        "qualifiers-order": ["P6710"],
+        "id": "Q15882312$f493ce6b-4e16-5ccc-4a3e-a0b8bf0b85ee",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "626f9e95dd7b6d66a8c987e1bd516d2176746130",
+            "snaks": {
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "8b79f7291b34238b443c25b5e312d286bd7965a4",
+                  "datavalue": {
+                    "value": "https://de.wikipedia.org/w/index.php?title=Bahnstrecke_Mellerud/Sk%C3%A4lebol%E2%80%93Kornsj%C3%B6&oldid=253322849",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P4656"]
+          }
+        ]
+      }
+    ],
+    "P5817": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5817",
+          "hash": "3a5c47216c1ed20dc4a40d9bcde91e515d6a6966",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 55654238,
+              "id": "Q55654238"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q15882312$f89944d2-4cc0-cb55-2a26-6c81e89b24e2",
+        "rank": "normal"
+      }
+    ],
+    "P13473": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P13473",
+          "hash": "e73a7cf99cf4efbfc17c55b09a7eff5709937520",
+          "datavalue": {
+            "value": "Ml",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q15882312$BF25FBB6-F113-4818-AD1B-141F7EADEA6B",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "nlwiki": {
+      "site": "nlwiki",
+      "title": "Station Mellerud",
+      "badges": [],
+      "url": "https://nl.wikipedia.org/wiki/Station_Mellerud"
+    },
+    "svwiki": {
+      "site": "svwiki",
+      "title": "Melleruds station",
+      "badges": [],
+      "url": "https://sv.wikipedia.org/wiki/Melleruds_station"
+    }
+  }
+}

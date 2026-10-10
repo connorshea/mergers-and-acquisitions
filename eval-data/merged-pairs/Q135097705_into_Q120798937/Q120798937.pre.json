@@ -1,0 +1,567 @@
+{
+  "pageid": 115247857,
+  "ns": 0,
+  "title": "Q120798937",
+  "lastrevid": 2426500108,
+  "modified": "2025-11-06T11:38:30Z",
+  "type": "item",
+  "id": "Q120798937",
+  "labels": {
+    "fr": {
+      "language": "fr",
+      "value": "Judith Gomez"
+    },
+    "en": {
+      "language": "en",
+      "value": "Judith Gomez"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Judith Gomez"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Judith Gomez"
+    }
+  },
+  "descriptions": {
+    "fr": {
+      "language": "fr",
+      "value": "tireuse sportive française"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "tiradora francesa"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q120798937$e1df113d-46e4-8277-5cdb-d663f642518c",
+        "rank": "normal"
+      }
+    ],
+    "P2730": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2730",
+          "hash": "dd5ef073d97b74016333aa80bc68cbabe659fe77",
+          "datavalue": {
+            "value": "SHFRAW2008199801",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q120798937$525cd74e-40da-1264-dd2c-c9ab588473ec",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "5760796ff6ebc63aae12cdcbf509b07ebf0bd201",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581072,
+              "id": "Q6581072"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q120798937$aee4d840-4594-2242-a1e0-2980d4c69b04",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "5c0fa0d334b12fb6fd96eeccd70c1bfbc0491a41",
+            "snaks": {
+              "P887": [
+                {
+                  "snaktype": "value",
+                  "property": "P887",
+                  "hash": "0f89b02e7a7b9408e3cd5c2b9cae2f47d84944d5",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 69652498,
+                      "id": "Q69652498"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P887"]
+          }
+        ]
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "22e87732ea9c4da90dd8fdc5ca40f30c38d7ce83",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 17486376,
+              "id": "Q17486376"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q120798937$2041d5d1-46bb-8696-35dd-6e9086ae2c87",
+        "rank": "normal"
+      }
+    ],
+    "P569": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P569",
+          "hash": "c0e20b0819e289438c9619501470a354bc84d312",
+          "datavalue": {
+            "value": {
+              "time": "+1998-08-20T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q120798937$45bfbe80-41da-e7bd-eb68-b4592aec1530",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "456d5f2c3cdedca5ec69aa0588496eb8314ec843",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "2c881adde0dc54a31fe09d17163373453eae2e45",
+                  "datavalue": {
+                    "value": "https://www.issf-sports.org/athletes/athlete.ashx?personissfid=SHFRAW2008199801",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "d120ca6c2a46e5b3a7b90ac5333957bdc7b976ea",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-07-22T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P735": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P735",
+          "hash": "179ccfa8a380a65420b35ddc636c58342775362e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5954149,
+              "id": "Q5954149"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q120798937$6271c5f9-4bb8-d24c-4105-91ad35439306",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "323be97becfd18ea6625da4b3770079385901a18",
+            "snaks": {
+              "P887": [
+                {
+                  "snaktype": "value",
+                  "property": "P887",
+                  "hash": "b40d6c0ac6eb965460f92fade101fe40a3c44239",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 97033143,
+                      "id": "Q97033143"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P887"]
+          }
+        ]
+      }
+    ],
+    "P734": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P734",
+          "hash": "7546fd594bd086009fb331a051c56ce5c40da3a6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 37499550,
+              "id": "Q37499550"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q120798937$79caffe2-4590-fa04-3b83-a8fa8049e001",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "323be97becfd18ea6625da4b3770079385901a18",
+            "snaks": {
+              "P887": [
+                {
+                  "snaktype": "value",
+                  "property": "P887",
+                  "hash": "b40d6c0ac6eb965460f92fade101fe40a3c44239",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 97033143,
+                      "id": "Q97033143"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P887"]
+          }
+        ]
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "a3d46fa4beeabd048657cdb76d1f1113c94ae554",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 142,
+              "id": "Q142"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q120798937$db13b628-4a23-c076-50a0-1adf827989b3",
+        "rank": "normal"
+      }
+    ],
+    "P1532": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1532",
+          "hash": "5b22fd74feee79c7f69b16bad3985dbe78418bce",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 142,
+              "id": "Q142"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q120798937$63caabe0-4dbf-2e27-f320-21d14c44d5f3",
+        "rank": "normal"
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "c9c29ba0a2184341e7cfa9a9fcd0008b573ed7f2",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 206989,
+              "id": "Q206989"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q120798937$8cfa8ed1-4a2f-dde3-967a-82a713414495",
+        "rank": "normal"
+      }
+    ],
+    "P4391": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4391",
+          "hash": "1b66c0b78ad395fcb42f533b845d85da807290ce",
+          "datavalue": {
+            "value": "387063",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q120798937$0f61260f-4b91-559b-19a8-3b8841b63120",
+        "rank": "normal"
+      }
+    ],
+    "P19": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P19",
+          "hash": "6b9bd883b0ccbae32fa98f41ab2c9a3bbfc6e43d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7880,
+              "id": "Q7880"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q120798937$e47c0834-4f76-5eae-37ec-cea6e35a28d2",
+        "rank": "normal"
+      }
+    ],
+    "P2013": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2013",
+          "hash": "afe915fe94b1a92e808959c10e6c1ad86731b550",
+          "datavalue": {
+            "value": "Judith.Gomez10.9",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q120798937$1c8c806a-4aba-257c-e489-b39fabb000ae",
+        "rank": "normal"
+      }
+    ],
+    "P2003": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2003",
+          "hash": "0116fbdba633c3848f4bf30a9e699b41d3378142",
+          "datavalue": {
+            "value": "judith_2008",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q120798937$6793e0d5-4730-ae4b-27e4-8b28f799baab",
+        "rank": "normal"
+      }
+    ],
+    "P6634": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6634",
+          "hash": "497fd577d7ec43adfda7db723aa029a1324a5b02",
+          "datavalue": {
+            "value": "judith-gomez-050920238",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q120798937$19b9da15-40ad-47af-067c-6f0f1de41797",
+        "rank": "normal"
+      }
+    ],
+    "P69": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P69",
+          "hash": "9b3c06d7a5e8d572f2ff3c01a984f295048792b1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3152447,
+              "id": "Q3152447"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q120798937$f844aa26-43bb-7c98-9f84-bfb9baf10767",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P69",
+          "hash": "99eadba33fec1952079b60536b3e0f6317ad6d74",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 54409381,
+              "id": "Q54409381"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q120798937$77c3bb06-41bc-0516-a595-3a566262afad",
+        "rank": "normal"
+      }
+    ],
+    "P18": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "c13fb0dd006d82248508c07e5f87e898b9200f38",
+          "datavalue": {
+            "value": "Judith GOMEZ.jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q120798937$2c9251cf-4f49-4043-777d-bb3830314e46",
+        "rank": "normal"
+      }
+    ],
+    "P443": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P443",
+          "hash": "41ca8fc28924a9f477766ec767703d44b8b74c05",
+          "datavalue": {
+            "value": "LL-Q150 (fra)-WikiLucas00-Judith Gomez.wav",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "d197d0a5efa4b4c23a302a829dd3ef43684fe002",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 150,
+                  "id": "Q150"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P407"],
+        "id": "Q120798937$80aff704-59b0-4c1f-9530-3bddd3a54b01",
+        "rank": "normal"
+      }
+    ],
+    "P11934": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11934",
+          "hash": "970aed8755bdc300a3dfa23b0cdfdfd0a3dad7f3",
+          "datavalue": {
+            "value": "judith-gomez",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q120798937$78BA7CDE-13B2-4D79-A47C-E033262FD4F1",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "frwiki": {
+      "site": "frwiki",
+      "title": "Judith Gomez",
+      "badges": [],
+      "url": "https://fr.wikipedia.org/wiki/Judith_Gomez"
+    }
+  }
+}

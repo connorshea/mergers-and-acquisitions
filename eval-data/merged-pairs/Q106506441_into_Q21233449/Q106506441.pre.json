@@ -1,0 +1,61 @@
+{
+  "pageid": 101797651,
+  "ns": 0,
+  "title": "Q106506441",
+  "lastrevid": 2529352323,
+  "modified": "2026-08-09T21:07:41Z",
+  "type": "item",
+  "id": "Q106506441",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Demon City Shinjuku Role-Playing Game"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "role-playing game"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "রোল-প্লেয়িং গেম"
+    },
+    "as": {
+      "language": "as",
+      "value": "ৰোল-প্লেয়িং গেম"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "8c4c136ea29ee738e36d831558de1d82aec00b52",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1643932,
+              "id": "Q1643932"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q106506441$F0A3DA0E-E4CE-402D-834D-A6C565242FFD",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Demon City Shinjuku Role-Playing Game",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Demon_City_Shinjuku_Role-Playing_Game"
+    }
+  }
+}

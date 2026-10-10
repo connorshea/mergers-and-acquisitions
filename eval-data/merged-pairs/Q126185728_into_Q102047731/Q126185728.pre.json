@@ -1,0 +1,143 @@
+{
+  "pageid": 120218287,
+  "ns": 0,
+  "title": "Q126185728",
+  "lastrevid": 2548278447,
+  "modified": "2026-09-22T03:07:40Z",
+  "type": "item",
+  "id": "Q126185728",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Harald Hårdtand: Kampen Om De Rene Tænder"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Harald Hårdtand: Kampen Om De Rene Tænder"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "1992 video game"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "لعبة فيديو"
+    },
+    "ig": {
+      "language": "ig",
+      "value": "egwuregwu vidīò 1992"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "03d2d8ec4a899b29435a104a9ce7c189a31ae380",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7889,
+              "id": "Q7889"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q126185728$A5AD9A54-B4BC-4664-AD7B-1F6EE4083377",
+        "rank": "normal"
+      }
+    ],
+    "P4671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4671",
+          "hash": "62e99274c91249ad427cddf780d6ebe41566ecff",
+          "datavalue": {
+            "value": "3898",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q126185728$63A1D0AA-EAC2-415F-ACBE-EE2A0270528A",
+        "rank": "normal"
+      }
+    ],
+    "P4846": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4846",
+          "hash": "d4499ebbf072f3a8c8bc5da599392568fb857a65",
+          "datavalue": {
+            "value": "2105",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q126185728$E7460189-7A98-432A-A365-14184AF23EE2",
+        "rank": "normal"
+      }
+    ],
+    "P7683": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7683",
+          "hash": "0eaefa3d585773f4f1a451965f4bc2014907e4fb",
+          "datavalue": {
+            "value": "e539c109-a42b-589c-818d-7ef5af26ba73",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q126185728$2AF16DDC-DEF4-4EC0-BABB-4AE91450095B",
+        "rank": "normal"
+      }
+    ],
+    "P12225": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12225",
+          "hash": "919e3c9ed0198a09ef8c8b135a5fba1c58dbe1b7",
+          "datavalue": {
+            "value": "Colgate",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q126185728$D0C82E6E-55A6-4987-BA35-8DC2AA029355",
+        "rank": "normal"
+      }
+    ],
+    "P12001": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12001",
+          "hash": "4c426c981e3a93c0575faa719591534810397c92",
+          "datavalue": {
+            "value": "2g8nY",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q126185728$92B44AE5-305F-4F0E-8E07-AADA540D5286",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

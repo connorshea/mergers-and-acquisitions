@@ -1,0 +1,555 @@
+{
+  "pageid": 130224263,
+  "ns": 0,
+  "title": "Q136522335",
+  "lastrevid": 2417317398,
+  "modified": "2025-10-17T03:43:33Z",
+  "type": "item",
+  "id": "Q136522335",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "RollerCoaster Tycoon: Loopy Landscapes"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "2000 video game expansion pack for RollerCoaster Tycoon"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "d3d738916246d5fef9c88dbea31d1771fef8a773",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 209163,
+              "id": "Q209163"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q136522335$87C187FF-1FA9-400F-B301-BF3DDAB7B069",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "77684bb8ebd942e7bcf8358f6b661400c14beed9",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "8d2a8157ff57c875f1f54617917ef5bc39c3be6e",
+                  "datavalue": {
+                    "value": "https://www.mobygames.com/game/2599/rollercoaster-tycoon-loopy-landscapes/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P8646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8646",
+          "hash": "ab0f478445b1b27008b0613659df47a9cc73bbf5",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5800778,
+              "id": "Q5800778"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q136522335$F1907351-8802-4F35-AB63-213332965DCD",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "77684bb8ebd942e7bcf8358f6b661400c14beed9",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "8d2a8157ff57c875f1f54617917ef5bc39c3be6e",
+                  "datavalue": {
+                    "value": "https://www.mobygames.com/game/2599/rollercoaster-tycoon-loopy-landscapes/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P179": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P179",
+          "hash": "13e098310a9748a390b86610a90e98b00a2edb7b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 828749,
+              "id": "Q828749"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q136522335$92506AD7-3185-480E-8162-ECD47FC9187F",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "cb1b6749896ef7a90a075a6405e346cbe9217612",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "f313ffcbb7623d00b5f6b53bcfcac63f588fd9dc",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/wiki/RollerCoaster_Tycoon_(video_game)",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P155": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P155",
+          "hash": "cb52cf771bb29a1fd2a7132f6faf23723ae84f6e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 9312099,
+              "id": "Q9312099"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q136522335$1DA786C6-C31E-4000-9835-7298CFFADD50",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "cb1b6749896ef7a90a075a6405e346cbe9217612",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "f313ffcbb7623d00b5f6b53bcfcac63f588fd9dc",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/wiki/RollerCoaster_Tycoon_(video_game)",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P170": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P170",
+          "hash": "95adadd3b0ba10a8b4a1524725d810907dae28f9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 454738,
+              "id": "Q454738"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q136522335$E75EEC63-AF4A-456F-A694-994778D84715",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "77684bb8ebd942e7bcf8358f6b661400c14beed9",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "8d2a8157ff57c875f1f54617917ef5bc39c3be6e",
+                  "datavalue": {
+                    "value": "https://www.mobygames.com/game/2599/rollercoaster-tycoon-loopy-landscapes/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P123": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P123",
+          "hash": "f773232fe664b716d47fa52872178ccfbddacdf5",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 579796,
+              "id": "Q579796"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q136522335$80BA0D8B-6E00-41A5-9218-E9487C90F753",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "77684bb8ebd942e7bcf8358f6b661400c14beed9",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "8d2a8157ff57c875f1f54617917ef5bc39c3be6e",
+                  "datavalue": {
+                    "value": "https://www.mobygames.com/game/2599/rollercoaster-tycoon-loopy-landscapes/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "8d7d5db0afe25fe30444bd82fbf15617fbdb996d",
+          "datavalue": {
+            "value": {
+              "time": "+2000-09-30T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q136522335$2717944F-ED01-4A9A-8249-3325FC71698C",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "77684bb8ebd942e7bcf8358f6b661400c14beed9",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "8d2a8157ff57c875f1f54617917ef5bc39c3be6e",
+                  "datavalue": {
+                    "value": "https://www.mobygames.com/game/2599/rollercoaster-tycoon-loopy-landscapes/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P400": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P400",
+          "hash": "0b7430c76aa932002363740d965c9f0a5cd61191",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1406,
+              "id": "Q1406"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q136522335$FCF677ED-9C9A-40E2-A1DE-6D3F3DCCC2C6",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "77684bb8ebd942e7bcf8358f6b661400c14beed9",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "8d2a8157ff57c875f1f54617917ef5bc39c3be6e",
+                  "datavalue": {
+                    "value": "https://www.mobygames.com/game/2599/rollercoaster-tycoon-loopy-landscapes/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "0833acca9130da6ae25da706d712df5329df6639",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1422746,
+              "id": "Q1422746"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q136522335$239775F0-8014-43CD-9FE8-BD1D7B7BCBC9",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "77684bb8ebd942e7bcf8358f6b661400c14beed9",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "8d2a8157ff57c875f1f54617917ef5bc39c3be6e",
+                  "datavalue": {
+                    "value": "https://www.mobygames.com/game/2599/rollercoaster-tycoon-loopy-landscapes/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "ced1c14f2764e6a61bbfd551343fdc1f1a903d67",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1198141,
+              "id": "Q1198141"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q136522335$6E649DD5-8DC1-442E-AF7C-99E50EE110F1",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "77684bb8ebd942e7bcf8358f6b661400c14beed9",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "8d2a8157ff57c875f1f54617917ef5bc39c3be6e",
+                  "datavalue": {
+                    "value": "https://www.mobygames.com/game/2599/rollercoaster-tycoon-loopy-landscapes/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "7bf912fb60a1b69509d1fc77144b5bc3b5d66174",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1143132,
+              "id": "Q1143132"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q136522335$05340BBE-E7F5-45EC-A0DF-1CAFAECEECE2",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "77684bb8ebd942e7bcf8358f6b661400c14beed9",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "8d2a8157ff57c875f1f54617917ef5bc39c3be6e",
+                  "datavalue": {
+                    "value": "https://www.mobygames.com/game/2599/rollercoaster-tycoon-loopy-landscapes/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P437": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P437",
+          "hash": "38385d5e27213e18fd3a9d1f88b738e2b043d020",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7189615,
+              "id": "Q7189615"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q136522335$DBD9AD0F-9689-4F33-B85A-B2407DC1B181",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "77684bb8ebd942e7bcf8358f6b661400c14beed9",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "8d2a8157ff57c875f1f54617917ef5bc39c3be6e",
+                  "datavalue": {
+                    "value": "https://www.mobygames.com/game/2599/rollercoaster-tycoon-loopy-landscapes/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P437",
+          "hash": "f9236afa39444ad69be7efe47f3a9e888d6081d2",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 54820071,
+              "id": "Q54820071"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q136522335$EF1F7E84-7FE5-4AE9-9A0D-1D12CBDD5580",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "466f79fd781b9cf0dcfa3298d73f9dfc03d736b0",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "3e74e558ff08d69b760c8df5facd1e2aa752e1b4",
+                  "datavalue": {
+                    "value": "https://store.steampowered.com/app/285310/RollerCoaster_Tycoon_Deluxe/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {}
+}

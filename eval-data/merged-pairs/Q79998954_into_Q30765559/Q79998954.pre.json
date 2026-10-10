@@ -1,0 +1,318 @@
+{
+  "pageid": 79408083,
+  "ns": 0,
+  "title": "Q79998954",
+  "lastrevid": 2489231628,
+  "modified": "2026-05-09T13:56:00Z",
+  "type": "item",
+  "id": "Q79998954",
+  "labels": {
+    "ko": {
+      "language": "ko",
+      "value": "마지막 밥상"
+    },
+    "en": {
+      "language": "en",
+      "value": "The Last Dining Table"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "2006 film"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "film"
+    },
+    "mn": {
+      "language": "mn",
+      "value": "2006 оны кино"
+    },
+    "ko": {
+      "language": "ko",
+      "value": "2006년 영화"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "2006年電影"
+    },
+    "th": {
+      "language": "th",
+      "value": "ภาพยนตร์ที่ออกฉายในปี พ.ศ. 2549"
+    },
+    "eo": {
+      "language": "eo",
+      "value": "Sud-Koreaj filmoj"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "২০০৬-এর চলচ্চিত্র"
+    },
+    "dv": {
+      "language": "dv",
+      "value": "2006 ވަނަ އަހަރު ނެރުނު ފިލްމެއް"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "фільм 2006 року"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "fa41184cb03f49f0edfbf2fc4f9d33e35afecaea",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11424,
+              "id": "Q11424"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q79998954$FD6C50DD-1361-4355-8871-92D7194F2028",
+        "rank": "normal"
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "dc4188996de539672ceb455087c518d143bc1637",
+          "datavalue": {
+            "value": {
+              "time": "+2006-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q79998954$f979c634-fa9a-4a34-8205-eb6c397be191",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "08be9f116c5c541d7fa461ad59ad559a42ffd6ed",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "56f99b6701feb379816767ae88bb77e0e74981b3",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 17985,
+                      "id": "Q17985"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P364": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P364",
+          "hash": "9c5cb3e5536eb94cba56e1c93fa75d9944422331",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 9176,
+              "id": "Q9176"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q79998954$b1010cb5-e909-4dfc-a92a-c804eddb5844",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "08be9f116c5c541d7fa461ad59ad559a42ffd6ed",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "56f99b6701feb379816767ae88bb77e0e74981b3",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 17985,
+                      "id": "Q17985"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "a0ec855ffc45c8d74e4d821c2452f7f69b0e43dd",
+          "datavalue": {
+            "value": "/g/11hz_7yxf0",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q79998954$7DEA5FF3-A697-4B3A-9BB9-F3FA83FEB1E1",
+        "rank": "normal"
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "c0a3edda06eb357cb4e7b36d4589111f68794325",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 884,
+              "id": "Q884"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q79998954$B17C1038-B6CC-4212-8F23-25C53F1473B1",
+        "rank": "normal"
+      }
+    ],
+    "P57": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P57",
+          "hash": "bfbb3e17f30d700d82e50eb1467247bd20a84068",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 27535237,
+              "id": "Q27535237"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q79998954$3EFE26AD-5D63-498F-932E-8F367F45BEE4",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "b20fe112cb623bee0b68267a9226bea0daa59043",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "56f99b6701feb379816767ae88bb77e0e74981b3",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 17985,
+                      "id": "Q17985"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "9e1ff94cb6d05fb208fa6c01a6803bcaaae7f823",
+                  "datavalue": {
+                    "value": "https://ko.wikipedia.org/w/index.php?title=마지막_밥상&oldid=36930789",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "b06b7ea51c2ddd8595ad712c1cf2ebfe44dcc110",
+          "datavalue": {
+            "value": {
+              "text": "마지막 밥상",
+              "language": "ko"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q79998954$33185CD8-1F78-4EDC-B66A-F6F72F8C23CF",
+        "rank": "normal"
+      }
+    ],
+    "P8921": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8921",
+          "hash": "96987cc192ae1fa8027e2a76b2776541117c66eb",
+          "datavalue": {
+            "value": "20061225",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q79998954$5D53DDB1-65B7-4520-ACB2-765D0D1820AE",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "kowiki": {
+      "site": "kowiki",
+      "title": "마지막 밥상",
+      "badges": [],
+      "url": "https://ko.wikipedia.org/wiki/%EB%A7%88%EC%A7%80%EB%A7%89_%EB%B0%A5%EC%83%81"
+    }
+  }
+}

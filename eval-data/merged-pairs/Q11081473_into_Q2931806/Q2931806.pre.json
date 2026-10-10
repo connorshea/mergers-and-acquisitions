@@ -1,0 +1,343 @@
+{
+  "pageid": 2804636,
+  "ns": 0,
+  "title": "Q2931806",
+  "lastrevid": 1758576349,
+  "modified": "2022-10-26T10:37:57Z",
+  "type": "item",
+  "id": "Q2931806",
+  "labels": {
+    "fr": {
+      "language": "fr",
+      "value": "CO2"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "CO2"
+    }
+  },
+  "descriptions": {
+    "fr": {
+      "language": "fr",
+      "value": "série télévisée d'animation"
+    },
+    "en": {
+      "language": "en",
+      "value": "television series"
+    },
+    "es": {
+      "language": "es",
+      "value": "serie de televisión"
+    },
+    "it": {
+      "language": "it",
+      "value": "serie televisiva"
+    },
+    "hu": {
+      "language": "hu",
+      "value": "televíziós sorozat"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "sèrie de televisió"
+    },
+    "eo": {
+      "language": "eo",
+      "value": "televida serio"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "sraith theilifíse"
+    },
+    "hy": {
+      "language": "hy",
+      "value": "հեռուստասերիալ"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "টেলিভিশন ধারাবাহিক"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "телевізійний серіал"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P1113": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1113",
+          "hash": "1cece85219249ae511aeabf83d93e59d8281f33b",
+          "datavalue": {
+            "value": {
+              "amount": "+101",
+              "unit": "1"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q2931806$16E36F4A-A6E1-41FD-9AB0-5F7594694BD2",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d4bd87b862b12d99d26e86472d44f26858dee639",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "f30cbd35620c4ea6d0633aaf0210a8916130469b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8447,
+                      "id": "Q8447"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P1267": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1267",
+          "hash": "ecbc8d1f1e284ad6373945474c038dbbe09099b3",
+          "datavalue": {
+            "value": "8366",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q2931806$7BC717FB-15C7-4A2C-9E9C-641FFBB02CD8",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d4bd87b862b12d99d26e86472d44f26858dee639",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "f30cbd35620c4ea6d0633aaf0210a8916130469b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8447,
+                      "id": "Q8447"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "40a93c25a36e6a07478de6eca4ba68f5b9aaa85f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5398426,
+              "id": "Q5398426"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2931806$4DB6241D-83DE-49FF-A0F4-21D672DBD4BF",
+        "rank": "normal"
+      }
+    ],
+    "P86": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P86",
+          "hash": "dca6a3aaa75154d7d7b231164f983db51648684a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 979169,
+              "id": "Q979169"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2931806$B59B34F1-13C9-439E-BC07-58435E00D316",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d4bd87b862b12d99d26e86472d44f26858dee639",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "f30cbd35620c4ea6d0633aaf0210a8916130469b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8447,
+                      "id": "Q8447"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P345": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P345",
+          "hash": "c720dc26d6c668cbf6d385668920010964f391fc",
+          "datavalue": {
+            "value": "tt3894824",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q2931806$89E52D6D-116F-40DA-B202-BBB82A718E20",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "5be8a19872687dc6d6361eb536282d1448d1044b",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "f30cbd35620c4ea6d0633aaf0210a8916130469b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8447,
+                      "id": "Q8447"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "f56961dbaf476ba943bd6e187827bdcb9e10616f",
+                  "datavalue": {
+                    "value": "https://fr.wikipedia.org/w/index.php?title=CO2_(série_télévisée_d'animation)&oldid=151975050",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P580": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P580",
+          "hash": "180c1d2810fdfa2616e3696cf9ff6a84aaee48dc",
+          "datavalue": {
+            "value": {
+              "time": "+2007-01-01T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q2931806$E246FAF3-8842-4B01-899C-21919AA0865E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "51f1afad898eef353d79e4d29fa8d143c06e8318",
+            "snaks": {
+              "P345": [
+                {
+                  "snaktype": "value",
+                  "property": "P345",
+                  "hash": "c720dc26d6c668cbf6d385668920010964f391fc",
+                  "datavalue": {
+                    "value": "tt3894824",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "09e1a06146886ac676f1cdd1545cba38aac96f41",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-08-19T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P345", "P813"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {
+    "frwiki": {
+      "site": "frwiki",
+      "title": "CO2 (série télévisée d'animation)",
+      "badges": [],
+      "url": "https://fr.wikipedia.org/wiki/CO2_(s%C3%A9rie_t%C3%A9l%C3%A9vis%C3%A9e_d%27animation)"
+    }
+  }
+}

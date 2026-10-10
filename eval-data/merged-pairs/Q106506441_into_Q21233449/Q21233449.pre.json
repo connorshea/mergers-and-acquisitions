@@ -1,0 +1,195 @@
+{
+  "pageid": 23280388,
+  "ns": 0,
+  "title": "Q21233449",
+  "lastrevid": 2067992523,
+  "modified": "2024-02-03T12:59:22Z",
+  "type": "item",
+  "id": "Q21233449",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Demon City Shinjuku Role-Playing Game"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "tabletop role-playing game"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "настільна рольова гра"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "8c4c136ea29ee738e36d831558de1d82aec00b52",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1643932,
+              "id": "Q1643932"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q21233449$e0a4df6b-497f-ce97-b76a-e592590aa3b8",
+        "rank": "normal"
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "e00208bb20a6c87a148a10fccc613fc753888024",
+          "datavalue": {
+            "value": {
+              "time": "+2000-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q21233449$ceb3d1c7-474b-d30f-4fc3-533f08b0b8d8",
+        "rank": "normal"
+      }
+    ],
+    "P4151": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4151",
+          "hash": "66aa2398934f893f4002ef01cd2b7bd129d6d73b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2452208,
+              "id": "Q2452208"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q21233449$2970B937-3311-4C15-8BCE-985671263A11",
+        "rank": "normal"
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "f1087ad5fb461448a3889ec06049dbd3a6b779f1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1643932,
+              "id": "Q1643932"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q21233449$AD9B783B-55D7-45A9-A278-7707D33B3F2D",
+        "rank": "normal"
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "7b29f0809942d4380c7f3e2ac42d09ec8f5c6c06",
+          "datavalue": {
+            "value": "/m/012bd2_k",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q21233449$90B4BA79-2160-41AA-9D2E-43BD12AB86AE",
+        "rank": "normal"
+      }
+    ],
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "1b4278b254ea67cc757bd77101a3e7deedaeeef2",
+          "datavalue": {
+            "value": {
+              "text": "Demon City Shinjuku Role-Playing Game",
+              "language": "en"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q21233449$1AAFCAFC-46B3-4FEE-B069-CFDA2BF19D34",
+        "rank": "normal"
+      }
+    ],
+    "P407": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P407",
+          "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1860,
+              "id": "Q1860"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q21233449$7DCACABF-4ED7-4861-A909-16118D386F38",
+        "rank": "normal"
+      }
+    ],
+    "P6216": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6216",
+          "hash": "5570347fdc76d2a80732f51ea10ee4b144a084e0",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 50423863,
+              "id": "Q50423863"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q21233449$0F3AF76C-577A-4286-A519-C54852AD5E06",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

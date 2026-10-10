@@ -1,0 +1,169 @@
+{
+  "pageid": 134111369,
+  "ns": 0,
+  "title": "Q140677839",
+  "lastrevid": 2522704655,
+  "modified": "2026-07-25T23:43:41Z",
+  "type": "item",
+  "id": "Q140677839",
+  "labels": {
+    "ar": {
+      "language": "ar",
+      "value": "محمد إقبال فيلسوف الذاتية"
+    }
+  },
+  "descriptions": {
+    "ar": {
+      "language": "ar",
+      "value": "كتاب من تأليف حسن حنفي"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "611eded04fae278fa0785b72a6e6185624da5de7",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 571,
+              "id": "Q571"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q140677839$4DF65A1D-CE4D-4B71-8071-26582D69958D",
+        "rank": "normal"
+      }
+    ],
+    "P50": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P50",
+          "hash": "5eedff83a05e1e1f233abb59341d02163ccd1991",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1112049,
+              "id": "Q1112049"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q140677839$55B24B9B-DA76-4E72-A00D-682873117323",
+        "rank": "normal"
+      }
+    ],
+    "P407": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P407",
+          "hash": "1b1356fe89ad919c93fbcf2b7754a7a6ae114093",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 13955,
+              "id": "Q13955"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q140677839$BB4DBF34-700F-4CA9-8D1E-9A15B5961D8F",
+        "rank": "normal"
+      }
+    ],
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "8576f913446a140cb834cd4f01e5168ad83748ac",
+          "datavalue": {
+            "value": {
+              "text": "محمد إقبال فيلسوف الذاتية",
+              "language": "ar"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q140677839$F15A14C5-5AFB-44CE-8765-5B5B31C646B0",
+        "rank": "normal"
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "d0b146732c08215a0fe1c09ff9481930fbba797a",
+          "datavalue": {
+            "value": {
+              "time": "+2009-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q140677839$7BC56674-1FD4-495A-9847-92C0C6BEB8AA",
+        "rank": "normal"
+      }
+    ],
+    "P1104": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1104",
+          "hash": "e32b20e7f656eb49cf9aa39da98e30beef551859",
+          "datavalue": {
+            "value": {
+              "amount": "+584",
+              "unit": "1"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q140677839$F1E10BEB-3B24-43D3-9CC4-F5F6156A8867",
+        "rank": "normal"
+      }
+    ],
+    "P957": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P957",
+          "hash": "4a355ab4c45a5cfcbbcc6e37c1cfe31674f7d297",
+          "datavalue": {
+            "value": "9959-29-415-9",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q140677839$9A294B91-25FF-4417-80D6-DCFC429F5C97",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

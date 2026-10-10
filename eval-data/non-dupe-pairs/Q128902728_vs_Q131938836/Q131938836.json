@@ -1,0 +1,131 @@
+{
+  "pageid": 125822098,
+  "ns": 0,
+  "title": "Q131938836",
+  "lastrevid": 2304185527,
+  "modified": "2025-01-30T13:25:20Z",
+  "type": "item",
+  "id": "Q131938836",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "EuroPark"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "parking operator based in Latvia"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "شركة في لاتفيا"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "EUROPARK LATVIA"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "b7fc6c9f46efeede3bf483f3a5b0c45c7be77936",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 783794,
+              "id": "Q783794"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q131938836$18e871de-47fe-1084-16bd-daa2618ed532",
+        "rank": "normal"
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "5ea0ab4c22b0bc3568dce0d8643634ac7f0c79e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 211,
+              "id": "Q211"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q131938836$eb82b687-4418-8524-4254-58db36375792",
+        "rank": "normal"
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "ec5482eabb7d8e0de2dc7b7b4ad441491010bb2c",
+          "datavalue": {
+            "value": "https://www.europark.lv/",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "783c8f4f024561b9c3a1853d7216591d82eb090f",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 9078,
+                  "id": "Q9078"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P407"],
+        "id": "Q131938836$50bd329e-4afa-9017-eef9-9beee52af868",
+        "rank": "normal"
+      }
+    ],
+    "P2013": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2013",
+          "hash": "8b217dd2fe70e7108c2b5013def5d002d5d06713",
+          "datavalue": {
+            "value": "europarkinlatvia",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q131938836$addb368a-40dc-8b3f-c354-bd1ccf78221b",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

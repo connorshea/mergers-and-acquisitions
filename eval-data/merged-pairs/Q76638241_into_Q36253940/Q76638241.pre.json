@@ -1,0 +1,238 @@
+{
+  "pageid": 76122149,
+  "ns": 0,
+  "title": "Q76638241",
+  "lastrevid": 2492947627,
+  "modified": "2026-05-17T03:45:57Z",
+  "type": "item",
+  "id": "Q76638241",
+  "labels": {
+    "de": {
+      "language": "de",
+      "value": "Städtisches Heimatmuseum Ballenstedt"
+    }
+  },
+  "descriptions": {
+    "fr": {
+      "language": "fr",
+      "value": "musée en Allemagne"
+    },
+    "br": {
+      "language": "br",
+      "value": "mirdi Alamagn"
+    },
+    "en": {
+      "language": "en",
+      "value": "museum in Germany"
+    },
+    "de": {
+      "language": "de",
+      "value": "Museum in Deutschland"
+    },
+    "it": {
+      "language": "it",
+      "value": "museo in Germania"
+    },
+    "es": {
+      "language": "es",
+      "value": "museo en Alemania"
+    },
+    "cy": {
+      "language": "cy",
+      "value": "amgueddfa yn yr Almaen"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "museu na Alemanha"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "museum i Tyskland"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "muzeum w Niemczech"
+    },
+    "eo": {
+      "language": "eo",
+      "value": "muzeo en Germanio"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "museo Saksassa"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "музей у Німеччині"
+    },
+    "hy": {
+      "language": "hy",
+      "value": "թանգարան Գերմանիայում"
+    },
+    "hi": {
+      "language": "hi",
+      "value": "जर्मनी का एक संग्रहालय"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P791": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P791",
+          "hash": "921e2451dd133f9d0d780394a47e7dbe5c53411f",
+          "datavalue": {
+            "value": "DE-MUS-801516",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q76638241$7CD79A63-E364-4A78-9438-D42E47E304B3",
+        "rank": "normal"
+      }
+    ],
+    "P281": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P281",
+          "hash": "59c994c8a6caf9907fcc44c2fee978d1d35e28a3",
+          "datavalue": {
+            "value": "06493",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q76638241$F4775D03-81C3-4633-9B9D-0E36406AEA72",
+        "rank": "normal"
+      }
+    ],
+    "P6375": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6375",
+          "hash": "74132c3957582559cce9b3586ec583a757d897f1",
+          "datavalue": {
+            "value": {
+              "text": "Allee 37, 06493 Ballenstedt",
+              "language": "de"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q76638241$52F325BA-CA93-41E2-ABA4-938C93D17351",
+        "rank": "normal"
+      }
+    ],
+    "P625": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P625",
+          "hash": "00510c5a570f51c70a68160fd3a7fa2ed68f5e3b",
+          "datavalue": {
+            "value": {
+              "latitude": 51.71911111111111,
+              "longitude": 11.220972222222223,
+              "altitude": null,
+              "precision": 0.00002777777777777778,
+              "globe": "http://www.wikidata.org/entity/Q2"
+            },
+            "type": "globecoordinate"
+          },
+          "datatype": "globe-coordinate"
+        },
+        "type": "statement",
+        "id": "Q76638241$A3F3FDE7-9682-41D2-A28E-6637DE217649",
+        "rank": "normal"
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "ef7247b704f4ec0a7df39e83306bb388fea17d5f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 183,
+              "id": "Q183"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q76638241$2D4B6430-1862-4510-A077-A00A8A79D0DF",
+        "rank": "normal"
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "4cb858cccdb4e3c1fbe0aac4e40c2715bed4b17c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 33506,
+              "id": "Q33506"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q76638241$590F9811-D4EA-4D4C-85BE-2374D5389DA0",
+        "rank": "normal"
+      }
+    ],
+    "P18": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "b2ec254bc19db8d6336796469326a2ea6b2f06c8",
+          "datavalue": {
+            "value": "Städtisches Heimatmuseum Ballenstedt.jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q76638241$57692412-EC7B-40E0-BA70-3368C072EC6D",
+        "rank": "normal"
+      }
+    ],
+    "P131": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P131",
+          "hash": "930ae55f86b7483790614edac1168366043708bc",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 50886,
+              "id": "Q50886"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q76638241$e843439c-49c8-35e7-b5b5-1e8d3ac51465",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

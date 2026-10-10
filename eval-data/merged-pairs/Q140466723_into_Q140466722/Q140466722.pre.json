@@ -1,0 +1,166 @@
+{
+  "pageid": 133905772,
+  "ns": 0,
+  "title": "Q140466722",
+  "lastrevid": 2538074382,
+  "modified": "2026-08-30T07:03:10Z",
+  "type": "item",
+  "id": "Q140466722",
+  "labels": {
+    "ja": {
+      "language": "ja",
+      "value": "真夜中は別の顔"
+    }
+  },
+  "descriptions": {},
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "40a93c25a36e6a07478de6eca4ba68f5b9aaa85f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5398426,
+              "id": "Q5398426"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q140466722$4BA19155-C23B-4C09-B607-B4C2248E6F62",
+        "rank": "normal"
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "e9d62405b1bb9b7b979f00006a344891e4c4f072",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 17,
+              "id": "Q17"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q140466722$16C48E58-50DD-40D8-B8A2-7A94ABAD4EF3",
+        "rank": "normal"
+      }
+    ],
+    "P364": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P364",
+          "hash": "e837a5e5691aacf2a7eca565824d57545629d7fa",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5287,
+              "id": "Q5287"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q140466722$B6BFA3A1-FA65-487F-B1FC-3E2183EE5523",
+        "rank": "normal"
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "9f031f0e3621feef6b695095da4d43debc49119f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1366112,
+              "id": "Q1366112"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q140466722$E9BE43F0-C3DF-4D7C-A009-E79D8106046E",
+        "rank": "normal"
+      }
+    ],
+    "P144": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P144",
+          "hash": "018e5daab51d299eb155c040764b57a92d43d877",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1317701,
+              "id": "Q1317701"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q140466722$7973b1e9-47ed-d744-ade3-a0f39d1ae36a",
+        "rank": "normal"
+      }
+    ],
+    "P449": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P449",
+          "hash": "5990ec4475739a51b940a343d2fa82e0e59359cc",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 908436,
+              "id": "Q908436"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q140466722$6fe37ce2-4e3e-bf39-123f-9f46d8bcee30",
+        "rank": "normal"
+      }
+    ],
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "2b3b046986e62b5ce51bf56a92d0ce456f5d4404",
+          "datavalue": {
+            "value": {
+              "text": "真夜中は別の顔",
+              "language": "ja"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q140466722$A0D4785E-D144-4FAD-B9C3-655A5FC28B78",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

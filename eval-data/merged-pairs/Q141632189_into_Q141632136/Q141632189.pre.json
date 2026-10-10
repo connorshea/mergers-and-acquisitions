@@ -1,0 +1,552 @@
+{
+  "pageid": 135209170,
+  "ns": 0,
+  "title": "Q141632189",
+  "lastrevid": 2552730205,
+  "modified": "2026-10-03T19:19:29Z",
+  "type": "item",
+  "id": "Q141632189",
+  "labels": {
+    "de": {
+      "language": "de",
+      "value": "Energieberatung Klein Service GmbH"
+    },
+    "en": {
+      "language": "en",
+      "value": "Energieberatung Klein Service GmbH"
+    }
+  },
+  "descriptions": {
+    "de": {
+      "language": "de",
+      "value": "digitale Energieberatung und Fördermittelservice mit Sitz in Pfarrkirchen"
+    },
+    "en": {
+      "language": "en",
+      "value": "German digital energy consulting and funding service company based in Pfarrkirchen"
+    }
+  },
+  "aliases": {
+    "de": [
+      {
+        "language": "de",
+        "value": "EB Klein Service"
+      },
+      {
+        "language": "de",
+        "value": "EB·KLEIN SERVICE GMBH"
+      },
+      {
+        "language": "de",
+        "value": "Energieberatung Klein Service"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "326e3d41d1e9c34715e880be6e1c6a1e822e4317",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4830453,
+              "id": "Q4830453"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141632189$6BC3BF9B-A2C3-4FCB-97CE-6F1B353A9AFF",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "56dfbcf70f55e16c5ecb0884a722c31bc5f1272d",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "d130e45d01c0bbd471f5ce1aaece85cea302825c",
+                  "datavalue": {
+                    "value": "https://www.eb-klein-service.de/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P1454": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1454",
+          "hash": "74fdb1902141ad63c707f8dcece2c0d644fe0eab",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 460178,
+              "id": "Q460178"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141632189$7C88D7A3-AEBE-481A-93AD-D54C9C38B6E7",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "56dfbcf70f55e16c5ecb0884a722c31bc5f1272d",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "d130e45d01c0bbd471f5ce1aaece85cea302825c",
+                  "datavalue": {
+                    "value": "https://www.eb-klein-service.de/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "ef7247b704f4ec0a7df39e83306bb388fea17d5f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 183,
+              "id": "Q183"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141632189$9ECD230D-A122-437B-B19B-6724A4AAE57B",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "56dfbcf70f55e16c5ecb0884a722c31bc5f1272d",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "d130e45d01c0bbd471f5ce1aaece85cea302825c",
+                  "datavalue": {
+                    "value": "https://www.eb-klein-service.de/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P159": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P159",
+          "hash": "42c11d6738c5a5a08e17be0b8f9ee5b5192dcf54",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 545359,
+              "id": "Q545359"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141632189$46984601-1394-4AFF-8425-763C1D423738",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "56dfbcf70f55e16c5ecb0884a722c31bc5f1272d",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "d130e45d01c0bbd471f5ce1aaece85cea302825c",
+                  "datavalue": {
+                    "value": "https://www.eb-klein-service.de/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "3c0d3dbfb37b5649b9c91318ae53bc0d0525f63a",
+          "datavalue": {
+            "value": {
+              "time": "+2026-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q141632189$AF45EDB8-8968-4911-8D21-E39316B9A3E3",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "56dfbcf70f55e16c5ecb0884a722c31bc5f1272d",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "d130e45d01c0bbd471f5ce1aaece85cea302825c",
+                  "datavalue": {
+                    "value": "https://www.eb-klein-service.de/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "32ffdf53857b14e23706dc99f81f1fce629c0a5a",
+          "datavalue": {
+            "value": "https://www.eb-klein-service.de/",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q141632189$16AA0CAA-6820-4FCE-8CA9-8A7A6C72C0E4",
+        "rank": "normal"
+      }
+    ],
+    "P1448": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1448",
+          "hash": "8fbadb0bd53ad8fb33c116372b2582f1dd1d4606",
+          "datavalue": {
+            "value": {
+              "text": "Energieberatung Klein Service GmbH",
+              "language": "de"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q141632189$98F711E1-EABF-4EB6-AC63-246AC0C68AE0",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "56dfbcf70f55e16c5ecb0884a722c31bc5f1272d",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "d130e45d01c0bbd471f5ce1aaece85cea302825c",
+                  "datavalue": {
+                    "value": "https://www.eb-klein-service.de/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P6375": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6375",
+          "hash": "1b818d0ce1b19b8f405a1e680a77833dd717c492",
+          "datavalue": {
+            "value": {
+              "text": "Mahlgassinger Weg 56, 84347 Pfarrkirchen",
+              "language": "de"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q141632189$91ABB445-B539-409C-9709-C53D3DCB7552",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "56dfbcf70f55e16c5ecb0884a722c31bc5f1272d",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "d130e45d01c0bbd471f5ce1aaece85cea302825c",
+                  "datavalue": {
+                    "value": "https://www.eb-klein-service.de/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P281": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P281",
+          "hash": "a62ed60ffd6735bc6a6991eb5fae971428e8183f",
+          "datavalue": {
+            "value": "84347",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q141632189$D931E420-D296-4697-B714-B8E2F5B9E6D2",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "56dfbcf70f55e16c5ecb0884a722c31bc5f1272d",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "d130e45d01c0bbd471f5ce1aaece85cea302825c",
+                  "datavalue": {
+                    "value": "https://www.eb-klein-service.de/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P968": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P968",
+          "hash": "f63f4508ec73e3222972e91c128400e600b84ca1",
+          "datavalue": {
+            "value": "mailto:info@eb-klein-service.de",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q141632189$A1FE8BC1-194E-4CC0-AA15-E30D5DE5FE04",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "56dfbcf70f55e16c5ecb0884a722c31bc5f1272d",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "d130e45d01c0bbd471f5ce1aaece85cea302825c",
+                  "datavalue": {
+                    "value": "https://www.eb-klein-service.de/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P1329": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1329",
+          "hash": "e05be0342598ef34bee78ea0904e4139859a9d46",
+          "datavalue": {
+            "value": "+49-89-215280253",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q141632189$4732B659-350E-41F2-866A-F24AC381B31B",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "56dfbcf70f55e16c5ecb0884a722c31bc5f1272d",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "d130e45d01c0bbd471f5ce1aaece85cea302825c",
+                  "datavalue": {
+                    "value": "https://www.eb-klein-service.de/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P3608": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3608",
+          "hash": "0e3ad9b6e3f5280eb74571ca83900e46e55f0bd0",
+          "datavalue": {
+            "value": "DE465170312",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q141632189$74CFA543-3220-48F9-AC06-D2FEB7F3FEAF",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "56dfbcf70f55e16c5ecb0884a722c31bc5f1272d",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "d130e45d01c0bbd471f5ce1aaece85cea302825c",
+                  "datavalue": {
+                    "value": "https://www.eb-klein-service.de/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P4264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4264",
+          "hash": "995b45d47604458923af657fddfc72948be59b39",
+          "datavalue": {
+            "value": "eb-klein-service",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q141632189$6D71F17F-D49C-40BF-B25A-9819922BE348",
+        "rank": "normal"
+      }
+    ],
+    "P2003": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2003",
+          "hash": "6a6f12c12da982edbf6baa49d71188cfd4f113f2",
+          "datavalue": {
+            "value": "eb.klein.service",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q141632189$87F74BC0-64AB-40BC-9CAB-B6102A454888",
+        "rank": "normal"
+      }
+    ],
+    "P11245": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11245",
+          "hash": "101915ab63899cf0e1759ebc5a46bae45e3209a4",
+          "datavalue": {
+            "value": "ebkleinservice",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q141632189$16945122-386B-4D0B-960D-E6ED307F5113",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

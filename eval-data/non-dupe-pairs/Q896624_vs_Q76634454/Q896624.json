@@ -1,0 +1,1385 @@
+{
+  "pageid": 847527,
+  "ns": 0,
+  "title": "Q896624",
+  "lastrevid": 2554590079,
+  "modified": "2026-10-07T14:52:29Z",
+  "type": "item",
+  "id": "Q896624",
+  "labels": {
+    "de": {
+      "language": "de",
+      "value": "Quadrat Bottrop"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Quadrat Bottrop"
+    },
+    "it": {
+      "language": "it",
+      "value": "Quadrat Bottrop"
+    },
+    "ru": {
+      "language": "ru",
+      "value": "Музей Йозефа Альберса"
+    },
+    "en": {
+      "language": "en",
+      "value": "Quadrat Bottrop"
+    }
+  },
+  "descriptions": {
+    "nl": {
+      "language": "nl",
+      "value": "museum in Bottrop, Noordrijn-Westfalen"
+    },
+    "en": {
+      "language": "en",
+      "value": "museum in Bottrop, Germany"
+    },
+    "de": {
+      "language": "de",
+      "value": "Museum in Bottrop"
+    },
+    "he": {
+      "language": "he",
+      "value": "מוזיאון בגרמניה"
+    },
+    "id": {
+      "language": "id",
+      "value": "museum di Jerman"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "متحف في ألمانيا"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "musée en Allemagne"
+    },
+    "br": {
+      "language": "br",
+      "value": "mirdi Alamagn"
+    },
+    "es": {
+      "language": "es",
+      "value": "museo en Alemania"
+    },
+    "it": {
+      "language": "it",
+      "value": "museo in Germania"
+    },
+    "cy": {
+      "language": "cy",
+      "value": "amgueddfa yn yr Almaen"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "museu na Alemanha"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "museum i Tyskland"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "muzeum w Niemczech"
+    },
+    "eo": {
+      "language": "eo",
+      "value": "muzeo en Germanio"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "museo Saksassa"
+    },
+    "hi": {
+      "language": "hi",
+      "value": "जर्मनी का एक संग्रहालय"
+    }
+  },
+  "aliases": {
+    "de": [
+      {
+        "language": "de",
+        "value": "Josef-Albers-Museum"
+      },
+      {
+        "language": "de",
+        "value": "Josef Albers Museum Quadrat"
+      }
+    ]
+  },
+  "claims": {
+    "P373": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P373",
+          "hash": "ffef44d89134ff7c58e9b0602bbbcd477494c4b2",
+          "datavalue": {
+            "value": "Quadrat Bottrop",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "q896624$9DEFEB63-D490-4629-A751-D18D8CB4106A",
+        "rank": "normal"
+      }
+    ],
+    "P625": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P625",
+          "hash": "76bf6e5fabfb6acad43dadba37a69e470e6b5a89",
+          "datavalue": {
+            "value": {
+              "latitude": 51.5313,
+              "longitude": 6.91792,
+              "altitude": null,
+              "precision": 0.0001,
+              "globe": "http://www.wikidata.org/entity/Q2"
+            },
+            "type": "globecoordinate"
+          },
+          "datatype": "globe-coordinate"
+        },
+        "type": "statement",
+        "id": "Q896624$4ECB5930-62FB-4FDE-AD60-9A99698F8F35",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9a24f7c0208b05d6be97077d855671d1dfdbc0dd",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 48183,
+                      "id": "Q48183"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "ef7247b704f4ec0a7df39e83306bb388fea17d5f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 183,
+              "id": "Q183"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q896624$5F7EE396-081D-47AB-BE3E-DB81E1950C75",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9a24f7c0208b05d6be97077d855671d1dfdbc0dd",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 48183,
+                      "id": "Q48183"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P131": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P131",
+          "hash": "851eb7aece2e8a8d71d8c6a4b9f891fe607fbfd9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3069,
+              "id": "Q3069"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q896624$5A74B948-C7F4-43B7-8709-7F6C6C47EB0F",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9a24f7c0208b05d6be97077d855671d1dfdbc0dd",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 48183,
+                      "id": "Q48183"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P18": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "565c865d6f24274b746752e3cddb0461c3221d67",
+          "datavalue": {
+            "value": "Bottrop - Im Stadtgarten - Stadtgarten - Quadrat 06 ies.jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q896624$A726BF31-3841-49F9-81F0-3A4815477393",
+        "rank": "normal"
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "290952aad231e294f24dd49f0cabbba668026aad",
+          "datavalue": {
+            "value": "http://www.quadrat-bottrop.de/",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "46bfd327b830f66f7061ea92d1be430c135fa91f",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 188,
+                  "id": "Q188"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P582": [
+            {
+              "snaktype": "somevalue",
+              "property": "P582",
+              "hash": "0f0e43d5ac17613a0369bf0d65a07a326f4b8d98",
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P407", "P582"],
+        "id": "Q896624$16EB0A9B-4AA6-4EFF-BF6F-E58662931641",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "06cdb25db78c3e77369ab0d99811dd25cbe29707",
+          "datavalue": {
+            "value": "https://quadrat.bottrop.de/",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P580": [
+            {
+              "snaktype": "somevalue",
+              "property": "P580",
+              "hash": "591beafd4b23b81744b09486d54b98520c54fa5e",
+              "datatype": "time"
+            }
+          ],
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "46bfd327b830f66f7061ea92d1be430c135fa91f",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 188,
+                  "id": "Q188"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P580", "P407"],
+        "id": "Q896624$53325b30-41c4-1e39-a60a-34b767edf4f4",
+        "rank": "preferred"
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "4cb858cccdb4e3c1fbe0aac4e40c2715bed4b17c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 33506,
+              "id": "Q33506"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q896624$34193714-DA05-46F4-BC76-882029970943",
+        "rank": "normal"
+      }
+    ],
+    "P214": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P214",
+          "hash": "74732ba73d2ea3b1562f88a0f345a240e3e978d9",
+          "datavalue": {
+            "value": "129968304",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q896624$827C703A-A867-4A51-87B6-71E23CD79D22",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ad3713df772ae88af6a7458d084a40ad20b226d6",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "6b7d4330c4aac4caec4ede9de0311ce273f88ecd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 54919,
+                      "id": "Q54919"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a00cc299e508357647636e29593b8ca3e534077d",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2015-08-06T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P1435": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1435",
+          "hash": "205137d8b3c50fd71f9af3e0e9403b47696abf33",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 15632117,
+              "id": "Q15632117"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q896624$C1ECC1F4-9DE0-40B1-80B0-73EF23D4442B",
+        "rank": "normal"
+      }
+    ],
+    "P791": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P791",
+          "hash": "a3961147532b12629b0a9f473db28eac842e700d",
+          "datavalue": {
+            "value": "DE-MUS-025618",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q896624$B97FCA59-B467-46B2-8C73-55B9FF8BB3D1",
+        "rank": "normal"
+      }
+    ],
+    "P6375": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6375",
+          "hash": "a3d240157f3fd2a00edccfca29e0ac6bd93955e2",
+          "datavalue": {
+            "value": {
+              "text": "Anni-Albers-Platz 1, 46236 Bottrop",
+              "language": "de"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q896624$523F1F56-377A-4779-B8C0-2BC0EBE1171E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "dcedbbad1103809fdff89944525c832a21ae932b",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "a8b78970dcca5a95acf775b5a9f3e7c6398b4d0e",
+                  "datavalue": {
+                    "value": "https://quadrat.bottrop.de/sonstiges/kontakt.php",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "05b9f81f4016a108c36c0888968e4356baaa37a4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-05-15T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "b9b674985374f966685b9e9579b48f2a60b56bf5",
+          "datavalue": {
+            "value": {
+              "time": "+1976-09-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 10,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q896624$c1f876d8-4d3d-ad89-97fb-403f3f7b785a",
+        "rank": "normal"
+      }
+    ],
+    "P1619": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1619",
+          "hash": "9235483ac704131fa0c5a9caab69c9ce290f21ca",
+          "datavalue": {
+            "value": {
+              "time": "+1983-06-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 10,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q896624$cea1b4bb-4505-882e-7537-ecbf7399f21f",
+        "rank": "normal"
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "4b4379103631fa72665768b3c2d01e3400c30eeb",
+          "datavalue": {
+            "value": "/g/122dy518",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q896624$77048D58-0FBF-428B-96A1-8301AC134293",
+        "rank": "normal"
+      }
+    ],
+    "P281": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P281",
+          "hash": "e5e4ef805546e552abd53fecc105dec8b9363b14",
+          "datavalue": {
+            "value": "46236",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q896624$f64d92b8-42ed-107b-5255-80f1839fcf50",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "dcedbbad1103809fdff89944525c832a21ae932b",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "a8b78970dcca5a95acf775b5a9f3e7c6398b4d0e",
+                  "datavalue": {
+                    "value": "https://quadrat.bottrop.de/sonstiges/kontakt.php",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "05b9f81f4016a108c36c0888968e4356baaa37a4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-05-15T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P669": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P669",
+          "hash": "255b7041c9fae0a4c95d9dc72133939d69b96087",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 106322218,
+              "id": "Q106322218"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P670": [
+            {
+              "snaktype": "value",
+              "property": "P670",
+              "hash": "ea704489ca9e1ac8bcf75cf174cd436b5bfbb64f",
+              "datavalue": {
+                "value": "1",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P670"],
+        "id": "Q896624$97fc7f79-4c0a-6ea1-8b01-e3bf1124329e",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "dcedbbad1103809fdff89944525c832a21ae932b",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "a8b78970dcca5a95acf775b5a9f3e7c6398b4d0e",
+                  "datavalue": {
+                    "value": "https://quadrat.bottrop.de/sonstiges/kontakt.php",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "05b9f81f4016a108c36c0888968e4356baaa37a4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-05-15T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P968": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P968",
+          "hash": "f124fc3d82d2508f3642fccf18f4abdd6d4a434d",
+          "datavalue": {
+            "value": "mailto:quadrat@bottrop.de",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q896624$f0f08ece-4c9f-0f03-d281-d41787a79f7c",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "dcedbbad1103809fdff89944525c832a21ae932b",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "a8b78970dcca5a95acf775b5a9f3e7c6398b4d0e",
+                  "datavalue": {
+                    "value": "https://quadrat.bottrop.de/sonstiges/kontakt.php",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "05b9f81f4016a108c36c0888968e4356baaa37a4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-05-15T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P3608": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3608",
+          "hash": "49c1444c4d8a44bacb0a6b5d0ee5ff1f88e4222a",
+          "datavalue": {
+            "value": "DE124235025",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q896624$e1d20bc9-443b-4915-e111-b0794f26859d",
+        "rank": "normal"
+      }
+    ],
+    "P159": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P159",
+          "hash": "61c3dd05d3e2159e73c2b98c8c08845ec2c1edec",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3069,
+              "id": "Q3069"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q896624$33435f1a-423c-d599-6924-c23c7ebbf068",
+        "rank": "normal"
+      }
+    ],
+    "P166": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P166",
+          "hash": "59d552cf21c94a06f37180810c019d0e59a9d6ff",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 18026219,
+              "id": "Q18026219"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P585": [
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "a910853afc29ee98ebd8b5f67a02ff08aea299d2",
+              "datavalue": {
+                "value": {
+                  "time": "+2006-00-00T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 9,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P585"],
+        "id": "Q896624$c75080e6-4ab5-92f7-7e5a-28bb9154170e",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "5b5be0a8a9c0701d9056c62b5b1783ed2446d47b",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "5e49174586f357881ccfeecaf296555164faec28",
+                  "datavalue": {
+                    "value": "https://www.aica.de/auszeichnungen/museum-des-jahres/2006-josef-albers-museum-quadrat-bottrop.html",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "05b9f81f4016a108c36c0888968e4356baaa37a4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-05-15T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P227": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P227",
+          "hash": "1e3f0d05e28fd0af8d343912e943b4979fce903f",
+          "datavalue": {
+            "value": "10048158-9",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "q896624$2432fe8c-46be-b4cd-86de-8f6407e532f0",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d98ce9a31529c09a4833bc0fe908496085d39ee4",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "6b7d4330c4aac4caec4ede9de0311ce273f88ecd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 54919,
+                      "id": "Q54919"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P214": [
+                {
+                  "snaktype": "value",
+                  "property": "P214",
+                  "hash": "74732ba73d2ea3b1562f88a0f345a240e3e978d9",
+                  "datavalue": {
+                    "value": "129968304",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "3a9acf7d7583b37903418308d95f4c6a5d1f8329",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-05-17T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P214", "P813"]
+          }
+        ]
+      }
+    ],
+    "P3065": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3065",
+          "hash": "6ef0c175c83bb92795e849c6a529d8fd8a7be392",
+          "datavalue": {
+            "value": "A012748011",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "q896624$a9336d37-4bca-e205-672d-e38df4c642ea",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d98ce9a31529c09a4833bc0fe908496085d39ee4",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "6b7d4330c4aac4caec4ede9de0311ce273f88ecd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 54919,
+                      "id": "Q54919"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P214": [
+                {
+                  "snaktype": "value",
+                  "property": "P214",
+                  "hash": "74732ba73d2ea3b1562f88a0f345a240e3e978d9",
+                  "datavalue": {
+                    "value": "129968304",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "3a9acf7d7583b37903418308d95f4c6a5d1f8329",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-05-17T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P214", "P813"]
+          }
+        ]
+      }
+    ],
+    "P1705": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1705",
+          "hash": "5db2d32fc500641d50bd29409eb2ec3bf2bf3f83",
+          "datavalue": {
+            "value": {
+              "text": "Josef Albers Museum",
+              "language": "de"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q896624$e0333f83-4b8d-a810-5133-a3eca9a483d1",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "4d0f302127c8867a20c3ca29c74a8aec50252381",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 206855,
+                      "id": "Q206855"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "1dfd173ece9764a7a2f778218f28a1dbfc32f390",
+                  "datavalue": {
+                    "value": "https://ru.wikipedia.org/?oldid=102113719",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P3749": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3749",
+          "hash": "d9e4b93497728ba187408a2c209e323ee3b4a94d",
+          "datavalue": {
+            "value": "8660491179421068742",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q896624$efb4cd73-457e-ee8e-92ff-eca1002a94fb",
+        "rank": "normal"
+      }
+    ],
+    "P3134": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3134",
+          "hash": "917c9ea123d5d74a014c717715ecd9a9f6583753",
+          "datavalue": {
+            "value": "1866218",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q896624$89a48f8b-4e83-56c2-5229-de1bfa87ea2e",
+        "rank": "normal"
+      }
+    ],
+    "P5383": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5383",
+          "hash": "a1e1d326fa56dc2f12cfa00b4860fc40c3024378",
+          "datavalue": {
+            "value": "40196",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q896624$1AC58D8A-D88E-49F9-84B2-AE129460A08F",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2edbe097725b5ef70fb4272927d9b7314dcaef09",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "bb385bc908e4615b60c060310f5723f66c443109",
+                  "datavalue": {
+                    "value": "https://www.archinform.net/service/wd_aipro.php",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "c619cc6e0e5fe3733a8c4a47939343e5970e0e9d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 265049,
+                      "id": "Q265049"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "4f507987dca1385d14b6be094f9cf14f72351548",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-03-09T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P10689": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10689",
+          "hash": "4289082fc0016f0eefc94df095fc3078d1f26714",
+          "datavalue": {
+            "value": "24004508",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q896624$B866C3B6-C1E1-4FE4-9EBF-48D9F4536EB9",
+        "rank": "normal"
+      }
+    ],
+    "P9918": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P9918",
+          "hash": "5ee6002eb6df61600782f5e9ec0e2675abe68fb7",
+          "datavalue": {
+            "value": "KS00104178",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q896624$F54CBDBE-17A1-4363-8CE5-D3632C8B0DF4",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P9918",
+          "hash": "2d8ce2497fbdb4d9f254cb2cd5067f6dfe9c24f6",
+          "datavalue": {
+            "value": "KS00104179",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q896624$C39B15A7-51C4-4571-84F0-3A52F1A13AA7",
+        "rank": "normal"
+      }
+    ],
+    "P3451": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3451",
+          "hash": "69cadb1013df486f480a3009decab22bd00e1e7c",
+          "datavalue": {
+            "value": "2022-12-30 Quadrat in Bottrop 02.jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q896624$5C149F00-2189-4227-8D21-D69F75ABAA96",
+        "rank": "normal"
+      }
+    ],
+    "P527": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P527",
+          "hash": "f275f8f8d2d206ac433ee0693f60f6ff3640d239",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2197244,
+              "id": "Q2197244"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q896624$e885be20-43f9-3c4c-65d2-c4cb0698f92b",
+        "rank": "normal"
+      }
+    ],
+    "P8189": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8189",
+          "hash": "dd1fa125bab41e728d12fb8e430402a2d5983414",
+          "datavalue": {
+            "value": "987008144777805171",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q896624$4808BB97-B026-439E-AC9B-21FFE36205CC",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "9cdf440e65c63970849a77b78bcbbc274d70b9fa",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 76634454,
+              "id": "Q76634454"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q896624$A33CC5AD-F65C-4AA7-85FA-8F514B0B918A",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "dewiki": {
+      "site": "dewiki",
+      "title": "Quadrat Bottrop",
+      "badges": [],
+      "url": "https://de.wikipedia.org/wiki/Quadrat_Bottrop"
+    },
+    "nlwiki": {
+      "site": "nlwiki",
+      "title": "Quadrat Bottrop",
+      "badges": [],
+      "url": "https://nl.wikipedia.org/wiki/Quadrat_Bottrop"
+    },
+    "itwiki": {
+      "site": "itwiki",
+      "title": "Quadrat Bottrop",
+      "badges": [],
+      "url": "https://it.wikipedia.org/wiki/Quadrat_Bottrop"
+    },
+    "commonswiki": {
+      "site": "commonswiki",
+      "title": "Category:Quadrat Bottrop",
+      "badges": [],
+      "url": "https://commons.wikimedia.org/wiki/Category:Quadrat_Bottrop"
+    },
+    "ruwiki": {
+      "site": "ruwiki",
+      "title": "Музей Йозефа Альберса",
+      "badges": [],
+      "url": "https://ru.wikipedia.org/wiki/%D0%9C%D1%83%D0%B7%D0%B5%D0%B9_%D0%99%D0%BE%D0%B7%D0%B5%D1%84%D0%B0_%D0%90%D0%BB%D1%8C%D0%B1%D0%B5%D1%80%D1%81%D0%B0"
+    }
+  }
+}

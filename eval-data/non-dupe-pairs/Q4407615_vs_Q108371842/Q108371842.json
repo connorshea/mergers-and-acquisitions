@@ -1,0 +1,412 @@
+{
+  "pageid": 103633726,
+  "ns": 0,
+  "title": "Q108371842",
+  "lastrevid": 2518245592,
+  "modified": "2026-07-16T17:17:35Z",
+  "type": "item",
+  "id": "Q108371842",
+  "labels": {
+    "de": {
+      "language": "de",
+      "value": "Planet Alcatraz"
+    },
+    "en-ca": {
+      "language": "en-ca",
+      "value": "Planet Alcatraz"
+    },
+    "ru": {
+      "language": "ru",
+      "value": "Санитары подземелий"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "Planet Alcatraz"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "Planet Alcatraz"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "Planet Alcatraz"
+    },
+    "en": {
+      "language": "en",
+      "value": "Planet Alcatraz"
+    },
+    "lv": {
+      "language": "lv",
+      "value": "Planet Alcatraz"
+    },
+    "it": {
+      "language": "it",
+      "value": "Planet Alcatraz"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Planet Alcatraz"
+    },
+    "es": {
+      "language": "es",
+      "value": "Planet Alcatraz"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "Planet Alcatraz"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "Planet Alcatraz"
+    },
+    "en-gb": {
+      "language": "en-gb",
+      "value": "Planet Alcatraz"
+    },
+    "sco": {
+      "language": "sco",
+      "value": "Planet Alcatraz"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Planet Alcatraz"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "Planet Alcatraz"
+    }
+  },
+  "descriptions": {
+    "de": {
+      "language": "de",
+      "value": "Computerspielserie"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "datorspelsserie"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "videopelisarja"
+    },
+    "en-ca": {
+      "language": "en-ca",
+      "value": "video game series"
+    },
+    "ru": {
+      "language": "ru",
+      "value": "серия компьютерных игр"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "série de jogos eletrônicos"
+    },
+    "en": {
+      "language": "en",
+      "value": "video game series"
+    },
+    "lv": {
+      "language": "lv",
+      "value": "datorspēļu sērija"
+    },
+    "it": {
+      "language": "it",
+      "value": "serie di videogiochi"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "série de jeux vidéo"
+    },
+    "es": {
+      "language": "es",
+      "value": "serie de videojuegos"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "серія відеоігор"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "seria gier komputerowych"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "sèrie de videojocs"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "computerspelserie"
+    },
+    "sco": {
+      "language": "sco",
+      "value": "video gemme series"
+    },
+    "en-gb": {
+      "language": "en-gb",
+      "value": "video game series"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P9835": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P9835",
+          "hash": "79ced56492ab78438127a851a854171a91a6fe9e",
+          "datavalue": {
+            "value": "1751",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q108371842$85052EEE-D708-474A-BD20-7C2BDDBB092B",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "340d4a522d92a339205252bad835eba6cd23fd68",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "53581df037a70b3d59b63369720c8850784640bc",
+                  "datavalue": {
+                    "value": "https://www.igromania.ru/game/series/1751/Sanitary_podzemeliy.html",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P1476": [
+                {
+                  "snaktype": "value",
+                  "property": "P1476",
+                  "hash": "169ca25661fb2dcbf9feee34763cb08c799fe9c9",
+                  "datavalue": {
+                    "value": {
+                      "text": "Серия игр Санитары подземелий",
+                      "language": "ru"
+                    },
+                    "type": "monolingualtext"
+                  },
+                  "datatype": "monolingualtext"
+                }
+              ],
+              "P407": [
+                {
+                  "snaktype": "value",
+                  "property": "P407",
+                  "hash": "d291ddb7cd77c94a7bd709a8395934147e0864fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 7737,
+                      "id": "Q7737"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P1433": [
+                {
+                  "snaktype": "value",
+                  "property": "P1433",
+                  "hash": "4e500b64c836bab7f8abb5ef15e8dd96de79bebd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 4197757,
+                      "id": "Q4197757"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "d8342b01ad3eb6af21917e6ba1515da43a2d9e74",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-09-01T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P1476", "P407", "P1433", "P813"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "28e85ae78b1fad0af0f87f70f08c5f9c3dbbc52f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7058673,
+              "id": "Q7058673"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q108371842$4EBC5ED8-787C-4CD2-9156-6C35ED60B87E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "340d4a522d92a339205252bad835eba6cd23fd68",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "53581df037a70b3d59b63369720c8850784640bc",
+                  "datavalue": {
+                    "value": "https://www.igromania.ru/game/series/1751/Sanitary_podzemeliy.html",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P1476": [
+                {
+                  "snaktype": "value",
+                  "property": "P1476",
+                  "hash": "169ca25661fb2dcbf9feee34763cb08c799fe9c9",
+                  "datavalue": {
+                    "value": {
+                      "text": "Серия игр Санитары подземелий",
+                      "language": "ru"
+                    },
+                    "type": "monolingualtext"
+                  },
+                  "datatype": "monolingualtext"
+                }
+              ],
+              "P407": [
+                {
+                  "snaktype": "value",
+                  "property": "P407",
+                  "hash": "d291ddb7cd77c94a7bd709a8395934147e0864fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 7737,
+                      "id": "Q7737"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P1433": [
+                {
+                  "snaktype": "value",
+                  "property": "P1433",
+                  "hash": "4e500b64c836bab7f8abb5ef15e8dd96de79bebd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 4197757,
+                      "id": "Q4197757"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "d8342b01ad3eb6af21917e6ba1515da43a2d9e74",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-09-01T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P1476", "P407", "P1433", "P813"]
+          }
+        ]
+      }
+    ],
+    "P12082": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12082",
+          "hash": "611bbd886b51d7e5b2d15dc5b665900601afe951",
+          "datavalue": {
+            "value": "1071",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q108371842$DF91B7FF-855C-4264-BE4E-1F2F01C14EF6",
+        "rank": "normal"
+      }
+    ],
+    "P14470": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P14470",
+          "hash": "5453733ddfa9c221a31c1c6f2c686777e47e34ff",
+          "datavalue": {
+            "value": "Franchises/Planet_Alcatraz",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9675": [
+            {
+              "snaktype": "value",
+              "property": "P9675",
+              "hash": "926e158220e6df614dd4867f4dce057f8bf213b5",
+              "datavalue": {
+                "value": "99507",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9675"],
+        "id": "Q108371842$57363205-1CC0-4604-9B8D-741DAACBC088",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

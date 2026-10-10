@@ -1,0 +1,181 @@
+{
+  "pageid": 131307250,
+  "ns": 0,
+  "title": "Q137642503",
+  "lastrevid": 2515002668,
+  "modified": "2026-07-08T07:10:13Z",
+  "type": "item",
+  "id": "Q137642503",
+  "labels": {
+    "ca": {
+      "language": "ca",
+      "value": "La torre de vidre"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "La torre de vidre"
+    }
+  },
+  "descriptions": {
+    "ca": {
+      "language": "ca",
+      "value": "Pòdcast en català"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "3cad12dc85b7be85a65179c8eb0f833d3c332108",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 24634210,
+              "id": "Q24634210"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137642503$ADAB298B-BB49-44AF-9CD3-51812BF8C878",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "65061e00df66d9213810238ef10d6f015dce9fba",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "226d87ee67f5b37e3771667d4dda363920a6f1f0",
+                  "datavalue": {
+                    "value": "https://www.audio.cat/podcast/la-torre-de-vidre",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "270487ce9d09d93d59f69c979053adb48bd9606c",
+          "datavalue": {
+            "value": "https://www.ccma.cat/catradio/la-torre-de-vidre/",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q137642503$F7C717F8-7A9C-46E9-9CA6-5C8315315015",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "65061e00df66d9213810238ef10d6f015dce9fba",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "226d87ee67f5b37e3771667d4dda363920a6f1f0",
+                  "datavalue": {
+                    "value": "https://www.audio.cat/podcast/la-torre-de-vidre",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P5916": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5916",
+          "hash": "e23204ee70ebc5398e33f6e4bd33c0c9bd21c8f6",
+          "datavalue": {
+            "value": "2UEWE8XeYGXxjQMTycXnzb",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137642503$00EE6C12-4849-44DC-A694-5731F55AF3CD",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "65061e00df66d9213810238ef10d6f015dce9fba",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "226d87ee67f5b37e3771667d4dda363920a6f1f0",
+                  "datavalue": {
+                    "value": "https://www.audio.cat/podcast/la-torre-de-vidre",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P5842": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5842",
+          "hash": "d27cf1fe9438e2839c005cbcbb3846e39d0018cf",
+          "datavalue": {
+            "value": "1613147322",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137642503$C7C022FE-C6B3-46E4-A2A4-5622E1D61198",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "65061e00df66d9213810238ef10d6f015dce9fba",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "226d87ee67f5b37e3771667d4dda363920a6f1f0",
+                  "datavalue": {
+                    "value": "https://www.audio.cat/podcast/la-torre-de-vidre",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {}
+}

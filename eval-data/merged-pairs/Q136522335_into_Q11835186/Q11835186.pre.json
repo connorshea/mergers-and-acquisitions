@@ -1,0 +1,496 @@
+{
+  "pageid": 12971953,
+  "ns": 0,
+  "title": "Q11835186",
+  "lastrevid": 2523455721,
+  "modified": "2026-07-27T14:34:55Z",
+  "type": "item",
+  "id": "Q11835186",
+  "labels": {
+    "pl": {
+      "language": "pl",
+      "value": "Rollercoaster Tycoon: Zwariowane Krajobrazy"
+    },
+    "en": {
+      "language": "en",
+      "value": "RollerCoaster Tycoon: Loopy Landscapes"
+    },
+    "de": {
+      "language": "de",
+      "value": "RollerCoaster Tycoon: Loopy Landscapes"
+    }
+  },
+  "descriptions": {
+    "ru": {
+      "language": "ru",
+      "value": "компьютерная игра"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "لعبة فيديو"
+    },
+    "en": {
+      "language": "en",
+      "value": "2000 video game expansion pack"
+    },
+    "de": {
+      "language": "de",
+      "value": "Computerspielerweiterung"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "d3d738916246d5fef9c88dbea31d1771fef8a773",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 209163,
+              "id": "Q209163"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11835186$D262D831-220C-47F5-9436-2B682ADAA6F6",
+        "rank": "normal"
+      }
+    ],
+    "P400": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P400",
+          "hash": "0b7430c76aa932002363740d965c9f0a5cd61191",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1406,
+              "id": "Q1406"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11835186$db9bae36-42a4-419d-80b9-057f9267be36",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "14d2400e3b1d36332748dc330276f099eeaa8800",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "39224a9c2e8ce5424defbd16603d25771956c7fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 1551807,
+                      "id": "Q1551807"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "d8d3d5d2649d5f34f7d025667c146043b03f6e57",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1610017,
+              "id": "Q1610017"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11835186$d40a696f-8e5a-414d-82a2-430e2061d7b4",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "14d2400e3b1d36332748dc330276f099eeaa8800",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "39224a9c2e8ce5424defbd16603d25771956c7fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 1551807,
+                      "id": "Q1551807"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P8646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8646",
+          "hash": "ab0f478445b1b27008b0613659df47a9cc73bbf5",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5800778,
+              "id": "Q5800778"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11835186$19C08FA4-C31D-41DC-9D4F-2D9CE7680883",
+        "rank": "normal"
+      }
+    ],
+    "P10096": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10096",
+          "hash": "95ff1026abce592c26f09e2ca684d017cd4a93a1",
+          "datavalue": {
+            "value": "602",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11835186$65C0EB74-A5A3-453A-B931-8BB5C6518038",
+        "rank": "normal"
+      }
+    ],
+    "P6262": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6262",
+          "hash": "2b69f881f1dc510bca07310c3e7d202a7dc84b67",
+          "datavalue": {
+            "value": "rct:Loopy_Landscapes",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 1860,
+                  "id": "Q1860"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P9675": [
+            {
+              "snaktype": "value",
+              "property": "P9675",
+              "hash": "9e8832230a132c022f6077e1944acee04180e26f",
+              "datavalue": {
+                "value": "7",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P407", "P9675"],
+        "id": "Q11835186$64F5C03F-2EFC-4EFD-B648-8D0C79EA4EE1",
+        "rank": "normal"
+      }
+    ],
+    "P1933": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1933",
+          "hash": "3c3c496a2d30bd6b6ca5bb2d26e13eb3c69bd089",
+          "datavalue": {
+            "value": "rollercoaster-tycoon-loopy-landscapes",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11835186$440CCBDF-FF49-48B3-98D7-4F82F833E261",
+        "rank": "normal"
+      }
+    ],
+    "P11688": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11688",
+          "hash": "f6e5f204e74e42525b1b2f440c42f54d8c3ff0dc",
+          "datavalue": {
+            "value": "2599",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11835186$BF38F036-38DB-47C9-9375-FBBEBFD1D3AD",
+        "rank": "normal"
+      }
+    ],
+    "P6827": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6827",
+          "hash": "a80dd57bb87528d2b9b402b8c61a1a062304ea46",
+          "datavalue": {
+            "value": "16756",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11835186$CB97C578-208B-4036-B675-545AFF7E0E2E",
+        "rank": "normal"
+      }
+    ],
+    "P5290": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5290",
+          "hash": "d5c56b558eba5b401cb5295db9d3dea687296629",
+          "datavalue": {
+            "value": "10033",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11835186$525073AD-5576-4646-A896-F64D4691F108",
+        "rank": "normal"
+      }
+    ],
+    "P12215": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12215",
+          "hash": "6a1f97c26942456234e424ab8e06094d72ab4043",
+          "datavalue": {
+            "value": "36671",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11835186$5cf2a7ca-d5ae-477a-85ad-05679e897f36",
+        "rank": "normal"
+      }
+    ],
+    "P12054": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12054",
+          "hash": "4d0f2a2ac13f34f14e26f95d9705c0a2df082147",
+          "datavalue": {
+            "value": "rollercoaster-tycoon-loopy-landscapes",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P12078": [
+            {
+              "snaktype": "value",
+              "property": "P12078",
+              "hash": "b90d7820e78327220d1a2189449a92bec5e5ee96",
+              "datavalue": {
+                "value": "1300003063",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ]
+        },
+        "qualifiers-order": ["P12078"],
+        "id": "Q11835186$DD828F8A-4AD4-42C2-B07B-BD50D646C116",
+        "rank": "normal"
+      }
+    ],
+    "P12245": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12245",
+          "hash": "8fa193594509b8033d0a328af26fcead27e497cb",
+          "datavalue": {
+            "value": "1876",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11835186$412B8C69-4A8F-4668-8AEC-17884ADEF5DE",
+        "rank": "normal"
+      }
+    ],
+    "P5794": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5794",
+          "hash": "16177d510d9d92bed0758e58819baffddc79463a",
+          "datavalue": {
+            "value": "rollercoaster-tycoon-loopy-landscapes",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9043": [
+            {
+              "snaktype": "value",
+              "property": "P9043",
+              "hash": "1fa0d88ba3fdcdd7250d17ab142ca96b3a95f0c0",
+              "datavalue": {
+                "value": "19529",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9043"],
+        "id": "Q11835186$910771C8-7362-4E09-9289-B3C72D5B9B9D",
+        "rank": "normal"
+      }
+    ],
+    "P11250": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11250",
+          "hash": "e3910544947618e405e6e83b4d47caab064a3f66",
+          "datavalue": {
+            "value": "rct:Loopy_Landscapes",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9675": [
+            {
+              "snaktype": "value",
+              "property": "P9675",
+              "hash": "a203c451d9f9953038b8c8f3b0a90198ef8cbe06",
+              "datavalue": {
+                "value": "23",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9675"],
+        "id": "Q11835186$5172c8a2-481a-511d-02ca-2e594ef67c43",
+        "rank": "normal"
+      }
+    ],
+    "P14470": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P14470",
+          "hash": "9db739187e4ae0c4480d7821892120064aa5397a",
+          "datavalue": {
+            "value": "Games/RollerCoaster_Tycoon_Loopy_Landscapes",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9675": [
+            {
+              "snaktype": "value",
+              "property": "P9675",
+              "hash": "6897acf85ffa724cfa496d07215910e9cfe6d080",
+              "datavalue": {
+                "value": "131628",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9675"],
+        "id": "Q11835186$57D6A8C7-DE76-4219-B4A8-3350D2E77FE8",
+        "rank": "normal"
+      }
+    ],
+    "P9877": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P9877",
+          "hash": "7a87313174c589d147af543db9e3a0b6af4eef92",
+          "datavalue": {
+            "value": "3912",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11835186$A002011F-5298-45B1-93BC-5C2E6C35CAC0",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "plwiki": {
+      "site": "plwiki",
+      "title": "Rollercoaster Tycoon: Zwariowane krajobrazy",
+      "badges": [],
+      "url": "https://pl.wikipedia.org/wiki/Rollercoaster_Tycoon:_Zwariowane_krajobrazy"
+    }
+  }
+}

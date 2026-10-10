@@ -1,0 +1,221 @@
+{
+  "pageid": 12291156,
+  "ns": 0,
+  "title": "Q11081473",
+  "lastrevid": 2508059255,
+  "modified": "2026-06-19T19:54:02Z",
+  "type": "item",
+  "id": "Q11081473",
+  "labels": {
+    "ca": {
+      "language": "ca",
+      "value": "Co2"
+    },
+    "es": {
+      "language": "es",
+      "value": "Co2"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Co2"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Co2"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "television series"
+    },
+    "it": {
+      "language": "it",
+      "value": "serie televisiva"
+    },
+    "hu": {
+      "language": "hu",
+      "value": "televíziós sorozat"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "sèrie de televisió"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "série télévisée"
+    },
+    "eo": {
+      "language": "eo",
+      "value": "televida serio"
+    },
+    "es": {
+      "language": "es",
+      "value": "serie de televisión"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "sraith theilifíse"
+    },
+    "fa": {
+      "language": "fa",
+      "value": "مجموعهٔ تلویزیونی ساخته‌شده در فرانسه"
+    },
+    "hy": {
+      "language": "hy",
+      "value": "հեռուստասերիալ"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "televisieserie uit Frankrijk"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "টেলিভিশন ধারাবাহিক"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "телевізійний серіал"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "40a93c25a36e6a07478de6eca4ba68f5b9aaa85f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5398426,
+              "id": "Q5398426"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11081473$73f5bf0b-4546-3918-3e82-6f503b317d9d",
+        "rank": "normal"
+      }
+    ],
+    "P2437": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2437",
+          "hash": "6db12b2ed073c4ebab7f783192f73a82f7d46e06",
+          "datavalue": {
+            "value": {
+              "amount": "+2",
+              "unit": "1"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q11081473$08b34ea1-427b-b1c9-68c7-348a37d4840d",
+        "rank": "normal"
+      }
+    ],
+    "P1113": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1113",
+          "hash": "f896febe327a9d835845583e4135429b934bc951",
+          "datavalue": {
+            "value": {
+              "amount": "+65",
+              "unit": "1"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q11081473$9bd551fe-4049-0061-be45-efdb2046508f",
+        "rank": "normal"
+      }
+    ],
+    "P2047": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2047",
+          "hash": "ca54126b30f1f42fd51581cf1663f424cbaadace",
+          "datavalue": {
+            "value": {
+              "amount": "+2",
+              "unit": "http://www.wikidata.org/entity/Q7727"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q11081473$b5c327fc-4144-023b-340f-071c8d95b036",
+        "rank": "normal"
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "f707ab9792279b2ccec78f8736a8e5d28c8b7fc7",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 142,
+              "id": "Q142"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11081473$72777f3e-4cc8-1e45-40b4-9fd774e68344",
+        "rank": "normal"
+      }
+    ],
+    "P170": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P170",
+          "hash": "f1a04162d4be80bfbea6958f259a39383e30a2eb",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3379205,
+              "id": "Q3379205"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11081473$91a7e60b-42b2-b14e-c8f2-8b2d06315f60",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "cawiki": {
+      "site": "cawiki",
+      "title": "Co2",
+      "badges": [],
+      "url": "https://ca.wikipedia.org/wiki/Co2"
+    },
+    "eswiki": {
+      "site": "eswiki",
+      "title": "Co2 (serie de televisión)",
+      "badges": [],
+      "url": "https://es.wikipedia.org/wiki/Co2_(serie_de_televisi%C3%B3n)"
+    }
+  }
+}

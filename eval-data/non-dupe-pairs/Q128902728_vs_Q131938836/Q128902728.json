@@ -1,0 +1,190 @@
+{
+  "pageid": 122878364,
+  "ns": 0,
+  "title": "Q128902728",
+  "lastrevid": 2302925518,
+  "modified": "2025-01-27T05:19:44Z",
+  "type": "item",
+  "id": "Q128902728",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "EuroPark"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "parking operator based in Estonia"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "شركة إستونية"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "EuroPark Estonia"
+      },
+      {
+        "language": "en",
+        "value": "EuroPark Estonia OÜ"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "b7fc6c9f46efeede3bf483f3a5b0c45c7be77936",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 783794,
+              "id": "Q783794"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q128902728$d7570a2b-439b-1a1b-daa1-eb8128846e70",
+        "rank": "normal"
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "21b21489a3206bbdd928f9257d8fcd1327b83486",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 191,
+              "id": "Q191"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q128902728$3f23d522-469d-59dd-417e-fb40776af7a0",
+        "rank": "normal"
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "8c30873d5ee9f4209a82444e376088e1a608b389",
+          "datavalue": {
+            "value": "https://europark.ee/",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "7913eca2548c2bd3b23179257baff3732e7a88d2",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 9072,
+                  "id": "Q9072"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P407"],
+        "id": "Q128902728$43ad26e9-4940-961d-ebac-87602a319e99",
+        "rank": "normal"
+      }
+    ],
+    "P2013": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2013",
+          "hash": "723e1161ed04d64f6c6232c25eb030d25da387c9",
+          "datavalue": {
+            "value": "europarkestonia",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q128902728$ce92b955-48a4-7779-1f34-9833cd1f60be",
+        "rank": "normal"
+      }
+    ],
+    "P6518": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6518",
+          "hash": "f4dcce66c855ec6ede6c5a535629934648f8f45a",
+          "datavalue": {
+            "value": "10811490",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q128902728$8a41bdf1-4cf3-9d66-ee1e-81f724319584",
+        "rank": "normal"
+      }
+    ],
+    "P1454": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1454",
+          "hash": "af079f51d35aa8efb1b6f2ee02f27862931c47bb",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 16917171,
+              "id": "Q16917171"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q128902728$b189da87-4faf-9bfd-4723-58b888354d2f",
+        "rank": "normal"
+      }
+    ],
+    "P7891": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7891",
+          "hash": "ac97123266355caaaf58f5f814cf56c7e36191e4",
+          "datavalue": {
+            "value": "3215",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q128902728$3632A2C3-595D-4A9F-A468-1A4D98B817A7",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

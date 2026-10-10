@@ -1,0 +1,645 @@
+{
+  "pageid": 44383733,
+  "ns": 0,
+  "title": "Q43147169",
+  "lastrevid": 2532088300,
+  "modified": "2026-08-16T20:47:29Z",
+  "type": "item",
+  "id": "Q43147169",
+  "labels": {
+    "ro": {
+      "language": "ro",
+      "value": "gara Lotru"
+    },
+    "en": {
+      "language": "en",
+      "value": "Lotru"
+    },
+    "cs": {
+      "language": "cs",
+      "value": "Lotru"
+    },
+    "de": {
+      "language": "de",
+      "value": "Lotru"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "Lotru"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Lotru"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "Railway station in Vâlcea County, Romania"
+    },
+    "ro": {
+      "language": "ro",
+      "value": "gară din România"
+    },
+    "de": {
+      "language": "de",
+      "value": "Bahnhof in Rumänien"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "stacja kolejowa w Rumunii"
+    },
+    "cs": {
+      "language": "cs",
+      "value": "železniční stanice v Rumunsku"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "محطة سكة حديدية في رومانيا"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "gare ferroviaire roumaine"
+    },
+    "el": {
+      "language": "el",
+      "value": "σιδηροδρομικός σταθμός στη Ρουμανία"
+    }
+  },
+  "aliases": {
+    "fr": [
+      {
+        "language": "fr",
+        "value": "gare de Lotru"
+      }
+    ]
+  },
+  "claims": {
+    "P131": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P131",
+          "hash": "b5b264231be1b5139b3207b9497616030de434cb",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 526019,
+              "id": "Q526019"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q43147169$52AEAEB0-908D-4A52-AFC1-910091420E87",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "201e949af2fb5e74898b2afdc75e07ff88b1a807",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "66c964126402dc461fe3ea6c566bf43e3a0fb3df",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 28563569,
+                      "id": "Q28563569"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P577": [
+                {
+                  "snaktype": "value",
+                  "property": "P577",
+                  "hash": "c90e7cd24f66635f7941cec9222f71e064ddeeed",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2017-11-07T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "52e6b003ff06bdfcce954bced7e8a8e3162e7988",
+                  "datavalue": {
+                    "value": "https://tools.wmflabs.org/heritage/api/api.php?action=search&format=json&srcountry=ro&srlang=ro&srid=VL-II-m-B-09683",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P577", "P854"]
+          }
+        ]
+      }
+    ],
+    "P1770": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1770",
+          "hash": "01044d49dd252d18fe1460981f60cf72f7623a93",
+          "datavalue": {
+            "value": "VL-II-m-B-09683",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q43147169$8F0E8520-762F-474E-9955-428860DC5C07",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "201e949af2fb5e74898b2afdc75e07ff88b1a807",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "66c964126402dc461fe3ea6c566bf43e3a0fb3df",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 28563569,
+                      "id": "Q28563569"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P577": [
+                {
+                  "snaktype": "value",
+                  "property": "P577",
+                  "hash": "c90e7cd24f66635f7941cec9222f71e064ddeeed",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2017-11-07T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "52e6b003ff06bdfcce954bced7e8a8e3162e7988",
+                  "datavalue": {
+                    "value": "https://tools.wmflabs.org/heritage/api/api.php?action=search&format=json&srcountry=ro&srlang=ro&srid=VL-II-m-B-09683",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P577", "P854"]
+          }
+        ]
+      }
+    ],
+    "P1435": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1435",
+          "hash": "c616613849e27f7f9c44f78c4defe2a03378a5e1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 916620,
+              "id": "Q916620"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q43147169$1BA6483A-2ABD-430B-8651-63536D42E115",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "201e949af2fb5e74898b2afdc75e07ff88b1a807",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "66c964126402dc461fe3ea6c566bf43e3a0fb3df",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 28563569,
+                      "id": "Q28563569"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P577": [
+                {
+                  "snaktype": "value",
+                  "property": "P577",
+                  "hash": "c90e7cd24f66635f7941cec9222f71e064ddeeed",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2017-11-07T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "52e6b003ff06bdfcce954bced7e8a8e3162e7988",
+                  "datavalue": {
+                    "value": "https://tools.wmflabs.org/heritage/api/api.php?action=search&format=json&srcountry=ro&srlang=ro&srid=VL-II-m-B-09683",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P577", "P854"]
+          }
+        ]
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "8ef322efb0810d012f9b4799c2413f3721f6387a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 218,
+              "id": "Q218"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q43147169$DD3DB01B-A336-4903-8D6F-88A80CAC5D9C",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "201e949af2fb5e74898b2afdc75e07ff88b1a807",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "66c964126402dc461fe3ea6c566bf43e3a0fb3df",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 28563569,
+                      "id": "Q28563569"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P577": [
+                {
+                  "snaktype": "value",
+                  "property": "P577",
+                  "hash": "c90e7cd24f66635f7941cec9222f71e064ddeeed",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2017-11-07T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "52e6b003ff06bdfcce954bced7e8a8e3162e7988",
+                  "datavalue": {
+                    "value": "https://tools.wmflabs.org/heritage/api/api.php?action=search&format=json&srcountry=ro&srlang=ro&srid=VL-II-m-B-09683",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P577", "P854"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "12a4103fbfd98ec75d5d9269014f78fb822e8d00",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 55488,
+              "id": "Q55488"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q43147169$40C9023E-09AC-48F4-930D-F0011FE04AB9",
+        "rank": "normal"
+      }
+    ],
+    "P127": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P127",
+          "hash": "9521b7559932b9dde9c1025d8e4ef7f6719c4558",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 118791749,
+              "id": "Q118791749"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q43147169$632B4E2F-33C8-426C-8EF6-F6EECDE9EABE",
+        "rank": "normal"
+      }
+    ],
+    "P137": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P137",
+          "hash": "c689c0233eb623061228ab03f6e824d031f0dbf1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 118791749,
+              "id": "Q118791749"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q43147169$5DDDE466-C027-4D48-B355-62F6F098A49A",
+        "rank": "normal"
+      }
+    ],
+    "P6375": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6375",
+          "hash": "5533d756c0cba6f2aea790d8079610dd0532d5b7",
+          "datavalue": {
+            "value": {
+              "text": "Strada Golotreni 16",
+              "language": "ro"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q43147169$CC2A4CEB-0550-4BD7-9C39-354FC80F5CFD",
+        "rank": "normal"
+      }
+    ],
+    "P197": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P197",
+          "hash": "e2d64d1ac90d32d170c1f4191815e0a1b2019a8b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 59605011,
+              "id": "Q59605011"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q43147169$A0754C62-39A4-4452-8618-DBEBF8336917",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P197",
+          "hash": "6dc7aa31d3532ceb871964e2bd136315069351e5",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 59615731,
+              "id": "Q59615731"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q43147169$80044CD6-789A-4960-AC25-DD6743088CC0",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P197",
+          "hash": "b392a641d1e145407ce943cf4312525ce6fe6898",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 59615924,
+              "id": "Q59615924"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q43147169$EAB2CBE9-9D91-42A9-AB70-624699B97A43",
+        "rank": "normal"
+      }
+    ],
+    "P625": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P625",
+          "hash": "df751bdc18f461c3ad529f991a38320a2aa55803",
+          "datavalue": {
+            "value": {
+              "latitude": 45.34677716666667,
+              "longitude": 24.274854166666668,
+              "altitude": null,
+              "precision": 2.777777777777778e-8,
+              "globe": "http://www.wikidata.org/entity/Q2"
+            },
+            "type": "globecoordinate"
+          },
+          "datatype": "globe-coordinate"
+        },
+        "type": "statement",
+        "id": "Q43147169$b511cc19-44ea-47ca-7454-f414fb0c9fd8",
+        "rank": "normal"
+      }
+    ],
+    "P18": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "a6cb4bf47d9f3a8e08232deaf8a39e585757c6d2",
+          "datavalue": {
+            "value": "Lotru.jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q43147169$7428cf5f-4b27-6d52-df54-4148ba96c38d",
+        "rank": "normal"
+      }
+    ],
+    "P373": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P373",
+          "hash": "96994c5563a04e1d76a485b6efe03154c85443d0",
+          "datavalue": {
+            "value": "Lotru train station",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q43147169$bdbf21a6-4bea-e3f6-abf5-7b7bab008fbf",
+        "rank": "normal"
+      }
+    ],
+    "P11693": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11693",
+          "hash": "fcc582f57b6365eb7aded7fed04c832fde0fcf19",
+          "datavalue": {
+            "value": "2669248288",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q43147169$cf1b23d7-40c3-9e44-9f36-8c87da3b11b5",
+        "rank": "normal"
+      }
+    ],
+    "P81": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P81",
+          "hash": "78b1298eeef3962fd8d5f15add4b466b6bfbf196",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 12723304,
+              "id": "Q12723304"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q43147169$f33f3e60-4502-83f9-3119-7cc4a6ca8039",
+        "rank": "normal"
+      }
+    ],
+    "P5817": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5817",
+          "hash": "3a5c47216c1ed20dc4a40d9bcde91e515d6a6966",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 55654238,
+              "id": "Q55654238"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q43147169$0608d0c6-4ade-9162-9ccf-8cff2489ae5b",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "commonswiki": {
+      "site": "commonswiki",
+      "title": "Category:Lotru train station",
+      "badges": [],
+      "url": "https://commons.wikimedia.org/wiki/Category:Lotru_train_station"
+    }
+  }
+}

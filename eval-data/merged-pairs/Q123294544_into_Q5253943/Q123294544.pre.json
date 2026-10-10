@@ -1,0 +1,71 @@
+{
+  "pageid": 117528049,
+  "ns": 0,
+  "title": "Q123294544",
+  "lastrevid": 2003603116,
+  "modified": "2023-11-03T09:13:59Z",
+  "type": "item",
+  "id": "Q123294544",
+  "labels": {
+    "fr": {
+      "language": "fr",
+      "value": "Delicious"
+    },
+    "en": {
+      "language": "en",
+      "value": "Delicious"
+    }
+  },
+  "descriptions": {
+    "fr": {
+      "language": "fr",
+      "value": "série de jeux vidéo"
+    },
+    "en": {
+      "language": "en",
+      "value": "video game series"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "28e85ae78b1fad0af0f87f70f08c5f9c3dbbc52f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7058673,
+              "id": "Q7058673"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q123294544$e718534a-48de-213b-9da5-26cb4d658037",
+        "rank": "normal"
+      }
+    ],
+    "P11690": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11690",
+          "hash": "226c18121e5fad01d91f57fa41ef0495185c65fb",
+          "datavalue": {
+            "value": "14048",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q123294544$4b2f9e94-433f-06dc-f460-92789ad2b0fc",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

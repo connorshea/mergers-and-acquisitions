@@ -1,0 +1,617 @@
+{
+  "pageid": 95030258,
+  "ns": 0,
+  "title": "Q96282754",
+  "lastrevid": 2335649759,
+  "modified": "2025-04-07T22:52:56Z",
+  "type": "item",
+  "id": "Q96282754",
+  "labels": {
+    "ast": {
+      "language": "ast",
+      "value": "The Trolley Song"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "The Trolley Song"
+    },
+    "da": {
+      "language": "da",
+      "value": "The Trolley Song"
+    },
+    "de": {
+      "language": "de",
+      "value": "The Trolley Song"
+    },
+    "en": {
+      "language": "en",
+      "value": "The Trolley Song"
+    },
+    "es": {
+      "language": "es",
+      "value": "The Trolley Song"
+    },
+    "eu": {
+      "language": "eu",
+      "value": "The Trolley Song"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "The Trolley Song"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "The Trolley Song"
+    },
+    "hu": {
+      "language": "hu",
+      "value": "The Trolley Song"
+    },
+    "it": {
+      "language": "it",
+      "value": "The Trolley Song"
+    },
+    "nb": {
+      "language": "nb",
+      "value": "The Trolley Song"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "The Trolley Song"
+    },
+    "nn": {
+      "language": "nn",
+      "value": "The Trolley Song"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "The Trolley Song"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "The Trolley Song"
+    },
+    "ro": {
+      "language": "ro",
+      "value": "The Trolley Song"
+    },
+    "se": {
+      "language": "se",
+      "value": "The Trolley Song"
+    },
+    "sq": {
+      "language": "sq",
+      "value": "The Trolley Song"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "The Trolley Song"
+    },
+    "tr": {
+      "language": "tr",
+      "value": "The Trolley Song"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "The Trolley Song"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "vocal track by Judy Garland and the M-G-M Studio Chorus; 1944 original soundtrack recording"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "6cec4a89c879a88c6c034be7465bb937702004ce",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 55850593,
+              "id": "Q55850593"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q96282754$1b9abdcf-4c1f-85c1-e019-f7c70fb563d8",
+        "rank": "normal"
+      }
+    ],
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "8a07fb2221a48d7d66663f41c16a7c33ef5b4f05",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11637,
+              "id": "Q11637"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P3831": [
+            {
+              "snaktype": "value",
+              "property": "P3831",
+              "hash": "a8fc95f48fb1d6df8d7c5a9e32a7707adbaa27b1",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 55975210,
+                  "id": "Q55975210"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P3831"],
+        "id": "Q96282754$dd0b1f95-4401-52a5-487e-2ff8c3fb5e7e",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "1ad9bc360d1c85f999ea33ded91405312edd8f8c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 60441985,
+              "id": "Q60441985"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q96282754$0acf8acc-4012-d291-dd51-c0db1da45cff",
+        "rank": "normal"
+      }
+    ],
+    "P4404": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4404",
+          "hash": "9833cf192c02c43e26cd5aa0afcc8dfa444521a9",
+          "datavalue": {
+            "value": "9467d763-c267-460c-a980-86ea01f3db2d",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "6c3d2ce68ac15adb4d8969d7dc520767a5ee888a",
+              "datavalue": {
+                "value": "The Trolley Song (Meet Me in St. Louis, 1944 film soundtrack, stereo mix from MGM's original recording masters)",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q96282754$5d3c1efa-49a9-39e8-08bb-c0ac2752fa5c",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "8825bddf441a1a43532898d088813bbacfa59a28",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "623cc8f0e2f65afe4d66b91962d354a2f3aa9a27",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 14005,
+                      "id": "Q14005"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "ccaece45204bff86d17d2736966a5ae0904c0db5",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2020-06-12T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "6f0510068a64b8ef259906c80399bc6046575bd7",
+          "datavalue": {
+            "value": {
+              "text": "The Trolley Song",
+              "language": "en"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q96282754$b3303780-45a1-83fa-f7c9-1bc8b2b6bb87",
+        "rank": "normal"
+      }
+    ],
+    "P3300": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3300",
+          "hash": "996702304528403ee228a5dfb28802bafe42c1b3",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1507268,
+              "id": "Q1507268"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q96282754$bed380cf-4d0e-fe81-88e8-7b293e2a6580",
+        "rank": "normal"
+      }
+    ],
+    "P1552": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1552",
+          "hash": "7c99171a55ab183a59977d03124573a8dcd7af4c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 15975575,
+              "id": "Q15975575"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q96282754$5d8fcdcc-4049-cc9a-39b2-41e698aa452e",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1552",
+          "hash": "9c6cc170274e81a0f85c45ff99bb818faa474473",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 67007571,
+              "id": "Q67007571"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q96282754$cb0b8b3b-4734-795d-3fde-7f7742aee817",
+        "rank": "normal"
+      }
+    ],
+    "P1433": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1433",
+          "hash": "a8d8e8d6076b3ea3655aa0adac3829e0789f65a3",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11776895,
+              "id": "Q11776895"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P577": [
+            {
+              "snaktype": "value",
+              "property": "P577",
+              "hash": "8342d9ebfa73eae8193415946f87d8d4ee544197",
+              "datavalue": {
+                "value": {
+                  "time": "+1995-00-00T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 9,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P1545": [
+            {
+              "snaktype": "value",
+              "property": "P1545",
+              "hash": "51210afb13f62d7537a51c61ba9b9586db143c24",
+              "datavalue": {
+                "value": "10",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P577", "P1545"],
+        "id": "Q96282754$7ceff7f3-4c3b-546a-120c-11c482b0b9ec",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "db60cb4c10ee4f64e7aba0ce2f6164bb9635845d",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "0a98e7b8da67b1283132f7ca0bff11e73f6fc04c",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2020-06-14T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P813"]
+          }
+        ]
+      }
+    ],
+    "P1730": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1730",
+          "hash": "137ab742ad157c12fbc22978860354ca01f4901b",
+          "datavalue": {
+            "value": "mt0004910175",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "53ec9e5d22fe5f5529a2eb3fab2520c353db39bc",
+              "datavalue": {
+                "value": "The Trolley Song",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q96282754$4524192d-4b91-9fa6-8a05-97732c2835cb",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "54f456506f9892e6d7edd2dd8441571378fcafd5",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "fa28758dedb471bbd17a5773562e57ccb962622d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 31181,
+                      "id": "Q31181"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "0a98e7b8da67b1283132f7ca0bff11e73f6fc04c",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2020-06-14T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P2550": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2550",
+          "hash": "b8b4f516eaac2dc37565b11d486f2a0b459188d8",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7770323,
+              "id": "Q7770323"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q96282754$ea13ce03-4894-7a24-1c30-a110f919b234",
+        "rank": "normal"
+      }
+    ],
+    "P2624": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2624",
+          "hash": "cb98bb2ebe2815f0a1d76526349da3e56222ee7c",
+          "datavalue": {
+            "value": "trolley-song-lyrics-judy-garland",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q96282754$23CE2190-B3C8-403C-B579-3EB08F0170F9",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P1243": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1243",
+          "hash": "44fc5183325c1f75ca4a5b4f873e9749acbe5fa8",
+          "datavalue": {
+            "value": "UST1C0102370",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q96282754$74E51D2C-D2F7-4D78-B8E1-03E7B44CE69A",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "6e046e687d92e3d9795ea39ddda054174d1d2f2b",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "623cc8f0e2f65afe4d66b91962d354a2f3aa9a27",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 14005,
+                      "id": "Q14005"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4404": [
+                {
+                  "snaktype": "value",
+                  "property": "P4404",
+                  "hash": "9833cf192c02c43e26cd5aa0afcc8dfa444521a9",
+                  "datavalue": {
+                    "value": "9467d763-c267-460c-a980-86ea01f3db2d",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P4404"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {}
+}

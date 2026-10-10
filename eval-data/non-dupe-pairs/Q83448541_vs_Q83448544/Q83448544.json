@@ -1,0 +1,307 @@
+{
+  "pageid": 82764842,
+  "ns": 0,
+  "title": "Q83448544",
+  "lastrevid": 2552397120,
+  "modified": "2026-10-03T02:39:34Z",
+  "type": "item",
+  "id": "Q83448544",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Lennoxtown railway station"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Lennoxtown"
+    }
+  },
+  "descriptions": {
+    "ar": {
+      "language": "ar",
+      "value": "محطة قطار في اسكتلندا، المملكة المتحدة"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "spoorwegstation in Schotland, Verenigd Koninkrijk"
+    },
+    "en": {
+      "language": "en",
+      "value": "railway station in East Dunbartonshire, Scotland, UK"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "যুক্তরাজ্যের রেলওয়ে স্টেশন"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "gare ferroviaire d'East Dunbartonshire, en Écosse, au Royaume-Uni"
+    },
+    "el": {
+      "language": "el",
+      "value": "σιδηροδρομικός σταθμός στo Ηνωμένο Βασίλειο"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "Lennoxtown Station"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "12a4103fbfd98ec75d5d9269014f78fb822e8d00",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 55488,
+              "id": "Q55488"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q83448544$969EB372-6170-4061-A3D3-6772392FD279",
+        "rank": "normal"
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "a44880420787fb348836dc51d3babc5227c4ef7e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 145,
+              "id": "Q145"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q83448544$863AC19E-578E-4C97-8202-9EDDFEFCC88C",
+        "rank": "normal"
+      }
+    ],
+    "P131": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P131",
+          "hash": "72a898e367d8713f51d772041ea5b5f02a7f154a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 211889,
+              "id": "Q211889"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P3831": [
+            {
+              "snaktype": "value",
+              "property": "P3831",
+              "hash": "819380206ef7ce1dc8c269ac93678ac7d9fb0c63",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 15060255,
+                  "id": "Q15060255"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P3831"],
+        "id": "Q83448544$70D08DDD-9753-4D84-B968-57FB92E2BD0A",
+        "rank": "normal"
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "b56f3614900267793e4a60f1edc0aa05e47b60a4",
+          "datavalue": {
+            "value": "/g/11fr3d45t0",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q83448544$106FDA3C-5950-48A6-A7A9-EC0EB5A65744",
+        "rank": "normal"
+      }
+    ],
+    "P625": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P625",
+          "hash": "0b1745aefc45a6c1105a3a1a652a613bde967043",
+          "datavalue": {
+            "value": {
+              "latitude": 55.973545,
+              "longitude": -4.201761,
+              "altitude": null,
+              "precision": 0.000001,
+              "globe": "http://www.wikidata.org/entity/Q2"
+            },
+            "type": "globecoordinate"
+          },
+          "datatype": "globe-coordinate"
+        },
+        "type": "statement",
+        "id": "Q83448544$51875e43-4f69-bb09-4564-c100f05b5297",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d5c16a5bc8fa1d7de18f09a659e4f8edc620eb64",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "42f057dd82a1bd10e34b1d3a9e21b006e49ba8af",
+                  "datavalue": {
+                    "value": "https://maps.nls.uk/geo/explore/#zoom=18&lat=55.97370&lon=-4.20190&layers=168&b=1&marker=55.973545,-4.201761",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P7959": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7959",
+          "hash": "b8b7a014daca1088311d75a29665cce5ae076b41",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1229763,
+              "id": "Q1229763"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q83448544$0c4311bf-82de-4311-8480-eab5e15c0a68",
+        "rank": "normal"
+      }
+    ],
+    "P1619": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1619",
+          "hash": "abf4b6aa88c90b27e27668e8b12a5354ff7db7d9",
+          "datavalue": {
+            "value": {
+              "time": "+1848-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q83448544$3BD203C8-AAF0-4A59-A577-E0C3EC333AAE",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2a03e250377d37f15482cbbdd1d0225b9b4a00e8",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "460d62ca8048feb504c5c0f8fc903dceffdb9443",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/wiki/Category:Railway_stations_in_Great_Britain_opened_in_1848",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "90977d09985ec30893985880beffccd2afbc1222",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 83448541,
+              "id": "Q83448541"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q83448544$C4876C8F-490E-4AD6-A487-F24569C6A721",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Lennoxtown (Old) railway station",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Lennoxtown_(Old)_railway_station"
+    }
+  }
+}

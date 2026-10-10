@@ -1,0 +1,245 @@
+{
+  "pageid": 110663427,
+  "ns": 0,
+  "title": "Q115971827",
+  "lastrevid": 2550189392,
+  "modified": "2026-09-27T22:09:01Z",
+  "type": "item",
+  "id": "Q115971827",
+  "labels": {
+    "fr": {
+      "language": "fr",
+      "value": "Kyle Thompson"
+    },
+    "en": {
+      "language": "en",
+      "value": "Kyle Thompson"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Kyle Thompson"
+    }
+  },
+  "descriptions": {
+    "fr": {
+      "language": "fr",
+      "value": "développeur de jeu vidéo"
+    },
+    "en": {
+      "language": "en",
+      "value": "video game developer"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "розробник відеоігор"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "ভিডিও গেম ডেভেলপার"
+    },
+    "as": {
+      "language": "as",
+      "value": "ভিডিঅ' গেম ডেভেলপাৰ"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q115971827$bee7128c-40ec-e2ce-e1d9-544e6f4df8f6",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q115971827$8affc551-4e80-59e7-a73d-60db387c2635",
+        "rank": "normal"
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "4278f1a60102248c4a5ed8e4c7861f93c33ffe7f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 58287519,
+              "id": "Q58287519"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q115971827$430fbb7e-4e95-6dae-6ab6-3c69b17b88f6",
+        "rank": "normal"
+      }
+    ],
+    "P735": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P735",
+          "hash": "5306646d4f32660d66e0998e0ee7bcdeed682469",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1326816,
+              "id": "Q1326816"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q115971827$fde557ed-40bc-6dcf-ca64-dc48b1e7fcc0",
+        "rank": "normal"
+      }
+    ],
+    "P734": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P734",
+          "hash": "d746f034de57f84f7438570b8c892c950e3f627e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2803433,
+              "id": "Q2803433"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q115971827$2a2e07f2-413f-c077-3a4b-e99d4ce2f5ff",
+        "rank": "normal"
+      }
+    ],
+    "P2002": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2002",
+          "hash": "3b304690587a82752820047583bddbb95e52c3c6",
+          "datavalue": {
+            "value": "KyleThompsonDev",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P6552": [
+            {
+              "snaktype": "value",
+              "property": "P6552",
+              "hash": "927240720cc3782238afefcee8ce08a439620939",
+              "datavalue": {
+                "value": "1228391151310233600",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ],
+          "P580": [
+            {
+              "snaktype": "value",
+              "property": "P580",
+              "hash": "cc9f14cf7bd0e4d35123935a7fd35e5dc6a32b64",
+              "datavalue": {
+                "value": {
+                  "time": "+2020-02-14T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P585": [
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "135b8aa5dbb17bab3de019239540924de2f4f051",
+              "datavalue": {
+                "value": {
+                  "time": "+2023-01-09T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P6552", "P580", "P585"],
+        "id": "Q115971827$a5325ed8-4baa-8956-e86c-0a77513dc078",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "362980b070a44cf597c20cd1d34ceebed7d452aa",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 21623106,
+              "id": "Q21623106"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q115971827$A10F703E-55A2-4BDD-AD18-A72E3C5CFBB4",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

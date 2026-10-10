@@ -1,0 +1,159 @@
+{
+  "pageid": 134861956,
+  "ns": 0,
+  "title": "Q141329783",
+  "lastrevid": 2549826144,
+  "modified": "2026-09-26T23:58:20Z",
+  "type": "item",
+  "id": "Q141329783",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "The life of saint Christine"
+    },
+    "la": {
+      "language": "la",
+      "value": "Vita sanctae Christinae"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "La vie de sainte Christine"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "medieval versions of the life of Saint Christina of Bolsena"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "versions médiévales de la vie de sainte Christine de Bolsena"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5963e3cad5eee4ae1cffbefbac15327800b9a7e6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7725634,
+              "id": "Q7725634"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141329783$077E21E8-C8C7-4DA5-BDD2-4CCCC6D0B23A",
+        "rank": "normal"
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "37aeea3f194932edf979e2dcd777865ba543f708",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 208628,
+              "id": "Q208628"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141329783$45549E56-67E9-41B9-BA09-22FD8C03E9EB",
+        "rank": "normal"
+      }
+    ],
+    "P4549": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4549",
+          "hash": "1ce2e20dc9c17d1670b3b5744ae593ead51725fc",
+          "datavalue": {
+            "value": "18668",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q141329783$8F85A89B-1980-4DAB-B123-07A72E99625D",
+        "rank": "normal"
+      }
+    ],
+    "P2348": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2348",
+          "hash": "ce8abd67b2a82eaeeaf07a32d171127e3f0f0372",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 12554,
+              "id": "Q12554"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141329783$0EFD165B-4429-4DCF-9CC2-3B0D97C9EF88",
+        "rank": "normal"
+      }
+    ],
+    "P921": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P921",
+          "hash": "7c15f25e2166637f8d8b4389735f41aec02059f3",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 237882,
+              "id": "Q237882"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141329783$B46443DA-A251-4C99-94DB-9754365DA859",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "fc7942a7bda839c43874167ef96658e4ebf4afc4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 141329723,
+              "id": "Q141329723"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141329783$087D77B0-C66C-4A97-89A3-686903F4FBE8",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

@@ -1,0 +1,166 @@
+{
+  "pageid": 5023434,
+  "ns": 0,
+  "title": "Q5253943",
+  "lastrevid": 2233263224,
+  "modified": "2024-08-21T21:36:00Z",
+  "type": "item",
+  "id": "Q5253943",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Delicious"
+    },
+    "pt-br": {
+      "language": "pt-br",
+      "value": "emily delicious"
+    },
+    "ru": {
+      "language": "ru",
+      "value": "Delicious"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "美味餐厅系列"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "series of time management casual games"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "28e85ae78b1fad0af0f87f70f08c5f9c3dbbc52f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7058673,
+              "id": "Q7058673"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q5253943$8aff9f96-4ebf-4028-9e18-65febbfaa102",
+        "rank": "normal"
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "d1bb05edbb23c889726dbad3a8f25dbd9df8f99f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 55,
+              "id": "Q55"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q5253943$7581F0CC-FA15-499D-9702-418037358381",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "11b25a834e418e38dfe0174c13ee2d9f5d565c23",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "fc771c90109b5d28f5567e93701f5f78d8b7c089",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/wiki/Category:Video_games_developed_in_the_Netherlands",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "4f302488619710592f42aa143dbd08d3199cf2e0",
+          "datavalue": {
+            "value": "/m/04mymbr",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q5253943$99111EDD-6E9C-4B89-80EF-97C3FBEF0420",
+        "rank": "normal"
+      }
+    ],
+    "P11891": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11891",
+          "hash": "291002eb6efcf78bfc19fc096b88c72e87563c8e",
+          "datavalue": {
+            "value": "delicious-serie",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q5253943$10EBCB7E-0D79-4533-A916-90AAB4DFED0D",
+        "rank": "normal"
+      }
+    ],
+    "P5360": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5360",
+          "hash": "4dda3d3b878821f965ce50bb2d6c337f9bda2253",
+          "datavalue": {
+            "value": "delicious-series",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q5253943$31EB0A06-CC6C-495B-9735-ECF6F4E676B8",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

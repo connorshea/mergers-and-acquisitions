@@ -1,0 +1,371 @@
+{
+  "pageid": 76118406,
+  "ns": 0,
+  "title": "Q76634454",
+  "lastrevid": 2554590076,
+  "modified": "2026-10-07T14:52:29Z",
+  "type": "item",
+  "id": "Q76634454",
+  "labels": {
+    "de": {
+      "language": "de",
+      "value": "Josef Albers Museum"
+    }
+  },
+  "descriptions": {
+    "fr": {
+      "language": "fr",
+      "value": "musée en Allemagne"
+    },
+    "br": {
+      "language": "br",
+      "value": "mirdi Alamagn"
+    },
+    "de": {
+      "language": "de",
+      "value": "Museum in Deutschland"
+    },
+    "en": {
+      "language": "en",
+      "value": "museum in Germany"
+    },
+    "it": {
+      "language": "it",
+      "value": "museo in Germania"
+    },
+    "es": {
+      "language": "es",
+      "value": "museo en Alemania"
+    },
+    "cy": {
+      "language": "cy",
+      "value": "amgueddfa yn yr Almaen"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "museu na Alemanha"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "museum i Tyskland"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "muzeum w Niemczech"
+    },
+    "eo": {
+      "language": "eo",
+      "value": "muzeo en Germanio"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "museo Saksassa"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "музей у Німеччині"
+    },
+    "hy": {
+      "language": "hy",
+      "value": "թանգարան Գերմանիայում"
+    },
+    "hi": {
+      "language": "hi",
+      "value": "जर्मनी का एक संग्रहालय"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P791": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P791",
+          "hash": "54763f7a4c66495e9cc74a5cc17cac7c8c7ff76d",
+          "datavalue": {
+            "value": "DE-MUS-238215",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q76634454$F47A5B54-0224-4C6F-998F-1EF8E143A75F",
+        "rank": "normal"
+      }
+    ],
+    "P281": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P281",
+          "hash": "e5e4ef805546e552abd53fecc105dec8b9363b14",
+          "datavalue": {
+            "value": "46236",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q76634454$6A5BE004-E83F-4089-9129-6C79D7731988",
+        "rank": "normal"
+      }
+    ],
+    "P6375": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6375",
+          "hash": "c55cd5334432171fcc5db6db1c022a2491fb6efb",
+          "datavalue": {
+            "value": {
+              "text": "Im Stadtgarten 20, 46236 Bottrop",
+              "language": "de"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q76634454$59AEDB44-3214-4D57-B50C-62C55D8C4AF3",
+        "rank": "normal"
+      }
+    ],
+    "P625": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P625",
+          "hash": "1ec652b042cb6e30ca16d850fd026303ea2e2bd2",
+          "datavalue": {
+            "value": {
+              "latitude": 51.53115,
+              "longitude": 6.917976,
+              "altitude": null,
+              "precision": 0.000001,
+              "globe": "http://www.wikidata.org/entity/Q2"
+            },
+            "type": "globecoordinate"
+          },
+          "datatype": "globe-coordinate"
+        },
+        "type": "statement",
+        "id": "Q76634454$C8283E9F-E2E3-4D1B-990A-60D0AC93F935",
+        "rank": "normal"
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "48cc82c240ddfd779cbd548a0e822d12636c2cdc",
+          "datavalue": {
+            "value": "http://www.bottrop.de/mq/index.php",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q76634454$0FA181F5-BF8D-4290-88A8-FF295D35E67C",
+        "rank": "normal"
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "ef7247b704f4ec0a7df39e83306bb388fea17d5f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 183,
+              "id": "Q183"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q76634454$8BF8C40B-5938-448F-BFD3-B8CF1EFF50DA",
+        "rank": "normal"
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "4cb858cccdb4e3c1fbe0aac4e40c2715bed4b17c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 33506,
+              "id": "Q33506"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q76634454$CFACA8B9-A8EC-4643-8E87-B27E4A4ADC54",
+        "rank": "normal"
+      }
+    ],
+    "P691": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P691",
+          "hash": "b7b63b552ff00cf2c0126fc4b2847b6c85d016ae",
+          "datavalue": {
+            "value": "xx0151262",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "ed3b2a2c8d9a1e71ceb5c866b1128ea95f1b66ad",
+              "datavalue": {
+                "value": "Josef-Albers-Museum",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q76634454$0867F5A0-32A6-4C39-97A6-28171C841015",
+        "rank": "normal"
+      }
+    ],
+    "P214": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P214",
+          "hash": "3480c1bb50f5afde3a11113b7171e56b13d25431",
+          "datavalue": {
+            "value": "158948336",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q76634454$53A6C227-4AE8-4587-A84C-7578BA2B4060",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "b2b1e3fdc00d1864dd04cfe15abcdabb117ab71e",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "6b7d4330c4aac4caec4ede9de0311ce273f88ecd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 54919,
+                      "id": "Q54919"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "8f78f934214fed06845fba598ead818abd8b0ccb",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-06-20T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P8189": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8189",
+          "hash": "dd1fa125bab41e728d12fb8e430402a2d5983414",
+          "datavalue": {
+            "value": "987008144777805171",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q76634454$AD1969A5-C16F-47F0-8548-F7BF4B5591CB",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ecb7a39cf436eb1fba419853af168ef9f2ba1dab",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "a03bb6ffe37be9554492f4eea5bd18afcb57df19",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 106509962,
+                      "id": "Q106509962"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P248"]
+          }
+        ]
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "80be75bc6cd05658713e116999726d5072261423",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 896624,
+              "id": "Q896624"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q76634454$CE65DA50-BB39-4901-B042-167A87AC508E",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

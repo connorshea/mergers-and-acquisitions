@@ -1,0 +1,95 @@
+{
+  "pageid": 124200362,
+  "ns": 0,
+  "title": "Q130235698",
+  "lastrevid": 2550712642,
+  "modified": "2026-09-29T00:46:42Z",
+  "type": "item",
+  "id": "Q130235698",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Criminal"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "2013 single by Smiley"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5be109d8a3cbbd062357a9d210d4ef00ef25244e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 105543609,
+              "id": "Q105543609"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q130235698$dc112992-669c-4a5c-89bb-0cd11aad47f5",
+        "rank": "normal"
+      }
+    ],
+    "P7937": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7937",
+          "hash": "95c182f3c475d9df12743fde55dc93e0a76efa11",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7366,
+              "id": "Q7366"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q130235698$d1ae75e9-aa00-49ec-ad98-f58f7cc32ac0",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "8084ad93ad92d98d0b323d451593a69b606b739b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 139740967,
+              "id": "Q139740967"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q130235698$D149FDA4-64DC-485E-AF39-90C291E446AE",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Criminal (Smiley song)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Criminal_(Smiley_song)"
+    }
+  }
+}

@@ -1,0 +1,301 @@
+{
+  "pageid": 2310973,
+  "ns": 0,
+  "title": "Q2392153",
+  "lastrevid": 2551651635,
+  "modified": "2026-10-01T06:22:44Z",
+  "type": "item",
+  "id": "Q2392153",
+  "labels": {
+    "eo": {
+      "language": "eo",
+      "value": "Tanbo"
+    },
+    "de": {
+      "language": "de",
+      "value": "Tanbo"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "根棋"
+    },
+    "en": {
+      "language": "en",
+      "value": "Tanbo"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "game"
+    },
+    "de": {
+      "language": "de",
+      "value": "strategisches Brettspiel für zwei Personen"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "bordspel"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "jeu de société"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "3033071b8ff4020f1bf602c4811b184ec5fef20c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 131436,
+              "id": "Q131436"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2392153$171FE05C-8BEE-403F-A94A-9E09F786217C",
+        "rank": "normal"
+      }
+    ],
+    "P2339": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2339",
+          "hash": "73c6c2795f5dc7724399eba79f534ac5893bcfca",
+          "datavalue": {
+            "value": "6492",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q2392153$70A0C12A-A01B-4450-821E-F6DD2CC104BD",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9a24f7c0208b05d6be97077d855671d1dfdbc0dd",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 48183,
+                      "id": "Q48183"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "d06f3490e712153fa7d9f9d63f1001a980dc003f",
+          "datavalue": {
+            "value": "/m/01kdp6",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q2392153$2C1C2253-76C6-4F70-A628-6FB734C555CF",
+        "rank": "normal"
+      }
+    ],
+    "P3962": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3962",
+          "hash": "e1921c4aeb7d2292676166afd69a5fea170314af",
+          "datavalue": {
+            "value": "3760399890336",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q2392153$67B2205A-C2A4-4794-8051-E35D5B4CB903",
+        "rank": "normal"
+      }
+    ],
+    "P1872": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1872",
+          "hash": "667f201dd26a3ac2d1a167738b7bc12d47164dcb",
+          "datavalue": {
+            "value": {
+              "amount": "+2",
+              "unit": "1"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q2392153$4C6740EF-2003-42CD-8FDE-BBD852F32148",
+        "rank": "normal"
+      }
+    ],
+    "P1873": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1873",
+          "hash": "3787fa640c2a667378f5231f7564e91b83c42248",
+          "datavalue": {
+            "value": {
+              "amount": "+2",
+              "unit": "1"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q2392153$35511EA5-FAA4-4242-8421-D28E9735FE47",
+        "rank": "normal"
+      }
+    ],
+    "P2899": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2899",
+          "hash": "1a9da0e461e7943625a20e0485295e5077fedf66",
+          "datavalue": {
+            "value": {
+              "amount": "+8",
+              "unit": "http://www.wikidata.org/entity/Q24564698"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q2392153$411B0679-B058-4777-A059-964A727F0066",
+        "rank": "normal"
+      }
+    ],
+    "P2047": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2047",
+          "hash": "40687bacefc26f4eaf8d3f3cf3410b143a223beb",
+          "datavalue": {
+            "value": {
+              "amount": "+5",
+              "unit": "http://www.wikidata.org/entity/Q7727"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q2392153$B67BDA86-E6E3-4A35-929C-148F651FF41D",
+        "rank": "normal"
+      }
+    ],
+    "P14579": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P14579",
+          "hash": "6a6ca60bca2e492398afe5f03b23a8922276a1a4",
+          "datavalue": {
+            "value": "83705",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q2392153$E8E50177-77B3-4494-A4C5-5F21ABFD84B3",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "d4e59893b544844c9935a5f4c15d99ca504ac902",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 141571515,
+              "id": "Q141571515"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1013": [
+            {
+              "snaktype": "value",
+              "property": "P1013",
+              "hash": "8dd4758387179b92e5e18850b5eaaf62294e0489",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 107214772,
+                  "id": "Q107214772"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1013"],
+        "id": "Q2392153$e293d511-c886-4293-bb9c-3b1d2f6d95d3",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "eowiki": {
+      "site": "eowiki",
+      "title": "Tanbo",
+      "badges": [],
+      "url": "https://eo.wikipedia.org/wiki/Tanbo"
+    },
+    "dewiki": {
+      "site": "dewiki",
+      "title": "Tanbo (Spiel)",
+      "badges": [],
+      "url": "https://de.wikipedia.org/wiki/Tanbo_(Spiel)"
+    },
+    "zhwiki": {
+      "site": "zhwiki",
+      "title": "根棋",
+      "badges": [],
+      "url": "https://zh.wikipedia.org/wiki/%E6%A0%B9%E6%A3%8B"
+    }
+  }
+}

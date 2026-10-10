@@ -8,13 +8,17 @@
 //   node scripts/eval-llm.ts labels                  # resolve labels once (QLever, no API key)
 //   node scripts/eval-llm.ts show <pair-dir>         # print the prompt for one pair
 //   node scripts/eval-llm.ts estimate                # count tokens and project the cost (free)
-//   node scripts/eval-llm.ts submit [--models haiku,sonnet,opus] [--limit N] [--wait]
+//   node scripts/eval-llm.ts submit [--models haiku,sonnet,opus] [--limit N] [--max-pair-cost USD] [--wait]
 //   node scripts/eval-llm.ts collect [run-dir] [--wait]   # default: the latest run
 //
 // `submit` and `estimate` need ANTHROPIC_API_KEY (or an `ant auth login`
 // profile). Each run is kept under tmp/llm-eval/<timestamp>/ (gitignored):
 // run.json names its batches, results-<model>.jsonl holds what came back, so
 // `collect` can be re-run any time to re-print the report.
+//
+// Each request's max_tokens is sized so its worst case stays under a per-pair
+// cost cap (MAX_PAIR_COST_USD, or --max-pair-cost); a pair that can't fit under
+// it on a model isn't sent to that model.
 //
 // Item and property labels come from eval-data/llm-labels.json, which `labels`
 // fills from QLever. Like the other eval-data side files it's append-only, so
@@ -28,7 +32,9 @@ import {
   type Effort,
   HAIKU_LONG_PROMPT_TOKENS,
   type LabelLookup,
+  MAX_PAIR_COST_USD,
   MAX_PROMPT_TOKENS,
+  outputTokenBudget,
   parseReview,
   PROMPT_VERSION,
   promptTokens,
@@ -138,6 +144,7 @@ interface RunBatch {
 interface Run {
   createdAt: string;
   promptVersion: number;
+  maxPairCostUsd?: number;
   batches: RunBatch[];
 }
 
@@ -202,22 +209,35 @@ async function countPromptTokens(
 }
 
 /**
- * The pairs whose prompt stays under MAX_PROMPT_TOKENS, counted exactly on
- * Haiku, so no request crosses into Haiku's long-prompt rate. A pair over it
- * is left out for every model, which keeps the models comparable.
+ * The pairs whose prompt stays under MAX_PROMPT_TOKENS, with their prompt
+ * tokens, counted exactly on Haiku so no request crosses into Haiku's
+ * long-prompt rate. A pair over it is left out for every model, which keeps
+ * the models comparable. (The 5.5 models count a prompt alike, so the count
+ * also sizes the other models' max_tokens.)
  */
 async function underPromptLimit(
   client: Anthropic,
   pairs: Pair[],
   texts: Map<string, string>,
-): Promise<Pair[]> {
+): Promise<{ pairs: Pair[]; tokens: Map<string, number> }> {
   const kept: Pair[] = [];
+  const tokens = new Map<string, number>();
   for (const p of pairs) {
-    const tokens = await countPromptTokens(client, "claude-haiku-5-5", texts.get(p.name)!);
-    if (tokens <= MAX_PROMPT_TOKENS) kept.push(p);
-    else console.warn(`⚠ skipping ${p.name}: ${tokens} prompt tokens (limit ${MAX_PROMPT_TOKENS})`);
+    const n = await countPromptTokens(client, "claude-haiku-5-5", texts.get(p.name)!);
+    tokens.set(p.name, n);
+    if (n <= MAX_PROMPT_TOKENS) kept.push(p);
+    else console.warn(`⚠ skipping ${p.name}: ${n} prompt tokens (limit ${MAX_PROMPT_TOKENS})`);
   }
-  return kept;
+  return { pairs: kept, tokens };
+}
+
+function maxPairCost(argv: string[]): number {
+  const raw = flag(argv, "--max-pair-cost");
+  if (raw === undefined) return MAX_PAIR_COST_USD;
+  const dollars = Number(raw);
+  if (!Number.isFinite(dollars) || dollars <= 0)
+    throw new Error(`--max-pair-cost must be a positive number of dollars, got "${raw}"`);
+  return dollars;
 }
 
 async function submit(argv: string[]): Promise<void> {
@@ -226,12 +246,14 @@ async function submit(argv: string[]): Promise<void> {
   const selected = await selectPairs(argv);
   const labelOf = await labelLookup();
   const texts = new Map(selected.map((p) => [p.name, pairText(p, labelOf)]));
-  const pairs = await underPromptLimit(client, selected, texts);
+  const maxCost = maxPairCost(argv);
+  const { pairs, tokens } = await underPromptLimit(client, selected, texts);
   if (pairs.length === 0) throw new Error("no pairs left to submit");
 
   const run: Run = {
     createdAt: new Date().toISOString(),
     promptVersion: PROMPT_VERSION,
+    maxPairCostUsd: maxCost,
     batches: [],
   };
   const dir = join(RUNS_DIR, run.createdAt.replace(/[:.]/g, "-"));
@@ -244,15 +266,28 @@ async function submit(argv: string[]): Promise<void> {
   for (const model of models) {
     const effort = (flag(argv, `--effort-${REVIEW_MODELS[model].short}`) ??
       REVIEW_MODELS[model].defaultEffort) as Effort;
-    const batch = await client.messages.batches.create({
-      requests: pairs.map((p) => ({
+    const requests = [];
+    for (const p of pairs) {
+      const maxTokens = outputTokenBudget(model, tokens.get(p.name)!, maxCost);
+      if (maxTokens === null) {
+        console.warn(
+          `⚠ skipping ${p.name} on ${model}: its prompt alone nearly reaches the ${usd(maxCost)} cap`,
+        );
+        continue;
+      }
+      requests.push({
         custom_id: p.name,
-        params: reviewRequest(model, effort, texts.get(p.name)!),
-      })),
-    });
-    run.batches.push({ model, effort, batchId: batch.id, pairs: pairs.map((p) => p.name) });
+        params: reviewRequest(model, effort, texts.get(p.name)!, maxTokens),
+      });
+    }
+    if (requests.length === 0) {
+      console.warn(`⚠ no pairs fit under the ${usd(maxCost)} cap on ${model}; not submitting it`);
+      continue;
+    }
+    const batch = await client.messages.batches.create({ requests });
+    run.batches.push({ model, effort, batchId: batch.id, pairs: requests.map((r) => r.custom_id) });
     await saveRun();
-    console.log(`${model} (effort ${effort}): batch ${batch.id}, ${pairs.length} requests`);
+    console.log(`${model} (effort ${effort}): batch ${batch.id}, ${requests.length} requests`);
   }
   console.log(`\nRun saved to ${dir}. Collect with: node scripts/eval-llm.ts collect ${dir}`);
   if (argv.includes("--wait")) await collect(dir, true);
@@ -528,6 +563,14 @@ async function report(dir: string, run: Run): Promise<void> {
         `${Math.round(sum("output_tokens") / records.length)} out tokens/pair · ` +
         `${usd(each * 10_000)} per 10k pairs, ${usd(each * 50_000)} per 50k`,
     );
+    const priciest = records.reduce((x, y) => (y.costUsd > x.costUsd ? y : x), records[0]);
+    if (priciest) {
+      const maxOut = Math.max(...records.map((r) => r.usage?.output_tokens ?? 0));
+      console.log(
+        `          priciest pair ${usd(priciest.costUsd)} (${priciest.pair}), most output ${maxOut} tokens` +
+          (run.maxPairCostUsd === undefined ? "" : ` · cap ${usd(run.maxPairCostUsd)} per pair`),
+      );
+    }
   }
   if (haiku) {
     const unsureRate =
@@ -587,16 +630,22 @@ async function estimate(argv: string[]): Promise<void> {
   const pairs = await selectPairs(argv);
   const labelOf = await labelLookup();
   const assumedOutput: Record<string, number> = { haiku: 400, sonnet: 800, opus: 800 };
+  const maxCost = maxPairCost(argv);
 
   for (const model of models) {
     let total = 0;
     let max = 0;
     let over = 0;
+    let unaffordable = 0;
+    let minMaxTokens = Infinity;
     for (const p of pairs) {
       const tokens = await countPromptTokens(client, model, pairText(p, labelOf));
       total += tokens;
       max = Math.max(max, tokens);
       if (tokens > MAX_PROMPT_TOKENS) over++;
+      const budget = outputTokenBudget(model, tokens, maxCost);
+      if (budget === null) unaffordable++;
+      else minMaxTokens = Math.min(minMaxTokens, budget);
     }
     const avgIn = total / pairs.length;
     const out = assumedOutput[REVIEW_MODELS[model].short];
@@ -607,6 +656,11 @@ async function estimate(argv: string[]): Promise<void> {
         ` (~${out} output assumed) → ` +
         `${usd(each * pairs.length)} for these ${pairs.length} pairs, ` +
         `${usd(each * 10_000)} per 10k, ${usd(each * 50_000)} per 50k`,
+    );
+    console.log(
+      `  ${usd(maxCost)} cap per pair: max_tokens ${minMaxTokens === Infinity ? "n/a" : minMaxTokens}` +
+        ` at the lowest` +
+        (unaffordable > 0 ? `, ${unaffordable} pair(s) too big to send` : ""),
     );
   }
 }

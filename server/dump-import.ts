@@ -1591,10 +1591,18 @@ async function pruneMissing(
  */
 async function keepSeen(qids: string[], dump: string): Promise<void> {
   if (qids.length === 0) return;
-  await db.execute(sql`
-    insert into ${itemSync} (qid, last_dump)
-    select qid, ${dump} from ${items} where qid in ${qids}
-    on duplicate key update last_dump = values(last_dump)`);
+  // A plain read, not INSERT … SELECT: that would take shared locks on the
+  // `items` rows ahead of the item_sync ones, the reverse of upsertItems.
+  const present = (
+    await db.select({ qid: items.qid }).from(items).where(inArray(items.qid, qids))
+  ).map((r) => r.qid);
+  if (present.length === 0) return;
+  // Key order, so concurrent shards take their locks in the same order.
+  present.sort(compareKeys);
+  await db
+    .insert(itemSync)
+    .values(present.map((qid) => ({ qid, lastDump: dump })))
+    .onDuplicateKeyUpdate({ set: { lastDump: dump } });
 }
 
 /**
@@ -1799,7 +1807,16 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
         onSkip(item.id, err);
       }
     }
-    await keepSeen(refused, dump);
+    await withLockRetry(
+      () => keepSeen(refused, dump),
+      (attempt, err) => {
+        lockRetries++;
+        log(
+          `${tag} keeping ${refused.length} refused item(s) lost a lock race ` +
+            `(${errorSummary(err)}); retry ${attempt}/${LOCK_RETRIES}`,
+        );
+      },
+    );
   };
 
   // The progress line shows both the rate over the last interval (what the job

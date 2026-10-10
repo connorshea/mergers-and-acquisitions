@@ -418,7 +418,7 @@ describe.skipIf(!DB_TEST)("runHunt", () => {
       for (const qid of ["Q100", "Q200", "Q300"]) await insertItem(makeItem(qid, qid, steam("1")));
       await runHunt();
       await db.execute(sql`truncate table external_ids`);
-      await db.execute(sql`truncate table items`);
+      await db.execute(sql`delete from items`);
       await insertItem(makeItem("Q500", "Epsilon", steam("9")));
       await insertItem(makeItem("Q600", "Zeta", steam("9")));
       expect(await rebuiltOn(async () => expect((await runHunt()).pairs).toBe(1))).toBe(true);

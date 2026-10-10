@@ -1,9 +1,11 @@
 -- Read `items` for the copy below without locking its rows (REPEATABLE READ
 -- would take a shared lock on every row it copies, blocking writers for the
--- length of the copy). Session-wide, so it's reset after the copy: the
--- migrator runs every pending migration on this one connection. The CREATE
--- TABLE's implicit commit ends the migrator's transaction, so each batch of
--- the copy runs under it as its own autocommitted transaction.
+-- length of the copy). The foreign key's check still locks each copied row's
+-- `items` row, but only until its batch commits. Session-wide, so it's reset
+-- after the copy: the migrator runs every pending migration on this one
+-- connection. The CREATE TABLE's implicit commit ends the migrator's
+-- transaction, so each batch of the copy runs under it as its own
+-- autocommitted transaction.
 --
 -- The copy goes in batches of 50,000 qids rather than one ~4.7M-row
 -- statement: each batch commits on its own, so no single transaction builds
@@ -32,7 +34,8 @@ CREATE TABLE IF NOT EXISTS `item_sync` (
 	`converter_version` int unsigned,
 	`primary_type` varchar(32),
 	CONSTRAINT `item_sync_qid` PRIMARY KEY(`qid`),
-	INDEX `idx_item_sync_revision` (`converter_version`,`primary_type`,`qid`,`source_revid`)
+	INDEX `idx_item_sync_revision` (`converter_version`,`primary_type`,`qid`,`source_revid`),
+	CONSTRAINT `item_sync_qid_items_qid_fk` FOREIGN KEY (`qid`) REFERENCES `items`(`qid`) ON DELETE cascade ON UPDATE no action
 );
 --> statement-breakpoint
 BEGIN NOT ATOMIC

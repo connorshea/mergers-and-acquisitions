@@ -484,7 +484,21 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {},
+      "foreignKeys": {
+        "item_sync_qid_items_qid_fk": {
+          "name": "item_sync_qid_items_qid_fk",
+          "tableFrom": "item_sync",
+          "tableTo": "items",
+          "columnsFrom": [
+            "qid"
+          ],
+          "columnsTo": [
+            "qid"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {
         "item_sync_qid": {
           "name": "item_sync_qid",

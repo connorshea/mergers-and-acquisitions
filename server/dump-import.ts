@@ -1513,8 +1513,8 @@ async function finishSegment(
 /**
  * Delete every item not stamped as seen in `dump`, with its external ids, and
  * settle the open candidates that referenced it. Returns [items, candidates].
- * Read from `item_sync`, which is small enough to scan whole; a row left over
- * from an item deleted elsewhere is never stamped again, so it is dropped here.
+ * Read from `item_sync`, which is small enough to scan whole; deleting the
+ * items deletes their rows there too (through its foreign key).
  */
 async function pruneMissing(
   dump: string,
@@ -1556,7 +1556,6 @@ async function pruneMissing(
     await db.transaction(async (tx) => {
       await tx.delete(externalIds).where(inArray(externalIds.qid, qids));
       await tx.delete(items).where(inArray(items.qid, qids));
-      await tx.delete(itemSync).where(inArray(itemSync.qid, qids));
       const [result] = await tx
         .update(mergeCandidates)
         .set({
@@ -1591,8 +1590,11 @@ async function keepSeen(qids: string[], dump: string): Promise<void> {
   if (present.length === 0) return;
   // Key order, so concurrent shards take their locks in the same order.
   present.sort(compareKeys);
+  // IGNORE: an item deleted since the read (a merge, say) fails the foreign
+  // key, and is skipped rather than failing the rest.
   await db
     .insert(itemSync)
+    .ignore()
     .values(present.map((qid) => ({ qid, lastDump: dump })))
     .onDuplicateKeyUpdate({ set: { lastDump: dump } });
 }

@@ -652,6 +652,18 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
     expect(await idsOf("Q100")).toEqual([{ property: "P1733", value: "1" }]);
   });
 
+  it("writes back an item deleted outside the import, though its revision is unchanged", async () => {
+    await run([at(10, game("Q100", "Alpha"))]);
+    // Deleted by something that only knows `items` (a manual fix, an older
+    // merge route): its item_sync row goes with it, so the next pass at the
+    // same revision doesn't skip it as unedited.
+    await db.delete(externalIds);
+    await db.delete(items);
+    expect(await db.select().from(itemSync)).toEqual([]);
+    expect(await run([at(10, game("Q100", "Alpha"))])).toMatchObject({ unedited: 0, parsed: 1 });
+    expect((await allItems()).map((r) => [r.qid, r.sourceRevid])).toEqual([["Q100", 10]]);
+  });
+
   it("records the new revision of an item whose converted data didn't change", async () => {
     await run([at(10, game("Q100", "Alpha"))]);
     const first = (await allItems())[0];

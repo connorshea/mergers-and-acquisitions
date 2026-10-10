@@ -68,11 +68,15 @@ export const items = mysqlTable(
 // tens of KB each), that was a random page read per item against a buffer
 // pool far smaller than the table. These rows are ~60 bytes, so the whole
 // table stays in memory. The dump import writes one for every item it
-// inserts, and every path that deletes an item deletes its row too.
+// inserts. The foreign key deletes the row with its item, whatever deletes it:
+// an orphan row would be restamped every pass as unedited, so the item would
+// never be written back.
 export const itemSync = mysqlTable(
   "item_sync",
   {
-    qid: varchar("qid", { length: 32 }).primaryKey(),
+    qid: varchar("qid", { length: 32 })
+      .primaryKey()
+      .references(() => items.qid, { onDelete: "cascade" }),
     lastSyncedAt: datetime("last_synced_at", { mode: "string" })
       .notNull()
       .default(sql`CURRENT_TIMESTAMP`),

@@ -17,8 +17,6 @@ const TABLES = [
   "merge_candidates",
   "external_ids",
   "external_id_dupes",
-  "items",
-  "item_sync",
   "properties",
   "class_ancestors",
   "entity_labels",
@@ -30,9 +28,9 @@ const TABLES = [
   "llm_reviews",
 ];
 
-// The auth tables are linked by foreign keys, which MariaDB refuses to
-// TRUNCATE through; DELETE them children-first instead.
-const FK_TABLES = ["wikidata_edits", "sessions", "oauth_tokens", "users"];
+// The auth tables and items/item_sync are linked by foreign keys, which
+// MariaDB refuses to TRUNCATE through; DELETE them children-first instead.
+const FK_TABLES = ["item_sync", "items", "wikidata_edits", "sessions", "oauth_tokens", "users"];
 
 /** Empty every application table (not the migrations journal). */
 export async function truncateAll(): Promise<void> {

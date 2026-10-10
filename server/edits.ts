@@ -641,7 +641,6 @@ edits.post("/:id/merge", async (c) => {
     await db.transaction(async (tx) => {
       await tx.delete(externalIds).where(eq(externalIds.qid, fromQid));
       await tx.delete(items).where(eq(items.qid, fromQid));
-      await tx.delete(itemSync).where(eq(itemSync.qid, fromQid));
       await tx
         .update(mergeCandidates)
         .set({

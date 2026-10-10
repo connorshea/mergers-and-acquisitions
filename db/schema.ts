@@ -141,6 +141,9 @@ export const mergeCandidates = mysqlTable(
     // edit request (merge or "different from") takes via an optimistic
     // UPDATE … WHERE status = 'open', so two submits can't both reach Wikidata;
     // it reverts to `open` on failure.
+    // `auto_dismissed` is set by the Claude review job alone (#292), when two
+    // models agree the pair isn't a duplicate: no human, no `resolved_by`, and
+    // `resolution` is "llm-review:<id>" of the confirming `llm_reviews` row.
     status: varchar("status", { length: 16 }).notNull().default("open"),
     reasons: json<string[]>("reasons").notNull(), // string[]
     hasBlocker: boolean("has_blocker").notNull().default(false),
@@ -480,5 +483,69 @@ export const wikidataEdits = mysqlTable(
     index("idx_wikidata_edits_user_id").on(t.userId),
     index("idx_wikidata_edits_candidate_id").on(t.candidateId),
     index("idx_wikidata_edits_edit_group").on(t.editGroup),
+  ],
+);
+
+// ---------------------------------------------------------------------------
+// Claude reviews of candidate pairs — see server/llm-reviews.ts.
+// ---------------------------------------------------------------------------
+
+// One row per pair and review stage: a Haiku first pass, then an Opus
+// confirmation when Haiku says "different". Keyed on the unordered pair (QIDs
+// ordered by number), so a candidate re-detected in the other direction is
+// still the same pair and is never reviewed again. A review never edits
+// Wikidata and never changes a pair's score; the only thing it can do is move
+// an open pair to `auto_dismissed`.
+//
+// The row is the claim: the job inserts it `pending` before submitting the
+// request, so the unique key stops a crashed or overlapping run from sending
+// the same pair to the same stage twice. `succeeded` is final; `failed` may be
+// retried, up to a bounded number of `attempts`. No foreign key to
+// merge_candidates: the hunt prunes candidates, and the review should outlive
+// them.
+export const llmReviews = mysqlTable(
+  "llm_reviews",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    qidLow: varchar("qid_low", { length: 32 }).notNull(),
+    qidHigh: varchar("qid_high", { length: 32 }).notNull(),
+    stage: varchar("stage", { length: 16 }).notNull(), // "first_pass" | "confirmation"
+    status: varchar("status", { length: 16 }).notNull().default("pending"), // "pending" | "succeeded" | "failed"
+    attempts: int("attempts").notNull().default(1),
+    // From src/lib/llm-review.ts: the model id, its effort, PROMPT_VERSION.
+    model: varchar("model", { length: 64 }).notNull(),
+    effort: varchar("effort", { length: 16 }).notNull(),
+    promptVersion: int("prompt_version").notNull(),
+    // The parsed answer (parseReview); null until it succeeds.
+    verdict: varchar("verdict", { length: 16 }), // "same" | "different" | "unsure"
+    probability: double("probability"),
+    rationale: text("rationale"),
+    // Why a `failed` row has no answer: an API error, a refusal, `max_tokens`,
+    // an unparseable answer.
+    error: varchar("error", { length: 255 }),
+    // On a confirmation row, the first-pass review it checks.
+    confirms: int("confirms"),
+    // The item revisions the prompt was built from, for auditing; null when
+    // the mirror doesn't know them.
+    lowRevid: bigint("low_revid", { mode: "number", unsigned: true }),
+    highRevid: bigint("high_revid", { mode: "number", unsigned: true }),
+    batchId: varchar("batch_id", { length: 64 }),
+    customId: varchar("custom_id", { length: 64 }),
+    inputTokens: int("input_tokens"),
+    outputTokens: int("output_tokens"),
+    cacheCreationInputTokens: int("cache_creation_input_tokens"),
+    cacheReadInputTokens: int("cache_read_input_tokens"),
+    costUsd: double("cost_usd"), // costUsd(model, usage, true): Batch prices
+    createdAt: datetime("created_at", { mode: "string" })
+      .notNull()
+      .default(sql`CURRENT_TIMESTAMP`),
+    completedAt: datetime("completed_at", { mode: "string" }),
+  },
+  (t) => [
+    uniqueIndex("idx_llm_reviews_pair_stage").on(t.qidLow, t.qidHigh, t.stage),
+    // Collecting results: the pending rows of each batch.
+    index("idx_llm_reviews_status_batch").on(t.status, t.batchId),
+    // The monthly budget: the spend of reviews completed since a date.
+    index("idx_llm_reviews_completed").on(t.completedAt),
   ],
 );

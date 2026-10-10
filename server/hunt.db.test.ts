@@ -132,6 +132,31 @@ describe.skipIf(!DB_TEST)("runHunt", () => {
     expect((await runHunt()).pairs).toBe(0);
   });
 
+  it("never rescores or resurrects a pair Claude hid", async () => {
+    await insertItem(makeItem("Q100", "Starfall Drift", steam("812340")));
+    await insertItem(makeItem("Q200", "Starfall Drift", steam("812340")));
+    await db.insert(mergeCandidates).values({
+      fromQid: "Q200",
+      intoQid: "Q100",
+      confidence: 0.123,
+      reasons: ["hidden by Claude"],
+      status: "auto_dismissed",
+      resolvedAt: "2026-01-01 00:00:00",
+      resolution: "llm-review:1",
+    });
+
+    await runHunt();
+
+    const rows = await allCandidates();
+    expect(rows).toHaveLength(1);
+    expect(rows[0]).toMatchObject({
+      status: "auto_dismissed",
+      confidence: 0.123,
+      reasons: ["hidden by Claude"],
+      resolution: "llm-review:1",
+    });
+  });
+
   it("never rescores or resurrects a pair a human resolved", async () => {
     await insertItem(makeItem("Q100", "Starfall Drift", steam("812340")));
     await insertItem(makeItem("Q200", "Starfall Drift", steam("812340")));

@@ -28,7 +28,9 @@ import type {
   CandidateReopenResponse,
   CandidateSummary,
   ItemCreation,
+  LlmReviewSummary,
 } from "../lib/api-types.ts";
+import { statusFlag } from "../lib/api-types.ts";
 import { wikiPageUrl } from "../lib/wiki.ts";
 
 // Detail view for one candidate: a summary card (confidence, evidence, actions)
@@ -287,18 +289,24 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
             >
               {status && status !== "open" ? (
                 <>
-                  <span className="flag flag-status">{status}</span>
-                  {/* A merged pair's details get the banner above the ledger. */}
-                  {status !== "merged" && (resolution || resolvedBy) && (
-                    <span className="detail-resolution">
-                      <Resolution resolution={resolution} resolvedBy={resolvedBy} />
-                      {data?.editGroupUrl && <EditGroupLink url={data.editGroupUrl} separated />}
-                    </span>
-                  )}
+                  <span className="flag flag-status">{statusFlag(status)}</span>
+                  {/* A merged pair's details get the banner above the ledger;
+                    a hidden one's resolution only names the review, which
+                    the panel below shows in full. */}
+                  {status !== "merged" &&
+                    status !== "auto_dismissed" &&
+                    (resolution || resolvedBy) && (
+                      <span className="detail-resolution">
+                        <Resolution resolution={resolution} resolvedBy={resolvedBy} />
+                        {data?.editGroupUrl && <EditGroupLink url={data.editGroupUrl} separated />}
+                      </span>
+                    )}
                   {/* A merged pair stays merged (it happened on Wikidata); a
-                    dismissed one, or a merge claim that was abandoned, can
-                    come back. */}
-                  {(status === "dismissed" || status === "merging") && (
+                    dismissed or hidden one, or a merge claim that was
+                    abandoned, can come back. */}
+                  {(status === "dismissed" ||
+                    status === "auto_dismissed" ||
+                    status === "merging") && (
                     <button
                       type="button"
                       className="btn-dismiss"
@@ -352,6 +360,7 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
               changed them since.
             </p>
           )}
+          {status === "auto_dismissed" && data && <ClaudeReviews reviews={data.llmReviews} />}
           {data && candidate && (!data.from || !data.into) && (
             <MissingItemsNote candidate={candidate} from={data.from} into={data.into} />
           )}
@@ -839,6 +848,53 @@ function DifferentDialog({
         </button>
       </div>
     </Dialog>
+  );
+}
+
+const STAGE_LABELS: Record<LlmReviewSummary["stage"], string> = {
+  first_pass: "First pass",
+  confirmation: "Confirmation",
+};
+
+/** Model ids as people say them: "claude-opus-5-5" → "Claude Opus 5.5". */
+function modelName(model: string): string {
+  const m = /^claude-([a-z]+)-(\d+)-(\d+)$/.exec(model);
+  return m ? `Claude ${m[1][0].toUpperCase()}${m[1].slice(1)} ${m[2]}.${m[3]}` : model;
+}
+
+/**
+ * Why a hidden pair was hidden: each Claude review of it, with the model's
+ * verdict, how likely it thought a duplicate was, and its reasoning.
+ */
+function ClaudeReviews({ reviews }: { reviews: LlmReviewSummary[] }) {
+  return (
+    <section className="claude-reviews" aria-labelledby="claude-reviews-heading">
+      <h2 id="claude-reviews-heading">Hidden by automation</h2>
+      <p className="detail-note">
+        Two Claude models agreed these items aren't duplicates, so the pair left the open list
+        without a human review. Claude never edits Wikidata. If they are duplicates, reopen the
+        pair.
+      </p>
+      {reviews.length === 0 ? (
+        <p className="detail-note">The reviews behind this are no longer stored.</p>
+      ) : (
+        <ol className="claude-review-list">
+          {reviews.map((r) => (
+            <li key={r.id} className="claude-review">
+              <div className="claude-review-head">
+                <span className="claude-review-stage">{STAGE_LABELS[r.stage]}</span>
+                <span className="claude-review-model">{modelName(r.model)}</span>
+                <span className={`flag claude-verdict is-${r.verdict}`}>{r.verdict}</span>
+                <span className="claude-review-p">
+                  {Math.round(r.probability * 100)}% likely duplicates
+                </span>
+              </div>
+              <p className="claude-review-rationale">{r.rationale}</p>
+            </li>
+          ))}
+        </ol>
+      )}
+    </section>
   );
 }
 

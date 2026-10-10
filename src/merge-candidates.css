@@ -1263,6 +1263,49 @@ a.chip-id:hover {
   color: var(--muted);
   font-size: 0.9rem;
 }
+/* A hidden pair's Claude reviews (CandidateDetail's ClaudeReviews). */
+.claude-reviews {
+  margin: 1rem 0 0;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+}
+.claude-reviews h2 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.claude-reviews > .detail-note {
+  margin-top: 0.3rem;
+}
+.claude-review-list {
+  margin: 0.75rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.claude-review + .claude-review {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--rule);
+}
+.claude-review-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.6rem;
+  font-size: 0.9rem;
+}
+.claude-review-stage {
+  font-weight: 600;
+}
+.claude-review-model,
+.claude-review-p {
+  color: var(--muted);
+}
+.claude-review-rationale {
+  margin: 0.3rem 0 0;
+  overflow-wrap: anywhere;
+}
 .detail-note.is-missing {
   padding: 0.9rem 1.1rem;
   border: 1px dashed var(--rule);

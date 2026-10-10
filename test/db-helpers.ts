@@ -3,7 +3,7 @@
 import { sql } from "drizzle-orm";
 import { db } from "../server/db.ts";
 import { clearCandidateCounts } from "../server/candidate-count-cache.ts";
-import { externalIds, items, sessions, users } from "../db/schema.ts";
+import { externalIds, itemSync, items, sessions, users } from "../db/schema.ts";
 import { SESSION_COOKIE, SESSION_TTL_SECONDS } from "../server/auth/session.ts";
 import { randomToken, sha256Hex } from "../server/auth/crypto.ts";
 import { addSeconds, toSqlDatetime } from "../server/auth/time.ts";
@@ -98,8 +98,9 @@ export function makeItem(
 }
 
 /**
- * Insert an item the way the seed/import scripts do: the `items` row with its
- * denormalized label/type, plus one `external_ids` row per external-id value.
+ * Insert an item the way the import does: the `items` row with its
+ * denormalized label/type, its `item_sync` row (not yet seen in any dump), plus
+ * one `external_ids` row per external-id value.
  */
 export async function insertItem(item: Item): Promise<void> {
   await db.insert(items).values({
@@ -108,6 +109,7 @@ export async function insertItem(item: Item): Promise<void> {
     primaryType: primaryType(item) ?? null,
     data: item,
   });
+  await db.insert(itemSync).values({ qid: item.id });
   const rows = externalIdRows(item).map((r) => ({ qid: item.id, ...r }));
   if (rows.length > 0) await db.insert(externalIds).values(rows);
 }

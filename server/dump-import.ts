@@ -1538,20 +1538,10 @@ async function pruneMissing(
     after = page[page.length - 1].qid;
     if (page.length < READ_PAGE) break;
   }
-  // An item without an item_sync row was written by something other than the
-  // dump import, and not seen in this pass either. Found from idx_items_primary_type, which holds every qid, so
-  // the JSON rows are never read.
-  const [unsynced] = (await db.execute(sql`
-    select i.qid from ${items} i force index (idx_items_primary_type)
-    left join ${itemSync} s on s.qid = i.qid
-    where s.qid is null`)) as unknown as [{ qid: string }[]];
-  for (const r of unsynced) gone.push(r.qid);
   if (gone.length === 0) return [0, 0];
-  // Every qid in either table: the unsynced items aren't in item_sync's count.
-  const mirrored = total + unsynced.length;
-  if (!opts.force && gone.length > mirrored * MAX_PRUNE_FRACTION) {
+  if (!opts.force && gone.length > total * MAX_PRUNE_FRACTION) {
     opts.log(
-      `import-dump: NOT pruning ${gone.length} of ${mirrored} items (> ${MAX_PRUNE_FRACTION * 100}%); ` +
+      `import-dump: NOT pruning ${gone.length} of ${total} items (> ${MAX_PRUNE_FRACTION * 100}%); ` +
         "is the dump complete? Set DUMP_PRUNE_FORCE=1 to prune anyway.",
     );
     return [0, 0];

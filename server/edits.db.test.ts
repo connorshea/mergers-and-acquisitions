@@ -12,7 +12,7 @@ import {
   vi,
 } from "vite-plus/test";
 import { randomBytes } from "node:crypto";
-import { and, eq, sql } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { app } from "./app.ts";
 import { db, pool } from "./db.ts";
 import {
@@ -789,8 +789,7 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
   describe("POST /api/candidates/:id/different", () => {
     it("adds P1889 both ways, mirrors it, and dismisses", async () => {
       // As if the dump import had written both items.
-      await db.execute(sql`
-        insert into ${itemSync} (qid, data_hash) select qid, ${"a".repeat(40)} from ${items}`);
+      await db.update(itemSync).set({ dataHash: "a".repeat(40) });
       const calls = stubWikidata((_p, n) => claimOk(200 + n));
       const { status, body } = await post<CandidateDifferentResponse>(
         `/api/candidates/${alpha}/different`,

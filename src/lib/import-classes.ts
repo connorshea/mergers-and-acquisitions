@@ -49,7 +49,8 @@ const VIDEO_GAME_CLASSES: readonly ImportClass[] = [
 
 /**
  * The humans the mirror imports, out of Wikidata's ~13M: ~290k before
- * authors and musicians, ~760k with them (October 2026). Game people (~20k,
+ * authors and musicians, ~760k with them, ~1.4M with film/TV people and
+ * composers (October 2026). Game people (~20k,
  * ~11k of them linked from games): the video game occupations under "game
  * designer" / "video game developer", professional gamers, and the game
  * databases' person ids. Anime staff (~17k more): anyone with an AniList or
@@ -58,13 +59,17 @@ const VIDEO_GAME_CLASSES: readonly ImportClass[] = [
  * of the multi-sport Olympic databases, which bulk imports each created their
  * own items from. Authors, musicians and other creators (~470k more): the
  * occupations below plus the book, comics and music databases' person ids.
+ * Film and TV people (~560k more): anyone with an IMDb id, the cast and crew
+ * of the films and series the mirror holds. Composers (~130k more).
  *
- * Left out for size (each is ~8-12 KB a person in the mirror, against a 25 GB
- * ToolsDB guideline, #192): other athletes (~1.4M under "athlete"), film and
- * TV people (~560k more with an IMDb id), the bare "writer" occupation (~450k
- * more: journalists, academics) and composers (~130k more). MusicBrainz
- * (~230k more) is left out too, though only for size: as a filter it would be
- * fine, since it isn't used as evidence.
+ * Each person is ~8-12 KB in the mirror. These were left out to keep ToolsDB
+ * under its 25 GB guideline; on Trove (#192) the limit is the volume and the
+ * buffer pool instead, so the mirror grows a step at a time. Still left out:
+ * other athletes (~1.4M under "athlete"; the next candidate, once the import
+ * and hunt times on Trove allow), the bare "writer" occupation (~450k more:
+ * journalists, academics, few of them duplicates) and MusicBrainz (~230k
+ * more; it mirrors Wikidata, so it would only bring people in, never count
+ * as evidence).
  */
 const PEOPLE: SelectiveImport = {
   linkedFrom: VIDEO_GAME_CLASSES.map((c) => c.qid),
@@ -92,6 +97,7 @@ const PEOPLE: SelectiveImport = {
     "Q18844224", // science fiction writer
     "Q4853732", // children's writer
     "Q49757", // poet
+    "Q36834", // composer
   ],
   idProperties: [
     "P3913", // MobyGames person ID
@@ -116,6 +122,7 @@ const PEOPLE: SelectiveImport = {
     "P3505", // BoardGameGeek designer ID
     "P1953", // Discogs artist ID
     "P1728", // AllMusic artist ID
+    "P345", // IMDb ID
   ],
 };
 

@@ -19,7 +19,7 @@
 //      class's occupations or id properties, so the ~13M humans outside video
 //      games are passed over like any other line.
 //   3. A hit line for an item the mirror already holds at the same revision,
-//      converted by the current converter (`items.source_revid` and
+//      converted by the current converter (`item_sync.source_revid` and
 //      `converter_version`, loaded up front into a compact index), is not
 //      parsed at all: its QID and `"lastrevid"` are read from the raw bytes and
 //      the row is only restamped as seen. Most items aren't edited in a week.
@@ -73,6 +73,7 @@ import {
   dumpImportLinked,
   dumpImportSegments,
   externalIds,
+  itemSync,
   items,
   mergeCandidates,
 } from "../db/schema.ts";
@@ -925,9 +926,10 @@ export async function sharedLinkedQids(
  * row whose type is a class really is in scope at that revision.) An item left
  * out for any reason is only parsed as before, never skipped wrongly.
  *
- * One streamed read of idx_items_revision alone (it covers the query), as
- * arrays rather than row objects: on a 2.9M-item mirror this takes ~0.6s,
- * against ~1.6s keyset-paged 20k rows at a time.
+ * One streamed read, as arrays rather than row objects. It walks
+ * idx_items_primary_type (which holds the qid, so the JSON rows are never
+ * read) and looks each item up in the narrow `item_sync`; the join order is
+ * forced, as the other way round would read every `items` row.
  */
 export async function loadRevisionIndex(classQids: readonly string[]): Promise<RevisionIndex> {
   const qids: number[] = [];
@@ -938,9 +940,11 @@ export async function loadRevisionIndex(classQids: readonly string[]): Promise<R
   const core = conn.connection as unknown as CoreConnection;
   const stream = core
     .query({
-      sql: `select qid, source_revid from items
-            where converter_version = ? and source_revid is not null and primary_type in (?)`,
-      values: [CONVERTER_VERSION, classQids],
+      sql: `select s.qid, s.source_revid
+            from items i force index (idx_items_primary_type)
+            straight_join item_sync s on s.qid = i.qid
+            where i.primary_type in (?) and s.converter_version = ? and s.source_revid is not null`,
+      values: [classQids, CONVERTER_VERSION],
       rowsAsArray: true,
     })
     .stream({ highWaterMark: 5000 });
@@ -1007,13 +1011,16 @@ export async function upsertItems(
       blockingKey: storedBlockingKey(label),
       primaryType: type,
       data: item,
+    };
+    const sync = {
+      qid: item.id,
       lastSyncedAt: stamp,
       lastDump: dump ?? null,
       dataHash,
       sourceRevid: revids?.get(item.id) ?? null,
       converterVersion: CONVERTER_VERSION,
     };
-    return { row, ids };
+    return { row, sync, ids };
   });
 
   // One transaction, so a batch that fails leaves every item as it was (not,
@@ -1026,53 +1033,53 @@ export async function upsertItems(
         (
           await tx
             .select({
-              qid: items.qid,
-              dataHash: items.dataHash,
-              sourceRevid: items.sourceRevid,
-              converterVersion: items.converterVersion,
+              qid: itemSync.qid,
+              dataHash: itemSync.dataHash,
+              sourceRevid: itemSync.sourceRevid,
+              converterVersion: itemSync.converterVersion,
             })
-            .from(items)
+            .from(itemSync)
             .where(
               inArray(
-                items.qid,
+                itemSync.qid,
                 prepared.map((p) => p.row.qid),
               ),
             )
         ).map((r) => [r.qid, r]),
       );
       const isUnchanged = (p: (typeof prepared)[number]) =>
-        stored.get(p.row.qid)?.dataHash === p.row.dataHash;
+        stored.get(p.row.qid)?.dataHash === p.sync.dataHash;
       const changed = prepared.filter((p) => !isUnchanged(p));
       const unchanged = prepared.filter(isUnchanged).map((p) => p.row.qid);
 
       if (unchanged.length > 0) {
         await tx
-          .update(items)
+          .update(itemSync)
           .set({ lastSyncedAt: stamp, ...(dump ? { lastDump: dump } : {}) })
-          .where(inArray(items.qid, unchanged));
+          .where(inArray(itemSync.qid, unchanged));
       }
       // An unchanged item at a new revision (an edit the conversion drops, such
       // as a label in a language we don't keep), or first seen by this
       // converter version, stores exactly what this revision converts to now:
       // record the revision so the next pass can skip it unparsed.
       const revised = prepared.filter((p) => {
-        if (!isUnchanged(p) || p.row.sourceRevid === null) return false;
+        if (!isUnchanged(p) || p.sync.sourceRevid === null) return false;
         const s = stored.get(p.row.qid)!;
-        return s.sourceRevid !== p.row.sourceRevid || s.converterVersion !== CONVERTER_VERSION;
+        return s.sourceRevid !== p.sync.sourceRevid || s.converterVersion !== CONVERTER_VERSION;
       });
       if (revised.length > 0) {
         await tx
-          .update(items)
+          .update(itemSync)
           .set({
-            sourceRevid: sql`case ${items.qid} ${sql.join(
-              revised.map((p) => sql`when ${p.row.qid} then ${p.row.sourceRevid}`),
+            sourceRevid: sql`case ${itemSync.qid} ${sql.join(
+              revised.map((p) => sql`when ${p.row.qid} then ${p.sync.sourceRevid}`),
               sql` `,
             )} end`,
             converterVersion: CONVERTER_VERSION,
           })
           .where(
             inArray(
-              items.qid,
+              itemSync.qid,
               revised.map((p) => p.row.qid),
             ),
           );
@@ -1093,11 +1100,21 @@ export async function upsertItems(
               blockingKey: sql`values(${items.blockingKey})`,
               primaryType: sql`values(${items.primaryType})`,
               data: sql`values(${items.data})`,
-              lastSyncedAt: sql`values(${items.lastSyncedAt})`,
-              lastDump: sql`coalesce(values(${items.lastDump}), ${items.lastDump})`,
-              dataHash: sql`values(${items.dataHash})`,
-              sourceRevid: sql`values(${items.sourceRevid})`,
-              converterVersion: sql`values(${items.converterVersion})`,
+            },
+          });
+      }
+      const syncs = changed.map((p) => p.sync);
+      for (let i = 0; i < syncs.length; i += ITEM_BATCH) {
+        await tx
+          .insert(itemSync)
+          .values(syncs.slice(i, i + ITEM_BATCH))
+          .onDuplicateKeyUpdate({
+            set: {
+              lastSyncedAt: sql`values(${itemSync.lastSyncedAt})`,
+              lastDump: sql`coalesce(values(${itemSync.lastDump}), ${itemSync.lastDump})`,
+              dataHash: sql`values(${itemSync.dataHash})`,
+              sourceRevid: sql`values(${itemSync.sourceRevid})`,
+              converterVersion: sql`values(${itemSync.converterVersion})`,
             },
           });
       }
@@ -1494,31 +1511,41 @@ async function finishSegment(
 /**
  * Delete every item not stamped as seen in `dump`, with its external ids, and
  * settle the open candidates that referenced it. Returns [items, candidates].
+ * Read from `item_sync`, which is small enough to scan whole; a row left over
+ * from an item deleted elsewhere is never stamped again, so it is dropped here.
  */
 async function pruneMissing(
   dump: string,
   opts: { force: boolean; log: (m: string) => void },
 ): Promise<[number, number]> {
-  const [{ total }] = await db.select({ total: count() }).from(items);
+  const [{ total }] = await db.select({ total: count() }).from(itemSync);
   const gone: string[] = [];
   let after = "";
   for (;;) {
     const page = await db
-      .select({ qid: items.qid })
-      .from(items)
+      .select({ qid: itemSync.qid })
+      .from(itemSync)
       .where(
         and(
-          or(isNull(items.lastDump), ne(items.lastDump, dump)),
-          after ? gt(items.qid, after) : sql`1 = 1`,
+          or(isNull(itemSync.lastDump), ne(itemSync.lastDump, dump)),
+          after ? gt(itemSync.qid, after) : sql`1 = 1`,
         ),
       )
-      .orderBy(asc(items.qid))
+      .orderBy(asc(itemSync.qid))
       .limit(READ_PAGE);
     if (page.length === 0) break;
     for (const r of page) gone.push(r.qid);
     after = page[page.length - 1].qid;
     if (page.length < READ_PAGE) break;
   }
+  // An item without an item_sync row was written by something other than the
+  // dump import, and not seen in this pass either. Found from idx_items_primary_type, which holds every qid, so
+  // the JSON rows are never read.
+  const [unsynced] = (await db.execute(sql`
+    select i.qid from ${items} i force index (idx_items_primary_type)
+    left join ${itemSync} s on s.qid = i.qid
+    where s.qid is null`)) as unknown as [{ qid: string }[]];
+  for (const r of unsynced) gone.push(r.qid);
   if (gone.length === 0) return [0, 0];
   if (!opts.force && gone.length > total * MAX_PRUNE_FRACTION) {
     opts.log(
@@ -1535,6 +1562,7 @@ async function pruneMissing(
     await db.transaction(async (tx) => {
       await tx.delete(externalIds).where(inArray(externalIds.qid, qids));
       await tx.delete(items).where(inArray(items.qid, qids));
+      await tx.delete(itemSync).where(inArray(itemSync.qid, qids));
       const [result] = await tx
         .update(mergeCandidates)
         .set({
@@ -1561,7 +1589,10 @@ async function pruneMissing(
  */
 async function keepSeen(qids: string[], dump: string): Promise<void> {
   if (qids.length === 0) return;
-  await db.update(items).set({ lastDump: dump }).where(inArray(items.qid, qids));
+  await db.execute(sql`
+    insert into ${itemSync} (qid, last_dump)
+    select qid, ${dump} from ${items} where qid in ${qids}
+    on duplicate key update last_dump = values(last_dump)`);
 }
 
 /**
@@ -1725,9 +1756,9 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
       await withLockRetry(
         () =>
           db
-            .update(items)
+            .update(itemSync)
             .set({ lastSyncedAt: stamp, lastDump: dump })
-            .where(inArray(items.qid, slice)),
+            .where(inArray(itemSync.qid, slice)),
         (attempt, err) => {
           lockRetries++;
           log(

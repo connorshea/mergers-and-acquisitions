@@ -18,6 +18,7 @@ const TABLES = [
   "external_ids",
   "external_id_dupes",
   "items",
+  "item_sync",
   "properties",
   "class_ancestors",
   "entity_labels",

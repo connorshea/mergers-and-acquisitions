@@ -12,7 +12,7 @@ import mysql from "mysql2/promise";
 import type { Connection } from "mysql2/promise";
 import { and, eq, inArray, or } from "drizzle-orm";
 import { db } from "./db.ts";
-import { externalIds, items, mergeCandidates } from "../db/schema.ts";
+import { externalIds, itemSync, items, mergeCandidates } from "../db/schema.ts";
 import type { Item } from "../src/lib/compare.ts";
 import { chunk } from "../src/lib/chunk.ts";
 import { toSqlDatetime } from "./auth/time.ts";
@@ -161,6 +161,7 @@ async function settle(qids: string[], fates: Map<string, ItemFate>): Promise<num
     }
     await tx.delete(externalIds).where(inArray(externalIds.qid, qids));
     await tx.delete(items).where(inArray(items.qid, qids));
+    await tx.delete(itemSync).where(inArray(itemSync.qid, qids));
     return settled;
   });
 }

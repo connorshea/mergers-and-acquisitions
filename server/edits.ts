@@ -20,7 +20,7 @@ import { and, eq, inArray, lt, or } from "drizzle-orm";
 import { db } from "./db.ts";
 import { type AuthEnv, type AuthUser, requireUser } from "./auth/session.ts";
 import { addSeconds, toSqlDatetime } from "./auth/time.ts";
-import { externalIds, items, mergeCandidates, wikidataEdits } from "../db/schema.ts";
+import { externalIds, itemSync, items, mergeCandidates, wikidataEdits } from "../db/schema.ts";
 import { loadLabels, summaryColumns, toSummary } from "./candidate-summary.ts";
 import { editLimiter } from "./rate-limit.ts";
 import {
@@ -641,6 +641,7 @@ edits.post("/:id/merge", async (c) => {
     await db.transaction(async (tx) => {
       await tx.delete(externalIds).where(eq(externalIds.qid, fromQid));
       await tx.delete(items).where(eq(items.qid, fromQid));
+      await tx.delete(itemSync).where(eq(itemSync.qid, fromQid));
       await tx
         .update(mergeCandidates)
         .set({
@@ -916,11 +917,13 @@ edits.post("/:id/different", async (c) => {
     };
     try {
       // Clear the import hash and revision: they described the data before
-      // this edit, and the next dump pass should convert the item afresh.
+      // this edit, and the next dump pass should convert the item afresh. Its
+      // last_dump stays, so a pass under way doesn't prune it.
+      await db.update(items).set({ data }).where(eq(items.qid, item.qid));
       await db
-        .update(items)
-        .set({ data, dataHash: null, sourceRevid: null })
-        .where(eq(items.qid, item.qid));
+        .update(itemSync)
+        .set({ dataHash: null, sourceRevid: null })
+        .where(eq(itemSync.qid, item.qid));
     } catch (err) {
       console.error(
         `different-from: ${item.qid} → ${target.qid} saved as rev ${revid} but the mirror update failed`,

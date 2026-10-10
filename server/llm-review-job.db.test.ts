@@ -3,9 +3,9 @@
 // test/global-setup.ts.
 import Anthropic from "@anthropic-ai/sdk";
 import { afterAll, beforeEach, describe, expect, it } from "vite-plus/test";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { db, pool } from "./db.ts";
-import { items, llmReviews, mergeCandidates } from "../db/schema.ts";
+import { itemSync, items, llmReviews, mergeCandidates } from "../db/schema.ts";
 import type { Review, ReviewModel } from "../src/lib/llm-review.ts";
 import {
   collect,
@@ -247,7 +247,9 @@ describe.skipIf(!DB_TEST)("the monthly Claude review job", () => {
   it("reuses Haiku's prompt count for Opus only while both items are unchanged", async () => {
     await candidate("Q2", "Q1");
     await candidate("Q4", "Q3");
-    await db.update(items).set({ sourceRevid: 100 });
+    await db.execute(
+      sql`insert into ${itemSync} (qid, source_revid) select qid, 100 from ${items}`,
+    );
     const tokens = { inputTokens: 900, cacheReadInputTokens: 2100 };
     await review("Q1", "Q2", { ...tokens, lowRevid: 100, highRevid: 100 });
     await review("Q3", "Q4", { ...tokens, lowRevid: 100, highRevid: 99 }); // Q4 edited since
@@ -259,7 +261,7 @@ describe.skipIf(!DB_TEST)("the monthly Claude review job", () => {
 
   it("counts Opus's prompt when either item's revision is unknown", async () => {
     await candidate("Q2", "Q1");
-    await db.update(items).set({ sourceRevid: 100 }).where(eq(items.qid, "Q1"));
+    await db.insert(itemSync).values({ qid: "Q1", sourceRevid: 100 });
     await review("Q1", "Q2", { inputTokens: 900, lowRevid: 100, highRevid: null });
 
     await runStage(db, api, CONFIG, "confirmation", quiet);

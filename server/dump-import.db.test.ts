@@ -8,11 +8,12 @@ import { join } from "node:path";
 import { Readable } from "node:stream";
 import { gzipSync } from "node:zlib";
 import { afterAll, beforeEach, describe, expect, it } from "vite-plus/test";
-import { and, asc, eq, sql } from "drizzle-orm";
+import { and, asc, eq, getTableColumns, sql } from "drizzle-orm";
 import { db, pool } from "./db.ts";
 import {
   dumpImportSegments,
   externalIds,
+  itemSync,
   items,
   mergeCandidates,
   properties,
@@ -68,7 +69,14 @@ const source = (entities: object[]) =>
 const run = (entities: object[], opts: Parameters<typeof runDumpImport>[0] = {}) =>
   runDumpImport({ source: source(entities), log: () => {}, ...opts });
 
-const allItems = () => db.select().from(items).orderBy(asc(items.qid));
+const { qid: _qid, ...syncColumns } = getTableColumns(itemSync);
+/** Every item with its import bookkeeping (null when it has no item_sync row). */
+const allItems = () =>
+  db
+    .select({ ...getTableColumns(items), ...syncColumns })
+    .from(items)
+    .leftJoin(itemSync, eq(itemSync.qid, items.qid))
+    .orderBy(asc(items.qid));
 const segmentRows = async () =>
   (
     await db
@@ -181,7 +189,7 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
 
   it("writes an item in full when its stored hash is missing", async () => {
     await run([game("Q100", "Alpha", [steam("1")])]);
-    await db.update(items).set({ dataHash: null });
+    await db.update(itemSync).set({ dataHash: null });
     const stats = await run([game("Q100", "Alpha", [steam("1")])]);
     expect(stats).toMatchObject({ upserted: 1, unchanged: 0, externalIds: 1 });
     expect((await allItems())[0].dataHash).toMatch(/^[0-9a-f]{40}$/);
@@ -656,7 +664,7 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
 
   it("parses a stored item again under a new converter version, or on a full pass", async () => {
     await run([at(10, game("Q100", "Alpha"))]);
-    await db.update(items).set({ converterVersion: CONVERTER_VERSION - 1 });
+    await db.update(itemSync).set({ converterVersion: CONVERTER_VERSION - 1 });
     expect(await run([at(10, game("Q100", "Alpha"))])).toMatchObject({
       parsed: 1,
       unedited: 0,

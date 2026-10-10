@@ -48,6 +48,7 @@ describe("the Claude review path", () => {
   const entries = [
     "server/llm-reviews.ts",
     "server/llm-batch.ts",
+    "server/llm-review-job.ts",
     "src/lib/llm-review.ts",
     "scripts/eval-llm.ts",
     ...readdirSync(resolve(ROOT, "jobs"))
@@ -56,8 +57,9 @@ describe("the Claude review path", () => {
   ];
   const forbidden = ["server/wikidata-client.ts", "server/edits.ts"].map((f) => resolve(ROOT, f));
 
-  it("covers the trial job", () => {
+  it("covers the trial and review jobs", () => {
     expect(entries).toContain("jobs/llm-trial.ts");
+    expect(entries).toContain("jobs/llm-review.ts");
   });
 
   it.each(entries)("%s doesn't import the Wikidata edit client", (entry) => {

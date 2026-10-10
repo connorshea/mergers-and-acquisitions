@@ -172,3 +172,37 @@
   schedule: "0 5 * * *" # nightly 05:00 UTC
   mem: 1Gi
   emails: onfailure
+
+# The monthly Claude review (#292, server/llm-review-job.ts). Never edits
+# Wikidata. None of these jobs waits on the API: each submits or collects and
+# exits.
+# - first-pass (1st): sends Haiku every open pair that has never had a review.
+# - confirm (2nd, a day later, once Haiku's batches have ended; they take at
+#   most 24 h): sends Opus only the pairs Haiku called "different".
+# - collect (hourly on the 1st-3rd): writes back whatever batches have ended
+#   and hides the pairs Opus also calls "different" (`auto_dismissed`). With
+#   nothing pending it's one query and no API call. The 3rd's runs cover an
+#   Opus batch that takes the full 24 h.
+# Spend stops at LLM_MONTHLY_BUDGET_USD (default $200, both models), and if
+# the API refuses for lack of credit or the Console spend limit the run stops
+# cleanly: what it didn't send waits for next month. Needs the
+# ANTHROPIC_API_KEY envvar.
+- name: llm-review-first-pass
+  command: node --max-old-space-size=768 jobs/llm-review.ts first-pass
+  image: tool-mna/tool-mna:latest
+  schedule: "0 6 1 * *" # 1st of the month, 06:00 UTC, after the nightly hunt
+  mem: 1Gi
+  emails: onfailure
+
+- name: llm-review-confirm
+  command: node --max-old-space-size=768 jobs/llm-review.ts confirm
+  image: tool-mna/tool-mna:latest
+  schedule: "0 7 2 * *" # 2nd of the month, 07:00 UTC
+  mem: 1Gi
+  emails: onfailure
+
+- name: llm-review-collect
+  command: node jobs/llm-review.ts collect
+  image: tool-mna/tool-mna:latest
+  schedule: "30 * 1-3 * *" # hourly at :30 on the 1st to 3rd
+  emails: onfailure

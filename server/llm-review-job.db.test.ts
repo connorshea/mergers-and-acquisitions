@@ -328,6 +328,34 @@ describe.skipIf(!DB_TEST)("the monthly Claude review job", () => {
     expect(capped.sent().map(([, id]) => id)).toEqual(["Q5_Q6_f"]);
   });
 
+  it("splits a run into batches by request count and by size", async () => {
+    const pairs = async () => {
+      await truncateAll();
+      for (let i = 0; i < 5; i++) await candidate(`Q${2 * i + 2}`, `Q${2 * i + 1}`, 0.4 + i / 10);
+    };
+    await pairs();
+    await runStage(db, api, CONFIG, "first_pass", {
+      ...quiet,
+      batchLimits: { requests: 2, bytes: 1e9 },
+    });
+    const batches = [...api.batches.values()].map((b) => b.requests);
+    expect(batches.map((b) => b.length)).toEqual([2, 2, 1]);
+    expect((await rowsFor("first_pass")).map((r) => r.status)).toEqual(Array(5).fill("succeeded"));
+
+    // A cap that fits three of these requests, with their commas, but not four.
+    const size = Math.max(...batches.flat().map((r) => Buffer.byteLength(JSON.stringify(r)) + 1));
+    await pairs();
+    const bySize = new FakeApi();
+    await runStage(db, bySize, CONFIG, "first_pass", {
+      ...quiet,
+      batchLimits: { requests: 100, bytes: 3 * size },
+    });
+    const sized = [...bySize.batches.values()].map((b) => b.requests);
+    expect(sized.map((b) => b.length)).toEqual([3, 2]);
+    for (const b of sized)
+      expect(Buffer.byteLength(JSON.stringify(b))).toBeLessThanOrEqual(3 * size);
+  });
+
   it("releases its claims when the batch can't be created", async () => {
     await candidate("Q2", "Q1");
     await candidate("Q4", "Q3");

@@ -4,15 +4,36 @@
 
 import type { Item } from "./compare.ts";
 
-export const CANDIDATE_STATUSES = ["open", "merging", "dismissed", "merged"] as const;
+export const CANDIDATE_STATUSES = [
+  "open",
+  "merging",
+  "dismissed",
+  "merged",
+  "auto_dismissed",
+] as const;
 export type CandidateStatus = (typeof CANDIDATE_STATUSES)[number];
 
+/** How each status reads in the UI. */
+export const STATUS_LABELS: Record<CandidateStatus, string> = {
+  open: "Open",
+  merging: "Merging",
+  dismissed: "Dismissed",
+  merged: "Merged",
+  // Two Claude models agreed the pair isn't a duplicate (server/llm-reviews.ts).
+  auto_dismissed: "Hidden by automation",
+};
+
+/** A status as the short flag on a resolved pair shows it ("hidden", not "auto_dismissed"). */
+export function statusFlag(status: string): string {
+  return status === "auto_dismissed" ? "hidden" : status;
+}
+
 /**
- * Statuses a human (or an in-flight merge) owns: the hunt never rescores,
- * resurrects, or drops a candidate in one of these, and the list's default
- * view excludes them.
+ * Statuses a human (or an in-flight merge, or the Claude review job) has
+ * settled: the hunt never rescores, resurrects, or drops a candidate in one
+ * of these, and the list's default view excludes them.
  */
-export const PROTECTED_STATUSES = ["merging", "dismissed", "merged"] as const;
+export const PROTECTED_STATUSES = ["merging", "dismissed", "merged", "auto_dismissed"] as const;
 
 export const CANDIDATE_SORTS = ["confidence", "detectedAt"] as const;
 export type CandidateSort = (typeof CANDIDATE_SORTS)[number];
@@ -83,9 +104,27 @@ export interface CandidateDetailResponse {
    * (its merge, or its "different from" statements); null when none did.
    */
   editGroupUrl: string | null;
+  /**
+   * The Claude reviews that hid the pair, first pass then confirmation; empty
+   * unless the pair is `auto_dismissed`. Open pairs never carry them: a
+   * verdict nothing acts on shouldn't steer a reviewer.
+   */
+  llmReviews: LlmReviewSummary[];
   /** Neighbour candidate ids for prev/next navigation (same status, confidence order). */
   prevId: number | null;
   nextId: number | null;
+}
+
+/** One stored Claude review of a pair, as the detail page shows it. */
+export interface LlmReviewSummary {
+  id: number;
+  stage: "first_pass" | "confirmation";
+  model: string;
+  verdict: "same" | "different" | "unsure";
+  probability: number;
+  rationale: string;
+  /** UTC, "YYYY-MM-DD HH:MM:SS". */
+  completedAt: string | null;
 }
 
 /** An item's first revision on Wikidata: who created it, when, and how. */

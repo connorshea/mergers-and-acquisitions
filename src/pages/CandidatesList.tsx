@@ -19,6 +19,8 @@ import { useDismissableMenu } from "../lib/use-dismissable-menu.ts";
 import {
   CANDIDATE_SORTS,
   CANDIDATE_STATUSES,
+  STATUS_LABELS,
+  statusFlag,
   type CandidateListResponse,
   type CandidateSort,
   type CandidateStatus,
@@ -312,9 +314,7 @@ export default function CandidatesList() {
   // just the app name; other statuses carry their own "<Status> candidates"
   // tail. A search term leads. React 19 hoists this into <head>.
   const titleTail =
-    status === "open"
-      ? "M&A: A Wikidata Merge Assistant"
-      : `${status[0].toUpperCase() + status.slice(1)} candidates`;
+    status === "open" ? "M&A: A Wikidata Merge Assistant" : `${STATUS_LABELS[status]} candidates`;
   const titleParts = [...(q ? [`“${q}”`] : []), ...(creator ? [`by ${creator}`] : [])];
   const pageTitle = [...titleParts, titleTail].join(" · ");
 
@@ -393,7 +393,7 @@ export default function CandidatesList() {
                 populated, so it's left out of the filter to keep it uncluttered. */}
             {CANDIDATE_STATUSES.filter((s) => s !== "merging").map((s) => (
               <option key={s} value={s}>
-                {s[0].toUpperCase() + s.slice(1)}
+                {STATUS_LABELS[s]}
               </option>
             ))}
           </select>
@@ -769,7 +769,7 @@ function CandidateRowView({
             blocker
           </span>
         )}
-        {c.status !== "open" && <span className="flag flag-status">{c.status}</span>}
+        {c.status !== "open" && <span className="flag flag-status">{statusFlag(c.status)}</span>}
       </td>
       <td className="col-actions">
         {c.status === "open" && (

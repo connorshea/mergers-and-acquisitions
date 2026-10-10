@@ -28,7 +28,9 @@ import type {
   CandidateReopenResponse,
   CandidateSummary,
   ItemCreation,
+  LlmReviewSummary,
 } from "../lib/api-types.ts";
+import { statusFlag } from "../lib/api-types.ts";
 import { wikiPageUrl } from "../lib/wiki.ts";
 
 // Detail view for one candidate: a summary card (confidence, evidence, actions)
@@ -287,17 +289,21 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
             >
               {status && status !== "open" ? (
                 <>
-                  <span className="flag flag-status">{status}</span>
-                  {/* A merged pair's details get the banner above the ledger. */}
-                  {status !== "merged" && (resolution || resolvedBy) && (
-                    <span className="detail-resolution">
-                      <Resolution resolution={resolution} resolvedBy={resolvedBy} />
-                      {data?.editGroupUrl && <EditGroupLink url={data.editGroupUrl} separated />}
-                    </span>
-                  )}
+                  <span className="flag flag-status">{statusFlag(status)}</span>
+                  {/* A merged pair's details get the banner above the ledger;
+                    a hidden one's resolution only names the review, which
+                    the panel below shows in full. */}
+                  {status !== "merged" &&
+                    status !== "auto_dismissed" &&
+                    (resolution || resolvedBy) && (
+                      <span className="detail-resolution">
+                        <Resolution resolution={resolution} resolvedBy={resolvedBy} />
+                        {data?.editGroupUrl && <EditGroupLink url={data.editGroupUrl} separated />}
+                      </span>
+                    )}
                   {/* A merged pair stays merged (it happened on Wikidata); a
                     dismissed one, or a merge claim that was abandoned, can
-                    come back. */}
+                    come back. A hidden one reopens from its reviews card. */}
                   {(status === "dismissed" || status === "merging") && (
                     <button
                       type="button"
@@ -351,6 +357,14 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
               {candidate?.status === "merged" ? "merged" : "marked as different"}. Wikidata may have
               changed them since.
             </p>
+          )}
+          {status === "auto_dismissed" && data && (
+            <ClaudeReviews
+              reviews={data.llmReviews}
+              onReopen={reopen}
+              reopening={dismissing}
+              canReopen={!!user}
+            />
           )}
           {data && candidate && (!data.from || !data.into) && (
             <MissingItemsNote candidate={candidate} from={data.from} into={data.into} />
@@ -839,6 +853,125 @@ function DifferentDialog({
         </button>
       </div>
     </Dialog>
+  );
+}
+
+const STAGE_LABELS: Record<LlmReviewSummary["stage"], string> = {
+  first_pass: "1 · First pass",
+  confirmation: "2 · Confirm",
+};
+
+/** Model ids as people say them: "claude-opus-5-5" → "Opus 5.5". */
+function modelName(model: string): string {
+  const m = /^claude-([a-z]+)-(\d+)-(\d+)$/.exec(model);
+  return m ? `${m[1][0].toUpperCase()}${m[1].slice(1)} ${m[2]}.${m[3]}` : model;
+}
+
+/**
+ * Why a hidden pair was hidden: each model's review of it, with its verdict,
+ * how likely it thought a duplicate was, and its reasoning, plus the way back
+ * to the open list.
+ */
+function ClaudeReviews({
+  reviews,
+  onReopen,
+  reopening,
+  canReopen,
+}: {
+  reviews: LlmReviewSummary[];
+  onReopen: () => void;
+  reopening: boolean;
+  canReopen: boolean;
+}) {
+  return (
+    <section className="auto-review" aria-labelledby="auto-review-heading">
+      <header className="auto-review-head">
+        <div className="auto-review-intro">
+          <div className="auto-review-title">
+            <svg
+              viewBox="0 0 24 24"
+              width="18"
+              height="18"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
+              <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
+              <path d="M1 1l22 22" />
+            </svg>
+            <h2 id="auto-review-heading">Hidden by automation</h2>
+            <span className="auto-review-pill">Not reviewed by a human</span>
+          </div>
+          <p>
+            Two models independently judged these to be separate items, so the pair was closed
+            automatically. Nothing was changed on Wikidata.
+          </p>
+        </div>
+        <button
+          type="button"
+          className="btn-reopen-pair"
+          onClick={onReopen}
+          disabled={reopening || !canReopen}
+          title={canReopen ? undefined : "Log in to reopen"}
+        >
+          <svg
+            viewBox="0 0 24 24"
+            width="16"
+            height="16"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M3 12a9 9 0 1 0 3-6.7" />
+            <path d="M3 4v5h5" />
+          </svg>
+          {reopening ? "Reopening…" : "Reopen pair"}
+        </button>
+      </header>
+      {reviews.length === 0 ? (
+        <p className="auto-review-empty">The reviews behind this are no longer stored.</p>
+      ) : (
+        <ol className="auto-review-list">
+          {reviews.map((r) => {
+            const pct = Math.round(r.probability * 100);
+            return (
+              <li key={r.id} className="auto-review-row">
+                <div className="auto-review-who">
+                  <span className="auto-review-stage">{STAGE_LABELS[r.stage]}</span>
+                  <span className="auto-review-model">{modelName(r.model)}</span>
+                </div>
+                <div className="auto-review-body">
+                  <div className="auto-review-verdict">
+                    <span className="auto-review-chip">
+                      {r.verdict[0].toUpperCase() + r.verdict.slice(1)}
+                    </span>
+                    <div
+                      className="auto-review-likelihood"
+                      role="img"
+                      aria-label={`${pct}% likely duplicates`}
+                    >
+                      <div className="auto-review-bar">
+                        <div style={{ width: `${pct}%` }} />
+                      </div>
+                      <span className="auto-review-pct">{pct}%</span>
+                      <span className="auto-review-caption">duplicate likelihood</span>
+                    </div>
+                  </div>
+                  <p className="auto-review-rationale">{r.rationale}</p>
+                </div>
+              </li>
+            );
+          })}
+        </ol>
+      )}
+    </section>
   );
 }
 

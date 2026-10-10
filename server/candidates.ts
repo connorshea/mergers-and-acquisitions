@@ -12,6 +12,7 @@ import { loadLabels, summaryColumns, toSummary } from "./candidate-summary.ts";
 import { attachSitelinkRedirects } from "./sitelink-overlay.ts";
 import { loadCreations } from "./item-creations.ts";
 import { cachedCount } from "./candidate-count-cache.ts";
+import { loadPairReviews } from "./llm-reviews.ts";
 import {
   classAncestors,
   entityLabels,
@@ -283,7 +284,7 @@ candidates.get("/:id", async (c) => {
         ? "different-from"
         : null;
 
-  const [labels, itemRows, nextRows, prevRows, groupRows] = await Promise.all([
+  const [labels, itemRows, nextRows, prevRows, groupRows, llmReviews] = await Promise.all([
     loadLabels([row]),
     // A resolved pair shows the snapshot saved when it was resolved instead.
     snapshot
@@ -318,6 +319,8 @@ candidates.get("/:id", async (c) => {
           .orderBy(desc(wikidataEdits.id))
           .limit(1)
       : [],
+    // Only a hidden pair shows the reviews that hid it (see LlmReviewSummary).
+    row.status === "auto_dismissed" ? loadPairReviews(db, row.fromQid, row.intoQid) : [],
   ]);
   const editGroup = groupRows[0]?.editGroup;
 
@@ -437,6 +440,7 @@ candidates.get("/:id", async (c) => {
     propertyInapplicable,
     valueLabels,
     editGroupUrl: editGroup ? editGroupUrl(editGroup) : null,
+    llmReviews,
     prevId: prevRows[0]?.id ?? null,
     nextId: nextRows[0]?.id ?? null,
   };

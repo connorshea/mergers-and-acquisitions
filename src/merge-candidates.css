@@ -1263,6 +1263,192 @@ a.chip-id:hover {
   color: var(--muted);
   font-size: 0.9rem;
 }
+/* A hidden pair's model reviews (CandidateDetail's ClaudeReviews): a header
+   with the way back, then one row per review, stage and model on the left. */
+.auto-review {
+  margin: 1rem 0 0;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.auto-review-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem 1.5rem;
+  padding: 1.35rem 1.5rem 1.1rem;
+}
+.auto-review-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+  flex: 1 1 20rem;
+}
+.auto-review-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.6rem;
+  color: var(--muted);
+}
+.auto-review-title h2 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.auto-review-pill {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--muted) 14%, var(--surface));
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem;
+}
+.auto-review-intro p {
+  margin: 0;
+  max-width: 38rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.btn-reopen-pair {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.5rem;
+  padding: 0 1rem;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--surface);
+  background: var(--focus);
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn-reopen-pair:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+.btn-reopen-pair:disabled {
+  color: var(--muted);
+  background: color-mix(in srgb, var(--muted) 14%, var(--surface));
+  cursor: not-allowed;
+}
+.auto-review-empty {
+  margin: 0;
+  padding: 1.1rem 1.5rem;
+  border-top: 1px solid var(--rule);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.auto-review-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.auto-review-row {
+  display: grid;
+  grid-template-columns: 8.25rem minmax(0, 1fr);
+  border-top: 1px solid var(--rule);
+}
+.auto-review-who {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1.1rem 0 1.1rem 1.5rem;
+}
+.auto-review-stage {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.auto-review-model {
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+.auto-review-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.1rem 1.5rem 1.2rem 0.5rem;
+  min-width: 0;
+}
+.auto-review-verdict {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.9rem;
+}
+.auto-review-chip {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--focus);
+  background: color-mix(in srgb, var(--focus) 12%, var(--surface));
+  border-radius: 6px;
+  padding: 0.1rem 0.5rem;
+}
+.auto-review-likelihood {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.8125rem;
+}
+.auto-review-bar {
+  width: 10rem;
+  height: 6px;
+  background: var(--rule);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.auto-review-bar > div {
+  height: 100%;
+  background: var(--similar);
+}
+.auto-review-pct {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+}
+.auto-review-caption {
+  color: var(--muted);
+}
+.auto-review-rationale {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+/* Phones: stage and model sit above the review instead of beside it. */
+@media (max-width: 560px) {
+  .auto-review-head,
+  .auto-review-empty {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .auto-review-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .auto-review-who {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 0.6rem;
+    padding: 1rem 1rem 0;
+  }
+  .auto-review-body {
+    padding: 0.5rem 1rem 1.1rem;
+  }
+  .auto-review-bar {
+    width: 6rem;
+  }
+}
 .detail-note.is-missing {
   padding: 0.9rem 1.1rem;
   border: 1px dashed var(--rule);

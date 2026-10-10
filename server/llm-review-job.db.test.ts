@@ -10,6 +10,7 @@ import type { Review, ReviewModel } from "../src/lib/llm-review.ts";
 import {
   collect,
   MAX_ATTEMPTS,
+  ResultsGone,
   type ReviewApi,
   type ReviewConfig,
   runStage,
@@ -256,6 +257,15 @@ describe.skipIf(!DB_TEST)("the monthly Claude review job", () => {
     expect(api.counted[0]).toContain("Item Q4");
   });
 
+  it("counts Opus's prompt when either item's revision is unknown", async () => {
+    await candidate("Q2", "Q1");
+    await db.update(items).set({ sourceRevid: 100 }).where(eq(items.qid, "Q1"));
+    await review("Q1", "Q2", { inputTokens: 900, lowRevid: 100, highRevid: null });
+
+    await runStage(db, api, CONFIG, "confirmation", quiet);
+    expect(api.counted).toHaveLength(1);
+  });
+
   it("hides a pair only when Opus says 'different' under the cut-off, and only if still open", async () => {
     const pairs = {
       hide: [await candidate("Q2", "Q1"), await candidate("Q1", "Q2")],
@@ -328,6 +338,23 @@ describe.skipIf(!DB_TEST)("the monthly Claude review job", () => {
     expect(capped.sent().map(([, id]) => id)).toEqual(["Q5_Q6_f"]);
   });
 
+  it("doesn't spend a run's slots on pairs it skips", async () => {
+    await candidate("Q2", "Q1", 0.1);
+    await db.delete(items).where(eq(items.qid, "Q1")); // gone from the mirror
+    await candidate("Q4", "Q3", 0.2);
+    await candidate("Q6", "Q5", 0.3);
+    const lines: string[] = [];
+    const { submit } = await runStage(db, api, { ...CONFIG, maxPairs: 1 }, "first_pass", {
+      ...quiet,
+      log: (l) => lines.push(l),
+    });
+    expect(api.sent().map(([, id]) => id)).toEqual(["Q3_Q4_f"]);
+    expect(submit).toMatchObject({ submitted: 1, deferred: 1, skipped: { missingItem: 1 } });
+    expect(lines).toContain(
+      "claude-haiku-5-5: 1 pairs left for next month by LLM_MAX_PAIRS_PER_RUN",
+    );
+  });
+
   it("splits a run into batches by request count and by size", async () => {
     const pairs = async () => {
       await truncateAll();
@@ -366,6 +393,17 @@ describe.skipIf(!DB_TEST)("the monthly Claude review job", () => {
     const rows = await rowsFor("first_pass");
     expect(rows).toHaveLength(1);
     expect(rows[0]).toMatchObject({ qidLow: "Q3", status: "failed", attempts: 1, batchId: null });
+  });
+
+  it("keeps its claims when the batch may have been made", async () => {
+    await candidate("Q2", "Q1");
+    api.createError = new Anthropic.APIConnectionTimeoutError();
+    await expect(runStage(db, api, CONFIG, "first_pass", quiet)).rejects.toThrow("timed out");
+    expect(await rowsFor("first_pass")).toMatchObject([{ status: "pending", batchId: null }]);
+    // Nothing goes again this month while the claim stands.
+    const again = new FakeApi();
+    await runStage(db, again, CONFIG, "first_pass", quiet);
+    expect(again.sent()).toEqual([]);
   });
 
   it("stops cleanly when the API is out of credit", async () => {
@@ -428,6 +466,40 @@ describe.skipIf(!DB_TEST)("the monthly Claude review job", () => {
       expect(next.sent()).toHaveLength(attempt <= MAX_ATTEMPTS ? 3 : 0);
     }
     expect((await rowsFor("first_pass")).map((r) => r.attempts)).toEqual([3, 3, 1, 3]);
+  });
+
+  it("adds a retry's cost to this month's earlier attempts, not last month's", async () => {
+    await candidate("Q2", "Q1");
+    await candidate("Q4", "Q3");
+    const failed = { status: "failed", verdict: null, error: "stop_reason max_tokens" };
+    await review("Q1", "Q2", { ...failed, costUsd: 0.04, completedAt: "2026-10-01 06:30:00" });
+    await review("Q3", "Q4", { ...failed, costUsd: 0.04, completedAt: "2026-09-01 06:30:00" });
+    const now = () => new Date("2026-10-01T08:00:00Z");
+    await runStage(db, api, CONFIG, "first_pass", { ...quiet, now });
+
+    const [thisMonth, lastMonth] = await rowsFor("first_pass");
+    expect(thisMonth.status).toBe("succeeded");
+    expect(thisMonth.costUsd! - lastMonth.costUsd!).toBeCloseTo(0.04);
+    expect(lastMonth.costUsd).toBeLessThan(0.01);
+  });
+
+  it("fails a batch whose results are gone, and goes on to the rest", async () => {
+    await candidate("Q2", "Q1");
+    await candidate("Q4", "Q3");
+    api.hold = true;
+    await runStage(db, api, CONFIG, "first_pass", {
+      ...quiet,
+      wait: false,
+      batchLimits: { requests: 1, bytes: 1e9 },
+    });
+    for (const b of api.batches.values()) b.ended = true;
+    const batchResults = api.batchResults.bind(api);
+    api.batchResults = async function* (batchId) {
+      if (batchId === "batch_1") throw new ResultsGone("expired");
+      yield* batchResults(batchId);
+    };
+    const result = await collect(db, api, CONFIG, quiet);
+    expect(result).toMatchObject({ succeeded: 1, errors: { "results gone": 1 } });
   });
 
   it("fails a batch the API has lost, and a claim no batch was ever recorded for", async () => {

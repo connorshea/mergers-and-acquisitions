@@ -1,0 +1,203 @@
+{
+  "pageid": 119191053,
+  "ns": 0,
+  "title": "Q125019776",
+  "lastrevid": 2106843569,
+  "modified": "2024-03-20T12:16:00Z",
+  "type": "item",
+  "id": "Q125019776",
+  "labels": {
+    "nl": {
+      "language": "nl",
+      "value": "One Tail One Head"
+    },
+    "en": {
+      "language": "en",
+      "value": "One Tail One Head"
+    },
+    "en-us": {
+      "language": "en-us",
+      "value": "One Tail One Head"
+    },
+    "de": {
+      "language": "de",
+      "value": "One Tail One Head"
+    }
+  },
+  "descriptions": {
+    "nl": {
+      "language": "nl",
+      "value": "Muziekgroep uit Noorwegen"
+    },
+    "en": {
+      "language": "en",
+      "value": "Band from Norway"
+    },
+    "de": {
+      "language": "de",
+      "value": "Norwegische band"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "طاقم موسيقي نرويجي"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "3c9f9d423bb4b1080c7bbebd83a3f9cce18cb443",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 215380,
+              "id": "Q215380"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q125019776$799ace90-42cb-5d8e-ca3e-60b2cbad82cf",
+        "rank": "normal"
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "aedee50c025bda74b01554c4130277c62e5661dd",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 20,
+              "id": "Q20"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P131": [
+            {
+              "snaktype": "value",
+              "property": "P131",
+              "hash": "f0b04da4249402005ebc9acb8fc94719d442c452",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 127676,
+                  "id": "Q127676"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            {
+              "snaktype": "value",
+              "property": "P131",
+              "hash": "2c2a7369dfad8e5e1437a718ca4d01534df311e7",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 25804,
+                  "id": "Q25804"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P131"],
+        "id": "Q125019776$44e1d14f-42dd-9088-cac4-bf1c0aeffe03",
+        "rank": "normal"
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "0e5554408666eddf5d44477cd4adc2892fa01b1b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 132438,
+              "id": "Q132438"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q125019776$0f81fb9d-4ed7-351a-5ea6-32bd194445fc",
+        "rank": "normal"
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "47fd3e17c5b9f429115086f36ea29f748c63550e",
+          "datavalue": {
+            "value": {
+              "time": "+2006-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q125019776$0f0ddae5-4b7d-e8c5-9ded-1de3a9764a2f",
+        "rank": "normal"
+      }
+    ],
+    "P1953": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1953",
+          "hash": "461a5f1072481c57e0fcc4c15af1be5429b2fd01",
+          "datavalue": {
+            "value": "1086721",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q125019776$236a588a-494c-bed8-538e-ebf9ed908f04",
+        "rank": "normal"
+      }
+    ],
+    "P1952": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1952",
+          "hash": "bae994574119d1cc013c7558f9c1ae0a1cc4754b",
+          "datavalue": {
+            "value": "3540259462",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q125019776$5699b5f4-45be-b03b-18ac-97de91cf3037",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

@@ -1,0 +1,756 @@
+{
+  "pageid": 135209116,
+  "ns": 0,
+  "title": "Q141632136",
+  "lastrevid": 2552728555,
+  "modified": "2026-10-03T19:15:28Z",
+  "type": "item",
+  "id": "Q141632136",
+  "labels": {
+    "de": {
+      "language": "de",
+      "value": "Energieberatung Klein Service GmbH"
+    },
+    "en": {
+      "language": "en",
+      "value": "Energieberatung Klein Service GmbH"
+    }
+  },
+  "descriptions": {
+    "de": {
+      "language": "de",
+      "value": "digitale Energieberatung und Fördermittelservice aus Pfarrkirchen"
+    },
+    "en": {
+      "language": "en",
+      "value": "German digital energy consulting and funding services company"
+    }
+  },
+  "aliases": {
+    "de": [
+      {
+        "language": "de",
+        "value": "EB Klein Service"
+      }
+    ],
+    "en": [
+      {
+        "language": "en",
+        "value": "EB Klein Service"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "326e3d41d1e9c34715e880be6e1c6a1e822e4317",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4830453,
+              "id": "Q4830453"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141632136$05F49CFC-2761-4228-9476-A9E9941F5314",
+        "rank": "normal"
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "ef7247b704f4ec0a7df39e83306bb388fea17d5f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 183,
+              "id": "Q183"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141632136$1D31C4AA-A1E8-4B71-96AC-14BB460BAAE9",
+        "rank": "normal"
+      }
+    ],
+    "P1454": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1454",
+          "hash": "74fdb1902141ad63c707f8dcece2c0d644fe0eab",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 460178,
+              "id": "Q460178"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141632136$A83F8B11-8A32-4E34-B78A-7B2523E2F118",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "0ffa2cc64126ef2d2d936ebc63867ea8c6cbdc13",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "54a085561bf3592cc5f3ff4f4effec02c1c9804f",
+                  "datavalue": {
+                    "value": "https://www.eb-klein-service.de/impressum/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a5fb8322be4b586eb739a6ba1cb075133870e930",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-10-03T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P159": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P159",
+          "hash": "42c11d6738c5a5a08e17be0b8f9ee5b5192dcf54",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 545359,
+              "id": "Q545359"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141632136$7F697AFA-8163-4DE3-9060-2EFC7C7FCB8D",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "0ffa2cc64126ef2d2d936ebc63867ea8c6cbdc13",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "54a085561bf3592cc5f3ff4f4effec02c1c9804f",
+                  "datavalue": {
+                    "value": "https://www.eb-klein-service.de/impressum/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a5fb8322be4b586eb739a6ba1cb075133870e930",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-10-03T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P452": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P452",
+          "hash": "52067fab3b027d9f84e0bbe410dc46a804c69ef5",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 19059292,
+              "id": "Q19059292"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141632136$37DC7F5E-DD2C-4CDB-9745-2AADE6CE4DBD",
+        "rank": "normal"
+      }
+    ],
+    "P1448": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1448",
+          "hash": "8fbadb0bd53ad8fb33c116372b2582f1dd1d4606",
+          "datavalue": {
+            "value": {
+              "text": "Energieberatung Klein Service GmbH",
+              "language": "de"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q141632136$1794A94F-498B-40CE-922A-EDFC180F0E57",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "0ffa2cc64126ef2d2d936ebc63867ea8c6cbdc13",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "54a085561bf3592cc5f3ff4f4effec02c1c9804f",
+                  "datavalue": {
+                    "value": "https://www.eb-klein-service.de/impressum/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a5fb8322be4b586eb739a6ba1cb075133870e930",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-10-03T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P6375": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6375",
+          "hash": "1b818d0ce1b19b8f405a1e680a77833dd717c492",
+          "datavalue": {
+            "value": {
+              "text": "Mahlgassinger Weg 56, 84347 Pfarrkirchen",
+              "language": "de"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q141632136$C6D4A773-175E-4148-A85C-C5C0320DC824",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "0ffa2cc64126ef2d2d936ebc63867ea8c6cbdc13",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "54a085561bf3592cc5f3ff4f4effec02c1c9804f",
+                  "datavalue": {
+                    "value": "https://www.eb-klein-service.de/impressum/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a5fb8322be4b586eb739a6ba1cb075133870e930",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-10-03T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P281": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P281",
+          "hash": "a62ed60ffd6735bc6a6991eb5fae971428e8183f",
+          "datavalue": {
+            "value": "84347",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q141632136$B7CD705A-01A7-4D73-9D2B-A037CC6283BE",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "0ffa2cc64126ef2d2d936ebc63867ea8c6cbdc13",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "54a085561bf3592cc5f3ff4f4effec02c1c9804f",
+                  "datavalue": {
+                    "value": "https://www.eb-klein-service.de/impressum/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a5fb8322be4b586eb739a6ba1cb075133870e930",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-10-03T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P12012": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12012",
+          "hash": "d7e849d4936c21a174284568c53e1fa4091beccf",
+          "datavalue": {
+            "value": "15556",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P10604": [
+            {
+              "snaktype": "value",
+              "property": "P10604",
+              "hash": "88626b95956a2af3225069091528e5e321cf602d",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 104806723,
+                  "id": "Q104806723"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P2378": [
+            {
+              "snaktype": "value",
+              "property": "P2378",
+              "hash": "42652adc03639d1f5d7c5d0a7b3821d3b4812141",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 16054354,
+                  "id": "Q16054354"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P10604", "P2378"],
+        "id": "Q141632136$45EA2CCD-0428-4AB4-A919-6D866233BC75",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "0ffa2cc64126ef2d2d936ebc63867ea8c6cbdc13",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "54a085561bf3592cc5f3ff4f4effec02c1c9804f",
+                  "datavalue": {
+                    "value": "https://www.eb-klein-service.de/impressum/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a5fb8322be4b586eb739a6ba1cb075133870e930",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-10-03T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P3608": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3608",
+          "hash": "0e3ad9b6e3f5280eb74571ca83900e46e55f0bd0",
+          "datavalue": {
+            "value": "DE465170312",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q141632136$11AF358C-D079-4CA7-A17C-285CA14F5B0B",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "0ffa2cc64126ef2d2d936ebc63867ea8c6cbdc13",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "54a085561bf3592cc5f3ff4f4effec02c1c9804f",
+                  "datavalue": {
+                    "value": "https://www.eb-klein-service.de/impressum/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a5fb8322be4b586eb739a6ba1cb075133870e930",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-10-03T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "99000bb68c6f4547722f9a16190bbc65d0e677ce",
+          "datavalue": {
+            "value": "https://www.eb-klein-service.de",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "46bfd327b830f66f7061ea92d1be430c135fa91f",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 188,
+                  "id": "Q188"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P407"],
+        "id": "Q141632136$B37C91C2-3C76-4E94-B13E-78F48997C570",
+        "rank": "normal"
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "3c0d3dbfb37b5649b9c91318ae53bc0d0525f63a",
+          "datavalue": {
+            "value": {
+              "time": "+2026-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q141632136$D42A7DEB-7D09-43A4-A4B9-C9475BA44C21",
+        "rank": "normal"
+      }
+    ],
+    "P4264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4264",
+          "hash": "995b45d47604458923af657fddfc72948be59b39",
+          "datavalue": {
+            "value": "eb-klein-service",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q141632136$5BA01DF5-FCAD-4599-9973-D27D6F933E2E",
+        "rank": "normal"
+      }
+    ],
+    "P11245": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11245",
+          "hash": "101915ab63899cf0e1759ebc5a46bae45e3209a4",
+          "datavalue": {
+            "value": "ebkleinservice",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q141632136$D1AE43EE-11BE-4CEE-963A-DB98CA77DB09",
+        "rank": "normal"
+      }
+    ],
+    "P968": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P968",
+          "hash": "f63f4508ec73e3222972e91c128400e600b84ca1",
+          "datavalue": {
+            "value": "mailto:info@eb-klein-service.de",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q141632136$E4E59877-62F1-4E9D-B695-A4F1C674DF62",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "0ffa2cc64126ef2d2d936ebc63867ea8c6cbdc13",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "54a085561bf3592cc5f3ff4f4effec02c1c9804f",
+                  "datavalue": {
+                    "value": "https://www.eb-klein-service.de/impressum/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a5fb8322be4b586eb739a6ba1cb075133870e930",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-10-03T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P1329": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1329",
+          "hash": "e05be0342598ef34bee78ea0904e4139859a9d46",
+          "datavalue": {
+            "value": "+49-89-215280253",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q141632136$833229F7-289F-48D9-A8DD-F0C3E2FA8442",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "0ffa2cc64126ef2d2d936ebc63867ea8c6cbdc13",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "54a085561bf3592cc5f3ff4f4effec02c1c9804f",
+                  "datavalue": {
+                    "value": "https://www.eb-klein-service.de/impressum/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a5fb8322be4b586eb739a6ba1cb075133870e930",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-10-03T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {}
+}

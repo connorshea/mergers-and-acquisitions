@@ -1,0 +1,216 @@
+{
+  "pageid": 134861896,
+  "ns": 0,
+  "title": "Q141329723",
+  "lastrevid": 2551804710,
+  "modified": "2026-10-01T14:44:09Z",
+  "type": "item",
+  "id": "Q141329723",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "La vie de sainte Christine"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "La vie de sainte Christine"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "medieval French versions of the life of Saint Christina of Bolsena"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "versions médiévales françaises de la vie de sainte Christine de Bolsena"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5963e3cad5eee4ae1cffbefbac15327800b9a7e6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7725634,
+              "id": "Q7725634"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141329723$058E8E49-F9E7-4C8D-8252-A0C8790600C7",
+        "rank": "normal"
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "37aeea3f194932edf979e2dcd777865ba543f708",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 208628,
+              "id": "Q208628"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141329723$8E5634AA-F887-4AD1-B000-422D2E8C2212",
+        "rank": "normal"
+      }
+    ],
+    "P407": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P407",
+          "hash": "5f5ff1a6dce3b17d7844a13f5990276a722dfc70",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1473289,
+              "id": "Q1473289"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141329723$2FD80C8C-37C1-4BDB-8C68-0041767A436E",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P407",
+          "hash": "ebe6ff9a0770b40375af95f15634dd794f84855b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 35222,
+              "id": "Q35222"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141329723$05A1F805-0741-434E-A3BE-B95747DE05FB",
+        "rank": "normal"
+      }
+    ],
+    "P4549": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4549",
+          "hash": "b6babd3036090257cf695db85eb1623b05be5b60",
+          "datavalue": {
+            "value": "1170",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q141329723$426170C9-E69A-4CCF-9BAB-47D99EA8B132",
+        "rank": "normal"
+      }
+    ],
+    "P2348": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2348",
+          "hash": "ce8abd67b2a82eaeeaf07a32d171127e3f0f0372",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 12554,
+              "id": "Q12554"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141329723$AFA495B9-A79F-4046-A81C-A322750E7041",
+        "rank": "normal"
+      }
+    ],
+    "P921": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P921",
+          "hash": "7c15f25e2166637f8d8b4389735f41aec02059f3",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 237882,
+              "id": "Q237882"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141329723$1F6BE070-F0EF-446C-AD88-82507DE309CF",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "aa900a76e04e2505d838b5ca02043eaa2fd6fbc7",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 141329783,
+              "id": "Q141329783"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141329723$FCA0B5FE-940F-4D75-BF6E-CBC45037044B",
+        "rank": "normal"
+      }
+    ],
+    "P747": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P747",
+          "hash": "a2b7483cf52a5be242be277857cfe116ecbc7f89",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 125883472,
+              "id": "Q125883472"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141329723$f8ce952d-48dd-3a32-6ce0-ae83eec6bc27",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

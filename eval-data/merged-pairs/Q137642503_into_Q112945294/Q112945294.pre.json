@@ -1,0 +1,910 @@
+{
+  "pageid": 107793358,
+  "ns": 0,
+  "title": "Q112945294",
+  "lastrevid": 2514996704,
+  "modified": "2026-07-08T06:46:22Z",
+  "type": "item",
+  "id": "Q112945294",
+  "labels": {
+    "ca": {
+      "language": "ca",
+      "value": "La torre de vidre"
+    },
+    "en": {
+      "language": "en",
+      "value": "La torre de vidre"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "La torre de vidre"
+    }
+  },
+  "descriptions": {
+    "ca": {
+      "language": "ca",
+      "value": "pòdcast en català"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "3cad12dc85b7be85a65179c8eb0f833d3c332108",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 24634210,
+              "id": "Q24634210"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q112945294$3b97ec3e-4493-243e-1754-8ee1d2f24e0c",
+        "rank": "normal"
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "02b787bbe711a104d45a35182c4ebaf351790f49",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 105885059,
+              "id": "Q105885059"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q112945294$a9d8d3b8-42ee-5eeb-badf-8298a490e09f",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "906d43059b5beff8ef925325cd0cf386fde599c0",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "eda826a7a251eb3526d600f014cd71e53fa5b83e",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 70058728,
+                      "id": "Q70058728"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P248"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "0e66f1ea3d0e013159c57698adc55ecc80ef1ecb",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 105885182,
+              "id": "Q105885182"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q112945294$EACAE67C-FE75-4308-BDFE-BDC38A8E87D8",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "906d43059b5beff8ef925325cd0cf386fde599c0",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "eda826a7a251eb3526d600f014cd71e53fa5b83e",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 70058728,
+                      "id": "Q70058728"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P248"]
+          }
+        ]
+      }
+    ],
+    "P407": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P407",
+          "hash": "ec06d5af7af836fa6b5c49e9b0ded85c8ab48b12",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7026,
+              "id": "Q7026"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q112945294$16f5604a-42b4-f0a6-66dd-0db19a3c40e4",
+        "rank": "normal"
+      }
+    ],
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "61b73f7cbec669eeaefeb6e566fa93b23a18e998",
+          "datavalue": {
+            "value": {
+              "text": "La torre de vidre",
+              "language": "ca"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q112945294$80c1a5d8-4368-0c71-5eb0-0caf5dcb71fc",
+        "rank": "normal"
+      }
+    ],
+    "P272": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P272",
+          "hash": "2c0f5ef66649230976bf51d2f8762ef2809a0c76",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1050307,
+              "id": "Q1050307"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q112945294$f023fff3-4a82-2693-5810-0aef0475123f",
+        "rank": "normal"
+      }
+    ],
+    "P18": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "5bbcab4e8d224f122b41b7846285f3ff5152408e",
+          "datavalue": {
+            "value": "Gala dels Premis Sonor 2022 - 92.jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q112945294$51ef9d83-40f7-70d1-d5be-4d2610a33484",
+        "rank": "normal"
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "270487ce9d09d93d59f69c979053adb48bd9606c",
+          "datavalue": {
+            "value": "https://www.ccma.cat/catradio/la-torre-de-vidre/",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "ec06d5af7af836fa6b5c49e9b0ded85c8ab48b12",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 7026,
+                  "id": "Q7026"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P407"],
+        "id": "Q112945294$67aa4c8c-41bc-d879-e1cb-f4eec5727b46",
+        "rank": "normal"
+      }
+    ],
+    "P5842": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5842",
+          "hash": "d27cf1fe9438e2839c005cbcbb3846e39d0018cf",
+          "datavalue": {
+            "value": "1613147322",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q112945294$40d1aea0-4f4c-17eb-7808-7ad53899ab57",
+        "rank": "normal"
+      }
+    ],
+    "P57": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P57",
+          "hash": "bcef40154601b1e40a6d58627a674fc2f5c541d5",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 112898172,
+              "id": "Q112898172"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q112945294$c1f68b7c-4108-d398-6a66-543401eb1868",
+        "rank": "normal"
+      }
+    ],
+    "P58": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P58",
+          "hash": "0a85888d8761577e2b0b035701def7d38d3266d3",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 540695,
+              "id": "Q540695"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q112945294$af09afe6-4b3b-52f1-d837-d6e186d2945c",
+        "rank": "normal"
+      }
+    ],
+    "P161": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P161",
+          "hash": "4631f2167c57ec45166e129d8c640f82b75a0bba",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11940916,
+              "id": "Q11940916"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q112945294$822af940-4dd4-b70a-a48d-5db646c249b2",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P161",
+          "hash": "57f69efb591e1285f236757acc41ea6477d2e91f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3260048,
+              "id": "Q3260048"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q112945294$9b8347bd-4713-f960-bd86-51f95dd8aec2",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P161",
+          "hash": "f2bf17e792f1863de557b77b067535ba867ca0e7",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11689366,
+              "id": "Q11689366"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q112945294$4076d5fd-4e7f-e7c2-6f85-ff11a8aeda3c",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P161",
+          "hash": "db58217e87e27cfd20553dc5e0c0782c5fa758bf",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 9058145,
+              "id": "Q9058145"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q112945294$e0ec9a2d-4ebc-2585-8d03-38f594821994",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P161",
+          "hash": "6b2c97ffbe8c4975dc7d3bdf76d48426f5d80f76",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 108870297,
+              "id": "Q108870297"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q112945294$a02febed-4c44-6087-823e-7202a11e6767",
+        "rank": "normal"
+      }
+    ],
+    "P5916": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5916",
+          "hash": "e23204ee70ebc5398e33f6e4bd33c0c9bd21c8f6",
+          "datavalue": {
+            "value": "2UEWE8XeYGXxjQMTycXnzb",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q112945294$21c72773-4c05-b718-348b-8388ffa47e0d",
+        "rank": "normal"
+      }
+    ],
+    "P9003": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P9003",
+          "hash": "9340e3fb80fef96e41bf69fcc0746c8a75281d0e",
+          "datavalue": {
+            "value": "aHR0cHM6Ly9kaW5hbWljcy5jY21hLmNhdC9wdWJsaWMvcG9kY2FzdC9jYXRyYWRpby94bWwvOS81L3BvZHByb2dyYW1hMTk1OS54bWw",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q112945294$5d1abbf7-486c-59a4-c7be-951e50fe343f",
+        "rank": "normal"
+      }
+    ],
+    "P166": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P166",
+          "hash": "2fb77504dbe547a3d6395a2f52626611639fe34f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 112945669,
+              "id": "Q112945669"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P585": [
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "2158d4b68f82b8f36f47c98bd3609a99913faa59",
+              "datavalue": {
+                "value": {
+                  "time": "+2022-00-00T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 9,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P805": [
+            {
+              "snaktype": "value",
+              "property": "P805",
+              "hash": "ee621f46d2fb7756fe2fabfdd18ea99a1b2c5f13",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 112958085,
+                  "id": "Q112958085"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P585", "P805"],
+        "id": "Q112945294$fc820718-4e1b-0f43-721e-a93c7f11c056",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "5fcb7138cfb87771fbcac51308e8b88569b0e670",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "938802fe2807db199d5b54b947a679b274a07671",
+                  "datavalue": {
+                    "value": "https://www.sonor.cat/guanyadors",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "9c07da73b84889803ebd6601ba04b4579c39577d",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-07-06T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P437": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P437",
+          "hash": "c3c59966af7cf393915fc3d8a7f387161f86fab2",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 24633474,
+              "id": "Q24633474"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q112945294$398E65D6-222A-4DF0-9764-1908B3F61BBB",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "bc37294dd2296c4598095d980fddb9825c75a19f",
+            "snaks": {
+              "P3452": [
+                {
+                  "snaktype": "value",
+                  "property": "P3452",
+                  "hash": "9327d3fc0213836d525ac07df39c4cdfce545323",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 70058728,
+                      "id": "Q70058728"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "b16b99de5cd5b6e630892bdd822c238b7b3d1633",
+                  "datavalue": {
+                    "value": "https://www.wikidata.org/wiki/Q112945294#P5842",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                },
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "1bfabb81cee48131e6b729f34de650285bec38ce",
+                  "datavalue": {
+                    "value": "https://www.wikidata.org/wiki/Property:P5842#P2302",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P3452", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P373": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P373",
+          "hash": "13606a5c962f3b8394a4e936dbd2377c365c620c",
+          "datavalue": {
+            "value": "La torre de vidre",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q112945294$3ca4c58f-fe0f-405e-9ccb-98b2c3312225",
+        "rank": "normal"
+      }
+    ],
+    "P1113": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1113",
+          "hash": "44c5c7eaec73d97a7bc7751376f6ddc5f8997f65",
+          "datavalue": {
+            "value": {
+              "amount": "+6",
+              "unit": "1"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P585": [
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "180675bc38f449f67a045f25c2cc60e7bbbe372d",
+              "datavalue": {
+                "value": {
+                  "time": "+2023-09-20T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P585"],
+        "id": "Q112945294$B2D58A4C-EB28-43B4-A008-F35EC66AA131",
+        "rank": "normal"
+      }
+    ],
+    "P1019": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1019",
+          "hash": "c70facdf2d1c719ff37c2db949c58b3566ea179d",
+          "datavalue": {
+            "value": "https://dinamics.ccma.cat/public/podcast/catradio/xml/9/5/podprograma1959.xml",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P2701": [
+            {
+              "snaktype": "value",
+              "property": "P2701",
+              "hash": "361868c9714bf67697e245dd0a88b00a7d1ba1ca",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 45432,
+                  "id": "Q45432"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P2701"],
+        "id": "Q112945294$41E7E4E9-563A-419F-AF54-E0A77F3E1AF5",
+        "rank": "normal"
+      }
+    ],
+    "P582": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P582",
+          "hash": "b121c844de65668b8cc377ea6f67e2537c63376e",
+          "datavalue": {
+            "value": {
+              "time": "+2021-09-27T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P585": [
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "fc34ed3357f60f66422b02a8133c223ff7312299",
+              "datavalue": {
+                "value": {
+                  "time": "+2023-11-04T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            },
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "175a1cd35a691ff1791dcbeb3ffcc154b94b7baf",
+              "datavalue": {
+                "value": {
+                  "time": "+2023-11-08T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            },
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "a7e3323ab389bde49424c27f2e531e6a03ad0e54",
+              "datavalue": {
+                "value": {
+                  "time": "+2023-11-19T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            },
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "e232997d0a14aea10f300dc0fa43ff10b6a5b82a",
+              "datavalue": {
+                "value": {
+                  "time": "+2024-02-09T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            },
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "9e47eeb4c70347634be3a30e12598f48a50d40d4",
+              "datavalue": {
+                "value": {
+                  "time": "+2024-04-10T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P585"],
+        "id": "Q112945294$AE0BE2E1-CD16-4E7B-BBD6-A1298E5482C0",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "906d43059b5beff8ef925325cd0cf386fde599c0",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "eda826a7a251eb3526d600f014cd71e53fa5b83e",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 70058728,
+                      "id": "Q70058728"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P248"]
+          }
+        ]
+      }
+    ],
+    "P10286": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10286",
+          "hash": "a121ca399a9774b70110f5fd6b705a56acf1a424",
+          "datavalue": {
+            "value": "https://is1-ssl.mzstatic.com/image/thumb/Podcasts116/v4/4a/d8/31/4ad83145-9e6e-ccf5-5085-79d88829107d/mza_1622414931946941212.jpg/600x600bb.jpg",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q112945294$4496772A-0F47-4C7D-935E-AC604FCF1382",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "906d43059b5beff8ef925325cd0cf386fde599c0",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "eda826a7a251eb3526d600f014cd71e53fa5b83e",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 70058728,
+                      "id": "Q70058728"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P248"]
+          }
+        ]
+      }
+    ],
+    "P11740": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11740",
+          "hash": "77b6aa6b1bb184ca8ddcb5f579830a2916a1675a",
+          "datavalue": {
+            "value": "5869907",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q112945294$3FBC960F-7600-40C4-9C63-CF3795049AF7",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "commonswiki": {
+      "site": "commonswiki",
+      "title": "Category:La torre de vidre",
+      "badges": [],
+      "url": "https://commons.wikimedia.org/wiki/Category:La_torre_de_vidre"
+    }
+  }
+}

@@ -1,0 +1,226 @@
+{
+  "pageid": 64526238,
+  "ns": 0,
+  "title": "Q64879501",
+  "lastrevid": 2549732053,
+  "modified": "2026-09-26T17:46:25Z",
+  "type": "item",
+  "id": "Q64879501",
+  "labels": {
+    "fr": {
+      "language": "fr",
+      "value": "House"
+    },
+    "en": {
+      "language": "en",
+      "value": "House"
+    }
+  },
+  "descriptions": {
+    "fr": {
+      "language": "fr",
+      "value": "film de Radoslav Vladić"
+    },
+    "en": {
+      "language": "en",
+      "value": "1977 film directed by Radoslav Vladić"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "film van Radoslav Vladić"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "filme de 1977 dirigido por Radoslav Vladić"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "fa41184cb03f49f0edfbf2fc4f9d33e35afecaea",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11424,
+              "id": "Q11424"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q64879501$eff40968-49ef-a634-ff2d-05f398bd47bb",
+        "rank": "normal"
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "cbe7e848be62e9ca2af340eb4b7626ee258bc092",
+          "datavalue": {
+            "value": {
+              "time": "+1977-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q64879501$6b75b3ce-47bc-0573-c386-4ef55dd4f7e1",
+        "rank": "normal"
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "889764c0029b48e1f8c6d23e6789e683c355c271",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 36704,
+              "id": "Q36704"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q64879501$917ec5db-4f16-961e-70af-8eddcd708712",
+        "rank": "normal"
+      }
+    ],
+    "P57": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P57",
+          "hash": "674490b72409f9b055a6be7e221b58015382f5fb",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 16082212,
+              "id": "Q16082212"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q64879501$2d069e27-4944-687f-85f9-08e3410f75f6",
+        "rank": "normal"
+      }
+    ],
+    "P2047": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2047",
+          "hash": "73639c9646348b82deb412a236193561cea30ecc",
+          "datavalue": {
+            "value": {
+              "amount": "+8",
+              "unit": "http://www.wikidata.org/entity/Q7727"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q64879501$1fb45840-4c33-451c-d850-257970afd7d4",
+        "rank": "normal"
+      }
+    ],
+    "P364": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P364",
+          "hash": "68654298e329d2104533aca297aa3cb9ce18f9ae",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 22282939,
+              "id": "Q22282939"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P518": [
+            {
+              "snaktype": "value",
+              "property": "P518",
+              "hash": "47fc2b260410cf20549115856fffec0cf39e8016",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 131395,
+                  "id": "Q131395"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P518"],
+        "id": "Q64879501$8f76e68c-42b4-8775-d49a-f2eb5aa7e9a3",
+        "rank": "normal"
+      }
+    ],
+    "P14449": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P14449",
+          "hash": "942d759fbb4abdf815da99e1eb2f41024ac8ab7f",
+          "datavalue": {
+            "value": "50641",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q64879501$2EE6C506-1920-492B-BFDE-8A92F2117D7B",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "fb0b4ac24fd2cd34d07f9d081c501b3548f45430",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1132905,
+              "id": "Q1132905"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q64879501$59AA329F-D196-4DC4-BF42-F63792B85443",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

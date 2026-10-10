@@ -1,0 +1,152 @@
+{
+  "pageid": 117829127,
+  "ns": 0,
+  "title": "Q123632252",
+  "lastrevid": 2204614765,
+  "modified": "2024-07-15T01:59:04Z",
+  "type": "item",
+  "id": "Q123632252",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Rock and Roll Music/Blue Feeling"
+    },
+    "it": {
+      "language": "it",
+      "value": "Rock and Roll Music/Blue Feeling"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "Rock and Roll Music/Blue Feeling"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "single by Chuck Berry"
+    },
+    "it": {
+      "language": "it",
+      "value": "singolo di Chuck Berry del 1956"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "أغنية من أداء تشاك بيري"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P1954": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1954",
+          "hash": "483985cec979dfc8fea84b9abf57255af45d52d0",
+          "datavalue": {
+            "value": "459146",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q123632252$cc0628fa-424c-996e-4600-6543011c723f",
+        "rank": "normal"
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "33d81754a79b2dab75d17c156313b0f8f0f4f086",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 134556,
+              "id": "Q134556"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q123632252$2f13b511-4220-bbeb-9883-1a583c778ab2",
+        "rank": "normal"
+      }
+    ],
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "972097b16974ba1fa212ad1698dd7bf1af55fbda",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5921,
+              "id": "Q5921"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q123632252$aa16c658-4df9-7b63-1acb-c79fa9b879f8",
+        "rank": "normal"
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "625fbe079b66e6268a4d7cf4ef2cc448b0f86269",
+          "datavalue": {
+            "value": {
+              "time": "+1957-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q123632252$61c814b3-4db2-e91b-ba41-e053d8938974",
+        "rank": "normal"
+      }
+    ],
+    "P264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P264",
+          "hash": "38906f0fc5966bb1ac60eb1d1d78cf6cd19f7475",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 772494,
+              "id": "Q772494"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q123632252$1396a4f1-48e4-3d15-9b6e-4400a60ee432",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "itwiki": {
+      "site": "itwiki",
+      "title": "Rock and Roll Music/Blue Feeling",
+      "badges": [],
+      "url": "https://it.wikipedia.org/wiki/Rock_and_Roll_Music/Blue_Feeling"
+    }
+  }
+}

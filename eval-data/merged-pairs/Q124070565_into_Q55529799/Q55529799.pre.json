@@ -1,0 +1,65 @@
+{
+  "pageid": 55527485,
+  "ns": 0,
+  "title": "Q55529799",
+  "lastrevid": 1575877620,
+  "modified": "2022-02-11T15:19:08Z",
+  "type": "item",
+  "id": "Q55529799",
+  "labels": {
+    "ja": {
+      "language": "ja",
+      "value": "Dead Hungry"
+    }
+  },
+  "descriptions": {},
+  "aliases": {},
+  "claims": {
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "6b0fa7c81dd6c298cdba8ea13ffd247085a44a6d",
+          "datavalue": {
+            "value": "/g/11f647y1vd",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q55529799$2719FD36-F9DC-4F5C-B7AE-31B298A0017A",
+        "rank": "normal"
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "03d2d8ec4a899b29435a104a9ce7c189a31ae380",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7889,
+              "id": "Q7889"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q55529799$5F3EF5B9-6073-4CCF-9129-AD9BE015BECD",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "jawiki": {
+      "site": "jawiki",
+      "title": "Dead Hungry",
+      "badges": [],
+      "url": "https://ja.wikipedia.org/wiki/Dead_Hungry"
+    }
+  }
+}

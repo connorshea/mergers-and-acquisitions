@@ -1,0 +1,347 @@
+{
+  "pageid": 132852076,
+  "ns": 0,
+  "title": "Q139394768",
+  "lastrevid": 2549822589,
+  "modified": "2026-09-26T23:40:16Z",
+  "type": "item",
+  "id": "Q139394768",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "La chronique du Pseudo-Turpin (Sixième version)"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "La chronique du Pseudo-Turpin (Sixième version)"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "anonymous French version of the Pseudo-Turpin Chronicle"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "version française anonyme de la Chronique du Pseudo-Turpin"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5963e3cad5eee4ae1cffbefbac15327800b9a7e6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7725634,
+              "id": "Q7725634"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q139394768$36897ABC-A6EA-4B3D-AA61-956B9EE3D7CD",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "51f5302806e7378a8fe1193a8d52afe8df356b42",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 125309905,
+              "id": "Q125309905"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q139394768$13F1F4DD-8C6C-4B5D-A546-E8C1DA95AA57",
+        "rank": "normal"
+      }
+    ],
+    "P50": [
+      {
+        "mainsnak": {
+          "snaktype": "somevalue",
+          "property": "P50",
+          "hash": "550406f72367231639323fe7a9c11b2dc8f2c426",
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q139394768$4565DD5A-26EB-4AE4-B50A-78B97D84065B",
+        "rank": "normal"
+      }
+    ],
+    "P407": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P407",
+          "hash": "ebe6ff9a0770b40375af95f15634dd794f84855b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 35222,
+              "id": "Q35222"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q139394768$0B4640D9-1F61-454E-953E-A646B3629F35",
+        "rank": "normal"
+      }
+    ],
+    "P7937": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7937",
+          "hash": "de74b56d86c4a8dd0eef115a499b9b7a370282cc",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 676,
+              "id": "Q676"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q139394768$4860EF05-10F4-4D6D-9F40-1D947690870B",
+        "rank": "normal"
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "8455ffdac80bc47bb935fd06c791a0bb5f696a61",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 185363,
+              "id": "Q185363"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q139394768$A1AC0DC5-9FC0-4394-9A75-BBF9A4CBA9C7",
+        "rank": "normal"
+      }
+    ],
+    "P921": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P921",
+          "hash": "148c894105d8eea5624c6314a25569d7f1652fef",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 131531507,
+              "id": "Q131531507"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q139394768$3A54D679-D495-476F-89A6-6F528DE591E2",
+        "rank": "normal"
+      }
+    ],
+    "P4549": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4549",
+          "hash": "ffe2d4bf195687af2cc1286f8b5eedd8b0851ad4",
+          "datavalue": {
+            "value": "12069",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q139394768$32CEC8D9-D536-43FF-A603-9A21E40AEE12",
+        "rank": "normal"
+      }
+    ],
+    "P655": [
+      {
+        "mainsnak": {
+          "snaktype": "somevalue",
+          "property": "P655",
+          "hash": "e438d1693a154ce12d326c86f65d3cd57efc778e",
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q139394768$66BDEDFD-96E8-4527-BF33-D6B3BEC9A62D",
+        "rank": "normal"
+      }
+    ],
+    "P629": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P629",
+          "hash": "876bfabb5de1ca7f95ec5647a32767593cb80810",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 513838,
+              "id": "Q513838"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q139394768$A7B5E69A-39CE-4FC1-9CA0-F1F260A8FE3B",
+        "rank": "normal"
+      }
+    ],
+    "P2348": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2348",
+          "hash": "ce8abd67b2a82eaeeaf07a32d171127e3f0f0372",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 12554,
+              "id": "Q12554"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q139394768$7865FF1D-AD70-453B-AFA3-84F070A91594",
+        "rank": "normal"
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "1225f12d4bdbf2c8830d2c2e3747514445a5d9ad",
+          "datavalue": {
+            "value": {
+              "time": "+1240-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985786"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P4241": [
+            {
+              "snaktype": "value",
+              "property": "P4241",
+              "hash": "af0b3775532df8a37fd0d80a0dd1ecf2edc44142",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 79030196,
+                  "id": "Q79030196"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P4241"],
+        "id": "Q139394768$8C4CF023-4011-41DE-AF23-BBD03B6581D2",
+        "rank": "normal"
+      }
+    ],
+    "P6216": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6216",
+          "hash": "f69dc45ce9c48664155022498b34100d801bd549",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 19652,
+              "id": "Q19652"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q139394768$8CA6B326-C308-4262-BBE8-DF39DBE219BD",
+        "rank": "normal"
+      }
+    ],
+    "P1922": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1922",
+          "hash": "28d29d585a7efe2479a00d59554563cb637351e9",
+          "datavalue": {
+            "value": {
+              "text": "quant uns rois de France i venroit",
+              "language": "fro"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q139394768$d4d80a95-4491-2dec-b6c1-0e77b91bf641",
+        "rank": "normal"
+      }
+    ],
+    "P12020": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12020",
+          "hash": "3e4894826dee35cb13b65406c81a1c47cfa72b37",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 122238702,
+              "id": "Q122238702"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q139394768$4ee24d3b-4048-af16-92d2-3c121623aa47",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

@@ -1,0 +1,254 @@
+{
+  "pageid": 50510929,
+  "ns": 0,
+  "title": "Q49508130",
+  "lastrevid": 2299077005,
+  "modified": "2025-01-17T15:28:39Z",
+  "type": "item",
+  "id": "Q49508130",
+  "labels": {
+    "ceb": {
+      "language": "ceb",
+      "value": "John F Kennedy Stadium"
+    },
+    "en": {
+      "language": "en",
+      "value": "John F Kennedy Stadium"
+    }
+  },
+  "descriptions": {},
+  "aliases": {},
+  "claims": {
+    "P1566": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1566",
+          "hash": "fb4f22dd48d468664ea3e2160580f71a6a8788f6",
+          "datavalue": {
+            "value": "4558866",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q49508130$9919B063-F64A-47A3-A924-15DCB6DF8740",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "43a0088c51fd85e5a85d1b46412c3a635e6d4edc",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d8fbf8671e3c630db61bfac691068cfb6857f243",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 837615,
+                      "id": "Q837615"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P625": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P625",
+          "hash": "8e7de3cfeb949c035be075052e1876f69f0c1f05",
+          "datavalue": {
+            "value": {
+              "latitude": 39.90095,
+              "longitude": -75.17212,
+              "altitude": null,
+              "precision": 0.011709704698329,
+              "globe": "http://www.wikidata.org/entity/Q2"
+            },
+            "type": "globecoordinate"
+          },
+          "datatype": "globe-coordinate"
+        },
+        "type": "statement",
+        "id": "Q49508130$1E6E247D-9474-44AD-9CAE-A22ACBCA6C7D",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "43a0088c51fd85e5a85d1b46412c3a635e6d4edc",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d8fbf8671e3c630db61bfac691068cfb6857f243",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 837615,
+                      "id": "Q837615"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "be4c6eafa2984964f04be85667263f5642ba1a72",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 30,
+              "id": "Q30"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q49508130$99F0D6B4-3204-4DE0-8C21-836FCF748076",
+        "rank": "normal"
+      }
+    ],
+    "P131": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P131",
+          "hash": "31c450382b82fbe818b2a92617e3adebfa7f7e97",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 496900,
+              "id": "Q496900"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q49508130$9A6BA1DF-8548-4E24-82B3-81AE4D6D2F82",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d66d60d66b283f50ddcd38c5b65d6832d4e5038c",
+            "snaks": {
+              "P1566": [
+                {
+                  "snaktype": "value",
+                  "property": "P1566",
+                  "hash": "fb4f22dd48d468664ea3e2160580f71a6a8788f6",
+                  "datavalue": {
+                    "value": "4558866",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "1b3ef912a2bd61e18dd43abd184337eb010b2e96",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 830106,
+                      "id": "Q830106"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "b9ed3500f734a32c643aa68e12ba469114add000",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-08-18T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P1566", "P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P590": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P590",
+          "hash": "17d176da920681ca5dbace5f2eee1ad1d6d9a4be",
+          "datavalue": {
+            "value": "1217358",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q49508130$7408ED3B-16B2-45CB-97A3-BFC001007273",
+        "rank": "normal"
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "a2cb9ea692bc81efccddb68809a778e595f32b34",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 483110,
+              "id": "Q483110"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q49508130$27047d0a-42d3-349e-0397-9ca1d9e05ad7",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "cebwiki": {
+      "site": "cebwiki",
+      "title": "John F Kennedy Stadium",
+      "badges": [],
+      "url": "https://ceb.wikipedia.org/wiki/John_F_Kennedy_Stadium"
+    }
+  }
+}

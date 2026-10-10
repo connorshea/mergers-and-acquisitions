@@ -1,0 +1,803 @@
+{
+  "pageid": 2061158,
+  "ns": 0,
+  "title": "Q2135177",
+  "lastrevid": 2545176455,
+  "modified": "2026-09-13T18:56:09Z",
+  "type": "item",
+  "id": "Q2135177",
+  "labels": {
+    "nl": {
+      "language": "nl",
+      "value": "Marielund"
+    },
+    "en": {
+      "language": "en",
+      "value": "Marielund railway station"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "Marielund"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "Marielundin rautatieasema"
+    },
+    "da": {
+      "language": "da",
+      "value": "Marielund Station"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Marielund"
+    },
+    "ur": {
+      "language": "ur",
+      "value": "ماریلونڈ ریلوے اسٹیشن"
+    }
+  },
+  "descriptions": {
+    "nl": {
+      "language": "nl",
+      "value": "Uppsala"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "gare ferroviaire suédoise"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "järnvägsstation i Uppsala kommun"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "محطة قطار في السويد"
+    },
+    "en": {
+      "language": "en",
+      "value": "railway station in Uppsala, Sweden"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "stacja kolejowa w Szwecji"
+    },
+    "de": {
+      "language": "de",
+      "value": "Bahnhof in Schweden"
+    },
+    "ro": {
+      "language": "ro",
+      "value": "gară din Suedia"
+    },
+    "da": {
+      "language": "da",
+      "value": "jernbanestation i Uppsala Kommune, Sverige"
+    },
+    "el": {
+      "language": "el",
+      "value": "σιδηροδρομικός σταθμός στη Σουηδία"
+    }
+  },
+  "aliases": {
+    "sv": [
+      {
+        "language": "sv",
+        "value": "Marielunds järnvägsstation"
+      },
+      {
+        "language": "sv",
+        "value": "Marielund station"
+      }
+    ],
+    "fr": [
+      {
+        "language": "fr",
+        "value": "gare de Marielund"
+      }
+    ]
+  },
+  "claims": {
+    "P131": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P131",
+          "hash": "79e3a11fce8d66c171df988b7cec6ddbbb882844",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 59091,
+              "id": "Q59091"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q2135177$940D3FAF-AF80-4608-A8C9-300CCC23C695",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "732ec1c90a6f0694c7db9a71bf09fe7f2b674172",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "9123b0de1cc9c3954366ba797d598e4e1ea4146f",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 10000,
+                      "id": "Q10000"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "c83b0e7fbdd58e611aa93b9d84b6194c20051c09",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 34,
+              "id": "Q34"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q2135177$80A07992-A8E2-48E6-872F-97A3217C8A19",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "87793e8165368d71d864174458bafe44a3c3d402",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "889b94c40f0dc1125270051a5044b24e92e7236a",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 175482,
+                      "id": "Q175482"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "2c4c1c5ca84547a5d00a88002623774322130283",
+                  "datavalue": {
+                    "value": "https://fi.wikipedia.org/w/index.php?title=Marielundin_rautatieasema_(ULJ)&oldid=14000200",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P625": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P625",
+          "hash": "9586105ec30163301e082f84475801a236973778",
+          "datavalue": {
+            "value": {
+              "latitude": 59.842777777778,
+              "longitude": 17.875,
+              "altitude": null,
+              "precision": 0.00027777777777778,
+              "globe": "http://www.wikidata.org/entity/Q2"
+            },
+            "type": "globecoordinate"
+          },
+          "datatype": "globe-coordinate"
+        },
+        "type": "statement",
+        "id": "q2135177$8CE9AA98-BB11-450B-8047-A69F8F8912B6",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "12a4103fbfd98ec75d5d9269014f78fb822e8d00",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 55488,
+              "id": "Q55488"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2135177$31916E66-C83B-46BE-828C-F114C34E5186",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P18": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "2f7fb4a57d8a20942ced42a7a1e93706e181789f",
+          "datavalue": {
+            "value": "Marielund station Upsala lenna.jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q2135177$4EC47626-5772-473F-AC6C-D88E5546E4C5",
+        "rank": "preferred",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "ea8ce0e3f990021ade170e858d9a96d27ad8b95c",
+          "datavalue": {
+            "value": "Marielund.JPG",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q2135177$80139822-62B6-4F3F-B015-5FAFD6DAD2AA",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "1f1ad4e8b24154f402e1afe4c76421acd00932f9",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "889b94c40f0dc1125270051a5044b24e92e7236a",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 175482,
+                      "id": "Q175482"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P81": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P81",
+          "hash": "b2f14dd03c7521d81b2eec0bd78ae884863e8116",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4412566,
+              "id": "Q4412566"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2135177$E81242B3-FD6D-4E18-8C28-2A577295C5F0",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P1619": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1619",
+          "hash": "14d1f11d138ff55fd66e587c9bec261f40ceb252",
+          "datavalue": {
+            "value": {
+              "time": "+1876-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q2135177$14E26C61-9C5D-464B-BF65-56F1757C720C",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "e18a063a7b9c5c7bf9de2cd63737239edfcf6e30",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "7d93f1459ad0ee23fe124bca6d30c2dcc89000fd",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Marielund_railway_station&oldid=596102985",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P137": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P137",
+          "hash": "43b896b164c033965b4f1af0a5d4bdd1202a8550",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4412566,
+              "id": "Q4412566"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2135177$6D595033-E374-401D-B80A-8937DCB3F513",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "e18a063a7b9c5c7bf9de2cd63737239edfcf6e30",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "7d93f1459ad0ee23fe124bca6d30c2dcc89000fd",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Marielund_railway_station&oldid=596102985",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          },
+          {
+            "hash": "87793e8165368d71d864174458bafe44a3c3d402",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "889b94c40f0dc1125270051a5044b24e92e7236a",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 175482,
+                      "id": "Q175482"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "2c4c1c5ca84547a5d00a88002623774322130283",
+                  "datavalue": {
+                    "value": "https://fi.wikipedia.org/w/index.php?title=Marielundin_rautatieasema_(ULJ)&oldid=14000200",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P296": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P296",
+          "hash": "d64986fbcfddc25ac24ead3a297e4981042eb83a",
+          "datavalue": {
+            "value": "Ml",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1013": [
+            {
+              "snaktype": "value",
+              "property": "P1013",
+              "hash": "e9d29286b12b77fed4fee29b726a268d70d3599e",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 1677108,
+                  "id": "Q1677108"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1013"],
+        "id": "Q2135177$AF28B119-A5A7-4DC9-8350-0D198B234DB1",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2e3405ac307e8045b02efbc614c7ada08f91844f",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "3f3952d8b962c6d61743fe9298c9eded446b509e",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 96253602,
+                      "id": "Q96253602"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "ae90b1d079437a9edb042df425fde37e3f367152",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2020-06-13T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "802cac4ffeeacc15bc0f2c08f33dd3bfd968a6a3",
+          "datavalue": {
+            "value": "/m/02r6nym",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q2135177$36EA27A4-66D1-4F1F-B1F6-F4C825DBACF8",
+        "rank": "normal"
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "eca08f659fe23d08e2d680a2d1d1aa18c5c4c6a3",
+          "datavalue": {
+            "value": "/g/1237d7hx",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q2135177$BF2503DB-6D0C-4AF6-9E4B-59BFF8B866E8",
+        "rank": "normal"
+      }
+    ],
+    "P276": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P276",
+          "hash": "c715a6f2a0f1485df2ac42f05cacbcdd480bf462",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 99232212,
+              "id": "Q99232212"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2135177$CC7F4B9A-75F3-4AAD-9B28-BDA402B89927",
+        "rank": "normal"
+      }
+    ],
+    "P373": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P373",
+          "hash": "822371b021c9d64b5ba3afcba804aea16bab03aa",
+          "datavalue": {
+            "value": "Marielund station",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q2135177$b0503d7e-bc10-4b71-a660-ba1274f94eca",
+        "rank": "normal"
+      }
+    ],
+    "P9495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P9495",
+          "hash": "548ae9d083ab99757ad8b271775ed53cee693894",
+          "datavalue": {
+            "value": "geo/105A0DB4-077D-468A-ACE0-F04AE3DC9CFE",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q2135177$8945A5F1-940E-450B-9759-79B22607A825",
+        "rank": "normal"
+      }
+    ],
+    "P5817": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5817",
+          "hash": "3a5c47216c1ed20dc4a40d9bcde91e515d6a6966",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 55654238,
+              "id": "Q55654238"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2135177$75fb470f-40c9-bb96-9f4c-c29475282a4e",
+        "rank": "normal"
+      }
+    ],
+    "P13473": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P13473",
+          "hash": "e73a7cf99cf4efbfc17c55b09a7eff5709937520",
+          "datavalue": {
+            "value": "Ml",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q2135177$5A66727D-99B6-453F-A5F9-EB8D1957A980",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Marielund railway station",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Marielund_railway_station"
+    },
+    "fiwiki": {
+      "site": "fiwiki",
+      "title": "Marielundin rautatieasema (ULJ)",
+      "badges": [],
+      "url": "https://fi.wikipedia.org/wiki/Marielundin_rautatieasema_(ULJ)"
+    },
+    "commonswiki": {
+      "site": "commonswiki",
+      "title": "Category:Marielund station (Upsala–Lenna Jernväg)",
+      "badges": [],
+      "url": "https://commons.wikimedia.org/wiki/Category:Marielund_station_(Upsala%E2%80%93Lenna_Jernv%C3%A4g)"
+    },
+    "urwiki": {
+      "site": "urwiki",
+      "title": "ماریلونڈ ریلوے اسٹیشن",
+      "badges": [],
+      "url": "https://ur.wikipedia.org/wiki/%D9%85%D8%A7%D8%B1%DB%8C%D9%84%D9%88%D9%86%DA%88_%D8%B1%DB%8C%D9%84%D9%88%DB%92_%D8%A7%D8%B3%D9%B9%DB%8C%D8%B4%D9%86"
+    }
+  }
+}

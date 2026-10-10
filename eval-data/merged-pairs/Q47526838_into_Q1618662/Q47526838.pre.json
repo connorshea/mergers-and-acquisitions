@@ -1,0 +1,723 @@
+{
+  "pageid": 48569873,
+  "ns": 0,
+  "title": "Q47526838",
+  "lastrevid": 2492662062,
+  "modified": "2026-05-16T16:22:03Z",
+  "type": "item",
+  "id": "Q47526838",
+  "labels": {
+    "de": {
+      "language": "de",
+      "value": "Reichskammergerichtsmuseum"
+    },
+    "en": {
+      "language": "en",
+      "value": "Rosengasse 16"
+    }
+  },
+  "descriptions": {
+    "de": {
+      "language": "de",
+      "value": "Kulturdenkmal in Wetzlar, Rosengasse 16"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "museum in Wetzlar, Duitsland"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "musée en Allemagne"
+    },
+    "br": {
+      "language": "br",
+      "value": "mirdi Alamagn"
+    },
+    "es": {
+      "language": "es",
+      "value": "museo en Alemania"
+    },
+    "it": {
+      "language": "it",
+      "value": "museo in Germania"
+    },
+    "cy": {
+      "language": "cy",
+      "value": "amgueddfa yn yr Almaen"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "museu na Alemanha"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "museum i Tyskland"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "muzeum w Niemczech"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "متحف في فتسلار، ألمانيا"
+    },
+    "eo": {
+      "language": "eo",
+      "value": "muzeo en Germanio"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "museo Saksassa"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "пам'ятка культурної спадщини в Гессені, Німеччина"
+    },
+    "en": {
+      "language": "en",
+      "value": "cultural heritage monument in Wetzlar, Hesse, Germany"
+    },
+    "hi": {
+      "language": "hi",
+      "value": "जर्मनी का एक संग्रहालय"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "ef7247b704f4ec0a7df39e83306bb388fea17d5f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 183,
+              "id": "Q183"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q47526838$FB19A8C1-F12A-4759-AE03-F0C0CB81C101",
+        "rank": "normal"
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "4cb858cccdb4e3c1fbe0aac4e40c2715bed4b17c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 33506,
+              "id": "Q33506"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q47526838$1F870CE1-4873-4256-8361-9F4A92AC2EF8",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "26649b92d6c661851f2cb4def40d14ea9177ce68",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 41176,
+              "id": "Q41176"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q47526838$9d18d478-4fe8-8c09-3945-3b31d1b27298",
+        "rank": "normal"
+      }
+    ],
+    "P361": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P361",
+          "hash": "80e05ef5a394f7c44a011e2c94e1f01f69ab21c7",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 47526520,
+              "id": "Q47526520"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q47526838$08212451-7865-48A1-885B-1C261222A128",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "cf59d9f0271e972d9dbd88fc3173871f36304a39",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 48183,
+                      "id": "Q48183"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "3dd0945da60d0d643ff3cee4290c0ddc7ddd0ee7",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2018-01-31T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P813"]
+          }
+        ]
+      }
+    ],
+    "P131": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P131",
+          "hash": "a5d5894f1c619074c9614caecbd71f898a3efe5e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4178,
+              "id": "Q4178"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q47526838$A7D8C8D0-84F3-4B39-ADF9-4CAE8B4174C5",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "cf59d9f0271e972d9dbd88fc3173871f36304a39",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 48183,
+                      "id": "Q48183"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "3dd0945da60d0d643ff3cee4290c0ddc7ddd0ee7",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2018-01-31T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P813"]
+          }
+        ]
+      }
+    ],
+    "P1435": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1435",
+          "hash": "3a469a8ccae261842d1268fb041a4f2b678ce37d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 85171284,
+              "id": "Q85171284"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q47526838$B6B8AE67-0FBE-45B6-B514-E1D10A10F6CD",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "7a357e74eaed675a57e63e5a1c98687a52397e03",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "7eea1a7c1a14f5121d9e0b4466abdebc7e6a66bd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 19411765,
+                      "id": "Q19411765"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "55010caeddef622a9159fa20f96ac3468ce37a0a",
+                  "datavalue": {
+                    "value": "http://denkxweb.denkmalpflege-hessen.de/25079/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "3dd0945da60d0d643ff3cee4290c0ddc7ddd0ee7",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2018-01-31T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P18": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "9e683fd8f7f3c441f9b6658282372f818503bc4c",
+          "datavalue": {
+            "value": "Wetzlar (DerHexer) WLMMH 25079 2011-09-21 01.jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q47526838$84609893-7F16-4598-A198-60D03D321E3E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "cf59d9f0271e972d9dbd88fc3173871f36304a39",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 48183,
+                      "id": "Q48183"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "3dd0945da60d0d643ff3cee4290c0ddc7ddd0ee7",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2018-01-31T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P813"]
+          }
+        ]
+      }
+    ],
+    "P373": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P373",
+          "hash": "b1a030b9c1655016decf02fe8efd817f57d68f91",
+          "datavalue": {
+            "value": "Rosengasse 16 (Wetzlar)",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q47526838$0FFF6397-176E-4A2B-8FF4-7FC2CF860BBA",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "cf59d9f0271e972d9dbd88fc3173871f36304a39",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 48183,
+                      "id": "Q48183"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "3dd0945da60d0d643ff3cee4290c0ddc7ddd0ee7",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2018-01-31T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P813"]
+          }
+        ]
+      }
+    ],
+    "P1769": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1769",
+          "hash": "be5d319afd06d45330abd972c6bd33cc9d716c79",
+          "datavalue": {
+            "value": "25079",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P582": [
+            {
+              "snaktype": "somevalue",
+              "property": "P582",
+              "hash": "0f0e43d5ac17613a0369bf0d65a07a326f4b8d98",
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P582"],
+        "id": "Q47526838$99698CAD-EF27-4BC9-BC9D-7884C588222E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "cf59d9f0271e972d9dbd88fc3173871f36304a39",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 48183,
+                      "id": "Q48183"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "3dd0945da60d0d643ff3cee4290c0ddc7ddd0ee7",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2018-01-31T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P813"]
+          }
+        ]
+      }
+    ],
+    "P6375": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6375",
+          "hash": "a5b6281534f45f64e14aef610c2e579aa465c0cd",
+          "datavalue": {
+            "value": {
+              "text": "Rosengasse",
+              "language": "de"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P670": [
+            {
+              "snaktype": "value",
+              "property": "P670",
+              "hash": "8c1587603fa7bc261e7f9d23c72f983e55ec2b76",
+              "datavalue": {
+                "value": "16",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ],
+          "P281": [
+            {
+              "snaktype": "value",
+              "property": "P281",
+              "hash": "422bbbb3b8241a1cedb602d94799d56b1fc1c8ed",
+              "datavalue": {
+                "value": "35578",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P670", "P281"],
+        "id": "Q47526838$46A1F061-2E1E-486A-B478-4DA32F2EFF07",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "cf59d9f0271e972d9dbd88fc3173871f36304a39",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 48183,
+                      "id": "Q48183"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "3dd0945da60d0d643ff3cee4290c0ddc7ddd0ee7",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2018-01-31T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P813"]
+          }
+        ]
+      }
+    ],
+    "P625": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P625",
+          "hash": "b4a47a2582baa2bb49a49a2cb60782ffaf141392",
+          "datavalue": {
+            "value": {
+              "latitude": 50.5534794,
+              "longitude": 8.5019257,
+              "altitude": null,
+              "precision": 0.00001,
+              "globe": "http://www.wikidata.org/entity/Q2"
+            },
+            "type": "globecoordinate"
+          },
+          "datatype": "globe-coordinate"
+        },
+        "type": "statement",
+        "id": "Q47526838$2AC40221-1432-4289-82D5-6CD63A63B357",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "0ded477aaabd98b4f1526a13efa6e46583a22d1b",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "62bbd11cbaa88965e19f28ee02aa8474d3344ce8",
+                  "datavalue": {
+                    "value": "https://www.openstreetmap.org/#map=19/50.5534794/8.5019257",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P791": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P791",
+          "hash": "496db16fb44a34ddc9cdd911fed40076d13e0805",
+          "datavalue": {
+            "value": "DE-MUS-267718",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q47526838$2A0E6FF0-3B0B-4366-AFF2-14422E30C289",
+        "rank": "normal"
+      }
+    ],
+    "P2817": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2817",
+          "hash": "85acd6ff87dd8b782f31e2e99d2c247921ba6af4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 28777586,
+              "id": "Q28777586"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q47526838$FA30E2BA-E673-4551-B32A-87ED8A9416CE",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "commonswiki": {
+      "site": "commonswiki",
+      "title": "Category:Rosengasse 16 (Wetzlar)",
+      "badges": [],
+      "url": "https://commons.wikimedia.org/wiki/Category:Rosengasse_16_(Wetzlar)"
+    }
+  }
+}

@@ -1,0 +1,442 @@
+{
+  "pageid": 102351429,
+  "ns": 0,
+  "title": "Q107102320",
+  "lastrevid": 2550052159,
+  "modified": "2026-09-27T14:23:32Z",
+  "type": "item",
+  "id": "Q107102320",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Cyborg 009"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "サイボーグ009"
+    },
+    "ro": {
+      "language": "ro",
+      "value": "Cyborg 009"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "1968 Japanese anime television series"
+    },
+    "ro": {
+      "language": "ro",
+      "value": "serial din 1968"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "日本電視動畫系列"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "১৯৬৮ সালের জাপানি অ্যানিমে টেলিভিশন ধারাবাহিক"
+    },
+    "as": {
+      "language": "as",
+      "value": "১৯৬৮ চনৰ জাপানী এনিমে টেলিভিছন ধাৰাবাহিক"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "022b89adfef511a9ec77c6ab616bd1f808327301",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 63952888,
+              "id": "Q63952888"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q107102320$d8a2f239-482b-fd04-e9f0-543a44902b86",
+        "rank": "normal"
+      }
+    ],
+    "P144": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P144",
+          "hash": "917c09a4172f36718515b2d0e6c1a23454b40b14",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1070661,
+              "id": "Q1070661"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q107102320$28683441-4e6f-960f-ceae-04789cd1d7b0",
+        "rank": "normal"
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "e9d62405b1bb9b7b979f00006a344891e4c4f072",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 17,
+              "id": "Q17"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q107102320$273e30b5-4d72-2a60-55b2-dfc23b876a3f",
+        "rank": "normal"
+      }
+    ],
+    "P364": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P364",
+          "hash": "e837a5e5691aacf2a7eca565824d57545629d7fa",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5287,
+              "id": "Q5287"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q107102320$a67bfef5-404f-e464-28d1-09dd84f3c263",
+        "rank": "normal"
+      }
+    ],
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "75aa4a3940d2d3b0d54706517866c5aaed053b49",
+          "datavalue": {
+            "value": {
+              "text": "サイボーグ009",
+              "language": "ja"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q107102320$61811ec2-48c7-7d07-e48a-812178a2250e",
+        "rank": "normal"
+      }
+    ],
+    "P4086": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4086",
+          "hash": "b0ad3d4da33ef530f6e0a21595c0e16095836ebd",
+          "datavalue": {
+            "value": "8394",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q107102320$a5530ac8-48cb-6f92-057d-7e3028c0474b",
+        "rank": "normal"
+      }
+    ],
+    "P580": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P580",
+          "hash": "ca765e815e962601f4636e9a765ce56e74fee75d",
+          "datavalue": {
+            "value": {
+              "time": "+1968-04-05T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q107102320$1e19294d-4216-1c87-f225-5db210f0f735",
+        "rank": "normal"
+      }
+    ],
+    "P582": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P582",
+          "hash": "faf01c71c3b2ce0afc49d4b90c16415419c178b1",
+          "datavalue": {
+            "value": {
+              "time": "+1968-09-27T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q107102320$228cd4e4-4d92-9b17-8eef-38733358cf5a",
+        "rank": "normal"
+      }
+    ],
+    "P1113": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1113",
+          "hash": "46b27e575a10df6c0c15d3af4b7a80924a528f7d",
+          "datavalue": {
+            "value": {
+              "amount": "+26",
+              "unit": "1"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q107102320$8ed9b8fd-490c-c350-58b6-5f4f89b4732e",
+        "rank": "normal"
+      }
+    ],
+    "P272": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P272",
+          "hash": "877e1b1b4891fd0558dd696ed68620cb09c3beca",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 730179,
+              "id": "Q730179"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q107102320$f4dec580-4ebf-6e4a-4900-098eb8ff537c",
+        "rank": "normal"
+      }
+    ],
+    "P5646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5646",
+          "hash": "21df7377f6f7176d71de1987ef80475b6a024bef",
+          "datavalue": {
+            "value": "1527",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q107102320$276480f7-4542-4a23-60f3-16daa27b1714",
+        "rank": "normal"
+      }
+    ],
+    "P12005": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12005",
+          "hash": "b149109dce47a15024de74c4051657374d6cd293",
+          "datavalue": {
+            "value": "18",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q107102320$2933d3fe-4874-2087-f983-fb8d7cb243d9",
+        "rank": "normal"
+      }
+    ],
+    "P11349": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11349",
+          "hash": "19ddea937464857e01411c091c92b4398d169c33",
+          "datavalue": {
+            "value": "cyborg-009-1968",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q107102320$4BC34C85-2017-49DF-BEDE-7FAC05C94640",
+        "rank": "normal"
+      }
+    ],
+    "P12427": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12427",
+          "hash": "4f9547dd3d689f4362678a5f63ddca9d0ca1b901",
+          "datavalue": {
+            "value": "ZKnr5KiiR",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q107102320$3251A162-BE93-4E8D-A8E6-3E30FF54B114",
+        "rank": "normal"
+      }
+    ],
+    "P8729": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8729",
+          "hash": "8f95dd008b3b1d988e3ab56037eda5cd3e6ba860",
+          "datavalue": {
+            "value": "8394",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q107102320$132DF27B-64A7-4DE6-AFB3-D5792B7B43FD",
+        "rank": "normal"
+      }
+    ],
+    "P11495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11495",
+          "hash": "841454533b4f9b90f9dc67ef2a06bfaf735c1f05",
+          "datavalue": {
+            "value": "3741",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q107102320$DE601E85-0557-48E9-A761-0B1BDE69F279",
+        "rank": "normal"
+      }
+    ],
+    "P12477": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12477",
+          "hash": "100c88666d502914b49784a777cd241f2176f21d",
+          "datavalue": {
+            "value": "1426",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q107102320$97AD0D57-173A-4FD6-BAB1-18495B67F3AE",
+        "rank": "normal"
+      }
+    ],
+    "P12489": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12489",
+          "hash": "e5d6c5eab48b8ea3915019a6d0e896e10cf6db31",
+          "datavalue": {
+            "value": "6271",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q107102320$99497B86-6D67-4896-BD99-416F0EA235DC",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "d78f9edc72f2a6bbba118eb350023385dbffac37",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 105336003,
+              "id": "Q105336003"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1013": [
+            {
+              "snaktype": "value",
+              "property": "P1013",
+              "hash": "6b6b42869cbb10bc865c238f9a1ccc1ec1d6c792",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 1361758,
+                  "id": "Q1361758"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1013"],
+        "id": "Q107102320$69aead6c-b303-4032-9c6a-b9aa03f2aeca",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwikiquote": {
+      "site": "enwikiquote",
+      "title": "Cyborg 009",
+      "badges": [],
+      "url": "https://en.wikiquote.org/wiki/Cyborg_009"
+    }
+  }
+}

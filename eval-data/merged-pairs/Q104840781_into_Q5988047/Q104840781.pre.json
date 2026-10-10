@@ -1,0 +1,128 @@
+{
+  "pageid": 100254649,
+  "ns": 0,
+  "title": "Q104840781",
+  "lastrevid": 2470512319,
+  "modified": "2026-03-08T15:46:20Z",
+  "type": "item",
+  "id": "Q104840781",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "M*A*S*H"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "M*A*S*H"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "1983 video game"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "لعبة فيديو"
+    },
+    "ig": {
+      "language": "ig",
+      "value": "egwuregwu vidiyo 1983"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "відеогра 1983 року"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "03d2d8ec4a899b29435a104a9ce7c189a31ae380",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7889,
+              "id": "Q7889"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q104840781$f99751c9-4c04-2c55-8880-ace9fe684418",
+        "rank": "normal"
+      }
+    ],
+    "P8351": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8351",
+          "hash": "ee43a57f13722fe62a58e78876eeafeb7888b4ef",
+          "datavalue": {
+            "value": "36988",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q104840781$CF5D59D3-D24C-45C8-981C-4E9F1140C221",
+        "rank": "normal"
+      }
+    ],
+    "P12001": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12001",
+          "hash": "041e0cbbb2b9016ea75a2dfd51999f1746a3e7e2",
+          "datavalue": {
+            "value": "zXyK",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q104840781$2FA57501-2080-4B1A-A13B-96C53993E2F7",
+        "rank": "normal"
+      }
+    ],
+    "P5794": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5794",
+          "hash": "efd3be92a5d5930ba6b45d0e9a001456cf81b9f4",
+          "datavalue": {
+            "value": "m-star-a-star-s-star-h",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9043": [
+            {
+              "snaktype": "value",
+              "property": "P9043",
+              "hash": "5ddef340e75053c5c9671adc1a358eab2e10776d",
+              "datavalue": {
+                "value": "22734",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9043"],
+        "id": "Q104840781$EFA52D77-D27E-4255-8725-457F508989C8",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

@@ -1,0 +1,246 @@
+{
+  "pageid": 52125710,
+  "ns": 0,
+  "title": "Q51205293",
+  "lastrevid": 2549909787,
+  "modified": "2026-09-27T06:53:36Z",
+  "type": "item",
+  "id": "Q51205293",
+  "labels": {
+    "ru": {
+      "language": "ru",
+      "value": "Маршал Мерецков: мир и война (по страницам семейного альбома)"
+    }
+  },
+  "descriptions": {
+    "ru": {
+      "language": "ru",
+      "value": "книга"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "boek"
+    }
+  },
+  "aliases": {
+    "ru": [
+      {
+        "language": "ru",
+        "value": "Маршал Мерецков: мир и война"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "f1017f4e3d3bf786f250c08b8bddda30ff782554",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 488053,
+              "id": "Q488053"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q51205293$746da8fe-4256-9aae-2161-1953f6c21186",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5963e3cad5eee4ae1cffbefbac15327800b9a7e6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7725634,
+              "id": "Q7725634"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q51205293$6EC3A503-5292-495F-ABAB-5B08F7AC94FB",
+        "rank": "normal"
+      }
+    ],
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "a229ee72a76d641702efbd97d224c2b71a68cc23",
+          "datavalue": {
+            "value": {
+              "text": "Маршал Мерецков: мир и война (по страницам семейного альбома)",
+              "language": "ru"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q51205293$0bb051db-4d50-e12f-0ff1-293f9ec321e9",
+        "rank": "normal"
+      }
+    ],
+    "P2093": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2093",
+          "hash": "0a41041c720920a610788039103bb4151137a193",
+          "datavalue": {
+            "value": "Мерецков В. К.",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q51205293$9d7f0d34-4dfa-7e73-69fa-2a97d4390fea",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2093",
+          "hash": "9e875a1768e691ec7d424d74b3b0fcae6f01ddbc",
+          "datavalue": {
+            "value": "Никишин А. В.",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q51205293$4a3f7a1d-4f1d-890d-ce2c-39b1387684ef",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2093",
+          "hash": "c89c7222833fb958253b7291772b2498fefa2c11",
+          "datavalue": {
+            "value": "Задорожный В. Н.",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q51205293$a77dffdb-4a91-c603-4d3b-d3611949b0aa",
+        "rank": "normal"
+      }
+    ],
+    "P123": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P123",
+          "hash": "c6e8444f3ddbcc21fd73c5af4af42a57eac539d4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4306477,
+              "id": "Q4306477"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q51205293$bf8c7af6-450a-02da-558a-72a5c73e5ae2",
+        "rank": "normal"
+      }
+    ],
+    "P291": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P291",
+          "hash": "679e730b87380df9ad2d5f15c68251cfa606c491",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 649,
+              "id": "Q649"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q51205293$8fb2ac8e-492b-ba4d-ec18-dfa910ac6e76",
+        "rank": "normal"
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "3d01b574c925af0f0e8ed640a0bc1e6102ca6b33",
+          "datavalue": {
+            "value": {
+              "time": "+2017-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q51205293$8df425fe-41a7-b8a5-ed3d-ce07a18a6a3f",
+        "rank": "normal"
+      }
+    ],
+    "P1104": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1104",
+          "hash": "493386ca6e2b5a1168518a3f05321fab137411ec",
+          "datavalue": {
+            "value": {
+              "amount": "+116",
+              "unit": "1"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q51205293$6bef0e3e-4616-46d5-8acd-568c7443a03e",
+        "rank": "normal"
+      }
+    ],
+    "P957": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P957",
+          "hash": "c979dbb165c4619052119a847ed1dbdf1293fd0b",
+          "datavalue": {
+            "value": "5-87012-061-4",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q51205293$2083524F-9EE5-4276-9096-E538F241E517",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

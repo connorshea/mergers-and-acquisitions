@@ -1,0 +1,224 @@
+{
+  "pageid": 104827873,
+  "ns": 0,
+  "title": "Q109719324",
+  "lastrevid": 2551289807,
+  "modified": "2026-09-30T11:27:22Z",
+  "type": "item",
+  "id": "Q109719324",
+  "labels": {
+    "sr": {
+      "language": "sr",
+      "value": "Мара"
+    }
+  },
+  "descriptions": {
+    "sr": {
+      "language": "sr",
+      "value": "лик из романа Општинско дете : роман једног одојчета"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "personage"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "شخصية أدبية"
+    }
+  },
+  "aliases": {
+    "sr": [
+      {
+        "language": "sr",
+        "value": "Госпа Мара"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "6af4871f82990a0f901a6c4a5050c4bacc0a99cb",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 95074,
+              "id": "Q95074"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q109719324$1bc3d65e-449c-ce42-6e0f-82d828c215f5",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "4ed7f58b60f56f843e6b2a42236ceeb3629f294a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3658341,
+              "id": "Q3658341"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q109719324$fc617484-459a-3081-f0f1-28704fc7b1bc",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "5760796ff6ebc63aae12cdcbf509b07ebf0bd201",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581072,
+              "id": "Q6581072"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q109719324$e7fafcdd-4142-fd41-bfac-a3845cb7788c",
+        "rank": "normal"
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "a553506c4505b0612496708d122ccdedb3c476b5",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2917466,
+              "id": "Q2917466"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q109719324$3547b26e-4e50-75ff-7fbe-e26ec276be0c",
+        "rank": "normal"
+      }
+    ],
+    "P170": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P170",
+          "hash": "81ad7a03780bc3f3ef3a779831f0b43e5f6fff66",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 315136,
+              "id": "Q315136"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q109719324$5e8707c4-4bc7-facb-b611-f0b71e31e3a7",
+        "rank": "normal"
+      }
+    ],
+    "P1441": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1441",
+          "hash": "66e2078e442156cea2030c8eb45a9f744dbf5500",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 109336115,
+              "id": "Q109336115"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q109719324$cbf29c14-4394-1ebe-aac7-1c4e4825da30",
+        "rank": "normal"
+      }
+    ],
+    "P2561": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2561",
+          "hash": "a293b675bbed936ecc8fdb2c5365ea4e96e3dd74",
+          "datavalue": {
+            "value": {
+              "text": "Мара",
+              "language": "sh"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q109719324$e5242524-4363-d421-4319-e6e3c5fbdf79",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "61275a32df6341821464178076d3143714d89820",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 109832393,
+              "id": "Q109832393"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1013": [
+            {
+              "snaktype": "value",
+              "property": "P1013",
+              "hash": "8dd4758387179b92e5e18850b5eaaf62294e0489",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 107214772,
+                  "id": "Q107214772"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1013"],
+        "id": "Q109719324$be6d725f-213d-43c7-8620-5cd5ae77db5a",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

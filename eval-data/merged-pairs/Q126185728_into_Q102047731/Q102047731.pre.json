@@ -1,0 +1,293 @@
+{
+  "pageid": 98861234,
+  "ns": 0,
+  "title": "Q102047731",
+  "lastrevid": 2548278427,
+  "modified": "2026-09-22T03:07:30Z",
+  "type": "item",
+  "id": "Q102047731",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Harald Hårdtand"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Harald Hårdtand"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "1992 video game"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "computerspel"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "لعبة فيديو"
+    },
+    "ig": {
+      "language": "ig",
+      "value": "egwuregwu vidiyo 1992"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "відеогра 1992 року"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "Harald Hårdtand: Kampen om de rene tænder"
+      },
+      {
+        "language": "en",
+        "value": "Harald Hårdtand i Kampen om de rene tænder"
+      },
+      {
+        "language": "en",
+        "value": "Harald Hårdtand i \"Kampen om de rene tænder\""
+      },
+      {
+        "language": "en",
+        "value": "Harald Hardtooth: The Fight of the Clean Teeth"
+      }
+    ],
+    "ig": [
+      {
+        "language": "ig",
+        "value": "d: Kampen om de rene tænder"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "03d2d8ec4a899b29435a104a9ce7c189a31ae380",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7889,
+              "id": "Q7889"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q102047731$7cc4842f-41a9-4799-866d-b165fe144af3",
+        "rank": "normal"
+      }
+    ],
+    "P8351": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8351",
+          "hash": "9b9871a6011c8d32b5e2f1e7ce515779075c9413",
+          "datavalue": {
+            "value": "35927",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q102047731$769114EB-BE1B-4C5B-B500-B9632C923CBB",
+        "rank": "normal"
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "53deb2dca27f4bcdcfc96b2abc88226ca5637932",
+          "datavalue": {
+            "value": "/g/11qnr237ch",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q102047731$D09EFB17-F7C5-4036-AEFA-896DFC851F03",
+        "rank": "normal"
+      }
+    ],
+    "P12001": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12001",
+          "hash": "fae1aab9c2211485a1888ee945fa857460b4b331",
+          "datavalue": {
+            "value": "6yKp",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q102047731$56D1E2C4-7350-4BC9-8C1D-52CEC5462058",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "6244989f064103bc67eaa639f7ddf280fad0f6aa",
+            "snaks": {
+              "P12001": [
+                {
+                  "snaktype": "value",
+                  "property": "P12001",
+                  "hash": "fae1aab9c2211485a1888ee945fa857460b4b331",
+                  "datavalue": {
+                    "value": "6yKp",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "46c3401396fdc597d58062bd3bb5ad995e268f13",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 124398839,
+                      "id": "Q124398839"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "3ec6f320fcfee3fbd5d4c04317410eea9762a888",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2024-05-17T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P12001", "P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P4671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4671",
+          "hash": "62e99274c91249ad427cddf780d6ebe41566ecff",
+          "datavalue": {
+            "value": "3898",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q102047731$0dba966e-4ef5-7ecf-f2e6-5c0f3a574ba8",
+        "rank": "normal"
+      }
+    ],
+    "P4846": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4846",
+          "hash": "d4499ebbf072f3a8c8bc5da599392568fb857a65",
+          "datavalue": {
+            "value": "2105",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q102047731$da85ca93-4843-5ad4-be30-53eabcc9311a",
+        "rank": "normal"
+      }
+    ],
+    "P7683": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7683",
+          "hash": "0eaefa3d585773f4f1a451965f4bc2014907e4fb",
+          "datavalue": {
+            "value": "e539c109-a42b-589c-818d-7ef5af26ba73",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q102047731$26b9b2da-4ece-d0fd-3c61-001359a56b17",
+        "rank": "normal"
+      }
+    ],
+    "P12225": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12225",
+          "hash": "919e3c9ed0198a09ef8c8b135a5fba1c58dbe1b7",
+          "datavalue": {
+            "value": "Colgate",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q102047731$65462d1e-42b9-660c-f895-92195216f3bc",
+        "rank": "normal"
+      }
+    ],
+    "P400": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P400",
+          "hash": "7da7c424c7a8fdf6dfd2c450338b4fa9178c2fda",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 100047,
+              "id": "Q100047"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q102047731$f6fd036c-44fd-09de-bd8f-16024bf93b89",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "itwiki": {
+      "site": "itwiki",
+      "title": "Harald Hårdtand",
+      "badges": [],
+      "url": "https://it.wikipedia.org/wiki/Harald_H%C3%A5rdtand"
+    }
+  }
+}

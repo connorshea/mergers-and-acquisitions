@@ -1,0 +1,576 @@
+{
+  "pageid": 135129216,
+  "ns": 0,
+  "title": "Q141571515",
+  "lastrevid": 2551651632,
+  "modified": "2026-10-01T06:22:43Z",
+  "type": "item",
+  "id": "Q141571515",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Tanbo"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Tanbo"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "two-player board game by Ikumo Tasaka"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "jeu de société pour deux joueurs d'Ikumo Tasaka"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "3033071b8ff4020f1bf602c4811b184ec5fef20c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 131436,
+              "id": "Q131436"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141571515$D06A8DFA-AFCA-47FA-A088-83B1A1503A2A",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9423cd59b28783d35d517f9c12cfa82834c6602a",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "ec98d747aaabb7e75a4e8ea983078524a821e42b",
+                  "datavalue": {
+                    "value": "https://musokastudio.com/products/tanbo",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "36d558700354b596f79376aa110f264256571b6d",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-09-27T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P123": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P123",
+          "hash": "7cddab5fd1d9e714c8b7fd9c3c02eeabc6c356a3",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 131663341,
+              "id": "Q131663341"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q141571515$9C965E5E-A239-430E-808B-9A48748CAFEB",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9423cd59b28783d35d517f9c12cfa82834c6602a",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "ec98d747aaabb7e75a4e8ea983078524a821e42b",
+                  "datavalue": {
+                    "value": "https://musokastudio.com/products/tanbo",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "36d558700354b596f79376aa110f264256571b6d",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-09-27T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P2093": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2093",
+          "hash": "28fa6a548f0664e54350ede2b56bdfcde56c0f4d",
+          "datavalue": {
+            "value": "Ikumo Tasaka",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q141571515$7B7B8BED-6113-436C-B8FE-77DD36FB2035",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9423cd59b28783d35d517f9c12cfa82834c6602a",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "ec98d747aaabb7e75a4e8ea983078524a821e42b",
+                  "datavalue": {
+                    "value": "https://musokastudio.com/products/tanbo",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "36d558700354b596f79376aa110f264256571b6d",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-09-27T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P1872": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1872",
+          "hash": "667f201dd26a3ac2d1a167738b7bc12d47164dcb",
+          "datavalue": {
+            "value": {
+              "amount": "+2",
+              "unit": "1"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q141571515$74C06BDF-BE20-4255-A827-84060CFE9113",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9423cd59b28783d35d517f9c12cfa82834c6602a",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "ec98d747aaabb7e75a4e8ea983078524a821e42b",
+                  "datavalue": {
+                    "value": "https://musokastudio.com/products/tanbo",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "36d558700354b596f79376aa110f264256571b6d",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-09-27T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P1873": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1873",
+          "hash": "3787fa640c2a667378f5231f7564e91b83c42248",
+          "datavalue": {
+            "value": {
+              "amount": "+2",
+              "unit": "1"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q141571515$7BB0C371-2A88-457C-9B74-E452F294EC31",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9423cd59b28783d35d517f9c12cfa82834c6602a",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "ec98d747aaabb7e75a4e8ea983078524a821e42b",
+                  "datavalue": {
+                    "value": "https://musokastudio.com/products/tanbo",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "36d558700354b596f79376aa110f264256571b6d",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-09-27T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P2899": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2899",
+          "hash": "863706368ca21821f42806a7636c351f906e27fa",
+          "datavalue": {
+            "value": {
+              "amount": "+10",
+              "unit": "http://www.wikidata.org/entity/Q24564698"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q141571515$8A5FD136-1A9A-42B6-A3CF-F7564139451E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9423cd59b28783d35d517f9c12cfa82834c6602a",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "ec98d747aaabb7e75a4e8ea983078524a821e42b",
+                  "datavalue": {
+                    "value": "https://musokastudio.com/products/tanbo",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "36d558700354b596f79376aa110f264256571b6d",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-09-27T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P2047": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2047",
+          "hash": "40687bacefc26f4eaf8d3f3cf3410b143a223beb",
+          "datavalue": {
+            "value": {
+              "amount": "+5",
+              "unit": "http://www.wikidata.org/entity/Q7727"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q141571515$44FEE936-29D8-45B7-B51D-3DC06F6F6FFE",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9423cd59b28783d35d517f9c12cfa82834c6602a",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "ec98d747aaabb7e75a4e8ea983078524a821e42b",
+                  "datavalue": {
+                    "value": "https://musokastudio.com/products/tanbo",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "36d558700354b596f79376aa110f264256571b6d",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-09-27T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2047",
+          "hash": "664c5cea1169a12a7b7e9ac767936de775bbad4b",
+          "datavalue": {
+            "value": {
+              "amount": "+15",
+              "unit": "http://www.wikidata.org/entity/Q7727"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q141571515$FD7694A6-1DAA-4234-B367-857F03A8E74C",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9423cd59b28783d35d517f9c12cfa82834c6602a",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "ec98d747aaabb7e75a4e8ea983078524a821e42b",
+                  "datavalue": {
+                    "value": "https://musokastudio.com/products/tanbo",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "36d558700354b596f79376aa110f264256571b6d",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-09-27T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P2339": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2339",
+          "hash": "9d9f4aaf50560ab00b75ee5dfe7a0c6a8fa1213b",
+          "datavalue": {
+            "value": "436638",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q141571515$61712495-6F4D-40F5-86C3-D82D57F101E4",
+        "rank": "normal"
+      }
+    ],
+    "P973": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P973",
+          "hash": "fe5f493060f6eacab64d274d63f79731fa9b5b63",
+          "datavalue": {
+            "value": "https://musokastudio.com/products/tanbo",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q141571515$DF64EDF4-BC40-4504-9599-D96F96745B42",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "21cc9ee4c336d68ed27ee818ff51233be4055abf",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2392153,
+              "id": "Q2392153"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1013": [
+            {
+              "snaktype": "value",
+              "property": "P1013",
+              "hash": "8dd4758387179b92e5e18850b5eaaf62294e0489",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 107214772,
+                  "id": "Q107214772"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1013"],
+        "id": "Q141571515$ebd2ca8b-a4e3-4018-90e2-ffd62cf06417",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

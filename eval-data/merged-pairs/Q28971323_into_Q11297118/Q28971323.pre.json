@@ -1,0 +1,524 @@
+{
+  "pageid": 30631324,
+  "ns": 0,
+  "title": "Q28971323",
+  "lastrevid": 2474207962,
+  "modified": "2026-03-21T13:28:28Z",
+  "type": "item",
+  "id": "Q28971323",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Caterpillar Japan"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "キャタピラージャパン"
+    }
+  },
+  "descriptions": {
+    "id": {
+      "language": "id",
+      "value": "perusahaan Jepang"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "Caterpillar Japan LLC"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "326e3d41d1e9c34715e880be6e1c6a1e822e4317",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4830453,
+              "id": "Q4830453"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q28971323$68BD3F85-ACEF-4887-A746-0627D0D5A5DF",
+        "rank": "normal"
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "55178c20e031f1579d34d802f16f6b9951b631e1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 17,
+              "id": "Q17"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q28971323$28a0b451-49fc-18b2-b093-cf97d9c50d77",
+        "rank": "normal"
+      }
+    ],
+    "P749": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P749",
+          "hash": "573d8b0a9df3270d04327c6ba3c9a1fd1ecfd4d3",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 459965,
+              "id": "Q459965"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q28971323$badce1cc-46d6-15e1-f25e-8144acfea14e",
+        "rank": "normal"
+      }
+    ],
+    "P2427": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2427",
+          "hash": "edd2ad6a15aea1b21ae796454244dd60f74f84c0",
+          "datavalue": {
+            "value": "grid.472811.9",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q28971323$52794131-4968-2e88-206c-687722a3e0cf",
+        "rank": "normal"
+      }
+    ],
+    "P159": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P159",
+          "hash": "c0c04b4a6a8eab6f8d6c6a218ba27ef9c3fef1e1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1490,
+              "id": "Q1490"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P625": [
+            {
+              "snaktype": "value",
+              "property": "P625",
+              "hash": "1b803016cd3ec0dd67242bb2106f61965079b517",
+              "datavalue": {
+                "value": {
+                  "latitude": 35.626748,
+                  "longitude": 139.632928,
+                  "altitude": null,
+                  "precision": 0.000001,
+                  "globe": "http://www.wikidata.org/entity/Q2"
+                },
+                "type": "globecoordinate"
+              },
+              "datatype": "globe-coordinate"
+            }
+          ]
+        },
+        "qualifiers-order": ["P625"],
+        "id": "Q28971323$EB0B7D81-8FCB-411E-91ED-FFCDABF64F01",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9a6b6f55fa50282812c29cb6c4de26be4868c770",
+            "snaks": {
+              "P2427": [
+                {
+                  "snaktype": "value",
+                  "property": "P2427",
+                  "hash": "edd2ad6a15aea1b21ae796454244dd60f74f84c0",
+                  "datavalue": {
+                    "value": "grid.472811.9",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P2427"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P159",
+          "hash": "c8524221472cf9034f0971c4a56a1c2c98a221f3",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1203393,
+              "id": "Q1203393"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P625": [
+            {
+              "snaktype": "value",
+              "property": "P625",
+              "hash": "8a709c5ba0ee25ca5d3f7367111d58a1237077bd",
+              "datavalue": {
+                "value": {
+                  "latitude": 35.45824103748055,
+                  "longitude": 139.63432469081894,
+                  "altitude": null,
+                  "precision": 1e-8,
+                  "globe": "http://www.wikidata.org/entity/Q2"
+                },
+                "type": "globecoordinate"
+              },
+              "datatype": "globe-coordinate"
+            }
+          ],
+          "P281": [
+            {
+              "snaktype": "value",
+              "property": "P281",
+              "hash": "46e2502c8c3af27e1e599bbddc6112b7f9cd7591",
+              "datavalue": {
+                "value": "220-0012",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ],
+          "P6375": [
+            {
+              "snaktype": "value",
+              "property": "P6375",
+              "hash": "c99722ee72e0119171460c06ee8f8a9ced15adc4",
+              "datavalue": {
+                "value": {
+                  "text": "神奈川県横浜市西区みなとみらい三丁目７番1号　OCEAN GATE MINATOMIRAI 12階",
+                  "language": "ja"
+                },
+                "type": "monolingualtext"
+              },
+              "datatype": "monolingualtext"
+            }
+          ]
+        },
+        "qualifiers-order": ["P625", "P281", "P6375"],
+        "id": "Q28971323$f7930a10-45a3-96b3-8376-bd14072c9c46",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "23913e0a013f198598467a2147a6f0a56707f824",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "5b280311c335464fbadbcb0cfd4b5c0403bcddb1",
+                  "datavalue": {
+                    "value": "https://www.caterpillar.com/ja/company/caterpillar-in-japan/about-caterpillar-japan.html",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "4f6bcf85f788a1c0f8e1d67b9bc114ea4f858970",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-12-27T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P813"]
+          }
+        ]
+      }
+    ],
+    "P213": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P213",
+          "hash": "938d9cc3053505e6a964c25c3f42c8836b4d7945",
+          "datavalue": {
+            "value": "0000000417785123",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q28971323$FE63386A-24E0-42F6-94EB-22E6205D4117",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9a6b6f55fa50282812c29cb6c4de26be4868c770",
+            "snaks": {
+              "P2427": [
+                {
+                  "snaktype": "value",
+                  "property": "P2427",
+                  "hash": "edd2ad6a15aea1b21ae796454244dd60f74f84c0",
+                  "datavalue": {
+                    "value": "grid.472811.9",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P2427"]
+          }
+        ]
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "25f26e04642bd60747f1a0a84b62e785f9a6b89d",
+          "datavalue": {
+            "value": "http://www.caterpillar.com/ja.html",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q28971323$1B6FCBEC-553D-4208-A934-7488DB070E2D",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9a6b6f55fa50282812c29cb6c4de26be4868c770",
+            "snaks": {
+              "P2427": [
+                {
+                  "snaktype": "value",
+                  "property": "P2427",
+                  "hash": "edd2ad6a15aea1b21ae796454244dd60f74f84c0",
+                  "datavalue": {
+                    "value": "grid.472811.9",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P2427"]
+          }
+        ]
+      }
+    ],
+    "P6782": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6782",
+          "hash": "10814c4fae65b45e44ca676d5efb0e1cd597c688",
+          "datavalue": {
+            "value": "047z4ys07",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q28971323$FDF7AC8C-064E-4686-8AE7-6BD28E1D3645",
+        "rank": "normal"
+      }
+    ],
+    "P3500": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3500",
+          "hash": "1973231d65ef8b08cf00c901a161b624dc251f90",
+          "datavalue": {
+            "value": "358546",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q28971323$865BF0F2-EAAA-47A3-906E-A8B812AF274E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "5e21c8dbd2cc0506d49c53c98afcb9d610df6c8a",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "654ac97d41e766b6860b1b7acd87f11a6b00c4f9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 64159407,
+                      "id": "Q64159407"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P213": [
+                {
+                  "snaktype": "value",
+                  "property": "P213",
+                  "hash": "938d9cc3053505e6a964c25c3f42c8836b4d7945",
+                  "datavalue": {
+                    "value": "0000000417785123",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P213"]
+          }
+        ]
+      }
+    ],
+    "P1454": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1454",
+          "hash": "b1de18212a980c02ea5cddda776acd0a3ee69a97",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1562410,
+              "id": "Q1562410"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q28971323$0681cf0f-4c88-3d6e-4c25-909cdaf7adb1",
+        "rank": "normal"
+      }
+    ],
+    "P3225": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3225",
+          "hash": "6ce7db0f151eb9934486685dde300592741f8921",
+          "datavalue": {
+            "value": "2010901005953",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q28971323$f85195b2-4da2-c503-d6f9-4b7efb597cdd",
+        "rank": "normal"
+      }
+    ],
+    "P1320": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1320",
+          "hash": "7c606afac01470a0e8fc41ec240c78bff8c3f820",
+          "datavalue": {
+            "value": "jp/2010901005953",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q28971323$0ACD70AD-8CEA-4CBA-BC21-72C6539DC825",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9d98780a5f1e3794b40a636feb7a72e5885c7603",
+            "snaks": {
+              "P3452": [
+                {
+                  "snaktype": "value",
+                  "property": "P3452",
+                  "hash": "a29d7d15cbc6f7864583afde78c196450196fee7",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 18535356,
+                      "id": "Q18535356"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P3452"]
+          }
+        ]
+      }
+    ],
+    "P14075": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P14075",
+          "hash": "5c4de8c0aceab4e4abb38ac059c8b2560a5ccb53",
+          "datavalue": {
+            "value": "63153",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q28971323$E53F643D-AB00-471C-8D60-598FBF353A11",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

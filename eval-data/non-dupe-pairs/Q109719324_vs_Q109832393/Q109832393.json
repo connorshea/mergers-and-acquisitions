@@ -1,0 +1,258 @@
+{
+  "pageid": 104934525,
+  "ns": 0,
+  "title": "Q109832393",
+  "lastrevid": 2551289803,
+  "modified": "2026-09-30T11:27:22Z",
+  "type": "item",
+  "id": "Q109832393",
+  "labels": {
+    "sr": {
+      "language": "sr",
+      "value": "Мара"
+    }
+  },
+  "descriptions": {
+    "sr": {
+      "language": "sr",
+      "value": "лик из романа Харамбаша Мицко : српски војвода и заточеник у Фесану"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "personage"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "6af4871f82990a0f901a6c4a5050c4bacc0a99cb",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 95074,
+              "id": "Q95074"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q109832393$e97147bd-4158-54ab-3872-dadf0952f626",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "4ed7f58b60f56f843e6b2a42236ceeb3629f294a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3658341,
+              "id": "Q3658341"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q109832393$3e4779fa-41ae-17a9-9ff4-202a5d21d6c9",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "5760796ff6ebc63aae12cdcbf509b07ebf0bd201",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581072,
+              "id": "Q6581072"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q109832393$d0b31dff-4fda-74ad-3215-7489656918aa",
+        "rank": "normal"
+      }
+    ],
+    "P1441": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1441",
+          "hash": "51ca00abc0d52ae1657434bb08056419cc99123b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 109336252,
+              "id": "Q109336252"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q109832393$b56cc805-4ec2-a058-285f-df557109dd80",
+        "rank": "normal"
+      }
+    ],
+    "P26": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P26",
+          "hash": "bfeb12a79390a8bf6e324d3fefbf0d5960e5a628",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 109832380,
+              "id": "Q109832380"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q109832393$bc025e70-437c-fbd7-48a0-3e3e3232dd36",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "005b52eb12dae863e08b3664039d39af28f249a8",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "9121035b6884af0b3f0cc8a58bfde04afc2600d0",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 109336252,
+                      "id": "Q109336252"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P248"]
+          }
+        ]
+      }
+    ],
+    "P22": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P22",
+          "hash": "84cd25b5ad9e7e438c9af0f54955495b89024d66",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 109832502,
+              "id": "Q109832502"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q109832393$d7e66765-43f3-4fb0-8a0d-d43270d79be4",
+        "rank": "normal"
+      }
+    ],
+    "P25": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P25",
+          "hash": "7d8b5e06f638c561f31a1f3eef01e921d58abdd9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 109832812,
+              "id": "Q109832812"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q109832393$f45fc475-4edf-99cd-d592-fac427bac394",
+        "rank": "normal"
+      }
+    ],
+    "P2561": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2561",
+          "hash": "a293b675bbed936ecc8fdb2c5365ea4e96e3dd74",
+          "datavalue": {
+            "value": {
+              "text": "Мара",
+              "language": "sh"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q109832393$e66bbe8c-474c-9553-450c-d6fca1f42e2e",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "365552a50255e11b14934f1fb4a329b3ddd3d885",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 109719324,
+              "id": "Q109719324"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1013": [
+            {
+              "snaktype": "value",
+              "property": "P1013",
+              "hash": "8dd4758387179b92e5e18850b5eaaf62294e0489",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 107214772,
+                  "id": "Q107214772"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1013"],
+        "id": "Q109832393$9ff9004f-8c92-4779-9645-174d9c2cce4b",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

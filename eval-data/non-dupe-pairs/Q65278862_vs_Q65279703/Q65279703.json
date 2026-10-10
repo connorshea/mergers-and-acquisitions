@@ -1,0 +1,147 @@
+{
+  "pageid": 64919822,
+  "ns": 0,
+  "title": "Q65279703",
+  "lastrevid": 2458011037,
+  "modified": "2026-01-26T18:10:26Z",
+  "type": "item",
+  "id": "Q65279703",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Analogique B"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Analogique B"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "composition for tape by Iannis Xenakis"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "compositie van Iannis Xenakis"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5be109d8a3cbbd062357a9d210d4ef00ef25244e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 105543609,
+              "id": "Q105543609"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q65279703$67C537B7-9E58-4D6E-8316-89CCDE32538E",
+        "rank": "normal"
+      }
+    ],
+    "P86": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P86",
+          "hash": "0fa9f4b3e464a0e2e46ef4937f84e1f23bcde4c1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 152880,
+              "id": "Q152880"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q65279703$1a0c7d41-4783-3ac0-e8fa-21726e0ec21d",
+        "rank": "normal"
+      }
+    ],
+    "P5302": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5302",
+          "hash": "8d7a43ccfd150c77c62eefb1db7b2922df55e0bb",
+          "datavalue": {
+            "value": "12781",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q65279703$cc9cc0f7-42f2-13d7-1bb6-deaee516ad40",
+        "rank": "normal"
+      }
+    ],
+    "P435": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P435",
+          "hash": "1f54952f69987c9ed19b166b8d20bf08f93b77af",
+          "datavalue": {
+            "value": "38dd95c7-de6d-4d53-bfc3-834f3a6b020f",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q65279703$2adfe756-4ca9-8693-2b92-e05d98fb31f4",
+        "rank": "normal"
+      }
+    ],
+    "P14100": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P14100",
+          "hash": "26eb85ffd246ac9f3e39db64f69272c4089bd8c3",
+          "datavalue": {
+            "value": "analogique-a-et-b",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q65279703$F7FD717C-7683-444E-9449-B860C28BCA49",
+        "rank": "normal"
+      }
+    ],
+    "P361": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P361",
+          "hash": "19d3168d340a46cf061df26cd37e5a90e8bb228e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 137901484,
+              "id": "Q137901484"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q65279703$2ce27f84-4f41-bcde-b7e9-42a2b2479740",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

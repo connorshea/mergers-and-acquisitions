@@ -1,0 +1,1064 @@
+{
+  "pageid": 131597800,
+  "ns": 0,
+  "title": "Q137992445",
+  "lastrevid": 2551211769,
+  "modified": "2026-09-30T07:45:20Z",
+  "type": "item",
+  "id": "Q137992445",
+  "labels": {
+    "mul": {
+      "language": "mul",
+      "value": "Chainsaw Warrior"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "2013 video game developed by Auroch Digital Ltd"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "لعبة فيديو"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "03d2d8ec4a899b29435a104a9ce7c189a31ae380",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7889,
+              "id": "Q7889"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137992445$2E554904-0765-497C-AC7A-311268EAD148",
+        "rank": "normal"
+      }
+    ],
+    "P11688": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11688",
+          "hash": "acc8f4f2216a1b1852210ad5e55d5cea38d0b42f",
+          "datavalue": {
+            "value": "73450",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$F320B8C8-8AC1-4955-8404-04947012D067",
+        "rank": "normal"
+      }
+    ],
+    "P9968": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P9968",
+          "hash": "b92a43dcf23f323e418cc953edce9c85a99594cb",
+          "datavalue": {
+            "value": "chainsaw-warrior",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$008A30FA-3D84-4CAA-A113-BF35CAA9B4BF",
+        "rank": "normal"
+      }
+    ],
+    "P10248": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10248",
+          "hash": "b6aba0c45911a76f4973300f3f21a716aa172293",
+          "datavalue": {
+            "value": "chainsaw-warrior",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$C4DAE18F-665A-41DF-B75C-58FB673BDF8C",
+        "rank": "normal"
+      }
+    ],
+    "P13554": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P13554",
+          "hash": "4ef21e632533007fd8167778c741fb0290171507",
+          "datavalue": {
+            "value": "chainsaw-warrior-2013",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$7E3D731D-F4AA-40D8-A01D-707C4E9FD204",
+        "rank": "normal"
+      }
+    ],
+    "P10453": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10453",
+          "hash": "24a2d9e3ba4440d932e6faa83f5f65ff8a7491f6",
+          "datavalue": {
+            "value": "chainsaw-warrior",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$8BAD889F-985C-4861-856B-87BA6CDB92F5",
+        "rank": "normal"
+      }
+    ],
+    "P9877": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P9877",
+          "hash": "db1c1c2b20e39dbc8bd434efaeba47ad5f30e0da",
+          "datavalue": {
+            "value": "14849",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$ACA5F185-A3C8-4008-81D5-B41D6260C2B6",
+        "rank": "normal"
+      }
+    ],
+    "P10365": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10365",
+          "hash": "a6bab015fd04ca356b92a51382de098c305e18b0",
+          "datavalue": {
+            "value": "chainsaw-warrior",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$00E926DE-2D32-48A1-B7E3-507340347196",
+        "rank": "normal"
+      }
+    ],
+    "P13206": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P13206",
+          "hash": "da6cdcdc17cf2d4316a4835436059851613d762f",
+          "datavalue": {
+            "value": "chainsaw-warrior",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$38EB8D38-16AF-4D0F-AD68-3ED22C8A4CAD",
+        "rank": "normal"
+      }
+    ],
+    "P11771": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11771",
+          "hash": "28b04ee9b6dfa16efc78a8d997d09538207f8614",
+          "datavalue": {
+            "value": "77529",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$56487761-61E1-4C85-941B-CF4A17996CD2",
+        "rank": "normal"
+      }
+    ],
+    "P5247": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5247",
+          "hash": "9779cbf8d4c137ad9b998b331419cdc2cbf005e5",
+          "datavalue": {
+            "value": "3030-44171",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$6DB9DB39-25CB-4F25-A8FF-C2DA42B5D40B",
+        "rank": "normal"
+      }
+    ],
+    "P9143": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P9143",
+          "hash": "ae44d0e429b713038d2dc02ffb0953d5b5e0aabc",
+          "datavalue": {
+            "value": "chainsaw-warrior",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$C307A55B-7AE0-4A90-A9E2-F3AA4DC05169",
+        "rank": "normal"
+      }
+    ],
+    "P11459": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11459",
+          "hash": "cf18e2546481dfcf48d00eb71efa15441c3e1418",
+          "datavalue": {
+            "value": "27322",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$5A8F9981-FB54-44A3-9FDE-CBE623949C3C",
+        "rank": "normal"
+      }
+    ],
+    "P11877": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11877",
+          "hash": "4552baf06414734a7167f4bcf85cbcc954a62eaa",
+          "datavalue": {
+            "value": "chainsaw-warrior",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$3EC0F007-E293-434D-B40B-D638700B51E1",
+        "rank": "normal"
+      }
+    ],
+    "P11411": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11411",
+          "hash": "a06d44dc885b8a5341a7181e089525bb58684153",
+          "datavalue": {
+            "value": "chainsaw-warrior",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$16062B3E-0367-446F-AA42-322661E142C2",
+        "rank": "normal"
+      }
+    ],
+    "P11425": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11425",
+          "hash": "46a499187212b1be41420ee8e6602abb7f255cc4",
+          "datavalue": {
+            "value": "22422",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$4A858463-9079-4A89-8FBD-D2754E600919",
+        "rank": "normal"
+      }
+    ],
+    "P10383": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10383",
+          "hash": "6af1e4a99642cf628037d47d91c89d431916cd10",
+          "datavalue": {
+            "value": "chainsaw-warrior",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$15D0FC97-DE1D-4217-8C9D-40DD2A6A026E",
+        "rank": "normal"
+      }
+    ],
+    "P10030": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10030",
+          "hash": "e968066f8426416e410b923272f1187a6c85dc18",
+          "datavalue": {
+            "value": "chainsaw_warrior",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$3068B60D-DF4C-4682-976F-FEDE8AD78592",
+        "rank": "normal"
+      }
+    ],
+    "P7591": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7591",
+          "hash": "2c303ec76504d7169e370abbc0c2241050df1c2f",
+          "datavalue": {
+            "value": "316635",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$065468E6-5775-4367-BFDA-68A627AEE0C2",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7591",
+          "hash": "57704f35aa0b1a1ebb4deb9308f6cb212d6d9426",
+          "datavalue": {
+            "value": "149390",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$A8664EC0-EE69-40E9-950F-BC0F3ED385D7",
+        "rank": "normal"
+      }
+    ],
+    "P5794": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5794",
+          "hash": "42ddacc99cc645d1b3f5a533b0badcafdbd0b48f",
+          "datavalue": {
+            "value": "chainsaw-warrior",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9043": [
+            {
+              "snaktype": "value",
+              "property": "P9043",
+              "hash": "f94156d2409ae4d7ffa5988c6d6809715cfe107e",
+              "datavalue": {
+                "value": "16672",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9043"],
+        "id": "Q137992445$6575602E-8C6E-4785-8856-B32FD04059D4",
+        "rank": "normal"
+      }
+    ],
+    "P6337": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6337",
+          "hash": "b95607b70f5fb9e905d5e534e9f5874d937c8882",
+          "datavalue": {
+            "value": "Chainsaw_Warrior",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$D17381E3-8D5D-4EA0-83FB-1993D50A48CA",
+        "rank": "normal"
+      }
+    ],
+    "P11307": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11307",
+          "hash": "8f4acd6a03ee44715389fba3108998808ee066c0",
+          "datavalue": {
+            "value": "2004",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$0407D355-0379-4529-8986-D09F0FA96D87",
+        "rank": "normal"
+      }
+    ],
+    "P2816": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2816",
+          "hash": "49f922729674004d4fc2e1fe419845d6d6ac449f",
+          "datavalue": {
+            "value": "14990",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$0FB60CC5-4543-4C94-BB02-8215ADB3D8BA",
+        "rank": "normal"
+      }
+    ],
+    "P7564": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7564",
+          "hash": "28213b5109413596d9950031609b5f9a575c570b",
+          "datavalue": {
+            "value": "34591",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$5F18E7AC-6DB1-4BAC-B959-DCD39EDAE608",
+        "rank": "normal"
+      }
+    ],
+    "P7555": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7555",
+          "hash": "0ecb18e7f12b3aaddd4774d847873b396b0714e1",
+          "datavalue": {
+            "value": "213912",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$4B7281DA-1A42-44FD-9A1C-A4836F1FF7FB",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7555",
+          "hash": "f77005e6801369ad4e97bc9fc3ac8e408b6468ff",
+          "datavalue": {
+            "value": "200261",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$747F0B32-ED52-4406-A5B4-2346997ABE87",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7555",
+          "hash": "bbfe629483fa8669d9b35028ac6ccec8cb04fbf9",
+          "datavalue": {
+            "value": "200260",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$4B8C7C42-DDA3-4D44-9E50-E80DFF57AB41",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7555",
+          "hash": "94aa61c5f1062cda5c3480a52de8fbd910eed11f",
+          "datavalue": {
+            "value": "200259",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$160D602B-A53B-4E5B-B969-E5262DDA4AB2",
+        "rank": "normal"
+      }
+    ],
+    "P7597": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7597",
+          "hash": "9a92750c23975990b4ca8444aa027b7610b04171",
+          "datavalue": {
+            "value": "chainsaw-warrior",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$FA902ECA-B551-4225-A8B7-ADFD93300D1B",
+        "rank": "normal"
+      }
+    ],
+    "P7909": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7909",
+          "hash": "4b209b7c75e1996577124d47245b0a855f3cbceb",
+          "datavalue": {
+            "value": "11847",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$76F552C2-9477-4B18-B468-2232E2914054",
+        "rank": "normal"
+      }
+    ],
+    "P7875": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7875",
+          "hash": "b599c212272382605fce01c1683a0c3c190fa32c",
+          "datavalue": {
+            "value": "chainsaw-warrior",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$76E7B341-F84F-4D84-8392-7A74B5FA39DE",
+        "rank": "normal"
+      }
+    ],
+    "P1933": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1933",
+          "hash": "8e8d0c05c6b01f4b804fb0f26523cac30d082feb",
+          "datavalue": {
+            "value": "chainsaw-warrior",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$3E503704-1398-4DAE-B77F-3D2E0BC6DC23",
+        "rank": "normal"
+      }
+    ],
+    "P4705": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4705",
+          "hash": "7734b1f03a135f931922437283560fff2b10fda8",
+          "datavalue": {
+            "value": "0024431",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$04F38981-E280-41AB-864D-5695E3C3D100",
+        "rank": "normal"
+      }
+    ],
+    "P4477": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4477",
+          "hash": "d0d92fd7f5978163fb88e6815d8a701bb4dc2b25",
+          "datavalue": {
+            "value": "chainsaw-warrior",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P2241": [
+            {
+              "snaktype": "value",
+              "property": "P2241",
+              "hash": "a0db91b88923840bfb75551df0c13cd9be979538",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 125145384,
+                  "id": "Q125145384"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P2241"],
+        "id": "Q137992445$352C6F4B-B86F-4C83-9B4B-0A40D3ED6DC9",
+        "rank": "deprecated"
+      }
+    ],
+    "P479": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P479",
+          "hash": "f0184888d87098b82f63ef021c77329be6790481",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 165970,
+              "id": "Q165970"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137992445$F361CCD8-B162-4D89-9159-3F6C93958538",
+        "rank": "normal"
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "f22b65529f04812dab8e052ad61b917f13b10f50",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 21,
+              "id": "Q21"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137992445$99d23d7c-1725-4db2-b5c5-87be32fc648c",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "559811b1de22a125240de76968f1b3757421b26d",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "317fdbb13cea617ed6a6b20f6a34f98d47f383f8",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 60315954,
+                      "id": "Q60315954"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P7564": [
+                {
+                  "snaktype": "value",
+                  "property": "P7564",
+                  "hash": "28213b5109413596d9950031609b5f9a575c570b",
+                  "datavalue": {
+                    "value": "34591",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "eb6d73e87ad364fbf511b9f861d665a1d844251f",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-02-02T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P7564", "P813"]
+          }
+        ]
+      }
+    ],
+    "P1733": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1733",
+          "hash": "be9721ce53a64560c581fb66bb9cf5a373e232de",
+          "datavalue": {
+            "value": "251710",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$6198A149-C40B-499A-9DB8-B2D9DA34634E",
+        "rank": "normal"
+      }
+    ],
+    "P400": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P400",
+          "hash": "0b7430c76aa932002363740d965c9f0a5cd61191",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1406,
+              "id": "Q1406"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137992445$AF68817B-414F-40D7-9F88-66607E9CF8F7",
+        "rank": "normal"
+      }
+    ],
+    "P750": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P750",
+          "hash": "a161a9b7cd58b77025f50c298a08edbb1aca71b2",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 337535,
+              "id": "Q337535"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137992445$BD9B8729-287B-4EF1-9FC4-E68DE3CC6F62",
+        "rank": "normal"
+      }
+    ],
+    "P437": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P437",
+          "hash": "87ee8a96ba9c0d680a53715c86643c654cb999e7",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 269415,
+              "id": "Q269415"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137992445$BFF603F2-13BF-4579-915C-A4209EB01C47",
+        "rank": "normal"
+      }
+    ],
+    "P12570": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12570",
+          "hash": "e7c4cb25cc630b48ddbb974c4fb9fd08afe001cd",
+          "datavalue": {
+            "value": "chainsaw-warrior-classic",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$9835f019-ba99-4b62-bb61-1757cd010726",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "316036f0d45b81f99b821470045c5eb0e4e4ccb5",
+            "snaks": {
+              "P11797": [
+                {
+                  "snaktype": "value",
+                  "property": "P11797",
+                  "hash": "53f73b28fd55dd1f3a49dc385694281e30c1947e",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 337535,
+                      "id": "Q337535"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P1733": [
+                {
+                  "snaktype": "value",
+                  "property": "P1733",
+                  "hash": "be9721ce53a64560c581fb66bb9cf5a373e232de",
+                  "datavalue": {
+                    "value": "251710",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "e277bd98072450a8f65013b296420929e98d178b",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-04-23T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P11797", "P1733", "P813"]
+          }
+        ]
+      }
+    ],
+    "P12561": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12561",
+          "hash": "2e426fb1054d6260d51c2f8e5a1ef6eb1490990e",
+          "datavalue": {
+            "value": "3059",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$e3878323-70f0-4e07-82f5-e36fb6ca9635",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "8e3b2e43d826703aacf2bdec5986c34c4f80e06c",
+            "snaks": {
+              "P11797": [
+                {
+                  "snaktype": "value",
+                  "property": "P11797",
+                  "hash": "53f73b28fd55dd1f3a49dc385694281e30c1947e",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 337535,
+                      "id": "Q337535"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P1733": [
+                {
+                  "snaktype": "value",
+                  "property": "P1733",
+                  "hash": "be9721ce53a64560c581fb66bb9cf5a373e232de",
+                  "datavalue": {
+                    "value": "251710",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "27e56bf3fed3d30350d0cf39fc68f3204ce427b3",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-05-14T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P11797", "P1733", "P813"]
+          }
+        ]
+      }
+    ],
+    "P14470": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P14470",
+          "hash": "f614dd4f0817295fef122b0b3fe76db06ac6dae1",
+          "datavalue": {
+            "value": "Games/Chainsaw_Warrior",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9675": [
+            {
+              "snaktype": "value",
+              "property": "P9675",
+              "hash": "155b3c9dde15622ea40e101cf3e5eeea41c615a8",
+              "datavalue": {
+                "value": "188056",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9675"],
+        "id": "Q137992445$031B8AF5-83E8-47CA-87AC-36B98AAF082E",
+        "rank": "normal"
+      }
+    ],
+    "P12001": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12001",
+          "hash": "ee207747fdae55bd92e67e881e6493da52460630",
+          "datavalue": {
+            "value": "m5nMm",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137992445$DC8B56A8-445E-4B2B-BDAC-8E643274FAC4",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "1b9a94f65940de1be3821c9a3014a07e1f06a292",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5068030,
+              "id": "Q5068030"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1013": [
+            {
+              "snaktype": "value",
+              "property": "P1013",
+              "hash": "758a8defa0676780ff8d05bf8a0a446b946af704",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 55761780,
+                  "id": "Q55761780"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1013"],
+        "id": "Q137992445$e3af44c1-822c-423e-b89c-3fbcdf2d4ef8",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

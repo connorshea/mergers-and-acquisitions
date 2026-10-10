@@ -1,0 +1,447 @@
+{
+  "pageid": 66328895,
+  "ns": 0,
+  "title": "Q66734074",
+  "lastrevid": 2551712912,
+  "modified": "2026-10-01T09:39:16Z",
+  "type": "item",
+  "id": "Q66734074",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Metal Gear Solid"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Metal Gear Solid"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "メタルギアソリッドシリーズ"
+    },
+    "ru": {
+      "language": "ru",
+      "value": "Metal Gear Solid"
+    },
+    "lld": {
+      "language": "lld",
+      "value": "Metal Gear Solid"
+    },
+    "nb": {
+      "language": "nb",
+      "value": "Metal Gear Solid"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "Metal Gear Solid"
+    },
+    "sl": {
+      "language": "sl",
+      "value": "Metal Gear Solid"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "ميتال غير سوليد"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "video game series"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "série de jeux vidéo"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "コンピュータゲームのシリーズ"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "серія відеоігор"
+    },
+    "lld": {
+      "language": "lld",
+      "value": "serie de videojuesc"
+    },
+    "sl": {
+      "language": "sl",
+      "value": "serija videoiger"
+    }
+  },
+  "aliases": {
+    "ja": [
+      {
+        "language": "ja",
+        "value": "MGSシリーズ"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "28e85ae78b1fad0af0f87f70f08c5f9c3dbbc52f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7058673,
+              "id": "Q7058673"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q66734074$8f9fde10-4c9f-72a4-8974-31338f783747",
+        "rank": "normal"
+      }
+    ],
+    "P5247": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5247",
+          "hash": "2066b846019c483d21864ad2f88c1f0276433b63",
+          "datavalue": {
+            "value": "3025-1575",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q66734074$2e8a0b8e-4e00-d86f-f100-19f54f984c77",
+        "rank": "normal"
+      }
+    ],
+    "P361": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P361",
+          "hash": "3fd0624dd70a082b01f93ea82f4982079272052d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 216655,
+              "id": "Q216655"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q66734074$609f2cfa-4dab-ada9-5af8-0cfb99456213",
+        "rank": "normal"
+      }
+    ],
+    "P2512": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2512",
+          "hash": "a75c588baa4e56937ae330daee02c12d0b0c96a0",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 930345,
+              "id": "Q930345"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q66734074$6ae116bb-410e-6e52-d322-9341e9ad7964",
+        "rank": "normal"
+      }
+    ],
+    "P9835": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P9835",
+          "hash": "ecc4a9a59ca4cf03e7a58da34706bfce00202cef",
+          "datavalue": {
+            "value": "923",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q66734074$DE6464EF-1947-4524-9A63-2AB9961DFDB7",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fdee2242b45f1d8ae9091ff23e40e3967e3b2367",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "834b6abf5733907a35d9de47ee0f7339e873a429",
+                  "datavalue": {
+                    "value": "https://www.igromania.ru/game/series/923/Metal_Gear_Solid.html",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P1476": [
+                {
+                  "snaktype": "value",
+                  "property": "P1476",
+                  "hash": "126c00c67b79369d8f624c3d55c4f128b3f9bd58",
+                  "datavalue": {
+                    "value": {
+                      "text": "Серия игр Metal Gear Solid",
+                      "language": "ru"
+                    },
+                    "type": "monolingualtext"
+                  },
+                  "datatype": "monolingualtext"
+                }
+              ],
+              "P407": [
+                {
+                  "snaktype": "value",
+                  "property": "P407",
+                  "hash": "d291ddb7cd77c94a7bd709a8395934147e0864fc",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 7737,
+                      "id": "Q7737"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P1433": [
+                {
+                  "snaktype": "value",
+                  "property": "P1433",
+                  "hash": "4e500b64c836bab7f8abb5ef15e8dd96de79bebd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 4197757,
+                      "id": "Q4197757"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "0af976d6f36a73b481e56b9a17523e06cd642ca4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-08-29T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P854", "P1476", "P407", "P1433", "P813"]
+          }
+        ]
+      }
+    ],
+    "P3984": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3984",
+          "hash": "e411f2294ac76b3dbdc7dbc9f6d504aa04b3335f",
+          "datavalue": {
+            "value": "metalgearsolid",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q66734074$A08A89F6-C688-4AF9-8374-5357AA4785A8",
+        "rank": "normal"
+      }
+    ],
+    "P1417": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1417",
+          "hash": "7ebc1f951d2511c937be019bc24636f59fa06bed",
+          "datavalue": {
+            "value": "topic/Metal-Gear-Solid",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "897febc14da0f41285ccc723b181a39a22698350",
+              "datavalue": {
+                "value": "Metal Gear Solid",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q66734074$f4c28bbc-46bd-a4dd-47e4-32166f15e046",
+        "rank": "normal"
+      }
+    ],
+    "P13062": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P13062",
+          "hash": "71818ec829cc6576a001fca53d94a011c4826c7c",
+          "datavalue": {
+            "value": "metal-gear-solid",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q66734074$9EED9BF3-E558-48BF-BA83-BAF8662B3ED4",
+        "rank": "normal"
+      }
+    ],
+    "P910": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P910",
+          "hash": "c4ca7d364a02f74dc7eb320c69e31e90d89e8715",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 9985354,
+              "id": "Q9985354"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q66734074$77d9e2f4-44f1-c516-7c81-9f77fa2dc52f",
+        "rank": "normal"
+      }
+    ],
+    "P14470": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P14470",
+          "hash": "bd143e8db27c381792ead08f13accedbe18e937c",
+          "datavalue": {
+            "value": "Franchises/Metal_Gear_Solid",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P9675": [
+            {
+              "snaktype": "value",
+              "property": "P9675",
+              "hash": "3dfb76ed6b4112dd5984fbb1558db397f9ff7cac",
+              "datavalue": {
+                "value": "97639",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P9675"],
+        "id": "Q66734074$ED8AABC9-94C5-436A-B59E-0367A2ACF034",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "dca5f95ede164ef5a5602463898dbfe854ef9807",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6582527,
+              "id": "Q6582527"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1013": [
+            {
+              "snaktype": "value",
+              "property": "P1013",
+              "hash": "14abdba5fa3289d6004405947481644800fe79d9",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 126045708,
+                  "id": "Q126045708"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1013"],
+        "id": "Q66734074$0b8d0264-223d-4c71-a389-3f7f52fb2d51",
+        "rank": "normal"
+      }
+    ],
+    "P4969": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4969",
+          "hash": "d32a6efa11e7ced6931068741e433ca6613d2d42",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 930345,
+              "id": "Q930345"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q66734074$8ACC8B37-FCBE-4F65-B749-A15FDF8D66BF",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

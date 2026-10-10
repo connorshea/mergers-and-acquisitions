@@ -1,0 +1,498 @@
+{
+  "pageid": 85918140,
+  "ns": 0,
+  "title": "Q86672387",
+  "lastrevid": 2481799556,
+  "modified": "2026-04-15T12:19:46Z",
+  "type": "item",
+  "id": "Q86672387",
+  "labels": {
+    "it": {
+      "language": "it",
+      "value": "Stazione di Walthamstow Central"
+    },
+    "en": {
+      "language": "en",
+      "value": "Walthamstow Central railway station"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Walthamstow Central"
+    }
+  },
+  "descriptions": {
+    "it": {
+      "language": "it",
+      "value": "stazione ferroviaria britannica"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "spoorwegstation in Waltham Forest, Verenigd Koninkrijk"
+    },
+    "en": {
+      "language": "en",
+      "value": "National Rail station in London, United Kingdom"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "যুক্তরাজ্যের রেলওয়ে স্টেশন"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "محطة سكة حديدية في ناحية غابة والثام في لندن، المملكة المتحدة"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "gare ferroviaire nationale de Londres, Royaume-Uni"
+    },
+    "el": {
+      "language": "el",
+      "value": "σιδηροδρομικός σταθμός στo Ηνωμένο Βασίλειο"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "Walthamstow Central Station"
+      }
+    ],
+    "fr": [
+      {
+        "language": "fr",
+        "value": "gare de Walthamstow Central"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "12a4103fbfd98ec75d5d9269014f78fb822e8d00",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 55488,
+              "id": "Q55488"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q86672387$71f2be90-4a1e-f4de-1050-32b0f84b40d2",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "f91054a5e871c2cb408f68a6d697d81bc0331d27",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 22808404,
+              "id": "Q22808404"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q86672387$19c034f5-46f8-6258-d7a7-881f0de6bff4",
+        "rank": "normal"
+      }
+    ],
+    "P833": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P833",
+          "hash": "15fb84acff691f07e951d151c64b64cac1166754",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 801582,
+              "id": "Q801582"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q86672387$56e8c274-4967-49ee-617f-32a5232bc322",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P833",
+          "hash": "4ed91fd0b39531df7b8db8a4a3169dd8705600d5",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2546520,
+              "id": "Q2546520"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q86672387$22e63ed1-4d9f-c5a3-5a89-8fd929986d6c",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P833",
+          "hash": "da86b74eb5a5580f9f3a9653f22fbd8ac15e43bb",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 104376653,
+              "id": "Q104376653"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q86672387$014c8c98-45b6-2f03-7ba9-d3549002b38b",
+        "rank": "normal"
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "a44880420787fb348836dc51d3babc5227c4ef7e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 145,
+              "id": "Q145"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q86672387$c92d36da-4151-5ea4-008d-a4e5abfdb9df",
+        "rank": "normal"
+      }
+    ],
+    "P18": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "edf187e4f18bbc5041db78d1371d7ba14fb01fab",
+          "datavalue": {
+            "value": "Walthamstow Central stn old building.JPG",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q86672387$91f5c4e0-4aec-4263-966b-2d79bf9802e5",
+        "rank": "normal"
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "b39d2ee0d473e0ce6e1426d35a5df43dcb8fc036",
+          "datavalue": {
+            "value": {
+              "time": "+1872-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q86672387$48a30724-4411-eebb-7b30-20c86e8919e2",
+        "rank": "normal"
+      }
+    ],
+    "P131": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P131",
+          "hash": "fdf38334732be3c067a52fdcb50236ad9638054f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 40608,
+              "id": "Q40608"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q86672387$b9dba8cb-477e-f589-92bd-0a7bf5035281",
+        "rank": "normal"
+      }
+    ],
+    "P197": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P197",
+          "hash": "61c3236cd44328ab0bf05d215364e889fc42713c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2084371,
+              "id": "Q2084371"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q86672387$c5be0911-4db6-ce49-1fd9-a8f1eb71fb26",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P197",
+          "hash": "9383c35bd343571aaedcd148ba3fcb06e7a83af6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2457986,
+              "id": "Q2457986"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q86672387$5fab9dd5-4426-ca57-e5af-8be353319168",
+        "rank": "normal"
+      }
+    ],
+    "P625": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P625",
+          "hash": "00f4695f583a13a3252a3b15ade48e01562aa631",
+          "datavalue": {
+            "value": {
+              "latitude": 51.582947222222224,
+              "longitude": -0.019841666666666667,
+              "altitude": null,
+              "precision": 0.000002777777777777778,
+              "globe": "http://www.wikidata.org/entity/Q2"
+            },
+            "type": "globecoordinate"
+          },
+          "datatype": "globe-coordinate"
+        },
+        "type": "statement",
+        "id": "Q86672387$b9b084d8-4690-4423-66a5-ec4d1140688f",
+        "rank": "normal"
+      }
+    ],
+    "P7959": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7959",
+          "hash": "40cb316169643f4c9cc54bbb6a0df2f08469d238",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 67442940,
+              "id": "Q67442940"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q86672387$23d7b61f-f245-4fbe-818b-68b426025115",
+        "rank": "normal"
+      }
+    ],
+    "P1566": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1566",
+          "hash": "9def4da6e8a44e0b2751fc13691e207ada0e3c6f",
+          "datavalue": {
+            "value": "6953802",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q86672387$8a7a35cf-49dd-5cc4-49ca-afdc0fffbf49",
+        "rank": "normal"
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "c64c19c1b366dc90826d1254206e8a6bc842726f",
+          "datavalue": {
+            "value": "/g/11fs0cgrn_",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q86672387$80415715-4FBC-46B2-8471-59E2BE99E6DD",
+        "rank": "normal"
+      }
+    ],
+    "P10987": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10987",
+          "hash": "bd0c7fcbf7683cb422201c356dcbfe847839bab5",
+          "datavalue": {
+            "value": "W/Walthamstow_Central",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P2868": [
+            {
+              "snaktype": "value",
+              "property": "P2868",
+              "hash": "2cb866ed10bbde870a35ae7dcb843a9113f8daec",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 55488,
+                  "id": "Q55488"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "3cca273b28e7d47a71b144d914817c3fefc53566",
+              "datavalue": {
+                "value": "Walthamstow Central",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ],
+          "P613": [
+            {
+              "snaktype": "value",
+              "property": "P613",
+              "hash": "7130cfc7800645094b6027cf4146849ab30c1e41",
+              "datavalue": {
+                "value": "TQ 37257 88971",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P2868", "P1810", "P613"],
+        "id": "Q86672387$CA05E497-C37D-4CE5-9863-66C489E94D3A",
+        "rank": "normal"
+      }
+    ],
+    "P12928": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12928",
+          "hash": "ff117fe1c685b8dc6df78ad8abe3b23accd80e40",
+          "datavalue": {
+            "value": "WLTWCEN",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "f041264c352241a7b883d96620955ef0bcd40ac3",
+              "datavalue": {
+                "value": "WALTHAMSTOW CENTRAL",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ],
+          "P613": [
+            {
+              "snaktype": "value",
+              "property": "P613",
+              "hash": "3a0277a675b588971e9fbfd57db1e457efab4982",
+              "datavalue": {
+                "value": "TQ 37286 88972",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810", "P613"],
+        "id": "Q86672387$AFC40DCD-34B4-4C7E-95AD-310E5D667E19",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "4d5af6f0499f65c53a93a9ff96fd719f50aafaae",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "d06fb4680a26b760c78d6ba4325cddc2b6505cbd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 129564200,
+                      "id": "Q129564200"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P248"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {}
+}

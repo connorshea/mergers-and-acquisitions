@@ -1,0 +1,917 @@
+{
+  "pageid": 107024225,
+  "ns": 0,
+  "title": "Q112116024",
+  "lastrevid": 2553453408,
+  "modified": "2026-10-05T13:01:18Z",
+  "type": "item",
+  "id": "Q112116024",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Sigurður Ólafsson"
+    },
+    "is": {
+      "language": "is",
+      "value": "Sigurður Ólafsson"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Sigurður Ólafsson"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "Sigurður Ólafsson"
+    },
+    "da": {
+      "language": "da",
+      "value": "Sigurður Ólafsson"
+    },
+    "de": {
+      "language": "de",
+      "value": "Sigurður Ólafsson"
+    },
+    "es": {
+      "language": "es",
+      "value": "Sigurður Ólafsson"
+    },
+    "eu": {
+      "language": "eu",
+      "value": "Sigurður Ólafsson"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "Sigurður Ólafsson"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Sigurður Ólafsson"
+    },
+    "hu": {
+      "language": "hu",
+      "value": "Sigurður Ólafsson"
+    },
+    "it": {
+      "language": "it",
+      "value": "Sigurður Ólafsson"
+    },
+    "nb": {
+      "language": "nb",
+      "value": "Sigurður Ólafsson"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Sigurður Ólafsson"
+    },
+    "nn": {
+      "language": "nn",
+      "value": "Sigurður Ólafsson"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "Sigurður Ólafsson"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "Sigurður Ólafsson"
+    },
+    "ro": {
+      "language": "ro",
+      "value": "Sigurður Ólafsson"
+    },
+    "se": {
+      "language": "se",
+      "value": "Sigurður Ólafsson"
+    },
+    "sq": {
+      "language": "sq",
+      "value": "Sigurður Ólafsson"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "Sigurður Ólafsson"
+    },
+    "tr": {
+      "language": "tr",
+      "value": "Sigurður Ólafsson"
+    },
+    "pt-br": {
+      "language": "pt-br",
+      "value": "Sigurður Ólafsson"
+    },
+    "ru": {
+      "language": "ru",
+      "value": "Сигурдур Олафссон"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Sigurður Ólafsson"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "Icelandic singer, horse breeder"
+    },
+    "is": {
+      "language": "is",
+      "value": "íslenskur söngvari og hestamaður"
+    }
+  },
+  "aliases": {
+    "is": [
+      {
+        "language": "is",
+        "value": "Sigurður Jón Ólafsson"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q112116024$19333D71-0412-49EA-8D7B-57D405EECB32",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q112116024$6A56F1DF-820B-4DDB-8B40-35116B9B0D41",
+        "rank": "normal"
+      }
+    ],
+    "P735": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P735",
+          "hash": "a02ad5cbffca3fa5d6448ff240024226dfab98ee",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 20903083,
+              "id": "Q20903083"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q112116024$0710DF19-BB2A-4764-B53C-D21B9775EA11",
+        "rank": "normal"
+      }
+    ],
+    "P569": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P569",
+          "hash": "0568683974d04678cbfa085b106ea6b1b543bc34",
+          "datavalue": {
+            "value": {
+              "time": "+1916-12-04T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q112116024$0295DD7B-615A-4DF4-A602-3645AB4DB100",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "dfb91eddbb245870d33f6e48ba13a6dfb53efcef",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "515198c3261a14b3a60eccdc010b19f098bbfed1",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 718394,
+                      "id": "Q718394"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "3ed39e76a5e2ff3b95bdc2d8163ddd9a50a98761",
+                  "datavalue": {
+                    "value": "https://is.wikipedia.org/wiki/Sigurður_Ólafsson",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "69ad3b2fd2a1a1fcb88ba17f884af3c6eafd8952",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-05-23T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656", "P813"]
+          }
+        ]
+      }
+    ],
+    "P570": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P570",
+          "hash": "ebf0f7f6cebddf1d62bdc4873fc223524e6a162c",
+          "datavalue": {
+            "value": {
+              "time": "+1993-07-15T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q112116024$82D71321-E685-47A1-A12C-8FF28201C4BC",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "dfb91eddbb245870d33f6e48ba13a6dfb53efcef",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "515198c3261a14b3a60eccdc010b19f098bbfed1",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 718394,
+                      "id": "Q718394"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "3ed39e76a5e2ff3b95bdc2d8163ddd9a50a98761",
+                  "datavalue": {
+                    "value": "https://is.wikipedia.org/wiki/Sigurður_Ólafsson",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "69ad3b2fd2a1a1fcb88ba17f884af3c6eafd8952",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-05-23T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656", "P813"]
+          }
+        ]
+      }
+    ],
+    "P1953": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1953",
+          "hash": "b6813accc31572f8e1181073f29694a2422120fc",
+          "datavalue": {
+            "value": "2995439",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "a3aed10e7d06941d515987c2ed7b7815d5e6d173",
+              "datavalue": {
+                "value": "Sigurður Ólafsson",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q112116024$1495CC52-F386-435C-AE15-222E7D3CA1DF",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f8ca36faee0b4648a18db5c9201f0ddf05f2a22c",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "c34208b35b041d6758e6b68814cd263cacdabb10",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 504063,
+                      "id": "Q504063"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "69ad3b2fd2a1a1fcb88ba17f884af3c6eafd8952",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-05-23T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "5d9aed2c3197fcda899ff4eb02863355294acc5b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 177220,
+              "id": "Q177220"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q112116024$ccc81982-4078-78e5-b866-5806fdac3265",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "dfb91eddbb245870d33f6e48ba13a6dfb53efcef",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "515198c3261a14b3a60eccdc010b19f098bbfed1",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 718394,
+                      "id": "Q718394"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "3ed39e76a5e2ff3b95bdc2d8163ddd9a50a98761",
+                  "datavalue": {
+                    "value": "https://is.wikipedia.org/wiki/Sigurður_Ólafsson",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "69ad3b2fd2a1a1fcb88ba17f884af3c6eafd8952",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-05-23T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656", "P813"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "9d93b72105711b85bdaaf5fc4761c41a5d48eb86",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 55960555,
+              "id": "Q55960555"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q112116024$8e9a177c-4d82-c5c1-cec7-7a0b5b527c4d",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "e9bf5a1152e7f8bf998776e937001b97183ecfa1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 16000367,
+              "id": "Q16000367"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q112116024$9e6f6536-4c47-d1e4-4d22-89024e790d22",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "dfb91eddbb245870d33f6e48ba13a6dfb53efcef",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "515198c3261a14b3a60eccdc010b19f098bbfed1",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 718394,
+                      "id": "Q718394"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "3ed39e76a5e2ff3b95bdc2d8163ddd9a50a98761",
+                  "datavalue": {
+                    "value": "https://is.wikipedia.org/wiki/Sigurður_Ólafsson",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "69ad3b2fd2a1a1fcb88ba17f884af3c6eafd8952",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-05-23T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656", "P813"]
+          }
+        ]
+      }
+    ],
+    "P973": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P973",
+          "hash": "c990ab321e738866b3c436691cd0d6408aa3db8b",
+          "datavalue": {
+            "value": "https://glatkistan.com/2021/10/13/sigurdur-olafsson/",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "19dd0c43926e9610b45f4d88736d9f7baad6e044",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 294,
+                  "id": "Q294"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P407"],
+        "id": "Q112116024$469DB8EC-5F9F-4053-9925-2BA053388E08",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "af7de25df28f0e97c76bcf20bb9221830f7c189b",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "69ad3b2fd2a1a1fcb88ba17f884af3c6eafd8952",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-05-23T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P813"]
+          }
+        ]
+      }
+    ],
+    "P434": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P434",
+          "hash": "2f64dfb66c9302d3106a15ab5bc0c4aacdb9be32",
+          "datavalue": {
+            "value": "a0ba0e53-afaa-46f2-86f0-5d926f56ef1b",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "a3aed10e7d06941d515987c2ed7b7815d5e6d173",
+              "datavalue": {
+                "value": "Sigurður Ólafsson",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q112116024$e34782af-43f2-3240-4a80-13adca0fc6fc",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "0f4c22da9484df891645d1d6d82e5fc9193abcd3",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "623cc8f0e2f65afe4d66b91962d354a2f3aa9a27",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 14005,
+                      "id": "Q14005"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "69ad3b2fd2a1a1fcb88ba17f884af3c6eafd8952",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-05-23T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P5056": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5056",
+          "hash": "62941eba29995ae58bdc6ef8cdf9d510ffe8402f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 21446387,
+              "id": "Q21446387"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q112116024$68a3a3fa-49a4-1492-4d22-f177df7b31d0",
+        "rank": "normal"
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "44d948adeaaba967f155621528687e41a9afc240",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 189,
+              "id": "Q189"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q112116024$9e40d7eb-415d-14f6-f0e3-f4209264fd9d",
+        "rank": "normal"
+      }
+    ],
+    "P19": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P19",
+          "hash": "c7049616b9c41599e115f62679bccee80270c6c9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1764,
+              "id": "Q1764"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q112116024$f0d377c3-43c4-ab9c-2c42-445b5fede14b",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "dfb91eddbb245870d33f6e48ba13a6dfb53efcef",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "515198c3261a14b3a60eccdc010b19f098bbfed1",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 718394,
+                      "id": "Q718394"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "3ed39e76a5e2ff3b95bdc2d8163ddd9a50a98761",
+                  "datavalue": {
+                    "value": "https://is.wikipedia.org/wiki/Sigurður_Ólafsson",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "69ad3b2fd2a1a1fcb88ba17f884af3c6eafd8952",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-05-23T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656", "P813"]
+          }
+        ]
+      }
+    ],
+    "P2909": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2909",
+          "hash": "8e0ab45f58cbab54a93967b80c43151ae9f0f3ad",
+          "datavalue": {
+            "value": "181068",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q112116024$53813D3F-47A4-4503-921B-3BE9FC38DFE4",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "8d5dcf3fb2d5e85973455cbbe576bb16f07f1715",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 16425871,
+              "id": "Q16425871"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1013": [
+            {
+              "snaktype": "value",
+              "property": "P1013",
+              "hash": "777ef156b80647ee99a58557816899e0d978b78f",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 55773103,
+                  "id": "Q55773103"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1013"],
+        "id": "Q112116024$b1c05dfb-2f96-460d-a306-62c20957644a",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "iswiki": {
+      "site": "iswiki",
+      "title": "Sigurður Ólafsson",
+      "badges": [],
+      "url": "https://is.wikipedia.org/wiki/Sigur%C3%B0ur_%C3%93lafsson"
+    }
+  }
+}

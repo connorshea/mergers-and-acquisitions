@@ -1,0 +1,229 @@
+{
+  "pageid": 24989035,
+  "ns": 0,
+  "title": "Q22971719",
+  "lastrevid": 1468575774,
+  "modified": "2021-07-28T20:15:52Z",
+  "type": "item",
+  "id": "Q22971719",
+  "labels": {
+    "ko": {
+      "language": "ko",
+      "value": "Butterfly"
+    },
+    "en": {
+      "language": "en",
+      "value": "Butterfly"
+    },
+    "es": {
+      "language": "es",
+      "value": "Butterfly"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Butterfly"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Butterfly"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Butterfly"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "song by South Korean band BTS"
+    },
+    "es": {
+      "language": "es",
+      "value": "canción del grupo surcoreano BTS"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "lied van Bangtan Boys"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "cantar de BTS"
+    }
+  },
+  "aliases": {
+    "ast": [
+      {
+        "language": "ast",
+        "value": "Butterfly (cantar de BTS)"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5be109d8a3cbbd062357a9d210d4ef00ef25244e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 105543609,
+              "id": "Q105543609"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q22971719$7CE2982B-C7F3-46D4-9602-FFF0E0016CB6",
+        "rank": "normal"
+      }
+    ],
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "7e85f253312f9214be7aa0e91ccbf17d9b4f7619",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 13580495,
+              "id": "Q13580495"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q22971719$9af63b0c-43c6-cc2b-a22f-e8af569869f0",
+        "rank": "normal"
+      }
+    ],
+    "P361": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P361",
+          "hash": "378d868b35164811ff6beffc7b4c9806db185f63",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 21666102,
+              "id": "Q21666102"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q22971719$649bf3b0-4a5e-6f95-3ae1-7740f82cc9f3",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P361",
+          "hash": "6661728c6d1c71fad58f91905547f190505f53e3",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 23927056,
+              "id": "Q23927056"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q22971719$be4dce20-4e6f-dcc4-bde9-348fd9e87405",
+        "rank": "normal"
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "d9c267c6788e5312dfbde04520427c7673ce5e21",
+          "datavalue": {
+            "value": {
+              "time": "+2015-11-30T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q22971719$5aab7827-4188-8b92-2ee8-b4f2d493de64",
+        "rank": "normal"
+      }
+    ],
+    "P264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P264",
+          "hash": "cd4aec03ade36908873858e17ce7bd678d639914",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 16161254,
+              "id": "Q16161254"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q22971719$481c095d-4522-9d29-7999-f05c39005175",
+        "rank": "normal"
+      }
+    ],
+    "P1730": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1730",
+          "hash": "972e15ffeacc3ed89ed5162932f4031b6098aa7d",
+          "datavalue": {
+            "value": "mt0052688473",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q22971719$ddb3f3cd-4040-57ad-0a13-ed870b1cff97",
+        "rank": "normal"
+      }
+    ],
+    "P7937": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7937",
+          "hash": "95c182f3c475d9df12743fde55dc93e0a76efa11",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7366,
+              "id": "Q7366"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q22971719$CE38FD64-6DDA-4490-A5CB-E58968E9BFA4",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

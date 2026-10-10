@@ -1,0 +1,188 @@
+{
+  "pageid": 4843083,
+  "ns": 0,
+  "title": "Q5068030",
+  "lastrevid": 2551211202,
+  "modified": "2026-09-30T07:43:51Z",
+  "type": "item",
+  "id": "Q5068030",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Chainsaw Warrior"
+    }
+  },
+  "descriptions": {
+    "nl": {
+      "language": "nl",
+      "value": "bordspel"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "jeu de société"
+    },
+    "en": {
+      "language": "en",
+      "value": "board game"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "гра на спеціальній дошці"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "বোর্ড গেম"
+    },
+    "as": {
+      "language": "as",
+      "value": "বৰ্ড গেম"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "3033071b8ff4020f1bf602c4811b184ec5fef20c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 131436,
+              "id": "Q131436"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q5068030$ECEC8C70-4A73-4C63-9F7B-5606F2265233",
+        "rank": "normal"
+      }
+    ],
+    "P2339": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2339",
+          "hash": "44d4e93fba4b4110862f37cdebd82f2f67b1bd96",
+          "datavalue": {
+            "value": "1827",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q5068030$85316895-D7D5-4184-A2C5-3B73DAB7CD59",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "865ccda7e2f8b17ed544511a46ade0031b167510",
+          "datavalue": {
+            "value": "/m/02w3cxv",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q5068030$72980DCE-DC44-4F34-8DCB-BDC24CEEA268",
+        "rank": "normal"
+      }
+    ],
+    "P14579": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P14579",
+          "hash": "2b8dd8deecc8e7357247b35a200b1dfa3ddaf9c4",
+          "datavalue": {
+            "value": "16431",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q5068030$FABCD23E-6DA2-479D-97CB-53BC3424C64A",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "f1fb0c133a2ed406a0adbf4906bc9dd871f2a641",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 137992445,
+              "id": "Q137992445"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1013": [
+            {
+              "snaktype": "value",
+              "property": "P1013",
+              "hash": "758a8defa0676780ff8d05bf8a0a446b946af704",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 55761780,
+                  "id": "Q55761780"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1013"],
+        "id": "Q5068030$09456ed7-6e52-49e5-a61d-1541a506d2af",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Chainsaw Warrior",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Chainsaw_Warrior"
+    }
+  }
+}

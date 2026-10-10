@@ -1,0 +1,182 @@
+{
+  "pageid": 127296501,
+  "ns": 0,
+  "title": "Q133445541",
+  "lastrevid": 2429356205,
+  "modified": "2025-11-14T06:43:52Z",
+  "type": "item",
+  "id": "Q133445541",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Butterfly"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "Butterfly (canção de Marina)"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "2025 single by Marina"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "single de Marina de 2025"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5be109d8a3cbbd062357a9d210d4ef00ef25244e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 105543609,
+              "id": "Q105543609"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q133445541$990a3a77-fa5c-40aa-ac5a-5fa788c2a849",
+        "rank": "normal"
+      }
+    ],
+    "P7937": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7937",
+          "hash": "95c182f3c475d9df12743fde55dc93e0a76efa11",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7366,
+              "id": "Q7366"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q133445541$51fc0687-88a1-448e-9139-82fc39503ddb",
+        "rank": "normal"
+      }
+    ],
+    "P436": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P436",
+          "hash": "96e2311072d55ab0f19a1cfe1e32466bc9f3f796",
+          "datavalue": {
+            "value": "1ddf2708-f498-4491-a14c-0f0f7787ab98",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q133445541$207d7a35-4718-d2a2-0557-b713e89eb894",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "235ef21547014b8a13bfef2fa1c5ae04bd8270c4",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "623cc8f0e2f65afe4d66b91962d354a2f3aa9a27",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 14005,
+                      "id": "Q14005"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "c371e03a48fc151cb6da8a8499341c6838d9d71c",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2025-03-21T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P1954": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1954",
+          "hash": "06fce025278f30696fdf2480d6d57a6fa0564db3",
+          "datavalue": {
+            "value": "3759333",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q133445541$ef6f39db-4cb5-6072-6580-11e57ff91a8a",
+        "rank": "normal"
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "d5a30cc5de57ea8b3da82e2f038b97d5fc1e060f",
+          "datavalue": {
+            "value": "/g/11x07s09br",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q133445541$4ba51f77-4c30-38c8-281e-e096e8067ccf",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Butterfly (Marina song)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Butterfly_(Marina_song)"
+    },
+    "ptwiki": {
+      "site": "ptwiki",
+      "title": "Butterfly (canção de Marina)",
+      "badges": [],
+      "url": "https://pt.wikipedia.org/wiki/Butterfly_(can%C3%A7%C3%A3o_de_Marina)"
+    }
+  }
+}

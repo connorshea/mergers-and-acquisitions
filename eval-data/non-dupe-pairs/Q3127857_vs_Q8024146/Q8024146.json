@@ -1,0 +1,765 @@
+{
+  "pageid": 7970314,
+  "ns": 0,
+  "title": "Q8024146",
+  "lastrevid": 2552199339,
+  "modified": "2026-10-02T15:04:23Z",
+  "type": "item",
+  "id": "Q8024146",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Windfall"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "Windfall"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Windfall"
+    },
+    "de": {
+      "language": "de",
+      "value": "Windfall"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Windfall"
+    },
+    "fi": {
+      "language": "fi",
+      "value": "Windfall"
+    },
+    "he": {
+      "language": "he",
+      "value": "Windfall"
+    },
+    "ceb": {
+      "language": "ceb",
+      "value": "Windfall"
+    },
+    "es": {
+      "language": "es",
+      "value": "Windfall"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "Windfall"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "Windfall"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Windfall"
+    }
+  },
+  "descriptions": {
+    "de": {
+      "language": "de",
+      "value": "Album von Ricky Nelson"
+    },
+    "fa": {
+      "language": "fa",
+      "value": "آلبومی از ریکی نلسون"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "muziekalbum van Ricky Nelson"
+    },
+    "en": {
+      "language": "en",
+      "value": "1974 studio album by Rick Nelson & The Stone Canyon Band"
+    },
+    "es": {
+      "language": "es",
+      "value": "álbum de Ricky Nelson de 1974"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "album de Rick Nelson"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "リッキー・ネルソンのアルバム"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "ألبوم صدر عام 1974"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "album Ricka Nelsona i Stone Canyon Band z 1974 roku"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "9e6388b11705a8ba574a0d62f54f48da6831361a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 122969764,
+              "id": "Q122969764"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q8024146$51C82E0B-5B01-4901-A75F-B84826BAD5F4",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P264",
+          "hash": "c85646708570c04753e38398f4a5f38b98164388",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2338889,
+              "id": "Q2338889"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q8024146$DA7D4CE8-16D7-48AA-954E-5CC7C8961F85",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "dc16d32b615bf1c6edf1919941065eedccacb8e4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 482994,
+              "id": "Q482994"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q8024146$4086A334-3F37-4004-811C-A1EAFD66496F",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "903261876229d2701fb58d71951099b19f9deecc",
+          "datavalue": {
+            "value": {
+              "time": "+1974-01-10T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q8024146$102DF594-026E-42CA-B09D-BEA7A05ED342",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "2c6f5b9e0312a8154d97ba19b476fa6dcc8cec42",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 613408,
+              "id": "Q613408"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q8024146$F26284AB-C0C1-4145-BD54-39F4A3870EC8",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "eaca36b898ee652b868991f4849248a46caa73e0",
+          "datavalue": {
+            "value": "/m/02vq_9w",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q8024146$EB84414A-50C6-4B4F-B7AA-5D23B9D8D30C",
+        "rank": "normal"
+      }
+    ],
+    "P291": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P291",
+          "hash": "d030038c836f9ed0d37c69cb8c389d689ebeb05a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 30,
+              "id": "Q30"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q8024146$89787E6A-0C16-4921-A016-C97BE7B17519",
+        "rank": "normal"
+      }
+    ],
+    "P436": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P436",
+          "hash": "a19613bc495cef5da1ff7f4e1ba9a9d041d11268",
+          "datavalue": {
+            "value": "bdfb5cf8-525f-4977-9ab0-ce0d687a75a1",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "8b01ff4aebdd9b1d7ecf528f5de9025ea5cb5f77",
+              "datavalue": {
+                "value": "Windfall",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q8024146$582b68bc-4b51-471d-3af1-8a4adb64d745",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f7ecbdfbb59a3c27ea3146211b0b61ce6c6a4696",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "623cc8f0e2f65afe4d66b91962d354a2f3aa9a27",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 14005,
+                      "id": "Q14005"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "4893b845827171da09ef2de8dd81dcf4ba50bb8f",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-10-02T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P1476": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1476",
+          "hash": "32649fb40d8217f6322df0c2807ce9ee969daea8",
+          "datavalue": {
+            "value": {
+              "text": "Windfall",
+              "language": "en"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q8024146$bc5ad996-4564-3089-8eb0-4a6fec319941",
+        "rank": "normal"
+      }
+    ],
+    "P7937": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7937",
+          "hash": "b736d0ddd58350a6f636c0daf4befdb4b6346897",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 208569,
+              "id": "Q208569"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q8024146$00cae276-47a2-168b-f4e0-12cdb8701778",
+        "rank": "normal"
+      }
+    ],
+    "P407": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P407",
+          "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1860,
+              "id": "Q1860"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q8024146$04ff092a-44aa-ee86-1891-beba4052ec98",
+        "rank": "normal"
+      }
+    ],
+    "P162": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P162",
+          "hash": "24e574aea5a27249832d448bf8f0774f0b9779e1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 303207,
+              "id": "Q303207"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q8024146$91DA5E6D-7E8D-4020-9FAB-F7EA02226069",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "147fb5648c155e15b7897bb4506365c65f7f5f87",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "4893b845827171da09ef2de8dd81dcf4ba50bb8f",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-10-02T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P813"]
+          }
+        ]
+      }
+    ],
+    "P1954": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1954",
+          "hash": "7f0b213c1c7314376401650a35c3f80c046940af",
+          "datavalue": {
+            "value": "349522",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "8b01ff4aebdd9b1d7ecf528f5de9025ea5cb5f77",
+              "datavalue": {
+                "value": "Windfall",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q8024146$42d0e565-41a8-be6c-9644-32f628b5185a",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "b6df74e5559ea55dbda25fa8296f1842d8971f04",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "c34208b35b041d6758e6b68814cd263cacdabb10",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 504063,
+                      "id": "Q504063"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "4893b845827171da09ef2de8dd81dcf4ba50bb8f",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-10-02T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P2635": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2635",
+          "hash": "f74fdb2e35f6ef281e01e6dbf91e712d5b3d255c",
+          "datavalue": {
+            "value": {
+              "amount": "+10",
+              "unit": "http://www.wikidata.org/entity/Q7302866"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q8024146$da96c634-46b1-0666-63f0-4a5cdb2390fb",
+        "rank": "normal"
+      }
+    ],
+    "P437": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P437",
+          "hash": "db68832b24bf6a2726d42ffdb49000881ca183e2",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 841983,
+              "id": "Q841983"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q8024146$d6b93ba4-4493-8a57-7b3c-9c88ee3fc06c",
+        "rank": "normal"
+      }
+    ],
+    "P14701": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P14701",
+          "hash": "2ee9aee1fc1e056db9023115ba88041a8a9a2e8f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5927576,
+              "id": "Q5927576"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P155": [
+            {
+              "snaktype": "value",
+              "property": "P155",
+              "hash": "5a0f29a5db702a419fb83c2cf2247bc2f5554278",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 1494073,
+                  "id": "Q1494073"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P156": [
+            {
+              "snaktype": "value",
+              "property": "P156",
+              "hash": "719dfb8be4870511d6d61e2bf7cb9537d79e5981",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 123488188,
+                  "id": "Q123488188"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P155", "P156"],
+        "id": "Q8024146$426d2b5a-44a3-abd3-11f4-92795f3acaeb",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "svwiki": {
+      "site": "svwiki",
+      "title": "Windfall",
+      "badges": [],
+      "url": "https://sv.wikipedia.org/wiki/Windfall"
+    },
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Windfall (Rick Nelson album)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Windfall_(Rick_Nelson_album)"
+    },
+    "plwiki": {
+      "site": "plwiki",
+      "title": "Windfall (album Ricky’ego Nelsona)",
+      "badges": [],
+      "url": "https://pl.wikipedia.org/wiki/Windfall_(album_Ricky%E2%80%99ego_Nelsona)"
+    },
+    "eswiki": {
+      "site": "eswiki",
+      "title": "Windfall",
+      "badges": [],
+      "url": "https://es.wikipedia.org/wiki/Windfall"
+    }
+  }
+}

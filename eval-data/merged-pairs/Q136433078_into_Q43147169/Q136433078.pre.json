@@ -1,0 +1,280 @@
+{
+  "pageid": 130123601,
+  "ns": 0,
+  "title": "Q136433078",
+  "lastrevid": 2532385871,
+  "modified": "2026-08-17T15:23:15Z",
+  "type": "item",
+  "id": "Q136433078",
+  "labels": {
+    "ro": {
+      "language": "ro",
+      "value": "Gara Lotru"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Lotru"
+    }
+  },
+  "descriptions": {
+    "ro": {
+      "language": "ro",
+      "value": "Gară CFR din Brezoi, județul Vâlcea, România"
+    },
+    "en": {
+      "language": "en",
+      "value": "railway station in Brezoi, Vâlcea County, Romania"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "gare de Brezoi, comté de Vâlcea, Roumanie"
+    },
+    "el": {
+      "language": "el",
+      "value": "σιδηροδρομικός σταθμός στη Ρουμανία"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "12a4103fbfd98ec75d5d9269014f78fb822e8d00",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 55488,
+              "id": "Q55488"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q136433078$a63e10ed-436e-2019-3f8e-a0fe25a77306",
+        "rank": "normal"
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "8ef322efb0810d012f9b4799c2413f3721f6387a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 218,
+              "id": "Q218"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q136433078$ef23c0b8-4d74-499c-b35e-04d20ba2bc4d",
+        "rank": "normal"
+      }
+    ],
+    "P1619": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1619",
+          "hash": "1d789ce284dc77f58a1cb62acb3920e78f5b951d",
+          "datavalue": {
+            "value": {
+              "time": "+1902-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q136433078$705301d8-473a-fcac-716c-1a000a0de4f0",
+        "rank": "normal"
+      }
+    ],
+    "P127": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P127",
+          "hash": "4abd8018de50772a46b7b049611b756db7e88e93",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 795231,
+              "id": "Q795231"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q136433078$c91b6a8f-46bd-45c0-8f19-743b2edb2b24",
+        "rank": "normal"
+      }
+    ],
+    "P625": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P625",
+          "hash": "8f7211c9d6ef05f356038f52e6ade8a0270b27d0",
+          "datavalue": {
+            "value": {
+              "latitude": 45.346980555555554,
+              "longitude": 24.274330555555554,
+              "altitude": null,
+              "precision": 0.000002777777777777778,
+              "globe": "http://www.wikidata.org/entity/Q2"
+            },
+            "type": "globecoordinate"
+          },
+          "datatype": "globe-coordinate"
+        },
+        "type": "statement",
+        "id": "Q136433078$70c7ec47-4f40-b021-a9d2-adf917434cc7",
+        "rank": "normal"
+      }
+    ],
+    "P1770": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1770",
+          "hash": "01044d49dd252d18fe1460981f60cf72f7623a93",
+          "datavalue": {
+            "value": "VL-II-m-B-09683",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q136433078$319a2260-4c7d-4965-49a1-5aa780acd41b",
+        "rank": "normal"
+      }
+    ],
+    "P18": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "a6cb4bf47d9f3a8e08232deaf8a39e585757c6d2",
+          "datavalue": {
+            "value": "Lotru.jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q136433078$b6543d51-462a-6e1c-c953-dcc7c953fcab",
+        "rank": "normal"
+      }
+    ],
+    "P1435": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1435",
+          "hash": "c616613849e27f7f9c44f78c4defe2a03378a5e1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 916620,
+              "id": "Q916620"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q136433078$1ACD6CB5-DF05-41A0-B4CC-B64816727601",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f714ef7426cebd6d56a0627fa4604677ae6b23a9",
+            "snaks": {
+              "P3452": [
+                {
+                  "snaktype": "value",
+                  "property": "P3452",
+                  "hash": "d948f8de4867f228229b3d3cd024fcbf083eba18",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 916620,
+                      "id": "Q916620"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "9e54765810112e7520ff8d077c9be5f6f12e68eb",
+                  "datavalue": {
+                    "value": "https://www.wikidata.org/wiki/Q136433078#P1770",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                },
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "b9c968fe03edd9cfde673050f7bfb1c6f2ff88e8",
+                  "datavalue": {
+                    "value": "https://www.wikidata.org/wiki/Property:P1770#P2302",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P3452", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P5817": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5817",
+          "hash": "3a5c47216c1ed20dc4a40d9bcde91e515d6a6966",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 55654238,
+              "id": "Q55654238"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q136433078$F7744260-2D89-46EC-9569-E6BF406EAB1B",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "rowiki": {
+      "site": "rowiki",
+      "title": "Gara Lotru",
+      "badges": [],
+      "url": "https://ro.wikipedia.org/wiki/Gara_Lotru"
+    }
+  }
+}

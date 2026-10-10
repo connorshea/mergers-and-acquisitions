@@ -1,0 +1,377 @@
+{
+  "pageid": 12437056,
+  "ns": 0,
+  "title": "Q11297118",
+  "lastrevid": 2433152028,
+  "modified": "2025-11-24T03:14:42Z",
+  "type": "item",
+  "id": "Q11297118",
+  "labels": {
+    "ja": {
+      "language": "ja",
+      "value": "キャタピラージャパン"
+    },
+    "en": {
+      "language": "en",
+      "value": "Caterpillar Japan"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "卡特比勒日本"
+    }
+  },
+  "descriptions": {
+    "ja": {
+      "language": "ja",
+      "value": "米国・キャタピラー社の日本法人。元三菱系。"
+    }
+  },
+  "aliases": {
+    "ja": [
+      {
+        "language": "ja",
+        "value": "新キャタピラー三菱"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "326e3d41d1e9c34715e880be6e1c6a1e822e4317",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4830453,
+              "id": "Q4830453"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11297118$1E486AEF-C034-429C-BFE0-1987BC321960",
+        "rank": "normal"
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "b59e357b84e3b195e5a8317cb646badd21e5bc87",
+          "datavalue": {
+            "value": "http://nippon.cat.com/",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q11297118$776BBD1D-5942-45C0-9121-9BDDD9698996",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 177837,
+                      "id": "Q177837"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P154": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P154",
+          "hash": "a550d135e18894a33eb17b12a04615c34be42ba7",
+          "datavalue": {
+            "value": "Caterpillar logo.svg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q11297118$CB3D0888-6E94-428B-A58B-71677DB989E3",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 177837,
+                      "id": "Q177837"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P159": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P159",
+          "hash": "c0c04b4a6a8eab6f8d6c6a218ba27ef9c3fef1e1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1490,
+              "id": "Q1490"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11297118$6817083C-094C-40F9-A8BB-173296D4ECF4",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 177837,
+                      "id": "Q177837"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "1b5a0179fda0e93070c196d574d7376386845a2a",
+          "datavalue": {
+            "value": {
+              "time": "+1963-11-04T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q11297118$5F9D707D-F204-44EA-971E-C59B936DE1AF",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a29a646602abf65105ed0f39a44231c962ece9ee",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 177837,
+                      "id": "Q177837"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P3225": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3225",
+          "hash": "6ce7db0f151eb9934486685dde300592741f8921",
+          "datavalue": {
+            "value": "2010901005953",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11297118$668aacfd-422b-3dc8-60f3-07d08734aa7f",
+        "rank": "normal"
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "531d71ce66da82f72bb335b775f905d64cbeaabe",
+          "datavalue": {
+            "value": "/g/120t4b69",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11297118$16A70F86-1AD2-44F2-B442-D0258BE9F11F",
+        "rank": "normal"
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "55178c20e031f1579d34d802f16f6b9951b631e1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 17,
+              "id": "Q17"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11297118$DA463F59-F31F-4575-8CDD-B96FCD4FB862",
+        "rank": "normal"
+      }
+    ],
+    "P6698": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6698",
+          "hash": "25f4b8c154c97133d1aa49ff7e8331e2bafbdf85",
+          "datavalue": {
+            "value": "キャタピラージャパン",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11297118$49E9465F-5F5E-4286-A7D4-57A4C34B65B1",
+        "rank": "normal"
+      }
+    ],
+    "P1320": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1320",
+          "hash": "7c606afac01470a0e8fc41ec240c78bff8c3f820",
+          "datavalue": {
+            "value": "jp/2010901005953",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q11297118$F3D06342-5DA1-4B81-A6BD-6BE145F3D887",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9d98780a5f1e3794b40a636feb7a72e5885c7603",
+            "snaks": {
+              "P3452": [
+                {
+                  "snaktype": "value",
+                  "property": "P3452",
+                  "hash": "a29d7d15cbc6f7864583afde78c196450196fee7",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 18535356,
+                      "id": "Q18535356"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P3452"]
+          }
+        ]
+      }
+    ],
+    "P131": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P131",
+          "hash": "ffbe7f3963a0987e5bcbe48ae173ec59983df141",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 38283,
+              "id": "Q38283"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q11297118$8D602C42-254F-43AF-94F5-776155F15C67",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "jawiki": {
+      "site": "jawiki",
+      "title": "キャタピラージャパン",
+      "badges": [],
+      "url": "https://ja.wikipedia.org/wiki/%E3%82%AD%E3%83%A3%E3%82%BF%E3%83%94%E3%83%A9%E3%83%BC%E3%82%B8%E3%83%A3%E3%83%91%E3%83%B3"
+    }
+  }
+}

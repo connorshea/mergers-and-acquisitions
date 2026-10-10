@@ -1,0 +1,515 @@
+{
+  "pageid": 55470239,
+  "ns": 0,
+  "title": "Q55454464",
+  "lastrevid": 2555054392,
+  "modified": "2026-10-08T15:18:56Z",
+  "type": "item",
+  "id": "Q55454464",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Aptevo Therapeutics (United States)"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Aptevo Therapeutics"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "company in Seattle, United States"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "bedrijf uit Verenigde Staten van Amerika"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "326e3d41d1e9c34715e880be6e1c6a1e822e4317",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4830453,
+              "id": "Q4830453"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q55454464$030A9E2B-B6F6-4C8D-AFD6-81078D063558",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "822b5e08b0ac726c1efb9eb96132b2e92370a06e",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "e82c485a6328df1bfa7982bdc7bad62424eec212",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 55434246,
+                      "id": "Q55434246"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P2427": [
+                {
+                  "snaktype": "value",
+                  "property": "P2427",
+                  "hash": "994999d070485c8d0d9a4a0c3317fc0a98635b5d",
+                  "datavalue": {
+                    "value": "grid.497508.7",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P2427"]
+          }
+        ]
+      }
+    ],
+    "P2427": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2427",
+          "hash": "994999d070485c8d0d9a4a0c3317fc0a98635b5d",
+          "datavalue": {
+            "value": "grid.497508.7",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q55454464$945E1040-B253-491C-9F81-1476B51086CF",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "822b5e08b0ac726c1efb9eb96132b2e92370a06e",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "e82c485a6328df1bfa7982bdc7bad62424eec212",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 55434246,
+                      "id": "Q55434246"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P2427": [
+                {
+                  "snaktype": "value",
+                  "property": "P2427",
+                  "hash": "994999d070485c8d0d9a4a0c3317fc0a98635b5d",
+                  "datavalue": {
+                    "value": "grid.497508.7",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P2427"]
+          }
+        ]
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "be4c6eafa2984964f04be85667263f5642ba1a72",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 30,
+              "id": "Q30"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q55454464$FE0B1333-6AF3-4473-AA1D-6F0D6809E754",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "822b5e08b0ac726c1efb9eb96132b2e92370a06e",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "e82c485a6328df1bfa7982bdc7bad62424eec212",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 55434246,
+                      "id": "Q55434246"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P2427": [
+                {
+                  "snaktype": "value",
+                  "property": "P2427",
+                  "hash": "994999d070485c8d0d9a4a0c3317fc0a98635b5d",
+                  "datavalue": {
+                    "value": "grid.497508.7",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P2427"]
+          }
+        ]
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "06a397ea4183a5a5f72b506a4bed7c0c9e27ba06",
+          "datavalue": {
+            "value": "http://aptevotherapeutics.com",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 1860,
+                  "id": "Q1860"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P407"],
+        "id": "Q55454464$DAFC5851-2844-43A6-A085-513C64170AA2",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "822b5e08b0ac726c1efb9eb96132b2e92370a06e",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "e82c485a6328df1bfa7982bdc7bad62424eec212",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 55434246,
+                      "id": "Q55434246"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P2427": [
+                {
+                  "snaktype": "value",
+                  "property": "P2427",
+                  "hash": "994999d070485c8d0d9a4a0c3317fc0a98635b5d",
+                  "datavalue": {
+                    "value": "grid.497508.7",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P2427"]
+          }
+        ]
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "7a873c4976d1b6843bbaae9746d0c86fa8398f65",
+          "datavalue": {
+            "value": {
+              "time": "+2016-01-01T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q55454464$6A23489B-887F-42C1-A618-2ED3E1495F87",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "822b5e08b0ac726c1efb9eb96132b2e92370a06e",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "e82c485a6328df1bfa7982bdc7bad62424eec212",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 55434246,
+                      "id": "Q55434246"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P2427": [
+                {
+                  "snaktype": "value",
+                  "property": "P2427",
+                  "hash": "994999d070485c8d0d9a4a0c3317fc0a98635b5d",
+                  "datavalue": {
+                    "value": "grid.497508.7",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P2427"]
+          }
+        ]
+      }
+    ],
+    "P6782": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6782",
+          "hash": "6ec706ba8ee7d5688dc8e5796225624936cb4ea4",
+          "datavalue": {
+            "value": "02k8zdn75",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q55454464$5EDBDFC6-F478-4A6E-982A-4E6E551C82F3",
+        "rank": "normal"
+      }
+    ],
+    "P159": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P159",
+          "hash": "4ab6a3943966c66013b0519cabe098f993e75051",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1223,
+              "id": "Q1223"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P625": [
+            {
+              "snaktype": "value",
+              "property": "P625",
+              "hash": "3cd80cfe33a9f8bfdeb2b63894402ce5681bc807",
+              "datavalue": {
+                "value": {
+                  "latitude": 47.616329,
+                  "longitude": -122.346008,
+                  "altitude": null,
+                  "precision": 0.000001,
+                  "globe": "http://www.wikidata.org/entity/Q2"
+                },
+                "type": "globecoordinate"
+              },
+              "datatype": "globe-coordinate"
+            }
+          ]
+        },
+        "qualifiers-order": ["P625"],
+        "id": "Q55454464$BB0C357C-D9A0-4E8B-A43F-242365E21286",
+        "rank": "normal"
+      }
+    ],
+    "P213": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P213",
+          "hash": "7a5bca2f533013c23aea8aef78b76002f9f4ab55",
+          "datavalue": {
+            "value": "0000000460166336",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q55454464$73DBFA79-3963-41A7-957E-E339A93242BC",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "aabe3df6ab2492dd99ae18b525ec9d2fd612ff72",
+            "snaks": {
+              "P6782": [
+                {
+                  "snaktype": "value",
+                  "property": "P6782",
+                  "hash": "6ec706ba8ee7d5688dc8e5796225624936cb4ea4",
+                  "datavalue": {
+                    "value": "02k8zdn75",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ]
+            },
+            "snaks-order": ["P6782"]
+          }
+        ]
+      }
+    ],
+    "P3500": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3500",
+          "hash": "bebcdb3a650eac3385d7b0be70c20f8e13251171",
+          "datavalue": {
+            "value": "484398",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "62ea46d9d3a56cf4339753dc3d964a779d8b59d2",
+              "datavalue": {
+                "value": "Aptevo Therapeutics Inc",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q55454464$36E9CD07-23FE-4DC9-99A5-84797AD9F08C",
+        "rank": "normal"
+      }
+    ],
+    "P2088": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2088",
+          "hash": "59afeea207305e9d982249640b269b154c5b95db",
+          "datavalue": {
+            "value": "aptevo-therapeutics",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q55454464$617663C5-5C1F-4AA8-A2BE-AD169A2F023F",
+        "rank": "normal"
+      }
+    ],
+    "P14075": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P14075",
+          "hash": "aedc515689a86b36474c0869d2014ce721d593eb",
+          "datavalue": {
+            "value": "87317",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q55454464$26B001C3-88D2-4882-BE4A-7639A85B9C17",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "430e1bac48bbe8fefb9e5fbf0caaf3c760779052",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 30268750,
+              "id": "Q30268750"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q55454464$8253D659-0575-473A-9D56-5CE22D7F68F2",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

@@ -1,0 +1,1053 @@
+{
+  "pageid": 2309622,
+  "ns": 0,
+  "title": "Q2390739",
+  "lastrevid": 2502312952,
+  "modified": "2026-06-05T18:23:13Z",
+  "type": "item",
+  "id": "Q2390739",
+  "labels": {
+    "fr": {
+      "language": "fr",
+      "value": "John F. Kennedy Stadium"
+    },
+    "en": {
+      "language": "en",
+      "value": "John F. Kennedy Stadium"
+    },
+    "it": {
+      "language": "it",
+      "value": "John F. Kennedy Stadium"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "ジョン・F・ケネディ・スタジアム"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "John F. Kennedy Stadium"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "John F. Kennedy Stadium"
+    },
+    "nb": {
+      "language": "nb",
+      "value": "John F. Kennedy Stadium"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "Stadion JFK"
+    },
+    "zh-hant": {
+      "language": "zh-hant",
+      "value": "肯尼迪體育場"
+    },
+    "zh-cn": {
+      "language": "zh-cn",
+      "value": "肯尼迪体育场"
+    },
+    "es": {
+      "language": "es",
+      "value": "John F. Kennedy Stadium"
+    },
+    "zh-hans": {
+      "language": "zh-hans",
+      "value": "肯尼迪体育场"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "肯尼迪体育场"
+    },
+    "he": {
+      "language": "he",
+      "value": "אצטדיון ג'ון אף קנדי"
+    },
+    "cs": {
+      "language": "cs",
+      "value": "Stadion JFK"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "John F. Kennedy Stadium"
+    },
+    "id": {
+      "language": "id",
+      "value": "Stadion John F. Kennedy"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "John F. Kennedy Stadium"
+    }
+  },
+  "descriptions": {
+    "nl": {
+      "language": "nl",
+      "value": "stadion in de Verenigde Staten"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "stade américain"
+    },
+    "he": {
+      "language": "he",
+      "value": "אצטדיון בארצות הברית"
+    },
+    "id": {
+      "language": "id",
+      "value": "stadion di Amerika Serikat"
+    },
+    "es": {
+      "language": "es",
+      "value": "estadio deportivo"
+    },
+    "en": {
+      "language": "en",
+      "value": "formerly an open-air stadium in Philadelphia"
+    },
+    "de": {
+      "language": "de",
+      "value": "Stadion in den Vereinigten Staaten"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "ملعب في فيلادلفيا، الولايات المتحدة"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "Estádio em Filadélfia, Estados Unidos"
+    },
+    "sv": {
+      "language": "sv",
+      "value": "arena i Philadelphia, Pennsylvania i USA"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "Philadelphia Municipal Stadium"
+      },
+      {
+        "language": "en",
+        "value": "Sesquicentennial Stadium"
+      }
+    ],
+    "zh": [
+      {
+        "language": "zh",
+        "value": "約翰·F·甘迺迪運動場"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "a2cb9ea692bc81efccddb68809a778e595f32b34",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 483110,
+              "id": "Q483110"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2390739$a08489fb-411d-eed5-96af-e3e64e293c14",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "31445342cb3c7702ea76176c174d810e430e7f49",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 19860854,
+              "id": "Q19860854"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2390739$6d6098f2-4640-5bdd-8293-b0ddb3920f09",
+        "rank": "normal"
+      }
+    ],
+    "P625": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P625",
+          "hash": "b440112a98d327e77b381bffbecd95bc6db45622",
+          "datavalue": {
+            "value": {
+              "latitude": 39.9014,
+              "longitude": -75.1719,
+              "altitude": null,
+              "precision": 0.0001,
+              "globe": "http://www.wikidata.org/entity/Q2"
+            },
+            "type": "globecoordinate"
+          },
+          "datatype": "globe-coordinate"
+        },
+        "type": "statement",
+        "id": "q2390739$363A06B6-554E-49D2-8981-FE95E07B0BFD",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "be4c6eafa2984964f04be85667263f5642ba1a72",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 30,
+              "id": "Q30"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q2390739$7A1071F4-A1D4-47DE-9A4E-77DF17C346F0",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P131": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P131",
+          "hash": "03e38a8fb03590cba79ca6dc124b227d43f6afcd",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1345,
+              "id": "Q1345"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q2390739$8F21A5B1-AC3F-48BE-B535-668FBFD2C17E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "1a2b5540e1277dfa78901ad43d1cb23a0c5c01a8",
+          "datavalue": {
+            "value": "/m/038h1z",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q2390739$FEEDE564-922D-46A1-8CD9-D2B4F029E78D",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2b00cb481cddcac7623114367489b5c194901c4a",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "a94b740202b097dd33355e0e6c00e54b9395e5e0",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 15241312,
+                      "id": "Q15241312"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P577": [
+                {
+                  "snaktype": "value",
+                  "property": "P577",
+                  "hash": "fde79ecb015112d2f29229ccc1ec514ed3e71fa2",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2013-10-28T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P577"]
+          }
+        ]
+      }
+    ],
+    "P18": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "2442ba2373abecf0f729cc74bf78b434e2ec1bc9",
+          "datavalue": {
+            "value": "Municipal Stadium Philadelphia.jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P2096": [
+            {
+              "snaktype": "value",
+              "property": "P2096",
+              "hash": "ba93da1293e01bff20951af454e6e52f39bbbe8d",
+              "datavalue": {
+                "value": {
+                  "text": "Bilde av stadion fra 1927",
+                  "language": "nb"
+                },
+                "type": "monolingualtext"
+              },
+              "datatype": "monolingualtext"
+            }
+          ]
+        },
+        "qualifiers-order": ["P2096"],
+        "id": "Q2390739$34911081-CDE9-4504-8864-8D30134BFD93",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P1083": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1083",
+          "hash": "e47c59b304a09dc1237df555cd2eb04cc6a44967",
+          "datavalue": {
+            "value": {
+              "amount": "+102000",
+              "unit": "1"
+            },
+            "type": "quantity"
+          },
+          "datatype": "quantity"
+        },
+        "type": "statement",
+        "id": "Q2390739$6F506423-A0F9-48B3-B974-E0F833D1E393",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P466": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P466",
+          "hash": "297b70a7682dc10949f3334270e331493544d9ca",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7182797,
+              "id": "Q7182797"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2390739$C91CCB40-1330-4C98-8C3B-D7C95D959360",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P127": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P127",
+          "hash": "b28d47980d7ab6fdb0588c15d0f47f1c5ce3be64",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 140072874,
+              "id": "Q140072874"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2390739$FD96069C-77A2-449F-ACCF-1FEEB3DA3026",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P1004": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1004",
+          "hash": "a52cfac2c7919a0faef31f5a395529a5dd20c875",
+          "datavalue": {
+            "value": "68726567-21b1-4e48-a0a1-ac33f9a702b5",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q2390739$69BC9B40-267E-4A61-B16B-6B8D99C74A4E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "706208b3024200fd0a39ad499808dd0d98d74065",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "623cc8f0e2f65afe4d66b91962d354a2f3aa9a27",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 14005,
+                      "id": "Q14005"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P248"]
+          }
+        ]
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "24071542631a19ffa6ae9ec928ba6b35ca3f4b12",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 41323,
+              "id": "Q41323"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2390739$53E61DAF-14F4-4159-8129-A7285266291B",
+        "rank": "normal"
+      }
+    ],
+    "P373": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P373",
+          "hash": "bc7b38da11f0bd1c01e457dba05f6ff8f9b7d8b0",
+          "datavalue": {
+            "value": "John F. Kennedy Stadium (Philadelphia)",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q2390739$00698917-596E-49B6-87AC-E73088D1D583",
+        "rank": "normal"
+      }
+    ],
+    "P1619": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1619",
+          "hash": "d71bf7bb7a123af3102d6e6ea169ae6b68ab5700",
+          "datavalue": {
+            "value": {
+              "time": "+1926-04-15T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q2390739$B286AB67-9619-4494-B041-BE4803554860",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "39a12f4149e027cef0e3cece9ab081e997fc9d69",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "b7f8bea3bb10c237323eb448dc4798948923bd5c",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 11921,
+                      "id": "Q11921"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "37ca22a00cb46cc198ddfc8efac9ea94a2088231",
+                  "datavalue": {
+                    "value": "https://pt.wikipedia.org/w/index.php?title=John_F._Kennedy_Stadium&oldid=56195164",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P576": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P576",
+          "hash": "d7dc22457a450bbf3f32e7c173ee03fdc9d9a8c8",
+          "datavalue": {
+            "value": {
+              "time": "+1992-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q2390739$6DF35C13-01F6-4093-8638-9495F5F3F5B3",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "5964827be5355e30189e2b38f66bb88a4a4f6f4f",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "d2955ddf188998a21a146d800a156c6be42c1a15",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=John_F._Kennedy_Stadium_(Philadelphia)&oldid=934160758",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P3999": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3999",
+          "hash": "3aef09b03be09d8233f0eb3ffbc7c02f8072043c",
+          "datavalue": {
+            "value": {
+              "time": "+1989-07-13T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q2390739$48281E2A-C071-4963-B1D6-04B03F99D0A5",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "5964827be5355e30189e2b38f66bb88a4a4f6f4f",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "d2955ddf188998a21a146d800a156c6be42c1a15",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=John_F._Kennedy_Stadium_(Philadelphia)&oldid=934160758",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "91fb5e2791fe834e5cc287f6ba53ad8110ee6c7b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 153312,
+              "id": "Q153312"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2390739$05d3fa02-477d-7164-d2cb-366633cd8c62",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "cd069d146345bfa2f73f93baec17ad0912a6b89d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6232411,
+              "id": "Q6232411"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2390739$375c2e5c-4b9b-fb5b-de82-25f66a924534",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "34181c80b1344fc1f65609176aa2fb12292e281f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 16632587,
+              "id": "Q16632587"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2390739$58762b9b-4cfd-155e-c156-6fd998f94843",
+        "rank": "normal"
+      }
+    ],
+    "P1705": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1705",
+          "hash": "8f5ea8ead84a719bb35522385e531ebbc1020f1d",
+          "datavalue": {
+            "value": {
+              "text": "John F. Kennedy Stadium",
+              "language": "en"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q2390739$c0e4b2a5-4df5-ecfd-8ce7-bff9507a2284",
+        "rank": "normal"
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "7603f4f980c74603c0afad7433405b5fe482417c",
+          "datavalue": {
+            "value": {
+              "time": "+1926-04-15T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q2390739$A556CD0A-8790-49E0-85EE-02DEC9FDA0C3",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "465d34567fe3f999f90db96a52533a3c32747701",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "20a778ac37e677de9a950e9151c9e205cc10d594",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=John_F._Kennedy_Stadium_(Philadelphia)&oldid=1157366300",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {
+    "frwiki": {
+      "site": "frwiki",
+      "title": "John F. Kennedy Stadium",
+      "badges": [],
+      "url": "https://fr.wikipedia.org/wiki/John_F._Kennedy_Stadium"
+    },
+    "itwiki": {
+      "site": "itwiki",
+      "title": "John F. Kennedy Stadium",
+      "badges": [],
+      "url": "https://it.wikipedia.org/wiki/John_F._Kennedy_Stadium"
+    },
+    "jawiki": {
+      "site": "jawiki",
+      "title": "ジョン・F・ケネディ・スタジアム",
+      "badges": [],
+      "url": "https://ja.wikipedia.org/wiki/%E3%82%B8%E3%83%A7%E3%83%B3%E3%83%BBF%E3%83%BB%E3%82%B1%E3%83%8D%E3%83%87%E3%82%A3%E3%83%BB%E3%82%B9%E3%82%BF%E3%82%B8%E3%82%A2%E3%83%A0"
+    },
+    "nowiki": {
+      "site": "nowiki",
+      "title": "John F. Kennedy Stadium",
+      "badges": [],
+      "url": "https://no.wikipedia.org/wiki/John_F._Kennedy_Stadium"
+    },
+    "ptwiki": {
+      "site": "ptwiki",
+      "title": "John F. Kennedy Stadium",
+      "badges": [],
+      "url": "https://pt.wikipedia.org/wiki/John_F._Kennedy_Stadium"
+    },
+    "plwiki": {
+      "site": "plwiki",
+      "title": "Stadion JFK",
+      "badges": [],
+      "url": "https://pl.wikipedia.org/wiki/Stadion_JFK"
+    },
+    "commonswiki": {
+      "site": "commonswiki",
+      "title": "Category:John F. Kennedy Stadium (Philadelphia)",
+      "badges": [],
+      "url": "https://commons.wikimedia.org/wiki/Category:John_F._Kennedy_Stadium_(Philadelphia)"
+    },
+    "nlwiki": {
+      "site": "nlwiki",
+      "title": "John F. Kennedy Stadium",
+      "badges": [],
+      "url": "https://nl.wikipedia.org/wiki/John_F._Kennedy_Stadium"
+    },
+    "eswiki": {
+      "site": "eswiki",
+      "title": "John F. Kennedy Stadium",
+      "badges": [],
+      "url": "https://es.wikipedia.org/wiki/John_F._Kennedy_Stadium"
+    },
+    "idwiki": {
+      "site": "idwiki",
+      "title": "Stadion John F. Kennedy",
+      "badges": [],
+      "url": "https://id.wikipedia.org/wiki/Stadion_John_F._Kennedy"
+    },
+    "enwiki": {
+      "site": "enwiki",
+      "title": "John F. Kennedy Stadium",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/John_F._Kennedy_Stadium"
+    },
+    "svwiki": {
+      "site": "svwiki",
+      "title": "John F. Kennedy Stadium",
+      "badges": [],
+      "url": "https://sv.wikipedia.org/wiki/John_F._Kennedy_Stadium"
+    },
+    "hewiki": {
+      "site": "hewiki",
+      "title": "אצטדיון ג'ון פ. קנדי",
+      "badges": [],
+      "url": "https://he.wikipedia.org/wiki/%D7%90%D7%A6%D7%98%D7%93%D7%99%D7%95%D7%9F_%D7%92%27%D7%95%D7%9F_%D7%A4._%D7%A7%D7%A0%D7%93%D7%99"
+    }
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "pageid": 21136829,
+  "ns": 0,
+  "title": "Q19529422",
+  "lastrevid": 2491804346,
+  "modified": "2026-05-15T02:03:30Z",
+  "type": "item",
+  "id": "Q19529422",
+  "labels": {
+    "pt": {
+      "language": "pt",
+      "value": "Arte"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "poem written by João da Cruz e Sousa"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P50": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P50",
+          "hash": "9c6ac903fc367ca1be375638d924580164caacfe",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2609059,
+              "id": "Q2609059"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q19529422$27F0759B-22EE-4827-9671-8541257C8650",
+        "rank": "normal"
+      }
+    ],
+    "P7937": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7937",
+          "hash": "6fa42627aa5371e9e67d3943036ca626757a2cf1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5185279,
+              "id": "Q5185279"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q19529422$27C045FA-204E-458E-A0BF-E17FF35E6728",
+        "rank": "normal"
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5963e3cad5eee4ae1cffbefbac15327800b9a7e6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7725634,
+              "id": "Q7725634"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q19529422$00969490-D673-4934-8ACF-4BD854F714F5",
+        "rank": "normal"
+      }
+    ],
+    "P6216": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6216",
+          "hash": "f69dc45ce9c48664155022498b34100d801bd549",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 19652,
+              "id": "Q19652"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q19529422$42D9FE0B-FCE1-49CB-8BA0-AACAA9FCC13A",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "ptwikisource": {
+      "site": "ptwikisource",
+      "title": "Arte (I)",
+      "badges": [],
+      "url": "https://pt.wikisource.org/wiki/Arte_(I)"
+    }
+  }
+}

@@ -1579,6 +1579,12 @@ const WORK_PERIOD_START = "P2031";
  */
 const MANY_SITELINK_CLASHES = 2;
 
+/** Whether a sitelink site id is a Wikisource (a language's, or multilingual sourceswiki). */
+function isWikisource(site: string): boolean {
+  const host = sitelinkHost(site);
+  return host === "wikisource.org" || (host?.endsWith(".wikisource.org") ?? false);
+}
+
 /**
  * Per-subject identifiers where each distinct subject has exactly one page: a
  * specific store or database entry for one game, artist, release, film or person. If
@@ -3096,6 +3102,19 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
       `${separateArticleWikis.length} wikis have a separate article for each item, almost certainly different subjects`,
     );
     cap("many-sitelink-clashes", 0.1);
+  } else {
+    // On Wikisource a single such clash is already near-conclusive. A page
+    // there is one specific text, and same-titled texts (a poem series, the
+    // same title by two poets, "Arte (I)" / "Arte (II)") get their own pages
+    // disambiguated by first line, author or number, not redirects to each
+    // other. So two different non-redirect pages are two texts.
+    const wikisourceClashes = separateArticleWikis.filter((r) => isWikisource(r.label));
+    if (wikisourceClashes.length > 0) {
+      reasons.unshift(
+        `each item links a different page on ${wikisourceClashes.map((r) => r.label).join(", ")}, almost certainly different texts`,
+      );
+      cap("wikisource-clash", 0.1);
+    }
   }
 
   // Two or more *per-subject* identifiers (Steam, MobyGames, Discogs, IMDb, …; see

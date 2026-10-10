@@ -1,0 +1,242 @@
+{
+  "pageid": 20392688,
+  "ns": 0,
+  "title": "Q18849140",
+  "lastrevid": 2436194683,
+  "modified": "2025-11-30T21:10:00Z",
+  "type": "item",
+  "id": "Q18849140",
+  "labels": {
+    "zh": {
+      "language": "zh",
+      "value": "古風"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "poem written by Li Bai"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "вірш Лі Бо"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P50": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P50",
+          "hash": "eb3bc37027103f6bde2d3a4fbc2e3afe9fa46562",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7071,
+              "id": "Q7071"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q18849140$21E69EDB-821C-4FCF-8D8E-F4AB0A2411C1",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "0540f1ae9bf5043230bd77d54de9ed478e6f6c1f",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "bc36232771605d1327a3b20f7f3b654de684f1c1",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 19822573,
+                      "id": "Q19822573"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "5963e3cad5eee4ae1cffbefbac15327800b9a7e6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7725634,
+              "id": "Q7725634"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q18849140$95AE8E13-E608-46B7-B297-A1B08358B092",
+        "rank": "normal"
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "f49f772d2d24b70cdec333afeebe0b5118c630fb",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3236984,
+              "id": "Q3236984"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q18849140$C85DB726-6A5E-4128-B837-EA0121EA4A2A",
+        "rank": "normal"
+      }
+    ],
+    "P407": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P407",
+          "hash": "63e506e38a7ce991510acc72a27dc1c9587bb2ac",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 37041,
+              "id": "Q37041"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q18849140$853926F9-5909-4AC4-87EF-08DE387C4F4B",
+        "rank": "normal"
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "0ea8b2347a09f4e02ee58992e3cab1c82e544d68",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 9683,
+              "id": "Q9683"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q18849140$CDF2A49C-1733-4F2F-BFE7-78404586A7D4",
+        "rank": "normal"
+      }
+    ],
+    "P6216": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6216",
+          "hash": "f69dc45ce9c48664155022498b34100d801bd549",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 19652,
+              "id": "Q19652"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1001": [
+            {
+              "snaktype": "value",
+              "property": "P1001",
+              "hash": "91dce20cb7cf8d03dc976a70e56b19939881d751",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 60332278,
+                  "id": "Q60332278"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P459": [
+            {
+              "snaktype": "value",
+              "property": "P459",
+              "hash": "8f1a08d7359ea45500b600d7ad0f13a7f032145e",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 29940705,
+                  "id": "Q29940705"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1001", "P459"],
+        "id": "Q18849140$EE468ADA-F643-47E0-97FD-D13A1C85701F",
+        "rank": "normal"
+      }
+    ],
+    "P7937": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7937",
+          "hash": "6fa42627aa5371e9e67d3943036ca626757a2cf1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5185279,
+              "id": "Q5185279"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q18849140$BD70A8A2-CD43-487A-AF19-6C646DD9DFF1",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "zhwikisource": {
+      "site": "zhwikisource",
+      "title": "古風 (天津三月時)",
+      "badges": [],
+      "url": "https://zh.wikisource.org/wiki/%E5%8F%A4%E9%A2%A8_(%E5%A4%A9%E6%B4%A5%E4%B8%89%E6%9C%88%E6%99%82)"
+    }
+  }
+}

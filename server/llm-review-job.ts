@@ -71,7 +71,8 @@ const RENDER_CHUNK = 500;
 const ID_CHUNK = 1000;
 /** Results written back per UPDATE. */
 const WRITE_CHUNK = 500;
-const POLL_MS = 5 * 60_000;
+/** How often `--wait` checks on running batches. */
+const POLL_MS = 60_000;
 /** How long a new batch may 404 while the API catches up. */
 const NEW_BATCH_GRACE_MS = 10 * 60_000;
 /** How long a claim may sit without a batch before it's taken for a crashed run's. */

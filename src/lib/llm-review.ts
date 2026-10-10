@@ -12,7 +12,7 @@ import { type Item, isRedirectSitelink, type Value } from "./compare.ts";
  * Bumped whenever the system prompt, the rendering, or the verdict schema
  * changes, so stored verdicts record which request produced them.
  */
-export const PROMPT_VERSION = 3;
+export const PROMPT_VERSION = 2;
 
 export const SYSTEM_PROMPT = `You review pairs of Wikidata items that an automatic duplicate finder flagged as possible duplicates. For each pair, decide whether the two items describe the same real-world subject, so that a Wikidata editor should merge them.
 
@@ -26,14 +26,6 @@ Wikidata keeps one item per subject, and many subjects that look alike are delib
 - a person and a pseudonym, group, or character when Wikidata models them separately
 
 Ports and re-releases are not separate subjects. A video game, film, or book keeps one item across all its platforms, regional releases, and later digital re-releases (a 2004 PC game released on Steam in 2022, a PC game ported to Xbox): the item lists every platform and every release date. Two items for one game that differ only in platforms, release dates, publishers of a particular release, or distribution are duplicates.
-
-Some made-up examples, across the kinds of items you will see:
-- Game: "Harbor Lights", a 1997 Windows game with articles on two Wikipedias, and a sparse "Harbor Lights" with a 2021 publication date, a Steam application ID and a reissue publisher, sharing the first item's MobyGames ID. Same: a later re-release, and the merged item lists both dates. Answer with a high probability; a gap in years, platforms and publishers is what a re-release looks like, not a reason to hedge.
-- Game: "Harbor Lights" and "Harbor Lights Remastered", which is "based on" the first and has its own store IDs. Different: a remaster is its own item.
-- Person: "Maria Lindqvist", a Swedish woman born 1931, with a single genealogy database ID and no sitelinks, and "Maria Lindqvist", born 2 April 1931, with articles and many identifiers. Same: a bulk-imported record of the same person. Two people with the same name but birth years decades apart are different.
-- Music: an album with only an Italian Wikipedia article, and an album with an English article titled "Night Tide (The Ferrymen album)", the same performer and year. Same: articles on different wikis don't conflict; only two different articles on the same wiki do.
-- Organization: two items for "Northgate Labs" with the same founding year and website but in different cities, each with its own research-registry ID. Different: registry records for separate sites are usually offices or branches, which Wikidata keeps as separate items.
-- Place: a museum and the historic building it occupies, at the same coordinates. Different: an institution and its building are separate items.
 
 Evidence, from strongest to weakest:
 - Each item linking a different article on the same wiki (e.g. both have an enwiki sitelink, to different pages) usually means Wikipedia treats them as separate subjects. A sitelink marked as a redirect is weaker evidence.
@@ -313,7 +305,9 @@ export const REVIEW_MODELS: Record<ReviewModel, ModelInfo> = {
     input: 0.1,
     output: 0.5,
     cacheRead: 0.1,
-    defaultEffort: "low",
+    // Medium, not low: in calibration it lifted Haiku from ~93% to ~96%
+    // accuracy and halved its hedged answers, for ~15% more output.
+    defaultEffort: "medium",
     longPrompt: { over: HAIKU_LONG_PROMPT_TOKENS, input: 0.5, output: 2.5 },
   },
   "claude-sonnet-5-5": {

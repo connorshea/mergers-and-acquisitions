@@ -302,11 +302,9 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
                       </span>
                     )}
                   {/* A merged pair stays merged (it happened on Wikidata); a
-                    dismissed or hidden one, or a merge claim that was
-                    abandoned, can come back. */}
-                  {(status === "dismissed" ||
-                    status === "auto_dismissed" ||
-                    status === "merging") && (
+                    dismissed one, or a merge claim that was abandoned, can
+                    come back. A hidden one reopens from its reviews card. */}
+                  {(status === "dismissed" || status === "merging") && (
                     <button
                       type="button"
                       className="btn-dismiss"
@@ -360,7 +358,14 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
               changed them since.
             </p>
           )}
-          {status === "auto_dismissed" && data && <ClaudeReviews reviews={data.llmReviews} />}
+          {status === "auto_dismissed" && data && (
+            <ClaudeReviews
+              reviews={data.llmReviews}
+              onReopen={reopen}
+              reopening={dismissing}
+              canReopen={!!user}
+            />
+          )}
           {data && candidate && (!data.from || !data.into) && (
             <MissingItemsNote candidate={candidate} from={data.from} into={data.into} />
           )}
@@ -852,46 +857,118 @@ function DifferentDialog({
 }
 
 const STAGE_LABELS: Record<LlmReviewSummary["stage"], string> = {
-  first_pass: "First pass",
-  confirmation: "Confirmation",
+  first_pass: "1 · First pass",
+  confirmation: "2 · Confirm",
 };
 
-/** Model ids as people say them: "claude-opus-5-5" → "Claude Opus 5.5". */
+/** Model ids as people say them: "claude-opus-5-5" → "Opus 5.5". */
 function modelName(model: string): string {
   const m = /^claude-([a-z]+)-(\d+)-(\d+)$/.exec(model);
-  return m ? `Claude ${m[1][0].toUpperCase()}${m[1].slice(1)} ${m[2]}.${m[3]}` : model;
+  return m ? `${m[1][0].toUpperCase()}${m[1].slice(1)} ${m[2]}.${m[3]}` : model;
 }
 
 /**
- * Why a hidden pair was hidden: each Claude review of it, with the model's
- * verdict, how likely it thought a duplicate was, and its reasoning.
+ * Why a hidden pair was hidden: each model's review of it, with its verdict,
+ * how likely it thought a duplicate was, and its reasoning, plus the way back
+ * to the open list.
  */
-function ClaudeReviews({ reviews }: { reviews: LlmReviewSummary[] }) {
+function ClaudeReviews({
+  reviews,
+  onReopen,
+  reopening,
+  canReopen,
+}: {
+  reviews: LlmReviewSummary[];
+  onReopen: () => void;
+  reopening: boolean;
+  canReopen: boolean;
+}) {
   return (
-    <section className="claude-reviews" aria-labelledby="claude-reviews-heading">
-      <h2 id="claude-reviews-heading">Hidden by automation</h2>
-      <p className="detail-note">
-        Two Claude models agreed these items aren't duplicates, so the pair left the open list
-        without a human review. Claude never edits Wikidata. If they are duplicates, reopen the
-        pair.
-      </p>
+    <section className="auto-review" aria-labelledby="auto-review-heading">
+      <header className="auto-review-head">
+        <div className="auto-review-intro">
+          <div className="auto-review-title">
+            <svg
+              viewBox="0 0 24 24"
+              width="18"
+              height="18"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
+              <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
+              <path d="M1 1l22 22" />
+            </svg>
+            <h2 id="auto-review-heading">Hidden by automation</h2>
+            <span className="auto-review-pill">Not reviewed by a human</span>
+          </div>
+          <p>
+            Two models independently judged these to be separate items, so the pair was closed
+            automatically. Nothing was changed on Wikidata.
+          </p>
+        </div>
+        <button
+          type="button"
+          className="btn-reopen-pair"
+          onClick={onReopen}
+          disabled={reopening || !canReopen}
+          title={canReopen ? undefined : "Log in to reopen"}
+        >
+          <svg
+            viewBox="0 0 24 24"
+            width="16"
+            height="16"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M3 12a9 9 0 1 0 3-6.7" />
+            <path d="M3 4v5h5" />
+          </svg>
+          {reopening ? "Reopening…" : "Reopen pair"}
+        </button>
+      </header>
       {reviews.length === 0 ? (
-        <p className="detail-note">The reviews behind this are no longer stored.</p>
+        <p className="auto-review-empty">The reviews behind this are no longer stored.</p>
       ) : (
-        <ol className="claude-review-list">
-          {reviews.map((r) => (
-            <li key={r.id} className="claude-review">
-              <div className="claude-review-head">
-                <span className="claude-review-stage">{STAGE_LABELS[r.stage]}</span>
-                <span className="claude-review-model">{modelName(r.model)}</span>
-                <span className={`flag claude-verdict is-${r.verdict}`}>{r.verdict}</span>
-                <span className="claude-review-p">
-                  {Math.round(r.probability * 100)}% likely duplicates
-                </span>
-              </div>
-              <p className="claude-review-rationale">{r.rationale}</p>
-            </li>
-          ))}
+        <ol className="auto-review-list">
+          {reviews.map((r) => {
+            const pct = Math.round(r.probability * 100);
+            return (
+              <li key={r.id} className="auto-review-row">
+                <div className="auto-review-who">
+                  <span className="auto-review-stage">{STAGE_LABELS[r.stage]}</span>
+                  <span className="auto-review-model">{modelName(r.model)}</span>
+                </div>
+                <div className="auto-review-body">
+                  <div className="auto-review-verdict">
+                    <span className="auto-review-chip">
+                      {r.verdict[0].toUpperCase() + r.verdict.slice(1)}
+                    </span>
+                    <div
+                      className="auto-review-likelihood"
+                      role="img"
+                      aria-label={`${pct}% likely duplicates`}
+                    >
+                      <div className="auto-review-bar">
+                        <div style={{ width: `${pct}%` }} />
+                      </div>
+                      <span className="auto-review-pct">{pct}%</span>
+                      <span className="auto-review-caption">duplicate likelihood</span>
+                    </div>
+                  </div>
+                  <p className="auto-review-rationale">{r.rationale}</p>
+                </div>
+              </li>
+            );
+          })}
         </ol>
       )}
     </section>

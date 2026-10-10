@@ -36,7 +36,6 @@ import {
   MAX_PAIR_COST_USD,
   MAX_PROMPT_TOKENS,
   outputTokenBudget,
-  parseReview,
   PROMPT_VERSION,
   promptTokens,
   type Review,
@@ -52,6 +51,12 @@ import {
   type TokenUsage,
 } from "../src/lib/llm-review.ts";
 import { orderByAge } from "../src/lib/compare.ts";
+import {
+  cachedPromptTokens,
+  countPromptTokens,
+  type ResultRecord,
+  toRecord,
+} from "../server/llm-batch.ts";
 import { fetchAllProperties, fetchEntityLabels } from "../src/lib/sparql.ts";
 import { EVAL_DIR, loadHeuristicScorer, loadPairs, type Pair } from "./eval-pairs.ts";
 
@@ -164,16 +169,6 @@ interface Run {
   batches: RunBatch[];
 }
 
-interface ResultRecord {
-  pair: string;
-  model: ReviewModel;
-  review: Review | null;
-  /** Why there's no review: an API error, a refusal, an unparseable answer. */
-  error?: string;
-  usage?: TokenUsage;
-  costUsd: number;
-}
-
 function parseModels(arg: string | undefined): ReviewModel[] {
   const wanted = (arg ?? "haiku,sonnet,opus").split(",").map((s) => s.trim());
   return wanted.map((short) => {
@@ -206,30 +201,6 @@ async function selectPairs(argv: string[]): Promise<Pair[]> {
     pairs = [...dups.slice(0, Math.ceil(n / 2)), ...distinct.slice(0, Math.floor(n / 2))];
   }
   return pairs;
-}
-
-/** A pair's exact prompt tokens on `model`, from count_tokens (free). */
-async function countPromptTokens(
-  client: Anthropic,
-  model: ReviewModel,
-  text: string,
-): Promise<number> {
-  const req = reviewRequest(model, REVIEW_MODELS[model].defaultEffort, text);
-  const { input_tokens } = await client.messages.countTokens({
-    model,
-    system: req.system,
-    messages: req.messages,
-    output_config: req.output_config,
-  });
-  return input_tokens;
-}
-
-/**
- * The tokens up to the cache breakpoint: the system prompt, counted with a
- * one-character pair so it slightly overstates (the safe side for the cap).
- */
-function cachedPromptTokens(client: Anthropic): Promise<number> {
-  return countPromptTokens(client, "claude-haiku-5-5", "-");
 }
 
 /**
@@ -342,46 +313,6 @@ async function readResults(dir: string, model: ReviewModel): Promise<ResultRecor
     if ((err as NodeJS.ErrnoException).code === "ENOENT") return null;
     throw err;
   }
-}
-
-/** One batch result as a record: the review, or why there isn't one. */
-function toRecord(
-  model: ReviewModel,
-  result: Anthropic.Messages.MessageBatchIndividualResponse,
-): ResultRecord {
-  const base = { pair: result.custom_id, model };
-  if (result.result.type !== "succeeded") {
-    const error =
-      result.result.type === "errored"
-        ? `errored: ${result.result.error.error.type}`
-        : result.result.type;
-    return { ...base, review: null, error, costUsd: 0 };
-  }
-  const message = result.result.message;
-  const usage: TokenUsage = {
-    input_tokens: message.usage.input_tokens,
-    output_tokens: message.usage.output_tokens,
-    cache_creation_input_tokens: message.usage.cache_creation_input_tokens,
-    cache_read_input_tokens: message.usage.cache_read_input_tokens,
-  };
-  const cost = costUsd(model, usage, true);
-  if (message.stop_reason !== "end_turn") {
-    return {
-      ...base,
-      review: null,
-      error: `stop_reason ${message.stop_reason}`,
-      usage,
-      costUsd: cost,
-    };
-  }
-  const text = message.content
-    .filter((b) => b.type === "text")
-    .map((b) => b.text)
-    .join("");
-  const review = parseReview(text);
-  return review
-    ? { ...base, review, usage, costUsd: cost }
-    : { ...base, review: null, error: "unparseable answer", usage, costUsd: cost };
 }
 
 /** Fetch an ended batch's results and save them as the model's results file. */

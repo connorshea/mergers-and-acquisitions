@@ -170,7 +170,7 @@ subclasses), together with its external ids and the
 descriptions, aliases and sitelinks (so there is no separate description sync:
 until the first full pass has run, the comparison view shows no descriptions),
 and time values keep their precision. It never talks to QLever. Humans (Q5) are
-the exception to "every item": of Wikidata's ~13M, only about 760k are
+the exception to "every item": of Wikidata's ~13M, only about 2.6M are
 imported: game people (~20k) — those a mirrored video game (or developer,
 publisher, …) links to, those whose occupation is a game one (video game
 developer, designer, programmer, esports player, …), and those with a
@@ -180,8 +180,10 @@ with an Olympedia, Olympics.com, Sports-Reference, InterSportStats or
 The-Sports.org id, and authors, musicians and other creators (~470k): novelists,
 poets, comics artists, mangaka, voice actors, animators, board and RPG
 designers, and anyone with an ISFDB, Goodreads, LibraryThing, Discogs,
-AllMusic or similar person id. Film/TV people, other athletes and the bare
-"writer" occupation are left out to keep ToolsDB under 25 GB. The lists are `PEOPLE` in
+AllMusic or similar person id, and film/TV people (~560k), anyone with an
+IMDb id, composers (~130k), and athletes (~1.2M more): the 40 largest
+sports occupations (association football, basketball, athletics, …). The bare
+"writer" occupation is still left out, as are smaller sports. The lists are `PEOPLE` in
 `src/lib/import-classes.ts`. The linked set is read from the mirror before each
 pass, so a newly linked person arrives with the next week's dump and one that
 no longer qualifies is pruned a week later. Reading it is a minute-long

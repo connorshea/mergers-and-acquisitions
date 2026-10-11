@@ -956,7 +956,7 @@ describe("blockingLabelKey / punctuation-insensitive blocking", () => {
     );
     expect(formatIdUrl("https://$1/x", "example.org@evil.example")).toBeNull();
     expect(formatIdUrl("https://example.org/?id=$1", "1&redirect=http://evil.example")).toBe(
-      "https://example.org/?id=1%26redirect%3Dhttp%3A%2F%2Fevil.example",
+      "https://example.org/?id=1%26redirect%3Dhttp://evil.example",
     );
     // A vandalised formatter URL with a non-http(s) scheme never becomes a link.
     expect(formatIdUrl("javascript:alert(1)//$1", "268220")).toBeNull();

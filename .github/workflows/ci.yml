@@ -63,20 +63,6 @@ jobs:
   # drifted from db/migrations, and run the DB-backed tests (*.db.test.ts).
   db:
     runs-on: ubuntu-latest
-    services:
-      mariadb:
-        # Keep the version in step with prod (MariaDB 12.2 on Trove) so the
-        # tests exercise the same SQL dialect the deploy will.
-        image: mariadb:12.2
-        env:
-          MARIADB_ROOT_PASSWORD: root
-        ports:
-          - 3306:3306
-        options: >-
-          --health-cmd "healthcheck.sh --connect --innodb_initialized"
-          --health-interval 5s
-          --health-timeout 5s
-          --health-retries 12
     env:
       DB_HOST: 127.0.0.1
       DB_PORT: "3306"
@@ -84,6 +70,29 @@ jobs:
       DB_PASSWORD: mergers
       DB_NAME: mergers_test
     steps:
+      # Started as a background step rather than a `services:` container so the
+      # image pull and InnoDB startup overlap checkout and toolchain setup
+      # instead of running before them. Keep the version in step with prod
+      # (MariaDB 12.2 on Trove) so the tests exercise the same SQL dialect the
+      # deploy will.
+      - name: Start MariaDB
+        id: mariadb
+        background: true
+        run: |
+          docker run -d --name mariadb -p 3306:3306 \
+            -e MARIADB_ROOT_PASSWORD=root \
+            --health-cmd "healthcheck.sh --connect --innodb_initialized" \
+            --health-interval 2s --health-timeout 5s --health-retries 30 \
+            mariadb:12.2
+          for _ in $(seq 90); do
+            status=$(docker inspect -f '{{.State.Health.Status}}' mariadb)
+            if [ "$status" = healthy ]; then exit 0; fi
+            sleep 1
+          done
+          echo "::error::MariaDB did not become healthy (last status: $status)"
+          docker logs mariadb
+          exit 1
+
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -92,8 +101,11 @@ jobs:
       - name: Set up toolchain
         uses: ./.github/actions/setup
 
-      # The service image can't be given a default collation, so create the
-      # database explicitly with utf8mb4_bin — the same as prod and local dev.
+      - name: Wait for MariaDB
+        wait: mariadb
+
+      # Create the database explicitly with utf8mb4_bin, the same as prod and
+      # local dev, rather than relying on the image's default collation.
       - name: Create the test database
         run: |
           mysql -h 127.0.0.1 -P 3306 -u root -proot <<'SQL'

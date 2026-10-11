@@ -935,6 +935,29 @@ describe("blockingLabelKey / punctuation-insensitive blocking", () => {
     expect(formatIdUrl("https://tvtropes.org/pmwiki/pmwiki.php/$1", "VideoGame/Portal")).toBe(
       "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/Portal",
     );
+    // The value is percent-encoded as Wikibase does it: a slash survives (above),
+    // but a query, fragment, or space can't reshape the link.
+    expect(formatIdUrl("https://example.org/id/$1", "a b?x=1#frag&y")).toBe(
+      "https://example.org/id/a%20b%3Fx%3D1%23frag%26y",
+    );
+    expect(formatIdUrl("https://doi.org/$1", "10.1000/xyz:1,2")).toBe(
+      "https://doi.org/10.1000/xyz:1,2",
+    );
+    // The link stays on the template's host, whichever position $1 is in.
+    expect(formatIdUrl("https://$1.itch.io", "phish.example/#")).toBeNull();
+    expect(formatIdUrl("https://$1.itch.io", "phish.example?")).toBeNull();
+    expect(formatIdUrl("https://$1.itch.io", "studio-name")).toBe("https://studio-name.itch.io");
+    expect(formatIdUrl("https://$1.bandcamp.com/", "the.band")).toBe(
+      "https://the.band.bandcamp.com/",
+    );
+    // An "@" past the first slash is path, not authority, so it can't move the host.
+    expect(formatIdUrl("https://example.org/$1", "@evil.example/")).toBe(
+      "https://example.org/@evil.example/",
+    );
+    expect(formatIdUrl("https://$1/x", "example.org@evil.example")).toBeNull();
+    expect(formatIdUrl("https://example.org/?id=$1", "1&redirect=http://evil.example")).toBe(
+      "https://example.org/?id=1%26redirect%3Dhttp%3A%2F%2Fevil.example",
+    );
     // A vandalised formatter URL with a non-http(s) scheme never becomes a link.
     expect(formatIdUrl("javascript:alert(1)//$1", "268220")).toBeNull();
     expect(formatIdUrl(" JavaScript:alert(1)//$1", "268220")).toBeNull();

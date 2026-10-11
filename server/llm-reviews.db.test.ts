@@ -27,7 +27,7 @@ const review = (stage: "first_pass" | "confirmation", over: Partial<Review> = {}
   status: "succeeded",
   model: stage === "first_pass" ? "claude-haiku-5-5" : "claude-opus-5-5",
   effort: "medium",
-  promptVersion: 3,
+  promptVersion: 4,
   verdict: "different",
   probability: 0.03,
   rationale: `${stage} rationale`,

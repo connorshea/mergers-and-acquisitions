@@ -44,12 +44,12 @@ describe("renderItem", () => {
 
   it("lists instance of first, names known ids, and leaves unknown QIDs bare", () => {
     const statements = text.slice(text.indexOf("Statements:"));
-    expect(statements.split("\n")[1]).toBe('  instance of (P31): "video game" (Q7889); Q999');
+    expect(statements.split("\n")[1]).toBe('  "instance of" (P31): "video game" (Q7889); Q999');
   });
 
   it("trims a time to its precision and marks external identifiers", () => {
-    expect(text).toContain("  publication date (P577): 2007-10");
-    expect(text).toContain('  Steam application ID (P1733) [external identifier]: "400"');
+    expect(text).toContain('  "publication date" (P577): 2007-10');
+    expect(text).toContain('  "Steam application ID" (P1733) [external identifier]: "400"');
   });
 
   it("quotes free text from Wikidata, so it can't pose as prompt structure", () => {

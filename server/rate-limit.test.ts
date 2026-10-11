@@ -1,5 +1,14 @@
 import { describe, expect, it } from "vite-plus/test";
-import { createRateLimiter, parseEditRateLimit } from "./rate-limit.ts";
+import { createRateLimiter, parseEditRateLimit, parseRateLimit } from "./rate-limit.ts";
+
+describe("parseRateLimit", () => {
+  it("takes a positive integer and otherwise the fallback it is given", () => {
+    expect(parseRateLimit("12", 30)).toBe(12);
+    expect(parseRateLimit(undefined, 30)).toBe(30);
+    expect(parseRateLimit("", 30)).toBe(30);
+    expect(parseRateLimit("0", 30)).toBe(30);
+  });
+});
 
 describe("createRateLimiter", () => {
   it("allows up to `max` hits per window, then rejects with a retry hint", () => {

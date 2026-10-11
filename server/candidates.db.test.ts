@@ -6,6 +6,9 @@ import { eq } from "drizzle-orm";
 import { app } from "./app.ts";
 import { db, pool } from "./db.ts";
 import { refreshCandidateItemInfo } from "./candidate-item-info.ts";
+import { addSeconds, toSqlDatetime } from "./auth/time.ts";
+import { MERGING_STALE_SECONDS } from "./edits.ts";
+import { reviewLimiter } from "./rate-limit.ts";
 import {
   classAncestors,
   entityLabels,
@@ -66,6 +69,7 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
 
   beforeEach(async () => {
     await truncateAll();
+    reviewLimiter.reset();
     editor = await loginAs(EDITOR_ID, "Editor");
     await insertItem(
       makeItem(
@@ -256,11 +260,19 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       expect((await list("?noBlockers=0")).total).toBe(2);
     });
 
-    it("paginates and clamps pageSize", async () => {
+    it("paginates and clamps pageSize and page", async () => {
       const page2 = await list("?pageSize=1&page=2");
       expect(page2).toMatchObject({ total: 2, page: 2, pageSize: 1 });
       expect(page2.candidates.map((c) => c.id)).toEqual([beta]);
       expect((await list("?pageSize=1000")).pageSize).toBe(100);
+      expect((await list("?page=99999999")).page).toBe(1000);
+    });
+
+    it("treats LIKE wildcards in the search text literally", async () => {
+      // Before escaping, "%" or "_" matched every label.
+      expect((await list("?q=%")).total).toBe(0);
+      expect((await list("?q=_")).total).toBe(0);
+      expect((await list("?q=alpha%20quest")).total).toBe(1);
     });
 
     describe("language filter", () => {
@@ -503,6 +515,61 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
     it("404s for an unknown candidate", async () => {
       expect((await post("/api/candidates/999999/dismiss", editor)).status).toBe(404);
       expect((await post("/api/candidates/999999/reopen", editor)).status).toBe(404);
+    });
+
+    it("refuses to reopen a pair a merge has just claimed, and reopens a stale claim", async () => {
+      const claim = async (ageSeconds: number) =>
+        db
+          .update(mergeCandidates)
+          .set({
+            status: "merging",
+            resolvedAt: toSqlDatetime(addSeconds(new Date(), -ageSeconds)),
+          })
+          .where(eq(mergeCandidates.id, alpha));
+      await claim(5);
+      const live = await post<{ error: string }>(`/api/candidates/${alpha}/reopen`, editor);
+      expect(live).toEqual({
+        status: 409,
+        body: { error: "An edit of this candidate is in progress" },
+      });
+      const [held] = await db.select().from(mergeCandidates).where(eq(mergeCandidates.id, alpha));
+      expect(held?.status).toBe("merging");
+
+      await claim(MERGING_STALE_SECONDS + 5);
+      const stale = await post<CandidateReopenResponse>(`/api/candidates/${alpha}/reopen`, editor);
+      expect(stale.status).toBe(200);
+      expect(stale.body.candidate.status).toBe("open");
+    });
+
+    it("rate-limits a user's dismiss and reopen calls together", async () => {
+      // Each dismiss and reopen is one hit on the window, whatever its outcome.
+      for (let i = 0; i < 29; i++) reviewLimiter.hit(EDITOR_ID);
+      expect((await post(`/api/candidates/${alpha}/dismiss`, editor)).status).toBe(200);
+      const res = await app.request(`/api/candidates/${alpha}/reopen`, {
+        method: "POST",
+        headers: editor,
+      });
+      expect(res.status).toBe(429);
+      expect(res.headers.get("Retry-After")).toMatch(/^\d+$/);
+      expect(await res.json()).toMatchObject({ code: "rate-limited" });
+      const [row] = await db.select().from(mergeCandidates).where(eq(mergeCandidates.id, alpha));
+      expect(row?.status).toBe("dismissed");
+      // Another user has their own window.
+      const other = await loginAs(EDITOR_ID + 1, "Other");
+      expect((await post(`/api/candidates/${alpha}/reopen`, other)).status).toBe(200);
+    });
+
+    it("keeps the cached list total when a write is refused", async () => {
+      expect((await list()).total).toBe(2);
+      // Change the table behind the cache's back, then make a refused write.
+      await db
+        .update(mergeCandidates)
+        .set({ status: "dismissed" })
+        .where(eq(mergeCandidates.id, beta));
+      expect((await post(`/api/candidates/${alpha}/dismiss`)).status).toBe(401);
+      expect((await list()).total).toBe(2); // still the cached total
+      expect((await post(`/api/candidates/${alpha}/dismiss`, editor)).status).toBe(200);
+      expect((await list()).total).toBe(0); // a real write dropped it
     });
   });
 

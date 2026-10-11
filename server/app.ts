@@ -7,6 +7,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { serveStatic } from "@hono/node-server/serve-static";
 import { Hono } from "hono";
+import { bodyLimit } from "hono/body-limit";
 import { secureHeaders } from "hono/secure-headers";
 import { candidates } from "./candidates.ts";
 import { clearCountsOnWrite } from "./candidate-count-cache.ts";
@@ -19,6 +20,7 @@ import { requestLog } from "./request-log.ts";
 import { type AuthEnv, sessionMiddleware } from "./auth/session.ts";
 
 const CLIENT_DIR = process.env.CLIENT_DIR ?? "./dist/client";
+export const MAX_API_BODY_BYTES = 16 * 1024;
 const INDEX_HTML = `${CLIENT_DIR}/index.html`;
 
 export const app = new Hono<AuthEnv>();
@@ -52,6 +54,17 @@ app.use("*", secureHeaders({ contentSecurityPolicy: CONTENT_SECURITY_POLICY }));
 // drive the app in-process and would only fill their output with these lines.
 if (!process.env.VITEST) app.use("/api/*", requestLog());
 app.use("/api/*", sameOriginOnly);
+// The biggest legitimate body is the settings PUT (a short list of language
+// codes); the edit endpoints take a few fields at most. Nothing needs more
+// than this, and without a cap a logged-in client could have the single Node
+// process buffer whatever it sends.
+app.use(
+  "/api/*",
+  bodyLimit({
+    maxSize: MAX_API_BODY_BYTES,
+    onError: (c) => c.json({ error: "Request body too large" }, 413),
+  }),
+);
 app.use("/api/*", sessionMiddleware);
 app.route("/api/auth", authRoutes); // /api/auth/{login,callback,logout,me}
 // Any write to a candidate (dismiss, reopen, merge, "different from") can move

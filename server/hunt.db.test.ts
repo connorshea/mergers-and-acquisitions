@@ -1,26 +1,41 @@
 // Integration tests for the hunt (server/hunt.ts) against a real MariaDB:
 // blocking, scoring, and the upsert rules. Opt-in via DB_TEST=1 — see
 // test/global-setup.ts.
+import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { eq, sql } from "drizzle-orm";
 import { db, pool } from "./db.ts";
 import {
+  classAncestors,
   dumpImportSegments,
   externalIdDupes,
   externalIds,
+  itemSync,
   items,
   mergeCandidates,
   properties,
   syncState,
 } from "../db/schema.ts";
 import { MIN_CONFIDENCE, runHunt } from "./hunt.ts";
-import type { Value } from "../src/lib/compare.ts";
+import type { Item, Value } from "../src/lib/compare.ts";
 import { DB_TEST, insertItem, makeItem, truncateAll } from "../test/db-helpers.ts";
 
 const steam = (value: string): Record<string, Value[]> => ({
   P1733: [{ type: "external-id", value }],
 });
 const allCandidates = () => db.select().from(mergeCandidates);
+
+/**
+ * Insert an item row without the denormalized columns insertItem derives, so
+ * a test can store data those columns couldn't hold, plus its Steam id row.
+ */
+async function insertRawItem(data: unknown, qid: string, steamId: string): Promise<void> {
+  await db.insert(items).values({ qid, data: data as Item });
+  await db.insert(itemSync).values({ qid });
+  await db.insert(externalIds).values({ qid, property: "P1733", value: steamId });
+}
 
 describe.skipIf(!DB_TEST)("runHunt", () => {
   beforeEach(truncateAll);
@@ -269,6 +284,127 @@ describe.skipIf(!DB_TEST)("runHunt", () => {
     });
     expect((await runHunt()).pruned).toBe(0);
     expect(await allCandidates()).toHaveLength(1);
+  });
+
+  it("drops a pair whose item has left the table since the scan", async () => {
+    // An external id that outlived its item still blocks, but there's nothing
+    // to score: the pair is dropped and its open row pruned as an orphan.
+    await insertItem(makeItem("Q100", "Starfall Drift", steam("812340")));
+    await db.insert(externalIds).values({ qid: "Q900", property: "P1733", value: "812340" });
+    await db.insert(mergeCandidates).values({
+      fromQid: "Q900",
+      intoQid: "Q100",
+      confidence: 0.9,
+      reasons: ["item gone"],
+    });
+
+    const stats = await runHunt();
+    expect(stats).toMatchObject({ pairs: 1, scored: 0, upserted: 0, pruned: 1, failed: 0 });
+    expect(await allCandidates()).toHaveLength(0);
+  });
+
+  it("counts a pair that fails to score and carries on with the rest", async () => {
+    await insertItem(makeItem("Q100", "Starfall Drift", steam("812340")));
+    await insertItem(makeItem("Q200", "Starfall Drift", steam("812340")));
+    // No statements: the scorer throws on it.
+    const broken = (id: string) => ({ id, labels: {}, sitelinks: {} });
+    await insertRawItem(broken("Q300"), "Q300", "999");
+    await insertRawItem(broken("Q400"), "Q400", "999");
+
+    const error = vi.spyOn(console, "error").mockImplementation(() => {});
+    try {
+      const stats = await runHunt();
+      expect(stats).toMatchObject({ pairs: 2, scored: 2, upserted: 1, failed: 1 });
+      expect(error).toHaveBeenCalledWith(
+        expect.stringContaining("pair Q300/Q400 failed"),
+        expect.anything(),
+      );
+    } finally {
+      error.mockRestore();
+    }
+    const rows = await allCandidates();
+    expect(rows.map((r) => [r.fromQid, r.intoQid])).toEqual([["Q200", "Q100"]]);
+  });
+
+  it("retries a failed batch upsert row by row, losing only the bad row", async () => {
+    await insertItem(makeItem("Q100", "Starfall Drift", steam("812340")));
+    await insertItem(makeItem("Q200", "Starfall Drift", steam("812340")));
+    // A P31 longer than merge_candidates.from_type holds: the pair scores, but
+    // its row can't be written, which fails the multi-row upsert it's part of.
+    const longType = `Q${"9".repeat(40)}`;
+    const odd = (id: string) =>
+      makeItem(id, "Echo", { ...steam("777"), P31: [{ type: "item", value: longType }] });
+    await insertRawItem(odd("Q300"), "Q300", "777");
+    await insertRawItem(odd("Q400"), "Q400", "777");
+
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    const error = vi.spyOn(console, "error").mockImplementation(() => {});
+    try {
+      const stats = await runHunt();
+      expect(stats).toMatchObject({ pairs: 2, scored: 2, upserted: 1, failed: 1 });
+      expect(warn).toHaveBeenCalledWith(
+        expect.stringContaining("retrying rows individually"),
+        expect.anything(),
+      );
+      expect(error).toHaveBeenCalledWith(
+        expect.stringContaining("pair Q400/Q300 failed"),
+        expect.anything(),
+      );
+    } finally {
+      warn.mockRestore();
+      error.mockRestore();
+    }
+    const rows = await allCandidates();
+    expect(rows.map((r) => [r.fromQid, r.intoQid])).toEqual([["Q200", "Q100"]]);
+  });
+
+  it("writes an audit record per scored pair with AUDIT=1", async () => {
+    const dir = await mkdtemp(join(tmpdir(), "hunt-audit-"));
+    process.env.AUDIT = "1";
+    process.env.AUDIT_DIR = dir;
+    try {
+      await insertItem(makeItem("Q100", "Starfall Drift", steam("812340")));
+      await insertItem(makeItem("Q200", "Starfall Drift", steam("812340")));
+      await runHunt();
+      const lines = (await readFile(join(dir, "pairs.jsonl"), "utf8")).trim().split("\n");
+      expect(lines).toHaveLength(1);
+      expect(JSON.parse(lines[0])).toMatchObject({
+        from: "Q200",
+        into: "Q100",
+        fromLabel: "Starfall Drift",
+        intoType: "Q7889",
+        kept: true,
+      });
+    } finally {
+      delete process.env.AUDIT;
+      delete process.env.AUDIT_DIR;
+      await rm(dir, { recursive: true, force: true });
+    }
+  });
+
+  it("ignores a shared id the property's subject type constraint rules out", async () => {
+    // A BVMC person ID (P2799) copied onto two different games: once the
+    // constraint and the games' class ancestry are synced, it's no evidence.
+    const personId: Record<string, Value[]> = { P2799: [{ type: "external-id", value: "4321" }] };
+    await insertItem(makeItem("Q500", "Delta One", personId));
+    await insertItem(makeItem("Q600", "Delta Two", personId));
+    await db.insert(properties).values({
+      pid: "P2799",
+      label: "BVMC person ID",
+      datatype: "ExternalId",
+      subjectTypes: [{ classes: ["Q5"], relation: "instance", exceptions: [] }],
+    });
+
+    // Constraint synced but no ancestor data yet: the check fails open.
+    expect(await runHunt()).toMatchObject({ pairs: 1, upserted: 1 });
+
+    await db.delete(mergeCandidates);
+    await db.insert(classAncestors).values([
+      { class: "Q7889", ancestor: "Q7889" },
+      { class: "Q5", ancestor: "Q5" },
+    ]);
+    expect(await runHunt()).toMatchObject({ pairs: 1, scored: 1, upserted: 0 });
+    expect(await allCandidates()).toHaveLength(0);
   });
 
   describe("mass-prune guard", () => {

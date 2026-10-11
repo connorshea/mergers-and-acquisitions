@@ -93,6 +93,79 @@ describe("renderItem sitelinks", () => {
   });
 });
 
+describe("renderItem values", () => {
+  const bare: Item = {
+    id: "Q2",
+    labels: {},
+    descriptions: {},
+    aliases: {},
+    sitelinks: {},
+    statements: {},
+  };
+  const statementLines = (statements: Item["statements"]) =>
+    renderItem({ ...bare, statements }, (id) => (id === "Q11573" ? "metre" : undefined))
+      .split("\n")
+      .filter((line) => line.startsWith("  P"));
+
+  it("says when an item has no labels, statements, or sitelinks", () => {
+    expect(renderItem(bare, labelOf)).toBe(
+      "Item Q2\nLabels: none\nStatements: none\nSitelinks: none",
+    );
+  });
+
+  it("trims times to the year, keeps a full date, and passes odd ones through", () => {
+    expect(
+      statementLines({
+        P571: [
+          { type: "time", value: "+00001987-00-00T00:00:00Z" },
+          { type: "time", value: "-0500-03-14T00:00:00Z" },
+          { type: "time", value: "+2007-10-10T00:00:00Z" },
+          { type: "time", value: "sometime" },
+        ],
+      }),
+    ).toEqual(["  P571: 1987; -0500-03-14; 2007-10-10; sometime"]);
+  });
+
+  it("names a quantity's unit when known, and gives its id when not", () => {
+    expect(
+      statementLines({
+        P2043: [
+          { type: "quantity", value: "+12", unit: "Q11573" },
+          { type: "quantity", value: "+3", unit: "Q99" },
+          { type: "quantity", value: "-4" },
+        ],
+      }),
+    ).toEqual(['  P2043: 12 "metre"; 3 Q99; -4']);
+  });
+
+  it("renders coordinates, and unknown and no values", () => {
+    expect(
+      statementLines({
+        P625: [
+          { type: "coordinate", value: "Point(2 1)", latitude: 1, longitude: 2 },
+          { type: "coordinate", value: "Point(4 3)" },
+        ],
+        P50: [{ type: "somevalue", value: "" }],
+        P51: [{ type: "novalue", value: "" }],
+      }),
+    ).toEqual(["  P50: unknown value", "  P51: no value", "  P625: 1, 2; Point(4 3)"]);
+  });
+
+  it("caps the values per property and the term groups per item", () => {
+    const values = Array.from({ length: 15 }, (_, i) => ({
+      type: "string" as const,
+      value: `v${i}`,
+    }));
+    const [line] = statementLines({ P1449: values });
+    expect(line).toMatch(/"v11"; … 3 more$/);
+
+    const labels = Object.fromEntries(Array.from({ length: 14 }, (_, i) => [`l${i}`, `Name ${i}`]));
+    const text = renderItem({ ...bare, labels }, labelOf);
+    expect(text).toContain('  "Name 11" [l11]\n  … 2 more\nStatements: none');
+    expect(text).not.toContain("Name 12");
+  });
+});
+
 describe("parseReview", () => {
   it("reads a well-formed answer and clamps the probability", () => {
     expect(

@@ -324,7 +324,7 @@ candidates.get("/:id", async (c) => {
   ]);
   const editGroup = groupRows[0]?.editGroup;
 
-  const dataByQid = new Map(itemRows.map((r) => [r.qid, r.data as Item]));
+  const dataByQid = new Map(itemRows.map((r) => [r.qid, r.data]));
   const from = snapshot?.from ?? dataByQid.get(row.fromQid) ?? null;
   const into = snapshot?.into ?? dataByQid.get(row.intoQid) ?? null;
 

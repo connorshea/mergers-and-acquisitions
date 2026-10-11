@@ -13,7 +13,7 @@ runSitelinkRedirectSync()
       console.warn(`resolve-sitelinks: skipped ${failedWikis.join(", ")} after errors`);
     process.exit(0);
   })
-  .catch((err) => {
+  .catch((err: unknown) => {
     console.error("resolve-sitelinks: failed", err);
     process.exit(1);
   });

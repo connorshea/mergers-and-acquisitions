@@ -491,7 +491,7 @@ describe.skipIf(!DB_TEST)("the monthly Claude review job", () => {
     // The failures go again on the next run, until MAX_ATTEMPTS.
     for (let attempt = 2; attempt <= MAX_ATTEMPTS + 1; attempt++) {
       const next = new FakeApi();
-      next.answer = () => ({ type: "expired" }) as Answer;
+      next.answer = () => ({ type: "expired" });
       await runStage(db, next, CONFIG, "first_pass", quiet);
       expect(next.sent()).toHaveLength(attempt <= MAX_ATTEMPTS ? 3 : 0);
     }

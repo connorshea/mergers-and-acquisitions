@@ -20,7 +20,7 @@ describe("attachLiveSitelinkRedirects", () => {
     );
     const urls: URL[] = [];
     const fetchImpl = vi.fn<typeof fetch>(async (input) => {
-      const url = new URL(input instanceof Request ? input.url : String(input as string | URL));
+      const url = new URL(input instanceof Request ? input.url : String(input));
       urls.push(url);
       const redirects =
         url.host === "en.wikipedia.org"

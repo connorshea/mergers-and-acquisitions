@@ -663,7 +663,7 @@ export async function scanDump(source: Readable, opts: ScanOptions): Promise<Sca
     if (hits.size === 0) return false;
     // Dump order matters for nothing, but keep it anyway.
     for (const start of [...hits.keys()].sort((a, b) => a - b)) {
-      await handleLine(region.subarray(start, hits.get(start)!));
+      await handleLine(region.subarray(start, hits.get(start)));
       if (opts.limit !== undefined && stats.matched >= opts.limit) return true;
     }
     return false;
@@ -1903,7 +1903,7 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
     const held = claim;
     const beat = held
       ? setInterval(() => {
-          heartbeat(dump, segments, held).catch((err) =>
+          heartbeat(dump, segments, held).catch((err: unknown) =>
             log(`${segTag} heartbeat failed: ${errorSummary(err)}`),
           );
         }, opts.heartbeatMs ?? HEARTBEAT_MS)

@@ -89,7 +89,7 @@ async function main() {
   if (failed > 0) process.exitCode = 1;
 }
 
-main().catch((err) => {
+main().catch((err: unknown) => {
   console.error(err instanceof Error ? err.message : err);
   process.exit(1);
 });

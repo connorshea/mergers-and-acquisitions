@@ -48,7 +48,8 @@ function fromIsoTimestamp(ts: string): string {
 }
 
 // Replica columns arrive CONVERTed to utf8mb4 strings (or as numbers).
-const str = (v: unknown): string | null => (v == null ? null : String(v as string | number));
+const str = (v: unknown): string | null =>
+  typeof v === "string" ? v : typeof v === "number" ? String(v) : null;
 const num = (v: unknown): number | null => (v == null ? null : Number(v));
 
 /**

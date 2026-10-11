@@ -798,12 +798,12 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       stubWikidata(() => mergeOk(101, 102));
       // The snapshot is the only read of exactly { qid, data } from items.
       const real = db.select.bind(db);
-      const spy = vi.spyOn(db, "select").mockImplementation(((fields?: object) => {
+      const spy = vi.spyOn(db, "select").mockImplementation((fields?: object) => {
         if (fields && Object.keys(fields).join() === "qid,data") {
           throw new Error("Lost connection to server during query");
         }
         return real(fields as never);
-      }) as typeof db.select);
+      });
       const error = vi.spyOn(console, "error").mockImplementation(() => {});
       try {
         const { status, body } = await post<CandidateMergeResponse>(
@@ -1008,7 +1008,15 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
         .filter((c) => c.method === "POST")
         .map((c) => Object.fromEntries(c.params));
       expect(posts.map((p) => p.action)).toEqual(["wbsetclaim", "wbsetclaim"]);
-      const claims = posts.map((p) => JSON.parse(p.claim));
+      type ItemSnak = { datavalue: { value: { id: string } } };
+      const claims = posts.map(
+        (p) =>
+          JSON.parse(p.claim) as {
+            id: string;
+            mainsnak: ItemSnak;
+            qualifiers: Record<string, ItemSnak[]>;
+          },
+      );
       expect(claims.map((c) => [c.id.split("$")[0], c.mainsnak.datavalue.value.id])).toEqual([
         ["Q20", "Q10"],
         ["Q10", "Q20"],
@@ -1145,7 +1153,7 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       const insertSpy = vi.spyOn(db, "insert").mockImplementationOnce(() => {
         throw new Error("Deadlock found when trying to get lock");
       });
-      const realTransaction = db.transaction.bind(db) as typeof db.transaction;
+      const realTransaction = db.transaction.bind(db);
       const txSpy = vi
         .spyOn(db, "transaction")
         .mockImplementationOnce(realTransaction)
@@ -1373,7 +1381,7 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       // The first transaction records the merge; the second cleans the mirror.
       const real = db.transaction.bind(db);
       const spy = vi.spyOn(db, "transaction");
-      spy.mockImplementationOnce(real as typeof db.transaction).mockImplementationOnce(() => {
+      spy.mockImplementationOnce(real).mockImplementationOnce(() => {
         throw new Error("Deadlock found when trying to get lock");
       });
       const error = expectConsole("error");

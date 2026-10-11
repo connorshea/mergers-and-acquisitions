@@ -15,7 +15,7 @@ async function main() {
 main()
   .then(() => pool.end())
   .then(() => process.exit(0))
-  .catch((err) => {
+  .catch((err: unknown) => {
     console.error("prune-sessions: failed", err);
     process.exit(1);
   });

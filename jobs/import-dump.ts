@@ -141,7 +141,7 @@ runDumpImport({
     await pool.end();
     process.exit(0);
   })
-  .catch(async (err) => {
+  .catch(async (err: unknown) => {
     console.error("import-dump: failed", err);
     await pool.end().catch(() => {});
     process.exit(1);

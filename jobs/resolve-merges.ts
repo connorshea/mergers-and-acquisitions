@@ -6,7 +6,7 @@ import { runOutsideMergeSync } from "../server/outside-merges.ts";
 
 runOutsideMergeSync()
   .then(() => process.exit(0))
-  .catch((err) => {
+  .catch((err: unknown) => {
     console.error("resolve-merges: failed", err);
     process.exit(1);
   });

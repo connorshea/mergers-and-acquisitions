@@ -53,6 +53,18 @@ export default defineConfig({
       "typescript/no-base-to-string": "error",
       "typescript/prefer-promise-reject-errors": "error",
       "typescript/return-await": "error",
+      // Rejection values are `unknown`; `.catch((err) => err.message)` on an
+      // implicit `any` hides that a non-Error can reach it.
+      "typescript/use-unknown-in-catch-callback-variable": "error",
+      // Stop `any` from flowing silently into typed code.
+      "typescript/no-unsafe-argument": "error",
+      "typescript/no-unsafe-assignment": "error",
+      "typescript/no-unsafe-call": "error",
+      "typescript/no-unsafe-member-access": "error",
+      "typescript/no-unsafe-return": "error",
+      // A cast that no longer changes the type is stale and can mask a later
+      // type change.
+      "typescript/no-unnecessary-type-assertion": "error",
       // `== null` (null or undefined) stays allowed; everything else is strict.
       eqeqeq: ["error", "always", { null: "ignore" }],
     },

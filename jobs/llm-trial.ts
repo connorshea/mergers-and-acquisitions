@@ -179,7 +179,7 @@ async function submit(argv: string[]): Promise<void> {
         .select({ qid: items.qid, data: items.data })
         .from(items)
         .where(inArray(items.qid, ids));
-      for (const r of rows) byQid.set(r.qid, r.data as Item);
+      for (const r of rows) byQid.set(r.qid, r.data);
     }
     const complete = sampled.filter((s) => byQid.has(s.fromQid) && byQid.has(s.intoQid));
     if (complete.length < sampled.length) {
@@ -492,7 +492,7 @@ async function main() {
   }
 }
 
-main().catch((err) => {
+main().catch((err: unknown) => {
   console.error(err instanceof Error ? (err.stack ?? err.message) : err);
   process.exit(2);
 });

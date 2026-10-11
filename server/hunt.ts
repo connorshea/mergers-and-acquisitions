@@ -1005,7 +1005,7 @@ export async function runHunt(opts: { scoreWindow?: number } = {}): Promise<Hunt
   // fatal error mid-stream, or the socket dropping while idle) is an uncaught
   // exception that kills the process. Mid-stream errors also reach the
   // stream (see streamRows) and fail the hunt through the normal path.
-  reader.on("error", (err) => console.warn(`hunt: reader connection error: ${err.message}`));
+  reader.on("error", (err: Error) => console.warn(`hunt: reader connection error: ${err.message}`));
   let itemConn: mysql.Connection | undefined;
   const audit = AuditLog.fromEnv();
   const endItemConn = () => itemConn?.end().catch(() => {});
@@ -1025,7 +1025,9 @@ export async function runHunt(opts: { scoreWindow?: number } = {}): Promise<Hunt
     itemConn = await mysql.createConnection(connConfig());
     // Same reason as the reader's listener: a dropped socket must fail the
     // hunt through the pending query, not crash the process.
-    itemConn.on("error", (err) => console.warn(`hunt: item connection error: ${err.message}`));
+    itemConn.on("error", (err: Error) =>
+      console.warn(`hunt: item connection error: ${err.message}`),
+    );
     const stats = await score(
       db,
       conn,

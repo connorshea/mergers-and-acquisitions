@@ -163,7 +163,7 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
   // against the pair.
   const distinctStatements = useMemo(() => {
     if (!data?.from || !data.into) return 0;
-    const mirrors = new Set(data.propertyMirrors ?? []);
+    const mirrors = new Set(data.propertyMirrors);
     return countDistinctStatements(data.from, data.into, (pid) => mirrors.has(pid));
   }, [data]);
 
@@ -274,7 +274,7 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
               </svg>
               <span>
                 <Resolution resolution={resolution} resolvedBy={resolvedBy} capitalize />
-                {data?.editGroupUrl && <EditGroupLink url={data.editGroupUrl} separated />}
+                {data.editGroupUrl && <EditGroupLink url={data.editGroupUrl} separated />}
               </span>
             </div>
           )}
@@ -283,7 +283,7 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
               confidence={candidate.confidence}
               reasons={candidate.reasons}
               sharedType={candidate.sharedType?.label}
-              propertyLabels={data?.propertyLabels}
+              propertyLabels={data.propertyLabels}
               distinctStatements={distinctStatements}
               footer={outcome && <EditOutcomePanel outcome={outcome} />}
             >
@@ -298,7 +298,7 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
                     (resolution || resolvedBy) && (
                       <span className="detail-resolution">
                         <Resolution resolution={resolution} resolvedBy={resolvedBy} />
-                        {data?.editGroupUrl && <EditGroupLink url={data.editGroupUrl} separated />}
+                        {data.editGroupUrl && <EditGroupLink url={data.editGroupUrl} separated />}
                       </span>
                     )}
                   {/* A merged pair stays merged (it happened on Wikidata); a

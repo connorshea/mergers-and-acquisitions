@@ -556,8 +556,9 @@ export async function probeMerge(
     });
     const targetErr = apiError(target);
     if (targetErr) await fail(user, targetErr, deps);
-    const redirects = (target.body.query as { redirects?: { from?: string; to?: string }[] })
-      ?.redirects;
+    const redirects = (
+      target.body.query as { redirects?: { from?: string; to?: string }[] } | undefined
+    )?.redirects;
     redirectedTo = redirects?.find((r) => r.from === fromQid)?.to ?? null;
   }
   return { redirectedTo, fromRevid: from.lastrevid, intoRevid: into.lastrevid };

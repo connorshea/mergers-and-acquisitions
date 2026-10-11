@@ -501,7 +501,7 @@ export default function CandidatesList() {
                     candidate={c}
                     onDismiss={dismissCandidate}
                     canDismiss={user !== null}
-                    propertyLabels={data?.propertyLabels}
+                    propertyLabels={data.propertyLabels}
                   />
                 ))}
               </tbody>

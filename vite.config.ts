@@ -37,6 +37,24 @@ export default defineConfig({
       // reload and loses component state. Enforce it so we never silently
       // break HMR in `vp dev`.
       "react/only-export-components": "error",
+      // Type-aware checks beyond the correctness category. A `switch` with no
+      // `default` must cover every member of the union, so adding a `Value`
+      // type can't silently fall through to `undefined`.
+      "typescript/switch-exhaustiveness-check": [
+        "error",
+        { considerDefaultExhaustiveForUnions: true },
+      ],
+      // A promise in a condition (`if (fetchX())`) is always truthy. Async
+      // handlers passed where a void callback is expected (onClick, .finally)
+      // are intended here, so that half of the rule stays off.
+      "typescript/no-misused-promises": ["error", { checksVoidReturn: false }],
+      // Keep `[object Object]` out of logs, errors, and edit summaries.
+      "typescript/restrict-template-expressions": "error",
+      "typescript/no-base-to-string": "error",
+      "typescript/prefer-promise-reject-errors": "error",
+      "typescript/return-await": "error",
+      // `== null` (null or undefined) stays allowed; everything else is strict.
+      eqeqeq: ["error", "always", { null: "ignore" }],
     },
   },
   test: {

@@ -170,14 +170,17 @@ async function post<T>(path: string, headers: Record<string, string>, body?: unk
   return { status: res.status, headers: res.headers, body: (await res.json()) as T };
 }
 
-const candidateRow = async (id: number) =>
-  (await db.select().from(mergeCandidates).where(eq(mergeCandidates.id, id)))[0];
+const candidateRow = async (id: number) => {
+  const [row] = await db.select().from(mergeCandidates).where(eq(mergeCandidates.id, id));
+  if (!row) throw new Error(`no merge candidate ${id}`);
+  return row;
+};
 const itemQids = async () =>
   (await db.select({ qid: items.qid }).from(items)).map((r) => r.qid).sort();
 
 describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
   const saved: Record<string, string | undefined> = {};
-  let editor: Record<string, string>;
+  let editor: Awaited<ReturnType<typeof loginAs>>;
   let alpha: number; // Q20 -> Q10, open
   let beta: number; // Q30 -> Q20, open — references the merged-away item
   let gamma: number; // Q40 -> Q10, open — references only the survivor
@@ -223,7 +226,7 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
           .insert(mergeCandidates)
           .values({ fromQid, intoQid, confidence: 0.9, reasons: ["identical label"] })
           .$returningId()
-      )[0].id;
+      )[0]!.id;
     alpha = await insert("Q20", "Q10");
     beta = await insert("Q30", "Q20");
     gamma = await insert("Q40", "Q10");
@@ -400,7 +403,7 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       expect(groups).toHaveLength(2);
       expect(groups[0]).toMatch(/^[0-9a-f]{16}$/);
       expect(new Set(groups).size).toBe(1);
-      expect(audits[0].editGroup).toBe(groups[0]);
+      expect(audits[0]?.editGroup).toBe(groups[0]);
       expect(body.editGroupUrl).toBe(`https://editgroups.toolforge.org/b/CB/${groups[0]}/`);
 
       // The detail page links the same batch once the pair is merged.
@@ -553,13 +556,13 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
         ]);
         const posts = calls.filter((c) => c.method === "POST").map((c) => c.params);
         expect(posts.map((p) => p.get("action"))).toEqual(["wbsetsitelink", "wbmergeitems"]);
-        expect(posts[0].get("id")).toBe("Q20");
-        expect(posts[0].get("linksite")).toBe("enwiki");
+        expect(posts[0]?.get("id")).toBe("Q20");
+        expect(posts[0]?.get("linksite")).toBe("enwiki");
         // No title: that's what makes wbsetsitelink remove the link.
-        expect(posts[0].has("linktitle")).toBe(false);
-        expect(posts[0].get("summary")).toContain("a redirect to Q10's page");
+        expect(posts[0]?.has("linktitle")).toBe(false);
+        expect(posts[0]?.get("summary")).toContain("a redirect to Q10's page");
         // The sitelink conflict is never passed to ignoreconflicts.
-        expect(posts[1].get("ignoreconflicts")).toBe("description");
+        expect(posts[1]?.get("ignoreconflicts")).toBe("description");
 
         const [audit] = await db.select().from(wikidataEdits);
         expect(audit).toMatchObject({
@@ -722,7 +725,7 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       expect((await candidateRow(alpha)).status).toBe("open");
       // The audit keeps Wikidata's own text.
       const [audit] = await db.select().from(wikidataEdits);
-      expect(audit.errorText).toBe("Cannot access content, revision may be deleted.");
+      expect(audit?.errorText).toBe("Cannot access content, revision may be deleted.");
     });
 
     it("hands the claim back and audits it when Wikidata can't be read first", async () => {
@@ -765,7 +768,7 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       expect((await candidateRow(alpha)).status).toBe("open");
       const [audit] = await db.select().from(wikidataEdits);
       expect(audit).toMatchObject({ action: "merge", ok: false, errorCode: "internal" });
-      expect(audit.errorText).toMatch(/title/);
+      expect(audit?.errorText).toMatch(/title/);
     });
 
     it("refuses a sitelink clash as a conflict when its wiki can't be asked about redirects", async () => {
@@ -986,7 +989,7 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       ]);
 
       // Both legs share one EditGroups batch, recorded on each audit row.
-      const groups = posts.map((p) => p.summary.match(EDIT_GROUP_LINK)?.[1]);
+      const groups = posts.map((p) => p.summary?.match(EDIT_GROUP_LINK)?.[1]);
       expect(groups[0]).toMatch(/^[0-9a-f]{16}$/);
       expect(groups[1]).toBe(groups[0]);
       expect(audits.map((a) => a.editGroup)).toEqual([groups[0], groups[0]]);
@@ -1011,7 +1014,7 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       type ItemSnak = { datavalue: { value: { id: string } } };
       const claims = posts.map(
         (p) =>
-          JSON.parse(p.claim) as {
+          JSON.parse(p.claim!) as {
             id: string;
             mainsnak: ItemSnak;
             qualifiers: Record<string, ItemSnak[]>;
@@ -1022,7 +1025,7 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
         ["Q10", "Q20"],
       ]);
       for (const c of claims) {
-        expect(c.qualifiers.P1013[0].datavalue.value.id).toBe("Q55761780");
+        expect(c.qualifiers.P1013?.[0]?.datavalue.value.id).toBe("Q55761780");
       }
       const audits = await db.select().from(wikidataEdits);
       expect(audits.map((a) => a.params)).toEqual([
@@ -1111,7 +1114,7 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       );
       expect(second.status).toBe(200);
       expect(second.body.candidate.status).toBe("dismissed");
-      expect(second.body.edits[0].revision?.revid).toBe(500);
+      expect(second.body.edits[0]?.revision?.revid).toBe(500);
       expect(second.body.edits[1]).toEqual({ qid: "Q10", target: "Q20", error: "Too fast" });
     });
 

@@ -61,7 +61,11 @@ import { coordinateValue } from "./coordinates.ts";
 import { EXAMPLES } from "./fixtures.ts";
 import { reasonTone } from "./reasons.ts";
 
-const byName = Object.fromEntries(EXAMPLES.map((e) => [e.name, e]));
+const byName = (name: string) => {
+  const example = EXAMPLES.find((e) => e.name === name);
+  if (!example) throw new Error(`no example named ${name}`);
+  return example;
+};
 
 describe("normalize / stringSimilarity", () => {
   it("strips scheme, www and trailing slash", () => {
@@ -109,14 +113,15 @@ describe("levenshtein", () => {
     const d = Array.from({ length: a.length + 1 }, (_, i) =>
       Array.from({ length: b.length + 1 }, (_, j) => (i === 0 ? j : j === 0 ? i : 0)),
     );
+    const at = (i: number, j: number): number => d[i]![j]!;
     for (let i = 1; i <= a.length; i++)
       for (let j = 1; j <= b.length; j++)
-        d[i][j] = Math.min(
-          d[i - 1][j] + 1,
-          d[i][j - 1] + 1,
-          d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1),
+        d[i]![j] = Math.min(
+          at(i - 1, j) + 1,
+          at(i, j - 1) + 1,
+          at(i - 1, j - 1) + (a[i - 1] === b[j - 1] ? 0 : 1),
         );
-    return d[a.length][b.length];
+    return at(a.length, b.length);
   };
 
   it("gives known distances", () => {
@@ -414,7 +419,7 @@ describe("compareValues", () => {
 
 describe("buildRows (behavior-preserving extraction)", () => {
   it("flags conflicting descriptions and same-wiki sitelinks as blockers", () => {
-    const ex = byName["Game with conflicts"];
+    const ex = byName("Game with conflicts");
     const [from, into] = orderByAge(ex.a, ex.b);
     const rows = buildRows(from, into);
 
@@ -433,7 +438,7 @@ describe("buildRows (behavior-preserving extraction)", () => {
 
   describe("sitelink to a redirect", () => {
     const base = { labels: {}, descriptions: {}, aliases: {}, statements: {} };
-    const article: Item = {
+    const article = {
       ...base,
       id: "Q65117434",
       sitelinks: { enwiki: "Loud & Dangerous: Live from Hollywood" },
@@ -461,7 +466,7 @@ describe("buildRows (behavior-preserving extraction)", () => {
       for (const [a, b] of [
         [article, redirect],
         [redirect, article],
-      ]) {
+      ] as const) {
         const r = row(a, b);
         expect(r.blocker).toBe(true); // still a conflict Wikidata would raise
         expect(isMergeBlocker(r, a, b)).toBe(false);
@@ -514,7 +519,7 @@ describe("buildRows (behavior-preserving extraction)", () => {
 
     it("accepts the intentional-redirect badge too", () => {
       const intentional = { ...redirect, sitelinkBadges: { enwiki: ["Q70894304"] } };
-      expect(row(intentional, article).a[0].redirect).toBe(true);
+      expect(row(intentional, article).a[0]?.redirect).toBe(true);
     });
 
     it("never treats an intentional redirect as the other item's page", () => {
@@ -569,8 +574,8 @@ describe("buildRows (behavior-preserving extraction)", () => {
         sitelinkRedirects: { enwiki: null },
       };
       const r = row(article, unknown);
-      expect(r.b[0].redirect).toBe(true);
-      expect(r.b[0].redirectTarget).toBeUndefined();
+      expect(r.b[0]?.redirect).toBe(true);
+      expect(r.b[0]?.redirectTarget).toBeUndefined();
       expect(r.note).toMatch(/^Q1145650's page is a redirect/);
     });
 
@@ -614,7 +619,7 @@ describe("buildRows (behavior-preserving extraction)", () => {
   });
 
   it("cross-matches a renamed label against the other item's alias", () => {
-    const ex = byName["Company renamed"];
+    const ex = byName("Company renamed");
     const rows = buildRows(ex.a, ex.b);
     const label = rows.find((r) => r.key === "label:en");
     expect(label?.status).toBe("similar");
@@ -684,8 +689,8 @@ describe("collapseRepeatedRows", () => {
     const rows = collapseRepeatedRows(buildRows(a, b));
     const labels = rows.filter((r) => r.kind === "term").map((r) => r.label);
     expect(labels).toEqual(["label (de, en)", "label (it)"]);
-    expect(rows[0].key).toBe("label:de,en");
-    expect(rows[0].status).toBe("similar");
+    expect(rows[0]?.key).toBe("label:de,en");
+    expect(rows[0]?.status).toBe("similar");
   });
 
   it("leaves rows with no repeated values untouched", () => {
@@ -785,7 +790,7 @@ describe("mergeConflicts", () => {
   });
 
   it("reports differing descriptions and clashing sitelinks from the fixture pair", () => {
-    const ex = byName["Game with conflicts"];
+    const ex = byName("Game with conflicts");
     const [from, into] = orderByAge(ex.a, ex.b);
     expect(mergeConflicts(from, into)).toEqual(["description", "sitelink"]);
   });
@@ -811,14 +816,17 @@ describe("mergeConflicts", () => {
 });
 
 describe("scoreCandidate", () => {
-  const scored = Object.fromEntries(EXAMPLES.map((e) => [e.name, scoreCandidate(e.a, e.b)]));
+  const scored = (name: string) => {
+    const { a, b } = byName(name);
+    return scoreCandidate(a, b);
+  };
 
   it("ranks genuine duplicates above clearly-distinct items", () => {
-    const distinct = scored["Different things (film vs novel)"];
+    const distinct = scored("Different things (film vs novel)");
     expect(distinct.confidence).toBeLessThan(0.15);
 
     for (const name of ["Game with conflicts", "Clean merge (author)", "Company renamed"]) {
-      expect(scored[name].confidence).toBeGreaterThan(distinct.confidence);
+      expect(scored(name).confidence).toBeGreaterThan(distinct.confidence);
     }
   });
 
@@ -826,8 +834,8 @@ describe("scoreCandidate", () => {
     // The conflicted game differs on a Steam id and on its enwiki page (the
     // likely-redirect "… (video game)" shape), each docked a little, so it sits
     // below the clean pair but well above clearly-distinct items.
-    expect(scored["Game with conflicts"].confidence).toBeGreaterThan(0.3);
-    expect(scored["Clean merge (author)"].confidence).toBeGreaterThan(0.4);
+    expect(scored("Game with conflicts").confidence).toBeGreaterThan(0.3);
+    expect(scored("Clean merge (author)").confidence).toBeGreaterThan(0.4);
   });
 
   it("docks, but does not sink, a pair linking different pages on the same wiki", () => {
@@ -836,27 +844,27 @@ describe("scoreCandidate", () => {
       ...e.b,
       sitelinks: { ...e.b.sitelinks, enwiki: "Miriam Okafor (novelist)" },
     });
-    const clean = scored["Clean merge (author)"];
+    const clean = scored("Clean merge (author)");
     expect(clash.hasBlocker).toBe(true);
     expect(clash.confidence).toBeLessThan(clean.confidence);
     expect(clash.confidence).toBeGreaterThan(0.4);
   });
 
   it("explains its reasoning", () => {
-    expect(scored["Game with conflicts"].reasons).toContain("identical label");
-    expect(scored["Game with conflicts"].reasons).toContain("same instance of (P31)");
-    expect(scored["Different things (film vs novel)"].reasons).toContain(
+    expect(scored("Game with conflicts").reasons).toContain("identical label");
+    expect(scored("Game with conflicts").reasons).toContain("same instance of (P31)");
+    expect(scored("Different things (film vs novel)").reasons).toContain(
       "different instance of (P31)",
     );
-    expect(scored["Company renamed"].reasons).toContain("label matches the other item's alias");
+    expect(scored("Company renamed").reasons).toContain("label matches the other item's alias");
   });
 
   it("flags merge blockers without sinking confidence", () => {
     // The clean author pair has no conflicting description/sitelink.
-    expect(scored["Clean merge (author)"].hasBlocker).toBe(false);
+    expect(scored("Clean merge (author)").hasBlocker).toBe(false);
     // The conflicting game and the distinct film/novel both have blockers.
-    expect(scored["Game with conflicts"].hasBlocker).toBe(true);
-    expect(scored["Different things (film vs novel)"].hasBlocker).toBe(true);
+    expect(scored("Game with conflicts").hasBlocker).toBe(true);
+    expect(scored("Different things (film vs novel)").hasBlocker).toBe(true);
   });
 
   it("is symmetric in its two arguments", () => {
@@ -1165,7 +1173,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
         expect(result.reasons[0]).toBe(
           `each item links a different page on ${wiki}, almost certainly different texts`,
         );
-        expect(reasonTone(result.reasons[0]).polarity).toBe("negative");
+        expect(reasonTone(result.reasons[0]!).polarity).toBe("negative");
       }
     });
 
@@ -1817,7 +1825,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     for (const [mal, anilist] of [
       ["P4086", "P8729"],
       ["P4087", "P8731"],
-    ]) {
+    ] as const) {
       const item = (id: string, value: string): Item => ({
         ...base,
         id,
@@ -2064,7 +2072,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     const trace: ScoreTrace = { caps: [] };
     scoreCandidate(a, b, { trace });
     expect(trace.caps.map((c) => c.rule)).toEqual(["different-from-p1889"]);
-    expect(trace.caps[0].before).toBeGreaterThan(0.4);
+    expect(trace.caps[0]?.before).toBeGreaterThan(0.4);
   });
 
   describe('"permanent duplicated item" (P2959)', () => {
@@ -2087,7 +2095,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       for (const [x, y] of [
         [a, b],
         [b, a],
-      ]) {
+      ] as const) {
         expect(isPermanentDuplicatePair(x, y)).toBe(true);
         const result = scoreCandidate(x, y);
         expect(result.confidence).toBe(0);
@@ -2155,7 +2163,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       [work, editionOf],
       [hasEdition, edition],
       [edition, hasEdition],
-    ]) {
+    ] as const) {
       expect(isWorkEditionPair(a, b)).toBe(true);
       const result = scoreCandidate(a, b);
       expect(result.confidence).toBeLessThanOrEqual(0.1);
@@ -2191,7 +2199,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     for (const [a, b] of [
       [reissue, original],
       [original, reissue],
-    ]) {
+    ] as const) {
       expect(isWorkEditionPair(a, b)).toBe(true);
       const result = scoreCandidate(a, b);
       expect(result.confidence).toBeLessThanOrEqual(0.1);
@@ -2215,7 +2223,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     for (const [a, b] of [
       [recording, work],
       [work, recording],
-    ]) {
+    ] as const) {
       expect(isWorkEditionPair(a, b)).toBe(true);
       const result = scoreCandidate(a, b);
       expect(result.confidence).toBeLessThanOrEqual(0.1);
@@ -2248,7 +2256,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       [track, hasPart],
       [partOf, album],
       [album, partOf],
-    ]) {
+    ] as const) {
       expect(isPartWholePair(a, b)).toBe(true);
       const result = scoreCandidate(a, b);
       expect(result.confidence).toBeLessThanOrEqual(0.1);
@@ -2287,7 +2295,7 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     for (const [a, b] of [
       [conflation, other],
       [other, conflation],
-    ]) {
+    ] as const) {
       expect(isConflationPair(a, b)).toBe(true);
       const result = scoreCandidate(a, b);
       expect(result.confidence).toBe(0);
@@ -3039,7 +3047,7 @@ describe("isCollectionSiblingPair", () => {
   it("ignores case and punctuation, and any shared number", () => {
     expect(isCollectionSiblingPair(leaf("Q1", "1966.218.A"), leaf("Q2", "1966-218-a"))).toBe(false);
     const both = leaf("Q1", "1966.218.a");
-    both.statements.P217.push({ type: "string", value: "OLD-42" });
+    both.statements.P217!.push({ type: "string", value: "OLD-42" });
     expect(isCollectionSiblingPair(both, leaf("Q2", "OLD 42"))).toBe(false);
   });
 
@@ -3633,8 +3641,8 @@ describe("coordinates", () => {
         statements: { P625: [coordinateValue(40, -3), londonEye] },
       },
     ).filter((r) => r.key === "P625");
-    expect(row.status).toBe("distinct");
-    expect(row.a[0].note).toBe("453 m apart");
+    expect(row?.status).toBe("distinct");
+    expect(row?.a[0]?.note).toBe("453 m apart");
   });
 
   it("backfills a globe label", () => {
@@ -3645,7 +3653,7 @@ describe("coordinates", () => {
       {},
       { Q111: "Mars" },
     ).filter((r) => r.key === "P625");
-    expect(row.a[0].globeLabel).toBe("Mars");
+    expect(row?.a[0]?.globeLabel).toBe("Mars");
   });
 
   it("never counts matching coordinates as a shared identifier", () => {
@@ -3679,8 +3687,8 @@ describe("musical notation", () => {
     const a = { ...base, statements: { ...base.statements, P6670: [c] } };
     const b = { ...base, id: "Q2", statements: { ...base.statements, P6670: [d] } };
     const [row] = buildRows(a, b).filter((r) => r.key === "P6670");
-    expect(row.status).toBe("distinct");
-    expect(row.note).toMatch(/musical notation isn't compared/);
+    expect(row?.status).toBe("distinct");
+    expect(row?.note).toMatch(/musical notation isn't compared/);
     expect(countDistinctStatements(a, b)).toBe(0);
     expect(scoreCandidate(a, b)).toEqual(scoreCandidate(base, { ...base, id: "Q2" }));
   });

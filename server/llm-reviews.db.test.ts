@@ -39,8 +39,8 @@ const review = (stage: "first_pass" | "confirmation", over: Partial<Review> = {}
 const DUPLICATE = { cause: { code: "ER_DUP_ENTRY" } };
 
 async function insertReview(values: Review): Promise<number> {
-  const [{ id }] = await db.insert(llmReviews).values(values).$returningId();
-  return id;
+  const [row] = await db.insert(llmReviews).values(values).$returningId();
+  return row!.id;
 }
 
 const statusOf = async (id: number) =>
@@ -58,10 +58,11 @@ describe.skipIf(!DB_TEST)("llm_reviews and auto_dismissed", () => {
     await truncateAll();
     await insertItem(makeItem("Q10", "Alpha Quest"));
     await insertItem(makeItem("Q20", "Alpha Quest"));
-    [{ id: pair }] = await db
+    const [row] = await db
       .insert(mergeCandidates)
       .values({ fromQid: "Q20", intoQid: "Q10", confidence: 0.5, reasons: [] })
       .$returningId();
+    pair = row!.id;
   });
 
   afterAll(() => pool.end());
@@ -88,7 +89,7 @@ describe.skipIf(!DB_TEST)("llm_reviews and auto_dismissed", () => {
       resolvedBy: null,
       resolution: reviewResolution(confirmation),
     });
-    expect(row.resolvedAt).not.toBeNull();
+    expect(row!.resolvedAt).not.toBeNull();
 
     // A human's resolution always wins: nothing but `open` moves.
     for (const status of ["dismissed", "merged", "merging"]) {
@@ -125,13 +126,13 @@ describe.skipIf(!DB_TEST)("llm_reviews and auto_dismissed", () => {
       .select({ id: llmReviews.id })
       .from(llmReviews)
       .where(eq(llmReviews.stage, "confirmation"));
-    await hidePair(db, pair, confirmation.id);
+    await hidePair(db, pair, confirmation!.id);
     const hidden = await get<CandidateDetailResponse>(`/api/candidates/${pair}`);
     expect(hidden.llmReviews).toMatchObject([
       { stage: "first_pass", model: "claude-haiku-5-5", verdict: "different", probability: 0.1 },
       { stage: "confirmation", model: "claude-opus-5-5", verdict: "different", probability: 0.03 },
     ]);
-    expect(hidden.llmReviews[1].rationale).toBe("confirmation rationale");
+    expect(hidden.llmReviews[1]?.rationale).toBe("confirmation rationale");
   });
 
   it("can be reopened, keeping its reviews so it's never queued again", async () => {

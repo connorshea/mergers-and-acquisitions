@@ -52,7 +52,7 @@ export async function truncateAll(): Promise<void> {
 export async function loginAs(
   userId: number,
   username = `User${userId}`,
-): Promise<Record<string, string>> {
+): Promise<Record<string, string> & { Cookie: string }> {
   const now = new Date();
   await db
     .insert(users)

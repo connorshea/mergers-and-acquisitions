@@ -305,7 +305,7 @@ export async function collectOpenQids(): Promise<Set<string>> {
       .limit(READ_PAGE);
     for (const p of pairs) qids.add(p.from).add(p.into);
     if (pairs.length < READ_PAGE) break;
-    after = pairs[pairs.length - 1].id;
+    after = pairs[pairs.length - 1]!.id;
   }
   return qids;
 }

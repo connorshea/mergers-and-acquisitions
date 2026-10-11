@@ -267,17 +267,17 @@ export function levenshtein(a: string, b: string): number {
   const row = new Int32Array(n + 1);
   for (let j = 0; j <= n; j++) row[j] = j;
   for (let i = 1; i <= m; i++) {
-    let diag = row[0];
+    let diag = row[0]!;
     row[0] = i;
     const ca = a.charCodeAt(i - 1);
     for (let j = 1; j <= n; j++) {
-      const up = row[j];
+      const up = row[j]!;
       const cost = ca === b.charCodeAt(j - 1) ? 0 : 1;
-      row[j] = Math.min(up + 1, row[j - 1] + 1, diag + cost);
+      row[j] = Math.min(up + 1, row[j - 1]! + 1, diag + cost);
       diag = up;
     }
   }
-  return row[n];
+  return row[n]!;
 }
 
 export function stringSimilarity(a: string, b: string): number {
@@ -385,9 +385,9 @@ function doiOf(raw: string): string | null {
   const m = /^https?:\/\/(?:dx\.|www\.)?doi\.org\/(10\.[^?#]+?)\/*$/i.exec(raw.trim());
   if (!m) return null;
   try {
-    return decodeURIComponent(m[1]).toLowerCase();
+    return decodeURIComponent(m[1]!).toLowerCase();
   } catch {
-    return m[1].toLowerCase();
+    return m[1]!.toLowerCase();
   }
 }
 
@@ -1251,9 +1251,10 @@ export function foldNativeName(name: string): string {
  */
 function nativeNames(item: Item): { han: Map<string, string>; hangul: Map<string, string> } {
   const langs = new Set(
-    (item.statements.P27 ?? []).flatMap((v) =>
-      v.type === "item" && NATIVE_NAME_LANGS[v.value] ? [NATIVE_NAME_LANGS[v.value]] : [],
-    ),
+    (item.statements.P27 ?? []).flatMap((v) => {
+      const lang = v.type === "item" ? NATIVE_NAME_LANGS[v.value] : undefined;
+      return lang ? [lang] : [];
+    }),
   );
   // Without a Japanese/Korean citizenship, a P1559 value counts only when its
   // own script shows it's Japanese or Korean (a Chinese name is all Han, and
@@ -1429,9 +1430,9 @@ export function descriptionCreator(
 ): { name: string; words: Set<string> } | null {
   const m = description && /(\S+) by ([^,;(]+)/i.exec(description);
   if (!m) return null;
-  const before = m[1].toLowerCase();
+  const before = m[1]!.toLowerCase();
   if (before.endsWith("ed") || BY_PARTICIPLES.has(before)) return null;
-  const name = m[2].trim();
+  const name = m[2]!.trim();
   const words = name
     .toLowerCase()
     .split(/[^\p{L}\p{N}]+/u)
@@ -1445,7 +1446,7 @@ export function descriptionCreator(
  */
 export function descriptionYear(description: string | undefined): number | null {
   const m = description && /^(1\d{3}|20\d\d)\b/.exec(description);
-  return m ? parseInt(m[1], 10) : null;
+  return m ? parseInt(m[1]!, 10) : null;
 }
 
 /**
@@ -1674,8 +1675,9 @@ function romanToInt(s: string): number | null {
   const map: Record<string, number> = { i: 1, v: 5, x: 10, l: 50, c: 100, d: 500, m: 1000 };
   let total = 0;
   for (let i = 0; i < t.length; i++) {
-    const cur = map[t[i]];
-    const next = map[t[i + 1]] ?? 0;
+    // ROMAN_RE passed, so every character is a numeral in the map.
+    const cur = map[t[i]!]!;
+    const next = map[t[i + 1] ?? ""] ?? 0;
     total += cur < next ? -cur : cur;
   }
   return total;
@@ -1705,13 +1707,15 @@ export function installment(label: string): { base: string; num: number | null }
   if (direct) return direct;
   const bracketed = norm.match(/^(.+?)\s*[([]([^()[\]]+)[)\]]$/);
   if (bracketed) {
-    const inner = trailingInstallment(`${bracketed[1]} ${bracketed[2].trim()}`);
+    const head = bracketed[1]!;
+    const qualifier = bracketed[2]!.trim();
+    const inner = trailingInstallment(`${head} ${qualifier}`);
     if (inner) return inner.num < 1000 ? inner : { base: norm, num: null };
     // No number inside: the bracket is a qualifier (an author, a medium), so the
     // number may sit just before it. It stays in the base, so only labels
     // qualified the same way read as one series.
-    const before = trailingInstallment(bracketed[1]);
-    if (before) return { base: `${before.base} (${bracketed[2].trim()})`, num: before.num };
+    const before = trailingInstallment(head);
+    if (before) return { base: `${before.base} (${qualifier})`, num: before.num };
   }
   return { base: norm, num: null };
 }
@@ -1719,8 +1723,9 @@ export function installment(label: string): { base: string; num: number | null }
 function trailingInstallment(norm: string): { base: string; num: number } | null {
   const m = norm.match(/^(.+?)[\s:._-]+(?:['‘’]([0-9]{2})|([0-9]{1,4}|[ivxlcdm]+))$/i);
   if (!m) return null;
-  const base = m[1].trim();
-  const tok = m[2] ?? m[3];
+  const base = m[1]!.trim();
+  // One of the two alternatives always matched.
+  const tok = (m[2] ?? m[3])!;
   const num = /^[0-9]+$/.test(tok) ? parseInt(tok, 10) : romanToInt(tok);
   if (num === null || base.length === 0) return null;
   return { base, num };
@@ -1839,8 +1844,9 @@ const DIVISION_RE = new RegExp(
 export function titleDivisions(label: string): Map<string, Set<number>> {
   const out = new Map<string, Set<number>>();
   for (const m of label.normalize("NFKC").matchAll(DIVISION_RE)) {
-    const word = DIVISION_WORDS[m[1].toLowerCase()];
-    const tok = m[2];
+    // DIVISION_RE is built from DIVISION_WORDS' keys, so the word is one of them.
+    const word = DIVISION_WORDS[m[1]!.toLowerCase()]!;
+    const tok = m[2]!;
     const num = /^\d+$/.test(tok)
       ? parseInt(tok, 10)
       : tok === tok.toUpperCase()
@@ -1880,7 +1886,7 @@ export function isDifferentVolumePair(a: Item, b: Item): boolean {
  * they don't count.
  */
 export function isDisjointYearRangePair(a: Item, b: Item): boolean {
-  const span = (item: Item) => {
+  const span = (item: Item): [number, number] | null => {
     const years = [...titleYears(bestLabel(item))].map(Number);
     return years.length >= 2 ? [Math.min(...years), Math.max(...years)] : null;
   };
@@ -2146,7 +2152,7 @@ export function yearDisambiguatedWikis(a: Item, b: Item): string[] {
   return Object.keys(a.sitelinks).filter((wiki) => {
     const ta = a.sitelinks[wiki];
     const tb = b.sitelinks[wiki];
-    if (!tb || ta === tb || isRedirectSitelink(a, wiki) || isRedirectSitelink(b, wiki))
+    if (!ta || !tb || ta === tb || isRedirectSitelink(a, wiki) || isRedirectSitelink(b, wiki))
       return false;
     const ya = titleYears(ta);
     const yb = titleYears(tb);
@@ -2161,7 +2167,7 @@ export function yearDisambiguatedWikis(a: Item, b: Item): string[] {
  */
 export function splitDisambiguator(title: string): { base: string; qualifier: string | null } {
   const m = /^(.+?)\s*\(([^()]+)\)\s*$/.exec(title);
-  return m ? { base: m[1], qualifier: m[2] } : { base: title, qualifier: null };
+  return m ? { base: m[1]!, qualifier: m[2]! } : { base: title, qualifier: null };
 }
 
 /**
@@ -3167,7 +3173,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
         .join(", ")}), almost certainly different subjects`,
     );
     cap("differing-subject-page-ids", 0.1);
-  } else if (distinctSubjectPageIds.length === 1) {
+  } else if (distinctSubjectPageIds[0]) {
     // A single differing per-subject id (e.g. two different Steam or itch.io pages)
     // is a real discrepancy — usually different games, occasionally a data slip
     // when a stronger id still agrees. Dock it modestly and (via the ceiling

@@ -76,7 +76,7 @@ async function collectClashTitles(): Promise<Map<string, Set<string>>> {
         titles.add(title);
       }
     }
-    after = pairs[pairs.length - 1].id;
+    after = pairs[pairs.length - 1]!.id;
     if (pairs.length < READ_PAGE) break;
   }
   return byWiki;

@@ -82,8 +82,8 @@ describe.skipIf(!DB_TEST)("runHunt", () => {
       fromLabelLangs: ",en",
       intoLabelLangs: ",en",
     });
-    expect(rows[0].confidence).toBeGreaterThanOrEqual(MIN_CONFIDENCE);
-    expect(rows[0].reasons.some((r) => r.startsWith("shares external identifier"))).toBe(true);
+    expect(rows[0]!.confidence).toBeGreaterThanOrEqual(MIN_CONFIDENCE);
+    expect(rows[0]?.reasons.some((r) => r.startsWith("shares external identifier"))).toBe(true);
   });
 
   it("scores every pair when the pairs span several windows read ahead", async () => {
@@ -113,7 +113,7 @@ describe.skipIf(!DB_TEST)("runHunt", () => {
     await runHunt();
     const rows = await allCandidates();
     expect(rows).toHaveLength(1);
-    expect(rows[0].id).toBe(first.id);
+    expect(rows[0]?.id).toBe(first!.id);
   });
 
   it("blocks on label AND type, not label alone", async () => {
@@ -363,7 +363,7 @@ describe.skipIf(!DB_TEST)("runHunt", () => {
       await runHunt();
       const lines = (await readFile(join(dir, "pairs.jsonl"), "utf8")).trim().split("\n");
       expect(lines).toHaveLength(1);
-      expect(JSON.parse(lines[0])).toMatchObject({
+      expect(JSON.parse(lines[0]!)).toMatchObject({
         from: "Q200",
         into: "Q100",
         fromLabel: "Starfall Drift",
@@ -477,14 +477,15 @@ describe.skipIf(!DB_TEST)("runHunt", () => {
       await insertItem(makeItem("Q300", "Gamma", steam("2")));
       expect(await rebuiltOn(async () => expect((await runHunt()).pairs).toBe(1))).toBe(true);
       expect(await dupeKeys()).toEqual([["P1733", "1"]]);
-      const [{ maxId }] = await db
+      // An aggregate with no GROUP BY always returns exactly one row.
+      const [{ maxId }] = (await db
         .select({ maxId: sql<number>`max(${externalIds.id})` })
-        .from(externalIds);
+        .from(externalIds)) as [{ maxId: number }];
       const [state] = await db
         .select()
         .from(syncState)
         .where(eq(syncState.scope, "hunt-external-id-dupes"));
-      expect(state.cursor).toBe(Number(maxId));
+      expect(state?.cursor).toBe(Number(maxId));
 
       // A new item sharing Q300's id: found without a rebuild.
       await insertItem(makeItem("Q400", "Delta", steam("2")));
@@ -524,7 +525,7 @@ describe.skipIf(!DB_TEST)("runHunt", () => {
       await insertItem(makeItem("Q200", "Beta", steam("1")));
       const cursor = async () =>
         (await db.select().from(syncState).where(eq(syncState.scope, "hunt-external-id-dupes")))[0]
-          .cursor;
+          ?.cursor;
       // A live claim: a worker may still be committing rows below max(id).
       await db.insert(dumpImportSegments).values({
         dump: "20260922",
@@ -540,9 +541,9 @@ describe.skipIf(!DB_TEST)("runHunt", () => {
       // Finished (or abandoned) claims don't count.
       await db.update(dumpImportSegments).set({ doneAt: sql`current_timestamp` });
       await runHunt();
-      const [{ maxId }] = await db
+      const [{ maxId }] = (await db
         .select({ maxId: sql<number>`max(${externalIds.id})` })
-        .from(externalIds);
+        .from(externalIds)) as [{ maxId: number }];
       expect(await cursor()).toBe(Number(maxId));
     });
 

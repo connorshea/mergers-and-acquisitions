@@ -415,6 +415,8 @@ edits.post("/:id/merge", async (c) => {
     .select({ fromQid: mergeCandidates.fromQid, intoQid: mergeCandidates.intoQid })
     .from(mergeCandidates)
     .where(eq(mergeCandidates.id, id));
+  // Deleted between the claim and this read (a hunt prune): nothing left to release.
+  if (!row) return c.json({ error: "Candidate not found" }, 404);
   const { fromQid, intoQid } = row;
   const editGroup = newEditGroup();
   const audit: AuditBase = {
@@ -791,6 +793,7 @@ edits.post("/:id/different", async (c) => {
     .select({ fromQid: mergeCandidates.fromQid, intoQid: mergeCandidates.intoQid })
     .from(mergeCandidates)
     .where(eq(mergeCandidates.id, id));
+  if (!row) return c.json({ error: "Candidate not found" }, 404);
   const itemRows = await db
     .select({ qid: items.qid, primaryLabel: items.primaryLabel, data: items.data })
     .from(items)

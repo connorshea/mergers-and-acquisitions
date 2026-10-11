@@ -329,7 +329,7 @@ async function importRunning(conn: mysql.Connection): Promise<boolean> {
  */
 async function refreshDupeKeys(db: Db, conn: mysql.Connection): Promise<void> {
   const start = performance.now();
-  const [maxRows] = await conn.query<mysql.RowDataPacket[]>(
+  const [maxRows] = await conn.query<[mysql.RowDataPacket]>(
     "select coalesce(max(id), 0) as id from external_ids",
   );
   const maxId = Number(maxRows[0].id);
@@ -380,7 +380,7 @@ async function refreshDupeKeys(db: Db, conn: mysql.Connection): Promise<void> {
     .onDuplicateKeyUpdate({
       set: { cursor: sql`values(${syncState.cursor})`, lastRunAt: sql`CURRENT_TIMESTAMP` },
     });
-  const [countRows] = await conn.query<mysql.RowDataPacket[]>(
+  const [countRows] = await conn.query<[mysql.RowDataPacket]>(
     "select count(*) as n from external_id_dupes",
   );
   console.log(
@@ -419,9 +419,10 @@ class PairSink {
     }
     const nums = Array.from(new Set(group.qids.split(",")), qidNum);
     for (let i = 0; i < nums.length; i++) {
+      const x = nums[i]!;
       for (let j = i + 1; j < nums.length; j++) {
-        const [a, b] = nums[i] < nums[j] ? [nums[i], nums[j]] : [nums[j], nums[i]];
-        this.buffer.push([a, b]);
+        const y = nums[j]!;
+        this.buffer.push(x < y ? [x, y] : [y, x]);
         if (this.buffer.length >= PAIR_INSERT_CHUNK) await this.flush();
       }
     }
@@ -436,7 +437,7 @@ class PairSink {
 }
 
 async function countPairs(conn: mysql.Connection): Promise<number> {
-  const [rows] = await conn.query<mysql.RowDataPacket[]>("select count(*) as n from hunt_pairs");
+  const [rows] = await conn.query<[mysql.RowDataPacket]>("select count(*) as n from hunt_pairs");
   return Number(rows[0].n);
 }
 
@@ -776,7 +777,7 @@ async function score(
 
   // Counted before scoring, for the mass-prune guard below: rows the scoring
   // creates are all in hunt_pairs, so they can never be orphans.
-  const [[{ open }]] = await conn.query<mysql.RowDataPacket[]>(
+  const [[{ open }]] = await conn.query<[mysql.RowDataPacket]>(
     `select count(*) as open from merge_candidates c where ${UNRESOLVED_SQL}`,
   );
   const openCount = Number(open);

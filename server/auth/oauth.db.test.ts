@@ -195,14 +195,14 @@ describe.skipIf(!DB_TEST)("auth", () => {
 
       // The exchange is a confidential-client + PKCE request.
       expect(tokenCalls).toHaveLength(1);
-      expect(Object.fromEntries(tokenCalls[0])).toMatchObject({
+      expect(Object.fromEntries(tokenCalls[0]!)).toMatchObject({
         grant_type: "authorization_code",
         code: "abc",
         client_id: "client-123",
         client_secret: "shh-client-secret",
         redirect_uri: "http://localhost:5173/api/auth/callback",
       });
-      expect(tokenCalls[0].get("code_verifier")).toHaveLength(64);
+      expect(tokenCalls[0]!.get("code_verifier")).toHaveLength(64);
 
       // The login cookie is consumed, the session cookie is set.
       expect(cookieLine(res, "mna_oauth")).toMatch(/Max-Age=0/);
@@ -218,6 +218,7 @@ describe.skipIf(!DB_TEST)("auth", () => {
       const [user] = await db.select().from(users).where(eq(users.id, 7));
       expect(user).toMatchObject({ username: "Alice", groups: PROFILE.groups, blocked: false });
       const [tok] = await db.select().from(oauthTokens).where(eq(oauthTokens.userId, 7));
+      if (!tok) throw new Error("no oauth_tokens row for user 7");
       expect(tok.accessToken).not.toContain("access-1");
       expect(tok.refreshToken).not.toContain("refresh-1");
       expect(decrypt(tok.accessToken, "oauth_tokens:7")).toBe("access-1");
@@ -225,8 +226,8 @@ describe.skipIf(!DB_TEST)("auth", () => {
 
       // The DB holds only the hash of the cookie, and the cookie resolves to the user.
       const [row] = await db.select().from(sessions);
-      expect(row.id).toBe(sha256Hex(session));
-      expect(row.userId).toBe(7);
+      expect(row?.id).toBe(sha256Hex(session));
+      expect(row?.userId).toBe(7);
       expect(await me(session)).toEqual({
         user: { id: 7, username: "Alice", isAdmin: false, blocked: false, languages: [] },
         configured: true,
@@ -344,7 +345,7 @@ describe.skipIf(!DB_TEST)("auth", () => {
         "oauth: callback failed",
         expect.objectContaining({ message: "token exchange failed: ECONNRESET" }),
       );
-      expect(stub.mock.calls[0][1]?.signal).toBeInstanceOf(AbortSignal);
+      expect(stub.mock.calls[0]?.[1]?.signal).toBeInstanceOf(AbortSignal);
       expect(await db.select().from(users)).toHaveLength(0);
     });
 
@@ -597,13 +598,15 @@ describe.skipIf(!DB_TEST)("auth", () => {
       });
       await storeTokens(7, { access_token: "old", refresh_token: "refresh-1", expires_in: 60 });
       expect(await getAccessToken(7)).toBe("access-2");
-      expect(Object.fromEntries(tokenCalls[0])).toEqual({
+      expect(tokenCalls).toHaveLength(1);
+      expect(Object.fromEntries(tokenCalls[0]!)).toEqual({
         grant_type: "refresh_token",
         refresh_token: "refresh-1",
         client_id: "client-123",
         client_secret: "shh-client-secret",
       });
       const [row] = await db.select().from(oauthTokens).where(eq(oauthTokens.userId, 7));
+      if (!row) throw new Error("no oauth_tokens row for user 7");
       expect(decrypt(row.accessToken, "oauth_tokens:7")).toBe("access-2");
       expect(decrypt(row.refreshToken!, "oauth_tokens:7")).toBe("refresh-2");
       // And now it's fresh: no second refresh.
@@ -626,7 +629,7 @@ describe.skipIf(!DB_TEST)("auth", () => {
       await storeTokens(7, { access_token: "old", refresh_token: "refresh-1", expires_in: 0 });
       await getAccessToken(7);
       const [row] = await db.select().from(oauthTokens).where(eq(oauthTokens.userId, 7));
-      expect(decrypt(row.refreshToken!, "oauth_tokens:7")).toBe("refresh-1");
+      expect(decrypt(row!.refreshToken!, "oauth_tokens:7")).toBe("refresh-1");
     });
 
     it("drops the tokens and reports a revoked grant on invalid_grant", async () => {
@@ -646,6 +649,7 @@ describe.skipIf(!DB_TEST)("auth", () => {
     it("rejects a ciphertext copied from another user's row", async () => {
       await storeTokens(7, { access_token: "alice", refresh_token: "r-alice", expires_in: 3600 });
       const [alice] = await db.select().from(oauthTokens).where(eq(oauthTokens.userId, 7));
+      if (!alice) throw new Error("no oauth_tokens row for user 7");
       await db.insert(users).values({ id: 8, username: "Mallory", groups: [] });
       await db.insert(oauthTokens).values({ ...alice, userId: 8 });
       await expect(getAccessToken(8)).rejects.toThrow(/auth/i);

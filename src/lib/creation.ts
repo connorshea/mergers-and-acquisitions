@@ -51,7 +51,7 @@ export function creationTool(c: Pick<ItemCreation, "comment" | "tags">): Creatio
     };
   if ((m = comment.match(/toollabs:editgroups\/b\/([^/|\]\s]+)\/([^/|\]\s]+)/)))
     return {
-      name: `${EDITGROUPS_TOOLS[m[1]] ?? m[1]} batch`,
+      name: `${EDITGROUPS_TOOLS[m[1]!] ?? m[1]} batch`,
       url: `https://editgroups.toolforge.org/b/${m[1]}/${m[2]}/`,
     };
   if (/#quickstatements\b/i.test(comment)) return { name: "QuickStatements" };
@@ -64,7 +64,7 @@ export function creationTool(c: Pick<ItemCreation, "comment" | "tags">): Creatio
   if (/#petscan\b/i.test(comment)) return { name: "PetScan" };
   for (const t of tags) {
     if ((m = t.match(/^OAuth CID: (\d+)$/)))
-      return { name: OAUTH_CONSUMERS[m[1]] ?? `OAuth app #${m[1]}` };
+      return { name: OAUTH_CONSUMERS[m[1]!] ?? `OAuth app #${m[1]}` };
   }
   if ((m = comment.match(/(?:^|\s)#([A-Za-z][\w'-]*)/))) return { name: `#${m[1]}` };
   if (tags.includes("wikidata-ui")) return { name: "the Wikidata UI" };

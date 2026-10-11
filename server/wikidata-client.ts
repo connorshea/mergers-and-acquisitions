@@ -124,7 +124,7 @@ function apiError(res: ApiResponse): ApiError | null {
   const errors = body.errors;
   if (Array.isArray(errors) && errors.length > 0) {
     const all = errors as PlaintextError[];
-    const first = all[0];
+    const first = all[0]!;
     const text = first.text ?? first["*"] ?? "";
     const details = [
       ...all.slice(1).map((e) => e.text ?? e["*"] ?? e.code ?? ""),
@@ -556,8 +556,9 @@ export async function probeMerge(
     });
     const targetErr = apiError(target);
     if (targetErr) await fail(user, targetErr, deps);
-    const redirects = (target.body.query as { redirects?: { from?: string; to?: string }[] })
-      ?.redirects;
+    const redirects = (
+      target.body.query as { redirects?: { from?: string; to?: string }[] } | undefined
+    )?.redirects;
     redirectedTo = redirects?.find((r) => r.from === fromQid)?.to ?? null;
   }
   return { redirectedTo, fromRevid: from.lastrevid, intoRevid: into.lastrevid };

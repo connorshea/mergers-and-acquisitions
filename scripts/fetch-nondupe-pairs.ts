@@ -87,15 +87,19 @@ async function main() {
   // Revision pins given as `Qxxx@REVID`; unpinned QIDs fetch the current revision.
   const pins = new Map<string, number>();
   for (let i = 0; i < args.length; i++) {
-    if (args[i] === "--out") outDir = args[++i];
-    else if (args[i] === "--provenance") provenance = args[++i];
-    else if (/^Q\d+(@\d+)?$/.test(args[i])) {
-      const [qid, rev] = args[i].split("@");
+    const arg = args[i]!;
+    if (arg === "--out" || arg === "--provenance") {
+      const value = args[++i];
+      if (value === undefined) throw new Error(`${arg} needs a value`);
+      if (arg === "--out") outDir = value;
+      else provenance = value;
+    } else if (/^Q\d+(@\d+)?$/.test(arg)) {
+      const [qid, rev] = arg.split("@") as [string, string?];
       qids.push(qid);
       if (rev) pins.set(qid, Number(rev));
     } else
       throw new Error(
-        `unexpected arg: ${args[i]} (want Qxxx, Qxxx@REVID, --out DIR, or --provenance STR)`,
+        `unexpected arg: ${arg} (want Qxxx, Qxxx@REVID, --out DIR, or --provenance STR)`,
       );
   }
   if (qids.length === 0 || qids.length % 2 !== 0)
@@ -112,8 +116,10 @@ async function main() {
   for (let i = 0; i < qids.length; i += 2) {
     // Canonicalize each pair (lower QID number first) so directory names are
     // stable regardless of the order the two ids were given.
-    const [a, b] =
-      qidNum(qids[i]) <= qidNum(qids[i + 1]) ? [qids[i], qids[i + 1]] : [qids[i + 1], qids[i]];
+    // qids.length is even (checked above).
+    const x = qids[i]!;
+    const y = qids[i + 1]!;
+    const [a, b] = qidNum(x) <= qidNum(y) ? [x, y] : [y, x];
     if (a === b) {
       // Guard against a fat-fingered arg list (Qx Qx) producing a degenerate
       // "item vs itself" pair, which is not a valid negative example.

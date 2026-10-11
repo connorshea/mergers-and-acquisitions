@@ -296,7 +296,7 @@ async function latestRunDir(): Promise<string> {
     .map((d) => d.name)
     .sort();
   if (dirs.length === 0) throw new Error(`no runs under ${RUNS_DIR}; submit one first`);
-  return join(RUNS_DIR, dirs[dirs.length - 1]);
+  return join(RUNS_DIR, dirs[dirs.length - 1]!);
 }
 
 const resultsPath = (dir: string, model: ReviewModel) =>
@@ -582,7 +582,10 @@ async function report(dir: string, run: Run): Promise<void> {
         `${Math.round(sum("output_tokens") / records.length)} out tokens/pair · ` +
         `${usd(each * 10_000)} per 10k pairs, ${usd(each * 50_000)} per 50k`,
     );
-    const priciest = records.reduce((x, y) => (y.costUsd > x.costUsd ? y : x), records[0]);
+    const priciest = records.reduce<(typeof records)[number] | undefined>(
+      (x, y) => (x === undefined || y.costUsd > x.costUsd ? y : x),
+      undefined,
+    );
     if (priciest) {
       const maxOut = Math.max(...records.map((r) => r.usage?.output_tokens ?? 0));
       console.log(
@@ -633,7 +636,11 @@ async function estimate(argv: string[]): Promise<void> {
   const models = parseModels(flag(argv, "--models"));
   const pairs = await selectPairs(argv);
   const labelOf = await labelLookup();
-  const assumedOutput: Record<string, number> = { haiku: 400, sonnet: 800, opus: 800 };
+  const assumedOutput: Record<ReviewModel, number> = {
+    "claude-haiku-5-5": 400,
+    "claude-sonnet-5-5": 800,
+    "claude-opus-5-5": 800,
+  };
   const maxCost = maxPairCost(argv);
   const cached = await cachedPromptTokens(client);
 
@@ -653,7 +660,7 @@ async function estimate(argv: string[]): Promise<void> {
       else minMaxTokens = Math.min(minMaxTokens, budget);
     }
     const avgIn = total / pairs.length;
-    const out = assumedOutput[REVIEW_MODELS[model].short];
+    const out = assumedOutput[model];
     const each = costUsd(model, { input_tokens: avgIn, output_tokens: out }, true);
     console.log(
       `${model}: avg ${Math.round(avgIn)} input tokens/pair, max ${max}` +

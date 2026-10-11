@@ -151,7 +151,7 @@ describe.skipIf(!DB_TEST)("outside merges", () => {
       null,
       null,
     ]);
-    expect(snapshots[0].snapshot?.from.labels.en).toBe("Game 2");
+    expect(snapshots[0]?.snapshot?.from.labels.en).toBe("Game 2");
 
     const qids = (rows: { qid: string }[]) => rows.map((r) => r.qid).sort();
     expect(qids(await db.select({ qid: items.qid }).from(items))).toEqual([

@@ -67,6 +67,9 @@ export default defineConfig({
       "typescript/no-unnecessary-type-assertion": "error",
       // `== null` (null or undefined) stays allowed; everything else is strict.
       eqeqeq: ["error", "always", { null: "ignore" }],
+      // Only meaningful with noUncheckedIndexedAccess (tsconfig): flags guards,
+      // `?.` and `??` on values whose type says they can never be nullish.
+      "typescript/no-unnecessary-condition": "error",
     },
   },
   test: {

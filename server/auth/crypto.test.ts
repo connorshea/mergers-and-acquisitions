@@ -64,9 +64,11 @@ describe("token encryption", () => {
 
   it("rejects tampering", () => {
     const keys = loadEncKeys({ TOKEN_ENC_KEY: keyA });
-    const [v, kid, iv, ct, tag] = encrypt("payload", AAD, keys).split(":");
-    const flipped = ct[0] === "A" ? "B" : "A";
-    expect(() => decrypt([v, kid, iv, flipped + ct.slice(1), tag].join(":"), AAD, keys)).toThrow(
+    const parts = encrypt("payload", AAD, keys).split(":");
+    expect(parts).toHaveLength(5);
+    const [v, kid, iv, ct, tag] = parts;
+    const flipped = ct!.startsWith("A") ? "B" : "A";
+    expect(() => decrypt([v, kid, iv, flipped + ct!.slice(1), tag].join(":"), AAD, keys)).toThrow(
       /auth/i,
     );
     expect(() => decrypt("garbage", AAD, keys)).toThrow(/format/);
@@ -77,7 +79,7 @@ describe("token encryption", () => {
     const ct = encrypt("tok", AAD, old);
     const rotated = loadEncKeys({ TOKEN_ENC_KEY: keyB, TOKEN_ENC_KEY_PREVIOUS: keyA });
     expect(decrypt(ct, AAD, rotated)).toBe("tok");
-    expect(encrypt("tok", AAD, rotated).split(":")[1]).toBe(rotated[0].kid);
+    expect(encrypt("tok", AAD, rotated).split(":")[1]).toBe(rotated[0]?.kid);
     // Without the previous key the old ciphertext is unreadable, with a pointed error.
     expect(() => decrypt(ct, AAD, loadEncKeys({ TOKEN_ENC_KEY: keyB }))).toThrow(
       /TOKEN_ENC_KEY_PREVIOUS/,

@@ -163,7 +163,7 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
   // against the pair.
   const distinctStatements = useMemo(() => {
     if (!data?.from || !data.into) return 0;
-    const mirrors = new Set(data.propertyMirrors ?? []);
+    const mirrors = new Set(data.propertyMirrors);
     return countDistinctStatements(data.from, data.into, (pid) => mirrors.has(pid));
   }, [data]);
 
@@ -274,7 +274,7 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
               </svg>
               <span>
                 <Resolution resolution={resolution} resolvedBy={resolvedBy} capitalize />
-                {data?.editGroupUrl && <EditGroupLink url={data.editGroupUrl} separated />}
+                {data.editGroupUrl && <EditGroupLink url={data.editGroupUrl} separated />}
               </span>
             </div>
           )}
@@ -283,7 +283,7 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
               confidence={candidate.confidence}
               reasons={candidate.reasons}
               sharedType={candidate.sharedType?.label}
-              propertyLabels={data?.propertyLabels}
+              propertyLabels={data.propertyLabels}
               distinctStatements={distinctStatements}
               footer={outcome && <EditOutcomePanel outcome={outcome} />}
             >
@@ -298,7 +298,7 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
                     (resolution || resolvedBy) && (
                       <span className="detail-resolution">
                         <Resolution resolution={resolution} resolvedBy={resolvedBy} />
-                        {data?.editGroupUrl && <EditGroupLink url={data.editGroupUrl} separated />}
+                        {data.editGroupUrl && <EditGroupLink url={data.editGroupUrl} separated />}
                       </span>
                     )}
                   {/* A merged pair stays merged (it happened on Wikidata); a
@@ -864,7 +864,9 @@ const STAGE_LABELS: Record<LlmReviewSummary["stage"], string> = {
 /** Model ids as people say them: "claude-opus-5-5" → "Opus 5.5". */
 function modelName(model: string): string {
   const m = /^claude-([a-z]+)-(\d+)-(\d+)$/.exec(model);
-  return m ? `${m[1][0].toUpperCase()}${m[1].slice(1)} ${m[2]}.${m[3]}` : model;
+  if (!m) return model;
+  const family = m[1]!;
+  return `${family.charAt(0).toUpperCase()}${family.slice(1)} ${m[2]}.${m[3]}`;
 }
 
 /**
@@ -950,7 +952,7 @@ function ClaudeReviews({
                 <div className="auto-review-body">
                   <div className="auto-review-verdict">
                     <span className="auto-review-chip">
-                      {r.verdict[0].toUpperCase() + r.verdict.slice(1)}
+                      {r.verdict.charAt(0).toUpperCase() + r.verdict.slice(1)}
                     </span>
                     <div
                       className="auto-review-likelihood"

@@ -50,7 +50,7 @@ export function describeDifference(a: string, b: string): string | null {
       kinds.length <= 2
         ? kinds.join(" and ")
         : `${kinds.slice(0, -1).join(", ")}, and ${kinds.at(-1)}`;
-    parts.push(`${list[0].toUpperCase()}${list.slice(1)} difference only`);
+    parts.push(`${list.charAt(0).toUpperCase()}${list.slice(1)} difference only`);
   }
   const pct = Math.round(stringSimilarity(a, b) * 100);
   if (pct < 100) parts.push(`${pct}% match`);

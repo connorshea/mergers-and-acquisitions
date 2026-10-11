@@ -25,7 +25,7 @@ function localImports(file: string): string[] {
     ...source.matchAll(/\b(?:import|export)\b[^'"`;]*?\bfrom\s*["']([^"']+)["']/g),
     ...source.matchAll(/\bimport\s*\(\s*["']([^"']+)["']\s*\)/g),
     ...source.matchAll(/^\s*import\s*["']([^"']+)["']/gm),
-  ].map((m) => m[1]);
+  ].map((m) => m[1]!);
   return specs.filter((s) => s.startsWith(".")).map((s) => resolve(dirname(file), s));
 }
 
@@ -70,6 +70,6 @@ describe("the Claude review path", () => {
   });
 
   it("would catch one that does", () => {
-    expect(reachable(resolve(ROOT, "server/app.ts")).has(forbidden[0])).toBe(true);
+    expect(reachable(resolve(ROOT, "server/app.ts")).has(forbidden[0]!)).toBe(true);
   });
 });

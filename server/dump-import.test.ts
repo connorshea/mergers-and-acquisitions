@@ -95,7 +95,7 @@ describe("scanDump", () => {
       Readable.from([Buffer.from(dumpText(ENTITIES))]),
     );
     expect(matched.map((m) => m.id)).toEqual(["Q1", "Q6"]);
-    expect(matched[0].labels.en).toBe("Doom");
+    expect(matched[0]?.labels.en).toBe("Doom");
     expect(properties).toEqual(["P1733"]);
     expect(stats).toMatchObject({
       lines: ENTITIES.length + 2,
@@ -479,8 +479,7 @@ describe("dump shards", () => {
   it("finds member starts, skipping a header-like byte run inside a member", async () => {
     const { gz } = await writeFixture();
     expect(fixture.members[0]).toBe(0);
-    for (let i = 0; i < fixture.members.length; i++) {
-      const at = fixture.members[i];
+    for (const [i, at] of fixture.members.entries()) {
       expect(findMemberStart(gz, at)).toBe(at);
       // Anywhere inside a member, the search lands on the next member.
       const next = fixture.members[i + 1] ?? fixture.gz.length;
@@ -505,12 +504,11 @@ describe("dump shards", () => {
         const slices = Array.from({ length: count }, (_, index) =>
           dumpSlice(path, { index, count }),
         );
-        expect(slices[0].start).toBe(0);
-        expect(slices[count - 1].end).toBe(size);
-        for (let i = 0; i < count; i++) {
-          const { start, end } = slices[i];
+        expect(slices[0]?.start).toBe(0);
+        expect(slices.at(-1)?.end).toBe(size);
+        for (const [i, { start, end }] of slices.entries()) {
           expect(end).toBeGreaterThanOrEqual(start);
-          expect(i === 0 ? 0 : slices[i - 1].end).toBe(start);
+          expect(i === 0 ? 0 : slices[i - 1]!.end).toBe(start);
           expect(start === 0 || start === size || isBoundary(start)).toBe(true);
         }
         // Read every shard: together they see the whole dump exactly once.
@@ -519,7 +517,8 @@ describe("dump shards", () => {
         let lines = 0;
         for (let index = 0; index < count; index++) {
           const file = openDumpFile(path, { index, count });
-          expect(file.size).toBe(slices[index].end - slices[index].start);
+          const slice = slices[index]!;
+          expect(file.size).toBe(slice.end - slice.start);
           const { matched, stats } = await collect(file.source);
           expect(file.read()).toBe(file.size);
           ids.push(...matched.map((m) => m.id));

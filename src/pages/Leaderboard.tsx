@@ -53,7 +53,7 @@ export default function Leaderboard() {
   const ranks: number[] = [];
   entries?.forEach((e, i) => {
     const prev = entries[i - 1];
-    ranks.push(prev && prev.total === e.total ? ranks[i - 1] : i + 1);
+    ranks.push(prev && prev.total === e.total ? ranks[i - 1]! : i + 1);
   });
 
   return (

@@ -105,14 +105,14 @@ async function resolvePair(qid: string): Promise<Pair> {
     const fromRev = revs.find((r) => MERGE_FROM.test(r.comment));
     if (!fromRev)
       throw new Error(`${qid}: no merge revision (wbmergeitems-to/from) in last 50 edits`);
-    source = MERGE_FROM.exec(fromRev.comment)![1];
+    source = MERGE_FROM.exec(fromRev.comment)![1]!;
     await sleep(PAUSE_MS);
     revs = await fetchRevisions(source);
     toRev = revs.find((r) => MERGE_TO.test(r.comment));
     if (!toRev) throw new Error(`${source}: expected a wbmergeitems-to revision but found none`);
   }
 
-  const target = MERGE_TO.exec(toRev.comment)![1];
+  const target = MERGE_TO.exec(toRev.comment)![1]!;
   if (toRev.parentid === 0)
     throw new Error(`${source}: merge revision has no parent (nothing before merge?)`);
 
@@ -184,10 +184,14 @@ async function main() {
   let unmerged = false;
   const qids: string[] = [];
   for (let i = 0; i < args.length; i++) {
-    if (args[i] === "--out") outDir = args[++i];
-    else if (args[i] === "--unmerged") unmerged = true;
-    else if (/^Q\d+$/.test(args[i])) qids.push(args[i]);
-    else throw new Error(`unexpected arg: ${args[i]} (want Qxxx, --unmerged or --out DIR)`);
+    const arg = args[i]!;
+    if (arg === "--out") {
+      const dir = args[++i];
+      if (dir === undefined) throw new Error("--out needs a directory");
+      outDir = dir;
+    } else if (arg === "--unmerged") unmerged = true;
+    else if (/^Q\d+$/.test(arg)) qids.push(arg);
+    else throw new Error(`unexpected arg: ${arg} (want Qxxx, --unmerged or --out DIR)`);
   }
   if (qids.length === 0)
     throw new Error(
@@ -196,9 +200,12 @@ async function main() {
   if (unmerged && qids.length % 2 !== 0)
     throw new Error("--unmerged takes QIDs pairwise (SOURCE TARGET …); got an odd count");
   // Each job is one QID to resolve from its merge trail, or one unmerged pair.
-  const jobs: string[][] = unmerged
-    ? Array.from({ length: qids.length / 2 }, (_, i) => qids.slice(2 * i, 2 * i + 2))
-    : qids.map((q) => [q]);
+  const jobs: ([string] | [string, string])[] = unmerged
+    ? Array.from({ length: qids.length / 2 }, (_, i): [string, string] => [
+        qids[2 * i]!,
+        qids[2 * i + 1]!,
+      ])
+    : qids.map((q): [string] => [q]);
 
   await mkdir(outDir, { recursive: true });
   const indexPath = join(outDir, "index.jsonl");

@@ -16,9 +16,9 @@ export function capIdReason(
 ): { prefix: string; shown: string[]; hidden: string[] } | null {
   const m = ID_LIST_REASON.exec(text);
   if (!m) return null;
-  const ids = m[2].split(", ");
+  const ids = m[2]!.split(", ");
   if (ids.length <= max) return null;
-  return { prefix: m[1], shown: ids.slice(0, max), hidden: ids.slice(max) };
+  return { prefix: m[1]!, shown: ids.slice(0, max), hidden: ids.slice(max) };
 }
 
 /** Which way a reason pushes the score, and roughly how hard (1 weak – 3 strong). */
@@ -114,7 +114,7 @@ export function groupReasons(reasons: string[]): {
   for (const text of reasons) {
     const held = HELD_BELOW.exec(text);
     if (held) {
-      heldBelow = held[1];
+      heldBelow = held[1]!;
       continue;
     }
     const tone = reasonTone(text);

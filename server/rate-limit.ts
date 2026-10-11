@@ -20,7 +20,7 @@ export function createRateLimiter(max: number, windowMs: number): RateLimiter {
         hits.set(key, recent);
         return {
           ok: false,
-          retryAfter: Math.max(1, Math.ceil((recent[0] + windowMs - now) / 1000)),
+          retryAfter: Math.max(1, Math.ceil((recent[0]! + windowMs - now) / 1000)),
         };
       }
       recent.push(now);

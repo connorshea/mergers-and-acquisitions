@@ -54,7 +54,7 @@ function displayValue(v: AnnotatedValue): string {
   if (v.type === "time") {
     const m = /^([+-]?\d{4}-\d{2}-\d{2})T00:00:00Z$/.exec(v.value);
     // Year/month precision arrives as "00" parts (+1987-00-00 → 1987).
-    if (m) return m[1].replace(/^\+/, "").replace(/-00$/, "").replace(/-00$/, "");
+    if (m) return m[1]!.replace(/^\+/, "").replace(/-00$/, "").replace(/-00$/, "");
   }
   if (v.type === "quantity" && v.unit) return `${v.value} ${v.unitLabel ?? v.unit}`;
   if (v.type === "coordinate") return formatCoordinate(v);
@@ -70,7 +70,7 @@ function displayValue(v: AnnotatedValue): string {
 function rowDiffCaption(r: Row): string | null {
   const [a] = r.a;
   const [b] = r.b;
-  if (r.a.length !== 1 || r.b.length !== 1) return null;
+  if (!a || !b || r.a.length !== 1 || r.b.length !== 1) return null;
   if (a.type !== "string" || b.type !== "string" || a.status !== "similar") return null;
   return describeDifference(a.value, b.value);
 }

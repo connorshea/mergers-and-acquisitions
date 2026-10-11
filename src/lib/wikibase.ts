@@ -82,7 +82,7 @@ const entityUriQid = (uri: string): string | undefined =>
 export function snakValue(snak: Snak): Value | null {
   if (snak.snaktype === "somevalue") return { type: "somevalue", value: "" };
   if (snak.snaktype === "novalue") return { type: "novalue", value: "" };
-  if (snak.snaktype !== "value" || !snak.datavalue) return null;
+  if (!snak.datavalue) return null;
   const { type, value } = snak.datavalue;
   switch (type) {
     case "wikibase-entityid":

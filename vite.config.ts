@@ -50,6 +50,15 @@ export default defineConfig({
     // dependency. The seed defaults to Date.now() and is printed on each run;
     // reproduce a failing order with `vp test --sequence.seed=<seed>`.
     sequence: { shuffle: true },
+    // Off unless `--coverage` is passed (CI's db job does, since only it runs
+    // every test). `include` lists the source explicitly so files no test
+    // imports still show up, at 0%, rather than silently dropping out.
+    coverage: {
+      provider: "v8",
+      include: ["src/**/*.{ts,tsx}", "server/**/*.ts", "jobs/**/*.ts", "db/**/*.ts"],
+      exclude: ["**/*.test.ts", "**/*.d.ts"],
+      reporter: ["text-summary", "html", "json-summary"],
+    },
   },
   build: {
     outDir: "dist/client",

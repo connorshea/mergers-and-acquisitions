@@ -12,6 +12,10 @@ updates:
       # (the `packageManager` / `devEngines` pins in package.json).
       - dependency-name: pnpm
         update-types: ["version-update:semver-major"]
+      # @types/node tracks the Node major; keep it on 24.x to match
+      # `engines` / .node-version. Bump it by hand when the runtime moves.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
     groups:
       dev-dependencies:
         dependency-type: development

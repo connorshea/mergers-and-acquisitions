@@ -401,9 +401,10 @@ export const dumpImportLinked = mysqlTable(
 
 // One row per Wikimedia account that has logged in. Keyed on the *central*
 // (SUL) user id from the OAuth profile endpoint's `sub`, never the username —
-// accounts get renamed, ids don't. `groups`/`blocked` are a snapshot from the
-// last login, kept for display and gating (Wikidata enforces the real rights on
-// every edit regardless).
+// accounts get renamed, ids don't. `groups` is a snapshot from the last login
+// or nightly profile re-check, kept for display. `blocked` locks the account
+// out: login refuses it and the session middleware ends any session it holds
+// (server/auth/session.ts); Wikidata enforces the real rights on every edit.
 export const users = mysqlTable("users", {
   id: int("id").primaryKey(), // Wikimedia central user id (OAuth profile `sub`)
   username: varchar("username", { length: 255 }).notNull(),

@@ -23,7 +23,6 @@ export interface AuthUser {
   id: number;
   username: string;
   isAdmin: boolean;
-  blocked: boolean;
   /** Languages the user reads (settings page); empty when unset. */
   languages: string[];
 }
@@ -32,7 +31,7 @@ export type AuthVariables = { user: AuthUser | null; sessionId: string | null };
 /** Hono env for routers that read the session: `new Hono<AuthEnv>()`. */
 export type AuthEnv = { Variables: AuthVariables };
 
-function cookieOptions() {
+export function sessionCookieOptions() {
   return {
     httpOnly: true,
     secure: cookiesSecure(),
@@ -53,14 +52,35 @@ export async function createSession(c: Context, userId: number, now = new Date()
     lastSeenAt: stamp,
     expiresAt: toSqlDatetime(addSeconds(now, SESSION_TTL_SECONDS)),
   });
-  setCookie(c, SESSION_COOKIE, token, { ...cookieOptions(), maxAge: SESSION_TTL_SECONDS });
+  setCookie(c, SESSION_COOKIE, token, { ...sessionCookieOptions(), maxAge: SESSION_TTL_SECONDS });
   return id;
 }
 
 /** Delete a session row (by hash) and clear the cookie. */
 export async function destroySession(c: Context, id: string): Promise<void> {
   await db.delete(sessions).where(eq(sessions.id, id));
-  deleteCookie(c, SESSION_COOKIE, cookieOptions());
+  deleteCookie(c, SESSION_COOKIE, sessionCookieOptions());
+}
+
+/**
+ * End every session `userId` has and drop their OAuth tokens: the account is
+ * no longer welcome (blocked on Wikidata). Their next request finds no
+ * session and the cookie is cleared then.
+ */
+export async function endAllSessions(userId: number): Promise<void> {
+  await db.delete(sessions).where(eq(sessions.userId, userId));
+  await db.delete(oauthTokens).where(eq(oauthTokens.userId, userId));
+}
+
+/**
+ * Record that `userId` is blocked on Wikidata and log them out everywhere.
+ * Called wherever a block first shows up: the login profile, a Wikidata edit
+ * rejected as `blocked`, or the nightly profile re-check. Login refuses a
+ * blocked profile outright, so a blocked user never holds a session.
+ */
+export async function markBlocked(userId: number): Promise<void> {
+  await db.update(users).set({ blocked: true }).where(eq(users.id, userId));
+  await endAllSessions(userId);
 }
 
 /**
@@ -141,8 +161,14 @@ export const sessionMiddleware: MiddlewareHandler<AuthEnv> = async (c, next) => 
         await destroySession(c, id);
         await deleteTokensIfLoggedOut(row.userId);
       } else {
-        deleteCookie(c, SESSION_COOKIE, cookieOptions());
+        deleteCookie(c, SESSION_COOKIE, sessionCookieOptions());
       }
+    } else if (row.blocked) {
+      // Blocked since this session began (markBlocked may have raced with a
+      // request, or the flag was set by hand): the session ends here, along
+      // with any other the account holds, and the request runs logged out.
+      await endAllSessions(row.userId);
+      deleteCookie(c, SESSION_COOKIE, sessionCookieOptions());
     } else {
       if (addSeconds(fromSqlDatetime(row.lastSeenAt), TOUCH_INTERVAL_SECONDS) < now) {
         await db
@@ -154,7 +180,6 @@ export const sessionMiddleware: MiddlewareHandler<AuthEnv> = async (c, next) => 
         id: row.userId,
         username: row.username,
         isAdmin: isAdminId(row.userId),
-        blocked: row.blocked,
         languages: row.languages ?? [],
       });
       c.set("sessionId", id);

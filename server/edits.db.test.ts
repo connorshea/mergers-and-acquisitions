@@ -21,6 +21,7 @@ import {
   items,
   mergeCandidates,
   oauthTokens,
+  sessions,
   users,
   wikidataEdits,
 } from "../db/schema.ts";
@@ -241,17 +242,34 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       expect((await candidateRow(alpha)).status).toBe("open");
     });
 
-    it("refuses a blocked account before touching Wikidata", async () => {
+    it("treats a blocked account as logged out before touching Wikidata", async () => {
       await db.update(users).set({ blocked: true }).where(eq(users.id, EDITOR_ID));
       const calls = stubWikidata(() => mergeOk());
+      const { status } = await post<EditErrorResponse>(`/api/candidates/${alpha}/merge`, editor);
+      expect(status).toBe(401);
+      expect(calls).toHaveLength(0);
+      expect(await db.select().from(sessions)).toHaveLength(0);
+      expect((await candidateRow(alpha)).status).toBe("open");
+    });
+
+    it("logs the account out everywhere when Wikidata rejects the edit as blocked", async () => {
+      stubWikidata(() => apiError("blocked", "You have been blocked from editing"));
       const { status, body } = await post<EditErrorResponse>(
         `/api/candidates/${alpha}/merge`,
         editor,
       );
       expect(status).toBe(403);
       expect(body.code).toBe("blocked");
-      expect(calls).toHaveLength(0);
+      expect((await db.select().from(users))[0]?.blocked).toBe(true);
+      expect(await db.select().from(sessions)).toHaveLength(0);
+      expect(await db.select().from(oauthTokens)).toHaveLength(0);
+      // The claim was released: the candidate is open again for someone else.
       expect((await candidateRow(alpha)).status).toBe("open");
+      const next = await app.request(`/api/candidates/${alpha}/merge`, {
+        method: "POST",
+        headers: editor,
+      });
+      expect(next.status).toBe(401);
     });
 
     it("refuses conflict overrides from the client instead of merging with them", async () => {

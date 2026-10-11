@@ -303,7 +303,12 @@ describe("fetchClassAncestors", () => {
       ]);
     });
     vi.stubGlobal("fetch", fetch);
+    const error = vi.spyOn(console, "error").mockImplementation(() => {});
     const { ancestors, failed } = await fetchClassAncestors(qids(1500), { ...FAST, tries: 1 });
+    expect(error).toHaveBeenCalledWith(
+      expect.stringContaining("class ancestors: giving up on 500 classes (Q1001…)"),
+    );
+    error.mockRestore();
     expect(ancestors.get("Q1")).toEqual(["Q1", "Q386724"]);
     expect(ancestors.get("Q2")).toEqual(["Q2"]);
     expect(ancestors.size).toBe(1000);

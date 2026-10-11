@@ -2,16 +2,7 @@
 // real MariaDB. The "replica" is a set of wikidatawiki-shaped tables created in
 // the test database with the replicas' VARBINARY columns; the Action API
 // fallback gets a fake fetch. Opt-in via DB_TEST=1 — see test/global-setup.ts.
-import {
-  afterAll,
-  afterEach,
-  beforeAll,
-  beforeEach,
-  describe,
-  expect,
-  it,
-  vi,
-} from "vite-plus/test";
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import mysql from "mysql2/promise";
 import { sql } from "drizzle-orm";
 import { app } from "./app.ts";
@@ -21,6 +12,7 @@ import { itemCreations, mergeCandidates } from "../db/schema.ts";
 import { loadCreations, runItemCreationSync } from "./item-creations.ts";
 import type { CandidateCreationsResponse } from "../src/lib/api-types.ts";
 import { DB_TEST, truncateAll } from "../test/db-helpers.ts";
+import { quietLogs } from "../test/console.ts";
 
 const connect = () => mysql.createConnection(connConfig());
 const REPLICA_TABLES =
@@ -94,7 +86,7 @@ describe.skipIf(!DB_TEST)("item creations", () => {
     await db.execute(sql`INSERT INTO user_groups VALUES (6, 'bot'), (5, 'autoconfirmed')`);
   });
   beforeEach(truncateAll);
-  afterEach(() => vi.restoreAllMocks());
+  quietLogs();
   afterAll(async () => {
     await db.execute(sql.raw(`DROP TABLE IF EXISTS ${REPLICA_TABLES}`));
     await pool.end();

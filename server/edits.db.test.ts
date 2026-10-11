@@ -38,6 +38,7 @@ import {
   SAME_ORIGIN,
   truncateAll,
 } from "../test/db-helpers.ts";
+import { expectConsole } from "../test/console.ts";
 import { storeTokens } from "./auth/tokens.ts";
 import { addSeconds, toSqlDatetime } from "./auth/time.ts";
 import { editLimiter } from "./rate-limit.ts";
@@ -194,7 +195,10 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
     }
     await pool.end();
   });
-  afterEach(() => vi.unstubAllGlobals());
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.restoreAllMocks();
+  });
 
   beforeEach(async () => {
     await truncateAll();
@@ -411,7 +415,12 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
           ? mergeOk(101, 102, 0)
           : apiError("failed-save", "could not clear the item"),
       );
+      const error = expectConsole("error");
       const { body } = await post<CandidateMergeResponse>(`/api/candidates/${alpha}/merge`, editor);
+      expect(error).toHaveBeenCalledWith(
+        "merge: Q20 → Q10 merged but auto-redirect failed",
+        expect.objectContaining({ message: "could not clear the item" }),
+      );
       expect(body.redirected).toBe(false);
       expect(body.candidate.resolution).toBe(
         "merged into Q10 (rev 102); source item not redirected",
@@ -1297,6 +1306,7 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
 
     it("keeps the claim when the outcome can't be checked either", async () => {
       stubTimedOutMerge(() => new TypeError("fetch failed"));
+      const error = expectConsole("error");
       const { status, body } = await post<EditErrorResponse>(
         `/api/candidates/${alpha}/merge`,
         editor,
@@ -1304,6 +1314,10 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       );
       expect(status).toBe(502);
       expect(body.error).toMatch(/may still have gone through/);
+      expect(error).toHaveBeenCalledWith(
+        "merge: could not confirm the outcome of Q20 → Q10",
+        expect.anything(),
+      );
       const row = await candidateRow(alpha);
       expect(row.status).toBe("merging");
       expect(row.resolvedAt).not.toBeNull();
@@ -1362,6 +1376,7 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       spy.mockImplementationOnce(real as typeof db.transaction).mockImplementationOnce(() => {
         throw new Error("Deadlock found when trying to get lock");
       });
+      const error = expectConsole("error");
       try {
         const { status, body } = await post<CandidateMergeResponse>(
           `/api/candidates/${alpha}/merge`,
@@ -1370,6 +1385,10 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
         );
         expect(status).toBe(200);
         expect(body.candidate).toMatchObject({ id: alpha, status: "merged" });
+        expect(error).toHaveBeenCalledWith(
+          "merge: Q20 → Q10 succeeded but the mirror cleanup failed",
+          expect.objectContaining({ message: "Deadlock found when trying to get lock" }),
+        );
       } finally {
         spy.mockRestore();
       }

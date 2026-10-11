@@ -11,6 +11,7 @@ import { connConfig } from "./db-config.ts";
 import { externalIds, items, mergeCandidates } from "../db/schema.ts";
 import { runOutsideMergeSync, settlement } from "./outside-merges.ts";
 import { DB_TEST, insertItem, makeItem, truncateAll } from "../test/db-helpers.ts";
+import { expectConsole, quietLogs } from "../test/console.ts";
 
 const connect = () => mysql.createConnection(connConfig());
 
@@ -96,6 +97,7 @@ describe.skipIf(!DB_TEST)("outside merges", () => {
       rd_interwiki VARBINARY(32), rd_fragment VARBINARY(255))`);
   });
   beforeEach(truncateAll);
+  quietLogs();
   afterAll(async () => {
     await db.execute(sql`DROP TABLE IF EXISTS page, redirect`);
     await pool.end();
@@ -176,6 +178,7 @@ describe.skipIf(!DB_TEST)("outside merges", () => {
     await candidate("Q2", "Q1");
     for (let n = 100; n < 160; n += 2) await candidate(`Q${n}`, `Q${n + 1}`);
 
+    const warn = expectConsole("warn");
     expect(await runOutsideMergeSync({ connect })).toMatchObject({
       redirects: 1,
       deleted: 60,
@@ -185,5 +188,6 @@ describe.skipIf(!DB_TEST)("outside merges", () => {
     const rows = await candidates();
     expect(rows[0]).toMatchObject({ status: "merged" });
     expect(rows.slice(1).every((r) => r.status === "open")).toBe(true);
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining("NOT settling 60 of 62 items"));
   });
 });

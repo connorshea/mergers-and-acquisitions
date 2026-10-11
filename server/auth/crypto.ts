@@ -45,6 +45,10 @@ export function safeEqual(a: string, b: string): boolean {
 
 const ALGO = "aes-256-gcm";
 const IV_BYTES = 12;
+// Always the full 128-bit tag. Without `authTagLength` Node accepts any
+// NIST-valid GCM tag length on decrypt, so a tag truncated to 4 bytes would
+// still verify — a 32-bit forgery bound instead of 128.
+const TAG_BYTES = 16;
 
 export interface EncKey {
   kid: string;
@@ -74,7 +78,7 @@ export function encrypt(plaintext: string, aad: string, keys: EncKey[] = loadEnc
   if (!first) throw new Error("No encryption key to encrypt with");
   const { kid, key } = first;
   const iv = randomBytes(IV_BYTES);
-  const cipher = createCipheriv(ALGO, key, iv);
+  const cipher = createCipheriv(ALGO, key, iv, { authTagLength: TAG_BYTES });
   cipher.setAAD(Buffer.from(aad, "utf8"));
   const ct = Buffer.concat([cipher.update(plaintext, "utf8"), cipher.final()]);
   const tag = cipher.getAuthTag();
@@ -96,9 +100,15 @@ export function decrypt(payload: string, aad: string, keys: EncKey[] = loadEncKe
     throw new Error(
       `No encryption key with id ${kid} (was TOKEN_ENC_KEY rotated without TOKEN_ENC_KEY_PREVIOUS?)`,
     );
-  const decipher = createDecipheriv(ALGO, entry.key, Buffer.from(ivB64, "base64url"));
+  const iv = Buffer.from(ivB64, "base64url");
+  const tag = Buffer.from(tagB64, "base64url");
+  // `encrypt` only ever writes these lengths; anything else is not ours.
+  if (iv.length !== IV_BYTES || tag.length !== TAG_BYTES) {
+    throw new Error("Unrecognised ciphertext format (bad IV or auth tag length)");
+  }
+  const decipher = createDecipheriv(ALGO, entry.key, iv, { authTagLength: TAG_BYTES });
   decipher.setAAD(Buffer.from(aad, "utf8"));
-  decipher.setAuthTag(Buffer.from(tagB64, "base64url"));
+  decipher.setAuthTag(tag);
   return Buffer.concat([
     decipher.update(Buffer.from(ctB64, "base64url")),
     decipher.final(),

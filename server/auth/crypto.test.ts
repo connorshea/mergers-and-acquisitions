@@ -74,6 +74,40 @@ describe("token encryption", () => {
     expect(() => decrypt("garbage", AAD, keys)).toThrow(/format/);
   });
 
+  it("rejects a truncated auth tag rather than verifying a shorter one", () => {
+    const keys = loadEncKeys({ TOKEN_ENC_KEY: keyA });
+    const [v, kid, iv, ct, tag] = encrypt("payload", AAD, keys).split(":") as [
+      string,
+      string,
+      string,
+      string,
+      string,
+    ];
+    expect(Buffer.from(tag, "base64url")).toHaveLength(16);
+    // Node accepts 4/8/12..16-byte GCM tags by default; every short one must fail here.
+    for (const n of [15, 12, 8, 4]) {
+      const short = Buffer.from(tag, "base64url").subarray(0, n).toString("base64url");
+      expect(() => decrypt([v, kid, iv, ct, short].join(":"), AAD, keys)).toThrow(/format/);
+    }
+  });
+
+  it("rejects an IV of any length but 12 bytes", () => {
+    const keys = loadEncKeys({ TOKEN_ENC_KEY: keyA });
+    const [v, kid, iv, ct, tag] = encrypt("payload", AAD, keys).split(":") as [
+      string,
+      string,
+      string,
+      string,
+      string,
+    ];
+    expect(Buffer.from(iv, "base64url")).toHaveLength(12);
+    for (const bad of [Buffer.alloc(0), Buffer.alloc(8), Buffer.alloc(16)]) {
+      expect(() =>
+        decrypt([v, kid, bad.toString("base64url"), ct, tag].join(":"), AAD, keys),
+      ).toThrow(/format/);
+    }
+  });
+
   it("decrypts with the previous key during a rotation, encrypts with the current one", () => {
     const old = loadEncKeys({ TOKEN_ENC_KEY: keyA });
     const ct = encrypt("tok", AAD, old);

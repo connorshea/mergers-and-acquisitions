@@ -50,20 +50,19 @@ server/        Hono app (app.ts, index.ts) + routers (candidates, edits);
                write paths (*-sync.ts); the hunt (hunt.ts).
 jobs/          Toolforge scheduled jobs (hunt.ts, sync-*.ts), run via node
                (native TS type-stripping) and declared in jobs.yaml.
-db/            MySQL-dialect schema (schema.ts), seed script (seed.ts), and
-               drizzle-kit migrations (migrations/).
+db/            MySQL-dialect schema (schema.ts) and drizzle-kit migrations
+               (migrations/).
 src/           React SPA — pages/ (CandidatesList, CandidateDetail), the
                comparison UI (MergeCandidates.tsx), and DOM-free libraries in
-               src/lib/ (compare + scoreCandidate, the dump→Item adapter in
+               src/lib/ (compare + scoreCandidate, the derived DB columns in
                wikidata.ts, the QLever client in sparql.ts, the typed API
                client in client.ts).
 ```
 
 ## Data pipeline
 
-1. **Seed** (`db/seed.ts`, a one-off Toolforge job in prod) — bulk-load the
-   in-scope items from a Wikidata dump into `items` (+ their `external_ids`). This
-   is the initial mirror; the dump omits descriptions, which a sync backfills.
+1. **Dump import** (`jobs/import-dump.ts`, weekly) — load the in-scope items
+   from the Wikidata entity JSON dump into `items` (+ their `external_ids`).
 2. **Sync jobs** (scheduled, `jobs/sync-*.ts` over the shared `server/*-sync.ts`
    write paths) keep the mirror useful:
    - `sync-properties` — every property's label, datatype, and formatter URL, so
@@ -188,16 +187,16 @@ dismissed candidates).
   `toolforge webservice buildservice start`. Serves at `mna.toolforge.org`.
 - **Jobs:** `jobs.yaml` (`toolforge jobs load`) declares the scheduled
   `sync-properties` / `sync-entity-labels` / `sync-descriptions` (weekly) and
-  `hunt` (nightly, with extra memory/CPU), plus a one-off seed/initial-load job.
+  `hunt` (nightly, with extra memory/CPU), plus the weekly dump import.
   Set the Build Service `image` name in `jobs.yaml` before loading.
 - **DB:** a MariaDB 12.2 database on Trove, created with the **`utf8mb4_bin`**
   collation, connected through the `DB_*` env vars.
 
 ## Roadmap
 
-- [x] Core app: schema, seed, sync jobs, hunt, review SPA — migrated to
+- [x] Core app: schema, dump import, sync jobs, hunt, review SPA — migrated to
       Node/Hono/Drizzle+MariaDB and verified locally.
-- [ ] Deploy to Toolforge (build service, Trove DB, load `jobs.yaml`, one-off seed).
+- [x] Deploy to Toolforge (build service, Trove DB, load `jobs.yaml`, the dump import).
 - [x] **Wikimedia OAuth** login (sessions, encrypted token storage, gated routes).
 - [x] Apply-merge / "different from" edits on the user's behalf (issue #5).
 - [ ] Widen the item scope beyond video games toward all non-scholarly items.

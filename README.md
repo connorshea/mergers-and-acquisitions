@@ -40,7 +40,7 @@ Trove, create the database with the same `COLLATE utf8mb4_bin`.
 cp .env.example .env   # local DB defaults match the setup above
 pnpm install
 pnpm db:migrate        # apply migrations
-pnpm seed              # seed from seed-data/wikidata_games.json (SEED_LIMIT=2000 for a slice)
+DUMP_LIMIT=2000 pnpm job:import-dump  # load a slice of the mirror from a local WIKIDATA_JSON_DUMP
 pnpm dev               # Vite SPA (proxying /api) + the Hono server on :8000
 ```
 
@@ -52,7 +52,6 @@ pnpm start             # run the production server (serves API + dist/client)
 
 pnpm db:generate       # generate a migration from db/schema.ts (drizzle-kit)
 pnpm db:migrate        # apply pending migrations
-pnpm seed              # load the vglist SPARQL dump into the DB (quick dev DB)
 pnpm import-items Q1 Q2 # import specific items live from Special:EntityData
 
 pnpm job:import-dump   # load the mirror from the Wikidata entity JSON dump
@@ -216,8 +215,7 @@ toolforge envvars delete DUMP_LIMIT
 A full pass (156 GB gzip, ~1.6 TB inflated) is split across six jobs; see
 below. `jobs.yaml` schedules them weekly (Wednesdays, after the Tuesday dump).
 Locally, point `WIKIDATA_JSON_DUMP` at any `.json.gz` / `.json` in the same
-format (one entity per line; the `.bz2` dump is refused as far too slow). The
-older `pnpm seed` path (the vglist SPARQL blob) still works for a quick dev DB.
+format (one entity per line; the `.bz2` dump is refused as far too slow).
 
 ### Splitting the pass across jobs
 

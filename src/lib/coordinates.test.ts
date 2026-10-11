@@ -6,7 +6,6 @@ import {
   formatCoordinate,
   formatMeters,
   geohackUrl,
-  parseWktPoint,
 } from "./coordinates.ts";
 
 describe("formatCoordinate", () => {
@@ -92,12 +91,5 @@ describe("coordinateDistance / formatMeters", () => {
     expect(formatMeters(320.4)).toBe("320 m");
     expect(formatMeters(4230)).toBe("4.2 km");
     expect(formatMeters(48_400)).toBe("48 km");
-  });
-});
-
-describe("parseWktPoint", () => {
-  it("rejects a literal that isn't a point", () => {
-    expect(parseWktPoint("LINESTRING(1 2, 3 4)")).toBeNull();
-    expect(parseWktPoint("Point(a b)")).toBeNull();
   });
 });

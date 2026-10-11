@@ -6,8 +6,9 @@
 // Both go through server/wikidata-client.ts under the user's own OAuth grant
 // (never a shared account), write a `wikidata_edits` audit row for every
 // attempt, and are per-user rate limited. Wikidata enforces the user's real
-// rights; the only local gate beyond a login is the profile's `blocked` flag,
-// which turns a doomed edit into a clear message.
+// rights; there is no local gate beyond a login (a blocked account never has
+// one, see server/auth/session.ts), and an edit Wikidata rejects as `blocked`
+// ends the account's sessions.
 //
 // Both routes take a `merging` claim on the candidate first (an optimistic
 // UPDATE … WHERE status = 'open'), so a double click or a second tab can't
@@ -18,7 +19,7 @@ import { randomBytes } from "node:crypto";
 import { type Context, Hono, type MiddlewareHandler } from "hono";
 import { and, eq, inArray, lt, or } from "drizzle-orm";
 import { db } from "./db.ts";
-import { type AuthEnv, type AuthUser, requireUser } from "./auth/session.ts";
+import { type AuthEnv, type AuthUser, markBlocked, requireUser } from "./auth/session.ts";
 import { addSeconds, toSqlDatetime } from "./auth/time.ts";
 import { externalIds, itemSync, items, mergeCandidates, wikidataEdits } from "../db/schema.ts";
 import { loadLabels, summaryColumns, toSummary } from "./candidate-summary.ts";
@@ -195,16 +196,6 @@ function errorResponse(
 
 /** The checks shared by both edit endpoints; null when the request may proceed. */
 function editGate(c: EditContext, user: AuthUser): Response | null {
-  if (user.blocked) {
-    return errorResponse(
-      c,
-      {
-        error: "Your Wikidata account is blocked, so this app can't edit on its behalf.",
-        code: "blocked",
-      },
-      403,
-    );
-  }
   const limit = editLimiter.hit(user.id);
   if (!limit.ok) {
     c.header("Retry-After", String(limit.retryAfter));
@@ -264,6 +255,10 @@ async function auditFailure(base: AuditBase, err: unknown): Promise<WikidataEdit
     errorCode: known ? err.code : "internal",
     errorText: known ? err.message : err instanceof Error ? err.message : String(err),
   });
+  // Wikidata is the authority on blocks: one placed since login shows up here
+  // first. Record it and log the account out everywhere (this response is its
+  // last; see markBlocked).
+  if (known && err.kind === "blocked") await markBlocked(base.userId);
   if (known) return err;
   // Not a Wikidata outcome (a DB error, a bug): let Hono turn it into a 500.
   throw err;

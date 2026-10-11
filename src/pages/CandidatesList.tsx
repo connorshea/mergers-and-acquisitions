@@ -153,7 +153,7 @@ export default function CandidatesList() {
   const creator = params.get("creator") ?? "";
   // Hide pairs flagged with a merge-blocking conflict; off by default.
   const noBlockers = params.get("noBlockers") === "1";
-  // Set by the OAuth callback when the login didn't complete (?auth=denied|failed).
+  // Set by the OAuth callback when the login didn't complete (?auth=denied|failed|blocked).
   // Read once into state and then stripped from the URL, so the alert doesn't
   // survive every filter change and a retried login doesn't return to it.
   const [authOutcome] = useState(() => params.get("auth"));
@@ -340,6 +340,12 @@ export default function CandidatesList() {
         {authOutcome === "denied" && (
           <p className="list-msg is-error" role="alert">
             Login cancelled: the authorization request was declined by Wikidata.
+          </p>
+        )}
+        {authOutcome === "blocked" && (
+          <p className="list-msg is-error" role="alert">
+            Your Wikidata account is blocked, so it can't use this tool. Once the block is lifted,
+            log in again.
           </p>
         )}
         {authOutcome === "failed" && (

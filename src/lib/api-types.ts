@@ -248,7 +248,6 @@ export interface AuthUserInfo {
   id: number;
   username: string;
   isAdmin: boolean;
-  blocked: boolean;
   /** Languages the user reads (Wikidata codes); empty when unset. */
   languages: string[];
 }

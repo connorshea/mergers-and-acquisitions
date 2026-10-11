@@ -1931,10 +1931,6 @@ a.chip-id:hover {
   background: var(--shared-bg);
   color: var(--shared);
 }
-.auth-badge.is-blocked {
-  background: var(--distinct-bg);
-  color: var(--distinct);
-}
 .user-menu > summary {
   padding: 0.35rem 0.6rem;
   border: 1px solid var(--rule);

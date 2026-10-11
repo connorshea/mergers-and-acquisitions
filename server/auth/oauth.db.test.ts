@@ -22,6 +22,7 @@ import { expectConsole } from "../../test/console.ts";
 import { decrypt, randomToken, sha256Hex } from "./crypto.ts";
 import { wikiOrigin } from "./config.ts";
 import { MAX_RETURN_TO_LENGTH, safeReturnTo } from "./oauth.ts";
+import { recheckLoggedInUsers } from "./profile-recheck.ts";
 import { pruneExpiredSessions, SESSION_COOKIE, SESSION_TTL_SECONDS } from "./session.ts";
 import { addSeconds, fromSqlDatetime, toSqlDatetime } from "./time.ts";
 import { getAccessToken, storeTokens, TokenError } from "./tokens.ts";
@@ -229,7 +230,7 @@ describe.skipIf(!DB_TEST)("auth", () => {
       expect(row?.id).toBe(sha256Hex(session));
       expect(row?.userId).toBe(7);
       expect(await me(session)).toEqual({
-        user: { id: 7, username: "Alice", isAdmin: false, blocked: false, languages: [] },
+        user: { id: 7, username: "Alice", isAdmin: false, languages: [] },
         configured: true,
         wikiBaseUrl: wikiOrigin(),
       });
@@ -365,21 +366,47 @@ describe.skipIf(!DB_TEST)("auth", () => {
       expect(await db.select().from(oauthTokens)).toHaveLength(0);
     });
 
-    it("updates an existing user's name and block status on re-login", async () => {
+    it("updates an existing user's name and groups on re-login", async () => {
       stubProvider();
       const first = await startLogin();
       await callback(`code=abc&state=${first.state}`, first.loginCookie);
 
-      stubProvider({ profile: { sub: 7, username: "Alicia", groups: ["user"], blocked: true } });
+      stubProvider({ profile: { sub: 7, username: "Alicia", groups: ["user"], blocked: false } });
       const second = await startLogin();
       const res = await callback(`code=def&state=${second.state}`, second.loginCookie);
       const rows = await db.select().from(users);
       expect(rows).toHaveLength(1);
-      expect(rows[0]).toMatchObject({ id: 7, username: "Alicia", groups: ["user"], blocked: true });
+      expect(rows[0]).toMatchObject({ id: 7, username: "Alicia", groups: ["user"] });
       expect((await me(cookieValue(res, SESSION_COOKIE))).user).toMatchObject({
         username: "Alicia",
-        blocked: true,
       });
+    });
+
+    it("refuses a blocked account and ends the sessions it already had", async () => {
+      stubProvider();
+      const first = await startLogin();
+      const earlier = cookieValue(
+        await callback(`code=abc&state=${first.state}`, first.loginCookie),
+        SESSION_COOKIE,
+      )!;
+      expect((await me(earlier)).user?.id).toBe(7);
+
+      stubProvider({ profile: { sub: 7, username: "Alicia", groups: ["user"], blocked: true } });
+      const second = await startLogin();
+      const warn = expectConsole("warn");
+      const res = await callback(`code=def&state=${second.state}`, second.loginCookie);
+      expect(warn).toHaveBeenCalledWith("oauth: refused login for blocked account 7 (Alicia)");
+      expect(res.status).toBe(303);
+      expect(res.headers.get("location")).toBe("/?auth=blocked");
+      // No new session, the cookie is cleared, and the earlier session is gone too.
+      expect(cookieLine(res, SESSION_COOKIE)).toMatch(/Max-Age=0/);
+      expect(await db.select().from(sessions)).toHaveLength(0);
+      expect(await db.select().from(oauthTokens)).toHaveLength(0);
+      expect((await me(earlier)).user).toBeNull();
+      // The block is recorded on the user row, which stays for attribution.
+      const rows = await db.select().from(users);
+      expect(rows).toHaveLength(1);
+      expect(rows[0]).toMatchObject({ id: 7, username: "Alicia", blocked: true });
     });
 
     it("replaces an existing session in the same browser", async () => {
@@ -416,6 +443,19 @@ describe.skipIf(!DB_TEST)("auth", () => {
       });
       expect((await me(token)).user).toBeNull();
       expect(await db.select().from(sessions)).toHaveLength(0);
+    });
+
+    it("ends every session of an account once it is marked blocked", async () => {
+      const first = await loginAs(7, "Alice");
+      const second = await loginAs(7, "Alice");
+      await storeTokens(7, { access_token: "a", refresh_token: "r", expires_in: 3600 });
+      await db.update(users).set({ blocked: true }).where(eq(users.id, 7));
+      const res = await app.request("/api/auth/me", { headers: { Cookie: first.Cookie } });
+      expect(((await res.json()) as AuthMeResponse).user).toBeNull();
+      expect(cookieLine(res, SESSION_COOKIE)).toMatch(/Max-Age=0/);
+      expect((await me(second.Cookie.split("=")[1])).user).toBeNull();
+      expect(await db.select().from(sessions)).toHaveLength(0);
+      expect(await db.select().from(oauthTokens)).toHaveLength(0);
     });
 
     it("ignores a session idle for too long", async () => {
@@ -577,6 +617,48 @@ describe.skipIf(!DB_TEST)("auth", () => {
       });
       expect(own.status).toBe(200);
       expect(await db.select().from(sessions)).toHaveLength(0);
+    });
+  });
+
+  describe("recheckLoggedInUsers", () => {
+    const noSleep = async () => {};
+
+    it("locks out a logged-in account whose profile now says blocked", async () => {
+      const alice = await loginAs(7, "Alice");
+      await storeTokens(7, { access_token: "a", refresh_token: "r", expires_in: 3600 });
+      const bob = await loginAs(8, "Bob");
+      await storeTokens(8, { access_token: "b", refresh_token: "r", expires_in: 3600 });
+      const { stub } = stubProvider({
+        profile: { sub: 7, username: "Alice", groups: ["user"], blocked: true },
+      });
+      // The stub answers the same profile for everyone; give Bob his own.
+      stub.mockImplementation(async (_input, init) => {
+        const auth = new Headers(init?.headers).get("authorization");
+        return Response.json(
+          auth === "Bearer b"
+            ? { sub: 8, username: "Bobby", groups: ["user", "sysop"], blocked: false }
+            : { sub: 7, username: "Alice", groups: ["user"], blocked: true },
+        );
+      });
+      const warn = expectConsole("warn");
+      expect(await recheckLoggedInUsers(noSleep)).toEqual({ checked: 2, blocked: 1, skipped: 0 });
+      expect(warn).toHaveBeenCalledWith("profile-recheck: 7 (Alice) is blocked; ending sessions");
+      expect((await me(alice.Cookie.split("=")[1])).user).toBeNull();
+      expect((await me(bob.Cookie.split("=")[1])).user).toMatchObject({ username: "Bobby" });
+      const rows = await db.select().from(users).orderBy(users.id);
+      expect(rows.map((r) => [r.id, r.blocked, r.groups])).toEqual([
+        [7, true, ["user"]],
+        [8, false, ["user", "sysop"]],
+      ]);
+      expect(await db.select().from(oauthTokens)).toHaveLength(1);
+    });
+
+    it("leaves an account alone when its profile can't be fetched", async () => {
+      const alice = await loginAs(7, "Alice"); // no tokens stored: grant revoked
+      const warn = expectConsole("warn");
+      expect(await recheckLoggedInUsers(noSleep)).toEqual({ checked: 0, blocked: 0, skipped: 1 });
+      expect(warn).toHaveBeenCalledWith("profile-recheck: skipped 7 (Alice): no-token");
+      expect((await me(alice.Cookie.split("=")[1])).user?.id).toBe(7);
     });
   });
 

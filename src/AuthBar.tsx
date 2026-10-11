@@ -32,11 +32,6 @@ export default function AuthBar() {
           <summary className="auth-user" title={`Wikimedia user id ${user.id}`}>
             {user.username}
             {user.isAdmin && <span className="auth-badge">admin</span>}
-            {user.blocked && (
-              <span className="auth-badge is-blocked" title="This account is blocked on Wikidata">
-                blocked
-              </span>
-            )}
             <span aria-hidden="true">▾</span>
           </summary>
           <div className="menu-panel user-menu-panel">

@@ -113,8 +113,12 @@ nightly `prune-sessions` job deletes expired sessions.
 
 Every edit is made **under the logged-in user's own account** through their
 OAuth grant (`server/wikidata-client.ts`) — never a shared or bot account, never
-with `bot=1`. Wikidata enforces the user's real rights; the app only refuses up
-front for accounts its profile snapshot says are blocked.
+with `bot=1`. Wikidata enforces the user's real rights. Accounts blocked on
+Wikidata are locked out of the app altogether, not just out of editing: login
+refuses a blocked profile, an edit Wikidata rejects as `blocked` ends the
+account's sessions, and the nightly `prune-sessions` job re-checks every
+logged-in account's profile so a block placed after login catches up within a
+day.
 
 - **Merge** (`POST /api/candidates/:id/merge`) runs `wbmergeitems` in the
   app's order — the higher QID into the lower — with an edit summary crediting

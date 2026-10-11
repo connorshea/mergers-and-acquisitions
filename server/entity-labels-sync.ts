@@ -4,7 +4,11 @@ import { sql } from "drizzle-orm";
 import { db } from "./db.ts";
 import { entityLabels, items } from "../db/schema.ts";
 import { chunk } from "../src/lib/chunk.ts";
-import { fetchEntityLabels, type EntityLabelRow } from "../src/lib/sparql.ts";
+import {
+  fetchEntityLabels,
+  type EntityLabelRow,
+  type FetchEntityLabelsOptions,
+} from "../src/lib/sparql.ts";
 import { elapsed, progress } from "./progress.ts";
 
 const ROWS_PER_STMT = 1000;
@@ -193,8 +197,11 @@ export async function labelsFromMirror(qids: string[]): Promise<MirrorLabels> {
  * so a run that dies partway keeps what it fetched, and QIDs QLever keeps
  * failing on are skipped (reported in `failed`) instead of sinking the run.
  * Throws only when nothing could be fetched at all, or on a DB error.
+ * `lookupOpts` tunes the QLever lookup (tests turn its retry backoff off).
  */
-export async function runEntityLabelsSync(): Promise<EntityLabelsSyncResult> {
+export async function runEntityLabelsSync(
+  lookupOpts: FetchEntityLabelsOptions = {},
+): Promise<EntityLabelsSyncResult> {
   const started = Date.now();
   let qids = await collectReferencedItemQids();
   console.log(`entity labels: ${qids.length} referenced QIDs collected in ${elapsed(started)}`);
@@ -217,6 +224,7 @@ export async function runEntityLabelsSync(): Promise<EntityLabelsSyncResult> {
       synced += await syncEntityLabels(rows);
     },
     {
+      ...lookupOpts,
       onProgress: ({ done, total, fetched, failed }) => {
         const pct = ((done / total) * 100).toFixed(1);
         const ms = Date.now() - lookupStarted;

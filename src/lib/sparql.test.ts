@@ -1,8 +1,10 @@
 import { afterEach, describe, expect, it, vi } from "vite-plus/test";
 import {
   type EntityLabelRow,
+  fetchAllProperties,
   fetchClassAncestors,
   fetchEntityLabels,
+  fetchMirroredProps,
   fetchSubjectTypes,
   parseSparqlResults,
   SparqlError,
@@ -159,6 +161,93 @@ const WD = "http://www.wikidata.org/entity/";
 const uri = (id: string) => ({ type: "uri", value: `${WD}${id}` });
 const results = (bindings: object[]) =>
   new Response(JSON.stringify({ results: { bindings } }), { status: 200 });
+
+describe("fetchAllProperties", () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  const literal = (value: string) => ({ type: "literal", value });
+  const datatype = (name: string) => ({ type: "uri", value: `http://wikiba.se/ontology#${name}` });
+
+  it("dedupes by pid, keeping the first formatter and any row's mirrors flag", async () => {
+    const steam = { p: uri("P1733"), pLabel: literal("Steam application ID") };
+    const fetch = vi
+      .fn<typeof globalThis.fetch>()
+      .mockResolvedValueOnce(
+        results([
+          {
+            ...steam,
+            type: datatype("ExternalId"),
+            formatter: literal("https://store.steampowered.com/app/$1"),
+          },
+          // A second equally-ranked formatter: ignored.
+          { ...steam, type: datatype("ExternalId"), formatter: literal("https://steamdb.info/$1") },
+          // No formatter on the first row: the second row's is used.
+          { p: uri("P2799"), pLabel: literal("BVMC person ID"), type: datatype("ExternalId") },
+          {
+            p: uri("P2799"),
+            pLabel: literal("BVMC person ID"),
+            formatter: literal("https://bvmc/$1"),
+            mirrors: literal("true"),
+          },
+          { p: uri("P31"), pLabel: literal("instance of") },
+          // Not a property id, or missing its label: skipped.
+          { p: uri("Q5"), pLabel: literal("human") },
+          { p: uri("P9") },
+        ]),
+      )
+      .mockResolvedValueOnce(
+        results([{ p: uri("P2799"), st: uri("statement/P2799-1"), cls: uri("Q5") }]),
+      )
+      .mockResolvedValueOnce(results([]));
+    vi.stubGlobal("fetch", fetch);
+
+    expect(await fetchAllProperties()).toEqual([
+      {
+        pid: "P1733",
+        label: "Steam application ID",
+        datatype: "ExternalId",
+        formatterUrl: "https://store.steampowered.com/app/$1",
+        mirrorsWikidata: false,
+        subjectTypes: null,
+      },
+      {
+        pid: "P2799",
+        label: "BVMC person ID",
+        datatype: "ExternalId",
+        formatterUrl: "https://bvmc/$1",
+        mirrorsWikidata: true,
+        subjectTypes: [{ classes: ["Q5"], relation: "either", exceptions: [] }],
+      },
+      {
+        pid: "P31",
+        label: "instance of",
+        datatype: null,
+        formatterUrl: null,
+        mirrorsWikidata: false,
+        subjectTypes: null,
+      },
+    ]);
+    expect(fetch).toHaveBeenCalledTimes(3);
+  });
+});
+
+describe("fetchMirroredProps", () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it("returns the property ids, skipping anything else", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn<typeof globalThis.fetch>(async () =>
+        results([{ p: uri("P434") }, { p: uri("P8292") }, { p: uri("Q1") }, {}]),
+      ),
+    );
+    expect([...(await fetchMirroredProps())]).toEqual(["P434", "P8292"]);
+  });
+});
 
 describe("fetchSubjectTypes", () => {
   afterEach(() => {

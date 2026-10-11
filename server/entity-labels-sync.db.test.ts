@@ -1,11 +1,15 @@
 // Integration tests for the entity-label sync's QID scan
 // (server/entity-labels-sync.ts) against a real MariaDB. Opt-in via DB_TEST=1 —
 // see test/global-setup.ts.
-import { afterAll, beforeEach, describe, expect, it } from "vite-plus/test";
+import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { db, pool } from "./db.ts";
 import { sql } from "drizzle-orm";
 import { entityLabels, items } from "../db/schema.ts";
-import { collectReferencedItemQids, labelsFromMirror } from "./entity-labels-sync.ts";
+import {
+  collectReferencedItemQids,
+  labelsFromMirror,
+  runEntityLabelsSync,
+} from "./entity-labels-sync.ts";
 import type { Item, Value } from "../src/lib/compare.ts";
 import { DB_TEST, truncateAll } from "../test/db-helpers.ts";
 
@@ -121,5 +125,75 @@ describe.skipIf(!DB_TEST)("labelsFromMirror", () => {
       fresh: 0,
       missing: [],
     });
+  });
+});
+
+describe.skipIf(!DB_TEST)("runEntityLabelsSync", () => {
+  beforeEach(async () => {
+    await truncateAll();
+    vi.spyOn(console, "log").mockImplementation(() => {});
+    vi.spyOn(console, "error").mockImplementation(() => {});
+  });
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.restoreAllMocks();
+  });
+
+  const FAST = { tries: 1, baseDelayMs: 0, pauseMs: 0 };
+  const stored = async () =>
+    (await db.select().from(entityLabels).orderBy(entityLabels.qid)).map(
+      (r) => `${r.qid}=${r.label}`,
+    );
+  /** QLever, answering each requested QID with the label "QLever <qid>". */
+  const qlever = () =>
+    vi.fn<typeof fetch>(async (_url, init) => {
+      const query = new URLSearchParams(init?.body as string).get("query") ?? "";
+      const bindings = [...query.matchAll(/wd:(Q\d+)/g)].map(([, q]) => ({
+        v: { type: "uri", value: `http://www.wikidata.org/entity/${q}` },
+        vLabel: { type: "literal", value: `QLever ${q}`, "xml:lang": "en" },
+      }));
+      return Response.json({ results: { bindings } });
+    });
+  const qleverDown = () => vi.fn<typeof fetch>(async () => new Response("oom", { status: 500 }));
+
+  it("labels mirrored QIDs from the mirror and looks the rest up on QLever", async () => {
+    await db
+      .insert(items)
+      .values([
+        item("Q1", { P136: [ref("Q100")], P400: [ref("Q200")] }),
+        item("Q100", {}, { en: "Mirrored genre" }),
+      ]);
+    const fetch = qlever();
+    vi.stubGlobal("fetch", fetch);
+
+    expect(await runEntityLabelsSync(FAST)).toEqual({ synced: 2, failed: 0 });
+    // Only the QID the mirror couldn't label went to QLever.
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(new URLSearchParams(fetch.mock.calls[0][1]?.body as string).get("query")).toContain(
+      "VALUES ?v { wd:Q200 }",
+    );
+    expect(await stored()).toEqual(["Q100=Mirrored genre", "Q200=QLever Q200"]);
+  });
+
+  it("reports QIDs QLever keeps failing on without failing the run", async () => {
+    await db
+      .insert(items)
+      .values([
+        item("Q1", { P136: [ref("Q100")], P400: [ref("Q200")] }),
+        item("Q100", {}, { en: "Mirrored genre" }),
+      ]);
+    vi.stubGlobal("fetch", qleverDown());
+
+    expect(await runEntityLabelsSync(FAST)).toEqual({ synced: 1, failed: 1 });
+    expect(await stored()).toEqual(["Q100=Mirrored genre"]);
+  });
+
+  it("throws when no label at all could be fetched", async () => {
+    await db.insert(items).values(item("Q1", { P136: [ref("Q200")], P400: [ref("Q201")] }));
+    vi.stubGlobal("fetch", qleverDown());
+
+    await expect(runEntityLabelsSync(FAST)).rejects.toThrow(
+      "Entity-label lookup failed for all 2 referenced QIDs",
+    );
   });
 });

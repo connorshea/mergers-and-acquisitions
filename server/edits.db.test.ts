@@ -716,6 +716,108 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       expect(audit.errorText).toBe("Cannot access content, revision may be deleted.");
     });
 
+    it("hands the claim back and audits it when Wikidata can't be read first", async () => {
+      const calls = stubWikidata(() => mergeOk());
+      vi.stubGlobal(
+        "fetch",
+        vi.fn<typeof fetch>(async () => {
+          throw new TypeError("fetch failed");
+        }),
+      );
+      const { status, body } = await post<EditErrorResponse>(
+        `/api/candidates/${alpha}/merge`,
+        editor,
+      );
+      expect(status).toBe(502);
+      expect(body.code).toBe("wikidata-error");
+      expect(calls).toHaveLength(0);
+      expect((await candidateRow(alpha)).status).toBe("open");
+      const [audit] = await db.select().from(wikidataEdits);
+      expect(audit).toMatchObject({ action: "merge", ok: false, fromRevid: null });
+    });
+
+    it("audits an unexpected error as internal and still hands the claim back", async () => {
+      // A sitelink with no title: reading the live items throws a plain
+      // TypeError, not a Wikidata outcome, so the route answers 500.
+      const calls = stubWikidata(() => mergeOk(), {
+        Q20: { sitelinks: { enwiki: null as unknown as { title: string } } },
+      });
+      const error = vi.spyOn(console, "error").mockImplementation(() => {});
+      try {
+        const res = await app.request(`/api/candidates/${alpha}/merge`, {
+          method: "POST",
+          headers: editor,
+        });
+        expect(res.status).toBe(500);
+      } finally {
+        error.mockRestore();
+      }
+      expect(calls.some((c) => c.method === "POST")).toBe(false);
+      expect((await candidateRow(alpha)).status).toBe("open");
+      const [audit] = await db.select().from(wikidataEdits);
+      expect(audit).toMatchObject({ action: "merge", ok: false, errorCode: "internal" });
+      expect(audit.errorText).toMatch(/title/);
+    });
+
+    it("refuses a sitelink clash as a conflict when its wiki can't be asked about redirects", async () => {
+      // No known host for this wiki, so the redirect check fails: the clash
+      // can't be cleared automatically and needs a person, as before.
+      const calls = stubWikidata(() => mergeOk(), {
+        Q20: { sitelinks: { nosuchwiki: { title: "Alpha Quest (1990)" } } },
+        Q10: { sitelinks: { nosuchwiki: { title: "Alpha Quest" } } },
+      });
+      const error = vi.spyOn(console, "error").mockImplementation(() => {});
+      try {
+        const { status, body } = await post<EditErrorResponse>(
+          `/api/candidates/${alpha}/merge`,
+          editor,
+        );
+        expect(status).toBe(409);
+        expect(body.error).toContain("different pages on the same wiki");
+        expect(error).toHaveBeenCalledWith(
+          expect.stringContaining("could not check Q20 / Q10's sitelinks"),
+          expect.anything(),
+        );
+      } finally {
+        error.mockRestore();
+      }
+      expect(calls.some((c) => c.method === "POST")).toBe(false);
+      expect((await candidateRow(alpha)).status).toBe("open");
+    });
+
+    it("still records the merge when the pre-merge snapshot can't be read", async () => {
+      stubWikidata(() => mergeOk(101, 102));
+      // The snapshot is the only read of exactly { qid, data } from items.
+      const real = db.select.bind(db);
+      const spy = vi.spyOn(db, "select").mockImplementation(((fields?: object) => {
+        if (fields && Object.keys(fields).join() === "qid,data") {
+          throw new Error("Lost connection to server during query");
+        }
+        return real(fields as never);
+      }) as typeof db.select);
+      const error = vi.spyOn(console, "error").mockImplementation(() => {});
+      try {
+        const { status, body } = await post<CandidateMergeResponse>(
+          `/api/candidates/${alpha}/merge`,
+          editor,
+        );
+        expect(status).toBe(200);
+        expect(body.candidate).toMatchObject({ id: alpha, status: "merged" });
+        expect(error).toHaveBeenCalledWith(
+          expect.stringContaining("snapshot read failed"),
+          expect.anything(),
+        );
+      } finally {
+        spy.mockRestore();
+        error.mockRestore();
+      }
+      const row = await candidateRow(alpha);
+      expect(row).toMatchObject({ status: "merged", snapshot: null });
+      expect((await db.select().from(wikidataEdits))[0]).toMatchObject({ ok: true });
+      // The mirror cleanup still ran.
+      expect(await itemQids()).toEqual(["Q10", "Q30", "Q40"]);
+    });
+
     it("maps a revoked grant to a re-login and drops the stored tokens", async () => {
       stubWikidata(() =>
         apiError(
@@ -1074,6 +1176,21 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
         { type: "item", value: "Q10", label: "Alpha Quest" },
       ]);
       expect(byQid.get("Q10")!.statements.P1889).toBeUndefined();
+    });
+
+    it("hands the claim back when an item has left the mirror", async () => {
+      const calls = stubWikidata(() => claimOk(1));
+      await db.delete(externalIds).where(eq(externalIds.qid, "Q20"));
+      await db.delete(itemSync).where(eq(itemSync.qid, "Q20"));
+      await db.delete(items).where(eq(items.qid, "Q20"));
+      const { status, body } = await post<{ error: string }>(
+        `/api/candidates/${alpha}/different`,
+        editor,
+      );
+      expect(status).toBe(404);
+      expect(body.error).toBe("Item data missing for: Q20");
+      expect(calls).toHaveLength(0);
+      expect((await candidateRow(alpha)).status).toBe("open");
     });
 
     it("refuses a non-open candidate and an unknown one", async () => {

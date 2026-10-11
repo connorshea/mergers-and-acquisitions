@@ -355,6 +355,36 @@ describe.skipIf(!DB_TEST)("the monthly Claude review job", () => {
     );
   });
 
+  it("skips a pair whose prompt is too long, or too costly for Opus at any output size", async () => {
+    for (const [from, into] of [
+      ["Q2", "Q1"],
+      ["Q4", "Q3"],
+      ["Q6", "Q5"],
+    ]) {
+      await candidate(from, into);
+      await review(into, from);
+    }
+    // Over MAX_PROMPT_TOKENS; under it, but past what MAX_PAIR_COST_USD
+    // leaves Opus any output for; and an ordinary pair.
+    api.countTokens = async (_model, text) =>
+      text.includes("Item Q2") ? 95_000 : text.includes("Item Q4") ? 20_000 : 3000;
+    const lines: string[] = [];
+    const { submit } = await runStage(db, api, CONFIG, "confirmation", {
+      ...quiet,
+      log: (l) => lines.push(l),
+    });
+    expect(api.sent()).toEqual([[OPUS, "Q5_Q6_c"]]);
+    expect(submit).toMatchObject({
+      needed: 3,
+      submitted: 1,
+      skipped: { missingItem: 0, tooLong: 1, overCap: 1 },
+    });
+    expect(lines).toContain(
+      "claude-opus-5-5: skipped 0 with an item missing from the mirror, " +
+        "1 over 90000 prompt tokens, 1 over the per-pair cap",
+    );
+  });
+
   it("splits a run into batches by request count and by size", async () => {
     const pairs = async () => {
       await truncateAll();
@@ -521,6 +551,41 @@ describe.skipIf(!DB_TEST)("the monthly Claude review job", () => {
     };
     const result = await collect(db, api, CONFIG, quiet);
     expect(result).toMatchObject({ succeeded: 1, errors: { "results gone": 1 } });
+  });
+
+  it("leaves a batch whose results can't be read right now for the next collect", async () => {
+    await candidate("Q2", "Q1");
+    api.hold = true;
+    await runStage(db, api, CONFIG, "first_pass", { ...quiet, wait: false });
+    for (const b of api.batches.values()) b.ended = true;
+    const batchResults = api.batchResults.bind(api);
+    api.batchResults = () => ({
+      [Symbol.asyncIterator]: () => ({ next: () => Promise.reject(new Error("socket hang up")) }),
+    });
+    const lines: string[] = [];
+    const first = await collect(db, api, CONFIG, { ...quiet, log: (l) => lines.push(l) });
+    expect(first).toMatchObject({ succeeded: 0, failed: 0 });
+    expect(lines).toContain(
+      "batch batch_1: couldn't read its results (socket hang up); next collect tries again",
+    );
+    expect((await rowsFor("first_pass")).map((r) => r.status)).toEqual(["pending"]);
+
+    api.batchResults = batchResults;
+    expect(await collect(db, api, CONFIG, quiet)).toMatchObject({ succeeded: 1 });
+  });
+
+  it("with wait, polls until every batch has ended", async () => {
+    await candidate("Q2", "Q1");
+    api.hold = true;
+    await runStage(db, api, CONFIG, "first_pass", { ...quiet, wait: false });
+    // Still running when first asked; ended the next time.
+    let asked = 0;
+    api.batchEnded = async () => ++asked > 1;
+    const lines: string[] = [];
+    const result = await collect(db, api, CONFIG, { ...quiet, log: (l) => lines.push(l) });
+    expect(asked).toBe(2);
+    expect(lines).toContain("waiting on 1 batch…");
+    expect(result).toMatchObject({ running: 0, succeeded: 1 });
   });
 
   it("fails a batch the API has lost, and a claim no batch was ever recorded for", async () => {

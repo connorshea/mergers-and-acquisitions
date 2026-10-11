@@ -1,0 +1,32 @@
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 3
+    ignore:
+      # The Toolforge buildpack breaks on pnpm 12's native binary; stay on 11.x
+      # (the `packageManager` / `devEngines` pins in package.json).
+      - dependency-name: pnpm
+        update-types: ["version-update:semver-major"]
+    groups:
+      dev-dependencies:
+        dependency-type: development
+      prod-dependencies:
+        dependency-type: production
+
+  - package-ecosystem: github-actions
+    # "/" covers .github/workflows; the composite action needs its own entry.
+    directories:
+      - /
+      - /.github/actions/setup
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 3
+    groups:
+      actions:
+        patterns: ["*"]

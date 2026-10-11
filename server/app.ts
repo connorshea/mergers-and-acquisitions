@@ -71,6 +71,33 @@ app.all("/api/*", (c) => c.json({ error: "Not found" }, 404));
 // shell so client-side routes (e.g. /candidates/123) load index.html. Without
 // a build (tests, a fresh checkout) there is nothing to serve, and serveStatic
 // would only warn about the missing root.
+//
+// serveStatic sets no Cache-Control itself, and browsers then cache off
+// Last-Modified heuristically: a returning visitor could keep a stale
+// index.html whose hashed chunks no longer exist after a deploy (blank page
+// until a hard reload). So the shell always revalidates, the content-hashed
+// files under /assets are immutable, and the few unhashed files (favicons,
+// the og image) get a short lifetime. Set after the fact on the response —
+// serveStatic's onFound runs once its Response is already built, so headers
+// set there are lost — and only for the SPA: the API block above has already
+// answered /api/* requests, so this middleware never sees them.
+/** The Cache-Control for a 200 at `path` with the given Content-Type. */
+export function cacheControlFor(path: string, contentType: string | null): string {
+  if (contentType?.startsWith("text/html")) return "no-cache";
+  if (path.startsWith("/assets/")) return "public, max-age=31536000, immutable";
+  return "public, max-age=3600";
+}
+
+app.use("/*", async (c, next) => {
+  await next();
+  if (c.res.status === 200) {
+    c.res.headers.set(
+      "Cache-Control",
+      cacheControlFor(c.req.path, c.res.headers.get("Content-Type")),
+    );
+  }
+});
+
 if (existsSync(CLIENT_DIR)) app.use("/*", serveStatic({ root: CLIENT_DIR }));
 
 const indexHtml = existsSync(INDEX_HTML) ? readFileSync(INDEX_HTML, "utf8") : null;

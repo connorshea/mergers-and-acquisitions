@@ -28,9 +28,6 @@ jobs:
       - name: Format, lint, and type-check
         run: pnpm exec vp check
 
-      - name: Run tests
-        run: pnpm exec vp test
-
       - name: Type-check project references
         run: pnpm exec tsc -b
 
@@ -40,27 +37,19 @@ jobs:
       - name: Find unused files, exports, and dependencies
         run: pnpm exec knip
 
-  # The scorer's offline regression gate: scores every labelled pair under
-  # eval-data/ and fails only if a pair the checked-in baseline got right is now
-  # wrong. Needs no DB or network, so it runs on its own. See scripts/eval-score.ts
-  # for how to update the baseline after an intentional scoring change.
-  eval:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-
-      - name: Set up toolchain
-        uses: ./.github/actions/setup
-
+      # The scorer's offline regression gate: scores every labelled pair under
+      # eval-data/ and fails only if a pair the checked-in baseline got right is
+      # now wrong. Needs no DB or network. Runs even if an earlier step failed,
+      # so a lint error doesn't hide a scoring regression. See
+      # scripts/eval-score.ts for how to update the baseline after an
+      # intentional scoring change.
       - name: Score the eval dataset against the baseline
+        if: ${{ !cancelled() }}
         run: node scripts/eval-score.ts
 
   # Everything that needs a real database: apply the checked-in migrations to
   # an empty MariaDB (proving they run from scratch), fail if db/schema.ts has
-  # drifted from db/migrations, and run the DB-backed tests (*.db.test.ts).
+  # drifted from db/migrations, and run the full test suite (unit and DB-backed).
   db:
     runs-on: ubuntu-latest
     env:
@@ -130,8 +119,9 @@ jobs:
             exit 1
           fi
 
-      # Coverage is collected here rather than in the `ci` job because this is
-      # the only run that executes every test, DB-backed ones included.
+      # CI's only test run: with DB_TEST set it executes every test, unit and
+      # DB-backed alike, so the `ci` job doesn't run them separately. Coverage is
+      # collected here for the same reason.
       - name: Run tests including DB-backed tests
         run: pnpm exec vp test --coverage
         env:

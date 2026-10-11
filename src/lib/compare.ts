@@ -333,19 +333,45 @@ export function storedBlockingKey(label: string | null | undefined): string | nu
 const COMMONS_WIKI = "https://commons.wikimedia.org/wiki/";
 
 /**
+ * Percent-encode an identifier value for a formatter URL the way Wikibase does
+ * (MediaWiki's wfUrlencode): everything but the unreserved characters and
+ * `;:@$!*(),/~`, so a DOI's slash survives but `?`, `#`, `&` and spaces can't
+ * add query parameters, a fragment, or a host to the link.
+ */
+function encodeIdValue(value: string): string {
+  return encodeURIComponent(value).replace(/%(3B|3A|40|24|2C|2F)/gi, (m) => decodeURIComponent(m));
+}
+
+/** A value that may stand in for a host label, e.g. an itch.io or Bandcamp account. */
+const HOST_LABELS = /^[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*$/;
+
+/**
  * Build the external URL for an identifier value from a Wikidata formatter URL
  * (P1630), substituting the value for the `$1` placeholder — e.g.
  * ("https://store.steampowered.com/app/$1/", "268220") →
  * "https://store.steampowered.com/app/268220/". Returns null when there is no
  * template or it has no placeholder, so callers can fall back to plain text.
- * P1630 is a plain string anyone can edit, so the result must pass
- * `safeHttpUrl` too. A Commons page title is written MediaWiki-style, with
- * underscores for spaces ("Foo bar.jpg" → ".../wiki/File:Foo_bar.jpg").
+ *
+ * Both the template and the value are plain strings anyone can edit on
+ * Wikidata. The result must be an http(s) URL (`safeHttpUrl`), the value is
+ * percent-encoded as Wikibase does, and the link must stay on the host the
+ * template names: a `$1` in the host ("https://$1.itch.io") only takes a
+ * value that is nothing but host labels, and elsewhere the host after
+ * substitution has to equal the template's own. A Commons page title is
+ * written MediaWiki-style, with underscores for spaces ("Foo bar.jpg" →
+ * ".../wiki/File:Foo_bar.jpg").
  */
 export function formatIdUrl(template: string | undefined, value: string): string | null {
   if (!template || !template.includes("$1")) return null;
   const v = template.startsWith(COMMONS_WIKI) ? value.replaceAll(" ", "_") : value;
-  return safeHttpUrl(template.split("$1").join(v));
+  const authority = template.replace(/^[a-z][a-z0-9+.-]*:\/\//i, "").split(/[/?#]/, 1)[0] ?? "";
+  if (authority.includes("$1")) {
+    return HOST_LABELS.test(v) ? safeHttpUrl(template.split("$1").join(v)) : null;
+  }
+  const url = safeHttpUrl(template.split("$1").join(encodeIdValue(v)));
+  if (!url) return null;
+  const expected = safeHttpUrl(template.split("$1").join("x"));
+  return expected && new URL(url).host === new URL(expected).host ? url : null;
 }
 
 /**

@@ -115,7 +115,7 @@ async function review(a: string, b: string, over: Partial<Row> = {}): Promise<nu
       status: "succeeded",
       model: HAIKU,
       effort: "medium",
-      promptVersion: 3,
+      promptVersion: 4,
       verdict: "different",
       probability: 0.3,
       rationale: "earlier",

@@ -2,10 +2,11 @@
 // dismiss/reopen actions. The Wikidata edit routes on the same prefix live in
 // server/edits.ts; both build their responses with server/candidate-summary.ts
 // so the wire shapes stay in sync.
-import { Hono } from "hono";
-import { and, asc, count, desc, eq, gt, gte, inArray, lt, or, sql } from "drizzle-orm";
+import { Hono, type MiddlewareHandler } from "hono";
+import { and, asc, count, desc, eq, gt, gte, inArray, lt, ne, or, sql } from "drizzle-orm";
 import { db } from "./db.ts";
 import { type AuthEnv, requireUser } from "./auth/session.ts";
+import { reviewLimiter } from "./rate-limit.ts";
 import { addSeconds, toSqlDatetime } from "./auth/time.ts";
 import { DIFFERENT_FROM_RESOLUTION, editGroupUrl, MERGING_STALE_SECONDS } from "./edits.ts";
 import { loadLabels, summaryColumns, toSummary } from "./candidate-summary.ts";
@@ -45,6 +46,12 @@ const STATUSES = CANDIDATE_STATUSES;
 const SORTS = CANDIDATE_SORTS;
 const DEFAULT_PAGE_SIZE = 25;
 const MAX_PAGE_SIZE = 100;
+/**
+ * Deepest page a list request can ask for. OFFSET walks the index up to the
+ * page, so an unbounded `page` lets an anonymous caller make each request
+ * scan every row of a status; nobody browses past this.
+ */
+const MAX_PAGE = 1000;
 /** Most instance-of types one list request filters on. */
 const MAX_TYPE_FILTERS = 50;
 /**
@@ -79,8 +86,21 @@ function parseIntParam(value: string | undefined, fallback: number): number {
 export const candidates = new Hono<AuthEnv>();
 
 // Reading is open; resolving a candidate requires a logged-in editor.
-candidates.use("/:id/dismiss", requireUser);
-candidates.use("/:id/reopen", requireUser);
+/** 429 once a user has dismissed/reopened more than REVIEW_RATE_LIMIT times this minute. */
+const reviewGate: MiddlewareHandler<AuthEnv> = async (c, next) => {
+  const limit = reviewLimiter.hit(c.get("user")!.id);
+  if (!limit.ok) {
+    c.header("Retry-After", String(limit.retryAfter));
+    return c.json(
+      { error: `Too many queue changes; try again in ${limit.retryAfter}s`, code: "rate-limited" },
+      429,
+    );
+  }
+  await next();
+};
+
+candidates.use("/:id/dismiss", requireUser, reviewGate);
+candidates.use("/:id/reopen", requireUser, reviewGate);
 
 // GET /api/candidates — paginated, filterable, sortable list.
 candidates.get("/", async (c) => {
@@ -96,7 +116,7 @@ candidates.get("/", async (c) => {
     ? (sortParam as (typeof SORTS)[number])
     : "confidence";
 
-  const page = Math.max(1, Math.floor(parseIntParam(req.query("page"), 1)));
+  const page = Math.min(MAX_PAGE, Math.max(1, Math.floor(parseIntParam(req.query("page"), 1))));
   const pageSize = Math.min(
     MAX_PAGE_SIZE,
     Math.max(1, Math.floor(parseIntParam(req.query("pageSize"), DEFAULT_PAGE_SIZE))),
@@ -125,8 +145,10 @@ candidates.get("/", async (c) => {
   // has to join `items`.
   if (q) {
     // Case-insensitive substring match. The database collation is utf8mb4_bin
-    // (case-sensitive), so fold both sides with lower().
-    const pattern = `%${q.toLowerCase()}%`;
+    // (case-sensitive), so fold both sides with lower(). LIKE's own wildcards
+    // in the search text are escaped, so "100%" finds that label rather than
+    // matching everything (the default escape character is the backslash).
+    const pattern = `%${q.toLowerCase().replace(/[\\%_]/g, "\\$&")}%`;
     conditions.push(
       or(
         sql`lower(${mergeCandidates.fromLabel}) like ${pattern}`,
@@ -528,35 +550,28 @@ candidates.post("/:id/dismiss", async (c) => {
 // POST /api/candidates/:id/reopen — un-dismiss back to `open`, clear stamps.
 // A merged candidate stays merged (the merge already happened on Wikidata and
 // the merged-away item is gone from the mirror), and one that is being edited
-// right now can only be reopened once its claim has gone stale.
+// right now can only be reopened once its claim has gone stale. As with
+// dismiss, the status check lives in the UPDATE itself: checked first and
+// updated by id alone, a reopen could land on a claim a merge took in between
+// and hand the pair to a second merge while the first is still on the wire.
 candidates.post("/:id/reopen", async (c) => {
   const id = Number(c.req.param("id"));
   if (!Number.isInteger(id)) {
     return c.json({ error: "Invalid candidate id" }, 404);
   }
 
-  const [current] = await db
-    .select({ status: mergeCandidates.status, resolvedAt: mergeCandidates.resolvedAt })
-    .from(mergeCandidates)
-    .where(eq(mergeCandidates.id, id));
-  if (!current) {
-    return c.json({ error: "Candidate not found" }, 404);
-  }
-  if (current.status === "merged") {
-    return c.json({ error: "A merged candidate can't be reopened" }, 409);
-  }
-  if (
-    current.status === "merging" &&
-    (current.resolvedAt ?? "") >= toSqlDatetime(addSeconds(new Date(), -MERGING_STALE_SECONDS))
-  ) {
-    return c.json({ error: "An edit of this candidate is in progress" }, 409);
-  }
-
-  await db
+  const staleBefore = toSqlDatetime(addSeconds(new Date(), -MERGING_STALE_SECONDS));
+  const [result] = await db
     .update(mergeCandidates)
     // The snapshot described the pair when it was resolved; open, it shows live data again.
     .set({ status: "open", resolvedAt: null, resolution: null, resolvedBy: null, snapshot: null })
-    .where(eq(mergeCandidates.id, id));
+    .where(
+      and(
+        eq(mergeCandidates.id, id),
+        ne(mergeCandidates.status, "merged"),
+        or(ne(mergeCandidates.status, "merging"), lt(mergeCandidates.resolvedAt, staleBefore)),
+      ),
+    );
 
   const [row] = await db
     .select(summaryColumns)
@@ -564,6 +579,17 @@ candidates.post("/:id/reopen", async (c) => {
     .where(eq(mergeCandidates.id, id));
   if (!row) {
     return c.json({ error: "Candidate not found" }, 404);
+  }
+  if (result.affectedRows === 0 && row.status !== "open") {
+    return c.json(
+      {
+        error:
+          row.status === "merging"
+            ? "An edit of this candidate is in progress"
+            : "A merged candidate can't be reopened",
+      },
+      409,
+    );
   }
 
   const labels = await loadLabels([row]);

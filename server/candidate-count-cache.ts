@@ -44,8 +44,12 @@ export function clearCandidateCounts(): void {
   cache.clear();
 }
 
-/** Middleware: after any state-changing request, drop every cached total. */
+/**
+ * Middleware: after a state-changing request that succeeded, drop every cached
+ * total. A refused one (401, 403, 404, 429) changed nothing, so it keeps the
+ * cache; otherwise anyone could flush it with a stream of bad requests.
+ */
 export const clearCountsOnWrite: MiddlewareHandler = async (c, next) => {
   await next();
-  if (c.req.method !== "GET" && c.req.method !== "HEAD") clearCandidateCounts();
+  if (c.req.method !== "GET" && c.req.method !== "HEAD" && c.res.ok) clearCandidateCounts();
 };

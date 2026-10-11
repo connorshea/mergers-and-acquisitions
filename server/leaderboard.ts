@@ -107,7 +107,7 @@ leaderboard.get("/", async (c) => {
   const payload: LeaderboardResponse = {
     period,
     entries: rows.map((r) => ({ userId: r.userId, username: r.username, ...counts(r) })),
-    totals: { users: Number(totals.users), ...counts(totals) },
+    totals: { users: Number(totals!.users), ...counts(totals!) },
   };
   return c.json(payload);
 });

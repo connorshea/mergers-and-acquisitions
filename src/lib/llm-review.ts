@@ -139,7 +139,7 @@ const property = (pid: string, labelOf: LabelLookup): string => {
 function formatTime(time: string): string {
   const m = /^([+-]?)(\d+)-(\d\d)-(\d\d)/.exec(time);
   if (!m) return time;
-  const year = `${m[1] === "-" ? "-" : ""}${m[2].replace(/^0+(?=\d{4})/, "")}`;
+  const year = `${m[1] === "-" ? "-" : ""}${m[2]!.replace(/^0+(?=\d{4})/, "")}`;
   if (m[3] === "00") return year;
   if (m[4] === "00") return `${year}-${m[3]}`;
   return `${year}-${m[3]}-${m[4]}`;
@@ -221,7 +221,7 @@ export function renderItem(
   if (pids.length > 0) out.push("Statements:");
   else out.push("Statements: none");
   for (const pid of pids) {
-    const values = item.statements[pid];
+    const values = item.statements[pid] ?? [];
     const shown = values.slice(0, MAX_VALUES).map((v) => formatValue(v, labelOf));
     if (values.length > MAX_VALUES) shown.push(`… ${values.length - MAX_VALUES} more`);
     const kind = values.some((v) => v.type === "external-id") ? " [external identifier]" : "";
@@ -238,13 +238,15 @@ export function renderItem(
   if (sites.length > 0) out.push("Sitelinks:");
   else out.push("Sitelinks: none");
   for (const site of sites.filter((site) => shown.has(site))) {
+    const title = item.sitelinks[site];
+    if (title === undefined) continue;
     const target = item.sitelinkRedirects?.[site];
     const redirect = target
       ? ` (redirect to ${quote(target)})`
       : isRedirectSitelink(item, site)
         ? " (redirect)"
         : "";
-    out.push(`  ${site}: ${quote(item.sitelinks[site])}${redirect}`);
+    out.push(`  ${site}: ${quote(title)}${redirect}`);
   }
   if (sites.length > shown.size) out.push(`  … ${sites.length - shown.size} more`);
 

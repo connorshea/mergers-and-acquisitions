@@ -28,7 +28,7 @@ export async function collectItemClasses(pageSize = READ_PAGE): Promise<string[]
   const started = Date.now();
   const [[{ total }]] = (await db.execute(
     sql`select count(*) as total from ${items}`,
-  )) as unknown as [{ total: number }[]];
+  )) as unknown as [[{ total: number }]];
   const set = new Set<string>();
   let after = "";
   for (let page = 1; ; page++) {

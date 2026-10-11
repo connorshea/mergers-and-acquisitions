@@ -48,8 +48,8 @@ async function list(query = ""): Promise<CandidateListResponse> {
 }
 
 async function insertCandidate(values: typeof mergeCandidates.$inferInsert): Promise<number> {
-  const [{ id }] = await db.insert(mergeCandidates).values(values).$returningId();
-  return id;
+  const [row] = await db.insert(mergeCandidates).values(values).$returningId();
+  return row!.id;
 }
 
 const ENGINE: Value[] = [{ type: "item", value: "Q193564", label: "game engine" }];
@@ -62,7 +62,7 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
   let orphan: number; // Q60 -> Q50, 0.7, dismissed, items missing
 
   // Session headers for a plain (non-admin) editor.
-  let editor: Record<string, string>;
+  let editor: Awaited<ReturnType<typeof loginAs>>;
 
   beforeEach(async () => {
     await truncateAll();
@@ -143,12 +143,12 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
         hasBlocker: false,
         reasons: ["identical label"],
       });
-      expect(body.candidates[1].hasBlocker).toBe(true);
+      expect(body.candidates[1]?.hasBlocker).toBe(true);
       // A shared type is named from the import-class presets, else entity_labels
       // (none synced for the engine class here, so its label is null).
-      expect(body.candidates[0].sharedType).toEqual({ qid: "Q7889", label: "video game" });
-      expect(body.candidates[1].sharedType).toEqual({ qid: "Q193564", label: null });
-      expect(body.candidates[0].detectedAt).toMatch(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/);
+      expect(body.candidates[0]?.sharedType).toEqual({ qid: "Q7889", label: "video game" });
+      expect(body.candidates[1]?.sharedType).toEqual({ qid: "Q193564", label: null });
+      expect(body.candidates[0]?.detectedAt).toMatch(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/);
     });
 
     it("names the properties cited in the page's reasons", async () => {
@@ -212,7 +212,7 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       // Q20 is still a video game, so the pair still matches that type too.
       expect((await list("?type=Q7889")).candidates.map((c) => c.id)).toEqual([alpha]);
       // The sides no longer share a type, so the pair has none to show.
-      expect((await list("?type=Q7889")).candidates[0].sharedType).toBeNull();
+      expect((await list("?type=Q7889")).candidates[0]?.sharedType).toBeNull();
       expect(await refreshCandidateItemInfo(db)).toBe(0);
     });
 
@@ -435,7 +435,7 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       const { Cookie } = editor;
       expect((await post(`/api/candidates/${alpha}/dismiss`, { Cookie })).status).toBe(403);
       const [row] = await db.select().from(mergeCandidates).where(eq(mergeCandidates.id, alpha));
-      expect(row.status).toBe("open");
+      expect(row?.status).toBe("open");
     });
 
     it("dismisses, then reopens, a candidate", async () => {
@@ -461,7 +461,7 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       expect(dismissedList.candidates.find((c) => c.id === orphan)?.resolvedBy).toBeNull();
 
       const [row] = await db.select().from(mergeCandidates).where(eq(mergeCandidates.id, alpha));
-      expect(row.resolvedAt).not.toBeNull();
+      expect(row!.resolvedAt).not.toBeNull();
       // As if it had been marked "different from", which saves a snapshot.
       await db
         .update(mergeCandidates)
@@ -478,10 +478,10 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
         resolvedBy: null,
       });
       const [after] = await db.select().from(mergeCandidates).where(eq(mergeCandidates.id, alpha));
-      expect(after.resolvedAt).toBeNull();
-      expect(after.resolution).toBeNull();
+      expect(after?.resolvedAt).toBeNull();
+      expect(after?.resolution).toBeNull();
       // Open again, it shows live data rather than the resolved-time snapshot.
-      expect(after.snapshot).toBeNull();
+      expect(after?.snapshot).toBeNull();
       const detail = await get<CandidateDetailResponse>(`/api/candidates/${alpha}`);
       expect(detail.body.snapshot).toBe(false);
       expect(detail.body.from?.labels.en).toBe("Alpha Quest");
@@ -496,8 +496,8 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       expect(again.status).toBe(200);
       expect(again.body.candidate).toMatchObject({ status: "dismissed", resolvedBy: "Editor" });
       const [after] = await db.select().from(mergeCandidates).where(eq(mergeCandidates.id, alpha));
-      expect(after.resolvedBy).toBe(EDITOR_ID);
-      expect(after.resolvedAt).toBe(first.resolvedAt);
+      expect(after?.resolvedBy).toBe(EDITOR_ID);
+      expect(after?.resolvedAt).toBe(first!.resolvedAt);
     });
 
     it("404s for an unknown candidate", async () => {

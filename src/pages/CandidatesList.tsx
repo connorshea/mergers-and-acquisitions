@@ -66,7 +66,7 @@ function typeSummary(selected: string[]): string {
       g.classes.every((c) => selected.includes(c.qid)),
   );
   if (group) return group.name;
-  return selected.length === 1 ? typeLabel(selected[0]) : `${selected.length} types`;
+  return selected.length === 1 ? typeLabel(selected[0]!) : `${selected.length} types`;
 }
 
 /**
@@ -184,7 +184,7 @@ export default function CandidatesList() {
   // Phones only: the filter fields fold behind a toggle (CSS hides it on wider screens).
   const [filtersOpen, setFiltersOpen] = useState(false);
   const filterSummary = [
-    status[0].toUpperCase() + status.slice(1),
+    status.charAt(0).toUpperCase() + status.slice(1),
     typeSummary(types),
     creator && `by ${creator}`,
     noBlockers && "No blockers",

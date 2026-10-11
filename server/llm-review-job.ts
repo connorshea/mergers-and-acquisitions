@@ -217,9 +217,10 @@ async function expectedCost(db: Db, model: ReviewModel): Promise<number> {
         isNotNull(llmReviews.costUsd),
       ),
     );
+  const { mean: storedMean, n } = row!;
   const mean =
-    Number(row.n) >= MIN_COST_SAMPLES && row.mean !== null
-      ? Number(row.mean)
+    Number(n) >= MIN_COST_SAMPLES && storedMean !== null
+      ? Number(storedMean)
       : (TRIAL_MEAN_COST_USD[model] ?? REVIEW_MODELS[model].output / 1000);
   return mean * COST_MARGIN;
 }
@@ -233,7 +234,7 @@ async function monthSpend(db: Db, now: Date): Promise<number> {
     .select({ usd: sql<number | null>`sum(${llmReviews.costUsd})` })
     .from(llmReviews)
     .where(gte(llmReviews.completedAt, monthStart(now)));
-  let usd = Number(done.usd ?? 0);
+  let usd = Number(done!.usd ?? 0);
   const pending = await db
     .select({ model: llmReviews.model, n: sql<number>`count(*)` })
     .from(llmReviews)
@@ -393,7 +394,7 @@ async function renderPicks(db: Db, picks: Pick[]): Promise<(Rendered | null)[]> 
   ]);
   await attachSitelinkRedirects(db, itemPairs);
   const labelOf = await loadLabelLookup(db, itemPairs.flat());
-  const texts = new Map(found.map((p, i) => [p, renderPair(...itemPairs[i], labelOf)]));
+  const texts = new Map(found.map((p, i) => [p, renderPair(...itemPairs[i]!, labelOf)]));
   return picks.map((p) => {
     const text = texts.get(p);
     if (text === undefined) return null;
@@ -939,10 +940,11 @@ export async function runStage(
   try {
     await collect(db, api, config, { ...opts, wait: false });
     if (stage === "confirmation") {
-      const [{ n }] = await db
+      const [countRow] = await db
         .select({ n: sql<number>`count(*)` })
         .from(llmReviews)
         .where(and(eq(llmReviews.stage, "first_pass"), eq(llmReviews.status, "pending")));
+      const n = countRow!.n;
       if (Number(n) > 0) log(`${n} first passes still running; their pairs wait for next month`);
     }
     const picks = stage === "first_pass" ? await firstPassPicks(db) : await confirmPicks(db);

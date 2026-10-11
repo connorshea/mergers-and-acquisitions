@@ -43,7 +43,7 @@ describe("runPreflight", () => {
     });
     expect(result).toEqual({ status: "ok", applied: 5, expected: 4 });
     expect(warn).toHaveBeenCalledOnce();
-    expect(warn.mock.calls[0][0]).toMatch(/5 migrations applied .* 4/);
+    expect(warn.mock.calls[0]?.[0]).toMatch(/5 migrations applied .* 4/);
   });
 
   it("does not retry a pending schema", async () => {
@@ -78,8 +78,8 @@ describe("runPreflight", () => {
     expect(result).toEqual({ status: "ok", applied: 4, expected: 4 });
     expect(applied).toHaveBeenCalledTimes(3);
     expect(warn).toHaveBeenCalledTimes(2);
-    expect(warn.mock.calls[0][0]).toContain("attempt 1/3");
-    expect(warn.mock.calls[1][0]).toContain("attempt 2/3");
+    expect(warn.mock.calls[0]?.[0]).toContain("attempt 1/3");
+    expect(warn.mock.calls[1]?.[0]).toContain("attempt 2/3");
   });
 
   it("gives up after the last attempt with the final error", async () => {

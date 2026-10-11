@@ -864,7 +864,9 @@ const STAGE_LABELS: Record<LlmReviewSummary["stage"], string> = {
 /** Model ids as people say them: "claude-opus-5-5" → "Opus 5.5". */
 function modelName(model: string): string {
   const m = /^claude-([a-z]+)-(\d+)-(\d+)$/.exec(model);
-  return m ? `${m[1][0].toUpperCase()}${m[1].slice(1)} ${m[2]}.${m[3]}` : model;
+  if (!m) return model;
+  const family = m[1]!;
+  return `${family.charAt(0).toUpperCase()}${family.slice(1)} ${m[2]}.${m[3]}`;
 }
 
 /**
@@ -950,7 +952,7 @@ function ClaudeReviews({
                 <div className="auto-review-body">
                   <div className="auto-review-verdict">
                     <span className="auto-review-chip">
-                      {r.verdict[0].toUpperCase() + r.verdict.slice(1)}
+                      {r.verdict.charAt(0).toUpperCase() + r.verdict.slice(1)}
                     </span>
                     <div
                       className="auto-review-likelihood"

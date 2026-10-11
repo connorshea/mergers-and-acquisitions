@@ -80,8 +80,8 @@ describe("CONVERTER_VERSION", () => {
   it("uses fixture lines the raw revision reader understands", () => {
     for (const [i, line] of lines.entries()) {
       expect(lineRevision(Buffer.from(line))).toEqual({
-        qid: Number(entities[i].id.slice(1)),
-        revid: entities[i].lastrevid,
+        qid: Number(entities[i]!.id.slice(1)),
+        revid: entities[i]!.lastrevid,
       });
     }
   });

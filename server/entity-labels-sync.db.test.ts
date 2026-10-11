@@ -169,7 +169,7 @@ describe.skipIf(!DB_TEST)("runEntityLabelsSync", () => {
     expect(await runEntityLabelsSync(FAST)).toEqual({ synced: 2, failed: 0 });
     // Only the QID the mirror couldn't label went to QLever.
     expect(fetch).toHaveBeenCalledTimes(1);
-    expect(new URLSearchParams(fetch.mock.calls[0][1]?.body as string).get("query")).toContain(
+    expect(new URLSearchParams(fetch.mock.calls[0]?.[1]?.body as string).get("query")).toContain(
       "VALUES ?v { wd:Q200 }",
     );
     expect(await stored()).toEqual(["Q100=Mirrored genre", "Q200=QLever Q200"]);

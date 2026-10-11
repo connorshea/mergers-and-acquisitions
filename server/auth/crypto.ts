@@ -70,7 +70,9 @@ export function loadEncKeys(env: NodeJS.ProcessEnv = process.env): EncKey[] {
 }
 
 export function encrypt(plaintext: string, aad: string, keys: EncKey[] = loadEncKeys()): string {
-  const { kid, key } = keys[0];
+  const [first] = keys;
+  if (!first) throw new Error("No encryption key to encrypt with");
+  const { kid, key } = first;
   const iv = randomBytes(IV_BYTES);
   const cipher = createCipheriv(ALGO, key, iv);
   cipher.setAAD(Buffer.from(aad, "utf8"));
@@ -88,7 +90,7 @@ export function encrypt(plaintext: string, aad: string, keys: EncKey[] = loadEnc
 export function decrypt(payload: string, aad: string, keys: EncKey[] = loadEncKeys()): string {
   const parts = payload.split(":");
   if (parts.length !== 5 || parts[0] !== "v1") throw new Error("Unrecognised ciphertext format");
-  const [, kid, ivB64, ctB64, tagB64] = parts;
+  const [, kid, ivB64, ctB64, tagB64] = parts as [string, string, string, string, string];
   const entry = keys.find((k) => k.kid === kid);
   if (!entry)
     throw new Error(

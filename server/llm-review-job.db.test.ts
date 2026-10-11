@@ -98,16 +98,16 @@ async function candidate(from: string, into: string, confidence = 0.5, status = 
       await insertItem(makeItem(qid, "Alpha Quest"));
     }
   }
-  const [{ id }] = await db
+  const [row] = await db
     .insert(mergeCandidates)
     .values({ fromQid: from, intoQid: into, confidence, reasons: [], status })
     .$returningId();
-  return id;
+  return row!.id;
 }
 
 type Row = typeof llmReviews.$inferInsert;
 async function review(a: string, b: string, over: Partial<Row> = {}): Promise<number> {
-  const [{ id }] = await db
+  const [row] = await db
     .insert(llmReviews)
     .values({
       ...pairKey(a, b),
@@ -124,7 +124,7 @@ async function review(a: string, b: string, over: Partial<Row> = {}): Promise<nu
       ...over,
     })
     .$returningId();
-  return id;
+  return row!.id;
 }
 
 const rowsFor = (stage: string) =>
@@ -176,10 +176,10 @@ describe.skipIf(!DB_TEST)("the monthly Claude review job", () => {
     });
     expect(q1.costUsd).toBeGreaterThan(0);
     // The prompt follows the first candidate's direction: from Q8 into Q7.
-    const prompt = api.batches.get("batch_1")!.requests[0].params.messages[0].content;
+    const prompt = api.batches.get("batch_1")!.requests[0]!.params.messages[0]!.content;
     expect(prompt.indexOf("Item Q8")).toBeLessThan(prompt.indexOf("Item Q7"));
     // A first pass never hides anything, whatever it says.
-    expect((await statusOf(forward)).status).toBe("open");
+    expect((await statusOf(forward))?.status).toBe("open");
 
     // Nothing is left to send.
     const again = new FakeApi();
@@ -221,7 +221,7 @@ describe.skipIf(!DB_TEST)("the monthly Claude review job", () => {
       model: OPUS,
       status: "succeeded",
       verdict: "same",
-      confirms: haiku.id,
+      confirms: haiku!.id,
     });
   });
 
@@ -278,7 +278,7 @@ describe.skipIf(!DB_TEST)("the monthly Claude review job", () => {
       ["Q3", "Q4"],
       ["Q5", "Q6"],
       ["Q7", "Q8"],
-    ]) {
+    ] as const) {
       await review(a, b);
     }
     const answers: Record<string, Review> = {
@@ -307,12 +307,12 @@ describe.skipIf(!DB_TEST)("the monthly Claude review job", () => {
     for (const id of pairs.hide) {
       expect(await statusOf(id)).toMatchObject({
         status: "auto_dismissed",
-        resolution: reviewResolution(confirmation.id),
+        resolution: reviewResolution(confirmation!.id),
         resolvedBy: null,
       });
     }
-    expect((await statusOf(pairs.atCutoff)).status).toBe("open");
-    expect((await statusOf(pairs.same)).status).toBe("open");
+    expect((await statusOf(pairs.atCutoff))?.status).toBe("open");
+    expect((await statusOf(pairs.same))?.status).toBe("open");
     expect(await statusOf(pairs.human)).toMatchObject({
       status: "dismissed",
       resolution: "by hand",
@@ -360,7 +360,7 @@ describe.skipIf(!DB_TEST)("the monthly Claude review job", () => {
       ["Q2", "Q1"],
       ["Q4", "Q3"],
       ["Q6", "Q5"],
-    ]) {
+    ] as const) {
       await candidate(from, into);
       await review(into, from);
     }
@@ -502,7 +502,7 @@ describe.skipIf(!DB_TEST)("the monthly Claude review job", () => {
     for (let i = 0; i < 501; i++) await candidate(`Q${2 * i + 2}`, `Q${2 * i + 1}`);
     // Every third pair "same", with its index as the probability's last digits.
     api.answer = (_model, id) => {
-      const n = Number(id.split("_")[0].slice(1));
+      const n = Number(id.split("_")[0]!.slice(1));
       return n % 3 === 0
         ? { verdict: "same", probability: 0.5 + n / 1e6, rationale: id }
         : { verdict: "different", probability: 0.2, rationale: id };
@@ -528,10 +528,12 @@ describe.skipIf(!DB_TEST)("the monthly Claude review job", () => {
     const now = () => new Date("2026-10-01T08:00:00Z");
     await runStage(db, api, CONFIG, "first_pass", { ...quiet, now });
 
-    const [thisMonth, lastMonth] = await rowsFor("first_pass");
-    expect(thisMonth.status).toBe("succeeded");
-    expect(thisMonth.costUsd! - lastMonth.costUsd!).toBeCloseTo(0.04);
-    expect(lastMonth.costUsd).toBeLessThan(0.01);
+    const rows = await rowsFor("first_pass");
+    expect(rows).toHaveLength(2);
+    const [thisMonth, lastMonth] = rows;
+    expect(thisMonth!.status).toBe("succeeded");
+    expect(thisMonth!.costUsd! - lastMonth!.costUsd!).toBeCloseTo(0.04);
+    expect(lastMonth!.costUsd).toBeLessThan(0.01);
   });
 
   it("fails a batch whose results are gone, and goes on to the rest", async () => {

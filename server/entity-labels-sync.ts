@@ -42,7 +42,7 @@ async function eachConcurrently<T>(
 ): Promise<void> {
   let next = 0;
   const worker = async (): Promise<void> => {
-    while (next < inputs.length) await work(inputs[next++]);
+    while (next < inputs.length) await work(inputs[next++]!);
   };
   await Promise.all(Array.from({ length: Math.min(limit, inputs.length) }, worker));
 }
@@ -66,7 +66,7 @@ export async function collectReferencedItemQids(pageSize = READ_PAGE): Promise<s
   const started = Date.now();
   const [[{ total }]] = (await db.execute(
     sql`select count(*) as total from ${items}`,
-  )) as unknown as [{ total: number }[]];
+  )) as unknown as [[{ total: number }]];
   // Every pageSize-th qid closes a page; the rows after the last one form a
   // final, open-ended page.
   const [boundRows] = (await db.execute(sql`

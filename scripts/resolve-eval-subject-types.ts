@@ -23,9 +23,15 @@ async function pairs(): Promise<[Item, Item][]> {
   for (const [kind, blob] of [
     [
       "merged-pairs",
-      (m: Record<string, string>) => [`${m.source}.pre.json`, `${m.target}.pre.json`],
+      (m: Record<string, string>): [string, string] => [
+        `${m.source}.pre.json`,
+        `${m.target}.pre.json`,
+      ],
     ],
-    ["non-dupe-pairs", (m: Record<string, string>) => [`${m.a}.json`, `${m.b}.json`]],
+    [
+      "non-dupe-pairs",
+      (m: Record<string, string>): [string, string] => [`${m.a}.json`, `${m.b}.json`],
+    ],
   ] as const) {
     const root = join(EVAL_DIR, kind);
     for (const d of await readdir(root, { withFileTypes: true })) {

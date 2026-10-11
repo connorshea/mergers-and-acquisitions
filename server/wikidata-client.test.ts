@@ -102,7 +102,7 @@ describe("mergeItems", () => {
     expect(result).toEqual({ fromRevid: 3000000001, intoRevid: 3000000002, redirected: true });
 
     expect(calls).toHaveLength(2);
-    const [csrf, edit] = calls;
+    const [csrf, edit] = calls as [Call, Call];
     expect(csrf.method).toBe("GET");
     expect(Object.fromEntries(csrf.params)).toMatchObject({
       action: "query",
@@ -144,7 +144,7 @@ describe("mergeItems", () => {
       deps,
     );
     expect(result.redirected).toBe(false);
-    expect(calls[1].params.has("ignoreconflicts")).toBe(false);
+    expect(calls[1]?.params.has("ignoreconflicts")).toBe(false);
   });
 
   it("retries once with a fresh token on badtoken, then gives up", async () => {
@@ -155,8 +155,8 @@ describe("mergeItems", () => {
       deps,
     );
     expect(calls.map((c) => c.method)).toEqual(["GET", "POST", "GET", "POST"]);
-    expect(calls[1].params.get("token")).toBe("csrf-1");
-    expect(calls[3].params.get("token")).toBe("csrf-2");
+    expect(calls[1]?.params.get("token")).toBe("csrf-1");
+    expect(calls[3]?.params.get("token")).toBe("csrf-2");
 
     const twice = makeDeps([apiError("badtoken"), apiError("badtoken")]);
     const err = await failure(
@@ -175,8 +175,8 @@ describe("mergeItems", () => {
     await editRequest(USER, { action: "x" }, deps);
     await editRequest(USER, { action: "x" }, deps, { maxlag: false });
     const posts = calls.filter((call) => call.method === "POST");
-    expect(posts[0].params.get("maxlag")).toBe("5");
-    expect(posts[1].params.has("maxlag")).toBe(false);
+    expect(posts[0]?.params.get("maxlag")).toBe("5");
+    expect(posts[1]?.params.has("maxlag")).toBe(false);
   });
 
   it("waits out Retry-After (capped) and retries once on maxlag", async () => {
@@ -185,7 +185,7 @@ describe("mergeItems", () => {
     });
     const { deps, calls } = makeDeps([lagged, { success: 1 }]);
     await editRequest(USER, { action: "x" }, deps);
-    expect(calls[1].params.get("maxlag")).toBe("5");
+    expect(calls[1]?.params.get("maxlag")).toBe("5");
     expect(deps.sleep).toHaveBeenCalledWith(3000);
     // The CSRF token is still good; only the edit is re-sent.
     expect(calls.map((c) => c.method)).toEqual(["GET", "POST", "POST"]);
@@ -347,7 +347,7 @@ describe("finishRedirect", () => {
     // Two edits, each with its own asserted CSRF token: clear then redirect.
     const posts = calls.filter((call) => call.method === "POST");
     expect(posts).toHaveLength(2);
-    expect(Object.fromEntries(posts[0].params)).toMatchObject({
+    expect(Object.fromEntries(posts[0]!.params)).toMatchObject({
       action: "wbeditentity",
       id: "Q20",
       baserevid: "3000000001",
@@ -357,7 +357,7 @@ describe("finishRedirect", () => {
       assert: "user",
       assertuser: "Alice",
     });
-    expect(Object.fromEntries(posts[1].params)).toMatchObject({
+    expect(Object.fromEntries(posts[1]!.params)).toMatchObject({
       action: "wbcreateredirect",
       from: "Q20",
       to: "Q10",
@@ -407,7 +407,7 @@ describe("addItemClaim", () => {
       deps,
     );
     expect(result).toEqual({ revid: 42 });
-    expect(Object.fromEntries(calls[1].params)).toMatchObject({
+    expect(Object.fromEntries(calls[1]!.params)).toMatchObject({
       action: "wbcreateclaim",
       entity: "Q20",
       property: "P1889",
@@ -417,7 +417,7 @@ describe("addItemClaim", () => {
       token: "csrf-1",
     });
     // The user is waiting on it, so it skips the lag guard.
-    expect(calls[1].params.has("maxlag")).toBe(false);
+    expect(calls[1]?.params.has("maxlag")).toBe(false);
   });
 
   it("sets the whole statement under a fresh GUID when there is a qualifier", async () => {
@@ -436,14 +436,14 @@ describe("addItemClaim", () => {
       deps,
     );
     expect(result).toEqual({ revid: 43 });
-    const params = Object.fromEntries(calls[1].params);
+    const params = Object.fromEntries(calls[1]!.params);
     expect(params).toMatchObject({ action: "wbsetclaim", summary: "s", token: "csrf-1" });
     expect(params).not.toHaveProperty("entity");
     const item = (id: string) => ({
       type: "wikibase-entityid",
       value: { "entity-type": "item", id },
     });
-    const claim = JSON.parse(params.claim) as { id: string };
+    const claim = JSON.parse(params.claim!) as { id: string };
     expect(claim.id).toMatch(/^Q20\$[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
     expect(claim).toMatchObject({
       type: "statement",
@@ -453,7 +453,7 @@ describe("addItemClaim", () => {
         P1013: [{ snaktype: "value", property: "P1013", datavalue: item("Q55761780") }],
       },
     });
-    expect(calls[1].params.has("maxlag")).toBe(false);
+    expect(calls[1]?.params.has("maxlag")).toBe(false);
   });
 });
 
@@ -464,15 +464,15 @@ describe("removeSitelink", () => {
     ]);
     const result = await removeSitelink(USER, { qid: "Q20", wiki: "enwiki", summary: "s" }, deps);
     expect(result).toEqual({ revid: 43 });
-    expect(Object.fromEntries(calls[1].params)).toMatchObject({
+    expect(Object.fromEntries(calls[1]!.params)).toMatchObject({
       action: "wbsetsitelink",
       id: "Q20",
       linksite: "enwiki",
       summary: "s",
       token: "csrf-1",
     });
-    expect(calls[1].params.has("linktitle")).toBe(false);
-    expect(calls[1].params.has("maxlag")).toBe(false);
+    expect(calls[1]?.params.has("linktitle")).toBe(false);
+    expect(calls[1]?.params.has("maxlag")).toBe(false);
   });
 
   it("maps a refusal to a WikidataEditError", async () => {
@@ -504,8 +504,8 @@ describe("probeMerge", () => {
       intoRevid: 502,
     });
     expect(calls.map((c) => c.method)).toEqual(["GET", "GET"]);
-    expect(calls[0].params.get("titles")).toBe("Q20|Q10");
-    expect(calls[1].params.get("redirects")).toBe("1");
+    expect(calls[0]?.params.get("titles")).toBe("Q20|Q10");
+    expect(calls[1]?.params.get("redirects")).toBe("1");
   });
 
   it("reports no redirect without a second query, and a redirect elsewhere as-is", async () => {
@@ -548,7 +548,7 @@ describe("fetchItemsForMergeCheck", () => {
     expect(from.sitelinks).toEqual({ enwiki: "Foo (video game)" });
     expect(into.sitelinks).toEqual({ enwiki: "Foo" });
     expect(calls.map((c) => c.method)).toEqual(["GET"]);
-    expect(Object.fromEntries(calls[0].params)).toMatchObject({
+    expect(Object.fromEntries(calls[0]!.params)).toMatchObject({
       action: "wbgetentities",
       ids: "Q20|Q10",
       props: "sitelinks|claims",

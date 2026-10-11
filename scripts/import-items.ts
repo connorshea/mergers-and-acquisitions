@@ -45,8 +45,8 @@ async function importItem(qid: string): Promise<void> {
 async function main() {
   const qids = process.argv.slice(2).filter((a) => /^Q\d+$/.test(a));
   if (qids.length === 0) throw new Error("usage: node scripts/import-items.ts Qxxx [Qxxx …]");
-  for (let i = 0; i < qids.length; i++) {
-    await importItem(qids[i]);
+  for (const [i, qid] of qids.entries()) {
+    await importItem(qid);
     if (i < qids.length - 1) await sleep(PAUSE_MS);
   }
 }

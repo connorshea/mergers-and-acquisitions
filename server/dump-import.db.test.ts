@@ -125,7 +125,7 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
       blockingKey: "starfall drift",
       primaryType: "Q7889",
     });
-    expect(rows[0].data.descriptions).toEqual({ en: "Starfall Drift (video game)" });
+    expect(rows[0]?.data.descriptions).toEqual({ en: "Starfall Drift (video game)" });
     expect(await idsOf("Q100")).toEqual([{ property: "P1733", value: "812340" }]);
     expect(await db.select().from(properties)).toMatchObject([
       { pid: "P1733", label: "Steam application ID", datatype: "ExternalId" },
@@ -137,8 +137,8 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
     await run([game("Q100", "Starfall Drift II", [steam("999")])]);
     const rows = await allItems();
     expect(rows).toHaveLength(1);
-    expect(rows[0].primaryLabel).toBe("Starfall Drift II");
-    expect(rows[0].blockingKey).toBe("starfall drift ii");
+    expect(rows[0]?.primaryLabel).toBe("Starfall Drift II");
+    expect(rows[0]?.blockingKey).toBe("starfall drift ii");
     expect(await idsOf("Q100")).toEqual([{ property: "P1733", value: "999" }]);
   });
 
@@ -164,6 +164,7 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
       dump: "20260914",
     });
     const [before] = await allItems();
+    if (!before) throw new Error("no item imported");
     expect(before.dataHash).toMatch(/^[0-9a-f]{40}$/);
 
     const stats = await run(
@@ -182,8 +183,8 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
       ["Q100", "Alpha", "20260921"],
       ["Q200", "Beta Remastered", "20260921"],
     ]);
-    expect(rows[0].dataHash).toBe(before.dataHash);
-    expect(rows[1].dataHash).not.toBe(before.dataHash);
+    expect(rows[0]?.dataHash).toBe(before.dataHash);
+    expect(rows[1]!.dataHash).not.toBe(before.dataHash);
     // The unchanged item kept its external ids; the changed one was rebuilt.
     expect(await idsOf("Q100")).toEqual([{ property: "P1733", value: "1" }]);
     expect(await idsOf("Q200")).toEqual([{ property: "P1733", value: "3" }]);
@@ -194,7 +195,7 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
     await db.update(itemSync).set({ dataHash: null });
     const stats = await run([game("Q100", "Alpha", [steam("1")])]);
     expect(stats).toMatchObject({ upserted: 1, unchanged: 0, externalIds: 1 });
-    expect((await allItems())[0].dataHash).toMatch(/^[0-9a-f]{40}$/);
+    expect((await allItems())[0]?.dataHash).toMatch(/^[0-9a-f]{40}$/);
   });
 
   it("stores an item whose only label is too long for primary_label", async () => {
@@ -203,8 +204,8 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
     const stats = await run([long]);
     expect(stats).toMatchObject({ upserted: 1, failed: 0 });
     const [row] = await allItems();
-    expect(row.primaryLabel).toBe(`${"t".repeat(254)}…`);
-    expect(row.data.labels.it).toHaveLength(260);
+    expect(row?.primaryLabel).toBe(`${"t".repeat(254)}…`);
+    expect(row?.data.labels.it).toHaveLength(260);
   });
 
   it("skips external id values too long for the column", async () => {
@@ -285,9 +286,9 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
       ["Q300", "Q200", "dismissed"], // was already dismissed; untouched
       ["Q200", "Q100", "open"], // neither side pruned
     ]);
-    expect(cands[0].resolution).toMatch(/no longer in the Wikidata dump/);
-    expect(cands[0].resolvedAt).not.toBeNull();
-    expect(cands[1].resolvedAt).toBeNull();
+    expect(cands[0]?.resolution).toMatch(/no longer in the Wikidata dump/);
+    expect(cands[0]!.resolvedAt).not.toBeNull();
+    expect(cands[1]?.resolvedAt).toBeNull();
   });
 
   it("refuses to prune past the safety cap unless forced", async () => {
@@ -295,12 +296,12 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
     for (const it of existing) await insertItem(it);
     expect(3 / 10).toBeGreaterThan(MAX_PRUNE_FRACTION);
 
-    const refused = await run(existing.slice(0, 7).map((it) => game(it.id, it.labels.en)));
+    const refused = await run(existing.slice(0, 7).map((it) => game(it.id, it.labels.en!)));
     expect(refused.pruned).toBe(0);
     expect(await allItems()).toHaveLength(10);
 
     const forced = await run(
-      existing.slice(0, 7).map((it) => game(it.id, it.labels.en)),
+      existing.slice(0, 7).map((it) => game(it.id, it.labels.en!)),
       {
         forcePrune: true,
       },
@@ -355,8 +356,12 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
     await insertItem(makeItem("Q900", "Left the dump"));
     const dir = await mkdtemp(join(tmpdir(), "dump-import-db-"));
     const path = join(dir, "wikidata-20260914-all.json.gz");
-    const games = [game("Q100", "Alpha"), game("Q200", "Beta"), game("Q300", "Gamma")];
-    await writeFile(path, dumpGz([[games[0]], [games[1]], [games[2], STEAM_PROP]]).gz);
+    const [alpha, beta, gamma] = [
+      game("Q100", "Alpha"),
+      game("Q200", "Beta"),
+      game("Q300", "Gamma"),
+    ];
+    await writeFile(path, dumpGz([[alpha], [beta], [gamma, STEAM_PROP]]).gz);
     const lines: string[] = [];
     const log = (m: string) => void lines.push(m);
     const opts = { path, forcePrune: true, log }; // 1 of 4 gone is past the 20% cap
@@ -412,7 +417,7 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
       const dir = await mkdtemp(join(tmpdir(), "dump-import-db-"));
       const path = join(dir, `wikidata-${DUMP}-all.json.gz`);
       const batches: object[][] = GAMES.map((qid) => [game(qid, `Game ${qid}`)]);
-      batches[batches.length - 1].push(STEAM_PROP);
+      batches.at(-1)!.push(STEAM_PROP);
       await writeFile(path, dumpGz(batches).gz);
       return path;
     }
@@ -666,13 +671,14 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
 
   it("records the new revision of an item whose converted data didn't change", async () => {
     await run([at(10, game("Q100", "Alpha"))]);
-    const first = (await allItems())[0];
+    const [first] = await allItems();
+    if (!first) throw new Error("no item imported");
     // An edit the conversion drops (here, nothing at all) still moves the revision.
     const stats = await run([at(11, game("Q100", "Alpha"))]);
     expect(stats).toMatchObject({ unedited: 0, unchanged: 1 });
     const [row] = await allItems();
-    expect(row.sourceRevid).toBe(11);
-    expect(row.dataHash).toBe(first.dataHash);
+    expect(row?.sourceRevid).toBe(11);
+    expect(row?.dataHash).toBe(first.dataHash);
     expect(await run([at(11, game("Q100", "Alpha"))])).toMatchObject({ unedited: 1 });
   });
 
@@ -686,7 +692,7 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
       unchanged: 1,
     });
     // Same output, so the row is now vouched for by the current version.
-    expect((await allItems())[0].converterVersion).toBe(CONVERTER_VERSION);
+    expect((await allItems())[0]?.converterVersion).toBe(CONVERTER_VERSION);
     expect(await run([at(10, game("Q100", "Alpha"))])).toMatchObject({ unedited: 1 });
 
     const lines: string[] = [];

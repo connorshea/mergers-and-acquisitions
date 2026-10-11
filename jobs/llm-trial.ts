@@ -150,10 +150,11 @@ async function submit(argv: string[]): Promise<void> {
         gte(mergeCandidates.confidence, lo),
         hi === null ? undefined : lt(mergeCandidates.confidence, hi),
       );
-      const [{ n }] = await db
+      const [countRow] = await db
         .select({ n: sql<number>`count(*)` })
         .from(mergeCandidates)
         .where(where);
+      const n = countRow!.n;
       openPerBand[bandName(band)] = Number(n);
       const rows = await db
         .select({
@@ -200,12 +201,14 @@ async function submit(argv: string[]): Promise<void> {
     const pairs: SampledPair[] = [];
     const texts = new Map<string, string>();
     for (const [i, s] of complete.entries()) {
-      const tokens = client ? await countPromptTokens(client, "claude-haiku-5-5", prompts[i]) : 0;
+      // prompts and itemPairs are built one per `complete` entry.
+      const prompt = prompts[i]!;
+      const tokens = client ? await countPromptTokens(client, "claude-haiku-5-5", prompt) : 0;
       if (tokens > MAX_PROMPT_TOKENS) {
         console.warn(`⚠ skipping candidate ${s.id}: ${tokens} prompt tokens`);
         continue;
       }
-      const [from, into] = itemPairs[i];
+      const [from, into] = itemPairs[i]!;
       const label = (item: Item) =>
         item.labels.en ?? item.labels.mul ?? Object.values(item.labels)[0] ?? null;
       pairs.push({
@@ -219,7 +222,7 @@ async function submit(argv: string[]): Promise<void> {
         band: s.band,
         promptTokens: tokens,
       });
-      texts.set(String(s.id), prompts[i]);
+      texts.set(String(s.id), prompt);
     }
 
     const run: Run = {
@@ -468,7 +471,7 @@ async function latestRunDir(): Promise<string> {
     .map((d) => d.name)
     .sort();
   if (dirs.length === 0) throw new Error(`no runs under ${RUNS_DIR}; submit one first`);
-  return join(RUNS_DIR, dirs[dirs.length - 1]);
+  return join(RUNS_DIR, dirs[dirs.length - 1]!);
 }
 
 async function main() {

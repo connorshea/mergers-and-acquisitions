@@ -148,7 +148,7 @@ describe.skipIf(!DB_TEST)("item creations", () => {
       .select()
       .from(itemCreations)
       .where(sql`qid = 'Q1'`);
-    expect(q1.userEditCount).toBe(2000);
+    expect(q1?.userEditCount).toBe(2000);
     await db.execute(sql`UPDATE user SET user_editcount = 1234 WHERE user_id = 5`);
   });
 

@@ -201,8 +201,8 @@ candidates.get("/", async (c) => {
   // its own pool connection). The count is cached across pages.
   const [total, rows] = await Promise.all([
     cachedCount(countKey, async () => {
-      const [{ total }] = await db.select({ total: count() }).from(mergeCandidates).where(where);
-      return total;
+      const [row] = await db.select({ total: count() }).from(mergeCandidates).where(where);
+      return row!.total;
     }),
     db
       .select(summaryColumns)

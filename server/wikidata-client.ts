@@ -124,7 +124,7 @@ function apiError(res: ApiResponse): ApiError | null {
   const errors = body.errors;
   if (Array.isArray(errors) && errors.length > 0) {
     const all = errors as PlaintextError[];
-    const first = all[0];
+    const first = all[0]!;
     const text = first.text ?? first["*"] ?? "";
     const details = [
       ...all.slice(1).map((e) => e.text ?? e["*"] ?? e.code ?? ""),

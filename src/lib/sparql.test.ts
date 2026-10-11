@@ -24,7 +24,7 @@ describe("parseSparqlResults", () => {
     const body = '{"results":{"bindings":[{"v":{"type":"literal","value":"a\nb"}}]}}';
     expect((): unknown => JSON.parse(body)).toThrow(SyntaxError);
     const rows = parseSparqlResults(body);
-    expect(rows[0].v?.value).toBe("a b"); // control char replaced with a space
+    expect(rows[0]?.v?.value).toBe("a b"); // control char replaced with a space
   });
 
   it("returns an empty array when there are no bindings", () => {
@@ -52,7 +52,7 @@ function labelsBody(qids: string[]): Response {
 /** The QIDs in a request's VALUES clause. */
 function requestedQids(init?: RequestInit): string[] {
   const query = new URLSearchParams(init?.body as string).get("query") ?? "";
-  return [...query.matchAll(/wd:(Q\d+)/g)].map((m) => m[1]);
+  return [...query.matchAll(/wd:(Q\d+)/g)].map((m) => m[1]!);
 }
 
 const FAST = { baseDelayMs: 0, pauseMs: 0 };

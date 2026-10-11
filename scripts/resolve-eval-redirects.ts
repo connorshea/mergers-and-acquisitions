@@ -25,9 +25,15 @@ async function pairDirs(): Promise<{ name: string; dir: string; files: [string, 
   for (const [kind, blob] of [
     [
       "merged-pairs",
-      (m: Record<string, string>) => [`${m.source}.pre.json`, `${m.target}.pre.json`],
+      (m: Record<string, string>): [string, string] => [
+        `${m.source}.pre.json`,
+        `${m.target}.pre.json`,
+      ],
     ],
-    ["non-dupe-pairs", (m: Record<string, string>) => [`${m.a}.json`, `${m.b}.json`]],
+    [
+      "non-dupe-pairs",
+      (m: Record<string, string>): [string, string] => [`${m.a}.json`, `${m.b}.json`],
+    ],
   ] as const) {
     const root = join(EVAL_DIR, kind);
     for (const d of await readdir(root, { withFileTypes: true })) {
@@ -67,7 +73,7 @@ async function main() {
   let written = 0;
   let failed = 0;
   for (const { name, dir, files } of pairs) {
-    const [a, b] = await Promise.all(files.map(readItem));
+    const [a, b] = await Promise.all([readItem(files[0]), readItem(files[1])]);
     try {
       const { file, added } = await withBackoff(() => recordRedirects(dir, a, b));
       if (!file) continue;

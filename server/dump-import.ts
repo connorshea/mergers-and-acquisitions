@@ -221,7 +221,7 @@ const PROBE_BYTES = 4096;
  */
 function gzipHeaderLength(buf: Buffer): number {
   if (buf.length < 10 || buf[0] !== 0x1f || buf[1] !== 0x8b || buf[2] !== 0x08) return -1;
-  const flags = buf[3];
+  const flags = buf[3]!;
   if (flags & 0xe0) return -1;
   let n = 10;
   if (flags & 0x04) {
@@ -438,7 +438,7 @@ function classHits(
     let at = idx + NUMERIC_ID_NEEDLE.length;
     let id = 0;
     // Wikidata ids stay far below 2^53, so the running number is exact.
-    while (at < region.length && isDigit(region[at])) id = id * 10 + (region[at++] - 0x30);
+    while (at < region.length && isDigit(region[at]!)) id = id * 10 + (region[at++]! - 0x30);
     if (at === idx + NUMERIC_ID_NEEDLE.length) {
       from = at;
       continue;
@@ -481,7 +481,7 @@ export function lineRevision(line: Buffer): { qid: number; revid: number } | nul
   if (revAt === -1) return null;
   let at = revAt + LASTREVID_NEEDLE.length;
   let revid = 0;
-  while (at < line.length && isDigit(line[at])) revid = revid * 10 + (line[at++] - 0x30);
+  while (at < line.length && isDigit(line[at]!)) revid = revid * 10 + (line[at++]! - 0x30);
   if (at === revAt + LASTREVID_NEEDLE.length) return null;
   return { qid, revid };
 }
@@ -496,7 +496,7 @@ export function lineItemId(line: Buffer): number | null {
   if (idAt === -1) return null;
   let at = idAt + ITEM_ID_NEEDLE.length;
   let qid = 0;
-  while (at < line.length && isDigit(line[at])) qid = qid * 10 + (line[at++] - 0x30);
+  while (at < line.length && isDigit(line[at]!)) qid = qid * 10 + (line[at++]! - 0x30);
   if (at === idAt + ITEM_ID_NEEDLE.length || line[at] !== 0x22) return null;
   return qid;
 }
@@ -515,7 +515,7 @@ function mentionsProperty(line: Buffer, properties: ReadonlySet<number>): boolea
   while (at !== -1) {
     let end = at + PROPERTY_ID_NEEDLE.length;
     let pid = 0;
-    while (end < line.length && isDigit(line[end])) pid = pid * 10 + (line[end++] - 0x30);
+    while (end < line.length && isDigit(line[end]!)) pid = pid * 10 + (line[end++]! - 0x30);
     if (end > at + PROPERTY_ID_NEEDLE.length && line[end] === 0x22 && properties.has(pid)) {
       return true;
     }
@@ -810,7 +810,7 @@ export class RevisionIndex {
     let hi = this.qids.length - 1;
     while (lo <= hi) {
       const mid = (lo + hi) >>> 1;
-      const at = this.qids[mid];
+      const at = this.qids[mid]!;
       if (at === qid) return this.revids[mid] === revid;
       if (at < qid) lo = mid + 1;
       else hi = mid - 1;
@@ -821,11 +821,11 @@ export class RevisionIndex {
   /** Build from unsorted parallel lists (the load reads them in string order of QID). */
   static from(qids: ArrayLike<number>, revids: ArrayLike<number>): RevisionIndex {
     const order = Uint32Array.from({ length: qids.length }, (_, i) => i).sort(
-      (a, b) => qids[a] - qids[b],
+      (a, b) => qids[a]! - qids[b]!,
     );
     return new RevisionIndex(
-      Uint32Array.from(order, (i) => qids[i]),
-      Float64Array.from(order, (i) => revids[i]),
+      Uint32Array.from(order, (i) => qids[i]!),
+      Float64Array.from(order, (i) => revids[i]!),
     );
   }
 }
@@ -882,7 +882,7 @@ export async function sharedLinkedQids(
   const conn = await pool.getConnection();
   const lock = `mna:linked:${dump}:${segments}`;
   try {
-    const [[{ got }]] = await conn.query<({ got: number | null } & RowDataPacket)[]>(
+    const [[{ got }]] = await conn.query<[{ got: number | null } & RowDataPacket]>(
       "select get_lock(?, ?) as got",
       [lock, LINKED_LOCK_WAIT_SECONDS],
     );
@@ -1454,11 +1454,12 @@ async function setProgress(dump: string, segments: number): Promise<SetProgress>
     })
     .from(dumpImportSegments)
     .where(inSet(dump, segments));
+  const { done, claimed, matched } = row!;
   return {
     segments,
-    done: Number(row.done),
-    claimed: Number(row.claimed),
-    matched: Number(row.matched),
+    done: Number(done),
+    claimed: Number(claimed),
+    matched: Number(matched),
   };
 }
 
@@ -1519,7 +1520,8 @@ async function pruneMissing(
   dump: string,
   opts: { force: boolean; log: (m: string) => void },
 ): Promise<[number, number]> {
-  const [{ total }] = await db.select({ total: count() }).from(itemSync);
+  const [countRow] = await db.select({ total: count() }).from(itemSync);
+  const total = countRow!.total;
   const gone: string[] = [];
   let after = "";
   for (;;) {
@@ -1536,7 +1538,7 @@ async function pruneMissing(
       .limit(READ_PAGE);
     if (page.length === 0) break;
     for (const r of page) gone.push(r.qid);
-    after = page[page.length - 1].qid;
+    after = page[page.length - 1]!.qid;
     if (page.length < READ_PAGE) break;
   }
   if (gone.length === 0) return [0, 0];
@@ -1735,7 +1737,7 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
       (attempt, err) => {
         lockRetries++;
         log(
-          `${tag} ${pending.length === 1 ? pending[0].id : `batch of ${pending.length}`} lost a lock race ` +
+          `${tag} ${pending.length === 1 ? pending[0]!.id : `batch of ${pending.length}`} lost a lock race ` +
             `(${errorSummary(err)}); retry ${attempt}/${LOCK_RETRIES}`,
         );
       },

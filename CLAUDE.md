@@ -63,10 +63,11 @@ Layout:
 - `src/lib/wikibase.ts` — the Wikibase entity-JSON → `Item` adapter shared by
   the dump import, `scripts/import-items.ts`, and the eval script (datatype-exact
   ids, time precision kept, descriptions/aliases/sitelinks carried).
-- `db/` — the MySQL-dialect schema (`schema.ts`), the seed script (`seed.ts`),
-  and drizzle-kit migrations (`migrations/`, generated via `pnpm db:generate`).
+- `db/` — the MySQL-dialect schema (`schema.ts`) and drizzle-kit migrations
+  (`migrations/`, generated via `pnpm db:generate`).
 - `src/` — the React SPA; DOM-free heuristics (comparison + `scoreCandidate`) in
-  `src/lib/compare.ts`; the Wikidata dump→`Item` adapter in `src/lib/wikidata.ts`;
+  `src/lib/compare.ts`; the derived DB columns (`primaryLabel`, `externalIdRows`)
+  in `src/lib/wikidata.ts`;
   the typed API client in `src/lib/client.ts`.
 
 DB notes: prod is **MariaDB 12.2 on Trove** (Cloud VPS), so check SQL features
@@ -92,7 +93,6 @@ is only a manual fallback, never the default. QLever requires explicit `PREFIX`
 declarations on every query (wd/wdt/p/ps/wikibase/rdfs/schema/skos) and does not
 support Blazegraph extensions (`wikibase:label` service, named subqueries). Send
 a descriptive User-Agent, pace requests (~1s apart), and back off on 429.
-`script/dump_wikidata_games.rb` (vendored from vglist) is the reference client.
 
 ## Running tooling inside the Claude Code sandbox
 
@@ -117,11 +117,11 @@ notes:
 - The user's local Homebrew MariaDB **is reachable from the sandbox** over TCP:
   pass `allowed_domains: ["127.0.0.1:3306"]` on the Bash call (unix sockets are
   blocked, and so is starting a sandbox-local `mariadbd`). Never run anything
-  destructive against the `mergers` dev DB (the seed is expensive). For the
+  destructive against the `mergers` dev DB (the import is expensive). For the
   DB-backed tests use the dedicated `test_mergers` database — the `mergers`
   user may create `test_*` databases itself — via
   `DB_TEST=1 DB_NAME=test_mergers node_modules/.bin/vp test --run`.
-  `pnpm seed` / jobs / `db:migrate` against the real dev DB stay on the user's
+  Jobs / `db:migrate` against the real dev DB stay on the user's
   machine or Toolforge.
 - `drizzle-kit generate` is offline (diffs the schema against `db/migrations/meta`),
   so it runs in-sandbox with no DB at all; `migrate`/`push`/`studio` need the

@@ -9,7 +9,7 @@ dist
 .wrangler
 .DS_Store
 
-# Local Wikidata dump(s) used to seed dev data — too large to commit (~250MB).
+# Old local Wikidata dumps (the removed `pnpm seed` path) — too large to commit.
 seed-data/
 
 # Scratch notes and reports, not for committing.

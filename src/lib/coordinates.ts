@@ -45,25 +45,6 @@ export function coordinateValue(
 /** The globe QID of a coordinate value. */
 export const globeOf = (v: Value): string => v.globe ?? EARTH;
 
-/**
- * Parse a WKT point literal as SPARQL returns `wdt:P625` and friends:
- * "Point(<lon> <lat>)" — longitude first — prefixed with the globe's entity IRI
- * when it isn't Earth ("<http://www.wikidata.org/entity/Q111> Point(…)").
- * Null when the literal isn't such a point.
- */
-export function parseWktPoint(literal: string): Value | null {
-  const m =
-    /^\s*(?:<https?:\/\/www\.wikidata\.org\/entity\/(Q\d+)>\s*)?Point\(\s*(\S+)\s+(\S+)\s*\)\s*$/i.exec(
-      literal,
-    );
-  if (!m) return null;
-  const longitude = Number(m[2]);
-  const latitude = Number(m[3]);
-  if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return null;
-  // The truthy literal carries no precision.
-  return coordinateValue(latitude, longitude, undefined, m[1] ?? EARTH);
-}
-
 const radians = (deg: number): number => (deg * Math.PI) / 180;
 
 /**

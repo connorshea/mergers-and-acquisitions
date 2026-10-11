@@ -1,6 +1,5 @@
 // Import the in-scope items from a Wikidata *entity JSON dump* into `items` +
-// `external_ids` (+ `properties`), replacing the QLever-driven Ruby dumper and
-// db/seed.ts as the way the mirror is (re)built.
+// `external_ids` (+ `properties`) — the way the mirror is (re)built.
 //
 // On Toolforge the weekly dump is on the read-only NFS mount at
 //   /public/dumps/public/wikidatawiki/entities/latest-all.json.gz

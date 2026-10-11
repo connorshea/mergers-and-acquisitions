@@ -12,7 +12,6 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "node scripts/migrate.ts",
     "db:push": "drizzle-kit push",
-    "seed": "node db/seed.ts",
     "import-items": "node scripts/import-items.ts",
     "job:hunt": "node jobs/hunt.ts",
     "job:import-dump": "node jobs/import-dump.ts",

@@ -118,7 +118,17 @@ jobs:
             exit 1
           fi
 
+      # Coverage is collected here rather than in the `ci` job because this is
+      # the only run that executes every test, DB-backed ones included.
       - name: Run tests including DB-backed tests
-        run: pnpm exec vp test
+        run: pnpm exec vp test --coverage
         env:
           DB_TEST: "1"
+
+      - name: Upload coverage report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: coverage
+          path: coverage/
+          retention-days: 14

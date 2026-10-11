@@ -15,3 +15,6 @@ seed-data/
 # Scratch notes and reports, not for committing.
 tmp/
 .vitest/
+
+# Test coverage reports (`vp test --coverage`).
+coverage/

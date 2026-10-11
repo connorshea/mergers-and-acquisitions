@@ -19,7 +19,7 @@ async function main(): Promise<void> {
 
 main()
   .then(() => process.exit(0))
-  .catch((err) => {
+  .catch((err: unknown) => {
     console.error("sync-properties: failed", err);
     process.exit(1);
   });

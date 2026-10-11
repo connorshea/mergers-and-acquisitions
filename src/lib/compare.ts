@@ -1214,7 +1214,7 @@ const KANJI_VARIANTS: Record<string, string> = Object.fromEntries(
     "驛駅 寬寛 槇槙 𠮷吉"
   )
     .split(" ")
-    .map((pair) => Array.from(pair)),
+    .map((pair) => Array.from(pair) as [string, string]),
 );
 
 const HAN_RE = /\p{Script=Han}/u;

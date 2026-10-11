@@ -443,7 +443,7 @@ describe("addItemClaim", () => {
       type: "wikibase-entityid",
       value: { "entity-type": "item", id },
     });
-    const claim = JSON.parse(params.claim);
+    const claim = JSON.parse(params.claim) as { id: string };
     expect(claim.id).toMatch(/^Q20\$[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
     expect(claim).toMatchObject({
       type: "statement",

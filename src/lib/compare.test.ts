@@ -2892,20 +2892,17 @@ describe("scoreCandidate — creators, loose names, clashes and aggregator ids",
       });
 
     it("counts two stations a short walk apart as evidence for", () => {
-      const result = scoreCandidate(station("Q1", 52.3791, 4.9003), station("Q2", 52.3789, 4.9))!;
+      const result = scoreCandidate(station("Q1", 52.3791, 4.9003), station("Q2", 52.3789, 4.9));
       const reason = result.reasons.find((r) => r.startsWith("nearby coordinate"));
       expect(reason).toBe("nearby coordinate locations (P625), 30 m apart");
       expect(reasonTone(reason!)).toEqual({ polarity: "positive", strength: 2 });
-      const far = scoreCandidate(station("Q1", 52.3791, 4.9003), station("Q3", 52.39, 4.95))!;
+      const far = scoreCandidate(station("Q1", 52.3791, 4.9003), station("Q3", 52.39, 4.95));
       expect(result.confidence).toBeGreaterThan(far.confidence);
     });
 
     it("caps two same-name stations in different cities below the floor", () => {
       // Amsterdam Centraal and Rotterdam Centraal.
-      const result = scoreCandidate(
-        station("Q1", 52.3791, 4.9003),
-        station("Q2", 51.9249, 4.4689),
-      )!;
+      const result = scoreCandidate(station("Q1", 52.3791, 4.9003), station("Q2", 51.9249, 4.4689));
       expect(result.reasons[0]).toBe(
         "coordinate locations (P625) are 58 km apart, almost certainly different places",
       );
@@ -2917,7 +2914,7 @@ describe("scoreCandidate — creators, loose names, clashes and aggregator ids",
       const a = station("Q1", 52.3791, 4.9003, ids);
       const result = scoreCandidate(a, station("Q2", 51.9249, 4.4689, ids), {
         isIdentifierProp: isId,
-      })!;
+      });
       expect(result.confidence).toBeGreaterThan(0.1);
       expect(result.confidence).toBeLessThanOrEqual(0.6);
     });
@@ -2931,11 +2928,11 @@ describe("scoreCandidate — creators, loose names, clashes and aggregator ids",
         const plain = scoreCandidate(
           station("Q1", 53.4847, -2.0563),
           station("Q2", 53.4841, -2.0563),
-        )!;
+        );
         const result = scoreCandidate(
           station("Q1", 53.4847, -2.0563, state(DECOMMISSIONED)),
           station("Q2", 53.4841, -2.0563, state(IN_USE)),
-        )!;
+        );
         const reason = "different state of use (P5817): in use vs. decommissioned";
         expect(result.reasons).toContain(reason);
         expect(reasonTone(reason)).toEqual({ polarity: "negative", strength: 2 });
@@ -2955,14 +2952,14 @@ describe("scoreCandidate — creators, loose names, clashes and aggregator ids",
           const result = scoreCandidate(
             station("Q1", 53.4847, -2.0563, x),
             station("Q2", 53.4841, -2.0563, y),
-          )!;
+          );
           expect(result.reasons.some((r) => r.startsWith("different state of use"))).toBe(false);
         }
       });
     });
 
     it("docks two stations a couple of kilometres apart", () => {
-      const result = scoreCandidate(station("Q1", 52.3791, 4.9003), station("Q2", 52.36, 4.9))!;
+      const result = scoreCandidate(station("Q1", 52.3791, 4.9003), station("Q2", 52.36, 4.9));
       expect(result.reasons).toContain(
         "coordinate locations (P625) are 2.1 km apart, likely different places",
       );

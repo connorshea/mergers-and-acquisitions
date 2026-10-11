@@ -12,7 +12,7 @@ runEntityLabelsSync()
       console.warn(`sync-entity-labels: skipped ${failed} QIDs after repeated failures`);
     process.exit(0);
   })
-  .catch((err) => {
+  .catch((err: unknown) => {
     console.error("sync-entity-labels: failed", err);
     process.exit(1);
   });

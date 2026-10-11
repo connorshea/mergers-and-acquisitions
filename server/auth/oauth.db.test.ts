@@ -355,7 +355,9 @@ describe.skipIf(!DB_TEST)("auth", () => {
       const res = await callback(`code=abc&state=${state}`, loginCookie);
       expect(error).toHaveBeenCalledWith(
         "oauth: callback failed",
-        expect.objectContaining({ message: expect.stringContaining("missing sub/username") }),
+        expect.objectContaining({
+          message: expect.stringContaining("missing sub/username") as unknown,
+        }),
       );
       expect(res.headers.get("location")).toBe("/?auth=failed");
       expect(await db.select().from(users)).toHaveLength(0);

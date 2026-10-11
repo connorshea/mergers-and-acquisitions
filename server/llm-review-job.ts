@@ -383,7 +383,7 @@ async function renderPicks(db: Db, picks: Pick[]): Promise<(Rendered | null)[]> 
       .from(items)
       .leftJoin(itemSync, eq(itemSync.qid, items.qid))
       .where(inArray(items.qid, ids));
-    for (const r of rows) byQid.set(r.qid, { data: r.data as Item, revid: r.revid });
+    for (const r of rows) byQid.set(r.qid, { data: r.data, revid: r.revid });
   }
   const found = picks.filter((p) => byQid.has(p.fromQid) && byQid.has(p.intoQid));
   // Each pair gets its own copies, since the overlay mutates them.

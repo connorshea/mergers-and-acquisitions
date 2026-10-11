@@ -11,7 +11,7 @@ runHunt()
     );
     process.exit(0);
   })
-  .catch((err) => {
+  .catch((err: unknown) => {
     console.error("hunt: failed", err);
     process.exit(1);
   });

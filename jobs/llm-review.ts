@@ -42,7 +42,7 @@ async function main(): Promise<void> {
 }
 
 main()
-  .catch((err) => {
+  .catch((err: unknown) => {
     console.error("llm-review: failed", err);
     process.exitCode = 1;
   })

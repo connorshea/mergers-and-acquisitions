@@ -7,7 +7,7 @@ import { runItemCreationSync } from "../server/item-creations.ts";
 
 runItemCreationSync()
   .then(() => process.exit(0))
-  .catch((err) => {
+  .catch((err: unknown) => {
     console.error("resolve-creations: failed", err);
     process.exit(1);
   });

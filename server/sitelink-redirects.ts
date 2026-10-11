@@ -19,7 +19,6 @@ import type { Connection, ConnectionOptions, RowDataPacket } from "mysql2/promis
 import { and, asc, eq, gt, gte, inArray, lt, sql } from "drizzle-orm";
 import { db } from "./db.ts";
 import { items, mergeCandidates, sitelinkPages } from "../db/schema.ts";
-import type { Item } from "../src/lib/compare.ts";
 import { chunk } from "../src/lib/chunk.ts";
 import { sitelinkClashes } from "./sitelink-overlay.ts";
 import { elapsed, progress } from "./progress.ts";
@@ -66,7 +65,7 @@ async function collectClashTitles(): Promise<Map<string, Set<string>>> {
       .select({ qid: items.qid, data: items.data })
       .from(items)
       .where(inArray(items.qid, qids));
-    const byQid = new Map(rows.map((r) => [r.qid, r.data as Item]));
+    const byQid = new Map(rows.map((r) => [r.qid, r.data]));
     for (const p of pairs) {
       const a = byQid.get(p.from);
       const b = byQid.get(p.into);

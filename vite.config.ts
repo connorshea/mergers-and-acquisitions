@@ -37,6 +37,36 @@ export default defineConfig({
       // reload and loses component state. Enforce it so we never silently
       // break HMR in `vp dev`.
       "react/only-export-components": "error",
+      // Type-aware checks beyond the correctness category. A `switch` with no
+      // `default` must cover every member of the union, so adding a `Value`
+      // type can't silently fall through to `undefined`.
+      "typescript/switch-exhaustiveness-check": [
+        "error",
+        { considerDefaultExhaustiveForUnions: true },
+      ],
+      // A promise in a condition (`if (fetchX())`) is always truthy. Async
+      // handlers passed where a void callback is expected (onClick, .finally)
+      // are intended here, so that half of the rule stays off.
+      "typescript/no-misused-promises": ["error", { checksVoidReturn: false }],
+      // Keep `[object Object]` out of logs, errors, and edit summaries.
+      "typescript/restrict-template-expressions": "error",
+      "typescript/no-base-to-string": "error",
+      "typescript/prefer-promise-reject-errors": "error",
+      "typescript/return-await": "error",
+      // Rejection values are `unknown`; `.catch((err) => err.message)` on an
+      // implicit `any` hides that a non-Error can reach it.
+      "typescript/use-unknown-in-catch-callback-variable": "error",
+      // Stop `any` from flowing silently into typed code.
+      "typescript/no-unsafe-argument": "error",
+      "typescript/no-unsafe-assignment": "error",
+      "typescript/no-unsafe-call": "error",
+      "typescript/no-unsafe-member-access": "error",
+      "typescript/no-unsafe-return": "error",
+      // A cast that no longer changes the type is stale and can mask a later
+      // type change.
+      "typescript/no-unnecessary-type-assertion": "error",
+      // `== null` (null or undefined) stays allowed; everything else is strict.
+      eqeqeq: ["error", "always", { null: "ignore" }],
     },
   },
   test: {

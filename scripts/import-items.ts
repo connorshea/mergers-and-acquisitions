@@ -54,7 +54,7 @@ async function main() {
 main()
   .then(() => pool.end())
   .then(() => process.exit(0))
-  .catch(async (err) => {
+  .catch(async (err: unknown) => {
     console.error("import failed", err);
     await pool.end().catch(() => {});
     process.exit(1);

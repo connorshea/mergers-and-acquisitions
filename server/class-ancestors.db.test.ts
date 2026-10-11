@@ -8,6 +8,7 @@ import { collectItemClasses, syncClassAncestors } from "./class-ancestors.ts";
 import type { Item, Value } from "../src/lib/compare.ts";
 import { fetchClassAncestors } from "../src/lib/sparql.ts";
 import { DB_TEST, truncateAll } from "../test/db-helpers.ts";
+import { quietLogs } from "../test/console.ts";
 
 vi.mock("../src/lib/sparql.ts", () => ({
   fetchClassAncestors: vi.fn<typeof fetchClassAncestors>(),
@@ -52,6 +53,7 @@ describe.skipIf(!DB_TEST)("collectItemClasses", () => {
 
 describe.skipIf(!DB_TEST)("syncClassAncestors", () => {
   beforeEach(truncateAll);
+  quietLogs();
 
   it("replaces looked-up classes, drops gone ones, and keeps failed ones", async () => {
     await db

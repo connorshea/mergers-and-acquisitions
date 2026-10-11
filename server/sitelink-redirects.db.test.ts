@@ -11,6 +11,7 @@ import { mergeCandidates, sitelinkPages } from "../db/schema.ts";
 import { runSitelinkRedirectSync } from "./sitelink-redirects.ts";
 import { attachSitelinkRedirects } from "./sitelink-overlay.ts";
 import { DB_TEST, insertItem, makeItem, truncateAll } from "../test/db-helpers.ts";
+import { expectConsole, quietLogs } from "../test/console.ts";
 
 const connect = () => mysql.createConnection(connConfig());
 
@@ -45,6 +46,7 @@ describe.skipIf(!DB_TEST)("sitelink redirects", () => {
       (7, 100, 'Starfall_Drift', '', NULL)`);
   });
   beforeEach(truncateAll);
+  quietLogs();
   afterAll(async () => {
     await db.execute(sql`DROP TABLE IF EXISTS page, redirect`);
     await pool.end();
@@ -178,10 +180,12 @@ describe.skipIf(!DB_TEST)("sitelink redirects", () => {
       checkedAt: "2000-01-01 00:00:00",
     });
 
+    const warn = expectConsole("warn");
     const stats = await runSitelinkRedirectSync({
       connect: (wiki) => (wiki === "dewiki" ? Promise.reject(new Error("down")) : connect()),
     });
     expect(stats).toMatchObject({ checked: 2, failedWikis: ["dewiki"], pruned: 1 });
+    expect(warn).toHaveBeenCalledWith("sitelink redirects: dewiki failed", expect.any(Error));
     const wikis = await db.select({ wiki: sitelinkPages.wiki }).from(sitelinkPages);
     expect(wikis.map((r) => r.wiki)).toEqual(["enwiki", "enwiki"]);
   });
@@ -190,9 +194,11 @@ describe.skipIf(!DB_TEST)("sitelink redirects", () => {
     await insertItem(makeItem("Q1", "A", {}, { sitelinks: { enwiki: "Starfall Drift" } }));
     await insertItem(makeItem("Q2", "B", {}, { sitelinks: { enwiki: "Sectioned" } }));
     await candidate("Q2", "Q1");
+    const warn = expectConsole("warn");
     await expect(
       runSitelinkRedirectSync({ connect: () => Promise.reject(new Error("down")) }),
     ).rejects.toThrow(/all 1 wikis/);
+    expect(warn).toHaveBeenCalledWith("sitelink redirects: enwiki failed", expect.any(Error));
   });
 
   it("overlays only the redirects behind the pair's clashes", async () => {

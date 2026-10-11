@@ -21,6 +21,7 @@ import {
 import { MIN_CONFIDENCE, runHunt } from "./hunt.ts";
 import type { Item, Value } from "../src/lib/compare.ts";
 import { DB_TEST, insertItem, makeItem, truncateAll } from "../test/db-helpers.ts";
+import { expectConsole, quietLogs } from "../test/console.ts";
 
 const steam = (value: string): Record<string, Value[]> => ({
   P1733: [{ type: "external-id", value }],
@@ -40,6 +41,7 @@ async function insertRawItem(data: unknown, qid: string, steamId: string): Promi
 describe.skipIf(!DB_TEST)("runHunt", () => {
   beforeEach(truncateAll);
   afterAll(() => pool.end());
+  quietLogs();
 
   it("pairs items sharing an external id and stores one scored candidate", async () => {
     // Found by both blocking strategies (shared id AND same label+type); the
@@ -144,7 +146,9 @@ describe.skipIf(!DB_TEST)("runHunt", () => {
 
   it("skips an oversized label+type block", async () => {
     for (let i = 0; i < 101; i++) await insertItem(makeItem(`Q${1000 + i}`, "Untitled"));
+    const warn = expectConsole("warn");
     expect((await runHunt()).pairs).toBe(0);
+    expect(warn).toHaveBeenCalledWith("hunt: skipping oversized label+type block of 101 qids");
   });
 
   it("never rescores or resurrects a pair Claude hid", async () => {
@@ -311,17 +315,13 @@ describe.skipIf(!DB_TEST)("runHunt", () => {
     await insertRawItem(broken("Q300"), "Q300", "999");
     await insertRawItem(broken("Q400"), "Q400", "999");
 
-    const error = vi.spyOn(console, "error").mockImplementation(() => {});
-    try {
-      const stats = await runHunt();
-      expect(stats).toMatchObject({ pairs: 2, scored: 2, upserted: 1, failed: 1 });
-      expect(error).toHaveBeenCalledWith(
-        expect.stringContaining("pair Q300/Q400 failed"),
-        expect.anything(),
-      );
-    } finally {
-      error.mockRestore();
-    }
+    const error = expectConsole("error");
+    const stats = await runHunt();
+    expect(stats).toMatchObject({ pairs: 2, scored: 2, upserted: 1, failed: 1 });
+    expect(error).toHaveBeenCalledWith(
+      expect.stringContaining("pair Q300/Q400 failed"),
+      expect.anything(),
+    );
     const rows = await allCandidates();
     expect(rows.map((r) => [r.fromQid, r.intoQid])).toEqual([["Q200", "Q100"]]);
   });
@@ -337,23 +337,18 @@ describe.skipIf(!DB_TEST)("runHunt", () => {
     await insertRawItem(odd("Q300"), "Q300", "777");
     await insertRawItem(odd("Q400"), "Q400", "777");
 
-    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
-    const error = vi.spyOn(console, "error").mockImplementation(() => {});
-    try {
-      const stats = await runHunt();
-      expect(stats).toMatchObject({ pairs: 2, scored: 2, upserted: 1, failed: 1 });
-      expect(warn).toHaveBeenCalledWith(
-        expect.stringContaining("retrying rows individually"),
-        expect.anything(),
-      );
-      expect(error).toHaveBeenCalledWith(
-        expect.stringContaining("pair Q400/Q300 failed"),
-        expect.anything(),
-      );
-    } finally {
-      warn.mockRestore();
-      error.mockRestore();
-    }
+    const warn = expectConsole("warn");
+    const error = expectConsole("error");
+    const stats = await runHunt();
+    expect(stats).toMatchObject({ pairs: 2, scored: 2, upserted: 1, failed: 1 });
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining("retrying rows individually"),
+      expect.anything(),
+    );
+    expect(error).toHaveBeenCalledWith(
+      expect.stringContaining("pair Q400/Q300 failed"),
+      expect.anything(),
+    );
     const rows = await allCandidates();
     expect(rows.map((r) => [r.fromQid, r.intoQid])).toEqual([["Q200", "Q100"]]);
   });
@@ -425,8 +420,12 @@ describe.skipIf(!DB_TEST)("runHunt", () => {
 
     it("skips the prune when most open rows would go", async () => {
       await seed();
+      const warn = expectConsole("warn");
       expect((await runHunt()).pruned).toBe(0);
       expect(await allCandidates()).toHaveLength(151);
+      expect(warn).toHaveBeenCalledWith(
+        expect.stringContaining("NOT pruning 150 of 150 open rows"),
+      );
     });
 
     it("prunes anyway with HUNT_FORCE_PRUNE=1", async () => {
@@ -466,13 +465,10 @@ describe.skipIf(!DB_TEST)("runHunt", () => {
       ]);
     // Did the run rebuild external_id_dupes from scratch, or only add new rows?
     const rebuiltOn = async (run: () => Promise<unknown>): Promise<boolean> => {
-      const log = vi.spyOn(console, "log").mockImplementation(() => {});
-      try {
-        await run();
-        return log.mock.calls.some(([line]) => String(line).includes("rebuilding the shared id"));
-      } finally {
-        log.mockRestore();
-      }
+      const log = vi.mocked(console.log);
+      log.mockClear();
+      await run();
+      return log.mock.calls.some(([line]) => String(line).includes("rebuilding the shared id"));
     };
 
     it("adds keys from new rows and drops keys that are no longer shared", async () => {

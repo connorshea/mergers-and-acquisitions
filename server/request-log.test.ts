@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { describe, expect, it } from "vite-plus/test";
+import { describe, expect, it, vi } from "vite-plus/test";
 import { requestLog } from "./request-log.ts";
 
 describe("requestLog", () => {
@@ -15,7 +15,11 @@ describe("requestLog", () => {
       throw new Error("boom");
     });
     await app.request("/api/auth/callback?code=secret&state=xyz");
+    // Hono's default error handler logs the thrown error.
+    const error = vi.spyOn(console, "error").mockImplementation(() => {});
     await app.request("/api/boom");
+    expect(error).toHaveBeenCalledWith(expect.objectContaining({ message: "boom" }));
+    error.mockRestore();
     await app.request("/api/missing");
     expect(lines).toHaveLength(3);
     expect(lines[0]).toMatch(/^GET \/api\/auth\/callback 200 \d+ms$/);

@@ -18,6 +18,7 @@ import { db, pool } from "../db.ts";
 import { oauthTokens, sessions, users } from "../../db/schema.ts";
 import type { AuthMeResponse } from "../../src/lib/api-types.ts";
 import { DB_TEST, loginAs, truncateAll } from "../../test/db-helpers.ts";
+import { expectConsole } from "../../test/console.ts";
 import { decrypt, randomToken, sha256Hex } from "./crypto.ts";
 import { wikiOrigin } from "./config.ts";
 import { MAX_RETURN_TO_LENGTH, safeReturnTo } from "./oauth.ts";
@@ -127,7 +128,10 @@ describe.skipIf(!DB_TEST)("auth", () => {
     await pool.end();
   });
   beforeEach(truncateAll);
-  afterEach(() => vi.unstubAllGlobals());
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.restoreAllMocks();
+  });
 
   describe("GET /api/auth/login", () => {
     it("redirects to the authorize endpoint with PKCE and a signed state cookie", async () => {
@@ -306,7 +310,9 @@ describe.skipIf(!DB_TEST)("auth", () => {
     it("sends the user home with a note when they decline on Wikimedia", async () => {
       const { stub } = stubProvider();
       const { loginCookie } = await startLogin();
+      const warn = expectConsole("warn");
       const res = await callback("error=access_denied", loginCookie);
+      expect(warn).toHaveBeenCalledWith("oauth: provider returned error=access_denied");
       expect(res.status).toBe(303);
       expect(res.headers.get("location")).toBe("/?auth=denied");
       expect(stub).not.toHaveBeenCalled();
@@ -315,7 +321,12 @@ describe.skipIf(!DB_TEST)("auth", () => {
     it("fails soft when the token exchange is refused", async () => {
       stubProvider({ tokenStatus: 400, tokenBody: { error: "invalid_grant" } });
       const { state, loginCookie } = await startLogin();
+      const error = expectConsole("error");
       const res = await callback(`code=abc&state=${state}`, loginCookie);
+      expect(error).toHaveBeenCalledWith(
+        "oauth: callback failed",
+        expect.objectContaining({ message: "token exchange failed: invalid_grant" }),
+      );
       expect(res.headers.get("location")).toBe("/?auth=failed");
       expect(await db.select().from(sessions)).toHaveLength(0);
     });
@@ -326,8 +337,13 @@ describe.skipIf(!DB_TEST)("auth", () => {
       });
       vi.stubGlobal("fetch", stub);
       const { state, loginCookie } = await startLogin();
+      const error = expectConsole("error");
       const res = await callback(`code=abc&state=${state}`, loginCookie);
       expect(res.headers.get("location")).toBe("/?auth=failed");
+      expect(error).toHaveBeenCalledWith(
+        "oauth: callback failed",
+        expect.objectContaining({ message: "token exchange failed: ECONNRESET" }),
+      );
       expect(stub.mock.calls[0][1]?.signal).toBeInstanceOf(AbortSignal);
       expect(await db.select().from(users)).toHaveLength(0);
     });
@@ -335,7 +351,12 @@ describe.skipIf(!DB_TEST)("auth", () => {
     it("fails soft on a profile without a user id, creating nothing", async () => {
       stubProvider({ profile: { username: "NoSub" } });
       const { state, loginCookie } = await startLogin();
+      const error = expectConsole("error");
       const res = await callback(`code=abc&state=${state}`, loginCookie);
+      expect(error).toHaveBeenCalledWith(
+        "oauth: callback failed",
+        expect.objectContaining({ message: expect.stringContaining("missing sub/username") }),
+      );
       expect(res.headers.get("location")).toBe("/?auth=failed");
       expect(await db.select().from(users)).toHaveLength(0);
       expect(await db.select().from(oauthTokens)).toHaveLength(0);

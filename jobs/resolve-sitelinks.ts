@@ -1,8 +1,8 @@
 // Scheduled job: check the pages behind same-wiki sitelink clashes on open
 // candidates against the Wiki Replicas — is each a redirect, and to what — so
 // a clash that's really one page redirecting to the other can be told apart
-// from two distinct articles. Runs nightly after the hunt, which is what
-// creates and retires the candidates it looks at.
+// from two distinct articles. Runs daily, after the weekly hunt's time; the
+// hunt is what creates and retires the candidates it looks at.
 import { runSitelinkRedirectSync } from "../server/sitelink-redirects.ts";
 
 export async function main(): Promise<number> {

@@ -1,6 +1,6 @@
 // Settle open candidates whose items were merged (or deleted) on Wikidata
 // since the last dump, without waiting for the next weekly import to prune
-// them. Run nightly by jobs/resolve-merges.ts, before the hunt.
+// them. Run nightly by jobs/resolve-merges.ts, before the weekly hunt's time.
 //
 // A merged-away item is a redirect on Wikidata; a deleted one has no page. The
 // wikidatawiki replica's `page` / `redirect` tables say which, for every item

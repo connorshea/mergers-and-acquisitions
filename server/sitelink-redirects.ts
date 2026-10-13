@@ -1,6 +1,6 @@
 // Resolve the pages behind same-wiki sitelink clashes against the Wiki Replicas,
 // recording whether each is a redirect and where it points (`sitelink_pages`).
-// Run nightly by jobs/resolve-sitelinks.ts, after the hunt.
+// Run daily by jobs/resolve-sitelinks.ts, after the weekly hunt's time.
 //
 // Two open candidates' items linking different pages on one wiki is what makes
 // Wikidata refuse the merge — but often one page is just a redirect to the

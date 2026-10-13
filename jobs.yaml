@@ -21,16 +21,21 @@
 # that hold data in memory pass --max-old-space-size explicitly (about 3/4 of
 # `mem`, leaving room for buffers and the runtime).
 
+# Refresh the property table, then rebuild `class_ancestors` for the mirror's
+# classes. Weekly, between the dump import (Wednesdays 06:00, usually done in
+# 30-40 min, killed by its 3 h timeout at 09:00) and the hunt, so the hunt
+# checks subject type constraints against fresh properties and against
+# ancestors for the classes the new dump brought in.
 - name: sync-properties
   command: node jobs/sync-properties.ts
   image: tool-mna/tool-mna:latest
-  schedule: "0 2 * * 0" # Sundays 02:00 UTC
+  schedule: "0 9 * * 3" # Wednesdays 09:00 UTC
   emails: onfailure
 
 # Label the value QIDs the weekly dump import brought in. It runs after the
-# import (Wednesdays 06:00, usually done in 30-40 min, 3 h timeout) so new
-# pairs show names, not QIDs, by the time Thursday's hunt surfaces them; the
-# detail page reads labels per request, so nothing needs rescoring.
+# import (Wednesdays 06:00, usually done in 30-40 min, 3 h timeout), beside the
+# weekly hunt; the detail page reads labels per request, so the pairs the hunt
+# surfaces show names once it's done, with nothing to rescore.
 - name: sync-entity-labels
   command: node --max-old-space-size=768 jobs/sync-entity-labels.ts
   image: tool-mna/tool-mna:latest
@@ -63,7 +68,7 @@
 #
 # Retry once so a shard killed by a node drain restarts rather than waiting a
 # week (the import is idempotent and never prunes on an incomplete set); the
-# timeout catches a stuck shard before it collides with the next nightly hunt.
+# timeout stops a stuck shard before the property sync and hunt that follow.
 - name: import-dump-1
   command: node --max-old-space-size=384 jobs/import-dump.ts --worker import-dump-1
   image: tool-mna/tool-mna:latest
@@ -132,7 +137,8 @@
 
 # Settle open candidates whose items were merged or deleted on Wikidata since
 # the last dump, from the wikidatawiki replica (same TOOL_REPLICA_* credentials).
-# Before the hunt, so it skips the items that are gone.
+# Nightly, since outside merges happen every day; before Wednesday's hunt, so
+# that one skips the items that are gone.
 - name: resolve-merges
   command: node jobs/resolve-merges.ts
   image: tool-mna/tool-mna:latest
@@ -140,10 +146,15 @@
   mem: 1Gi
   emails: onfailure
 
+# Weekly, because its input is: the mirror only changes with the Wednesday
+# dump import, so a nightly run rescored an almost unchanged mirror six days
+# out of seven. 10:00 leaves the import its full 3 h timeout (to 09:00) and
+# the property sync an hour. A change to scoring (src/lib/compare.ts) reaches
+# the queue at the next run, or sooner as a one-off job (see the README).
 - name: hunt
   command: node --max-old-space-size=1536 jobs/hunt.ts
   image: tool-mna/tool-mna:latest
-  schedule: "0 3 * * *" # nightly 03:00 UTC, after the syncs settle
+  schedule: "0 10 * * 3" # Wednesdays 10:00 UTC
   # Defaults (512Mi / 0.1 CPU) are tiny. It once needed 3Gi (a ~1.57 GiB peak
   # at 2.18M items, from the in-memory label+type blocking), but blocking now
   # groups in SQL and scoring runs a window at a time: at ~2.4M items the heap
@@ -154,22 +165,24 @@
 
 # Resolve the pages behind same-wiki sitelink clashes on open candidates
 # against the Wiki Replicas (<wiki>.analytics.db.svc.wikimedia.cloud, with the
-# tool's TOOL_REPLICA_USER / TOOL_REPLICA_PASSWORD). After the hunt, since the
-# hunt decides which candidates are open.
+# tool's TOOL_REPLICA_USER / TOOL_REPLICA_PASSWORD). Daily, since pages
+# become redirects any day, and at a time after the weekly hunt, since the hunt
+# decides which candidates are open.
 - name: resolve-sitelinks
   command: node jobs/resolve-sitelinks.ts
   image: tool-mna/tool-mna:latest
-  schedule: "30 4 * * *" # nightly 04:30 UTC
+  schedule: "0 12 * * *" # daily 12:00 UTC
   mem: 1Gi
   emails: onfailure
 
 # Record who created each open candidate's items, and when, from the
-# wikidatawiki replica (same TOOL_REPLICA_* credentials). After the hunt; only
-# new items (and month-old rows) are read, so it's quick after the first run.
+# wikidatawiki replica (same TOOL_REPLICA_* credentials). At a time after the
+# weekly hunt, so Wednesday's run picks up the new pairs; only new items (and
+# month-old rows) are read, so the other nights' runs are quick.
 - name: resolve-creations
   command: node jobs/resolve-creations.ts
   image: tool-mna/tool-mna:latest
-  schedule: "0 5 * * *" # nightly 05:00 UTC
+  schedule: "30 12 * * *" # daily 12:30 UTC
   mem: 1Gi
   emails: onfailure
 
@@ -190,7 +203,7 @@
 - name: llm-review-first-pass
   command: node --max-old-space-size=768 jobs/llm-review.ts first-pass
   image: tool-mna/tool-mna:latest
-  schedule: "0 6 1 * *" # 1st of the month, 06:00 UTC, after the nightly hunt
+  schedule: "0 6 1 * *" # 1st of the month, 06:00 UTC
   mem: 1Gi
   emails: onfailure
 

@@ -4,7 +4,7 @@
 
 Compares two Wikidata items and groups their labels, aliases, sitelinks and
 statements into identical / similar / distinct / one-sided, flagging anything
-that would block a merge. Candidate pairs come from a nightly hunt over a local
+that would block a merge. Candidate pairs come from a weekly hunt over a local
 mirror of Wikidata items (loaded from the weekly entity dump); logged-in users
 review them and merge or mark them as different, editing Wikidata directly.
 
@@ -287,9 +287,9 @@ When two items link different pages on the same wiki, Wikidata refuses to merge
 them — but often one page is only a redirect to the other. The dump's "sitelink
 to redirect" badges don't say where a redirect points, and they're missing on
 pages that became redirects after being linked. So `pnpm job:resolve-sitelinks`
-(`jobs/resolve-sitelinks.ts` → `server/sitelink-redirects.ts`, nightly after the
-hunt) looks up every clashing sitelink on an open candidate in that wiki's
-`page` / `redirect` tables on the [Wiki
+(`jobs/resolve-sitelinks.ts` → `server/sitelink-redirects.ts`, daily, after
+the weekly hunt's time) looks up every clashing sitelink on an open candidate
+in that wiki's `page` / `redirect` tables on the [Wiki
 Replicas](https://wikitech.wikimedia.org/wiki/Help:Toolforge/Database) and
 stores the answer in `sitelink_pages`. It connects to
 `<wiki>.analytics.db.svc.wikimedia.cloud` (database `<wiki>_p`) with the tool's
@@ -312,11 +312,12 @@ tool behind it when the edit summary or tags name one (QuickStatements batch,
 OpenRefine / EditGroups batch, Mix'n'match, …).
 
 `pnpm job:resolve-creations` (`jobs/resolve-creations.ts` →
-`server/item-creations.ts`, nightly after the hunt) reads each open candidate's
-items' first revision from the `wikidatawiki` replica into `item_creations`,
-with the same replica settings as above. Only new items are read, plus rows
-older than 30 days, to refresh the creator's stats. A pair viewed before the
-job has reached it is looked up through the Action API instead
+`server/item-creations.ts`, daily, after the weekly hunt's time) reads each
+open candidate's items' first revision from the `wikidatawiki` replica into
+`item_creations`, with the same replica settings as above. Only new items are
+read, plus rows older than 30 days, to refresh the creator's stats. A pair
+viewed before the job has reached it is looked up through the Action API
+instead
 (`GET /api/candidates/:id/creations`) and cached the same way.
 
 ## Merges made outside the app
@@ -325,10 +326,10 @@ An item merged on Wikidata by someone else leaves the mirror only when the next
 weekly dump import prunes it, so until then its pairs stay open and a merge
 attempt fails with "Cannot access content, revision may be deleted."
 `pnpm job:resolve-merges` (`jobs/resolve-merges.ts` → `server/outside-merges.ts`,
-nightly before the hunt) looks every open candidate's items up in the
-`wikidatawiki` replica. A pair with a side that is now a redirect is settled as
-`merged`; one with a side that was deleted, as `dismissed`. Those items' rows
-leave the mirror, as with a merge made in the app.
+nightly, before the weekly hunt's time) looks every open candidate's items up
+in the `wikidatawiki` replica. A pair with a side that is now a redirect is
+settled as `merged`; one with a side that was deleted, as `dismissed`. Those
+items' rows leave the mirror, as with a merge made in the app.
 
 ## Claude review
 
@@ -425,6 +426,33 @@ curl -fsSL https://raw.githubusercontent.com/connorshea/mergers-and-acquisitions
 that's in progress, so don't load while the `import-dump-*` workers are running
 (check `toolforge jobs list`). It stops at the first job it can't create, so
 read its output to the end. GitHub's raw file can lag a merge by a few minutes.
+
+On Wednesdays, after the dump lands on Tuesday, the jobs run in this order
+(UTC):
+
+| Time  | Job                          | Notes                                           |
+| ----- | ---------------------------- | ----------------------------------------------- |
+| 06:00 | `import-dump-1..6`           | usually done in 30-40 min; 3 h timeout          |
+| 09:00 | `sync-properties`            | properties + `class_ancestors` for the new dump |
+| 10:00 | `hunt`, `sync-entity-labels` | the hunt only runs weekly; its input is weekly  |
+| 12:00 | `resolve-sitelinks`          | daily; 12:00 so it follows the hunt             |
+| 12:30 | `resolve-creations`          | daily; likewise                                 |
+
+`resolve-merges` (02:30) and `prune-sessions` (02:45) run nightly. The hunt
+used to run nightly too, but it only rescored an almost unchanged mirror on
+the six nights between imports. So a change to scoring (`src/lib/compare.ts`)
+reaches the queue at the next Wednesday's hunt; to apply it sooner, deploy it
+and run the hunt as a one-off job (a different name from the scheduled `hunt`,
+and the same heap, memory and CPU):
+
+```sh
+toolforge jobs run hunt-manual --image tool-mna/tool-mna:latest \
+  --command "node --max-old-space-size=1536 jobs/hunt.ts" --mem 2Gi --cpu 1 \
+  --emails onfailure
+```
+
+Don't start it while the `import-dump-*` workers are running: it would score a
+half-imported mirror.
 
 Job and Procfile commands call `node` directly rather than `npm run …`: the
 launch image has npm but not pnpm, and npm 11 refuses to run scripts because

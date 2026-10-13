@@ -4,10 +4,10 @@
 // likelier to be an accident than one made by an editor they know.
 //
 // Two ways in, both writing the same rows:
-// - runItemCreationSync (jobs/resolve-creations.ts, nightly after the hunt)
-//   reads the wikidatawiki replica for every open candidate's items that have
-//   no row yet, or whose row is old enough that the creator's stats may have
-//   drifted.
+// - runItemCreationSync (jobs/resolve-creations.ts, daily, after the weekly
+//   hunt) reads the wikidatawiki replica for every open candidate's items
+//   that have no row yet, or whose row is old enough that the creator's stats
+//   may have drifted.
 // - loadCreations (GET /api/candidates/:id/creations) serves the cached rows
 //   and asks the Action API for any item the job hasn't reached yet.
 import mysql from "mysql2/promise";

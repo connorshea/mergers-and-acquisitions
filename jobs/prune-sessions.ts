@@ -9,21 +9,22 @@ import { recheckLoggedInUsers } from "../server/auth/profile-recheck.ts";
 import { pruneExpiredSessions } from "../server/auth/session.ts";
 import { pool } from "../server/db.ts";
 
-async function main() {
-  const { sessions, tokens } = await pruneExpiredSessions();
-  console.log(
-    `prune-sessions: deleted ${sessions} expired session(s) and ${tokens} orphaned token row(s)`,
-  );
-  const { checked, blocked, skipped } = await recheckLoggedInUsers();
-  console.log(
-    `prune-sessions: re-checked ${checked} logged-in account(s), ${blocked} now blocked, ${skipped} skipped`,
-  );
+export async function main(): Promise<number> {
+  try {
+    const { sessions, tokens } = await pruneExpiredSessions();
+    console.log(
+      `prune-sessions: deleted ${sessions} expired session(s) and ${tokens} orphaned token row(s)`,
+    );
+    const { checked, blocked, skipped } = await recheckLoggedInUsers();
+    console.log(
+      `prune-sessions: re-checked ${checked} logged-in account(s), ${blocked} now blocked, ${skipped} skipped`,
+    );
+    await pool.end();
+    return 0;
+  } catch (err) {
+    console.error("prune-sessions: failed", err);
+    return 1;
+  }
 }
 
-main()
-  .then(() => pool.end())
-  .then(() => process.exit(0))
-  .catch((err: unknown) => {
-    console.error("prune-sessions: failed", err);
-    process.exit(1);
-  });
+if (import.meta.main) process.exit(await main());

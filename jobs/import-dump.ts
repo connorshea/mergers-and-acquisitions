@@ -30,10 +30,15 @@ import {
   DEFAULT_DUMP_PATH,
   DEFAULT_SEGMENTS,
   type DumpShard,
+  type ImportOptions,
+  type ImportStats,
   runDumpImport,
 } from "../server/dump-import.ts";
 
-function parseShard(argv: string[]): DumpShard {
+/** A bad flag or env var: `main` prints the message and exits 2. */
+export class UsageError extends Error {}
+
+export function parseShard(argv: string[]): DumpShard {
   const at = argv.indexOf("--shard");
   if (at === -1) return { index: 0, count: 1 };
   const spec = argv[at + 1] ?? "";
@@ -41,108 +46,145 @@ function parseShard(argv: string[]): DumpShard {
   const index = m ? Number(m[1]) : 0;
   const count = m ? Number(m[2]) : 0;
   if (!m || count < 1 || index < 1 || index > count) {
-    console.error(`import-dump: --shard wants i/N with 1 <= i <= N, got "${spec}"`);
-    process.exit(2);
+    throw new UsageError(`import-dump: --shard wants i/N with 1 <= i <= N, got "${spec}"`);
   }
   return { index: index - 1, count };
 }
 
 /** The worker name after `--worker`, the default one when it has none, or undefined without the flag. */
-function parseWorker(argv: string[]): string | undefined {
+export function parseWorker(argv: string[]): string | undefined {
   const at = argv.indexOf("--worker");
   if (at === -1) return undefined;
   const name = argv[at + 1];
   if (name === undefined || name.startsWith("--")) return `${hostname()}-${process.pid}`;
   if (name.length > 64) {
-    console.error(`import-dump: --worker name must be at most 64 characters, got "${name}"`);
-    process.exit(2);
+    throw new UsageError(`import-dump: --worker name must be at most 64 characters, got "${name}"`);
   }
   return name;
 }
 
-const argv = process.argv.slice(2);
-const worker = parseWorker(argv);
-if (worker !== undefined && argv.includes("--shard")) {
-  console.error("import-dump: --worker and --shard don't mix");
-  process.exit(2);
-}
-const shard = parseShard(argv);
-const segments = process.env.DUMP_SEGMENTS ? Number(process.env.DUMP_SEGMENTS) : DEFAULT_SEGMENTS;
-if (!(Number.isInteger(segments) && segments > 0)) {
-  console.error(
-    `import-dump: DUMP_SEGMENTS must be a positive integer, got "${process.env.DUMP_SEGMENTS}"`,
-  );
-  process.exit(2);
-}
-const configured = process.env.WIKIDATA_JSON_DUMP ?? DEFAULT_DUMP_PATH;
-// `latest-all.json.gz` is a symlink to a dated file (e.g. `20260914/wikidata-20260914-all.json.gz`).
-// Resolve it up front so the log says which dump this run read, and open the
-// dated file itself so a pointer swap mid-run can't make the two differ.
-// A missing file is left for runDumpImport to report (ENOENT on open).
-let path = configured;
-try {
-  path = realpathSync(configured);
-} catch {
-  // fall through with the configured path
-}
-const limit = process.env.DUMP_LIMIT ? Number(process.env.DUMP_LIMIT) : undefined;
-if (limit !== undefined && !(Number.isInteger(limit) && limit > 0)) {
-  console.error(
-    `import-dump: DUMP_LIMIT must be a positive integer, got "${process.env.DUMP_LIMIT}"`,
-  );
-  process.exit(2);
-}
-const redo = process.env.DUMP_REDO || undefined;
-if (redo !== undefined && !(redo.length <= 32 && worker !== undefined)) {
-  console.error("import-dump: DUMP_REDO is a token of at most 32 characters, for --worker runs");
-  process.exit(2);
-}
-if (limit !== undefined && worker !== undefined) {
-  console.error("import-dump: DUMP_LIMIT is for a single run; use it without --worker");
-  process.exit(2);
+/**
+ * `latest-all.json.gz` is a symlink to a dated file (e.g. `20260914/wikidata-20260914-all.json.gz`).
+ * Resolve it up front so the log says which dump this run read, and open the
+ * dated file itself so a pointer swap mid-run can't make the two differ.
+ * A missing file is left for runDumpImport to report (ENOENT on open).
+ */
+export function resolveDumpPath(configured: string): string {
+  try {
+    return realpathSync(configured);
+  } catch {
+    return configured;
+  }
 }
 
-console.log(
-  `import-dump: reading ${configured}${path !== configured ? ` -> ${path}` : ""}` +
-    (worker !== undefined ? ` (worker ${worker}, ${segments} segments)` : "") +
-    (shard.count > 1 ? ` (shard ${shard.index + 1}/${shard.count})` : "") +
-    (limit ? ` (limit ${limit})` : ""),
-);
+export interface JobConfig {
+  /** The dump path as configured, before resolving a symlink. */
+  configured: string;
+  worker: string | undefined;
+  segments: number;
+  shard: DumpShard;
+  limit: number | undefined;
+  /** What `runDumpImport` gets. */
+  options: ImportOptions;
+}
 
-runDumpImport({
-  path,
-  ...(worker !== undefined ? { worker, segments, redo } : { shard }),
-  limit,
-  prune: process.env.DUMP_PRUNE === "0" ? false : undefined,
-  forcePrune: process.env.DUMP_PRUNE_FORCE === "1",
-  full: process.env.DUMP_FULL === "1",
-})
-  .then(async (stats) => {
-    console.log(
-      `import-dump: ${
-        worker !== undefined
-          ? `worker ${worker} (${stats.segmentsScanned} segments) `
-          : shard.count > 1
-            ? `shard ${shard.index + 1}/${shard.count} `
-            : ""
-      }` +
-        `done in ${(stats.seconds / 60).toFixed(1)} min ` +
-        `(${(stats.writeWaitSeconds / 60).toFixed(1)} min waiting on writes` +
-        (stats.lockRetries > 0 ? `, ${stats.lockRetries} lock retries` : "") +
-        ") — " +
-        `${(stats.bytes / 1e9).toFixed(1)} GB inflated, ${stats.lines} lines, ${stats.parsed} parsed, ` +
-        `${stats.matched} matched (${stats.unedited} unedited), ${stats.upserted} items upserted (${stats.unchanged} unchanged), ${stats.externalIds} external ids, ` +
-        (stats.skipped + stats.failed > 0
-          ? `${stats.skipped} bad lines + ${stats.failed} failed items skipped, `
-          : "") +
-        `${stats.propertyRows} properties, ${stats.pruned} pruned, ${stats.settled} candidates settled` +
-        (stats.stopped ? " (stopped at limit)" : ""),
+/** Read the flags and env vars; throws a UsageError on a bad one. */
+export function parseConfig(argv: string[], env: NodeJS.ProcessEnv): JobConfig {
+  const worker = parseWorker(argv);
+  if (worker !== undefined && argv.includes("--shard")) {
+    throw new UsageError("import-dump: --worker and --shard don't mix");
+  }
+  const shard = parseShard(argv);
+  const segments = env.DUMP_SEGMENTS ? Number(env.DUMP_SEGMENTS) : DEFAULT_SEGMENTS;
+  if (!(Number.isInteger(segments) && segments > 0)) {
+    throw new UsageError(
+      `import-dump: DUMP_SEGMENTS must be a positive integer, got "${env.DUMP_SEGMENTS}"`,
     );
+  }
+  const configured = env.WIKIDATA_JSON_DUMP ?? DEFAULT_DUMP_PATH;
+  const path = resolveDumpPath(configured);
+  const limit = env.DUMP_LIMIT ? Number(env.DUMP_LIMIT) : undefined;
+  if (limit !== undefined && !(Number.isInteger(limit) && limit > 0)) {
+    throw new UsageError(
+      `import-dump: DUMP_LIMIT must be a positive integer, got "${env.DUMP_LIMIT}"`,
+    );
+  }
+  const redo = env.DUMP_REDO || undefined;
+  if (redo !== undefined && !(redo.length <= 32 && worker !== undefined)) {
+    throw new UsageError(
+      "import-dump: DUMP_REDO is a token of at most 32 characters, for --worker runs",
+    );
+  }
+  if (limit !== undefined && worker !== undefined) {
+    throw new UsageError("import-dump: DUMP_LIMIT is for a single run; use it without --worker");
+  }
+  return {
+    configured,
+    worker,
+    segments,
+    shard,
+    limit,
+    options: {
+      path,
+      ...(worker !== undefined ? { worker, segments, redo } : { shard }),
+      limit,
+      prune: env.DUMP_PRUNE === "0" ? false : undefined,
+      forcePrune: env.DUMP_PRUNE_FORCE === "1",
+      full: env.DUMP_FULL === "1",
+    },
+  };
+}
+
+function summary({ worker, shard }: JobConfig, stats: ImportStats): string {
+  return (
+    `import-dump: ${
+      worker !== undefined
+        ? `worker ${worker} (${stats.segmentsScanned} segments) `
+        : shard.count > 1
+          ? `shard ${shard.index + 1}/${shard.count} `
+          : ""
+    }` +
+    `done in ${(stats.seconds / 60).toFixed(1)} min ` +
+    `(${(stats.writeWaitSeconds / 60).toFixed(1)} min waiting on writes` +
+    (stats.lockRetries > 0 ? `, ${stats.lockRetries} lock retries` : "") +
+    ") — " +
+    `${(stats.bytes / 1e9).toFixed(1)} GB inflated, ${stats.lines} lines, ${stats.parsed} parsed, ` +
+    `${stats.matched} matched (${stats.unedited} unedited), ${stats.upserted} items upserted (${stats.unchanged} unchanged), ${stats.externalIds} external ids, ` +
+    (stats.skipped + stats.failed > 0
+      ? `${stats.skipped} bad lines + ${stats.failed} failed items skipped, `
+      : "") +
+    `${stats.propertyRows} properties, ${stats.pruned} pruned, ${stats.settled} candidates settled` +
+    (stats.stopped ? " (stopped at limit)" : "")
+  );
+}
+
+/** Run the import; resolves to the exit code (2 for a bad flag or env var). */
+export async function main(argv: string[], env: NodeJS.ProcessEnv = process.env): Promise<number> {
+  let config: JobConfig;
+  try {
+    config = parseConfig(argv, env);
+  } catch (err) {
+    if (!(err instanceof UsageError)) throw err;
+    console.error(err.message);
+    return 2;
+  }
+  const { configured, worker, segments, shard, limit, options } = config;
+  console.log(
+    `import-dump: reading ${configured}${options.path !== configured ? ` -> ${options.path}` : ""}` +
+      (worker !== undefined ? ` (worker ${worker}, ${segments} segments)` : "") +
+      (shard.count > 1 ? ` (shard ${shard.index + 1}/${shard.count})` : "") +
+      (limit ? ` (limit ${limit})` : ""),
+  );
+  try {
+    const stats = await runDumpImport(options);
+    console.log(summary(config, stats));
     await pool.end();
-    process.exit(0);
-  })
-  .catch(async (err: unknown) => {
+    return 0;
+  } catch (err) {
     console.error("import-dump: failed", err);
     await pool.end().catch(() => {});
-    process.exit(1);
-  });
+    return 1;
+  }
+}
+
+if (import.meta.main) process.exit(await main(process.argv.slice(2)));

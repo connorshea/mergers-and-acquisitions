@@ -5,9 +5,14 @@
 // refresh their creator's edit count and bot flag.
 import { runItemCreationSync } from "../server/item-creations.ts";
 
-runItemCreationSync()
-  .then(() => process.exit(0))
-  .catch((err: unknown) => {
+export async function main(): Promise<number> {
+  try {
+    await runItemCreationSync();
+    return 0;
+  } catch (err) {
     console.error("resolve-creations: failed", err);
-    process.exit(1);
-  });
+    return 1;
+  }
+}
+
+if (import.meta.main) process.exit(await main());

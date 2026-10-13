@@ -12,9 +12,21 @@
 import { db, pool } from "../server/db.ts";
 import { anthropicApi, collect, configFromEnv, runStage } from "../server/llm-review-job.ts";
 
-async function main(): Promise<void> {
-  const [command, ...argv] = process.argv.slice(2);
-  const config = configFromEnv();
+/** Run one stage; resolves to the exit code. */
+export async function main(argv: string[], env: NodeJS.ProcessEnv = process.env): Promise<number> {
+  try {
+    return await dispatch(argv, env);
+  } catch (err) {
+    console.error("llm-review: failed", err);
+    return 1;
+  } finally {
+    await pool.end();
+  }
+}
+
+async function dispatch(args: string[], env: NodeJS.ProcessEnv): Promise<number> {
+  const [command, ...argv] = args;
+  const config = configFromEnv(env);
   const i = argv.indexOf("--max-pairs");
   if (i >= 0) {
     config.maxPairs = Number(argv[i + 1]);
@@ -28,22 +40,18 @@ async function main(): Promise<void> {
     case "confirm": {
       const stage = command === "first-pass" ? "first_pass" : "confirmation";
       await runStage(db, anthropicApi(), config, stage, { wait });
-      break;
+      return 0;
     }
     case "collect":
       await collect(db, anthropicApi(), config, { wait });
-      break;
+      return 0;
     default:
       console.log(
         "usage: node jobs/llm-review.ts first-pass | confirm | collect [--wait] [--max-pairs N]",
       );
-      process.exitCode = command ? 1 : 0;
+      return command ? 1 : 0;
   }
 }
 
-main()
-  .catch((err: unknown) => {
-    console.error("llm-review: failed", err);
-    process.exitCode = 1;
-  })
-  .finally(() => pool.end());
+// Sets exitCode rather than exiting, so the process ends once the pool has closed.
+if (import.meta.main) process.exitCode = await main(process.argv.slice(2));

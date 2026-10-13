@@ -52,7 +52,8 @@ import {
   toRecord,
 } from "../server/llm-batch.ts";
 
-const RUNS_DIR = join(process.env.TOOL_DATA_DIR ?? "tmp", "llm-trial");
+/** Read per call rather than at import, so tests can point TOOL_DATA_DIR at a temp dir. */
+const runsDir = () => join(process.env.TOOL_DATA_DIR ?? "tmp", "llm-trial");
 const SITE = "https://mna.toolforge.org";
 const MODELS: ReviewModel[] = ["claude-haiku-5-5", "claude-opus-5-5"];
 const POLL_MS = 60_000;
@@ -231,7 +232,7 @@ async function submit(argv: string[]): Promise<void> {
       openPerBand,
       batches: [],
     };
-    const dir = join(RUNS_DIR, run.createdAt.replace(/[:.]/g, "-"));
+    const dir = join(runsDir(), run.createdAt.replace(/[:.]/g, "-"));
     await mkdir(dir, { recursive: true });
     await writeJsonl(join(dir, "pairs.jsonl"), pairs);
     await writeJsonl(
@@ -339,7 +340,7 @@ function verdictCounts(reviews: (Review | null | undefined)[]): string {
   return `${n("same")} same / ${n("different")} diff / ${n("unsure")} unsure${failed ? ` / ${failed} failed` : ""}`;
 }
 
-async function report(dir: string): Promise<void> {
+export async function report(dir: string): Promise<void> {
   const run = JSON.parse(await readFile(join(dir, "run.json"), "utf8")) as Run;
   const pairs = (await readJsonl<SampledPair>(join(dir, "pairs.jsonl"))) ?? [];
   const results = new Map<ReviewModel, Map<string, ResultRecord>>();
@@ -465,37 +466,45 @@ async function report(dir: string): Promise<void> {
 
 // ---------- main ----------
 
-async function latestRunDir(): Promise<string> {
-  const dirs = (await readdir(RUNS_DIR, { withFileTypes: true }))
+export async function latestRunDir(): Promise<string> {
+  const root = runsDir();
+  const dirs = (await readdir(root, { withFileTypes: true }))
     .filter((d) => d.isDirectory())
     .map((d) => d.name)
     .sort();
-  if (dirs.length === 0) throw new Error(`no runs under ${RUNS_DIR}; submit one first`);
-  return join(RUNS_DIR, dirs[dirs.length - 1]!);
+  if (dirs.length === 0) throw new Error(`no runs under ${root}; submit one first`);
+  return join(root, dirs[dirs.length - 1]!);
 }
 
-async function main() {
-  const [command, ...argv] = process.argv.slice(2);
+/** Resolves to the exit code: 1 for an unknown command, 2 for a failed one. */
+export async function main(args: string[]): Promise<number> {
+  try {
+    return await dispatch(args);
+  } catch (err) {
+    console.error(err instanceof Error ? (err.stack ?? err.message) : err);
+    return 2;
+  }
+}
+
+async function dispatch(args: string[]): Promise<number> {
+  const [command, ...argv] = args;
   const dirArg = argv[0] && !argv[0].startsWith("--") ? argv[0] : undefined;
   switch (command) {
     case "submit":
       await submit(argv);
-      break;
+      return 0;
     case "collect":
       await collect(dirArg ?? (await latestRunDir()), argv.includes("--wait"));
-      break;
+      return 0;
     case "report":
       await report(dirArg ?? (await latestRunDir()));
-      break;
+      return 0;
     default:
       console.log(
         "usage: node jobs/llm-trial.ts submit [--per-band N] [--wait] | collect [run-dir] [--wait] | report [run-dir]",
       );
-      process.exit(command ? 1 : 0);
+      return command ? 1 : 0;
   }
 }
 
-main().catch((err: unknown) => {
-  console.error(err instanceof Error ? (err.stack ?? err.message) : err);
-  process.exit(2);
-});
+if (import.meta.main) process.exit(await main(process.argv.slice(2)));

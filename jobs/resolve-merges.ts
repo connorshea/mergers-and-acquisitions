@@ -4,9 +4,14 @@
 // the items that are gone.
 import { runOutsideMergeSync } from "../server/outside-merges.ts";
 
-runOutsideMergeSync()
-  .then(() => process.exit(0))
-  .catch((err: unknown) => {
+export async function main(): Promise<number> {
+  try {
+    await runOutsideMergeSync();
+    return 0;
+  } catch (err) {
     console.error("resolve-merges: failed", err);
-    process.exit(1);
-  });
+    return 1;
+  }
+}
+
+if (import.meta.main) process.exit(await main());

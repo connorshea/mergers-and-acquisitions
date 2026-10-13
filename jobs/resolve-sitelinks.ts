@@ -5,15 +5,18 @@
 // creates and retires the candidates it looks at.
 import { runSitelinkRedirectSync } from "../server/sitelink-redirects.ts";
 
-runSitelinkRedirectSync()
-  .then(({ failedWikis }) => {
+export async function main(): Promise<number> {
+  try {
+    const { failedWikis } = await runSitelinkRedirectSync();
     // A partial run still exits 0: the wikis that failed keep their previous
     // rows (or none), and tomorrow's run retries them.
     if (failedWikis.length > 0)
       console.warn(`resolve-sitelinks: skipped ${failedWikis.join(", ")} after errors`);
-    process.exit(0);
-  })
-  .catch((err: unknown) => {
+    return 0;
+  } catch (err) {
     console.error("resolve-sitelinks: failed", err);
-    process.exit(1);
-  });
+    return 1;
+  }
+}
+
+if (import.meta.main) process.exit(await main());

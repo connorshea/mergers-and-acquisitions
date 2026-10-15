@@ -678,6 +678,10 @@ async function readPairs(
 /** A window's items, parsed and overlaid with redirects, and how long that took. */
 interface WindowItems {
   byQid: Map<string, Item>;
+  /** Each item's label block (blocking key and primary type), when it has one. */
+  blockOf: Map<string, string>;
+  /** How many items are in each of those blocks (ScoreOptions.labelBlockSize). */
+  blockSize: Map<string, number>;
   ms: number;
 }
 
@@ -705,11 +709,35 @@ async function readItems(
   // otherwise parse MariaDB's JSON columns itself while reading the result,
   // and the column's decoder would too.
   const [raw] = await itemConn.query<mysql.RowDataPacket[]>(
-    "select qid, cast(data as char) as data from items where qid in (?)",
+    `select qid, blocking_key, primary_type, cast(data as char) as data
+     from items where qid in (?)`,
     [Array.from(wanted)],
   );
   const byQid = new Map<string, Item>();
-  for (const row of raw) byQid.set(String(row.qid), JSON.parse(String(row.data)) as Item);
+  const blockOf = new Map<string, string>();
+  const blocks = new Map<string, [string, string]>();
+  for (const row of raw) {
+    byQid.set(String(row.qid), JSON.parse(String(row.data)) as Item);
+    if (row.blocking_key === null || row.primary_type === null) continue;
+    const key = JSON.stringify([row.blocking_key, row.primary_type]);
+    blockOf.set(String(row.qid), key);
+    blocks.set(key, [String(row.blocking_key), String(row.primary_type)]);
+  }
+  // The size of each block, from idx_items_blocking: how common the name is.
+  // Counted here rather than kept from the scan, since a pair blocked on a
+  // shared id never passes through its label group, and an oversized group
+  // (MAX_BLOCK_GROUP) is never expanded at all.
+  const blockSize = new Map<string, number>();
+  if (blocks.size > 0) {
+    const [counts] = await itemConn.query<mysql.RowDataPacket[]>(
+      `select blocking_key, primary_type, count(*) as n from items
+       where (blocking_key, primary_type) in (?)
+       group by blocking_key, primary_type`,
+      [Array.from(blocks.values())],
+    );
+    for (const row of counts)
+      blockSize.set(JSON.stringify([row.blocking_key, row.primary_type]), Number(row.n));
+  }
   // Redirects resolved by the previous resolve-sitelinks run, so a clash
   // that's one page redirecting to the other scores as duplicate evidence.
   await attachSitelinkRedirects(
@@ -720,7 +748,7 @@ async function readItems(
       return a && b ? [[a, b] as [Item, Item]] : [];
     }),
   );
-  return { byQid, ms: performance.now() - start };
+  return { byQid, blockOf, blockSize, ms: performance.now() - start };
 }
 
 /**
@@ -806,7 +834,7 @@ async function score(
   times.lap("pairs");
   let read = readAhead(window);
   while (read) {
-    const { byQid, ms } = await read;
+    const { byQid, blockOf, blockSize, ms } = await read;
     times.lap("wait");
     times.add("read", ms);
     windowIndex++;
@@ -833,7 +861,10 @@ async function score(
       try {
         const [from, into] = orderByAge(a, b);
         const trace: ScoreTrace | undefined = audit ? { caps: [] } : undefined;
-        const result = scoreCandidate(from, into, trace ? { ...scoreOpts, trace } : scoreOpts);
+        const block = blockOf.get(qa);
+        const labelBlockSize =
+          block !== undefined && block === blockOf.get(qb) ? blockSize.get(block) : undefined;
+        const result = scoreCandidate(from, into, { ...scoreOpts, labelBlockSize, trace });
         if (audit && trace) {
           await audit.pair({
             from: from.id,

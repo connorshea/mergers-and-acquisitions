@@ -1,0 +1,389 @@
+{
+  "pageid": 105331442,
+  "ns": 0,
+  "title": "Q110262422",
+  "lastrevid": 2529496161,
+  "modified": "2026-08-10T06:10:26Z",
+  "type": "item",
+  "id": "Q110262422",
+  "labels": {
+    "zh": {
+      "language": "zh",
+      "value": "高寒"
+    },
+    "zh-tw": {
+      "language": "zh-tw",
+      "value": "高寒"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "高寒"
+    },
+    "id": {
+      "language": "id",
+      "value": "Gao Han"
+    },
+    "en": {
+      "language": "en",
+      "value": "Gao Han"
+    },
+    "mn": {
+      "language": "mn",
+      "value": "Гао Хан"
+    },
+    "zh-hans": {
+      "language": "zh-hans",
+      "value": "高寒"
+    },
+    "zh-hant": {
+      "language": "zh-hant",
+      "value": "高寒"
+    },
+    "zh-cn": {
+      "language": "zh-cn",
+      "value": "高寒"
+    }
+  },
+  "descriptions": {
+    "zh-tw": {
+      "language": "zh-tw",
+      "value": "中國男演員"
+    },
+    "en": {
+      "language": "en",
+      "value": "Chinese actor"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "中国大陆男演员"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "中国の俳優"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "ممثل صيني"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "চীনা অভিনেতা"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "actor xinès"
+    },
+    "es": {
+      "language": "es",
+      "value": "actor chino"
+    },
+    "et": {
+      "language": "et",
+      "value": "Hiina näitleja"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "acteur chinois"
+    },
+    "gl": {
+      "language": "gl",
+      "value": "actor chinés"
+    },
+    "he": {
+      "language": "he",
+      "value": "שחקן סיני"
+    },
+    "ro": {
+      "language": "ro",
+      "value": "actor chinez"
+    },
+    "sq": {
+      "language": "sq",
+      "value": "aktor kinez"
+    },
+    "hr": {
+      "language": "hr",
+      "value": "kineski glumac"
+    },
+    "zh-hans": {
+      "language": "zh-hans",
+      "value": "中国大陆男演员"
+    },
+    "zh-hant": {
+      "language": "zh-hant",
+      "value": "中國男演員"
+    },
+    "zh-cn": {
+      "language": "zh-cn",
+      "value": "中国大陆男演员"
+    },
+    "id": {
+      "language": "id",
+      "value": "pameran asal Tiongkok"
+    },
+    "as": {
+      "language": "as",
+      "value": "চীনা অভিনেতা"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q110262422$737BBE3F-3F7E-4D24-A541-8EC24085FAAB",
+        "rank": "normal"
+      }
+    ],
+    "P3579": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3579",
+          "hash": "6f0b42dfc6dd54831d1e929599ded578334d35ec",
+          "datavalue": {
+            "value": "hampdengoo",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q110262422$9FF6484D-22FD-430A-A0C4-BE5F09A53EAE",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2d407c20d755964f2ab1fc836261613da5cea2d0",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "cb49f6fa327b245e4a5aaf48c44b3f503bcd4265",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 30239,
+                      "id": "Q30239"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "eae011a4324408b7dde931c625d52cff48c004da",
+                  "datavalue": {
+                    "value": "https://zh.wikipedia.org/w/index.php?title=高寒&oldid=75989353",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q110262422$C6599366-C2B2-4DBF-9DE1-C91E6A8E59F6",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "95b6ba01384962f6579c771813693cb332942d15",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "836dd2f0ed7d7e2698c65fdba8adb2803429f6d9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 92526,
+                      "id": "Q92526"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P3579": [
+                {
+                  "snaktype": "value",
+                  "property": "P3579",
+                  "hash": "6f0b42dfc6dd54831d1e929599ded578334d35ec",
+                  "datavalue": {
+                    "value": "hampdengoo",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "7c21b9563340be61372d911017198ead27a8c12c",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-03-29T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P3579", "P813"]
+          }
+        ]
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "1eba09bcad27633cc6b41ce6096f03323ae8b4a6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 10798782,
+              "id": "Q10798782"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q110262422$2d3b58c8-474c-b697-d8ca-b49d90cc3b67",
+        "rank": "normal"
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "58336cfb8953436203b6809c7bff2f2cfd5dd412",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 148,
+              "id": "Q148"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q110262422$88a4e731-4334-1112-c581-3c4396243388",
+        "rank": "normal"
+      }
+    ],
+    "P12836": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12836",
+          "hash": "7ad8218af7543b74766d66444379d9e0f51d8236",
+          "datavalue": {
+            "value": "27577231",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q110262422$213a3df0-40bf-9e5d-8d57-5f6c059f30f6",
+        "rank": "normal"
+      }
+    ],
+    "P345": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P345",
+          "hash": "607b2209d56df082b394cd4918d66ef079e25a26",
+          "datavalue": {
+            "value": "nm8224212",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q110262422$11f88f8d-451c-f716-e54d-2561e8683ecb",
+        "rank": "normal"
+      }
+    ],
+    "P14750": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P14750",
+          "hash": "53ddbfa11193bd6455ee78108f721328acfb7b6b",
+          "datavalue": {
+            "value": "A726-F5D2-31EB-5977-8254",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q110262422$07FF51B4-560D-4E57-A702-B883A720469A",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "idwiki": {
+      "site": "idwiki",
+      "title": "Gao Han",
+      "badges": [],
+      "url": "https://id.wikipedia.org/wiki/Gao_Han"
+    },
+    "zhwiki": {
+      "site": "zhwiki",
+      "title": "高鹤元",
+      "badges": [],
+      "url": "https://zh.wikipedia.org/wiki/%E9%AB%98%E9%B9%A4%E5%85%83"
+    }
+  }
+}

@@ -39,6 +39,7 @@ import {
   descriptionYear,
   descriptionYearSpan,
   activityConflicts,
+  sexConflict,
   differingDescriptionCreators,
   nameDisambiguatedLabels,
   nameDisambiguatedWikis,
@@ -1712,6 +1713,53 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       expect(result.reasons.some((r) => r.includes("almost certainly different people"))).toBe(
         false,
       );
+    });
+  });
+
+  describe("different sex", () => {
+    const human = (id: string, sex: string[], filmRu?: string): Item => ({
+      ...base,
+      id,
+      labels: { en: "Li Li" },
+      statements: stmt({
+        P31: [{ type: "item" as const, value: "Q5", label: "human" }],
+        P21: sex.map((value) => ({ type: "item" as const, value })),
+        ...(filmRu ? { P10302: [{ type: "external-id" as const, value: filmRu }] } : {}),
+      }),
+    });
+    const male = "Q6581097";
+    const female = "Q6581072";
+
+    it("caps a male and a female namesake", () => {
+      const result = scoreCandidate(human("Q1822580", [female]), human("Q137781158", [male]));
+      expect(result.confidence).toBeLessThanOrEqual(0.1);
+      expect(result.reasons[0]).toBe(
+        "Q1822580 is female and Q137781158 is male, almost certainly different people",
+      );
+    });
+
+    it("leaves other gender values, a missing value, and agreement alone", () => {
+      const transWoman = "Q1052281";
+      expect(sexConflict(human("Q1", [male]), human("Q2", [transWoman]))).toBeNull();
+      expect(sexConflict(human("Q1", [male, transWoman]), human("Q2", [female]))).toBeNull();
+      expect(sexConflict(human("Q1", [male]), human("Q2", []))).toBeNull();
+      expect(sexConflict(human("Q1", [female]), human("Q2", [female]))).toBeNull();
+    });
+
+    it("ignores non-humans", () => {
+      const animal: Item = {
+        ...human("Q1", [male]),
+        statements: stmt({ P21: [{ type: "item" as const, value: male }] }),
+      };
+      expect(sexConflict(animal, human("Q2", [female]))).toBeNull();
+    });
+
+    it("penalizes rather than caps when the two share a strong id", () => {
+      const result = scoreCandidate(human("Q1", [male], "li-li"), human("Q2", [female], "li-li"), {
+        isIdentifierProp: (pid: string) => pid === "P10302",
+      });
+      expect(result.reasons).toContain("Q1 is male and Q2 is female");
+      expect(result.confidence).toBeGreaterThan(0.1);
     });
   });
 

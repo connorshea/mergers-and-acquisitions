@@ -154,6 +154,10 @@ Each record's `provenance` records where the pair came from:
   from")** statements, which editors add precisely to separate commonly-confused
   items. Filtered to same-type, near-identical-label pairs (the confusable ones)
   and excludes scholarly-article / category / disambiguation items.
+- `llm-review-different-sex` — namesake humans from the hunt, one recorded
+  only as male and the other only as female (P21), which the LLM review called
+  different. Each also conflicts on a second fact (sport, occupation or date of
+  birth), so sex isn't the only thing telling them apart.
 - `game-vs-common-word` — a video game vs the common noun/concept it is named
   after, sharing the exact same label (e.g. _Braid_ the game vs `braid` the
   pattern, _Spore_ vs the reproductive `spore`, _Portal_ vs a `portal` opening).

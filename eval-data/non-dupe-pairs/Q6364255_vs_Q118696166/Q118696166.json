@@ -1,0 +1,300 @@
+{
+  "pageid": 113201283,
+  "ns": 0,
+  "title": "Q118696166",
+  "lastrevid": 2518664293,
+  "modified": "2026-07-17T14:28:02Z",
+  "type": "item",
+  "id": "Q118696166",
+  "labels": {
+    "ja": {
+      "language": "ja",
+      "value": "カノン"
+    },
+    "en": {
+      "language": "en",
+      "value": "Kanon"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Kanon"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "Japanese professional wrestler"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "日本の元女子プロレスラー"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "lluchadora profesional xaponesa"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "японська професійна реслерка"
+    },
+    "es": {
+      "language": "es",
+      "value": "luchadora profesional japonesa"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "জাপানি পেশাদার কুস্তিগির"
+    },
+    "as": {
+      "language": "as",
+      "value": "জাপানী পেছাদাৰী মল্লযুঁজাৰু"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q118696166$8E107691-6E88-47A0-865D-D9EAF5EE31C7",
+        "rank": "normal"
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "ca03731bf86f4c1732318a2fd55de25c8f500227",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 13474373,
+              "id": "Q13474373"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q118696166$1113B80C-B018-4732-A760-3B84A548C38F",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ddbe8e11b2e32d176d85b63bd0110e79196e18ad",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "c6f1777471211df31724ac60175786f3872c83e9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 177837,
+                      "id": "Q177837"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "53edbfa989c119a4e49eb49cd15ebc1ca723500e",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-08-27T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "575b66f0e3394ad5516da669bba1e6888423f93b",
+                  "datavalue": {
+                    "value": "https://ja.wikipedia.org/w/index.php?title=%E3%82%AB%E3%83%8E%E3%83%B3_(%E3%83%97%E3%83%AD%E3%83%AC%E3%82%B9%E3%83%A9%E3%83%BC)&oldid=96508115",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P813", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "5760796ff6ebc63aae12cdcbf509b07ebf0bd201",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581072,
+              "id": "Q6581072"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q118696166$ebbe7478-413a-e435-7d39-620b4e9b2821",
+        "rank": "normal"
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "442eed7751165909dcf1eb3e23702fbd4f08a258",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 17,
+              "id": "Q17"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q118696166$176e482d-4e2c-d1ac-8c7e-47c5933e4fdd",
+        "rank": "normal"
+      }
+    ],
+    "P2002": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2002",
+          "hash": "5ea659d62e3ebe71247712830cf53d4eba021ca5",
+          "datavalue": {
+            "value": "kanon_06422",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q118696166$81f1bbbd-4c9c-e8c8-8a35-791353703ac0",
+        "rank": "normal"
+      }
+    ],
+    "P735": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P735",
+          "hash": "44c74293908b82ca10f5e4fad2cddb0253f7278f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 123615774,
+              "id": "Q123615774"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q118696166$e2646247-49a0-2882-8aa9-86297420feeb",
+        "rank": "normal"
+      }
+    ],
+    "P18": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "bbbf7b3f57c68802bbdc6e67b38057d5bc31d25a",
+          "datavalue": {
+            "value": "Kanon1.jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q118696166$FD31FE56-5E52-406F-A444-EA17921EC320",
+        "rank": "normal"
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "963285a206e48a3a70ddb5a0ddbf3f8d883f8f9e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 131359,
+              "id": "Q131359"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q118696166$380c94eb-1990-42ed-9e63-3f19a8daa429",
+        "rank": "normal"
+      }
+    ],
+    "P1412": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1412",
+          "hash": "793e190594b14ce471153f6fd9f0d8b4228d5112",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5287,
+              "id": "Q5287"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q118696166$2A985B6F-0864-4BFB-9E5C-6A535EFF8818",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "jawiki": {
+      "site": "jawiki",
+      "title": "カノン (プロレスラー)",
+      "badges": [],
+      "url": "https://ja.wikipedia.org/wiki/%E3%82%AB%E3%83%8E%E3%83%B3_(%E3%83%97%E3%83%AD%E3%83%AC%E3%82%B9%E3%83%A9%E3%83%BC)"
+    }
+  }
+}

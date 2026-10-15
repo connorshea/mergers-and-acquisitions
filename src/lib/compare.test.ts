@@ -3163,7 +3163,37 @@ describe("scoreCandidate — creators, loose names, clashes and aggregator ids",
       isIdentifierProp: (pid) => pid === "P11307" || pid === "P5794",
     });
     expect(result.confidence).toBeLessThanOrEqual(0.1);
-    expect(result.reasons[0]).toContain('"--N" slug');
+    expect(result.reasons[0]).toContain("(numbered slugs)");
+  });
+
+  it("caps namesakes Sports Reference numbers apart (mike-williams-8 / -11)", () => {
+    // One import's college players: each its own Sports Reference page.
+    const human = { P31: [{ type: "item" as const, value: "Q5" }] };
+    const a = mk("Q100987352", "Mike Williams", { ...human, P3696: ext("mike-williams-8") });
+    const b = mk("Q100987353", "Mike Williams", { ...human, P3696: ext("mike-williams-11") });
+    const result = scoreCandidate(a, b, { isIdentifierProp: (pid) => pid === "P3696" });
+    expect(result.confidence).toBeLessThanOrEqual(0.1);
+    expect(result.reasons[0]).toBe(
+      "P3696 lists the two as separate same-named entries (numbered slugs), not a duplicate",
+    );
+  });
+
+  it("reads a single-dash number only when both slugs carry one", () => {
+    const isIdentifierProp = (pid: string) => pid === "P11307" || pid === "P5794";
+    const split = (x: string, y: string) =>
+      scoreCandidate(
+        mk("Q1", "Halo", { P11307: ext("t-1"), P5794: ext(x) }),
+        mk("Q2", "Halo", { P11307: ext("t-1"), P5794: ext(y) }),
+        { isIdentifierProp },
+      ).reasons.some((r) => r.includes("(numbered slugs)"));
+    expect(split("halo-2", "halo-3")).toBe(true);
+    // On one side alone the number may be the title's own.
+    expect(split("halo", "halo-2")).toBe(false);
+    // A long number is a serial id, not a counter.
+    expect(split("item-20417", "item-20418")).toBe(false);
+    // Different bases, or the same number written two ways.
+    expect(split("mike-williams-8", "mike-wilson-8")).toBe(false);
+    expect(split("mike-williams-08", "mike-williams-8")).toBe(false);
   });
 });
 

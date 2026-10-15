@@ -1758,13 +1758,29 @@ const SUBJECT_PAGE_ID_PROPS = new Set<string>([
 const SLUG_SUFFIX_RE = /--\d+$/;
 
 /**
+ * A slug numbered with a single dash, as Sports Reference numbers every
+ * same-named player ("mike-williams-8"). The base needs a letter, and the
+ * number at most three digits: a disambiguation counter stays small, while a
+ * longer number is a serial id ("item-20417") whose neighbours are unrelated.
+ */
+const NUMBERED_SLUG_RE = /^(.*\p{L}.*)-(\d{1,3})$/u;
+
+/**
  * Whether two external-id values are the same slug told apart only by a
- * `--N` suffix ("mutant" vs "mutant--1").
+ * number: a `--N` suffix on one or both ("mutant" vs "mutant--1"), or a
+ * `-N` on both ("mike-williams-8" vs "mike-williams-11"). A single-dash
+ * number is only read when both sides have one: on one side alone it is as
+ * likely part of the title ("halo" vs "halo-2" is a sequel, which other rules
+ * handle).
  */
 function isSlugSuffixSplit(x: Value, y: Value): boolean {
   if (x.type !== "external-id" || y.type !== "external-id" || x.value === y.value) return false;
-  if (!SLUG_SUFFIX_RE.test(x.value) && !SLUG_SUFFIX_RE.test(y.value)) return false;
-  return x.value.replace(SLUG_SUFFIX_RE, "") === y.value.replace(SLUG_SUFFIX_RE, "");
+  if (SLUG_SUFFIX_RE.test(x.value) || SLUG_SUFFIX_RE.test(y.value)) {
+    return x.value.replace(SLUG_SUFFIX_RE, "") === y.value.replace(SLUG_SUFFIX_RE, "");
+  }
+  const mx = NUMBERED_SLUG_RE.exec(x.value);
+  const my = NUMBERED_SLUG_RE.exec(y.value);
+  return mx !== null && my !== null && mx[1] === my[1] && Number(mx[2]) !== Number(my[2]);
 }
 
 const ROMAN_RE = /^m{0,3}(cm|cd|d?c{0,3})(xc|xl|l?x{0,3})(ix|iv|v?i{0,3})$/i;
@@ -3286,9 +3302,10 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
     );
   }
 
-  // Slug ids that differ only by a `--N` suffix (IGDB "bug-attack" vs
-  // "bug-attack--1", likewise IsThereAnyDeal and Lutris) are the database itself
-  // telling two same-named titles apart. Cap below the persistence floor,
+  // Slug ids that differ only by a number (IGDB "bug-attack" vs
+  // "bug-attack--1", likewise IsThereAnyDeal and Lutris; Sports Reference
+  // "mike-williams-8" vs "mike-williams-11") are the database itself telling
+  // two same-named entries apart. Cap below the persistence floor,
   // overriding even a shared id.
   const suffixSplitIds = rows.filter(
     (r) =>
@@ -3299,7 +3316,7 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   );
   if (suffixSplitIds.length > 0) {
     reasons.unshift(
-      `${suffixSplitIds.map((r) => r.key).join(", ")} lists the two as separate same-named entries (a "--N" slug), not a duplicate`,
+      `${suffixSplitIds.map((r) => r.key).join(", ")} lists the two as separate same-named entries (numbered slugs), not a duplicate`,
     );
     cap("slug-suffix-split", 0.1);
   }

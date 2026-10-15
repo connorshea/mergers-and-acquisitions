@@ -37,6 +37,8 @@ import {
   isConflationPair,
   descriptionCreator,
   descriptionYear,
+  descriptionYearSpan,
+  activityConflicts,
   differingDescriptionCreators,
   nameDisambiguatedLabels,
   nameDisambiguatedWikis,
@@ -1592,6 +1594,134 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
         "death years differ by 50, almost certainly different subjects",
       );
       expect(result.confidence).toBeLessThanOrEqual(0.1);
+    });
+  });
+
+  describe("activity outside a lifespan", () => {
+    const human = (
+      id: string,
+      opts: { description?: string; dates?: Record<string, string>; filmRu?: string } = {},
+    ): Item => ({
+      ...base,
+      id,
+      labels: { en: "Bob Martin" },
+      descriptions: opts.description ? { en: opts.description } : {},
+      statements: stmt({
+        P31: [{ type: "item" as const, value: "Q5", label: "human" }],
+        ...Object.fromEntries(
+          Object.entries(opts.dates ?? {}).map(([pid, time]) => [
+            pid,
+            [{ type: "time" as const, value: time }],
+          ]),
+        ),
+        ...(opts.filmRu ? { P10302: [{ type: "external-id" as const, value: opts.filmRu }] } : {}),
+      }),
+    });
+
+    it("caps a college player active before a namesake was born", () => {
+      // Sports Reference imports carry the career only in the description.
+      const result = scoreCandidate(
+        human("Q4954364", { dates: { P569: "+1985-04-10T00:00:00Z" } }),
+        human("Q100000001", { description: "college basketball player (1968–1970)" }),
+      );
+      expect(result.confidence).toBeLessThanOrEqual(0.1);
+      expect(result.reasons[0]).toBe(
+        "Q100000001 (in its description) was active by 1968, before Q4954364 was born (1985), " +
+          "almost certainly different people",
+      );
+    });
+
+    it("reads work period and floruit statements", () => {
+      const before = activityConflicts(
+        human("Q1", { dates: { P2031: "+1950-00-00T00:00:00Z" } }),
+        human("Q2", { dates: { P569: "+1960-01-01T00:00:00Z" } }),
+      );
+      expect(before).toEqual(["Q1 was active by 1950, before Q2 was born (1960)"]);
+      const after = activityConflicts(
+        human("Q1", { dates: { P570: "+1940-01-01T00:00:00Z" } }),
+        human("Q2", { dates: { P1317: "+1975-00-00T00:00:00Z" } }),
+      );
+      expect(after).toEqual(["Q2 was active in 1975, after Q1 died (1940)"]);
+    });
+
+    it("leaves a lifespan in the description that matches the other's life dates alone", () => {
+      const conflicts = activityConflicts(
+        human("Q1", { description: "American politician (1912–1994)" }),
+        human("Q2", { dates: { P569: "+1912-03-01T00:00:00Z", P570: "+1994-07-01T00:00:00Z" } }),
+      );
+      expect(conflicts).toEqual([]);
+    });
+
+    it("allows a year's slack, a child performer, and a career change", () => {
+      // Active the year before the listed birth: an off-by-one season or date.
+      expect(
+        activityConflicts(
+          human("Q1", { description: "college basketball player (1964–1964)" }),
+          human("Q2", { dates: { P569: "+1965-01-01T00:00:00Z" } }),
+        ),
+      ).toEqual([]);
+      // Active at five, and decades later in another line of work.
+      expect(
+        activityConflicts(
+          human("Q1", {
+            dates: { P2031: "+1995-00-00T00:00:00Z", P2032: "+2030-00-00T00:00:00Z" },
+          }),
+          human("Q2", { dates: { P569: "+1990-01-01T00:00:00Z" } }),
+        ),
+      ).toEqual([]);
+    });
+
+    it("takes the most lenient of several listed birth dates", () => {
+      const other: Item = {
+        ...human("Q2"),
+        statements: stmt({
+          P31: [{ type: "item" as const, value: "Q5", label: "human" }],
+          P569: [
+            { type: "time" as const, value: "+1960-01-01T00:00:00Z" },
+            { type: "time" as const, value: "+1948-01-01T00:00:00Z" },
+          ],
+        }),
+      };
+      expect(
+        activityConflicts(human("Q1", { dates: { P2031: "+1950-00-00T00:00:00Z" } }), other),
+      ).toEqual([]);
+    });
+
+    it("ignores non-humans", () => {
+      const band: Item = {
+        ...base,
+        id: "Q1",
+        labels: { en: "Bob Martin" },
+        descriptions: { en: "band (1968–1970)" },
+        statements: stmt({ P31: [{ type: "item" as const, value: "Q215380" }] }),
+      };
+      expect(
+        activityConflicts(band, human("Q2", { dates: { P569: "+1985-01-01T00:00:00Z" } })),
+      ).toEqual([]);
+    });
+
+    it("penalizes rather than caps when the two share a strong id", () => {
+      const result = scoreCandidate(
+        human("Q1", { description: "actor (1968–1970)", filmRu: "bob-martin" }),
+        human("Q2", { dates: { P569: "+1985-01-01T00:00:00Z" }, filmRu: "bob-martin" }),
+        { isIdentifierProp: (pid: string) => pid === "P10302" },
+      );
+      expect(result.reasons).toContain(
+        "Q1 (in its description) was active by 1968, before Q2 was born (1985)",
+      );
+      expect(result.reasons.some((r) => r.includes("almost certainly different people"))).toBe(
+        false,
+      );
+    });
+  });
+
+  describe("descriptionYearSpan", () => {
+    it("reads a parenthesized span", () => {
+      expect(descriptionYearSpan("college basketball player (1964–1964)")).toEqual([1964, 1964]);
+      expect(descriptionYearSpan("American politician (1912-1994)")).toEqual([1912, 1994]);
+      expect(descriptionYearSpan("New Zealand cricketer")).toBeNull();
+      expect(descriptionYearSpan("1995 EP by Twila Paris")).toBeNull();
+      expect(descriptionYearSpan("player (1994–1990)")).toBeNull();
     });
   });
 

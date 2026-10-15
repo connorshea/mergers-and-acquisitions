@@ -2693,6 +2693,13 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       1993,
     );
     expect(descriptionBirthYear("Turkish athlete (b. 12 May 1958)")).toBe(1958);
+    expect(
+      descriptionBirthYear(
+        "Gender: female Date of birth: 1991-10-29 Place of birth: Height: 164CM Weight: 53KG Sport: Athletics",
+      ),
+    ).toBe(1991);
+    // An empty "Date of birth:" field doesn't borrow a later number.
+    expect(descriptionBirthYear("Date of birth: Place of birth: Height: 164CM")).toBeNull();
     expect(descriptionBirthYear("English footballer (1938-2025)")).toBeNull();
     expect(descriptionBirthYear("1995 EP by Twila Paris")).toBeNull();
   });

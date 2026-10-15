@@ -1478,15 +1478,17 @@ export function descriptionYear(description: string | undefined): number | null 
 /**
  * The birth year an English description states ("football player (born
  * 1989)", "Chinese association football player, born October 1993", "b. 12
- * May 1990"), or null. Only an explicit "born" counts: a bare span like
- * "(1984–1984)" is a career as often as a lifespan (see descriptionYearSpan).
+ * May 1990", or a bulk import's "Date of birth: 1991-10-29"), or null. Only an
+ * explicit "born" or "date of birth" counts: a bare span like "(1984–1984)" is
+ * a career as often as a lifespan (see descriptionYearSpan).
  */
 export function descriptionBirthYear(description: string | undefined): number | null {
   const m =
     description &&
-    /\b(?:born|b\.)\s+(?:in\s+)?(?:\d{1,2}\s+)?(?:[A-Z][a-z]+\.?\s+)?(?:\d{1,2},?\s+)?(1\d{3}|20\d\d)\b/.exec(
+    (/\b(?:born|b\.)\s+(?:in\s+)?(?:\d{1,2}\s+)?(?:[A-Z][a-z]+\.?\s+)?(?:\d{1,2},?\s+)?(1\d{3}|20\d\d)\b/.exec(
       description,
-    );
+    ) ??
+      /\bdate of birth:?\s+(1\d{3}|20\d\d)\b/i.exec(description));
   return m ? parseInt(m[1]!, 10) : null;
 }
 

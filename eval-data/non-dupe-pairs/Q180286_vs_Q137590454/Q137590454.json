@@ -1,0 +1,147 @@
+{
+  "pageid": 131255281,
+  "ns": 0,
+  "title": "Q137590454",
+  "lastrevid": 2447458256,
+  "modified": "2025-12-26T17:09:03Z",
+  "type": "item",
+  "id": "Q137590454",
+  "labels": {
+    "mul": {
+      "language": "mul",
+      "value": "Yang Yang"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "Gender: female Date of birth: 1991-10-29 Place of birth: Height: 164CM Weight: 53KG Sport: Athletics Coach: Yin Lili Registered with: Liaoning"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137590454$8456D66B-CDAF-49D1-B0FC-A7D389B07DDD",
+        "rank": "normal"
+      }
+    ],
+    "P4068": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4068",
+          "hash": "d39dac48af7b5dc9e902f08fe33e210f8bd0df69",
+          "datavalue": {
+            "value": "7487",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137590454$2CFE5260-F18A-4EA7-9A9C-C91184CC4049",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "5760796ff6ebc63aae12cdcbf509b07ebf0bd201",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581072,
+              "id": "Q6581072"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137590454$95309309-1D92-4247-BB40-26A1239C8283",
+        "rank": "normal"
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "3e39c020c4eec333d245b60092deff33102b7793",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11513337,
+              "id": "Q11513337"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137590454$204D29F9-BD53-4489-96F0-3EB61B297B94",
+        "rank": "normal"
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "58336cfb8953436203b6809c7bff2f2cfd5dd412",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 148,
+              "id": "Q148"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137590454$8DC75FB5-0073-4674-9903-2A07777993D3",
+        "rank": "normal"
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "f28a2e63ed33d1234282caf5b5332bc38aa8f616",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 542,
+              "id": "Q542"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137590454$7AA92C75-D02C-4A9B-BB81-7FEDD3707CAF",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

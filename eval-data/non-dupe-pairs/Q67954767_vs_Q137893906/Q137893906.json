@@ -1,0 +1,292 @@
+{
+  "pageid": 131524216,
+  "ns": 0,
+  "title": "Q137893906",
+  "lastrevid": 2458675913,
+  "modified": "2026-01-28T14:37:37Z",
+  "type": "item",
+  "id": "Q137893906",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Michael Griffin"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "college basketball player (2024–2025) West Georgia"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137893906$0AC48412-D1D6-4749-AA49-86742C14C4C2",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137893906$9E1ADD95-5176-446C-8445-CA39A8E7B796",
+        "rank": "normal"
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "11287eecd5e53b76a5c19f4238894fbb8cd7e2dd",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3665646,
+              "id": "Q3665646"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137893906$F14885B9-8A72-41C0-BCB8-4F38E207F8A6",
+        "rank": "normal"
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "355cf420deda0ecbeccd228fe68c038166de555f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5372,
+              "id": "Q5372"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137893906$5F15A518-9E17-4EA4-BE54-29FE9407CBA5",
+        "rank": "normal"
+      }
+    ],
+    "P118": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P118",
+          "hash": "c518d209230d7dad3b02a10f24e42129fc75840b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 94861615,
+              "id": "Q94861615"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P580": [
+            {
+              "snaktype": "value",
+              "property": "P580",
+              "hash": "54ca0c06a3c87207ceccf47a31d90afeb2f2585b",
+              "datavalue": {
+                "value": {
+                  "time": "+2024-00-00T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 9,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P582": [
+            {
+              "snaktype": "value",
+              "property": "P582",
+              "hash": "dc5a9f01f03dd984c27d787363d1a6cc1772e544",
+              "datavalue": {
+                "value": {
+                  "time": "+2025-00-00T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 9,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P580", "P582"],
+        "id": "Q137893906$E6AA198A-CEFC-46DB-B650-CEEBA9A56776",
+        "rank": "normal"
+      }
+    ],
+    "P69": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P69",
+          "hash": "2af380cd9ce10b506d5646dc4f23351b4e693791",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2495945,
+              "id": "Q2495945"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137893906$3CD6D911-3B0D-411F-8124-5A7A85FF84E8",
+        "rank": "normal"
+      }
+    ],
+    "P54": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P54",
+          "hash": "46ed4522548d3b9486846c6b3f0b3357573e55da",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 108303187,
+              "id": "Q108303187"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P580": [
+            {
+              "snaktype": "value",
+              "property": "P580",
+              "hash": "54ca0c06a3c87207ceccf47a31d90afeb2f2585b",
+              "datavalue": {
+                "value": {
+                  "time": "+2024-00-00T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 9,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P582": [
+            {
+              "snaktype": "value",
+              "property": "P582",
+              "hash": "dc5a9f01f03dd984c27d787363d1a6cc1772e544",
+              "datavalue": {
+                "value": {
+                  "time": "+2025-00-00T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 9,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P580", "P582"],
+        "id": "Q137893906$AAAF8F97-66DA-4E92-B71D-911F54833EEA",
+        "rank": "normal"
+      }
+    ],
+    "P3696": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3696",
+          "hash": "6fc79e4d3bb9f74d2d1356fee8bf91167d2ba11d",
+          "datavalue": {
+            "value": "michael-griffin-3",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137893906$BA7A877C-A6C3-4234-B444-AC0AD6749024",
+        "rank": "normal"
+      }
+    ],
+    "P735": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P735",
+          "hash": "769fc2424092cc987cdc8781b2e791793107683e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4927524,
+              "id": "Q4927524"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137893906$679FF3F9-D350-4632-A5F0-303E365BF5F6",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

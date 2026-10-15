@@ -1,0 +1,365 @@
+{
+  "pageid": 95092164,
+  "ns": 0,
+  "title": "Q96371721",
+  "lastrevid": 2552651600,
+  "modified": "2026-10-03T15:53:22Z",
+  "type": "item",
+  "id": "Q96371721",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Alex Stewart"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Alex Stewart"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "অ্যালেক্স স্টুয়ার্ট"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "Scottish  footballer"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "স্কটিশ ফুটবল খেলোয়াড়"
+    },
+    "as": {
+      "language": "as",
+      "value": "স্কটিছ ফুটবল খেলুৱৈ"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q96371721$8f20334b-8b9d-4d08-ad8e-d0a0b080ee43",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q96371721$1e906f36-a5be-4b21-93e1-038b9cad35c2",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "7b3d53654a6e78f49a600edd15aa24d2df7b770f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 937857,
+              "id": "Q937857"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q96371721$04994313-4891-4e66-a2b5-c67c35e64ef6",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "1624e15e061523279bc14bb6497168e45caacb32",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2736,
+              "id": "Q2736"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q96371721$d6044b29-274c-47e3-b3a4-a330a71e7a7d",
+        "rank": "normal"
+      }
+    ],
+    "P54": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P54",
+          "hash": "4db190d2d1c2293b3ec0ecc4f9f1203c2b391a07",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 19578,
+              "id": "Q19578"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q96371721$f89fb1c5-b91d-4085-85d1-8f06f957daee",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P19": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P19",
+          "hash": "da7ddd12e8f5b7b978a99f3d20f867d73aef5de8",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 203000,
+              "id": "Q203000"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q96371721$0D3E3FE1-4533-45B1-BCFC-D6606645A794",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "649f024d09c8499bad7e47c95adab077fac1818d",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "66a61a0e0088a0ef33076d1b6da896c07017e39f",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Alex_Stewart_(Scottish_footballer)&oldid=970357715",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "001da41a65e9ca7fbcaaf83426868840ed190f73",
+          "datavalue": {
+            "value": "/g/11j5tn9n6j",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q96371721$4AB7CB84-DD88-4367-AABA-AD89B7A816AB",
+        "rank": "normal"
+      }
+    ],
+    "P735": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P735",
+          "hash": "bb510beef03468ecdc4e32c1c15d099c42c4da73",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 13258171,
+              "id": "Q13258171"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q96371721$B9DF5C47-C666-495A-99FF-118F3DD97039",
+        "rank": "normal"
+      }
+    ],
+    "P734": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P734",
+          "hash": "248c91dcd92f0fc60f43359095dc11a7aa90dcb4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2801971,
+              "id": "Q2801971"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q96371721$A92137BD-45D2-4620-AFDF-4C7A4E4BFD9A",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Alex Stewart (forward)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Alex_Stewart_(forward)"
+    }
+  }
+}

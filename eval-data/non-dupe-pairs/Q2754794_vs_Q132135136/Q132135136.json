@@ -1,0 +1,263 @@
+{
+  "pageid": 126016156,
+  "ns": 0,
+  "title": "Q132135136",
+  "lastrevid": 2516004737,
+  "modified": "2026-07-10T19:38:10Z",
+  "type": "item",
+  "id": "Q132135136",
+  "labels": {
+    "es": {
+      "language": "es",
+      "value": "Li Yan"
+    },
+    "en": {
+      "language": "en",
+      "value": "Li Yan"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Li Yan"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "Chinese weightlifter (2004-)"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "চীনা ভারোত্তোলক (২০০৪-)"
+    },
+    "as": {
+      "language": "as",
+      "value": "চীনা ভাৰোত্তোলক (২০০৪-)"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q132135136$ADF386B4-1634-46C8-9840-02AAFB9BFA3D",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "5760796ff6ebc63aae12cdcbf509b07ebf0bd201",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581072,
+              "id": "Q6581072"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q132135136$dcb97e34-4b0f-6c99-990a-c69ed6065620",
+        "rank": "normal"
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "51232ac6f085566875e799e1edd9f42922f84299",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 83462,
+              "id": "Q83462"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q132135136$24E66B08-1107-46B7-955E-A7378719657E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "05118170962a23e919b9fdd3945976333b40b65f",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e17507043402fe54ae6c4d65cc51f46cec987de9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8449,
+                      "id": "Q8449"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "0bd5aecd751ebfa1a299c47ca9d21ff9792bdd63",
+                  "datavalue": {
+                    "value": "https://es.wikipedia.org/w/index.php?title=Li_Yan_(halterófila,_2004)&oldid=166611214",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "b2abdebe03cd86f35b902b21aaf8f80bc13ca5f3",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 13381376,
+              "id": "Q13381376"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q132135136$89bacd2a-4832-f5e2-2da1-17694462b0ee",
+        "rank": "normal"
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "58336cfb8953436203b6809c7bff2f2cfd5dd412",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 148,
+              "id": "Q148"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q132135136$e07e0e10-4450-7f3c-ff0f-7f1662408684",
+        "rank": "normal"
+      }
+    ],
+    "P2868": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2868",
+          "hash": "5ce9b16b07818b928f42b2e2026d82944edfdcb0",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2948691,
+              "id": "Q2948691"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q132135136$0A2AD9B4-E7B6-4D73-B1DC-8856C624751C",
+        "rank": "normal"
+      }
+    ],
+    "P3667": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3667",
+          "hash": "7529be7c70e224e39abf064cac20780ee90850ee",
+          "datavalue": {
+            "value": "21480",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q132135136$6CEEC4A1-66C6-4751-8F7D-EFFE328F021E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "05118170962a23e919b9fdd3945976333b40b65f",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e17507043402fe54ae6c4d65cc51f46cec987de9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8449,
+                      "id": "Q8449"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "0bd5aecd751ebfa1a299c47ca9d21ff9792bdd63",
+                  "datavalue": {
+                    "value": "https://es.wikipedia.org/w/index.php?title=Li_Yan_(halterófila,_2004)&oldid=166611214",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {
+    "eswiki": {
+      "site": "eswiki",
+      "title": "Li Yan (halterófila, 2004)",
+      "badges": [],
+      "url": "https://es.wikipedia.org/wiki/Li_Yan_(halter%C3%B3fila,_2004)"
+    }
+  }
+}

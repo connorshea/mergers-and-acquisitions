@@ -1,0 +1,467 @@
+{
+  "pageid": 130859045,
+  "ns": 0,
+  "title": "Q137177399",
+  "lastrevid": 2545970138,
+  "modified": "2026-09-15T03:23:31Z",
+  "type": "item",
+  "id": "Q137177399",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Lee Min-seo"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "李旼書"
+    },
+    "ko": {
+      "language": "ko",
+      "value": "이민서"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "South Korean basketball player (born 2003)"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "দক্ষিণ কোরীয় বাস্কেটবল খেলোয়াড় (জন্ম ২০০৩)"
+    },
+    "as": {
+      "language": "as",
+      "value": "দক্ষিণ কোৰিয়ান বাস্কেটবল খেলুৱৈ (জন্ম ২০০৩)"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137177399$1459180F-07DF-4D3A-943F-F1EEB7074307",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137177399$8B144FA9-C62C-4D3D-98C2-663EE9CBF16C",
+        "rank": "normal"
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "11287eecd5e53b76a5c19f4238894fbb8cd7e2dd",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3665646,
+              "id": "Q3665646"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137177399$C61C4280-D192-4642-941A-6391E2FD2BF5",
+        "rank": "normal"
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "4c8732ed5fd2efcd7e616db0ae504388e4456649",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 884,
+              "id": "Q884"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137177399$F7529E63-136F-4DBB-B570-43FBA255049A",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2b1b50c616f574d7c0c5e8d9dbbeec88b49a822c",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "c2a0b04def91778941b407a3f5154ab122fbae10",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 130293317,
+                      "id": "Q130293317"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P12338": [
+                {
+                  "snaktype": "value",
+                  "property": "P12338",
+                  "hash": "3b59b7a33dc0f589305c840691ae595b2467cdb3",
+                  "datavalue": {
+                    "value": "283229",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P1810": [
+                {
+                  "snaktype": "value",
+                  "property": "P1810",
+                  "hash": "a8137891ad1352823178bc5a7fb93c57ab28dce6",
+                  "datavalue": {
+                    "value": "Minseo Lee",
+                    "type": "string"
+                  },
+                  "datatype": "string"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "c0d22274464a777fdd8f16b5c90e5c52c7256b4a",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2025-06-05T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P12338", "P1810", "P813"]
+          }
+        ]
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "355cf420deda0ecbeccd228fe68c038166de555f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5372,
+              "id": "Q5372"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q137177399$08dd45aa-48e3-ac62-2e31-9d87bfc0f814",
+        "rank": "normal"
+      }
+    ],
+    "P734": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P734",
+          "hash": "05587f520ead8b0e6d9edbf6b80b9c08ff487d29",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11983535,
+              "id": "Q11983535"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137177399$9be03817-4698-8fad-a520-ed25df09d289",
+        "rank": "normal"
+      }
+    ],
+    "P735": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P735",
+          "hash": "77fdf6b8bf35f9987ec062fad0db559d902c72c5",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6862492,
+              "id": "Q6862492"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137177399$c6f1d3f5-4ba1-005e-688f-481e6daeaf51",
+        "rank": "normal"
+      }
+    ],
+    "P8885": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8885",
+          "hash": "823e494aaef0ff763df0fd335602472d5bb9405c",
+          "datavalue": {
+            "value": "이민서(농구선수)",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137177399$12f9f2d7-42c3-05a4-d850-2c9e6bddc65b",
+        "rank": "normal"
+      }
+    ],
+    "P3527": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3527",
+          "hash": "470b9f987d3e540737978a04e1b20a2499707c1a",
+          "datavalue": {
+            "value": "796704",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137177399$7dad7a0b-4f0e-6e64-06ef-3212911d6a6e",
+        "rank": "normal"
+      }
+    ],
+    "P3957": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3957",
+          "hash": "a80293265f6bca810d9f17085c440f3f6c639805",
+          "datavalue": {
+            "value": "254361",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137177399$2c3c3301-4598-8c97-66ec-704aecc79d4d",
+        "rank": "normal"
+      }
+    ],
+    "P13073": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P13073",
+          "hash": "981ef6eb17e9f28c40287d9d3e3a107d34206b50",
+          "datavalue": {
+            "value": "291760",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q137177399$e29fb5dc-44da-1a99-e178-9989e46c4adb",
+        "rank": "normal"
+      }
+    ],
+    "P12338": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12338",
+          "hash": "3b59b7a33dc0f589305c840691ae595b2467cdb3",
+          "datavalue": {
+            "value": "283229",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "a8137891ad1352823178bc5a7fb93c57ab28dce6",
+              "datavalue": {
+                "value": "Minseo Lee",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q137177399$3cb25efc-4415-1e27-b267-1c678f9d5882",
+        "rank": "normal"
+      }
+    ],
+    "P1412": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1412",
+          "hash": "cd3065908b0f9333c71f9bbd2cd50858b2ec3c7c",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 9176,
+              "id": "Q9176"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137177399$4AC9F096-8DC2-4B7F-8AC8-8600036B6208",
+        "rank": "normal"
+      }
+    ],
+    "P569": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P569",
+          "hash": "4f0305f8320d2f9aa3c6ffd7aae7b07a46f1cff2",
+          "datavalue": {
+            "value": {
+              "time": "+2003-12-03T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q137177399$F4D4527C-B321-4735-B993-F413D13D1C65",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2b1b50c616f574d7c0c5e8d9dbbeec88b49a822c",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "c2a0b04def91778941b407a3f5154ab122fbae10",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 130293317,
+                      "id": "Q130293317"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P12338": [
+                {
+                  "snaktype": "value",
+                  "property": "P12338",
+                  "hash": "3b59b7a33dc0f589305c840691ae595b2467cdb3",
+                  "datavalue": {
+                    "value": "283229",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P1810": [
+                {
+                  "snaktype": "value",
+                  "property": "P1810",
+                  "hash": "a8137891ad1352823178bc5a7fb93c57ab28dce6",
+                  "datavalue": {
+                    "value": "Minseo Lee",
+                    "type": "string"
+                  },
+                  "datatype": "string"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "c0d22274464a777fdd8f16b5c90e5c52c7256b4a",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2025-06-05T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P12338", "P1810", "P813"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {}
+}

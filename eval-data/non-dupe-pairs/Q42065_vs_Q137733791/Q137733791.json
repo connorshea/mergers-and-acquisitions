@@ -1,0 +1,107 @@
+{
+  "pageid": 131397690,
+  "ns": 0,
+  "title": "Q137733791",
+  "lastrevid": 2526907867,
+  "modified": "2026-08-03T23:03:59Z",
+  "type": "item",
+  "id": "Q137733791",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Michael Anderson"
+    },
+    "ur": {
+      "language": "ur",
+      "value": "مائیکل اینڈرسن (فٹ بال کھلاڑی)"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "Australian association football player (born 1979)"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "অস্ট্রেলীয় ফুটবলার (জন্ম ১৯৭৯)"
+    },
+    "as": {
+      "language": "as",
+      "value": "অষ্ট্ৰেলীয়ান ফুটবল খেলুৱৈ (জন্ম ১৯৭৯)"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137733791$02d45323-4abf-6828-2066-4cd2ca4c6015",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137733791$d8555d79-4b5a-f107-0a2b-8a10a36a650c",
+        "rank": "normal"
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "7b3d53654a6e78f49a600edd15aa24d2df7b770f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 937857,
+              "id": "Q937857"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137733791$4ad746c1-4006-9bba-73bd-fc4c57f51d27",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "urwiki": {
+      "site": "urwiki",
+      "title": "مائیکل اینڈرسن (فٹ بال کھلاڑی)",
+      "badges": [],
+      "url": "https://ur.wikipedia.org/wiki/%D9%85%D8%A7%D8%A6%DB%8C%DA%A9%D9%84_%D8%A7%DB%8C%D9%86%DA%88%D8%B1%D8%B3%D9%86_(%D9%81%D9%B9_%D8%A8%D8%A7%D9%84_%DA%A9%DA%BE%D9%84%D8%A7%DA%91%DB%8C)"
+    }
+  }
+}

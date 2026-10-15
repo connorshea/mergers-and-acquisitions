@@ -158,6 +158,10 @@ Each record's `provenance` records where the pair came from:
   only as male and the other only as female (P21), which the LLM review called
   different. Each also conflicts on a second fact (sport, occupation or date of
   birth), so sex isn't the only thing telling them apart.
+- `llm-review-described-birth-year` — namesake humans from the hunt where one
+  item states its birth year only in its description ("football player (born
+  1997)") and the other's date of birth (P569) is years off, which the LLM
+  review called different.
 - `game-vs-common-word` — a video game vs the common noun/concept it is named
   after, sharing the exact same label (e.g. _Braid_ the game vs `braid` the
   pattern, _Spore_ vs the reproductive `spore`, _Portal_ vs a `portal` opening).

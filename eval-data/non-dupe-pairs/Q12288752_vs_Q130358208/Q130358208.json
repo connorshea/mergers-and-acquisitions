@@ -1,0 +1,181 @@
+{
+  "pageid": 124322896,
+  "ns": 0,
+  "title": "Q130358208",
+  "lastrevid": 2528527024,
+  "modified": "2026-08-07T18:54:05Z",
+  "type": "item",
+  "id": "Q130358208",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Nikolay Nikolov"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Nikolay Nikolov"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "Bulgarian footballer (born 2005)"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "বুলগেরীয় ফুটবলার (জন্ম ২০০৫)"
+    },
+    "as": {
+      "language": "as",
+      "value": "বুলগেৰীয়ান ফুটবল খেলুৱৈ (জন্ম ২০০৫)"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q130358208$f6eb673c-442b-5e0e-1b0c-665daf2da4e4",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q130358208$2750d8cb-48e9-46ff-d828-2540ff477799",
+        "rank": "normal"
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "7b3d53654a6e78f49a600edd15aa24d2df7b770f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 937857,
+              "id": "Q937857"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q130358208$b877c7d2-46ee-3f5e-ccb2-b145032f50d2",
+        "rank": "normal"
+      }
+    ],
+    "P2369": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2369",
+          "hash": "7b961c6caba318346bb4623460c2808c584e4d96",
+          "datavalue": {
+            "value": "934058",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q130358208$5747E993-568E-4F20-9073-28DD4579A76F",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "eb5d5376afac5798b1af168ad209d2f4987986ad",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "93c21dd69f1dc948cbd523a8f177d89403f01863",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Nikolay_Nikolov_(footballer,_born_2005)&oldid=1265547000",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "1624e15e061523279bc14bb6497168e45caacb32",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2736,
+              "id": "Q2736"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q130358208$a2100758-df33-464e-8586-5372f6f3d87f",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Nikolay Nikolov (footballer, born 2005)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Nikolay_Nikolov_(footballer,_born_2005)"
+    }
+  }
+}

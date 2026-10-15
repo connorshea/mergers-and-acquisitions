@@ -1,0 +1,717 @@
+{
+  "pageid": 26251048,
+  "ns": 0,
+  "title": "Q24279020",
+  "lastrevid": 2554235120,
+  "modified": "2026-10-07T00:19:05Z",
+  "type": "item",
+  "id": "Q24279020",
+  "labels": {
+    "de": {
+      "language": "de",
+      "value": "John Thomas"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "John Thomas"
+    },
+    "en": {
+      "language": "en",
+      "value": "John Thomas"
+    },
+    "sl": {
+      "language": "sl",
+      "value": "John Thomas"
+    },
+    "id": {
+      "language": "id",
+      "value": "John Thomas"
+    },
+    "ace": {
+      "language": "ace",
+      "value": "John Thomas"
+    },
+    "min": {
+      "language": "min",
+      "value": "John Thomas"
+    },
+    "jv": {
+      "language": "jv",
+      "value": "John Thomas"
+    },
+    "su": {
+      "language": "su",
+      "value": "John Thomas"
+    },
+    "bug": {
+      "language": "bug",
+      "value": "John Thomas"
+    },
+    "bjn": {
+      "language": "bjn",
+      "value": "John Thomas"
+    },
+    "map-bms": {
+      "language": "map-bms",
+      "value": "John Thomas"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "John Thomas"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "John Thomas"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "John Thomas"
+    },
+    "es": {
+      "language": "es",
+      "value": "John Thomas"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "John Thomas"
+    },
+    "sq": {
+      "language": "sq",
+      "value": "John Thomas"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "জন টমাস"
+    },
+    "it": {
+      "language": "it",
+      "value": "John Thomas"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "John Thomas"
+    },
+    "pt-br": {
+      "language": "pt-br",
+      "value": "John Thomas"
+    },
+    "en-ca": {
+      "language": "en-ca",
+      "value": "John Thomas"
+    },
+    "en-gb": {
+      "language": "en-gb",
+      "value": "John Thomas"
+    }
+  },
+  "descriptions": {
+    "ar": {
+      "language": "ar",
+      "value": "لاعب كرة قدم أمريكية من الولايات المتحدة الأمريكية"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "joueur américain de football américain"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "jogador de futebol americano dos Estados Unidos"
+    },
+    "de": {
+      "language": "de",
+      "value": "US-amerikanischer American-Football-Spieler"
+    },
+    "en": {
+      "language": "en",
+      "value": "American football player (born 1964)"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "xugador de fútbol americanu d'Estaos Xuníos"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "imreoir peile Meiriceánaí (1964-)"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "американський гравець в американський футбол"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "আমেরিকান ফুটবল খেলোয়াড় (জন্ম ১৯৬৪)"
+    },
+    "as": {
+      "language": "as",
+      "value": "আমেৰিকান ফুটবল খেলুৱৈ (জন্ম ১৯৬৪)"
+    }
+  },
+  "aliases": {
+    "de": [
+      {
+        "language": "de",
+        "value": "John Henry Jr. Thomas"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q24279020$D05D5C7B-E7E6-4A7B-B980-405414CAC2A9",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q24279020$E75B2BE8-DA43-4BC1-967A-D478E14399D1",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "5c0fa0d334b12fb6fd96eeccd70c1bfbc0491a41",
+            "snaks": {
+              "P887": [
+                {
+                  "snaktype": "value",
+                  "property": "P887",
+                  "hash": "0f89b02e7a7b9408e3cd5c2b9cae2f47d84944d5",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 69652498,
+                      "id": "Q69652498"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P887"]
+          }
+        ]
+      }
+    ],
+    "P735": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P735",
+          "hash": "0d15462b37a6aad7cc30b7c7ab66c5784437c94a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4925477,
+              "id": "Q4925477"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q24279020$55F112E6-40DA-4C70-A401-6CD9C63A16DC",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "323be97becfd18ea6625da4b3770079385901a18",
+            "snaks": {
+              "P887": [
+                {
+                  "snaktype": "value",
+                  "property": "P887",
+                  "hash": "b40d6c0ac6eb965460f92fade101fe40a3c44239",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 97033143,
+                      "id": "Q97033143"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P887"]
+          }
+        ]
+      }
+    ],
+    "P569": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P569",
+          "hash": "d121c2376c38a7388ab2a6ab792732ec540639fb",
+          "datavalue": {
+            "value": {
+              "time": "+1964-03-06T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q24279020$ED99EFEE-7FF1-412E-AE06-8F1732C5ECC9",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9a24f7c0208b05d6be97077d855671d1dfdbc0dd",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 48183,
+                      "id": "Q48183"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "eeee167655fcba87ebb09a06fce2dc2c7b975e64",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 19204627,
+              "id": "Q19204627"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q24279020$FC1D6FB0-0B7A-4F9E-9303-FCDFC25CDBB3",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9960c9872003d614bd10f6eec8231af20967da4a",
+            "snaks": {
+              "P123": [
+                {
+                  "snaktype": "value",
+                  "property": "P123",
+                  "hash": "3ef483c57cf4f2c3d6d8cfba38ff46471187db75",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 17082873,
+                      "id": "Q17082873"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "2e93d2d0c8fb3b2f5800c102ad673775171360b9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 7246590,
+                      "id": "Q7246590"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P3561": [
+                {
+                  "snaktype": "value",
+                  "property": "P3561",
+                  "hash": "5edee22554c1eda3c4f4805eae281d43adb82ab8",
+                  "datavalue": {
+                    "value": "T/ThomJo23",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "75189eafb31fc911d1854a8f1c3c7d076e508d62",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-05-09T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P123", "P248", "P3561", "P813"]
+          }
+        ]
+      }
+    ],
+    "P19": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P19",
+          "hash": "0e16f9de94c2e28a24aa0b3bcbeb466f1dd8ae85",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 43196,
+              "id": "Q43196"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q24279020$4B67BC58-E10D-45DE-A073-F12E007A8D1E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9a24f7c0208b05d6be97077d855671d1dfdbc0dd",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 48183,
+                      "id": "Q48183"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "52d0408c7915122e0519a22577f0cbdcb28f749b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 30,
+              "id": "Q30"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q24279020$2F186027-1783-4A83-B155-2CD636C68366",
+        "rank": "normal"
+      }
+    ],
+    "P54": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P54",
+          "hash": "f08fc22c8d740c12412d62681a674bc97e818233",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 219602,
+              "id": "Q219602"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q24279020$b2251091-92cc-467c-8300-f0b018a0fcf3",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9a24f7c0208b05d6be97077d855671d1dfdbc0dd",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 48183,
+                      "id": "Q48183"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "24071542631a19ffa6ae9ec928ba6b35ca3f4b12",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 41323,
+              "id": "Q41323"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q24279020$B5933607-1901-45A8-A811-E2930A346D43",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "0ec771ec5e59e13059dbac412ba1981c73573cf6",
+            "snaks": {
+              "P123": [
+                {
+                  "snaktype": "value",
+                  "property": "P123",
+                  "hash": "3ef483c57cf4f2c3d6d8cfba38ff46471187db75",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 17082873,
+                      "id": "Q17082873"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "2e93d2d0c8fb3b2f5800c102ad673775171360b9",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 7246590,
+                      "id": "Q7246590"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P3561": [
+                {
+                  "snaktype": "value",
+                  "property": "P3561",
+                  "hash": "5edee22554c1eda3c4f4805eae281d43adb82ab8",
+                  "datavalue": {
+                    "value": "T/ThomJo23",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "b8c7913c778d7dac14796333ecc6dfb4357df6f4",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-05-10T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P123", "P248", "P3561", "P813"]
+          }
+        ]
+      }
+    ],
+    "P734": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P734",
+          "hash": "47b628f089320badc0b26ff5aa5b435c26d8c45b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1413324,
+              "id": "Q1413324"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q24279020$EE141A1E-F83B-403A-95C8-822A370C3CA0",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "323be97becfd18ea6625da4b3770079385901a18",
+            "snaks": {
+              "P887": [
+                {
+                  "snaktype": "value",
+                  "property": "P887",
+                  "hash": "b40d6c0ac6eb965460f92fade101fe40a3c44239",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 97033143,
+                      "id": "Q97033143"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P887"]
+          }
+        ]
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "b8fd434e915f61044c2d0673771c2080f82011fb",
+          "datavalue": {
+            "value": "/g/11byzdd26t",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q24279020$B7EDCEC6-12CC-4AE2-B3E2-84F7F9D074A8",
+        "rank": "normal"
+      }
+    ],
+    "P3561": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3561",
+          "hash": "5edee22554c1eda3c4f4805eae281d43adb82ab8",
+          "datavalue": {
+            "value": "T/ThomJo23",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q24279020$10709B7D-FA13-45AF-812A-14109DAA698D",
+        "rank": "normal"
+      }
+    ],
+    "P9338": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P9338",
+          "hash": "0abd3ddd9be5509017972664fa7df26d0bb901b8",
+          "datavalue": {
+            "value": "john-thomas",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q24279020$C128A6CA-B9D8-4995-928E-E47EFE09A902",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "dewiki": {
+      "site": "dewiki",
+      "title": "John Thomas (Footballspieler, 1964)",
+      "badges": [],
+      "url": "https://de.wikipedia.org/wiki/John_Thomas_(Footballspieler,_1964)"
+    }
+  }
+}

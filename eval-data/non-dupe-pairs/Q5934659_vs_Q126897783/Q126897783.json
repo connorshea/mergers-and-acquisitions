@@ -1,0 +1,135 @@
+{
+  "pageid": 120905837,
+  "ns": 0,
+  "title": "Q126897783",
+  "lastrevid": 2549254970,
+  "modified": "2026-09-25T13:01:38Z",
+  "type": "item",
+  "id": "Q126897783",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Jorge Cabrera"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Jorge Cabrera"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "Uruguayan footballer (born 1969)"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "উরুগুয়েয়ীয় ফুটবলার (জন্ম ১৯৬৯)"
+    },
+    "as": {
+      "language": "as",
+      "value": "উৰুগুৱীয় ফুটবল খেলুৱৈ (জন্ম ১৯৬৯)"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "Jorge Daniel Cabrera Curbelo"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q126897783$a6136dfa-4b42-e4ce-19f0-e7f90b777fe8",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q126897783$c2504569-41e4-216f-c1d4-67b3813489bb",
+        "rank": "normal"
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "7b3d53654a6e78f49a600edd15aa24d2df7b770f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 937857,
+              "id": "Q937857"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q126897783$5a1bd932-4620-de47-541b-f4b1e171cdf3",
+        "rank": "normal"
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "1624e15e061523279bc14bb6497168e45caacb32",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2736,
+              "id": "Q2736"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q126897783$7bef67c1-8f5b-4eaf-874b-405414c8264a",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Jorge Cabrera (footballer)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Jorge_Cabrera_(footballer)"
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "pageid": 131212097,
+  "ns": 0,
+  "title": "Q137546024",
+  "lastrevid": 2511695224,
+  "modified": "2026-06-29T04:46:09Z",
+  "type": "item",
+  "id": "Q137546024",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Hitting the Apex"
+    },
+    "et": {
+      "language": "et",
+      "value": "Hitting the Apex"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "2015 documentary film by Mark Neale"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "fa41184cb03f49f0edfbf2fc4f9d33e35afecaea",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 11424,
+              "id": "Q11424"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137546024$D46BE982-F030-4A01-ABF1-1ECC5909364A",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Hitting the Apex (2015 film)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Hitting_the_Apex_(2015_film)"
+    },
+    "etwiki": {
+      "site": "etwiki",
+      "title": "Hitting the Apex",
+      "badges": [],
+      "url": "https://et.wikipedia.org/wiki/Hitting_the_Apex"
+    }
+  }
+}

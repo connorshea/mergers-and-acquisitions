@@ -37,6 +37,7 @@ import {
   isConflationPair,
   descriptionCreator,
   descriptionYear,
+  descriptionBirthYear,
   descriptionYearSpan,
   activityConflicts,
   sexConflict,
@@ -2649,6 +2650,51 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
     expect(
       nameDisambiguatedLabels(us, other("Aquinox Pharmaceuticals (United Kingdom)", "fr")),
     ).toBeNull();
+  });
+
+  it("reads a person's birth year from their description against the other's date of birth", () => {
+    // Q108053528 / a namesake: a Pro Football Reference import carries its
+    // birth year only in the description.
+    const human = (id: string, description: string, born?: string): Item => ({
+      ...base,
+      id,
+      labels: { en: "Mark Thompson" },
+      descriptions: { en: description },
+      statements: stmt({
+        P31: [{ type: "item", value: "Q5" }],
+        ...(born ? { P569: [{ type: "time" as const, value: born }] } : {}),
+      }),
+    });
+    const stub = human("Q108053528", "football player (born 1994)");
+    const far = scoreCandidate(stub, human("Q2", "American actor", "+1960-05-01T00:00:00Z"));
+    expect(far.reasons[0]).toBe(
+      "publication/inception/birth years differ by 34 (Q108053528's year from its description), almost certainly different subjects",
+    );
+    expect(far.confidence).toBeLessThan(0.4);
+    // A few years off is a penalty, enough to drop a bare name match.
+    const near = scoreCandidate(stub, human("Q2", "American actor", "+1990-05-01T00:00:00Z"));
+    expect(near.reasons).toContain(
+      "publication/inception/birth years differ by 4 (Q108053528's year from its description)",
+    );
+    expect(near.confidence).toBeLessThan(0.4);
+    // A year off is a date rounded into the description: no conflict.
+    const close = scoreCandidate(stub, human("Q2", "American actor", "+1993-12-01T00:00:00Z"));
+    expect(close.reasons.some((r) => r.includes("years differ"))).toBe(false);
+    // A career span isn't a birth year.
+    const career = human("Q3", "college basketball player (1984–1984) Marist");
+    expect(
+      scoreCandidate(career, human("Q2", "actor", "+1960-05-01T00:00:00Z")).reasons.some((r) =>
+        r.includes("years differ"),
+      ),
+    ).toBe(false);
+
+    expect(descriptionBirthYear("football player (born 1989)")).toBe(1989);
+    expect(descriptionBirthYear("Chinese association football player, born October 1993")).toBe(
+      1993,
+    );
+    expect(descriptionBirthYear("Turkish athlete (b. 12 May 1958)")).toBe(1958);
+    expect(descriptionBirthYear("English footballer (1938-2025)")).toBeNull();
+    expect(descriptionBirthYear("1995 EP by Twila Paris")).toBeNull();
   });
 
   it("reads an undated stub's year from its description against the other's date", () => {

@@ -228,7 +228,11 @@ export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
   {
     name: "WikiProject Fictional universes",
     // Wikidata's label is just "character"; spelled out so the type filter reads clearly.
-    classes: [{ qid: "Q95074", label: "fictional character" }],
+    classes: [
+      { qid: "Q95074", label: "fictional character" },
+      // Most characters are typed "fictional human" rather than the general class.
+      { qid: "Q15632617", label: "fictional human" },
+    ],
   },
   {
     name: "WikiProject Movies",
@@ -240,6 +244,7 @@ export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
       { qid: "Q93204", label: "documentary film" },
       { qid: "Q24856", label: "film series" },
       { qid: "Q5398426", label: "television series" },
+      { qid: "Q3464665", label: "television series season" },
       { qid: "Q581714", label: "animated series" },
       { qid: "Q1259759", label: "miniseries" },
       { qid: "Q526877", label: "web series" },

@@ -1476,6 +1476,81 @@ export function descriptionYear(description: string | undefined): number | null 
 }
 
 /**
+ * A parenthesized year span in an English description: "college basketball
+ * player (1964–1964)", "American politician (1912–1994)". For a person it is
+ * either a career or a lifespan, and either way the person was alive
+ * throughout it, which is all activityConflicts reads into it. Null without
+ * one, or for a span that runs backwards.
+ */
+export function descriptionYearSpan(description: string | undefined): [number, number] | null {
+  const m = description && /\((1\d{3}|20\d\d)\s*[–—-]\s*(1\d{3}|20\d\d)\)/.exec(description);
+  if (!m) return null;
+  const start = parseInt(m[1]!, 10);
+  const end = parseInt(m[2]!, 10);
+  return start <= end ? [start, end] : null;
+}
+
+/**
+ * Statements that put a person alive at a date: start and end of work period,
+ * and floruit. Unlike a birth date they are never compared year to year with
+ * the other item's (a career starts decades after the birth the other item may
+ * carry), only checked against its life dates.
+ */
+const ACTIVITY_PROPS = ["P2031", "P2032", "P1317"] as const;
+
+/**
+ * Years apart before activity outside a lifespan counts: a season written as
+ * its start year, or a year-precision date, can be off by one.
+ */
+const ACTIVITY_SLACK_YEARS = 2;
+
+/**
+ * Where one person was active (work period, floruit, or a description's year
+ * span) before the other was born or after they died: impossible for one
+ * person, so they are namesakes from different eras. A college player active
+ * in 1968 against a namesake born in 1985 is the common case: the sparse
+ * bulk-imported player has no birth date, only its career years. Career
+ * changes don't matter here, and neither does age: a child performer can be
+ * active at five, but no one is active before birth. Empty unless both are
+ * humans.
+ */
+export function activityConflicts(a: Item, b: Item): string[] {
+  if (!isHuman(a) || !isHuman(b)) return [];
+  const years = (item: Item, pids: readonly string[]): number[] =>
+    pids
+      .flatMap((pid) => item.statements[pid] ?? [])
+      .filter((v) => v.type === "time")
+      .map((v) => parseInt(/^[+-]?\d+/.exec(v.value)?.[0] ?? "", 10))
+      .filter((n) => Number.isFinite(n));
+  const conflicts: string[] = [];
+  const check = (active: Item, other: Item): void => {
+    const span = descriptionYearSpan(active.descriptions.en);
+    const activity = [...years(active, ACTIVITY_PROPS), ...(span ?? [])];
+    if (activity.length === 0) return;
+    const source = span ? `${active.id} (in its description)` : active.id;
+    const first = Math.min(...activity);
+    const last = Math.max(...activity);
+    // The earliest birth and the latest death the other item lists, so a
+    // disputed date never makes a conflict on its own.
+    const births = years(other, ["P569"]);
+    const deaths = years(other, ["P570"]);
+    if (births.length > 0 && Math.min(...births) - first >= ACTIVITY_SLACK_YEARS) {
+      conflicts.push(
+        `${source} was active by ${first}, before ${other.id} was born (${Math.min(...births)})`,
+      );
+    }
+    if (deaths.length > 0 && last - Math.max(...deaths) >= ACTIVITY_SLACK_YEARS) {
+      conflicts.push(
+        `${source} was active in ${last}, after ${other.id} died (${Math.max(...deaths)})`,
+      );
+    }
+  };
+  check(a, b);
+  check(b, a);
+  return conflicts;
+}
+
+/**
  * The two English descriptions' makers when they name different ones, with no
  * word in common ("by Aska" / "by Måns Zelmerlöw"). A stub item created from a
  * single article often carries nothing but its type and a description like
@@ -3295,6 +3370,18 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   if (isDisjointYearRangePair(a, b)) {
     reasons.unshift("titles cover different, non-overlapping year ranges, not a duplicate");
     cap("disjoint-year-range", 0.1);
+  }
+
+  // One person active before the other was born, or after they died. Without
+  // a shared strong id that settles it; with one it's a contest, since a
+  // description's span or a work period can be mis-entered too.
+  const activity = activityConflicts(a, b);
+  if (activity.length > 0 && strongIds.length > 0) {
+    score -= 0.3;
+    reasons.push(...activity);
+  } else if (activity.length > 0) {
+    reasons.unshift(...activity.map((r) => `${r}, almost certainly different people`));
+    cap("activity-outside-lifespan", 0.1);
   }
 
   // A work and its edition (P629 / P747 / P9237 / P2550 linking the pair) are distinct items by

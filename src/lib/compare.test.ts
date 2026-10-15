@@ -41,6 +41,8 @@ import {
   descriptionYearSpan,
   activityConflicts,
   sexConflict,
+  occupationConflict,
+  COMMON_NAME_MIN,
   differingDescriptionCreators,
   nameDisambiguatedLabels,
   nameDisambiguatedWikis,
@@ -1714,6 +1716,75 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       expect(result.reasons.some((r) => r.includes("almost certainly different people"))).toBe(
         false,
       );
+    });
+  });
+
+  describe("occupation conflict on a common name", () => {
+    const occ = (value: string, label: string) => ({ type: "item" as const, value, label });
+    const footballer = occ("Q937857", "association football player");
+    const director = occ("Q2526255", "film director");
+    const human = (id: string, occupations: ReturnType<typeof occ>[], extra = {}): Item => ({
+      ...base,
+      id,
+      labels: { en: "Mark Robinson" },
+      statements: stmt({
+        P31: [{ type: "item" as const, value: "Q5", label: "human" }],
+        P106: occupations,
+        ...extra,
+      }),
+    });
+
+    it("takes a bare name match below the floor when many share the name", () => {
+      const a = human("Q10379723", [footballer]);
+      const b = human("Q64995800", [director]);
+      expect(scoreCandidate(a, b).confidence).toBeGreaterThanOrEqual(0.4);
+      const result = scoreCandidate(a, b, { labelBlockSize: 12 });
+      expect(result.confidence).toBeLessThan(0.4);
+      expect(result.reasons).toContain(
+        "no occupation in common (association football player / film director), and 12 items share the name",
+      );
+    });
+
+    it("leaves a rare name alone", () => {
+      const result = scoreCandidate(human("Q1", [footballer]), human("Q2", [director]), {
+        labelBlockSize: COMMON_NAME_MIN - 1,
+      });
+      expect(result.reasons.some((r) => r.startsWith("no occupation in common"))).toBe(false);
+    });
+
+    it("counts umbrella occupations and one family as agreeing", () => {
+      const athlete = occ("Q2066131", "athlete");
+      const diver = occ("Q16004431", "diver");
+      expect(occupationConflict(human("Q1", [athlete]), human("Q2", [diver]))).toBeNull();
+      const filmActor = occ("Q10800557", "film actor");
+      const voiceActor = occ("Q2405480", "voice actor");
+      expect(occupationConflict(human("Q1", [filmActor]), human("Q2", [voiceActor]))).toBeNull();
+      const singer = occ("Q177220", "singer");
+      const composer = occ("Q36834", "composer");
+      expect(occupationConflict(human("Q1", [singer]), human("Q2", [composer]))).toBeNull();
+      // One shared occupation among several is agreement too.
+      expect(
+        occupationConflict(human("Q1", [footballer, director]), human("Q2", [director])),
+      ).toBeNull();
+      // But a musician is not a footballer.
+      expect(
+        occupationConflict(human("Q1", [occ("Q639669", "musician")]), human("Q2", [footballer])),
+      ).not.toBeNull();
+    });
+
+    it("needs occupations on both sides, and humans", () => {
+      expect(occupationConflict(human("Q1", [footballer]), human("Q2", []))).toBeNull();
+      const band: Item = { ...human("Q1", [footballer]), statements: stmt({ P106: [footballer] }) };
+      expect(occupationConflict(band, human("Q2", [director]))).toBeNull();
+    });
+
+    it("never applies with a shared strong id", () => {
+      const id = { P10302: [{ type: "external-id" as const, value: "mark-robinson" }] };
+      const result = scoreCandidate(human("Q1", [footballer], id), human("Q2", [director], id), {
+        labelBlockSize: 40,
+        isIdentifierProp: (pid: string) => pid === "P10302",
+      });
+      expect(result.reasons.some((r) => r.startsWith("no occupation in common"))).toBe(false);
     });
   });
 

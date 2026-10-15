@@ -402,6 +402,24 @@ describe.skipIf(!DB_TEST)("runHunt", () => {
     expect(await allCandidates()).toHaveLength(0);
   });
 
+  it("lowers namesake humans with no occupation in common once the name is common", async () => {
+    const occupations = ["Q937857", "Q33999", "Q82955", "Q1622272", "Q39631"];
+    const human = (i: number) =>
+      makeItem(`Q${700 + i}`, "Alex Morgan", {
+        P31: [{ type: "item", value: "Q5", label: "human" }],
+        P106: [{ type: "item", value: occupations[i]! }],
+      });
+    // Four namesakes: the name alone carries each pair over the floor.
+    for (let i = 0; i < 4; i++) await insertItem(human(i));
+    expect(await runHunt()).toMatchObject({ pairs: 6, upserted: 6 });
+
+    // A fifth makes it a common name (COMMON_NAME_MIN), so each conflict counts.
+    await db.delete(mergeCandidates);
+    await insertItem(human(4));
+    expect(await runHunt()).toMatchObject({ pairs: 10, scored: 10, upserted: 0 });
+    expect(await allCandidates()).toHaveLength(0);
+  });
+
   describe("mass-prune guard", () => {
     const orphans = Array.from({ length: 150 }, (_, i) => ({
       fromQid: `Q${20000 + i}`,

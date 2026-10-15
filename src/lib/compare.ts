@@ -1594,6 +1594,73 @@ export function sexConflict(a: Item, b: Item): string | null {
 }
 
 /**
+ * A label block at least this big is a common name: on the LLM review
+ * batches, namesakes with no occupation in common were almost never one
+ * person once five or more people shared the name, while real duplicates
+ * with differing occupations mostly had rare names.
+ */
+export const COMMON_NAME_MIN = 5;
+
+/**
+ * Occupations that sit above many specific ones (an "athlete" item is often
+ * the bulk-imported copy of a diver or a sprinter), so they agree with any
+ * occupation.
+ */
+const UMBRELLA_OCCUPATIONS = new Set<string>([
+  "Q2066131", // athlete
+  "Q50995749", // sportsperson
+  "Q11513337", // athletics competitor
+  "Q483501", // artist
+]);
+
+/**
+ * Occupations one person's items often split between: an actor recorded as
+ * a "film actor" on one item and a "voice actor" on the other, a musician as
+ * a singer and a composer. Two occupations in one family agree.
+ */
+const OCCUPATION_FAMILIES: Record<string, readonly string[]> = {
+  acting: ["Q33999", "Q10800557", "Q10798782", "Q2405480", "Q2259451"], // actor, film/TV/voice/stage actor
+  music: [
+    "Q639669",
+    "Q177220",
+    "Q488205",
+    "Q753110",
+    "Q36834",
+    "Q855091",
+    "Q486748",
+    "Q584301",
+    "Q1643514",
+  ], // musician, singer, singer-songwriter, songwriter, composer, guitarist, pianist, bassist, arranger
+  writing: ["Q36180", "Q6625963", "Q49757", "Q28389", "Q214917", "Q482980"], // writer, novelist, poet, screenwriter, playwright, author
+  filmmaking: ["Q2526255", "Q3282637", "Q3455803", "Q28389", "Q2059704"], // film director, film producer, director, screenwriter, television director
+};
+const OCCUPATION_FAMILY = new Map<string, string[]>();
+for (const [family, qids] of Object.entries(OCCUPATION_FAMILIES))
+  for (const q of qids) OCCUPATION_FAMILY.set(q, [...(OCCUPATION_FAMILY.get(q) ?? []), family]);
+
+/**
+ * Where two people both have occupations (P106) and none agree: no value in
+ * common, none in a shared family (OCCUPATION_FAMILIES), and no umbrella
+ * occupation on either side. Null otherwise, or unless both are humans. On
+ * its own it says little, since people change careers; scoreCandidate only
+ * counts it for a common name.
+ */
+export function occupationConflict(a: Item, b: Item): string | null {
+  if (!isHuman(a) || !isHuman(b)) return null;
+  const occupations = (item: Item) => (item.statements.P106 ?? []).filter((v) => v.type === "item");
+  const oa = occupations(a);
+  const ob = occupations(b);
+  if (oa.length === 0 || ob.length === 0) return null;
+  if ([...oa, ...ob].some((v) => UMBRELLA_OCCUPATIONS.has(v.value))) return null;
+  const keys = (values: typeof oa) =>
+    new Set(values.flatMap((v) => [v.value, ...(OCCUPATION_FAMILY.get(v.value) ?? [])]));
+  const kb = keys(ob);
+  if ([...keys(oa)].some((k) => kb.has(k))) return null;
+  const names = (values: typeof oa) => values.map((v) => v.label ?? v.value).join(", ");
+  return `no occupation in common (${names(oa)} / ${names(ob)})`;
+}
+
+/**
  * The two English descriptions' makers when they name different ones, with no
  * word in common ("by Aska" / "by Måns Zelmerlöw"). A stub item created from a
  * single article often carries nothing but its type and a description like
@@ -2700,6 +2767,14 @@ export interface ScoreOptions {
    */
   isInapplicableId?: (pid: string, item: Item) => boolean;
   /**
+   * How many items in the mirror share this pair's label block (the same
+   * blocking key and primary type) when both items are in it, or undefined
+   * when they aren't or the caller doesn't know. A name held by many people
+   * is weak evidence, so the hunt passes it to weigh an occupation conflict
+   * (see COMMON_NAME_MIN).
+   */
+  labelBlockSize?: number;
+  /**
    * Filled in with every hard cap and the confidence ceiling that lowered the
    * score, and the score each one found, so an audit can tell which rule
    * dropped a pair (the reasons alone don't say what it would have scored).
@@ -3457,6 +3532,22 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   } else if (sex) {
     reasons.unshift(`${sex}, almost certainly different people`);
     cap("different-sex", 0.1);
+  }
+
+  // A common name with no occupation in common: namesakes. Enough to take a
+  // bare name match, even one lifted by sitelinks on different wikis, below
+  // the floor, but not a pair with real corroboration, and never one with a
+  // shared strong id. A rare name is left alone: one person's items can
+  // record different careers.
+  const occupation = occupationConflict(a, b);
+  if (
+    occupation &&
+    strongIds.length === 0 &&
+    opts.labelBlockSize !== undefined &&
+    opts.labelBlockSize >= COMMON_NAME_MIN
+  ) {
+    score -= 0.2;
+    reasons.push(`${occupation}, and ${opts.labelBlockSize} items share the name`);
   }
 
   // A work and its edition (P629 / P747 / P9237 / P2550 linking the pair) are distinct items by

@@ -1550,6 +1550,32 @@ export function activityConflicts(a: Item, b: Item): string[] {
   return conflicts;
 }
 
+/** Sex or gender (P21) values that read as a conflict when the two items differ. */
+const MALE = "Q6581097";
+const FEMALE = "Q6581072";
+
+/**
+ * Where one person is recorded only as male and the other only as female:
+ * namesakes, since two items for one person don't disagree on it. Any other
+ * value (trans woman, trans man, non-binary, intersex, …) on either side
+ * leaves the pair alone, since a person's items can legitimately record their
+ * gender differently. Null unless both are humans.
+ */
+export function sexConflict(a: Item, b: Item): string | null {
+  if (!isHuman(a) || !isHuman(b)) return null;
+  const only = (item: Item): string | null => {
+    const values = new Set(
+      (item.statements.P21 ?? []).filter((v) => v.type === "item").map((v) => v.value),
+    );
+    return values.size === 1 && (values.has(MALE) || values.has(FEMALE)) ? [...values][0]! : null;
+  };
+  const sa = only(a);
+  const sb = only(b);
+  if (!sa || !sb || sa === sb) return null;
+  const name = (q: string) => (q === MALE ? "male" : "female");
+  return `${a.id} is ${name(sa)} and ${b.id} is ${name(sb)}`;
+}
+
 /**
  * The two English descriptions' makers when they name different ones, with no
  * word in common ("by Aska" / "by Måns Zelmerlöw"). A stub item created from a
@@ -3399,6 +3425,17 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   } else if (activity.length > 0) {
     reasons.unshift(...activity.map((r) => `${r}, almost certainly different people`));
     cap("activity-outside-lifespan", 0.1);
+  }
+
+  // One person male and the other female. The same contest with a shared
+  // strong id: either side's P21 can be mis-entered.
+  const sex = sexConflict(a, b);
+  if (sex && strongIds.length > 0) {
+    score -= 0.3;
+    reasons.push(sex);
+  } else if (sex) {
+    reasons.unshift(`${sex}, almost certainly different people`);
+    cap("different-sex", 0.1);
   }
 
   // A work and its edition (P629 / P747 / P9237 / P2550 linking the pair) are distinct items by

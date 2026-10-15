@@ -1476,6 +1476,21 @@ export function descriptionYear(description: string | undefined): number | null 
 }
 
 /**
+ * The birth year an English description states ("football player (born
+ * 1989)", "Chinese association football player, born October 1993", "b. 12
+ * May 1990"), or null. Only an explicit "born" counts: a bare span like
+ * "(1984–1984)" is a career as often as a lifespan (see descriptionYearSpan).
+ */
+export function descriptionBirthYear(description: string | undefined): number | null {
+  const m =
+    description &&
+    /\b(?:born|b\.)\s+(?:in\s+)?(?:\d{1,2}\s+)?(?:[A-Z][a-z]+\.?\s+)?(?:\d{1,2},?\s+)?(1\d{3}|20\d\d)\b/.exec(
+      description,
+    );
+  return m ? parseInt(m[1]!, 10) : null;
+}
+
+/**
  * A parenthesized year span in an English description: "college basketball
  * player (1964–1964)", "American politician (1912–1994)". For a person it is
  * either a career or a lifespan, and either way the person was alive
@@ -2935,9 +2950,13 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // ("1995 EP by Twila Paris"). Use it against the other item's *statements*
   // only: two descriptions' years are too loose to compare, since real
   // duplicates' descriptions disagree on the year ("2022 video game" / "2017
-  // video game"), and an item's own statement beats its description.
+  // video game"), and an item's own statement beats its description. A person's
+  // description gives a birth year instead ("football player (born 1989)"):
+  // the bulk-imported namesake often has no date of birth but that.
   const yearFromDescription = (item: Item): number[] => {
-    const y = descriptionYear(item.descriptions.en);
+    const y = isHuman(item)
+      ? descriptionBirthYear(item.descriptions.en)
+      : descriptionYear(item.descriptions.en);
     return y === null ? [] : [y];
   };
   let describedYear: Item | null = null;

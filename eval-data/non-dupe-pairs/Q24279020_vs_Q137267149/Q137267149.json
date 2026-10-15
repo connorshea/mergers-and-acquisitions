@@ -1,0 +1,145 @@
+{
+  "pageid": 130948716,
+  "ns": 0,
+  "title": "Q137267149",
+  "lastrevid": 2530790515,
+  "modified": "2026-08-13T07:05:00Z",
+  "type": "item",
+  "id": "Q137267149",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "John Thomas"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "gridiron football player (born 1953)"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "গ্রিডিরন ফুটবল খেলোয়াড় (জন্ম ১৯৫৩)"
+    },
+    "as": {
+      "language": "as",
+      "value": "গ্ৰিডিৰন ফুটবল খেলুৱৈ (জন্ম ১৯৫৩)"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137267149$ABADFC7E-53FB-4C2D-8130-9AA9E1653A4F",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137267149$9AAA114B-B146-46AF-80D2-F9AA1473A716",
+        "rank": "normal"
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "eeee167655fcba87ebb09a06fce2dc2c7b975e64",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 19204627,
+              "id": "Q19204627"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137267149$99D22295-83E3-4719-A2C0-E3E9F199BEBD",
+        "rank": "normal"
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "24071542631a19ffa6ae9ec928ba6b35ca3f4b12",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 41323,
+              "id": "Q41323"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137267149$C8C2DB4B-A747-4CAF-B142-143855D7B03A",
+        "rank": "normal"
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "52d0408c7915122e0519a22577f0cbdcb28f749b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 30,
+              "id": "Q30"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q137267149$8589AEA8-7E56-4899-9B9C-3C99CA915099",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "John Thomas (American football, born 1953)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/John_Thomas_(American_football,_born_1953)"
+    }
+  }
+}

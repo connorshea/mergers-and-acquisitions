@@ -1,0 +1,170 @@
+{
+  "pageid": 105756626,
+  "ns": 0,
+  "title": "Q110720729",
+  "lastrevid": 2530808410,
+  "modified": "2026-08-13T08:32:32Z",
+  "type": "item",
+  "id": "Q110720729",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Chris Smith"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Chris Smith"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "American football player (born 1999)"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "гравець в американський футбол (1999 року народження)"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "আমেরিকান ফুটবল খেলোয়াড় (জন্ম ১৯৯৯)"
+    },
+    "as": {
+      "language": "as",
+      "value": "আমেৰিকান ফুটবল খেলুৱৈ (জন্ম ১৯৯৯)"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q110720729$75B2BEC6-AEBD-4EFD-83C8-1A647F74417E",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q110720729$AE88F09E-F321-4252-82B8-88AD40B9A63E",
+        "rank": "normal"
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "eeee167655fcba87ebb09a06fce2dc2c7b975e64",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 19204627,
+              "id": "Q19204627"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q110720729$2B352D31-F8C7-4FD9-9D03-3ECD5F37CBA5",
+        "rank": "normal"
+      }
+    ],
+    "P641": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P641",
+          "hash": "24071542631a19ffa6ae9ec928ba6b35ca3f4b12",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 41323,
+              "id": "Q41323"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q110720729$471c7fcc-95e1-439a-8804-81c31b7a0c16",
+        "rank": "normal"
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "497fbf6a9863bc9c44242f8aaf4ef9dbce51bd72",
+          "datavalue": {
+            "value": "/g/11pv3qtjsn",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q110720729$E3DBC9B0-8104-42D1-A2F7-73F48580A25A",
+        "rank": "normal"
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "52d0408c7915122e0519a22577f0cbdcb28f749b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 30,
+              "id": "Q30"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q110720729$5E20260D-3D9A-48CA-B3B7-1D981C536DB5",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Chris Smith (running back, born 1999)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Chris_Smith_(running_back,_born_1999)"
+    }
+  }
+}

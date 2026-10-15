@@ -194,6 +194,7 @@ export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
       { qid: "Q20650540", label: "anime film" },
       { qid: "Q220898", label: "original video animation" },
       { qid: "Q80447738", label: "anime character" },
+      { qid: "Q87576284", label: "manga character" },
     ],
   },
   {
@@ -278,6 +279,11 @@ export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
       { qid: "Q55850643", label: "music track without lyrics" },
       { qid: "Q105543609", label: "musical work/composition" },
       { qid: "Q215380", label: "musical group" },
+      // Many groups are typed by kind rather than the general class.
+      { qid: "Q2088357", label: "musical ensemble" },
+      { qid: "Q5741069", label: "rock band" },
+      { qid: "Q641066", label: "girl group" },
+      { qid: "Q216337", label: "boy band" },
       { qid: "Q18127", label: "record label" },
       { qid: "Q2442401", label: "record company" },
     ],

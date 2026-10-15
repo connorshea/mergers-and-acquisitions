@@ -193,6 +193,7 @@ export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
       { qid: "Q104213567", label: "light novel series" },
       { qid: "Q20650540", label: "anime film" },
       { qid: "Q220898", label: "original video animation" },
+      { qid: "Q80447738", label: "anime character" },
     ],
   },
   {
@@ -215,6 +216,7 @@ export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
     classes: [
       { qid: "Q1004", label: "comic" },
       { qid: "Q14406742", label: "comic book series" },
+      { qid: "Q1114461", label: "comics character" },
     ],
   },
   {
@@ -223,6 +225,7 @@ export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
       { qid: "Q4830453", label: "business" },
       { qid: "Q6881511", label: "enterprise" },
       { qid: "Q783794", label: "company" },
+      { qid: "Q891723", label: "public company" },
     ],
   },
   {
@@ -232,6 +235,10 @@ export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
       { qid: "Q95074", label: "fictional character" },
       // Most characters are typed "fictional human" rather than the general class.
       { qid: "Q15632617", label: "fictional human" },
+      { qid: "Q15773347", label: "film character" },
+      { qid: "Q15773317", label: "television character" },
+      { qid: "Q15711870", label: "animated character" },
+      { qid: "Q3658341", label: "literary character" },
     ],
   },
   {
@@ -246,6 +253,7 @@ export const IMPORT_CLASS_GROUPS: readonly ImportClassGroup[] = [
       { qid: "Q5398426", label: "television series" },
       { qid: "Q3464665", label: "television series season" },
       { qid: "Q581714", label: "animated series" },
+      { qid: "Q117467246", label: "animated television series" },
       { qid: "Q1259759", label: "miniseries" },
       { qid: "Q526877", label: "web series" },
       { qid: "Q15416", label: "television program" },

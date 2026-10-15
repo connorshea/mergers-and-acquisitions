@@ -29,10 +29,28 @@ release. Add a tool name to select part of the graph. For example, run
 # Mergers & Acquisitions — project notes
 
 Full-stack app for finding, ranking, reviewing, and (eventually) applying
-Wikidata merge candidates, scoped to video games. Runs on **Wikimedia Toolforge**:
+Wikidata merge candidates. Runs on **Wikimedia Toolforge**:
 a **Hono** (Node) web server + **Drizzle** on **MariaDB**, with a Vite+ / React 19
 SPA client. (Migrated off Void/Cloudflare Workers+D1 — see the `migrate/toolforge`
 branch history.)
+
+**Item scope** — it began with video games and is steadily widening toward all
+non-scholarly items (PLAN.md roadmap). The mirror holds the `instance of` (P31)
+classes listed in `IMPORT_CLASS_GROUPS` (`src/lib/import-classes.ts`), grouped
+by WikiProject: video games (games, series, DLC, developers, publishers,
+characters, mods), anime & manga, board games / TTRPGs, books and literary
+works, comics, companies, fictional characters, film & TV, music (albums,
+singles, tracks, groups, labels), podcasts, and point places (museums, railway
+stations, stadiums — `pointPlace`, compared by coordinates). Humans (Q5) are
+imported **selectively** (`SelectiveImport`: linked from in-scope items, a
+listed occupation, or a listed database id). Matching is on the exact class
+QID — subclasses are not expanded — so widening scope means adding a class
+there; the importer's pre-filter, its P31 check, and the candidates type filter
+all read that list. Don't assume an item is a video game: some scorer
+heuristics in `compare.ts` are still game-specific, and the eval set
+(`eval-data/`) deliberately spans people, companies, works and places.
+Still out of scope: scholarly articles, Wikimedia categories/templates/
+disambiguations, taxa/genes/astronomy, and settlements/geographic features.
 
 Layout:
 
@@ -45,7 +63,8 @@ Layout:
   handle (`db.ts`) + connection config (`db-config.ts`); the sync write
   paths (`*-sync.ts`); the hunt (`hunt.ts`, scan→score→upsert in one pass); and
   the dump import (`dump-import.ts`: streams the Wikidata entity JSON dump from
-  Toolforge's `/public/dumps` NFS mount, pre-filters on `"numeric-id":7889`,
+  Toolforge's `/public/dumps` NFS mount, pre-filters on the import classes'
+  `"numeric-id":` values,
   upserts items + external ids + properties, prunes what left the dump);
   `class-ancestors.ts` rebuilds `class_ancestors` (our items' classes →
   ancestors named by subject type constraints) after the weekly property sync.

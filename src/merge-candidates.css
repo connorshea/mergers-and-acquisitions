@@ -1044,37 +1044,134 @@ a.chip-id:hover {
 .type-filter-panel .type-filter-type {
   padding-left: 1.8rem;
 }
-/* Loading indicator for the candidates list. It fades in after a beat so a
-   fast response doesn't flash it. */
-.spinner {
+/* Loading indicator (ZipperLoader). It fades in after a beat so a fast
+   response doesn't flash it. Like the logo, two rows of teeth (red and green,
+   the two items) mesh behind a slider; the slider runs to the end and back. */
+.zipper-loader {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.5rem;
   align-self: center;
   color: var(--muted);
   font-size: 0.85rem;
-  animation: spinner-appear 0s 150ms both;
+  animation: zipper-appear 0s 150ms both;
 }
-.spinner-ring {
-  width: 0.9rem;
-  height: 0.9rem;
-  border: 2px solid var(--rule);
-  border-top-color: var(--muted);
-  border-radius: 50%;
+.zipper {
+  position: relative;
+  flex: none;
+  /* A whole number of 6px tooth pairs, so neither row ends on a sliver. */
+  width: 66px;
+  height: 12px;
+  /* Room for the slider, which overhangs both ends. */
+  margin-inline: 4px;
 }
-@keyframes spinner-appear {
+.zipper-open,
+.zipper-closed,
+.zipper-pull {
+  position: absolute;
+  inset: 0;
+}
+.zipper-open::before,
+.zipper-open::after,
+.zipper-closed::before,
+.zipper-closed::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: repeating-linear-gradient(90deg, currentColor 0 3px, transparent 3px 6px);
+}
+.zipper-open::before,
+.zipper-closed::before {
+  color: var(--distinct);
+}
+.zipper-open::after,
+.zipper-closed::after {
+  color: var(--identical);
+  background-position: 3px 0;
+}
+/* Open: the rows sit apart at the top and bottom edges. */
+.zipper-open::before {
+  top: 0;
+}
+.zipper-open::after {
+  bottom: 0;
+}
+/* Closed: the rows overlap in the middle, their teeth alternating. */
+.zipper-closed::before {
+  top: 3px;
+  height: 4px;
+}
+.zipper-closed::after {
+  top: 5px;
+  height: 4px;
+}
+.zipper-slider {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 8px;
+  height: 12px;
+  transform: translateX(50%);
+  background: var(--ink);
+  border-radius: 1px;
+  /* Narrow end on the closed side, wide end facing the open teeth. */
+  clip-path: polygon(0 25%, 100% 0, 100% 100%, 0 75%);
+}
+/* Reduced motion: a still, part-zipped zipper. */
+.zipper-closed {
+  clip-path: inset(0 40% 0 0);
+}
+.zipper-open {
+  clip-path: inset(0 0 0 60%);
+}
+.zipper-pull {
+  transform: translateX(-40%);
+}
+@keyframes zipper-appear {
   from {
     opacity: 0;
   }
 }
-@keyframes spinner-turn {
+@keyframes zipper-close {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
   to {
-    transform: rotate(360deg);
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes zipper-open {
+  from {
+    clip-path: inset(0 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 100%);
+  }
+}
+@keyframes zipper-pull {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: none;
   }
 }
 @media (prefers-reduced-motion: no-preference) {
-  .spinner-ring {
-    animation: spinner-turn 0.8s linear infinite;
+  .zipper-closed,
+  .zipper-open,
+  .zipper-pull {
+    animation: 1.1s ease-in-out infinite alternate;
+  }
+  .zipper-closed {
+    animation-name: zipper-close;
+  }
+  .zipper-open {
+    animation-name: zipper-open;
+  }
+  .zipper-pull {
+    animation-name: zipper-pull;
   }
 }
 .ledger-wrap[data-stale] {
@@ -2185,7 +2282,7 @@ a.auth-login {
   }
   /* Filters: search and Search on the first row, then a Filters toggle (with
      Clear beside it) that folds away the other fields, which open one per row,
-     full-width. The spinner gets its own row under them. */
+     full-width. The loading indicator gets its own row under them. */
   .list-controls {
     display: grid;
     grid-template-columns: 1fr auto;
@@ -2242,7 +2339,7 @@ a.auth-login {
   .list-controls:not(.filters-open) > .field {
     display: none;
   }
-  .list-actions .spinner {
+  .list-actions .zipper-loader {
     grid-column: 1 / -1;
     order: 1;
   }

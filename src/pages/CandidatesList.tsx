@@ -13,6 +13,7 @@ import AuthBar from "../AuthBar.tsx";
 import Dialog from "../Dialog.tsx";
 import { LogoMark } from "../Logo.tsx";
 import ReasonText from "../ReasonText.tsx";
+import ZipperLoader from "../ZipperLoader.tsx";
 import { IMPORT_CLASS_GROUPS, IMPORT_CLASS_OPTIONS } from "../lib/import-classes.ts";
 import { rememberListSearch } from "../lib/list-state.ts";
 import { useDismissableMenu } from "../lib/use-dismissable-menu.ts";
@@ -430,7 +431,7 @@ export default function CandidatesList() {
         <div className="list-actions">
           {/* Shown while a refetch is in flight; the stale rows stay visible
               (dimmed) underneath instead of blanking the table. */}
-          {loading && data && <Spinner label="Updating…" />}
+          {loading && data && <ZipperLoader label="Updating…" />}
           {/* Clears the filters (search, creator, blockers, status, type, language) but keeps the sort. */}
           {hasFilters && (
             <button
@@ -461,7 +462,7 @@ export default function CandidatesList() {
       )}
       {loading && (!data || allDismissed) && (
         <p className="list-msg">
-          <Spinner label="Loading…" />
+          <ZipperLoader label="Loading…" />
         </p>
       )}
       {data && data.candidates.length === 0 && !loading && !pastEnd && (
@@ -681,16 +682,6 @@ function LanguageFilter({
         <span className="field-note">Any language</span>
       )}
     </div>
-  );
-}
-
-/** A small inline spinner with a visible label, announced politely to screen readers. */
-function Spinner({ label }: { label: string }) {
-  return (
-    <span className="spinner" role="status">
-      <span className="spinner-ring" aria-hidden="true" />
-      {label}
-    </span>
   );
 }
 

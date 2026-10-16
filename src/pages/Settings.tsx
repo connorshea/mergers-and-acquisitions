@@ -8,6 +8,7 @@ import { listHref } from "../lib/list-state.ts";
 import AuthBar from "../AuthBar.tsx";
 import { LogoMark } from "../Logo.tsx";
 import type { ToastState } from "../Toast.tsx";
+import ZipperLoader from "../ZipperLoader.tsx";
 
 // Languages offered as checkboxes; anything else goes in the free-text field.
 const COMMON_LANGUAGES = [
@@ -74,7 +75,9 @@ export default function Settings() {
       <main className="mc settings">
         <h1>Settings</h1>
         {loading ? (
-          <p className="list-msg">Loading…</p>
+          <p className="list-msg">
+            <ZipperLoader label="Loading…" />
+          </p>
         ) : user ? (
           <LanguageSettings key={user.id} saved={user.languages} />
         ) : (

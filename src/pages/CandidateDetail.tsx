@@ -32,6 +32,7 @@ import type {
 } from "../lib/api-types.ts";
 import { statusFlag } from "../lib/api-types.ts";
 import { wikiPageUrl } from "../lib/wiki.ts";
+import ZipperLoader from "../ZipperLoader.tsx";
 
 // Detail view for one candidate: a summary card (confidence, evidence, actions)
 // over the full field-by-field comparison. The API returns the pair already
@@ -229,7 +230,11 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
           <h1 className="visually-hidden">
             {candidate ? `Merge candidate: ${titleLead}` : titleLead}
           </h1>
-          {loading && <p className="list-msg">Loading…</p>}
+          {loading && (
+            <p className="list-msg">
+              <ZipperLoader label="Loading…" />
+            </p>
+          )}
           {error && !loading && (
             <p className="list-msg is-error" role="alert">
               {error}

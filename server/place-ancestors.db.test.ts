@@ -66,17 +66,21 @@ describe.skipIf(!DB_TEST)("syncPlaceAncestors", () => {
       { qid: "Q16554", ancestor: "Q1261" },
       { qid: "Q35765", ancestor: "Q17", country: true }, // no item names it any more
     ]);
-    vi.mocked(fetchPlaceAncestors).mockResolvedValueOnce({
-      ancestors: new Map([
-        [
-          "Q416131",
+    // The lookup streams: the Q416131 chunk comes back, the Q16554 one fails.
+    vi.mocked(fetchPlaceAncestors).mockImplementationOnce(async (_places, opts) => {
+      await opts?.onChunk?.(
+        ["Q416131"],
+        new Map([
           [
-            { ancestor: "Q1490", country: false },
-            { ancestor: "Q17", country: true },
+            "Q416131",
+            [
+              { ancestor: "Q1490", country: false },
+              { ancestor: "Q17", country: true },
+            ],
           ],
-        ],
-      ]),
-      failed: ["Q16554"],
+        ]),
+      );
+      return { ancestors: new Map(), failed: ["Q16554"] };
     });
     expect(await syncPlaceAncestors()).toEqual({ places: 1, rows: 2, failed: 1 });
     expect(await rows()).toEqual(["Q16554>Q1261", "Q416131>Q1490", "Q416131>Q17 (country)"]);

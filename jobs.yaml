@@ -52,14 +52,16 @@
 # it reads the whole new mirror, and before the 10:00 hunt and
 # sync-entity-labels, so the hunt scores with the fresh rows and the two
 # QLever-heavy syncs don't run at once. If it ever runs past 10:00, the hunt
-# scores with the previous rows until the rebuild commits; places rarely
-# move, so that costs little.
+# reads each place's rows as they stand (rewritten a chunk at a time, so this
+# week's for some places and last week's for the rest); places rarely move,
+# so that costs little.
 - name: sync-place-ancestors
   command: node --max-old-space-size=768 jobs/sync-place-ancestors.ts
   image: tool-mna/tool-mna:latest
   schedule: "30 9 * * 3" # Wednesdays 09:30 UTC
   emails: onfailure
-  # Holds every place value and its ancestors (a few per place) at once.
+  # Holds the list of place values; ancestors are written a QLever chunk at a
+  # time (server/place-ancestors.ts), so they never pile up.
   mem: 1Gi
 
 - name: prune-sessions

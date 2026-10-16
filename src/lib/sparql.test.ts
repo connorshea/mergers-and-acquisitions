@@ -350,4 +350,28 @@ describe("fetchPlaceAncestors", () => {
     expect(ancestors.has("Q3")).toBe(false);
     expect(failed).toEqual(qids(500, 1001));
   });
+
+  it("hands each chunk to onChunk instead of collecting it", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn<typeof globalThis.fetch>(async (_url, init) => {
+        const [first = ""] = requestedQids(init);
+        return results([{ p: uri(first), anc: uri("Q17") }]);
+      }),
+    );
+    const seen: [number, string, string[]][] = [];
+    const { ancestors, failed } = await fetchPlaceAncestors(qids(1500), {
+      ...FAST,
+      onChunk: async (places, chunk) => {
+        for (const [qid, list] of chunk)
+          seen.push([places.length, qid, list.map((e) => e.ancestor)]);
+      },
+    });
+    expect(seen).toEqual([
+      [1000, "Q1", ["Q17"]],
+      [500, "Q1001", ["Q17"]],
+    ]);
+    expect(ancestors.size).toBe(0);
+    expect(failed).toEqual([]);
+  });
 });

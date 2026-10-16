@@ -468,7 +468,7 @@ export default function MergeCandidates({
       )}
 
       {GROUPS.filter((g) => !hidden[g.status]).map((g) => {
-        // P31 first, then labels, aliases and sitelinks, then non-identifier statements
+        // P31 first, then sitelinks, labels and aliases, then non-identifier statements
         // and then external ids, each by P-number. Wikidata-sourced (mirrored)
         // and declared-shared (P4070) identifiers sink to the bottom — they're
         // weak evidence either way. Array.sort is stable, so terms and

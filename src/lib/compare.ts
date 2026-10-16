@@ -851,8 +851,9 @@ export function collapseRepeatedRows(rows: Row[]): Row[] {
 }
 
 /**
- * Display order for rows within a status group: P31 (instance of) first, then labels, then the other terms
- * (aliases) and sitelinks in build order, then non-identifier statements by
+ * Display order for rows within a status group: P31 (instance of) first, then
+ * sitelinks (in build order), then labels, then the other terms (aliases)
+ * in build order, then non-identifier statements by
  * P-number, then external-identifier statements by P-number. Returns a sort
  * tuple; compare with `compareRowRank`. `demoted` rows (mirrored / shared ids)
  * sort after everything else, in the same order among themselves.
@@ -860,9 +861,9 @@ export function collapseRepeatedRows(rows: Row[]): Row[] {
 export function rowDisplayRank(r: Row, demoted = false): [number, number, number] {
   const pnum = (key: string): number => Number(key.slice(1)) || 0;
   let tier: number;
-  if (r.key === "P31") tier = -1;
+  if (r.key === "P31") tier = -2;
+  else if (r.kind === "sitelink") tier = -1;
   else if (r.kind === "term") tier = r.key.startsWith("label:") ? 0 : 1;
-  else if (r.kind === "sitelink") tier = 2;
   else tier = r.a.concat(r.b).some((v) => v.type === "external-id") ? 4 : 3;
   return [demoted ? 1 : 0, tier, r.kind === "statement" ? pnum(r.key) : 0];
 }

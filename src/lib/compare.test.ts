@@ -736,7 +736,7 @@ describe("collapseRepeatedRows", () => {
 });
 
 describe("rowDisplayRank", () => {
-  it("orders P31, labels, other terms, sitelinks, non-id statements, then ids, by P-number", () => {
+  it("orders P31, sitelinks, labels, other terms, non-id statements, then ids, by P-number", () => {
     const base = { descriptions: {}, statements: {} };
     const a: Item = {
       ...base,
@@ -761,9 +761,9 @@ describe("rowDisplayRank", () => {
       .map((r) => r.key);
     expect(keys).toEqual([
       "P31",
+      "sitelink:enwiki",
       "label:en",
       "alias:en",
-      "sitelink:enwiki",
       "P17",
       "P136",
       "P577",

@@ -102,9 +102,10 @@ export interface CandidateDetailResponse {
   valueLabels: Record<string, string>;
   /**
    * The `place_ancestors` rows of the place values on this pair, for the
-   * comparison's place containment (placeContainmentFromRows).
+   * comparison's place containment (placeContainmentFromRows). Absent from a
+   * server older than the place sync (an old pod still serving mid-deploy).
    */
-  placeAncestors: PlaceAncestorRow[];
+  placeAncestors?: PlaceAncestorRow[];
   /**
    * The EditGroups page for the edits that resolved this pair from the app
    * (its merge, or its "different from" statements); null when none did.

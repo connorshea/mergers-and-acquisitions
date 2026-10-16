@@ -10,7 +10,11 @@ import type { Item, ScoreOptions } from "../src/lib/compare.ts";
 import { orderByAge, scoreCandidate } from "../src/lib/compare.ts";
 import { type Entity, entityToItem } from "../src/lib/wikibase.ts";
 import { applyRedirects } from "./eval-redirects.ts";
-import { loadInapplicableIdCheck, loadMirroredIdCheck } from "./eval-subject-types.ts";
+import {
+  loadInapplicableIdCheck,
+  loadMirroredIdCheck,
+  loadPlaceContainment,
+} from "./eval-subject-types.ts";
 
 export const EVAL_DIR = "eval-data";
 
@@ -82,14 +86,16 @@ export type HeuristicScorer = (pair: Pair) => { confidence: number; reasons: str
 /**
  * The heuristic scorer (src/lib/compare.ts) as production runs it: the pair
  * ordered by age, external ids classified by their real datatypes, and the
- * subject type and mirror checks read from eval-data/subject-types.json.
+ * subject type, mirror and place containment checks read from
+ * eval-data/subject-types.json.
  */
 export async function loadHeuristicScorer(): Promise<HeuristicScorer> {
   const isInapplicableId = await loadInapplicableIdCheck();
   const isMirroredIdProp = await loadMirroredIdCheck();
+  const placeContainment = await loadPlaceContainment();
   return (pair) => {
     const idProps = identifierProps(pair.a, pair.b);
-    const opts: ScoreOptions = { isInapplicableId, isMirroredIdProp };
+    const opts: ScoreOptions = { isInapplicableId, isMirroredIdProp, placeContainment };
     if (idProps.size > 0) opts.isIdentifierProp = (pid) => idProps.has(pid);
     const [from, into] = orderByAge(pair.a, pair.b);
     return scoreCandidate(from, into, opts);

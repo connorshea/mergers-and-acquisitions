@@ -169,7 +169,7 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
       data.from,
       data.into,
       (pid) => mirrors.has(pid),
-      placeContainmentFromRows(data.placeAncestors) ?? undefined,
+      placeContainmentFromRows(data.placeAncestors ?? []) ?? undefined,
     );
   }, [data]);
 

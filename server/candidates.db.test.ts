@@ -399,7 +399,7 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       });
 
       const { body } = await get<CandidateDetailResponse>(`/api/candidates/${id}`);
-      expect(body.placeAncestors.sort((x, y) => x.ancestor.localeCompare(y.ancestor))).toEqual([
+      expect(body.placeAncestors?.sort((x, y) => x.ancestor.localeCompare(y.ancestor))).toEqual([
         { qid: "Q416131", ancestor: "Q1490", country: false },
         { qid: "Q416131", ancestor: "Q17", country: true },
       ]);

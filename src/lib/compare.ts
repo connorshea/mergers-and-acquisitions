@@ -216,9 +216,10 @@ export interface Row {
   /** Collapsed sitelink rows only (collapseRepeatedRows): every wiki sharing these values. */
   sites?: string[];
   /**
-   * A similar statement row whose only agreement is a place inside a country
-   * on the other side (AnnotatedValue.broad). Scoring counts it as neither
-   * agreement nor disagreement.
+   * A similar statement row whose every value matches only as a place inside
+   * a country on the other side (AnnotatedValue.broad). Scoring counts it as
+   * neither agreement nor disagreement. A row with a broad match beside values
+   * that plainly differ is distinct instead.
    */
   broad?: boolean;
 }
@@ -657,11 +658,15 @@ export function compareSets(
   const aa = annotate(a, b);
   const bb = annotate(b, a);
   const all = [...aa, ...bb];
+  // A broad match is no evidence either way, so the row is judged by its other
+  // values: when they all differ (Tokyo and Paris vs. Japan: Paris still
+  // differs), the row does too, and with none left it's broad.
+  const firm = all.filter((v) => !v.broad);
   let status: Status;
   if (all.every((v) => v.status === "identical")) status = "identical";
-  else if (all.some((v) => v.status !== "distinct")) status = "similar";
-  else status = "distinct";
-  const broad = status === "similar" && all.every((v) => v.status === "distinct" || v.broad);
+  else if (firm.length > 0 && firm.every((v) => v.status === "distinct")) status = "distinct";
+  else status = "similar";
+  const broad = all.length > 0 && firm.length === 0;
   return broad ? { status, a: aa, b: bb, broad } : { status, a: aa, b: bb };
 }
 

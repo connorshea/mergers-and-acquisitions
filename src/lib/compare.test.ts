@@ -4276,6 +4276,30 @@ describe("place containment", () => {
     expect(closer.broad).toBeUndefined();
   });
 
+  it("keeps a row distinct when a broad match sits beside a value that differs", () => {
+    const paris = place("Q90", "Paris");
+    const r = buildRows(
+      mk("Q1", { P19: [tokyo, paris] }),
+      mk("Q2", { P19: [japan] }),
+      {},
+      {},
+      places,
+    ).find((x) => x.key === "P19")!;
+    expect(r.status).toBe("distinct");
+    expect(r.broad).toBeUndefined();
+    expect(r.a[0]).toMatchObject({ status: "similar", broad: true });
+    expect(r.a[1]).toMatchObject({ status: "distinct" });
+    // Paris still counts against the pair, as it did without containment.
+    const a = mk("Q1", { P19: [tokyo, paris], P159: [akasaka] });
+    const b = mk("Q2", { P19: [japan], P159: [tokyo] });
+    expect(
+      scoreCandidate(a, b, { placeContainment: places }).reasons.find((x) =>
+        x.includes("shared statements agree"),
+      ),
+    ).toBe("1 of 2 shared statements agree");
+    expect(countDistinctStatements(a, b, undefined, places)).toBe(1);
+  });
+
   it("scores a contained place as agreement and a country as neither", () => {
     const agree = (a: Value, b: Value) =>
       scoreCandidate(mk("Q118663756", { P159: [a] }), mk("Q113309741", { P159: [b] }), {

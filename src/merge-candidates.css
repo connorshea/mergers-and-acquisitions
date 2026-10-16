@@ -2507,11 +2507,12 @@ a.auth-login {
 }
 @media (max-width: 640px) {
   /* Let the count columns shrink to their numbers, and their headers wrap, so
-     the whole table fits a phone without scrolling sideways. */
+     the table fits a phone. Usernames stay on one line; a long one scrolls the
+     table sideways rather than breaking mid-name. */
   .leaderboard-table th,
   .leaderboard-table td {
-    padding-left: 0.6rem;
-    padding-right: 0.6rem;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
   }
   .leaderboard-table .col-rank {
     width: 2rem;
@@ -2519,7 +2520,7 @@ a.auth-login {
   .leaderboard-table .col-count {
     width: 1%;
   }
-  .leaderboard-table td:nth-child(2) {
-    overflow-wrap: anywhere;
+  .leaderboard-table td.col-user {
+    white-space: nowrap;
   }
 }

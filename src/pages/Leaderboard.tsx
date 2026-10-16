@@ -123,7 +123,7 @@ export default function Leaderboard() {
                 {entries.map((e, i) => (
                   <tr key={e.userId} className={e.userId === user?.id ? "is-you" : undefined}>
                     <td className="col-rank">{ranks[i]}</td>
-                    <td>
+                    <td className="col-user">
                       <a
                         href={wikiPageUrl(`User:${encodeURIComponent(e.username)}`)}
                         target="_blank"

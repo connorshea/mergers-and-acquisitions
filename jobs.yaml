@@ -45,6 +45,20 @@
   # referenced QIDs plus the 1.89M left to look up on QLever, and its copy.
   mem: 1Gi
 
+# Rebuild `place_ancestors`: each place our items name (headquarters, place of
+# birth, location, …) and the places containing it along P131+, from QLever,
+# so the comparison reads Akasaka vs. Tokyo as one place. Weekly, beside
+# sync-entity-labels after the import, for the place values the new dump
+# brought in. The hunt starting at the same time scores with the previous
+# rows until the rebuild commits; places rarely move, so that costs little.
+- name: sync-place-ancestors
+  command: node --max-old-space-size=768 jobs/sync-place-ancestors.ts
+  image: tool-mna/tool-mna:latest
+  schedule: "0 10 * * 3" # Wednesdays 10:00 UTC
+  emails: onfailure
+  # Holds every place value and its ancestors (a few per place) at once.
+  mem: 1Gi
+
 - name: prune-sessions
   command: node jobs/prune-sessions.ts
   image: tool-mna/tool-mna:latest

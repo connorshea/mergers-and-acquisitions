@@ -6,6 +6,7 @@
 
 import { coordinateDistance, formatMeters, globeOf } from "./coordinates.ts";
 import { POINT_PLACE_CLASSES } from "./import-classes.ts";
+import { PLACE_PROPS, type PlaceContainment } from "./places.ts";
 import { sitelinkHost } from "./wiki.ts";
 
 // ---------- Types ----------
@@ -192,6 +193,11 @@ export type RowStatus = Status | "one-sided";
 export interface AnnotatedValue extends Value {
   status: Status; // how this value relates to the other side
   note?: string;
+  /**
+   * Similar only as a place inside a country on the other side (Tokyo vs.
+   * Japan): not a contradiction, but not evidence either (see Row.broad).
+   */
+  broad?: boolean;
   /** Sitelink values only: the page is a redirect (isRedirectSitelink). */
   redirect?: boolean;
   /** Sitelink values only: the page it redirects to, when resolved. */
@@ -209,6 +215,12 @@ export interface Row {
   note?: string;
   /** Collapsed sitelink rows only (collapseRepeatedRows): every wiki sharing these values. */
   sites?: string[];
+  /**
+   * A similar statement row whose only agreement is a place inside a country
+   * on the other side (AnnotatedValue.broad). Scoring counts it as neither
+   * agreement nor disagreement.
+   */
+  broad?: boolean;
 }
 
 // ---------- Property labels ----------
@@ -476,11 +488,43 @@ function comparePhones(a: string, b: string): [Status, string?] {
 }
 
 /**
- * Returns [status, note] for a pair of values of the same property. `pid`, when
- * given, is that property; it turns off the fuzzy item-label hint for
- * NO_FUZZY_ITEM_LABELS and compares PHONE_PROPS values by digits.
+ * Two places where one contains the other (PLACE_PROPS values, see
+ * src/lib/places.ts), as a similar result: "Akasaka is in Tokyo". Containment
+ * in a country is flagged broad. Null when neither contains the other.
  */
-export function compareValues(x: Value, y: Value, pid?: string): [Status, string?] {
+function comparePlaces(
+  x: Value,
+  y: Value,
+  places: PlaceContainment,
+): [Status, string, boolean] | null {
+  const orders: [inner: Value, outer: Value][] = [
+    [x, y],
+    [y, x],
+  ];
+  for (const [inner, outer] of orders) {
+    const level = places(inner.value, outer.value);
+    if (!level) continue;
+    const name = (v: Value): string => v.label ?? v.value;
+    return level === "country"
+      ? ["similar", `${name(inner)} is in ${name(outer)}, a country: too broad to count`, true]
+      : ["similar", `${name(inner)} is in ${name(outer)}`, false];
+  }
+  return null;
+}
+
+/**
+ * Returns [status, note, broad] for a pair of values of the same property.
+ * `pid`, when given, is that property; it turns off the fuzzy item-label hint
+ * for NO_FUZZY_ITEM_LABELS and compares PHONE_PROPS values by digits. With
+ * `places`, a PLACE_PROPS value inside the other is similar; `broad` is set
+ * when the containing place is a country (AnnotatedValue.broad).
+ */
+export function compareValues(
+  x: Value,
+  y: Value,
+  pid?: string,
+  places?: PlaceContainment,
+): [status: Status, note?: string, broad?: boolean] {
   if (x.type !== y.type) return ["distinct"];
   // Unknown value (somevalue): a value exists but isn't recorded, so two of them
   // can't be confirmed equal — never an identical match, and their (blank-node)
@@ -495,7 +539,11 @@ export function compareValues(x: Value, y: Value, pid?: string): [Status, string
   if (x.value === y.value) return ["identical"];
 
   switch (x.type) {
-    case "item":
+    case "item": {
+      // A place and the place containing it (Akasaka vs. Tokyo) are one place
+      // given at two levels of detail.
+      const contained = pid && places && PLACE_PROPS.has(pid) ? comparePlaces(x, y, places) : null;
+      if (contained) return contained;
       // Different QIDs; fall back to label similarity as a hint only.
       if (
         x.label &&
@@ -505,6 +553,7 @@ export function compareValues(x: Value, y: Value, pid?: string): [Status, string
       )
         return ["similar", "different items with similar labels"];
       return ["distinct"];
+    }
     case "time": {
       // Wikidata times are `±YYYY-MM-DDThh:mm:ssZ`; a "00" month or day marks an
       // unspecified (coarser-precision) part, e.g. year precision is
@@ -567,23 +616,32 @@ export function compareValues(x: Value, y: Value, pid?: string): [Status, string
   }
 }
 
+/**
+ * Compares two sides' values for one property. `broad` is set when the
+ * property agrees only through values marked AnnotatedValue.broad (see
+ * Row.broad).
+ */
 export function compareSets(
   a: Value[],
   b: Value[],
   pid?: string,
-): { status: Status; a: AnnotatedValue[]; b: AnnotatedValue[] } {
+  places?: PlaceContainment,
+): { status: Status; a: AnnotatedValue[]; b: AnnotatedValue[]; broad?: boolean } {
   const annotate = (side: Value[], other: Value[]): AnnotatedValue[] =>
     side.map((v) => {
       let best: Status = "distinct";
       let note: string | undefined;
+      let broad = false;
       // A distinct coordinate keeps the note of the nearest point on the other side.
       let nearest = Infinity;
       for (const o of other) {
-        const [s, n] = compareValues(v, o, pid);
+        const [s, n, isBroad = false] = compareValues(v, o, pid, places);
         if (s === "identical") return { ...v, status: s };
-        if (s === "similar" && best !== "similar") {
+        // A close match beats a broad one (a place's city over its country).
+        if (s === "similar" && (best !== "similar" || (broad && !isBroad))) {
           best = "similar";
           note = n;
+          broad = isBroad;
         }
         if (s === "distinct" && n && best === "distinct" && v.type === "coordinate") {
           const d = coordinateDistance(v, o) ?? Infinity;
@@ -593,7 +651,7 @@ export function compareSets(
           }
         }
       }
-      return { ...v, status: best, note };
+      return broad ? { ...v, status: best, note, broad } : { ...v, status: best, note };
     });
 
   const aa = annotate(a, b);
@@ -603,7 +661,8 @@ export function compareSets(
   if (all.every((v) => v.status === "identical")) status = "identical";
   else if (all.some((v) => v.status !== "distinct")) status = "similar";
   else status = "distinct";
-  return { status, a: aa, b: bb };
+  const broad = status === "similar" && all.every((v) => v.status === "distinct" || v.broad);
+  return broad ? { status, a: aa, b: bb, broad } : { status, a: aa, b: bb };
 }
 
 /**
@@ -613,13 +672,15 @@ export function compareSets(
  * human label) backfills the display label of item-valued statements whose
  * label the sync didn't resolve, so genre/platform/etc. show a name instead of
  * a bare QID, and likewise the unit of quantity values and the globe of
- * non-Earth coordinates.
+ * non-Earth coordinates. `places` (PLACE_PROPS containment) makes a place and
+ * the place containing it similar.
  */
 export function buildRows(
   a: Item,
   b: Item,
   propertyLabels: Record<string, string> = {},
   valueLabels: Record<string, string> = {},
+  places?: PlaceContainment,
 ): Row[] {
   const rows: Row[] = [];
 
@@ -775,7 +836,7 @@ export function buildRows(
   for (const pid of langs(a.statements, b.statements)) {
     const va = withLabels(a.statements[pid] ?? []);
     const vb = withLabels(b.statements[pid] ?? []);
-    const cmp = compareSets(va, vb, pid);
+    const cmp = compareSets(va, vb, pid, places);
     const oneSided = va.length === 0 || vb.length === 0;
     rows.push({
       key: pid,
@@ -790,6 +851,7 @@ export function buildRows(
         : [...va, ...vb].some((v) => v.type === "musical-notation")
           ? "musical notation isn't compared, so it doesn't count toward the score"
           : undefined,
+      ...(cmp.broad && !oneSided ? { broad: true } : {}),
     });
   }
 
@@ -2678,15 +2740,16 @@ export function sharedIdentifierProps(a: Item, b: Item): Set<string> {
  * neither direction: ids that mirror Wikidata (the hardcoded floor, plus
  * `isMirroredIdProp` for the synced set), ids declared shared between the pair
  * (P4070), and library classifications. The evidence ledger mentions the count
- * when it has no signal against the pair.
+ * when it has no signal against the pair. `places` is ScoreOptions.placeContainment.
  */
 export function countDistinctStatements(
   a: Item,
   b: Item,
   isMirroredIdProp?: (pid: string) => boolean,
+  places?: PlaceContainment,
 ): number {
   const shared = sharedIdentifierProps(a, b);
-  return buildRows(a, b).filter(
+  return buildRows(a, b, {}, {}, places).filter(
     (r) =>
       r.kind === "statement" &&
       r.status === "distinct" &&
@@ -2768,6 +2831,15 @@ export interface ScoreOptions {
    */
   isInapplicableId?: (pid: string, item: Item) => boolean;
   /**
+   * Whether one place lies inside another along P131+ (src/lib/places.ts),
+   * so a place property given as Akasaka on one item and Tokyo on the other
+   * agrees instead of differing; a city inside the other's country is
+   * neither agreement nor disagreement (Row.broad). Built by the hunt from
+   * the synced `place_ancestors`; omitted before the first sync, when places
+   * compare by QID alone.
+   */
+  placeContainment?: PlaceContainment;
+  /**
    * How many items in the mirror share this pair's label block (the same
    * blocking key and primary type) when both items are in it, or undefined
    * when they aren't or the caller doesn't know. A name held by many people
@@ -2792,7 +2864,7 @@ export interface ScoreTrace {
 }
 
 export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): CandidateScore {
-  const rows = buildRows(a, b);
+  const rows = buildRows(a, b, {}, {}, opts.placeContainment);
   const reasons: string[] = [];
   let score = 0;
   const trace = opts.trace;
@@ -2969,10 +3041,12 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // item as distinct only says editors confused each with it, not that the pair
   // is one subject (two unrelated bands called Halo both point at a third Halo).
   // "Permanent duplicated item" (P2959) is handled on its own below, and
-  // musical notation isn't compared at all (isUncomparedRow).
+  // musical notation isn't compared at all (isUncomparedRow). Nor is a place
+  // only inside the other's country (Row.broad): it neither agrees nor differs.
   const stmtRows = rows.filter(
     (r) =>
       r.kind === "statement" &&
+      !r.broad &&
       r.key !== "P31" &&
       r.key !== DIFFERENT_FROM &&
       r.key !== PERMANENT_DUPLICATE &&

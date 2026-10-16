@@ -11,6 +11,7 @@ import { MERGING_STALE_SECONDS } from "./edits.ts";
 import { reviewLimiter } from "./rate-limit.ts";
 import {
   classAncestors,
+  placeAncestors,
   entityLabels,
   itemCreations,
   items,
@@ -378,6 +379,30 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       const { body } = await get<CandidateDetailResponse>(`/api/candidates/${id}`);
       // Only the work is ruled out; the track is the property's own subject.
       expect(body.propertyInapplicable).toEqual({ P1243: ["Q80"] });
+    });
+
+    it("sends the ancestors of the pair's place values", async () => {
+      await insertItem(
+        makeItem("Q90", "Mondorana", { P159: [{ type: "item", value: "Q416131" }] }),
+      );
+      await insertItem(makeItem("Q91", "Mondorana", { P159: [{ type: "item", value: "Q1490" }] }));
+      await db.insert(placeAncestors).values([
+        { qid: "Q416131", ancestor: "Q1490" },
+        { qid: "Q416131", ancestor: "Q17", country: true },
+        { qid: "Q35765", ancestor: "Q17", country: true }, // not on this pair
+      ]);
+      const id = await insertCandidate({
+        fromQid: "Q91",
+        intoQid: "Q90",
+        confidence: 0.5,
+        reasons: [],
+      });
+
+      const { body } = await get<CandidateDetailResponse>(`/api/candidates/${id}`);
+      expect(body.placeAncestors.sort((x, y) => x.ancestor.localeCompare(y.ancestor))).toEqual([
+        { qid: "Q416131", ancestor: "Q1490", country: false },
+        { qid: "Q416131", ancestor: "Q17", country: true },
+      ]);
     });
 
     it("links the last candidate back to the previous one", async () => {

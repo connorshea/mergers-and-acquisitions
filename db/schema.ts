@@ -265,6 +265,26 @@ export const classAncestors = mysqlTable(
   (t) => [primaryKey({ columns: [t.class, t.ancestor] })],
 );
 
+// For every place our items name under a place property (headquarters, place
+// of birth, location, …: PLACE_PROPS in src/lib/places.ts), the places that
+// contain it along "located in the administrative territorial entity"
+// (P131+), and whether each of those is a country. Lets the comparison read
+// Akasaka vs. Tokyo as one place at two levels of detail. Most places aren't
+// in the mirror, so they're looked up on QLever. Rebuilt weekly by
+// jobs/sync-place-ancestors.ts (server/place-ancestors.ts). A place with no
+// rows has no known ancestors.
+export const placeAncestors = mysqlTable(
+  "place_ancestors",
+  {
+    qid: varchar("qid", { length: 32 }).notNull(), // e.g. "Q416131" (Akasaka)
+    ancestor: varchar("ancestor", { length: 32 }).notNull(), // e.g. "Q1490" (Tokyo)
+    // The ancestor is a country (COUNTRY_CLASSES), too broad for containment
+    // in it to count as agreement.
+    country: boolean("country").notNull().default(false),
+  },
+  (t) => [primaryKey({ columns: [t.qid, t.ancestor] })],
+);
+
 // Human-readable labels for Wikidata *items* that appear as statement values
 // (genre, platform, developer, instance of, …), synced from Wikidata (see
 // jobs/sync-entity-labels.ts). Lets the comparison view show "role-playing

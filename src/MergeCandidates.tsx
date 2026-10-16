@@ -16,6 +16,7 @@ import { coordinateTooltip, formatCoordinate, geohackUrl } from "./lib/coordinat
 import { describeDifference } from "./lib/text-difference.ts";
 import { sitelinkUrl, wikiPageUrl } from "./lib/wiki.ts";
 import { displayLabel } from "./lib/wikidata.ts";
+import { type PlaceAncestorRow, placeContainmentFromRows } from "./lib/places.ts";
 import type { ItemCreation } from "./lib/api-types.ts";
 import {
   creationDate,
@@ -329,6 +330,7 @@ export default function MergeCandidates({
   propertyMirrors,
   propertyInapplicable,
   valueLabels,
+  placeAncestors,
   creations,
 }: {
   from: Item;
@@ -343,6 +345,8 @@ export default function MergeCandidates({
   propertyInapplicable?: Record<string, string[]>;
   /** Qxxx → human label, from the DB-backed entity_labels table. */
   valueLabels?: Record<string, string>;
+  /** The P131+ ancestors of the pair's place values, so a place and the one containing it compare as similar. */
+  placeAncestors?: PlaceAncestorRow[];
   /** Qxxx → who created it and how; loaded after the rest, so absent at first. */
   creations?: Record<string, ItemCreation>;
 }) {
@@ -391,6 +395,10 @@ export default function MergeCandidates({
     "one-sided": false,
   });
 
+  const places = useMemo(
+    () => placeContainmentFromRows(placeAncestors ?? []) ?? undefined,
+    [placeAncestors],
+  );
   const rows = useMemo(
     // Descriptions are shown directly under each item's name (see ItemPlate), so
     // drop them from the compared-properties groups rather than listing them
@@ -398,11 +406,11 @@ export default function MergeCandidates({
     // the same values across languages/wikis collapse into one row.
     () =>
       collapseRepeatedRows(
-        buildRows(from, into, propertyLabels, valueLabels).filter(
+        buildRows(from, into, propertyLabels, valueLabels, places).filter(
           (r) => !r.key.startsWith("description:"),
         ),
       ),
-    [from, into, propertyLabels, valueLabels],
+    [from, into, propertyLabels, valueLabels, places],
   );
   // Conflicts the merge flow handles itself (a differing description, a
   // redirect sitelink to the partner's page) aren't shown as blockers the user

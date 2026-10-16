@@ -3,6 +3,7 @@
 // stay in sync from one definition.
 
 import type { Item } from "./compare.ts";
+import type { PlaceAncestorRow } from "./places.ts";
 
 export const CANDIDATE_STATUSES = [
   "open",
@@ -99,6 +100,11 @@ export interface CandidateDetailResponse {
   propertyInapplicable: Record<string, string[]>;
   /** Qxxx → human label, for the item values present on this pair. */
   valueLabels: Record<string, string>;
+  /**
+   * The `place_ancestors` rows of the place values on this pair, for the
+   * comparison's place containment (placeContainmentFromRows).
+   */
+  placeAncestors: PlaceAncestorRow[];
   /**
    * The EditGroups page for the edits that resolved this pair from the app
    * (its merge, or its "different from" statements); null when none did.

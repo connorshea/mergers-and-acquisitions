@@ -10,6 +10,7 @@ import Dialog from "../Dialog.tsx";
 import EvidenceLedger from "../EvidenceLedger.tsx";
 import { LogoMark } from "../Logo.tsx";
 import MergeCandidates from "../MergeCandidates.tsx";
+import { placeContainmentFromRows } from "../lib/places.ts";
 import {
   AUTO_IGNORED_CONFLICTS,
   countDistinctStatements,
@@ -164,7 +165,12 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
   const distinctStatements = useMemo(() => {
     if (!data?.from || !data.into) return 0;
     const mirrors = new Set(data.propertyMirrors);
-    return countDistinctStatements(data.from, data.into, (pid) => mirrors.has(pid));
+    return countDistinctStatements(
+      data.from,
+      data.into,
+      (pid) => mirrors.has(pid),
+      placeContainmentFromRows(data.placeAncestors) ?? undefined,
+    );
   }, [data]);
 
   const candidate = data?.candidate;
@@ -380,6 +386,7 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
             propertyMirrors={data.propertyMirrors}
             propertyInapplicable={data.propertyInapplicable}
             valueLabels={data.valueLabels}
+            placeAncestors={data.placeAncestors}
             creations={creations}
           />
         )}

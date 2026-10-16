@@ -47,6 +47,7 @@ import {
 } from "../src/lib/compare.ts";
 import { primaryLabel, primaryType } from "../src/lib/wikidata.ts";
 import { makeInapplicableIdCheck, type SubjectTypeConstraint } from "../src/lib/subject-types.ts";
+import { placeContainmentFromRows, placeValues } from "../src/lib/places.ts";
 import { encodeLanguageList, pairLanguages } from "../src/lib/languages.ts";
 import { refreshCandidateItemInfo } from "./candidate-item-info.ts";
 import { attachSitelinkRedirects } from "./sitelink-overlay.ts";
@@ -682,6 +683,8 @@ interface WindowItems {
   blockOf: Map<string, string>;
   /** How many items are in each of those blocks (ScoreOptions.labelBlockSize). */
   blockSize: Map<string, number>;
+  /** Containment among the items' place values (ScoreOptions.placeContainment). */
+  places: ScoreOptions["placeContainment"];
   ms: number;
 }
 
@@ -738,6 +741,24 @@ async function readItems(
     for (const row of counts)
       blockSize.set(JSON.stringify([row.blocking_key, row.primary_type]), Number(row.n));
   }
+  // The ancestors of the window's place values only, so the whole
+  // place_ancestors table is never held at once.
+  const placeQids = placeValues(byQid.values());
+  let places: ScoreOptions["placeContainment"];
+  if (placeQids.length > 0) {
+    const [ancestorRows] = await itemConn.query<mysql.RowDataPacket[]>(
+      "select qid, ancestor, country from place_ancestors where qid in (?)",
+      [placeQids],
+    );
+    places =
+      placeContainmentFromRows(
+        ancestorRows.map((r) => ({
+          qid: String(r.qid),
+          ancestor: String(r.ancestor),
+          country: Boolean(r.country),
+        })),
+      ) ?? undefined;
+  }
   // Redirects resolved by the previous resolve-sitelinks run, so a clash
   // that's one page redirecting to the other scores as duplicate evidence.
   await attachSitelinkRedirects(
@@ -748,7 +769,7 @@ async function readItems(
       return a && b ? [[a, b] as [Item, Item]] : [];
     }),
   );
-  return { byQid, blockOf, blockSize, ms: performance.now() - start };
+  return { byQid, blockOf, blockSize, places, ms: performance.now() - start };
 }
 
 /**
@@ -834,7 +855,7 @@ async function score(
   times.lap("pairs");
   let read = readAhead(window);
   while (read) {
-    const { byQid, blockOf, blockSize, ms } = await read;
+    const { byQid, blockOf, blockSize, places, ms } = await read;
     times.lap("wait");
     times.add("read", ms);
     windowIndex++;
@@ -864,7 +885,12 @@ async function score(
         const block = blockOf.get(qa);
         const labelBlockSize =
           block !== undefined && block === blockOf.get(qb) ? blockSize.get(block) : undefined;
-        const result = scoreCandidate(from, into, { ...scoreOpts, labelBlockSize, trace });
+        const result = scoreCandidate(from, into, {
+          ...scoreOpts,
+          labelBlockSize,
+          placeContainment: places,
+          trace,
+        });
         if (audit && trace) {
           await audit.pair({
             from: from.id,

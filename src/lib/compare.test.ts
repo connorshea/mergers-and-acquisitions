@@ -64,6 +64,7 @@ import {
   stringSimilarity,
 } from "./compare.ts";
 import { coordinateValue } from "./coordinates.ts";
+import { makePlaceContainment } from "./places.ts";
 import { EXAMPLES } from "./fixtures.ts";
 import { reasonTone } from "./reasons.ts";
 
@@ -4205,5 +4206,97 @@ describe("countDistinctStatements", () => {
     });
     expect(countDistinctStatements(a, b)).toBe(2);
     expect(countDistinctStatements(a, b, (pid) => pid === "P214")).toBe(1);
+  });
+});
+
+describe("place containment", () => {
+  // Akasaka (Q416131) → Minato (Q190088) → Tokyo (Q1490) → Japan (Q17).
+  const places = makePlaceContainment(
+    new Map([
+      ["Q416131", ["Q190088", "Q1490", "Q17"]],
+      ["Q1490", ["Q17"]],
+      ["Q190088", ["Q1490", "Q17"]],
+    ]),
+    new Set(["Q17"]),
+  );
+  const place = (value: string, label: string): Value => ({ type: "item", value, label });
+  const akasaka = place("Q416131", "Akasaka");
+  const tokyo = place("Q1490", "Tokyo");
+  const japan = place("Q17", "Japan");
+  const osaka = place("Q35765", "Osaka");
+  const base = { labels: { en: "Mondorana Entertainment" }, descriptions: {}, aliases: {} };
+  const mk = (id: string, statements: Item["statements"]): Item => ({
+    ...base,
+    id,
+    sitelinks: {},
+    statements,
+  });
+
+  it("makes a place property value similar to the place containing it, either way round", () => {
+    expect(compareValues(akasaka, tokyo, "P159", places)).toEqual([
+      "similar",
+      "Akasaka is in Tokyo",
+      false,
+    ]);
+    expect(compareValues(tokyo, akasaka, "P159", places)).toEqual([
+      "similar",
+      "Akasaka is in Tokyo",
+      false,
+    ]);
+  });
+
+  it("flags containment in a country as broad", () => {
+    expect(compareValues(tokyo, japan, "P19", places)).toEqual([
+      "similar",
+      "Tokyo is in Japan, a country: too broad to count",
+      true,
+    ]);
+  });
+
+  it("leaves other properties, unrelated places, and unsynced data distinct", () => {
+    expect(compareValues(akasaka, tokyo, "P136", places)[0]).toBe("distinct");
+    expect(compareValues(osaka, tokyo, "P159", places)[0]).toBe("distinct");
+    expect(compareValues(akasaka, tokyo, "P159")[0]).toBe("distinct");
+  });
+
+  it("marks a row broad only when nothing closer agrees", () => {
+    const row = (a: Value[], b: Value[]) =>
+      buildRows(mk("Q1", { P159: a }), mk("Q2", { P159: b }), {}, {}, places).find(
+        (r) => r.key === "P159",
+      )!;
+    const broad = row([tokyo], [japan]);
+    expect(broad.status).toBe("similar");
+    expect(broad.broad).toBe(true);
+    const local = row([akasaka], [tokyo]);
+    expect(local.status).toBe("similar");
+    expect(local.broad).toBeUndefined();
+    // Akasaka matches Tokyo more closely than Japan, so the value isn't broad.
+    const closer = row([akasaka], [japan, tokyo]);
+    expect(closer.a[0]).toMatchObject({ status: "similar", note: "Akasaka is in Tokyo" });
+    expect(closer.broad).toBeUndefined();
+  });
+
+  it("scores a contained place as agreement and a country as neither", () => {
+    const agree = (a: Value, b: Value) =>
+      scoreCandidate(mk("Q118663756", { P159: [a] }), mk("Q113309741", { P159: [b] }), {
+        placeContainment: places,
+      }).reasons.find((r) => r.includes("shared statements agree"));
+    expect(agree(akasaka, tokyo)).toBe("1 of 1 shared statements agree");
+    expect(agree(tokyo, japan)).toBeUndefined();
+    expect(agree(osaka, tokyo)).toBeUndefined();
+    const countryOnly = scoreCandidate(mk("Q1", { P159: [tokyo] }), mk("Q2", { P159: [japan] }), {
+      placeContainment: places,
+    });
+    const differing = scoreCandidate(mk("Q1", { P159: [osaka] }), mk("Q2", { P159: [japan] }), {
+      placeContainment: places,
+    });
+    expect(countryOnly.confidence).toBe(differing.confidence);
+  });
+
+  it("doesn't count a contained place as a distinct statement", () => {
+    const a = mk("Q1", { P159: [akasaka], P19: [tokyo] });
+    const b = mk("Q2", { P159: [tokyo], P19: [japan] });
+    expect(countDistinctStatements(a, b)).toBe(2);
+    expect(countDistinctStatements(a, b, undefined, places)).toBe(0);
   });
 });

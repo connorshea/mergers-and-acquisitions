@@ -17,6 +17,7 @@
     "job:import-dump": "node jobs/import-dump.ts",
     "job:sync-properties": "node jobs/sync-properties.ts",
     "job:sync-entity-labels": "node jobs/sync-entity-labels.ts",
+    "job:sync-place-ancestors": "node jobs/sync-place-ancestors.ts",
     "job:prune-sessions": "node jobs/prune-sessions.ts",
     "job:resolve-sitelinks": "node jobs/resolve-sitelinks.ts",
     "job:resolve-creations": "node jobs/resolve-creations.ts",

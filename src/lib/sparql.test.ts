@@ -3,6 +3,7 @@ import {
   type EntityLabelRow,
   fetchAllProperties,
   fetchClassAncestors,
+  fetchPlaceAncestors,
   fetchEntityLabels,
   fetchMirroredProps,
   fetchSubjectTypes,
@@ -312,6 +313,41 @@ describe("fetchClassAncestors", () => {
     expect(ancestors.get("Q1")).toEqual(["Q1", "Q386724"]);
     expect(ancestors.get("Q2")).toEqual(["Q2"]);
     expect(ancestors.size).toBe(1000);
+    expect(failed).toEqual(qids(500, 1001));
+  });
+});
+
+describe("fetchPlaceAncestors", () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it("flags country ancestors, drops the place itself, and skips a chunk that keeps failing", async () => {
+    const fetch = vi.fn<typeof globalThis.fetch>(async (_url, init) => {
+      const [first] = requestedQids(init);
+      if (first === "Q1001") return OOM();
+      const country = { type: "literal", value: "true" };
+      return results([
+        { p: uri("Q1"), anc: uri("Q1490") },
+        { p: uri("Q1"), anc: uri("Q17"), country },
+        { p: uri("Q1"), anc: uri("Q1") },
+        { p: uri("Q2"), anc: uri("Q17") },
+        { p: uri("Q2"), anc: uri("Q17"), country },
+      ]);
+    });
+    vi.stubGlobal("fetch", fetch);
+    const error = vi.spyOn(console, "error").mockImplementation(() => {});
+    const { ancestors, failed } = await fetchPlaceAncestors(qids(1500), { ...FAST, tries: 1 });
+    expect(error).toHaveBeenCalledWith(
+      expect.stringContaining("place ancestors: giving up on 500 places (Q1001…)"),
+    );
+    error.mockRestore();
+    expect(ancestors.get("Q1")).toEqual([
+      { ancestor: "Q1490", country: false },
+      { ancestor: "Q17", country: true },
+    ]);
+    expect(ancestors.get("Q2")).toEqual([{ ancestor: "Q17", country: true }]);
+    expect(ancestors.has("Q3")).toBe(false);
     expect(failed).toEqual(qids(500, 1001));
   });
 });

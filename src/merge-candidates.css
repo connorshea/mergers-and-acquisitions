@@ -176,11 +176,11 @@ a {
 }
 .plate-id {
   color: var(--muted);
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 .plate-id:hover {
   color: var(--focus);
-  text-decoration: underline;
 }
 .plate-desc {
   color: var(--muted);
@@ -581,11 +581,12 @@ a.chip-id:hover {
 .chip-link {
   color: inherit;
   text-decoration: underline;
-  text-decoration-style: dotted;
   text-underline-offset: 2px;
 }
+/* --ink: near-white on the dark theme's deep chip tints, near-black on the light
+   theme's pale ones, where white text would be unreadable. */
 .chip-link:hover {
-  text-decoration-style: solid;
+  color: var(--ink);
 }
 
 @media (max-width: 640px) {

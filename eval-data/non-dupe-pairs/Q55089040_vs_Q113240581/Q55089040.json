@@ -1,0 +1,2946 @@
+{
+  "pageid": 55161631,
+  "ns": 0,
+  "title": "Q55089040",
+  "lastrevid": 2513621946,
+  "modified": "2026-07-04T01:29:39Z",
+  "type": "item",
+  "id": "Q55089040",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Marc Cortez"
+    },
+    "es": {
+      "language": "es",
+      "value": "Marc Cortez"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "Marc Cortez"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Marc Cortez"
+    },
+    "it": {
+      "language": "it",
+      "value": "Marc Cortez"
+    },
+    "sq": {
+      "language": "sq",
+      "value": "Marc Cortez"
+    },
+    "sl": {
+      "language": "sl",
+      "value": "Marc Cortez"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Marc Cortez"
+    },
+    "de": {
+      "language": "de",
+      "value": "Marc Cortez"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "American theologian"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "theoloog"
+    },
+    "it": {
+      "language": "it",
+      "value": "teologo"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "американський богослов"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "عالم عقيدة أمريكي"
+    },
+    "es": {
+      "language": "es",
+      "value": "teólogo estadounidense"
+    },
+    "ig": {
+      "language": "ig",
+      "value": "ọkà mmụta okpukpe si United States"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "মার্কিন ধর্মতত্ত্ববিদ"
+    },
+    "as": {
+      "language": "as",
+      "value": "আমেৰিকান ধৰ্মতত্ত্ববিদ"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "Marc Allen Cortez"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q55089040$20dd1ec5-47d3-8813-39fc-471b73bb42cc",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q55089040$562a6d4f-43c6-3bec-707b-4f97d41d0cb6",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ec889d79c14e682893e94e9843a5b6c00e828ad7",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "7cb0a63a5a2104c08e00d2ca812061d0d6e7aaf1",
+                  "datavalue": {
+                    "value": "https://www.wheaton.edu/academics/faculty/profile/?expert=marc.cortezphd",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "6fe3da0640635f157544bbff2ce3974ffb4c5a8e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1234713,
+              "id": "Q1234713"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q55089040$ffa15d5a-49c3-7754-78c3-42e078f41c6f",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ec889d79c14e682893e94e9843a5b6c00e828ad7",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "7cb0a63a5a2104c08e00d2ca812061d0d6e7aaf1",
+                  "datavalue": {
+                    "value": "https://www.wheaton.edu/academics/faculty/profile/?expert=marc.cortezphd",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          },
+          {
+            "hash": "81b9a2f44f06477a89d22a7eed81029f6addd787",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "019a50b7de741e0068bde41c9d9955b22a5de47b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 36578,
+                      "id": "Q36578"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P227": [
+                {
+                  "snaktype": "value",
+                  "property": "P227",
+                  "hash": "62a835682d631fa44994c0b38cb5a40cdad57efd",
+                  "datavalue": {
+                    "value": "137069871",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "207eee837bd6cbcb9596045fd18598dbfd0c5b0a",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-04-20T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P227", "P813"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "9aa0695c99167c517a72f70b41497e043edae0b5",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3400985,
+              "id": "Q3400985"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q55089040$3a83d877-4c33-01d0-c720-76d49da84245",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "6dd5af16dc902fc221ee43dff2812cfeb08d33ac",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 24262594,
+              "id": "Q24262594"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q55089040$bd8a66ca-4980-7754-30f8-03c4a178555a",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "11fdb0b641edd59d888805a278e1ebe45e812780",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 55737401,
+              "id": "Q55737401"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q55089040$c721fdea-4177-30cd-4def-1d10f3e07bd4",
+        "rank": "normal"
+      }
+    ],
+    "P108": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P108",
+          "hash": "9270310ecdc6fb2c7a9ac72bc9eb79c0e7f36640",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 747179,
+              "id": "Q747179"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q55089040$850b56f4-4c85-6c72-7137-b057be37449c",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ec889d79c14e682893e94e9843a5b6c00e828ad7",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "7cb0a63a5a2104c08e00d2ca812061d0d6e7aaf1",
+                  "datavalue": {
+                    "value": "https://www.wheaton.edu/academics/faculty/profile/?expert=marc.cortezphd",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P69": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P69",
+          "hash": "6bee08f1860eec76fb818213d52cf8e8867d6378",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6935185,
+              "id": "Q6935185"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P582": [
+            {
+              "snaktype": "value",
+              "property": "P582",
+              "hash": "21223f87fb708457f98a20c67e7c7e4eafbd0ff3",
+              "datavalue": {
+                "value": {
+                  "time": "+2000-00-00T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 9,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P512": [
+            {
+              "snaktype": "value",
+              "property": "P512",
+              "hash": "e1bbba02ae21a15bcef937d017c8142e5cf73a88",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 1765120,
+                  "id": "Q1765120"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P812": [
+            {
+              "snaktype": "value",
+              "property": "P812",
+              "hash": "ebb559a104ebbf3293bda2720f0e96acb8b642fe",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 34178,
+                  "id": "Q34178"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            {
+              "snaktype": "value",
+              "property": "P812",
+              "hash": "e48afe27e91700c3aa6c47072f6cbdd1c55239c5",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 9129,
+                  "id": "Q9129"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P582", "P512", "P812"],
+        "id": "Q55089040$25dc50b0-42d5-d3ca-2087-bfb0fbfbd00a",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ec889d79c14e682893e94e9843a5b6c00e828ad7",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "7cb0a63a5a2104c08e00d2ca812061d0d6e7aaf1",
+                  "datavalue": {
+                    "value": "https://www.wheaton.edu/academics/faculty/profile/?expert=marc.cortezphd",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P69",
+          "hash": "b3bcdbb14fb39f824a6896841277156ba8709749",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7988285,
+              "id": "Q7988285"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P582": [
+            {
+              "snaktype": "value",
+              "property": "P582",
+              "hash": "f84ab79307da73e0195993b8bfe549b6607b374f",
+              "datavalue": {
+                "value": {
+                  "time": "+2002-00-00T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 9,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P512": [
+            {
+              "snaktype": "value",
+              "property": "P512",
+              "hash": "1fafed2b31a833edf6e9eb53b644e410fe967778",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 2091008,
+                  "id": "Q2091008"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P812": [
+            {
+              "snaktype": "value",
+              "property": "P812",
+              "hash": "0cfcb1a0e5bec473bfce84853d99c8be604ca2f6",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 1981839,
+                  "id": "Q1981839"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P582", "P512", "P812"],
+        "id": "Q55089040$62a8a069-4c59-6860-3e8b-5e0de2322733",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ec889d79c14e682893e94e9843a5b6c00e828ad7",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "7cb0a63a5a2104c08e00d2ca812061d0d6e7aaf1",
+                  "datavalue": {
+                    "value": "https://www.wheaton.edu/academics/faculty/profile/?expert=marc.cortezphd",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P69",
+          "hash": "b3bcdbb14fb39f824a6896841277156ba8709749",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7988285,
+              "id": "Q7988285"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P582": [
+            {
+              "snaktype": "value",
+              "property": "P582",
+              "hash": "396a8a418d2d3af6444e59183215234da844a671",
+              "datavalue": {
+                "value": {
+                  "time": "+2004-00-00T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 9,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P512": [
+            {
+              "snaktype": "value",
+              "property": "P512",
+              "hash": "0f901a9f711145bc90d85e3115e986bc4705f528",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 1562371,
+                  "id": "Q1562371"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P812": [
+            {
+              "snaktype": "value",
+              "property": "P812",
+              "hash": "ebb559a104ebbf3293bda2720f0e96acb8b642fe",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 34178,
+                  "id": "Q34178"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            {
+              "snaktype": "value",
+              "property": "P812",
+              "hash": "b05426e63f09fe0932ebc8d790019d00d9c923d0",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 9288,
+                  "id": "Q9288"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            {
+              "snaktype": "value",
+              "property": "P812",
+              "hash": "fbf4032db1fb8d35560171fdd67b748a56162c1e",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 29980364,
+                  "id": "Q29980364"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            {
+              "snaktype": "value",
+              "property": "P812",
+              "hash": "b638fb0eb8b06b4658df36f7264358ccbbe018aa",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 1800439,
+                  "id": "Q1800439"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P582", "P512", "P812"],
+        "id": "Q55089040$7946b641-457a-63ff-35c7-70823ca7f956",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ec889d79c14e682893e94e9843a5b6c00e828ad7",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "7cb0a63a5a2104c08e00d2ca812061d0d6e7aaf1",
+                  "datavalue": {
+                    "value": "https://www.wheaton.edu/academics/faculty/profile/?expert=marc.cortezphd",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P69",
+          "hash": "211cbb13f7291cc0c9aaa6646e365f32c880072b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 216273,
+              "id": "Q216273"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P582": [
+            {
+              "snaktype": "value",
+              "property": "P582",
+              "hash": "9fc80f116cd7029ee0893c410d1b454ec3d06872",
+              "datavalue": {
+                "value": {
+                  "time": "+2007-00-00T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 9,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P512": [
+            {
+              "snaktype": "value",
+              "property": "P512",
+              "hash": "7794b96dbd443022c3e1a8cf8ce441903f279d3f",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 752297,
+                  "id": "Q752297"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P812": [
+            {
+              "snaktype": "value",
+              "property": "P812",
+              "hash": "ebb559a104ebbf3293bda2720f0e96acb8b642fe",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 34178,
+                  "id": "Q34178"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P582", "P512", "P812"],
+        "id": "Q55089040$afce0e02-4035-dd09-479d-78befbedfb8b",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ec889d79c14e682893e94e9843a5b6c00e828ad7",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "7cb0a63a5a2104c08e00d2ca812061d0d6e7aaf1",
+                  "datavalue": {
+                    "value": "https://www.wheaton.edu/academics/faculty/profile/?expert=marc.cortezphd",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P101": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P101",
+          "hash": "16e3faae1834cc0250cffa9b7324188ba3456e36",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1275703,
+              "id": "Q1275703"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q55089040$c0f14945-45a9-50a0-e153-81840f30febd",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ec889d79c14e682893e94e9843a5b6c00e828ad7",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "7cb0a63a5a2104c08e00d2ca812061d0d6e7aaf1",
+                  "datavalue": {
+                    "value": "https://www.wheaton.edu/academics/faculty/profile/?expert=marc.cortezphd",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P101",
+          "hash": "62006284ccc9563db81a4c9b4c82fbb52639a83b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 875490,
+              "id": "Q875490"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q55089040$ef7e08ea-413a-69bf-ee2a-ea571c4ea147",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ec889d79c14e682893e94e9843a5b6c00e828ad7",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "7cb0a63a5a2104c08e00d2ca812061d0d6e7aaf1",
+                  "datavalue": {
+                    "value": "https://www.wheaton.edu/academics/faculty/profile/?expert=marc.cortezphd",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P101",
+          "hash": "7eb20b048bd822c916d20bbe6f4423c82494bbdf",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 187900,
+              "id": "Q187900"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q55089040$04e3517d-48db-b923-dbae-7fe0215aa30f",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ec889d79c14e682893e94e9843a5b6c00e828ad7",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "7cb0a63a5a2104c08e00d2ca812061d0d6e7aaf1",
+                  "datavalue": {
+                    "value": "https://www.wheaton.edu/academics/faculty/profile/?expert=marc.cortezphd",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P101",
+          "hash": "f1303af8bfa955c427343d27b125f0d6c8642ca9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 191734,
+              "id": "Q191734"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q55089040$298d602a-4998-93e0-76c2-1b793853424f",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ec889d79c14e682893e94e9843a5b6c00e828ad7",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "7cb0a63a5a2104c08e00d2ca812061d0d6e7aaf1",
+                  "datavalue": {
+                    "value": "https://www.wheaton.edu/academics/faculty/profile/?expert=marc.cortezphd",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P101",
+          "hash": "48e72849a78bf13082694556bc59185935ab2b4f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 107473,
+              "id": "Q107473"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q55089040$0fe3466a-4bf9-353b-20eb-a0ea3689ac02",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ec889d79c14e682893e94e9843a5b6c00e828ad7",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "7cb0a63a5a2104c08e00d2ca812061d0d6e7aaf1",
+                  "datavalue": {
+                    "value": "https://www.wheaton.edu/academics/faculty/profile/?expert=marc.cortezphd",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P101",
+          "hash": "d78249a47eedd9644d47f0eceb2df5cf48b4e819",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1370284,
+              "id": "Q1370284"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q55089040$d6488231-4472-d896-477f-60fb5daa929c",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ec889d79c14e682893e94e9843a5b6c00e828ad7",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "7cb0a63a5a2104c08e00d2ca812061d0d6e7aaf1",
+                  "datavalue": {
+                    "value": "https://www.wheaton.edu/academics/faculty/profile/?expert=marc.cortezphd",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P101",
+          "hash": "64ae7720e6b23c5949478f831d9dc6892f6abaff",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 313073,
+              "id": "Q313073"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q55089040$147a0acf-42a3-a06b-8120-a09da889aebb",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ec889d79c14e682893e94e9843a5b6c00e828ad7",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "7cb0a63a5a2104c08e00d2ca812061d0d6e7aaf1",
+                  "datavalue": {
+                    "value": "https://www.wheaton.edu/academics/faculty/profile/?expert=marc.cortezphd",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P101",
+          "hash": "16e64355d9706b733c4f21e67dbab723a58b2064",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 8018,
+              "id": "Q8018"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q55089040$d87d5172-463b-b1b2-5ca7-2b702736a029",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ec889d79c14e682893e94e9843a5b6c00e828ad7",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "7cb0a63a5a2104c08e00d2ca812061d0d6e7aaf1",
+                  "datavalue": {
+                    "value": "https://www.wheaton.edu/academics/faculty/profile/?expert=marc.cortezphd",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P463": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P463",
+          "hash": "7e193c00869f48ba7a0b560ff4f64475f5d954c6",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5415759,
+              "id": "Q5415759"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q55089040$f99d8cae-4800-25e6-1211-ea681be0d965",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ec889d79c14e682893e94e9843a5b6c00e828ad7",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "7cb0a63a5a2104c08e00d2ca812061d0d6e7aaf1",
+                  "datavalue": {
+                    "value": "https://www.wheaton.edu/academics/faculty/profile/?expert=marc.cortezphd",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P463",
+          "hash": "4196ad4577456e10a39ee486bb3dbdd60d45de24",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5415731,
+              "id": "Q5415731"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q55089040$08bea70b-4512-a099-545f-0fc8d5caabe1",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ec889d79c14e682893e94e9843a5b6c00e828ad7",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "7cb0a63a5a2104c08e00d2ca812061d0d6e7aaf1",
+                  "datavalue": {
+                    "value": "https://www.wheaton.edu/academics/faculty/profile/?expert=marc.cortezphd",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P463",
+          "hash": "c3d8dc9dd18160979089de1727a2c3fd87600a06",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4742911,
+              "id": "Q4742911"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q55089040$cb50f5ba-4918-5b87-f3de-a7e9df756d89",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ec889d79c14e682893e94e9843a5b6c00e828ad7",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "7cb0a63a5a2104c08e00d2ca812061d0d6e7aaf1",
+                  "datavalue": {
+                    "value": "https://www.wheaton.edu/academics/faculty/profile/?expert=marc.cortezphd",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P735": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P735",
+          "hash": "821bf28537adc3398371b128903a591d515e0c0f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 17520944,
+              "id": "Q17520944"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1545": [
+            {
+              "snaktype": "value",
+              "property": "P1545",
+              "hash": "2a1ced1dca90648ea7e306acbadd74fc81a10722",
+              "datavalue": {
+                "value": "1",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1545"],
+        "id": "Q55089040$3939C0E2-A933-4C76-AAB3-0F66000FF84E",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P735",
+          "hash": "6b7daea8cc7431722e03fa57d5d0b2f624443ec9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 18118122,
+              "id": "Q18118122"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1545": [
+            {
+              "snaktype": "value",
+              "property": "P1545",
+              "hash": "7241753c62a310cf84895620ea82250dcea65835",
+              "datavalue": {
+                "value": "2",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1545"],
+        "id": "Q55089040$fc8c0f99-4619-c9d3-5e7b-e79cd745ac50",
+        "rank": "normal"
+      }
+    ],
+    "P184": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P184",
+          "hash": "c19956659b3c6a6b4c35dcb2da40b67b9e8618b7",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4707926,
+              "id": "Q4707926"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q55089040$e073dc9a-4cf4-f6be-61b0-87b677a2980b",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "8bdeadb5f3a9bb4f73bf4b83137867b796a140eb",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "cdfe34463cadd7b581e2864102fc75543a9fbd96",
+                  "datavalue": {
+                    "value": "https://wheaton.academia.edu/MarcCortez/CurriculumVitae",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P244": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P244",
+          "hash": "e9447ab695510d7d5316a19571013582eff2e61b",
+          "datavalue": {
+            "value": "no2008179656",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q55089040$9a0754e6-4e9e-f68e-aba1-72259bfc4473",
+        "rank": "normal"
+      }
+    ],
+    "P5715": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5715",
+          "hash": "30572a849e12c5bf27b728ae91d6d8b8532e3be7",
+          "datavalue": {
+            "value": "https://wheaton.academia.edu/MarcCortez",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q55089040$d3b515d9-4c2b-369b-5864-a1d38a7cb7ed",
+        "rank": "normal"
+      }
+    ],
+    "P2963": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2963",
+          "hash": "5fa7c45da4810fde44a1508f583bea9f17c9c6a4",
+          "datavalue": {
+            "value": "3197250",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "bd8bacb2626ec564c222e859278ca72f8b17bdf1",
+              "datavalue": {
+                "value": "Marc Cortez",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ],
+          "P585": [
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "71dc2db6111e66e7dcd4da7673c7cd4093f262c3",
+              "datavalue": {
+                "value": {
+                  "time": "+2020-09-29T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P3744": [
+            {
+              "snaktype": "value",
+              "property": "P3744",
+              "hash": "17d0a794ae6b904a9d492b8df25c24dd56b415c7",
+              "datavalue": {
+                "value": {
+                  "amount": "+0",
+                  "unit": "1"
+                },
+                "type": "quantity"
+              },
+              "datatype": "quantity"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810", "P585", "P3744"],
+        "id": "Q55089040$6fc98ecd-d43c-424a-8f69-faa9f995159c",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "8fbf39ddea71c21df31d89d7b977266391a9de9f",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "1bedddd2355bcf0690a96e103a595bb1a76f4c8b",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2020-09-22T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "a0e84923b8d99fc8a5013954ac16befd8e4f4696",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 2359213,
+                      "id": "Q2359213"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P3452": [
+                {
+                  "snaktype": "value",
+                  "property": "P3452",
+                  "hash": "6922b1a48486495a71e76a67cc4aed7209d461d1",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 96988748,
+                      "id": "Q96988748"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P813", "P248", "P3452"]
+          }
+        ]
+      }
+    ],
+    "P214": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P214",
+          "hash": "e367678dce8a24fdb1fcc9dd786af3cff5591138",
+          "datavalue": {
+            "value": "81311235",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q55089040$D78D0F12-495D-4F89-A56B-4AC0E054260C",
+        "rank": "normal"
+      }
+    ],
+    "P1207": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1207",
+          "hash": "55be1926b55b1fb2780493c84c789c10261778f8",
+          "datavalue": {
+            "value": "n2018284536",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q55089040$39522166-A905-4384-B15F-4D2AED8B6848",
+        "rank": "normal"
+      }
+    ],
+    "P213": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P213",
+          "hash": "2510df87e1a9573abc9245a42c00b36979d63d8a",
+          "datavalue": {
+            "value": "0000000078516841",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q55089040$01edf3a5-4f9c-5f88-5bb4-9fe2834b287e",
+        "rank": "normal"
+      }
+    ],
+    "P268": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P268",
+          "hash": "bb7453d50a9dfbf9ab1bb63932ec9e8848bb8ef4",
+          "datavalue": {
+            "value": "15994972k",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "q55089040$f923e897-49db-e3ec-2c9f-7bbb659bdc9a",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f2a910278f756065350721d19cd4f9393481c2b1",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "6b7d4330c4aac4caec4ede9de0311ce273f88ecd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 54919,
+                      "id": "Q54919"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P214": [
+                {
+                  "snaktype": "value",
+                  "property": "P214",
+                  "hash": "e367678dce8a24fdb1fcc9dd786af3cff5591138",
+                  "datavalue": {
+                    "value": "81311235",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "629c546c949bdcf8c5a027c86cdf3e6414c8a9c1",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-12-09T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P214", "P813"]
+          }
+        ]
+      }
+    ],
+    "P8179": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8179",
+          "hash": "d077aa3ca29d503507bbb23e6849e6c6f7944886",
+          "datavalue": {
+            "value": "ncf11501002",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "q55089040$a8aa19c7-4c3a-460b-fd38-5e20b156d1e9",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f2a910278f756065350721d19cd4f9393481c2b1",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "6b7d4330c4aac4caec4ede9de0311ce273f88ecd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 54919,
+                      "id": "Q54919"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P214": [
+                {
+                  "snaktype": "value",
+                  "property": "P214",
+                  "hash": "e367678dce8a24fdb1fcc9dd786af3cff5591138",
+                  "datavalue": {
+                    "value": "81311235",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "629c546c949bdcf8c5a027c86cdf3e6414c8a9c1",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-12-09T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P214", "P813"]
+          }
+        ]
+      }
+    ],
+    "P227": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P227",
+          "hash": "62a835682d631fa44994c0b38cb5a40cdad57efd",
+          "datavalue": {
+            "value": "137069871",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "q55089040$9db2240a-47a4-1e4c-95e8-90936d0b8ec8",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f2a910278f756065350721d19cd4f9393481c2b1",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "6b7d4330c4aac4caec4ede9de0311ce273f88ecd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 54919,
+                      "id": "Q54919"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P214": [
+                {
+                  "snaktype": "value",
+                  "property": "P214",
+                  "hash": "e367678dce8a24fdb1fcc9dd786af3cff5591138",
+                  "datavalue": {
+                    "value": "81311235",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "629c546c949bdcf8c5a027c86cdf3e6414c8a9c1",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-12-09T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P214", "P813"]
+          }
+        ]
+      }
+    ],
+    "P8189": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8189",
+          "hash": "40abd874bffc2b3cdc56878c0ec9e501ad1e10d0",
+          "datavalue": {
+            "value": "987007316292205171",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "q55089040$e2a6d2a2-4151-3bae-add3-f8412565e8f9",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f2a910278f756065350721d19cd4f9393481c2b1",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "6b7d4330c4aac4caec4ede9de0311ce273f88ecd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 54919,
+                      "id": "Q54919"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P214": [
+                {
+                  "snaktype": "value",
+                  "property": "P214",
+                  "hash": "e367678dce8a24fdb1fcc9dd786af3cff5591138",
+                  "datavalue": {
+                    "value": "81311235",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "629c546c949bdcf8c5a027c86cdf3e6414c8a9c1",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-12-09T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P214", "P813"]
+          }
+        ]
+      }
+    ],
+    "P271": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P271",
+          "hash": "9e8d5854c34f41a4baabf6eee3bb9531fafad348",
+          "datavalue": {
+            "value": "DA1741534X",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "q55089040$edc042f6-46b8-ba5d-c814-3a9f07867f5b",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f2a910278f756065350721d19cd4f9393481c2b1",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "6b7d4330c4aac4caec4ede9de0311ce273f88ecd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 54919,
+                      "id": "Q54919"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P214": [
+                {
+                  "snaktype": "value",
+                  "property": "P214",
+                  "hash": "e367678dce8a24fdb1fcc9dd786af3cff5591138",
+                  "datavalue": {
+                    "value": "81311235",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "629c546c949bdcf8c5a027c86cdf3e6414c8a9c1",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-12-09T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P214", "P813"]
+          },
+          {
+            "hash": "57f7d683eaaa97e6227b759f02edeae076e34c0f",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "b09baac32eb0d06cecfd287182405f4371d8c4a2",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 115920372,
+                      "id": "Q115920372"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P11496": [
+                {
+                  "snaktype": "value",
+                  "property": "P11496",
+                  "hash": "c81e7d785d3bab07b75f600ce0b1b882b0e40ee6",
+                  "datavalue": {
+                    "value": "1140563741633651840",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "1c19fc59e825f28d81686c4019090dadf9e18ae0",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-03-06T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P11496", "P813"]
+          }
+        ]
+      }
+    ],
+    "P3065": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3065",
+          "hash": "b976e5673c741b661500cb90a6cee0b105ecdf3a",
+          "datavalue": {
+            "value": "A027369407",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "q55089040$8616ee0b-4a68-6e27-bc38-d4c3d5cae712",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f2a910278f756065350721d19cd4f9393481c2b1",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "6b7d4330c4aac4caec4ede9de0311ce273f88ecd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 54919,
+                      "id": "Q54919"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P214": [
+                {
+                  "snaktype": "value",
+                  "property": "P214",
+                  "hash": "e367678dce8a24fdb1fcc9dd786af3cff5591138",
+                  "datavalue": {
+                    "value": "81311235",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "629c546c949bdcf8c5a027c86cdf3e6414c8a9c1",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-12-09T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P214", "P813"]
+          }
+        ]
+      }
+    ],
+    "P269": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P269",
+          "hash": "21cd13d4a8a2ed710d66bf36e848a51924dc9971",
+          "datavalue": {
+            "value": "22566304X",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "q55089040$3f347b4b-4a42-1f16-d924-2608dd097602",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f2a910278f756065350721d19cd4f9393481c2b1",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "6b7d4330c4aac4caec4ede9de0311ce273f88ecd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 54919,
+                      "id": "Q54919"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P214": [
+                {
+                  "snaktype": "value",
+                  "property": "P214",
+                  "hash": "e367678dce8a24fdb1fcc9dd786af3cff5591138",
+                  "datavalue": {
+                    "value": "81311235",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "629c546c949bdcf8c5a027c86cdf3e6414c8a9c1",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2021-12-09T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P214", "P813"]
+          }
+        ]
+      }
+    ],
+    "P5739": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5739",
+          "hash": "3d3b887978b4de555196f7eb506f23cf4dcb4999",
+          "datavalue": {
+            "value": "132552",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "51698de0c91ea5652958a98ea8e22ecd21cf17c7",
+              "datavalue": {
+                "value": "Cortez, Marc, 1972-",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q55089040$671CEE9E-93C6-4124-9264-E5F059A716C1",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "f73a4f0a9525932c7c2dbdb2d2438528e7b945f5",
+            "snaks": {
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "017f8610ef386fc668db8367e1deb5c3c265ce54",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2026-05-06T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P813"]
+          }
+        ]
+      }
+    ],
+    "P10553": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10553",
+          "hash": "bb70069c32971a9a6e7623375ce7e2361db79ea6",
+          "datavalue": {
+            "value": "589477005",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q55089040$696DB51A-A305-4EB6-9A3F-AACBF9580414",
+        "rank": "normal"
+      }
+    ],
+    "P1015": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1015",
+          "hash": "ac1a36cf924bad87ef880fb629af819df964d55d",
+          "datavalue": {
+            "value": "8071130",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "q55089040$d3f6fcb4-4bc9-7ee8-682b-e91c864c9def",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "c8ba4e514ac174afab728196fad5052c8e54815e",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "6b7d4330c4aac4caec4ede9de0311ce273f88ecd",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 54919,
+                      "id": "Q54919"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P214": [
+                {
+                  "snaktype": "value",
+                  "property": "P214",
+                  "hash": "e367678dce8a24fdb1fcc9dd786af3cff5591138",
+                  "datavalue": {
+                    "value": "81311235",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "59b71f14915ea8057e08ca144d1aaca002db0bfe",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-04-16T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P214", "P813"]
+          }
+        ]
+      }
+    ],
+    "P4862": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4862",
+          "hash": "43e591212a7f0ef9f46fe633f5abacb2da60cecf",
+          "datavalue": {
+            "value": "B001NSU5A8",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q55089040$a450e236-489b-eab7-669d-c015352975e2",
+        "rank": "normal"
+      }
+    ],
+    "P7400": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P7400",
+          "hash": "297ee1d4fd093f4bb8dc1f52eab65c4fbd185d61",
+          "datavalue": {
+            "value": "cortezmarc-1",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q55089040$9e7b82e0-4474-7205-d640-0390967a2357",
+        "rank": "normal"
+      }
+    ],
+    "P569": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P569",
+          "hash": "3956cc012af5eea3499547ea1ce40cec29ff7a8c",
+          "datavalue": {
+            "value": {
+              "time": "+1972-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q55089040$5046371f-476a-5960-02ec-21141931adae",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "37e358c388c2f9f21ed5cfe7cbc0a9c37b661515",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "85f38548b219245e3f613c704218efd0595de8da",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 13219454,
+                      "id": "Q13219454"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P244": [
+                {
+                  "snaktype": "value",
+                  "property": "P244",
+                  "hash": "e9447ab695510d7d5316a19571013582eff2e61b",
+                  "datavalue": {
+                    "value": "no2008179656",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "0399a754b29511df31d9b2c5309e5cddfec8f8f0",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-07-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P244", "P813"]
+          }
+        ]
+      }
+    ],
+    "P648": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P648",
+          "hash": "552ad3f9cd75f9e8625e22bd1bf15e3a5abb82e3",
+          "datavalue": {
+            "value": "OL6538649A",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q55089040$5ed09028-4e4e-e0d8-e600-522af474685e",
+        "rank": "normal"
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "52d0408c7915122e0519a22577f0cbdcb28f749b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 30,
+              "id": "Q30"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q55089040$d5ec2082-448c-868e-8a9a-ec333d7792f5",
+        "rank": "normal"
+      }
+    ],
+    "P734": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P734",
+          "hash": "b88a097bd98f97c1dcf1e14e391cf055349453d0",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 37439506,
+              "id": "Q37439506"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q55089040$67a57220-4e83-6eb7-3d77-fc4aa403fe70",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "323be97becfd18ea6625da4b3770079385901a18",
+            "snaks": {
+              "P887": [
+                {
+                  "snaktype": "value",
+                  "property": "P887",
+                  "hash": "b40d6c0ac6eb965460f92fade101fe40a3c44239",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 97033143,
+                      "id": "Q97033143"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P887"]
+          }
+        ]
+      }
+    ],
+    "P1412": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1412",
+          "hash": "7056615ebf0fbde82a3ca3bb9b2c481669a46eb1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1860,
+              "id": "Q1860"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q55089040$650f0109-4ef2-e2eb-d8c8-3c2515c1f7ae",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "0a850a4463976d8b3a27f2da12827129beb9e947",
+            "snaks": {
+              "P1280": [
+                {
+                  "snaktype": "value",
+                  "property": "P1280",
+                  "hash": "c0514e029f492734fdf34669d91fbcf5047f6482",
+                  "datavalue": {
+                    "value": "184547939",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "ce2ad38458403bf82a1be374c1e0c4ed312c4d48",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 16744133,
+                      "id": "Q16744133"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P1280", "P248"]
+          }
+        ]
+      }
+    ],
+    "P6886": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6886",
+          "hash": "5ba8b48f714e1f7318e9d48ed1deb5ec28b207ca",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1860,
+              "id": "Q1860"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q55089040$a3449e38-4034-55fd-8d26-aa60881c6d41",
+        "rank": "normal"
+      }
+    ],
+    "P2002": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2002",
+          "hash": "cd7a2133e414bb614f3b72d50a877926e6f97c78",
+          "datavalue": {
+            "value": "_MarcCortez",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P6552": [
+            {
+              "snaktype": "value",
+              "property": "P6552",
+              "hash": "a0d81be63048c3f58a4b12d6078c29b07d3ad23d",
+              "datavalue": {
+                "value": "89095028",
+                "type": "string"
+              },
+              "datatype": "external-id"
+            }
+          ],
+          "P580": [
+            {
+              "snaktype": "value",
+              "property": "P580",
+              "hash": "5a865a08c43092f90511e6daf14c60a77bbe9847",
+              "datavalue": {
+                "value": {
+                  "time": "+2009-11-11T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P585": [
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "e22be54d9d308b3b240a93e2d6a5c4570f4e0d8a",
+              "datavalue": {
+                "value": {
+                  "time": "+2022-08-20T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 11,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P6552", "P580", "P585"],
+        "id": "Q55089040$f7b736fd-4402-6609-8165-57e788cfd9db",
+        "rank": "normal"
+      }
+    ],
+    "P2013": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2013",
+          "hash": "ceb815fd904f7b89d3228a40a99e520759706be8",
+          "datavalue": {
+            "value": "marc.cortez.796",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q55089040$afddebf0-492d-51bc-acaf-a1106c0092fa",
+        "rank": "normal"
+      }
+    ],
+    "P6634": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6634",
+          "hash": "007d143d549b581585a350e3353e45f2fa144e3d",
+          "datavalue": {
+            "value": "cortezmarc",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q55089040$66899a70-4166-b32e-0383-0c89246557b9",
+        "rank": "normal"
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "f584fcbbc53f88706a32a04fc635439b9afdfa8e",
+          "datavalue": {
+            "value": "http://marccortez.com/",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 1860,
+                  "id": "Q1860"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P580": [
+            {
+              "snaktype": "value",
+              "property": "P580",
+              "hash": "2ff980d429ca62a9f912808fc44b6488fe02ca1c",
+              "datavalue": {
+                "value": {
+                  "time": "+2007-00-00T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 9,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P582": [
+            {
+              "snaktype": "value",
+              "property": "P582",
+              "hash": "c19ede3a78387f5d5a0fe69e96b852142a777c69",
+              "datavalue": {
+                "value": {
+                  "time": "+2018-00-00T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 9,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P1065": [
+            {
+              "snaktype": "value",
+              "property": "P1065",
+              "hash": "0f1cc66a5724e3c6ea26770bd25f3424d71f0850",
+              "datavalue": {
+                "value": "https://web.archive.org/web/20180912013942/http://marccortez.com/",
+                "type": "string"
+              },
+              "datatype": "url"
+            }
+          ]
+        },
+        "qualifiers-order": ["P407", "P580", "P582", "P1065"],
+        "id": "Q55089040$0137a1c3-4448-2527-4059-f44c7f216a42",
+        "rank": "normal"
+      }
+    ],
+    "P1280": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1280",
+          "hash": "c0514e029f492734fdf34669d91fbcf5047f6482",
+          "datavalue": {
+            "value": "184547939",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "80321776ea6397ba00c2f9076ca5c6278f5af296",
+              "datavalue": {
+                "value": "Cortez, Marc Allen, 1972-",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q55089040$FABFAEEB-B602-4DB8-B621-0B7DF948A3B5",
+        "rank": "normal"
+      }
+    ],
+    "P9661": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P9661",
+          "hash": "ba446c8146b2cea6a200de5dea158874633a5e6e",
+          "datavalue": {
+            "value": "76090",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q55089040$9D34A67B-E552-41CE-8F51-A31C6C3F28D1",
+        "rank": "normal"
+      }
+    ],
+    "P11496": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11496",
+          "hash": "c81e7d785d3bab07b75f600ce0b1b882b0e40ee6",
+          "datavalue": {
+            "value": "1140563741633651840",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q55089040$029CD48A-BBED-492A-B0D7-FAFE2183C59A",
+        "rank": "normal"
+      }
+    ],
+    "P396": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P396",
+          "hash": "5a4024cfa6c018cdbf297842da65fb6fc455a171",
+          "datavalue": {
+            "value": "TO0V639931",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "5c2b63b03a1d6975ef9b4465eea574ed42cb93e3",
+              "datavalue": {
+                "value": "Cortez, Marc",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q55089040$63BDE8E6-CB39-4DAB-8881-BD1B26EEA6D6",
+        "rank": "normal"
+      }
+    ],
+    "P12458": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12458",
+          "hash": "ee3de363aa2873afa33bdec4cc6f74ac0e4920e8",
+          "datavalue": {
+            "value": "77207",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "51698de0c91ea5652958a98ea8e22ecd21cf17c7",
+              "datavalue": {
+                "value": "Cortez, Marc, 1972-",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1810"],
+        "id": "Q55089040$7C6FC2FF-B2F7-4359-9087-1A5B9EE37822",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "1bf65f698a26693551a7008bd7a46381a841ee57",
+            "snaks": {
+              "P3452": [
+                {
+                  "snaktype": "value",
+                  "property": "P3452",
+                  "hash": "e7c802c17dbe401566608096149b9f4a3d17b1b0",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 124605379,
+                      "id": "Q124605379"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P3452"]
+          }
+        ]
+      }
+    ],
+    "P10832": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10832",
+          "hash": "02b9a1a8df61aa72d227d881fc2ca4b71e47d9e1",
+          "datavalue": {
+            "value": "E39PBJdWJDKfFgCBhGdvGFHgrq",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q55089040$CE3EB1C3-1ACC-4433-B784-18D27059E32E",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ca5ee3d5e9ae6848fdc1acdc3ec4facf2cf9233f",
+            "snaks": {
+              "P11797": [
+                {
+                  "snaktype": "value",
+                  "property": "P11797",
+                  "hash": "ebc61ebee105944aa63ee48264c820fab36c5571",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 13219454,
+                      "id": "Q13219454"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P244": [
+                {
+                  "snaktype": "value",
+                  "property": "P244",
+                  "hash": "e9447ab695510d7d5316a19571013582eff2e61b",
+                  "datavalue": {
+                    "value": "no2008179656",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "6e7e739b5c1b9d83e1b06391f1898dd20b68075e",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2024-04-20T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P11797", "P244", "P813"]
+          }
+        ]
+      }
+    ],
+    "P13591": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P13591",
+          "hash": "e932fb67f39a8622b69b1f8c03d0db891d2166bc",
+          "datavalue": {
+            "value": "person/6d542e0f-6379-438c-968d-004d2ca65c95",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q55089040$C5A9ABF5-5F01-4AA2-83BB-0B60CEFEB854",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

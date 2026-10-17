@@ -11,6 +11,8 @@ import CandidateDetail from "./pages/CandidateDetail.tsx";
 import CandidatesList from "./pages/CandidatesList.tsx";
 import Leaderboard from "./pages/Leaderboard.tsx";
 import Settings from "./pages/Settings.tsx";
+import RouteFocus from "./RouteFocus.tsx";
+import SkipLink from "./SkipLink.tsx";
 import Toast from "./Toast.tsx";
 import "./merge-candidates.css";
 
@@ -18,6 +20,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <AuthProvider>
+        <SkipLink />
         <RouteErrorBoundary>
           <Routes>
             <Route path="/" element={<CandidatesList />} />
@@ -27,6 +30,7 @@ createRoot(document.getElementById("root")!).render(
           </Routes>
           <SiteFooter />
           <Toast />
+          <RouteFocus />
         </RouteErrorBoundary>
       </AuthProvider>
     </BrowserRouter>

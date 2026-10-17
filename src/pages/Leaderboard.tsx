@@ -70,7 +70,7 @@ export default function Leaderboard() {
       </div>
       <main className="mc leaderboard">
         <div className="leaderboard-head">
-          <h1>Leaderboard</h1>
+          <h1 tabIndex={-1}>Leaderboard</h1>
           <nav className="period-toggle" aria-label="Period">
             {PERIODS.map((p) => (
               <Link
@@ -105,7 +105,8 @@ export default function Leaderboard() {
               <thead>
                 <tr>
                   <th scope="col" className="col-rank">
-                    #
+                    <span aria-hidden="true">#</span>
+                    <span className="visually-hidden">Rank</span>
                   </th>
                   <th scope="col">User</th>
                   <th scope="col" className="col-count">

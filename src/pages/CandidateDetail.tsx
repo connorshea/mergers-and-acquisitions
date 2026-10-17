@@ -1,8 +1,9 @@
-import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { fetch, FetchError } from "../lib/client.ts";
 import { useAuth } from "../lib/auth-context.ts";
 import { loginUrl } from "../lib/auth-url.ts";
+import { restoreFocus } from "../lib/focus.ts";
 import { listHref } from "../lib/list-state.ts";
 import { useArrowKeyNav } from "../lib/use-arrow-key-nav.ts";
 import AuthBar from "../AuthBar.tsx";
@@ -98,8 +99,27 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
     };
   }, [id]);
 
+  // Dismiss, reopen and the edit dialogs each swap out the button that was
+  // used (or disable it while in flight), dropping focus to <body>. Once the
+  // page has re-rendered, put it on the new actions or on the edit's outcome.
+  const bodyRef = useRef<HTMLDivElement>(null);
+  const refocus = useRef<"actions" | "outcome" | null>(null);
+  useEffect(() => {
+    const target = refocus.current;
+    if (!target || dismissing) return;
+    refocus.current = null;
+    restoreFocus(
+      bodyRef.current?.querySelector<HTMLElement>(
+        target === "outcome"
+          ? ".edit-result"
+          : ".detail-actions button:enabled, .btn-reopen-pair:enabled",
+      ),
+    );
+  }, [status, outcome, error, dismissing]);
+
   async function dismiss() {
     if (!id) return;
+    refocus.current = "actions";
     setDismissing(true);
     try {
       const res = await fetch("/api/candidates/:id/dismiss", { method: "POST", params: { id } });
@@ -113,6 +133,7 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
 
   async function reopen() {
     if (!id) return;
+    refocus.current = "actions";
     setDismissing(true);
     try {
       const res = await fetch("/api/candidates/:id/reopen", { method: "POST", params: { id } });
@@ -231,11 +252,15 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
       </div>
 
       <main>
-        <div className="detail-top detail-body">
-          {/* The pair is the page's subject; the plates below show it visually. */}
-          <h1 className="visually-hidden">
-            {candidate ? `Merge candidate: ${titleLead}` : titleLead}
-          </h1>
+        <div className="detail-top detail-body" ref={bodyRef}>
+          {/* The pair is the page's subject; the plates below show it visually.
+              Rendered once loaded, so focus moved here on navigation (see
+              RouteFocus) reads out the pair rather than "Candidate 123". */}
+          {!loading && (
+            <h1 className="visually-hidden" tabIndex={-1}>
+              {candidate ? `Merge candidate: ${titleLead}` : titleLead}
+            </h1>
+          )}
           {loading && (
             <p className="list-msg is-loading">
               <ZipperLoader label="Loading…" />
@@ -406,6 +431,7 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
           detected={detectedConflicts}
           onClose={() => setDialog(null)}
           onDone={(res) => {
+            refocus.current = "outcome";
             applyCandidate(res.candidate);
             setOutcome({ kind: "merge", res });
             setDialog(null);
@@ -418,6 +444,7 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
           candidate={candidate}
           onClose={() => setDialog(null)}
           onDone={(res) => {
+            refocus.current = "outcome";
             applyCandidate(res.candidate);
             setOutcome({ kind: "different", res });
             setDialog(null);
@@ -478,7 +505,7 @@ function EditOutcomePanel({ outcome }: { outcome: EditOutcome }) {
   if (outcome.kind === "merge") {
     const { from, into, redirected, removedSitelinks, editGroupUrl } = outcome.res;
     return (
-      <div className={`edit-result${redirected ? "" : " is-partial"}`} role="status">
+      <div className={`edit-result${redirected ? "" : " is-partial"}`} role="status" tabIndex={-1}>
         Merged {from.qid} into {into.qid}:{" "}
         <a href={into.url} target="_blank" rel="noreferrer">
           revision {into.revid}
@@ -516,7 +543,7 @@ function EditOutcomePanel({ outcome }: { outcome: EditOutcome }) {
   const { edits, editGroupUrl } = outcome.res;
   const partial = edits.some((e) => e.error);
   return (
-    <div className={`edit-result${partial ? " is-partial" : ""}`} role="status">
+    <div className={`edit-result${partial ? " is-partial" : ""}`} role="status" tabIndex={-1}>
       Marked as different from each other and dismissed.
       <ul>
         {edits.map((e) => (

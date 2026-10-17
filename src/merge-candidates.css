@@ -2228,6 +2228,31 @@ a.auth-login {
   white-space: nowrap;
 }
 
+/* Hidden until a keyboard user tabs onto it, then pinned to the top left. */
+.skip-link {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 100;
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--focus);
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 18%);
+  transform: translateY(calc(-100% - 1rem));
+}
+.skip-link:focus {
+  transform: none;
+}
+
+/* Landing spots that script moves focus to (a page's heading on navigation,
+   the result count after paging) aren't controls; a ring there reads as one. */
+h1[tabindex="-1"]:focus,
+.results-count:focus {
+  outline: none;
+}
+
 /* ---------- Toast ---------- */
 .toast {
   position: fixed;

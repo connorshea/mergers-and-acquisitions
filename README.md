@@ -434,7 +434,7 @@ On Wednesdays, after the dump lands on Tuesday, the jobs run in this order
 | ----- | ---------------------------- | ----------------------------------------------- |
 | 06:00 | `import-dump-1..6`           | usually done in 30-40 min; 3 h timeout          |
 | 09:00 | `sync-properties`            | properties + `class_ancestors` for the new dump |
-| 09:30 | `sync-place-ancestors`       | `place_ancestors`, so the hunt scores with them |
+| 09:15 | `sync-place-ancestors`       | `place_ancestors`, so the hunt scores with them |
 | 10:00 | `hunt`, `sync-entity-labels` | the hunt only runs weekly; its input is weekly  |
 | 12:00 | `resolve-sitelinks`          | daily; 12:00 so it follows the hunt             |
 | 12:30 | `resolve-creations`          | daily; likewise                                 |

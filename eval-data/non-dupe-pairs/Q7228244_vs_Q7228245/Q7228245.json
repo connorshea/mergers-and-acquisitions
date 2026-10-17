@@ -1,0 +1,223 @@
+{
+  "pageid": 7130725,
+  "ns": 0,
+  "title": "Q7228245",
+  "lastrevid": 2454807253,
+  "modified": "2026-01-14T10:09:44Z",
+  "type": "item",
+  "id": "Q7228245",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Pontiac Transportation Center"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Pontiac Transportation Center"
+    }
+  },
+  "descriptions": {
+    "fr": {
+      "language": "fr",
+      "value": "gare ferroviaire américaine"
+    },
+    "id": {
+      "language": "id",
+      "value": "stasiun kereta api di Amerika Serikat"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "محطة قطار في الولايات المتحدة الأمريكية"
+    },
+    "de": {
+      "language": "de",
+      "value": "Bahnhof in den Vereinigten Staaten"
+    },
+    "ro": {
+      "language": "ro",
+      "value": "gară din Statele Unite ale Americii"
+    },
+    "en": {
+      "language": "en",
+      "value": "railway station in the United States of America"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "মার্কিন যুক্তরাষ্ট্রের রেলওয়ে স্টেশন"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "залізнична станція в США"
+    },
+    "el": {
+      "language": "el",
+      "value": "σιδηροδρομικός σταθμός στις Ηνωμένες Πολιτείες Αμερικής"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "12a4103fbfd98ec75d5d9269014f78fb822e8d00",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 55488,
+              "id": "Q55488"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7228245$BF740493-6CF8-47AF-9D89-FE22ACE209F7",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "be4c6eafa2984964f04be85667263f5642ba1a72",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 30,
+              "id": "Q30"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7228245$886B0ABF-5E6F-46D7-8060-3F2258BB3344",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P625": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P625",
+          "hash": "92a2212900d8350fb7cca6babb1502c0cad24f92",
+          "datavalue": {
+            "value": {
+              "latitude": 42.6325,
+              "longitude": -83.292222,
+              "altitude": null,
+              "precision": 0.000001,
+              "globe": "http://www.wikidata.org/entity/Q2"
+            },
+            "type": "globecoordinate"
+          },
+          "datatype": "globe-coordinate"
+        },
+        "type": "statement",
+        "id": "Q7228245$4C984DDB-D632-4196-B677-9D96E941E212",
+        "rank": "normal"
+      }
+    ],
+    "P131": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P131",
+          "hash": "8e92a45396c26894728cf663cd4b6aa0dde9be38",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 847596,
+              "id": "Q847596"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7228245$d5f57208-454d-a7f5-46b0-e97f9b103f4e",
+        "rank": "normal"
+      }
+    ],
+    "P197": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P197",
+          "hash": "b280792915b944be5ba52573595f98b03d86c856",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4916576,
+              "id": "Q4916576"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7228245$6ee1a2c2-484e-f867-0b4b-7a3b3e1beb36",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Pontiac Transportation Center (1983)",
+      "badges": ["Q70893996"],
+      "url": "https://en.wikipedia.org/wiki/Pontiac_Transportation_Center_(1983)"
+    }
+  }
+}

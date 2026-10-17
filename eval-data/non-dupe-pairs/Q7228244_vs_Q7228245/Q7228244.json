@@ -1,0 +1,703 @@
+{
+  "pageid": 7130724,
+  "ns": 0,
+  "title": "Q7228244",
+  "lastrevid": 2454807251,
+  "modified": "2026-01-14T10:09:44Z",
+  "type": "item",
+  "id": "Q7228244",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Pontiac Transportation Center"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Pontiac Transportation Center"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "ポンティアック・トランスポーテーション・センター"
+    },
+    "zh": {
+      "language": "zh",
+      "value": "庞蒂亚克交通中心"
+    }
+  },
+  "descriptions": {
+    "fr": {
+      "language": "fr",
+      "value": "gare ferroviaire américaine, Michigan"
+    },
+    "nl": {
+      "language": "nl",
+      "value": "spoorwegstation in Michigan, Verenigde Staten van Amerika"
+    },
+    "id": {
+      "language": "id",
+      "value": "stasiun kereta api di Amerika Serikat"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "محطة قطار في الولايات المتحدة الأمريكية"
+    },
+    "de": {
+      "language": "de",
+      "value": "Bahnhof in den Vereinigten Staaten"
+    },
+    "ro": {
+      "language": "ro",
+      "value": "gară din Statele Unite ale Americii"
+    },
+    "en": {
+      "language": "en",
+      "value": "bus and train station in Michigan"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "মার্কিন যুক্তরাষ্ট্রের রেলওয়ে স্টেশন"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "アメリカの鉄道駅"
+    },
+    "uk": {
+      "language": "uk",
+      "value": "залізнична станція в США"
+    },
+    "el": {
+      "language": "el",
+      "value": "σιδηροδρομικός σταθμός στις Ηνωμένες Πολιτείες Αμερικής"
+    }
+  },
+  "aliases": {
+    "en": [
+      {
+        "language": "en",
+        "value": "Pontiac station"
+      }
+    ],
+    "fr": [
+      {
+        "language": "fr",
+        "value": "gare de Pontiac"
+      }
+    ]
+  },
+  "claims": {
+    "P625": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P625",
+          "hash": "1ba5766b8be0eec391c80b1962247b4ce553a14d",
+          "datavalue": {
+            "value": {
+              "latitude": 42.633667,
+              "longitude": -83.292861,
+              "altitude": null,
+              "precision": 0.0001,
+              "globe": "http://www.wikidata.org/entity/Q2"
+            },
+            "type": "globecoordinate"
+          },
+          "datatype": "globe-coordinate"
+        },
+        "type": "statement",
+        "id": "q7228244$E59FC65E-DD30-4DC7-9131-4DB46F6AF23F",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P17": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P17",
+          "hash": "be4c6eafa2984964f04be85667263f5642ba1a72",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 30,
+              "id": "Q30"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q7228244$B0DFB1F2-0BF4-4EEE-B820-B802EBDD3295",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P131": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P131",
+          "hash": "8e92a45396c26894728cf663cd4b6aa0dde9be38",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 847596,
+              "id": "Q847596"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q7228244$1E1E8923-6540-40A6-8925-3A22BC06621C",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "12a4103fbfd98ec75d5d9269014f78fb822e8d00",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 55488,
+              "id": "Q55488"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7228244$C892483B-612F-437D-A70D-C4992E880ACF",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P18": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "dcf83712c19e639ab1459fe94542e0bdf3ff1fb4",
+          "datavalue": {
+            "value": "Pontiac station, September 2016.jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q7228244$11676D5E-70F8-4278-8006-2971E88DF383",
+        "rank": "normal"
+      }
+    ],
+    "P373": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P373",
+          "hash": "5899bce5a1f9dec55d8c75b6a73cfce61c4380cd",
+          "datavalue": {
+            "value": "Pontiac Transportation Center",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q7228244$DBCB57E2-B0A1-40AC-800C-B5F94D4512C2",
+        "rank": "normal"
+      }
+    ],
+    "P571": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P571",
+          "hash": "9be19516eebe275200f3b5c24defb3f4369a2e92",
+          "datavalue": {
+            "value": {
+              "time": "+1983-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 9,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q7228244$9B139FE9-5319-440C-9541-1C1F16341A0B",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P127": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P127",
+          "hash": "27bb48c405323adc90de2625ab68fbd67d75dc82",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2350930,
+              "id": "Q2350930"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7228244$DEEEEC86-A16A-4E14-8168-B7ED0BA9A562",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P4803": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4803",
+          "hash": "d93450bca7bc8394b64466136ce54936567ddba1",
+          "datavalue": {
+            "value": "pnt",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q7228244$631a2d0c-4f63-2716-05d1-54ebdf27f2cd",
+        "rank": "normal"
+      }
+    ],
+    "P1619": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1619",
+          "hash": "781a967458b1204ea174617605f01dc69a8b5f58",
+          "datavalue": {
+            "value": {
+              "time": "+1983-05-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 10,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q7228244$FC99E663-255D-44F3-BAA7-F25CE5EA7DAC",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fc47c3eedf3aa408ee0f66563df857bd97ae2c65",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "399f93777376b09bc12763671ff1cc2961929a35",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Pontiac_Transportation_Center&oldid=847999538",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P6375": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6375",
+          "hash": "ce9ab1c049912581bdcc0a1b6c2e80b786a3a04c",
+          "datavalue": {
+            "value": {
+              "text": "51000 Woodward Avenue<br />Pontiac, Michigan 48342",
+              "language": "en"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q7228244$58707142-ECFC-4817-A2F0-1512E3DD0002",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d4bd87b862b12d99d26e86472d44f26858dee639",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "f30cbd35620c4ea6d0633aaf0210a8916130469b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8447,
+                      "id": "Q8447"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P1192": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1192",
+          "hash": "2ba282f451d1600594739860fdcbc430fc549ef4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 260450,
+              "id": "Q260450"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7228244$2975a247-442d-c7b7-27ae-8690dbf1de60",
+        "rank": "normal"
+      }
+    ],
+    "P197": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P197",
+          "hash": "39f89dfd69c0a4eee8d24e46b81707422b4a86e3",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 18209241,
+              "id": "Q18209241"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P5051": [
+            {
+              "snaktype": "value",
+              "property": "P5051",
+              "hash": "9804546ab658ecb2f7c7957755881e05646a8250",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 1155989,
+                  "id": "Q1155989"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P5051"],
+        "id": "Q7228244$632dee95-4524-1178-f290-84af59d0df89",
+        "rank": "normal"
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "b2b306d7950eb3440f01200a4c841d0802ee7668",
+          "datavalue": {
+            "value": "/m/094hbh",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q7228244$A7F09D7C-021D-4FCB-97FA-30A9047CED5C",
+        "rank": "normal"
+      }
+    ],
+    "P81": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P81",
+          "hash": "2eec3194873e78baf23461b25075cd8eddbf029f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 110527237,
+              "id": "Q110527237"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7228244$64ad6f48-4aac-7d03-1b99-578454a193c9",
+        "rank": "normal"
+      }
+    ],
+    "P1889": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1889",
+          "hash": "e9247d6aa2177c19f99f06457a570dc4eaaeeb04",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7228205,
+              "id": "Q7228205"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7228244$4b07cf7a-44c6-d722-ef89-14711357c5c0",
+        "rank": "normal"
+      }
+    ],
+    "P11109": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P11109",
+          "hash": "967b958fdef733d05e3c66fa8434728528989983",
+          "datavalue": {
+            "value": "s-dpsf89h3uh-pontiacamtrakstation",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q7228244$5a501edf-4075-0913-0fc3-49cddd9d7d1a",
+        "rank": "normal"
+      }
+    ],
+    "P5817": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P5817",
+          "hash": "3a5c47216c1ed20dc4a40d9bcde91e515d6a6966",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 55654238,
+              "id": "Q55654238"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q7228244$172CC8D7-285E-47D3-B9C7-25341F798267",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Pontiac Transportation Center",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Pontiac_Transportation_Center"
+    },
+    "commonswiki": {
+      "site": "commonswiki",
+      "title": "Category:Pontiac Transportation Center",
+      "badges": [],
+      "url": "https://commons.wikimedia.org/wiki/Category:Pontiac_Transportation_Center"
+    },
+    "frwiki": {
+      "site": "frwiki",
+      "title": "Pontiac Transportation Center",
+      "badges": [],
+      "url": "https://fr.wikipedia.org/wiki/Pontiac_Transportation_Center"
+    },
+    "jawiki": {
+      "site": "jawiki",
+      "title": "ポンティアック・トランスポーテーション・センター",
+      "badges": [],
+      "url": "https://ja.wikipedia.org/wiki/%E3%83%9D%E3%83%B3%E3%83%86%E3%82%A3%E3%82%A2%E3%83%83%E3%82%AF%E3%83%BB%E3%83%88%E3%83%A9%E3%83%B3%E3%82%B9%E3%83%9D%E3%83%BC%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%BB%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC"
+    }
+  }
+}

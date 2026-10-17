@@ -11,6 +11,7 @@ import type { runEntityLabelsSync } from "../server/entity-labels-sync.ts";
 import type { fetchAllProperties } from "../src/lib/sparql.ts";
 import type { syncProperties } from "../server/properties-sync.ts";
 import type { syncClassAncestors } from "../server/class-ancestors.ts";
+import type { syncPlaceAncestors } from "../server/place-ancestors.ts";
 import type { pruneExpiredSessions } from "../server/auth/session.ts";
 import type { recheckLoggedInUsers } from "../server/auth/profile-recheck.ts";
 
@@ -23,6 +24,7 @@ const m = vi.hoisted(() => ({
   fetchAllProperties: vi.fn<typeof fetchAllProperties>(),
   syncProperties: vi.fn<typeof syncProperties>(),
   syncClassAncestors: vi.fn<typeof syncClassAncestors>(),
+  syncPlaceAncestors: vi.fn<typeof syncPlaceAncestors>(),
   pruneExpiredSessions: vi.fn<typeof pruneExpiredSessions>(),
   recheckLoggedInUsers: vi.fn<typeof recheckLoggedInUsers>(),
   poolEnd: vi.fn<() => Promise<void>>(),
@@ -39,6 +41,7 @@ vi.mock("../server/entity-labels-sync.ts", () => ({ runEntityLabelsSync: m.runEn
 vi.mock("../src/lib/sparql.ts", () => ({ fetchAllProperties: m.fetchAllProperties }));
 vi.mock("../server/properties-sync.ts", () => ({ syncProperties: m.syncProperties }));
 vi.mock("../server/class-ancestors.ts", () => ({ syncClassAncestors: m.syncClassAncestors }));
+vi.mock("../server/place-ancestors.ts", () => ({ syncPlaceAncestors: m.syncPlaceAncestors }));
 vi.mock("../server/auth/session.ts", () => ({ pruneExpiredSessions: m.pruneExpiredSessions }));
 vi.mock("../server/auth/profile-recheck.ts", () => ({
   recheckLoggedInUsers: m.recheckLoggedInUsers,
@@ -50,6 +53,7 @@ const { main: resolveMerges } = await import("./resolve-merges.ts");
 const { main: resolveSitelinks } = await import("./resolve-sitelinks.ts");
 const { main: syncEntityLabels } = await import("./sync-entity-labels.ts");
 const { main: syncPropertiesJob } = await import("./sync-properties.ts");
+const { main: syncPlaceAncestorsJob } = await import("./sync-place-ancestors.ts");
 const { main: pruneSessions } = await import("./prune-sessions.ts");
 
 // Reset before quietLogs() installs its console spy, which a reset would undo.
@@ -69,6 +73,7 @@ describe.each([
   ["resolve-sitelinks", resolveSitelinks, m.runSitelinkRedirectSync],
   ["sync-entity-labels", syncEntityLabels, m.runEntityLabelsSync],
   ["sync-properties", syncPropertiesJob, m.fetchAllProperties],
+  ["sync-place-ancestors", syncPlaceAncestorsJob, m.syncPlaceAncestors],
   ["prune-sessions", pruneSessions, m.pruneExpiredSessions],
 ])("%s", (name, main, wrapped) => {
   it("exits 1 and logs the error when the run throws", async () => {
@@ -173,6 +178,27 @@ describe("sync-properties", () => {
     const error = expectConsole("error");
     expect(await syncPropertiesJob()).toBe(1);
     expect(error).toHaveBeenCalledWith("sync-properties: failed", boom);
+  });
+});
+
+describe("sync-place-ancestors", () => {
+  it("logs the counts and exits 0", async () => {
+    m.syncPlaceAncestors.mockResolvedValue({ places: 3, rows: 7, failed: 0 });
+    const warn = expectConsole("warn");
+    expect(await syncPlaceAncestorsJob()).toBe(0);
+    expect(console.log).toHaveBeenCalledWith(
+      "sync-place-ancestors: wrote 7 ancestor rows for 3 places",
+    );
+    expect(warn).not.toHaveBeenCalled();
+  });
+
+  it("warns about failed places but still exits 0", async () => {
+    m.syncPlaceAncestors.mockResolvedValue({ places: 3, rows: 5, failed: 2 });
+    const warn = expectConsole("warn");
+    expect(await syncPlaceAncestorsJob()).toBe(0);
+    expect(warn).toHaveBeenCalledWith(
+      "sync-place-ancestors: skipped 2 places after repeated failures",
+    );
   });
 });
 

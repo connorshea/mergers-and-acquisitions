@@ -19,6 +19,7 @@ const TABLES = [
   "external_id_dupes",
   "properties",
   "class_ancestors",
+  "place_ancestors",
   "entity_labels",
   "sync_state",
   "dump_import_segments",

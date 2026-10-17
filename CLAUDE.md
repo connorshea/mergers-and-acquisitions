@@ -68,6 +68,10 @@ Layout:
   upserts items + external ids + properties, prunes what left the dump);
   `class-ancestors.ts` rebuilds `class_ancestors` (our items' classes →
   ancestors named by subject type constraints) after the weekly property sync.
+  `place-ancestors.ts` rebuilds `place_ancestors` (our items' place values →
+  their P131+ ancestors, flagged when a country) weekly via
+  `jobs/sync-place-ancestors.ts`; `src/lib/places.ts` turns it into the
+  `ScoreOptions.placeContainment` check (Akasaka in Tokyo → similar).
 - `server/auth/` — Wikimedia OAuth 2.0 login (`oauth.ts` routes), cookie
   sessions + `requireUser` (`session.ts`), encrypted token
   storage + refresh (`tokens.ts`, `crypto.ts`), and the same-origin CSRF guard.

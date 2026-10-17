@@ -9,6 +9,7 @@ import { eq, sql } from "drizzle-orm";
 import { db, pool } from "./db.ts";
 import {
   classAncestors,
+  placeAncestors,
   dumpImportSegments,
   externalIdDupes,
   externalIds,
@@ -400,6 +401,26 @@ describe.skipIf(!DB_TEST)("runHunt", () => {
     ]);
     expect(await runHunt()).toMatchObject({ pairs: 1, scored: 1, upserted: 0 });
     expect(await allCandidates()).toHaveLength(0);
+  });
+
+  it("counts a place and the place containing it as agreement once ancestors are synced", async () => {
+    const hq = (qid: string): Record<string, Value[]> => ({
+      P159: [{ type: "item", value: qid }],
+    });
+    await insertItem(makeItem("Q118663756", "Mondorana Entertainment", hq("Q416131")));
+    await insertItem(makeItem("Q113309741", "Mondorana Entertainment", hq("Q1490")));
+    const agreement = async () =>
+      (await allCandidates())[0]?.reasons.find((r) => r.includes("shared statements agree"));
+
+    expect(await runHunt()).toMatchObject({ pairs: 1, upserted: 1 });
+    expect(await agreement()).toBeUndefined();
+
+    await db.insert(placeAncestors).values([
+      { qid: "Q416131", ancestor: "Q1490" },
+      { qid: "Q416131", ancestor: "Q17", country: true },
+    ]);
+    expect(await runHunt()).toMatchObject({ pairs: 1, upserted: 1 });
+    expect(await agreement()).toBe("1 of 1 shared statements agree");
   });
 
   it("lowers namesake humans with no occupation in common once the name is common", async () => {

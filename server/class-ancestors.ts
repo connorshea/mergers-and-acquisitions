@@ -19,12 +19,16 @@ const LOG_EVERY_PAGES = 20;
 const LOG_EVERY_CHUNKS = 10;
 
 /**
- * The distinct instance of (P31) and subclass of (P279) values across every
- * synced item. MariaDB pulls them out of `data` itself (JSON_TABLE), so only
- * each page's distinct classes cross the wire. Keyset pagination over the
- * `qid` primary key keeps this O(n).
+ * The distinct item values of the given properties across every synced item.
+ * MariaDB pulls them out of `data` itself (JSON_TABLE), so only each page's
+ * distinct values cross the wire. Keyset pagination over the `qid` primary
+ * key keeps this O(n). `what` names the values in the progress log.
  */
-export async function collectItemClasses(pageSize = READ_PAGE): Promise<string[]> {
+export async function collectItemValues(
+  pids: readonly string[],
+  what: string,
+  pageSize = READ_PAGE,
+): Promise<string[]> {
   const started = Date.now();
   const [[{ total }]] = (await db.execute(
     sql`select count(*) as total from ${items}`,
@@ -38,26 +42,34 @@ export async function collectItemClasses(pageSize = READ_PAGE): Promise<string[]
       order by qid limit 1 offset ${pageSize - 1}`)) as unknown as [{ qid: string }[]];
     const bound = bounds[0]?.qid;
     const range = sql`i.qid > ${after} ${bound === undefined ? sql`` : sql`and i.qid <= ${bound}`}`;
-    const classes = (path: string) => sql`
+    const values = (pid: string) => sql`
       select jt.qid from ${items} i,
-        json_table(i.data, ${path} columns (
+        json_table(i.data, ${`$.statements.${pid}[*]`} columns (
           type varchar(16) path '$.type',
           qid varchar(32) path '$.value'
         )) jt
       where ${range} and jt.type = 'item'`;
-    const [rows] = (await db.execute(sql`
-      ${classes("$.statements.P31[*]")} union
-      ${classes("$.statements.P279[*]")}`)) as unknown as [{ qid: string }[]];
+    const [rows] = (await db.execute(
+      sql.join(
+        pids.map((pid) => values(pid)),
+        sql` union `,
+      ),
+    )) as unknown as [{ qid: string }[]];
     for (const row of rows) set.add(row.qid);
     if (bound === undefined) break;
     after = bound;
     if (page % LOG_EVERY_PAGES === 0) {
       console.log(
-        `class ancestors: scanned ${progress(page * pageSize, total)} items, ${set.size} classes, ${elapsed(started)} elapsed`,
+        `${what}: scanned ${progress(page * pageSize, total)} items, ${set.size} values, ${elapsed(started)} elapsed`,
       );
     }
   }
   return [...set];
+}
+
+/** The distinct instance of (P31) and subclass of (P279) values across every synced item. */
+export function collectItemClasses(pageSize = READ_PAGE): Promise<string[]> {
+  return collectItemValues(["P31", "P279"], "class ancestors", pageSize);
 }
 
 export interface ClassAncestorsSyncResult {

@@ -18,7 +18,7 @@ eval-data/
       <TARGET>.pre.json         target item's full entity blob, pre-merge
       meta.json                 the pair's record (same shape as an index line)
       sitelink-redirects.json   (optional) where clashing sitelinks redirect
-  subject-types.json            subject type constraints, class ancestors, mirror flags (see below)
+  subject-types.json            subject type constraints, class/place ancestors, mirror flags (see below)
   non-dupe-pairs/               negative examples — pairs that are NOT duplicates
     index.jsonl                 one JSON record per pair (the manifest)
     <A>_vs_<B>/                 (A/B ordered by QID number, lower first)
@@ -91,8 +91,11 @@ scorer ignores an id whose constraint rules out both items (a person id
 copied onto two of the author's works, say). It also records, for each of
 those shared ids, whether the property mirrors Wikidata (P31 = Q24075706, as
 production's `properties.mirrors_wikidata` holds it — VIAF, MusicBrainz, …):
-such an id is no evidence either way. This file lets the eval apply the same
-checks offline.
+such an id is no evidence either way. And it records each place value's
+(birthplace, headquarters, location, …) P131+ ancestors and which of them are
+countries, as production's `place_ancestors` holds them, so a city and the
+region containing it compare the way the hunt compares them. This file lets
+the eval apply the same checks offline.
 
 It's append-only like the redirects: a re-run only adds properties and
 classes not recorded yet, so later edits on Wikidata don't shift the eval.

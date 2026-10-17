@@ -1,7 +1,7 @@
 // Backfill / extend `eval-data/subject-types.json` (see
 // scripts/eval-subject-types.ts) with the subject type constraints and class
-// ancestors every eval pair needs, and which of the pairs' shared id properties
-// mirror Wikidata. Run it after adding pairs. Recorded entries
+// ancestors every eval pair needs, which of the pairs' shared id properties
+// mirror Wikidata, and their place values' P131+ ancestors. Run it after adding pairs. Recorded entries
 // are kept as they are; delete the file to re-record from scratch.
 //
 //   node scripts/resolve-eval-subject-types.ts
@@ -49,10 +49,11 @@ async function pairs(): Promise<[Item, Item][]> {
 }
 
 async function main() {
-  const { constraints, classes, mirrors } = await recordSubjectTypes(await pairs());
+  const { constraints, classes, mirrors, places } = await recordSubjectTypes(await pairs());
   console.log(
     `${SUBJECT_TYPES_PATH}: added constraints for ${constraints} properties, ` +
-      `ancestors for ${classes} classes and mirror flags for ${mirrors} properties; ` +
+      `ancestors for ${classes} classes, mirror flags for ${mirrors} properties ` +
+      `and ancestors for ${places} places; ` +
       `recorded entries are kept as they were`,
   );
 }

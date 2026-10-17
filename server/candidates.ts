@@ -14,6 +14,7 @@ import { attachSitelinkRedirects } from "./sitelink-overlay.ts";
 import { loadCreations } from "./item-creations.ts";
 import { cachedCount } from "./candidate-count-cache.ts";
 import { loadPairReviews } from "./llm-reviews.ts";
+import { loadPlaceAncestors } from "./place-ancestors.ts";
 import {
   classAncestors,
   entityLabels,
@@ -25,6 +26,7 @@ import {
 } from "../db/schema.ts";
 import type { Item } from "../src/lib/compare.ts";
 import { chunk } from "../src/lib/chunk.ts";
+import { placeValues } from "../src/lib/places.ts";
 import {
   itemClasses,
   makeInapplicableIdCheck,
@@ -376,7 +378,7 @@ candidates.get("/:id", async (c) => {
   }
 
   const classes = [...new Set(present.flatMap(itemClasses))];
-  const [propertyChunks, valueChunks, ancestorChunks] = await Promise.all([
+  const [propertyChunks, valueChunks, ancestorChunks, placeAncestors] = await Promise.all([
     Promise.all(
       chunk(pids, ID_CHUNK).map((ids) =>
         db
@@ -408,6 +410,9 @@ candidates.get("/:id", async (c) => {
           .where(inArray(classAncestors.class, ids)),
       ),
     ),
+    // The ancestors of the pair's place values, so the comparison view reads
+    // Akasaka vs. Tokyo as the hunt scored it.
+    loadPlaceAncestors(placeValues(present)),
   ]);
 
   const propertyLabels: Record<string, string> = {};
@@ -461,6 +466,7 @@ candidates.get("/:id", async (c) => {
     propertyMirrors,
     propertyInapplicable,
     valueLabels,
+    placeAncestors,
     editGroupUrl: editGroup ? editGroupUrl(editGroup) : null,
     llmReviews,
     prevId: prevRows[0]?.id ?? null,

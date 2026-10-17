@@ -1,0 +1,799 @@
+{
+  "pageid": 64610824,
+  "ns": 0,
+  "title": "Q64966933",
+  "lastrevid": 2464873746,
+  "modified": "2026-02-20T08:06:54Z",
+  "type": "item",
+  "id": "Q64966933",
+  "labels": {
+    "es": {
+      "language": "es",
+      "value": "Odette Cortez"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Odette Cortez"
+    },
+    "sq": {
+      "language": "sq",
+      "value": "Odette Cortez"
+    },
+    "en": {
+      "language": "en",
+      "value": "Odette Cortez"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "Odette Cortez"
+    },
+    "as": {
+      "language": "as",
+      "value": "অডেট কৰ্টেজ"
+    }
+  },
+  "descriptions": {
+    "es": {
+      "language": "es",
+      "value": "Artista y Productora"
+    },
+    "ar": {
+      "language": "ar",
+      "value": "رائدة أعمال بنمية"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "পানামীয় ব্যবসায়ী"
+    },
+    "ca": {
+      "language": "ca",
+      "value": "empresària panamenya"
+    },
+    "en": {
+      "language": "en",
+      "value": "Panamanian businessperson"
+    },
+    "et": {
+      "language": "et",
+      "value": "Panama ärinaine"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "femme d'affaires panaméenne"
+    },
+    "gl": {
+      "language": "gl",
+      "value": "empresaria panameña"
+    },
+    "he": {
+      "language": "he",
+      "value": "אשת עסקים פנמית"
+    },
+    "ro": {
+      "language": "ro",
+      "value": "femeie de afaceri panameză"
+    },
+    "ig": {
+      "language": "ig",
+      "value": "onye na-azụ ahia si Panama"
+    },
+    "as": {
+      "language": "as",
+      "value": "পানামাৰ ব্যৱসায়ী"
+    }
+  },
+  "aliases": {
+    "es": [
+      {
+        "language": "es",
+        "value": "Odette Cortez, Odette Marina Cortez Palacios, Odette Marina, Odette Cortez Palacios"
+      }
+    ]
+  },
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q64966933$2d123ae2-456e-28b9-ae86-df1f6b1ecd15",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "df4aaf1b15d5db5eb10e475c0aded966a42f15d9",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "b34ff4ddb91dfd4cea5ea9deb0c53c37d51ae554",
+                  "datavalue": {
+                    "value": "http://www.fragatacultural.com/2014/01/odette-cortez-la-novia-del-folclor.html",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P18": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "62b0a10a8106f02c29680f20ef9fb4f085574623",
+          "datavalue": {
+            "value": "Odette Cortez 2019.jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P585": [
+            {
+              "snaktype": "value",
+              "property": "P585",
+              "hash": "77f348fcb49110a0de3c2faf4865527dc30dcbc9",
+              "datavalue": {
+                "value": {
+                  "time": "+2019-00-00T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 9,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P2096": [
+            {
+              "snaktype": "value",
+              "property": "P2096",
+              "hash": "6c1b9827287950a7e7610a1c2853c5dec339f4ce",
+              "datavalue": {
+                "value": {
+                  "text": "Odette Cortez luciendo una Pollera de Gala Blanca para la Inauguración del Museo de la Libertad y los Derechos Humanos en Panamá.",
+                  "language": "es"
+                },
+                "type": "monolingualtext"
+              },
+              "datatype": "monolingualtext"
+            }
+          ]
+        },
+        "qualifiers-order": ["P585", "P2096"],
+        "id": "Q64966933$b93ddfca-43db-1a24-32b6-5a987acb7045",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "5760796ff6ebc63aae12cdcbf509b07ebf0bd201",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581072,
+              "id": "Q6581072"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q64966933$16487376-4fa5-95ee-2224-79f1b12d4259",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d1f07d54b2b191c79827a804b0760b9d41bc025e",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "544d3ccf55a5035c1defe366b4608f91b69bc77e",
+                  "datavalue": {
+                    "value": "http://siemprelatina.com/latinas_destacadas/odette-cortez/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P27": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P27",
+          "hash": "616b6d083764ef659e2cfbde5dd6947bed967155",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 804,
+              "id": "Q804"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q64966933$af0f40b2-4f85-398f-d352-3cf07260f4ae",
+        "rank": "normal"
+      }
+    ],
+    "P1559": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1559",
+          "hash": "2514ede57d6558671695c882da5e263c68578e35",
+          "datavalue": {
+            "value": {
+              "text": "Odette Cortez",
+              "language": "es"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q64966933$a20f2bd6-49e7-91fd-2074-3f0cfaf6f185",
+        "rank": "normal"
+      }
+    ],
+    "P1477": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1477",
+          "hash": "395456e95dcd63affaa1211e33a9b8c6a30c8e89",
+          "datavalue": {
+            "value": {
+              "text": "Odette Marina Cortez Palacios",
+              "language": "es"
+            },
+            "type": "monolingualtext"
+          },
+          "datatype": "monolingualtext"
+        },
+        "type": "statement",
+        "id": "Q64966933$fb13cf47-4bd6-34fc-81f1-08649e036d7a",
+        "rank": "normal"
+      }
+    ],
+    "P735": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P735",
+          "hash": "23c6c734e2eb740f18f87cf23cb1b339e1afe89e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2014474,
+              "id": "Q2014474"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1545": [
+            {
+              "snaktype": "value",
+              "property": "P1545",
+              "hash": "2a1ced1dca90648ea7e306acbadd74fc81a10722",
+              "datavalue": {
+                "value": "1",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1545"],
+        "id": "Q64966933$4a035ab7-4e38-91dc-743f-88078181872d",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P735",
+          "hash": "b24634f3724f479a01597bf006336f838576214b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1120708,
+              "id": "Q1120708"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1545": [
+            {
+              "snaktype": "value",
+              "property": "P1545",
+              "hash": "7241753c62a310cf84895620ea82250dcea65835",
+              "datavalue": {
+                "value": "2",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1545"],
+        "id": "Q64966933$5bc10812-454e-9d9c-3ada-23914e7227f4",
+        "rank": "normal"
+      }
+    ],
+    "P734": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P734",
+          "hash": "b88a097bd98f97c1dcf1e14e391cf055349453d0",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 37439506,
+              "id": "Q37439506"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1545": [
+            {
+              "snaktype": "value",
+              "property": "P1545",
+              "hash": "2a1ced1dca90648ea7e306acbadd74fc81a10722",
+              "datavalue": {
+                "value": "1",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1545"],
+        "id": "Q64966933$23f58300-4966-a92d-3261-b3021d712b48",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P734",
+          "hash": "70c38d149854e46be8477668addf9f36e43d279b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 21492106,
+              "id": "Q21492106"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1545": [
+            {
+              "snaktype": "value",
+              "property": "P1545",
+              "hash": "7241753c62a310cf84895620ea82250dcea65835",
+              "datavalue": {
+                "value": "2",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": ["P1545"],
+        "id": "Q64966933$54a72a0c-4eca-8928-d93a-038fbb23d018",
+        "rank": "normal"
+      }
+    ],
+    "P569": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P569",
+          "hash": "80d29e271d1b1f210ae49dd65c504c1b2404e5f0",
+          "datavalue": {
+            "value": {
+              "time": "+1987-05-27T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q64966933$25f968c8-4fd7-17fc-0649-f7dce0c1ac3d",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d1f07d54b2b191c79827a804b0760b9d41bc025e",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "544d3ccf55a5035c1defe366b4608f91b69bc77e",
+                  "datavalue": {
+                    "value": "http://siemprelatina.com/latinas_destacadas/odette-cortez/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P19": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P19",
+          "hash": "bd97319338b727ce25edec59b0a2d07604914a9a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3306,
+              "id": "Q3306"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q64966933$ae3a9a18-4348-16a6-828b-5239e62177b2",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d1f07d54b2b191c79827a804b0760b9d41bc025e",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "544d3ccf55a5035c1defe366b4608f91b69bc77e",
+                  "datavalue": {
+                    "value": "http://siemprelatina.com/latinas_destacadas/odette-cortez/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      }
+    ],
+    "P1412": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1412",
+          "hash": "34f7c448acf9236240a0070caa86e7f1cdceee90",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1321,
+              "id": "Q1321"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q64966933$ce6a873b-44e9-35b7-05d5-85be4201ced8",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1412",
+          "hash": "7056615ebf0fbde82a3ca3bb9b2c481669a46eb1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1860,
+              "id": "Q1860"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q64966933$f1dfcb68-4488-1ab9-e9e1-d512efdebbff",
+        "rank": "normal"
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "5fb4462435e63a7d256af389df0871a28575ef6b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 47541952,
+              "id": "Q47541952"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q64966933$69c71e83-46c1-3369-e6c8-4e71e186c956",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a2cc111bbe4f72821d60bc8d8f90cc5e8aeb6d4d",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "4aebe09cf09d5c3524ead7a4a87d3ba4a6f5ecff",
+                  "datavalue": {
+                    "value": "https://www.panamaamerica.com.pa/variedades/una-travesia-folclorica-1130669",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "67f88738989da23263278866d40be8dfa7e757e2",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 483501,
+              "id": "Q483501"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q64966933$4f03baf4-4252-2c62-0c6b-c0a884bab2ea",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "228719b6a76ea68e947ea33c1ced9dffa630c08c",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "64bcaab05ab0be0f00c5181c93d17d9238423bbb",
+                  "datavalue": {
+                    "value": "https://www.critica.com.pa/show/hicieron-la-diferencia-en-argentina-528324",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P854"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "a321daf90c5faed583c2baba83ae836fe764e69b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 4070300,
+              "id": "Q4070300"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q64966933$74793c5f-4ae7-8c9e-34d9-f9cbb6b61385",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "cfc4c4762d152dc63e9f7e6b109edabaf1659e65",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 3075052,
+              "id": "Q3075052"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q64966933$2736daa2-45c9-95a4-f73b-d0cae9a27e9d",
+        "rank": "normal"
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "4f8fe0c39e4ad88629f612b8357fa911b87e9101",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 43845,
+              "id": "Q43845"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q64966933$e567b1c6-4d00-4dd2-c485-b8ce1da81777",
+        "rank": "normal"
+      }
+    ],
+    "P551": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P551",
+          "hash": "bbfd1fa190217ae599f788c65533a96fd3f8a9ca",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 804,
+              "id": "Q804"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q64966933$cca8e6ce-4c41-7a47-68dc-8ebdd970cc71",
+        "rank": "normal"
+      }
+    ],
+    "P373": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P373",
+          "hash": "f280899e3e072f5a188f300c04c7d54c0aa3cacd",
+          "datavalue": {
+            "value": "Odette Cortez",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "Q64966933$8e1950b0-4c87-8712-8110-33eb6cb5708a",
+        "rank": "normal"
+      }
+    ],
+    "P2003": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2003",
+          "hash": "cecd8f3a185ec2f810310350f2b76d797bf08425",
+          "datavalue": {
+            "value": "odettecortez",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q64966933$252DD9EC-88F3-4065-A414-3D1D19CEB320",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d559b38dfaaab65f9f0210f67783295456711ab4",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "d28bd6eb0613700ec0a5a94ccd2f4d95a9f780e4",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Odette_Cortez&oldid=1338853779",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Odette Cortez",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/Odette_Cortez"
+    },
+    "aswiki": {
+      "site": "aswiki",
+      "title": "অডেট কৰ্টেজ",
+      "badges": [],
+      "url": "https://as.wikipedia.org/wiki/%E0%A6%85%E0%A6%A1%E0%A7%87%E0%A6%9F_%E0%A6%95%E0%A7%B0%E0%A7%8D%E0%A6%9F%E0%A7%87%E0%A6%9C"
+    }
+  }
+}

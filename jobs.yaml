@@ -25,7 +25,10 @@
 # classes. Weekly, between the dump import (Wednesdays 06:00, usually done in
 # 30-40 min, killed by its 3 h timeout at 09:00) and the hunt, so the hunt
 # checks subject type constraints against fresh properties and against
-# ancestors for the classes the new dump brought in.
+# ancestors for the classes the new dump brought in. The classes come from
+# `item_values`; while any item predates it (the first pass after it was added,
+# if that pass is cut short) the class-ancestor rebuild fails, keeping last
+# week's rows, rather than dropping the classes of the items not yet written.
 - name: sync-properties
   command: node jobs/sync-properties.ts
   image: tool-mna/tool-mna:latest
@@ -55,10 +58,11 @@
 # ~190 QLever chunks (~190k places at 5.3M items) time before 10:00; it may
 # overlap sync-properties' class-ancestor lookups, which are far fewer. The
 # places come from `item_values`, which the import keeps (collecting them from
-# every item's data took 12.5 min). If it
-# ever runs past 10:00, the hunt reads each place's rows as they stand
-# (rewritten a chunk at a time, so this week's for some places and last week's
-# for the rest); places rarely move, so that costs little.
+# every item's data took 12.5 min); like sync-properties, the job fails rather
+# than prune while any item predates that table. If it ever runs past 10:00,
+# the hunt reads each place's rows as they stand (rewritten a chunk at a time,
+# so this week's for some places and last week's for the rest); places rarely
+# move, so that costs little.
 - name: sync-place-ancestors
   command: node --max-old-space-size=768 jobs/sync-place-ancestors.ts
   image: tool-mna/tool-mna:latest

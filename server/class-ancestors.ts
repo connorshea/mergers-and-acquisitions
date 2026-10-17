@@ -3,9 +3,10 @@
 // Together with `properties.subject_types` it lets the scorer tell
 // whether a subject type constraint on a superclass covers an item's class
 // (see src/lib/subject-types.ts).
-import { inArray } from "drizzle-orm";
+import { inArray, isNull, lt, or, sql } from "drizzle-orm";
 import { db } from "./db.ts";
-import { classAncestors, items, itemValues } from "../db/schema.ts";
+import { classAncestors, itemSync, itemValues } from "../db/schema.ts";
+import { ITEM_VALUES_VERSION } from "./converter-version.ts";
 import { chunk } from "../src/lib/chunk.ts";
 import { fetchClassAncestors } from "../src/lib/sparql.ts";
 import { ITEM_VALUE_PROPS } from "../src/lib/wikidata.ts";
@@ -18,24 +19,33 @@ const LOG_EVERY_CHUNKS = 10;
 /**
  * The distinct item values of the given properties across every synced item,
  * from `item_values` (written by the dump import for ITEM_VALUE_PROPS, which
- * must include `pids`). Throws when the table is empty but the mirror isn't,
- * as it is between the migration that adds it and the first import that fills
- * it: an empty list would have the syncs drop every row they keep.
+ * must include `pids`). Throws while any item was last written by a converter
+ * older than ITEM_VALUES_VERSION, as every item is between the migration that
+ * adds the table and the first import pass that rewrites them all, and as
+ * the items an interrupted pass didn't reach are: their values may be missing,
+ * and a short list would have the syncs drop the rows of every value left out.
  */
 export async function collectItemValues(pids: readonly string[]): Promise<string[]> {
   const missing = pids.filter((pid) => !ITEM_VALUE_PROPS.has(pid));
   if (missing.length > 0) throw new Error(`Not in ITEM_VALUE_PROPS: ${missing.join(", ")}`);
+  // A range on idx_item_sync_revision, which leads with converter_version.
+  const [counted] = await db
+    .select({ stale: sql<number>`count(*)` })
+    .from(itemSync)
+    .where(
+      or(isNull(itemSync.converterVersion), lt(itemSync.converterVersion, ITEM_VALUES_VERSION)),
+    );
+  const stale = Number(counted?.stale ?? 0);
+  if (stale > 0) {
+    throw new Error(
+      `${stale} items predate item_values (converter version < ${ITEM_VALUES_VERSION}); ` +
+        "a complete dump import pass writes them",
+    );
+  }
   const rows = await db
     .selectDistinct({ value: itemValues.value })
     .from(itemValues)
     .where(inArray(itemValues.property, [...pids]));
-  if (rows.length === 0) {
-    const [anyValue] = await db.select({ qid: itemValues.qid }).from(itemValues).limit(1);
-    const [anyItem] = await db.select({ qid: items.qid }).from(items).limit(1);
-    if (!anyValue && anyItem) {
-      throw new Error("item_values is empty; run the dump import to fill it");
-    }
-  }
   return rows.map((r) => r.value);
 }
 

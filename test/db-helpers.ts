@@ -7,6 +7,7 @@ import { externalIds, itemSync, itemValues, items, sessions, users } from "../db
 import { SESSION_COOKIE, SESSION_TTL_SECONDS } from "../server/auth/session.ts";
 import { randomToken, sha256Hex } from "../server/auth/crypto.ts";
 import { addSeconds, toSqlDatetime } from "../server/auth/time.ts";
+import { CONVERTER_VERSION } from "../server/converter-version.ts";
 import type { Item, Value } from "../src/lib/compare.ts";
 import { externalIdRows, itemValueRows, primaryLabel, primaryType } from "../src/lib/wikidata.ts";
 
@@ -106,8 +107,9 @@ export function makeItem(
 
 /**
  * Insert an item the way the import does: the `items` row with its
- * denormalized label/type, its `item_sync` row (not yet seen in any dump), plus
- * one `external_ids` row per external-id value and its `item_values` rows.
+ * denormalized label/type, its `item_sync` row (not yet seen in any dump, at
+ * the current converter version), plus one `external_ids` row per external-id
+ * value and its `item_values` rows.
  */
 export async function insertItem(item: Item): Promise<void> {
   await db.insert(items).values({
@@ -116,10 +118,19 @@ export async function insertItem(item: Item): Promise<void> {
     primaryType: primaryType(item) ?? null,
     data: item,
   });
-  await db.insert(itemSync).values({ qid: item.id });
+  await db.insert(itemSync).values({ qid: item.id, converterVersion: CONVERTER_VERSION });
   const rows = externalIdRows(item).map((r) => ({ qid: item.id, ...r }));
   if (rows.length > 0) await db.insert(externalIds).values(rows);
   await insertItemValues([item]);
+}
+
+/**
+ * Insert bare `items` rows (no `item_sync` row) with the `item_values` rows the
+ * import would write for them.
+ */
+export async function insertItemRows(rows: (typeof items.$inferInsert)[]): Promise<void> {
+  await db.insert(items).values(rows);
+  await insertItemValues(rows.map((r) => r.data));
 }
 
 /** The `item_values` rows the import would write for `list`. */

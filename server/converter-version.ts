@@ -26,3 +26,11 @@ export const CONVERTER_OUTPUTS = [
 ] as const;
 
 export const CONVERTER_VERSION = CONVERTER_OUTPUTS.length;
+
+// The converter version since which every write of an item also writes its
+// `item_values` rows, as they stand now (ITEM_VALUE_PROPS in
+// src/lib/wikidata.ts). An item synced at an older version may have none, so
+// the syncs that read `item_values` refuse to run while any such item is left
+// (server/class-ancestors.ts `collectItemValues`). Move it to the new
+// CONVERTER_VERSION whenever ITEM_VALUE_PROPS changes what the table holds.
+export const ITEM_VALUES_VERSION = 5;

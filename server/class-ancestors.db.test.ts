@@ -3,11 +3,13 @@
 // DB_TEST=1 — see test/global-setup.ts.
 import { afterAll, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { db, pool } from "./db.ts";
-import { classAncestors, items } from "../db/schema.ts";
+import { eq } from "drizzle-orm";
+import { classAncestors, items, itemSync } from "../db/schema.ts";
+import { ITEM_VALUES_VERSION } from "./converter-version.ts";
 import { collectItemClasses, syncClassAncestors } from "./class-ancestors.ts";
 import type { Item, Value } from "../src/lib/compare.ts";
 import { fetchClassAncestors } from "../src/lib/sparql.ts";
-import { DB_TEST, insertItemValues, truncateAll } from "../test/db-helpers.ts";
+import { DB_TEST, insertItemRows as insert, truncateAll } from "../test/db-helpers.ts";
 import { quietLogs } from "../test/console.ts";
 
 vi.mock("../src/lib/sparql.ts", () => ({
@@ -24,12 +26,6 @@ function item(qid: string, statements: Record<string, Value[]>): typeof items.$i
     statements,
   };
   return { qid, primaryLabel: qid, data };
-}
-
-/** Insert items with the `item_values` rows the import would write for them. */
-async function insert(rows: (typeof items.$inferInsert)[]): Promise<void> {
-  await db.insert(items).values(rows);
-  await insertItemValues(rows.map((r) => r.data));
 }
 
 const ref = (value: string): Value => ({ type: "item", value });
@@ -52,9 +48,21 @@ describe.skipIf(!DB_TEST)("collectItemClasses", () => {
     expect((await collectItemClasses()).sort()).toEqual(["Q386724", "Q7725634", "Q7889"]);
   });
 
-  it("refuses to collect from an empty item_values beside a non-empty mirror", async () => {
-    await db.insert(items).values([item("Q1", { P31: [ref("Q7889")] })]);
-    await expect(collectItemClasses()).rejects.toThrow(/item_values is empty/);
+  it("refuses to collect while any item predates item_values", async () => {
+    await insert([item("Q1", { P31: [ref("Q7889")] }), item("Q2", { P31: [ref("Q5")] })]);
+    await db.insert(itemSync).values({ qid: "Q1", converterVersion: ITEM_VALUES_VERSION });
+    // Not yet rewritten by the backfill pass, so it may have no rows.
+    await db.insert(itemSync).values({ qid: "Q2", converterVersion: ITEM_VALUES_VERSION - 1 });
+    await expect(collectItemClasses()).rejects.toThrow(/1 items predate item_values/);
+
+    await db.update(itemSync).set({ converterVersion: null }).where(eq(itemSync.qid, "Q2"));
+    await expect(collectItemClasses()).rejects.toThrow(/1 items predate item_values/);
+
+    await db
+      .update(itemSync)
+      .set({ converterVersion: ITEM_VALUES_VERSION })
+      .where(eq(itemSync.qid, "Q2"));
+    expect((await collectItemClasses()).sort()).toEqual(["Q5", "Q7889"]);
   });
 
   it("collects nothing from an empty mirror", async () => {

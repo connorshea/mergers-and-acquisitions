@@ -7,7 +7,7 @@ import { items, placeAncestors } from "../db/schema.ts";
 import { collectItemPlaces, loadPlaceAncestors, syncPlaceAncestors } from "./place-ancestors.ts";
 import type { Item, Value } from "../src/lib/compare.ts";
 import { fetchPlaceAncestors } from "../src/lib/sparql.ts";
-import { DB_TEST, insertItemValues, truncateAll } from "../test/db-helpers.ts";
+import { DB_TEST, insertItemRows as insert, truncateAll } from "../test/db-helpers.ts";
 import { quietLogs } from "../test/console.ts";
 
 vi.mock("../src/lib/sparql.ts", () => ({
@@ -24,12 +24,6 @@ function item(qid: string, statements: Record<string, Value[]>): typeof items.$i
     statements,
   };
   return { qid, primaryLabel: qid, data };
-}
-
-/** Insert items with the `item_values` rows the import would write for them. */
-async function insert(rows: (typeof items.$inferInsert)[]): Promise<void> {
-  await db.insert(items).values(rows);
-  await insertItemValues(rows.map((r) => r.data));
 }
 
 const ref = (value: string): Value => ({ type: "item", value });

@@ -95,6 +95,14 @@ describe("normalize / stringSimilarity", () => {
   it("scores unrelated strings low", () => {
     expect(stringSimilarity("Meridian Games", "Totally Different")).toBeLessThan(0.5);
   });
+
+  it("answers a threshold check the same way when lengths alone rule it out", () => {
+    // 4 vs 12 characters: at most 1/3 similar, whatever the letters.
+    expect(stringSimilarity("Doom", "Doom Eternal", 0.75)).toBeLessThan(0.75);
+    expect(stringSimilarity("Doom", "Doom Eternal")).toBeCloseTo(1 / 3);
+    // Lengths close enough to clear the bar: the exact similarity.
+    expect(stringSimilarity("Doom II", "Doom 2", 0.6)).toBe(stringSimilarity("Doom II", "Doom 2"));
+  });
 });
 
 /** Deterministic PRNG (mulberry32), so the randomized cases below are reproducible. */

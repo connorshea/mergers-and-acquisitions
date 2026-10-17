@@ -261,7 +261,26 @@ export const PROPERTY_LABELS: Record<string, string> = {
  */
 const APOSTROPHES_RE = /[\u2018\u2019\u201B\u02BC\u2032\u0060\u00B4\uFF07]/g;
 
+/**
+ * normalize()'s recent results. Scoring compares every label, alias and
+ * description of one item with every one of the other's, so each string is
+ * normalized many times per pair; the hunt reuses an item across many pairs
+ * too. Cleared when full rather than evicting, which is cheap and enough.
+ */
+const normalized = new Map<string, string>();
+const NORMALIZED_MAX = 50_000;
+
 export function normalize(s: string): string {
+  let n = normalized.get(s);
+  if (n === undefined) {
+    if (normalized.size >= NORMALIZED_MAX) normalized.clear();
+    n = normalizeUncached(s);
+    normalized.set(s, n);
+  }
+  return n;
+}
+
+function normalizeUncached(s: string): string {
   return s
     .toLowerCase()
     .trim()
@@ -293,12 +312,22 @@ export function levenshtein(a: string, b: string): number {
   return row[n]!;
 }
 
-export function stringSimilarity(a: string, b: string): number {
+/**
+ * Similarity (0–1) of two strings after normalize(): 1 minus their edit
+ * distance over the longer length. With `atLeast`, a caller that only asks
+ * whether the pair clears that bar skips the edit distance when the lengths
+ * alone rule it out (it is at least their difference), and gets that bound
+ * back instead, which is below `atLeast`.
+ */
+export function stringSimilarity(a: string, b: string, atLeast = 0): number {
   const na = normalize(a);
   const nb = normalize(b);
   if (na === nb) return 1;
   const max = Math.max(na.length, nb.length);
-  return max === 0 ? 1 : 1 - levenshtein(na, nb) / max;
+  if (max === 0) return 1;
+  const bound = 1 - Math.abs(na.length - nb.length) / max;
+  if (bound < atLeast) return bound;
+  return 1 - levenshtein(na, nb) / max;
 }
 
 /** Dice coefficient (0–1) over the distinct words of two strings. */
@@ -550,7 +579,7 @@ export function compareValues(
         x.label &&
         y.label &&
         !(pid && NO_FUZZY_ITEM_LABELS.has(pid)) &&
-        stringSimilarity(x.label, y.label) >= 0.6
+        stringSimilarity(x.label, y.label, 0.6) >= 0.6
       )
         return ["similar", "different items with similar labels"];
       return ["distinct"];
@@ -609,7 +638,7 @@ export function compareValues(
       return ["distinct"];
     case "string": {
       if (pid && PHONE_PROPS.has(pid)) return comparePhones(x.value, y.value);
-      const s = stringSimilarity(x.value, y.value);
+      const s = stringSimilarity(x.value, y.value, 0.75);
       if (s === 1) return ["similar", "equal after normalization"];
       if (s >= 0.75) return ["similar", `${Math.round(s * 100)}% string match`];
       return ["distinct"];
@@ -1489,7 +1518,7 @@ function disjointCreators(a: Item, b: Item, pid: string): boolean {
     if (x.type === y.type && x.value === y.value) return true;
     const tx = text(x);
     const ty = text(y);
-    return tx !== undefined && ty !== undefined && stringSimilarity(tx, ty) >= 0.9;
+    return tx !== undefined && ty !== undefined && stringSimilarity(tx, ty, 0.9) >= 0.9;
   };
   return !va.some((x) => vb.some((y) => overlaps(x, y)));
 }

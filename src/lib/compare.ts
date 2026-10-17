@@ -7,6 +7,7 @@
 import { coordinateDistance, formatMeters, globeOf } from "./coordinates.ts";
 import { POINT_PLACE_CLASSES } from "./import-classes.ts";
 import { PLACE_PROPS, type PlaceContainment } from "./places.ts";
+import { coarseTimeRange, coarseTimeText, isCoarseTime } from "./time.ts";
 import { sitelinkHost } from "./wiki.ts";
 
 // ---------- Types ----------
@@ -56,6 +57,13 @@ export interface Value {
   globe?: string;
   /** Human label for `globe`, backfilled for display like `unitLabel`. */
   globeLabel?: string;
+  /**
+   * Time values only: Wikibase's precision when it is coarser than a year (8
+   * decade, 7 century, 6 millennium, …), since `value` alone can't say so:
+   * "20th century" is stored as `+1901-00-00`. Absent at year precision and
+   * finer, which the zeroed month and day already encode. See src/lib/time.ts.
+   */
+  timePrecision?: number;
   /**
    * QIDs of the *other* items this identifier is declared to also cover —
    * Wikidata's "identifier shared with" (P4070) qualifier on the statement. An
@@ -561,6 +569,30 @@ function comparePlaces(
 }
 
 /**
+ * Two times at least one of which is only known to the decade, century or
+ * coarser, compared as the spans of years they cover: the same span at the
+ * same precision is identical, an overlapping one similar (1978 is in the 20th
+ * century), a disjoint one distinct.
+ */
+function compareCoarseTimes(x: Value, y: Value): [Status, string?] {
+  const span = (v: Value): [number, number] | null => {
+    const coarse = coarseTimeRange(v);
+    if (coarse) return coarse;
+    const year = parseInt(/^[+-]?\d+/.exec(v.value)?.[0] ?? "", 10);
+    return Number.isFinite(year) ? [year, year] : null;
+  };
+  const sx = span(x);
+  const sy = span(y);
+  if (!sx || !sy || sx[1] < sy[0] || sy[1] < sx[0]) return ["distinct"];
+  if (sx[0] === sy[0] && sx[1] === sy[1] && x.timePrecision === y.timePrecision)
+    return ["identical"];
+  const [inner, outer] = sx[1] - sx[0] <= sy[1] - sy[0] ? [x, y] : [y, x];
+  const name = (v: Value): string =>
+    coarseTimeText(v) ?? (/^[+-]?\d+/.exec(v.value)?.[0] ?? v.value).replace(/^\+/, "");
+  return ["similar", `${name(inner)} is in the ${name(outer)}`];
+}
+
+/**
  * Returns [status, note, broad] for a pair of values of the same property.
  * `pid`, when given, is that property; it turns off the fuzzy item-label hint
  * for NO_FUZZY_ITEM_LABELS and compares PHONE_PROPS values by digits. With
@@ -584,6 +616,8 @@ export function compareValues(
   if (x.type === "quantity" && x.unit !== y.unit) return ["distinct"];
   // Points on different globes never match, whatever their numbers.
   if (x.type === "coordinate" && globeOf(x) !== globeOf(y)) return ["distinct"];
+  // A decade, century or coarser: a span of years, not the year it's stored as.
+  if (x.type === "time" && (isCoarseTime(x) || isCoarseTime(y))) return compareCoarseTimes(x, y);
   if (x.value === y.value) return ["identical"];
 
   switch (x.type) {
@@ -1655,10 +1689,11 @@ const ACTIVITY_SLACK_YEARS = 2;
  */
 export function activityConflicts(a: Item, b: Item): string[] {
   if (!isHuman(a) || !isHuman(b)) return [];
+  // Exact years only: a birth in the "20th century" is stored as 1901.
   const years = (item: Item, pids: readonly string[]): number[] =>
     pids
       .flatMap((pid) => item.statements[pid] ?? [])
-      .filter((v) => v.type === "time")
+      .filter((v) => v.type === "time" && !isCoarseTime(v))
       .map((v) => parseInt(/^[+-]?\d+/.exec(v.value)?.[0] ?? "", 10))
       .filter((n) => Number.isFinite(n));
   const conflicts: string[] = [];
@@ -3141,11 +3176,12 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
   // (P577): they are the equivalent date for bands, companies and people.
   // Start of work period (P2031) counts too, except for people. Wikibase times
   // are signed (`+1993-08-31T00:00:00Z`), so read the year up to its first dash
-  // rather than a fixed four characters.
+  // rather than a fixed four characters. A decade or century has no one year
+  // ("20th century" is stored as 1901), so it's left out.
   const statementYears = (item: Item, pids: readonly string[]): number[] =>
     pids
       .flatMap((pid) => item.statements[pid] ?? [])
-      .filter((v) => v.type === "time")
+      .filter((v) => v.type === "time" && !isCoarseTime(v))
       .map((v) => parseInt(/^[+-]?\d+/.exec(v.value)?.[0] ?? "", 10))
       .filter((n) => Number.isFinite(n));
   const closestGap = (xs: number[], ys: number[]): number => {

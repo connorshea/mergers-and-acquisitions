@@ -7,6 +7,7 @@
 // reasons: the point is a second, independent opinion to rank by.
 
 import { type Item, isRedirectSitelink, type Value } from "./compare.ts";
+import { coarseTimeText } from "./time.ts";
 
 /**
  * Bumped whenever the system prompt, the rendering, or the verdict schema
@@ -150,7 +151,7 @@ function formatValue(v: Value, labelOf: LabelLookup): string {
     case "item":
       return named(v.value, labelOf);
     case "time":
-      return formatTime(v.value);
+      return coarseTimeText(v) ?? formatTime(v.value);
     case "quantity": {
       const unitLabel = v.unit ? labelOf(v.unit) : undefined;
       const unit = v.unit ? ` ${unitLabel ? quote(unitLabel) : v.unit}` : "";

@@ -1,0 +1,1238 @@
+{
+  "pageid": 108041606,
+  "ns": 0,
+  "title": "Q113240581",
+  "lastrevid": 2531516160,
+  "modified": "2026-08-14T23:34:42Z",
+  "type": "item",
+  "id": "Q113240581",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "Marc Cortez"
+    },
+    "sq": {
+      "language": "sq",
+      "value": "Marc Cortez"
+    },
+    "mul": {
+      "language": "mul",
+      "value": "Marc Cortez"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "American investor & actor"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "মার্কিন বিনিয়োগকারী ও অভিনেতা"
+    },
+    "as": {
+      "language": "as",
+      "value": "আমেৰিকান বিনিয়োগকাৰী আৰু অভিনেতা"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q113240581$a7051d26-46d5-18ab-d8c3-c354c3562d75",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q113240581$34a4bd41-4567-70e7-7778-58e92504b723",
+        "rank": "normal"
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "489664fca2ab1a9e1eced0218b3500d95f05f850",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 557880,
+              "id": "Q557880"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q113240581$e6b1cf38-4006-2444-34cd-61c8b4fd8928",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "08a616858e15dcfcac91af630c7bfb3774f29441",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "288e49929f83e34d499bf308cd2d0b51ccdd87b5",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 213660,
+                      "id": "Q213660"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P6634": [
+                {
+                  "snaktype": "value",
+                  "property": "P6634",
+                  "hash": "55b5e4fb16311c6c3a4d138473fe2d866b0ab420",
+                  "datavalue": {
+                    "value": "mrmarccortez",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "0399a754b29511df31d9b2c5309e5cddfec8f8f0",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-07-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P6634", "P813"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "758295c4843ebfb766fc8236d4849374401bd73e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 33999,
+              "id": "Q33999"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q113240581$567afdc7-40f1-eea9-dcbf-9cb92bdc0a41",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d0dbc8876ac04c0b3af289e5d41374879fa50c93",
+            "snaks": {
+              "P3865": [
+                {
+                  "snaktype": "value",
+                  "property": "P3865",
+                  "hash": "7fc8f7a4fc336350629329d08e726b950d7d4707",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 22137024,
+                      "id": "Q22137024"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "05a232afc913b73afb6f0001df13444fe15a290e",
+                  "datavalue": {
+                    "value": "https://www.marc-cortez.com/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "0399a754b29511df31d9b2c5309e5cddfec8f8f0",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-07-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P407": [
+                {
+                  "snaktype": "value",
+                  "property": "P407",
+                  "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 1860,
+                      "id": "Q1860"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P3865", "P854", "P813", "P407"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "205ec6a1bb145f7bd50097f242476315b54531c7",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 131524,
+              "id": "Q131524"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q113240581$468b6129-4544-6b94-6dc1-a39529909ca5",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "08a616858e15dcfcac91af630c7bfb3774f29441",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "288e49929f83e34d499bf308cd2d0b51ccdd87b5",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 213660,
+                      "id": "Q213660"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P6634": [
+                {
+                  "snaktype": "value",
+                  "property": "P6634",
+                  "hash": "55b5e4fb16311c6c3a4d138473fe2d866b0ab420",
+                  "datavalue": {
+                    "value": "mrmarccortez",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "0399a754b29511df31d9b2c5309e5cddfec8f8f0",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-07-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P6634", "P813"]
+          }
+        ]
+      }
+    ],
+    "P6634": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6634",
+          "hash": "55b5e4fb16311c6c3a4d138473fe2d866b0ab420",
+          "datavalue": {
+            "value": "mrmarccortez",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q113240581$75fad002-466b-d24b-f5ee-27420c7a098b",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d0dbc8876ac04c0b3af289e5d41374879fa50c93",
+            "snaks": {
+              "P3865": [
+                {
+                  "snaktype": "value",
+                  "property": "P3865",
+                  "hash": "7fc8f7a4fc336350629329d08e726b950d7d4707",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 22137024,
+                      "id": "Q22137024"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "05a232afc913b73afb6f0001df13444fe15a290e",
+                  "datavalue": {
+                    "value": "https://www.marc-cortez.com/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "0399a754b29511df31d9b2c5309e5cddfec8f8f0",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-07-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P407": [
+                {
+                  "snaktype": "value",
+                  "property": "P407",
+                  "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 1860,
+                      "id": "Q1860"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P3865", "P854", "P813", "P407"]
+          }
+        ]
+      }
+    ],
+    "P551": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P551",
+          "hash": "1058c3c697b3b4ae427f44c98f22ea01e6f2cdc8",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1050826,
+              "id": "Q1050826"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P580": [
+            {
+              "snaktype": "value",
+              "property": "P580",
+              "hash": "156d9bab431a7ff8a8df6b57193f4f99bf1244c9",
+              "datavalue": {
+                "value": {
+                  "time": "+2011-06-00T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 10,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P580"],
+        "id": "Q113240581$a07de4fc-40ae-9a34-2721-74d00e2d1100",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "08a616858e15dcfcac91af630c7bfb3774f29441",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "288e49929f83e34d499bf308cd2d0b51ccdd87b5",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 213660,
+                      "id": "Q213660"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P6634": [
+                {
+                  "snaktype": "value",
+                  "property": "P6634",
+                  "hash": "55b5e4fb16311c6c3a4d138473fe2d866b0ab420",
+                  "datavalue": {
+                    "value": "mrmarccortez",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "0399a754b29511df31d9b2c5309e5cddfec8f8f0",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-07-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P6634", "P813"]
+          }
+        ]
+      }
+    ],
+    "P108": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P108",
+          "hash": "ce282baf81106bc067cdfcfe40074d6a99ed416b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 333718,
+              "id": "Q333718"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P580": [
+            {
+              "snaktype": "value",
+              "property": "P580",
+              "hash": "322aee4f5183f2ec652eddc9021117b4d17dc383",
+              "datavalue": {
+                "value": {
+                  "time": "+2010-06-00T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 10,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P582": [
+            {
+              "snaktype": "value",
+              "property": "P582",
+              "hash": "dd1c825ba5595331a4673f1b8b75e62de368812c",
+              "datavalue": {
+                "value": {
+                  "time": "+2010-08-00T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 10,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P937": [
+            {
+              "snaktype": "value",
+              "property": "P937",
+              "hash": "0cf60dd8823eae28472b5f165a9a73783b688dd5",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 138338,
+                  "id": "Q138338"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P580", "P582", "P937"],
+        "id": "Q113240581$a1977e2b-414d-33ce-3b97-2bd510709abc",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "08a616858e15dcfcac91af630c7bfb3774f29441",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "288e49929f83e34d499bf308cd2d0b51ccdd87b5",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 213660,
+                      "id": "Q213660"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P6634": [
+                {
+                  "snaktype": "value",
+                  "property": "P6634",
+                  "hash": "55b5e4fb16311c6c3a4d138473fe2d866b0ab420",
+                  "datavalue": {
+                    "value": "mrmarccortez",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "0399a754b29511df31d9b2c5309e5cddfec8f8f0",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-07-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P6634", "P813"]
+          }
+        ]
+      }
+    ],
+    "P69": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P69",
+          "hash": "6e3bd8a959398a1e7ec26a3d4a60cc7fde55f294",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 499451,
+              "id": "Q499451"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P580": [
+            {
+              "snaktype": "value",
+              "property": "P580",
+              "hash": "2ff980d429ca62a9f912808fc44b6488fe02ca1c",
+              "datavalue": {
+                "value": {
+                  "time": "+2007-00-00T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 9,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P582": [
+            {
+              "snaktype": "value",
+              "property": "P582",
+              "hash": "f8612f95221010acb3bf2e187932c458ab880b91",
+              "datavalue": {
+                "value": {
+                  "time": "+2011-00-00T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 9,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ],
+          "P812": [
+            {
+              "snaktype": "value",
+              "property": "P812",
+              "hash": "f615a5299196b2761384b51212444ace060a438a",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 8134,
+                  "id": "Q8134"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            },
+            {
+              "snaktype": "value",
+              "property": "P812",
+              "hash": "5e5d6db7997af9157667dcb50717b5948db7bb8a",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 3908516,
+                  "id": "Q3908516"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P580", "P582", "P812"],
+        "id": "Q113240581$4f3568aa-4e60-90b0-a8e1-722fc3518258",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "08a616858e15dcfcac91af630c7bfb3774f29441",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "288e49929f83e34d499bf308cd2d0b51ccdd87b5",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 213660,
+                      "id": "Q213660"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P6634": [
+                {
+                  "snaktype": "value",
+                  "property": "P6634",
+                  "hash": "55b5e4fb16311c6c3a4d138473fe2d866b0ab420",
+                  "datavalue": {
+                    "value": "mrmarccortez",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "0399a754b29511df31d9b2c5309e5cddfec8f8f0",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-07-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P6634", "P813"]
+          }
+        ]
+      }
+    ],
+    "P1412": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1412",
+          "hash": "7056615ebf0fbde82a3ca3bb9b2c481669a46eb1",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1860,
+              "id": "Q1860"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q113240581$1f07999f-4ec5-b9b9-ec5b-e621f3cc4f8a",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "08a616858e15dcfcac91af630c7bfb3774f29441",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "288e49929f83e34d499bf308cd2d0b51ccdd87b5",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 213660,
+                      "id": "Q213660"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P6634": [
+                {
+                  "snaktype": "value",
+                  "property": "P6634",
+                  "hash": "55b5e4fb16311c6c3a4d138473fe2d866b0ab420",
+                  "datavalue": {
+                    "value": "mrmarccortez",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "0399a754b29511df31d9b2c5309e5cddfec8f8f0",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-07-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P6634", "P813"]
+          }
+        ]
+      },
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1412",
+          "hash": "e7aed5507e8abae419519ce2d59e3bdba6ab87a4",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 34057,
+              "id": "Q34057"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q113240581$5957758a-4478-a24a-6814-f13d0e286288",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "08a616858e15dcfcac91af630c7bfb3774f29441",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "288e49929f83e34d499bf308cd2d0b51ccdd87b5",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 213660,
+                      "id": "Q213660"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P6634": [
+                {
+                  "snaktype": "value",
+                  "property": "P6634",
+                  "hash": "55b5e4fb16311c6c3a4d138473fe2d866b0ab420",
+                  "datavalue": {
+                    "value": "mrmarccortez",
+                    "type": "string"
+                  },
+                  "datatype": "external-id"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "0399a754b29511df31d9b2c5309e5cddfec8f8f0",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-07-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P6634", "P813"]
+          }
+        ]
+      }
+    ],
+    "P856": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P856",
+          "hash": "45bb8e40437e08ee4f4050c61dded904f6107d42",
+          "datavalue": {
+            "value": "https://www.marc-cortez.com/",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 1860,
+                  "id": "Q1860"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": ["P407"],
+        "id": "Q113240581$b173e730-45e2-5ba5-8808-f58ea1f82d02",
+        "rank": "normal"
+      }
+    ],
+    "P968": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P968",
+          "hash": "68f160762754411783bf00d3e9c232aa88b9b714",
+          "datavalue": {
+            "value": "mailto:casting@marc-cortez.com",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q113240581$5878cd39-4d03-43d2-6631-82d942128118",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d0dbc8876ac04c0b3af289e5d41374879fa50c93",
+            "snaks": {
+              "P3865": [
+                {
+                  "snaktype": "value",
+                  "property": "P3865",
+                  "hash": "7fc8f7a4fc336350629329d08e726b950d7d4707",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 22137024,
+                      "id": "Q22137024"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "05a232afc913b73afb6f0001df13444fe15a290e",
+                  "datavalue": {
+                    "value": "https://www.marc-cortez.com/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "0399a754b29511df31d9b2c5309e5cddfec8f8f0",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-07-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P407": [
+                {
+                  "snaktype": "value",
+                  "property": "P407",
+                  "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 1860,
+                      "id": "Q1860"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P3865", "P854", "P813", "P407"]
+          }
+        ]
+      }
+    ],
+    "P2003": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2003",
+          "hash": "3d9a77c31a72f4a2064c275f76ca6cb5f8162fc7",
+          "datavalue": {
+            "value": "mrmarccortez",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P12546": [
+            {
+              "snaktype": "somevalue",
+              "property": "P12546",
+              "hash": "533b1250df2492bf500e17e9f0486f9009412ea4",
+              "datatype": "external-id"
+            }
+          ],
+          "P582": [
+            {
+              "snaktype": "somevalue",
+              "property": "P582",
+              "hash": "0f0e43d5ac17613a0369bf0d65a07a326f4b8d98",
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": ["P12546", "P582"],
+        "id": "Q113240581$c5af8129-4cc9-6170-4a58-98714a70c21d",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d0dbc8876ac04c0b3af289e5d41374879fa50c93",
+            "snaks": {
+              "P3865": [
+                {
+                  "snaktype": "value",
+                  "property": "P3865",
+                  "hash": "7fc8f7a4fc336350629329d08e726b950d7d4707",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 22137024,
+                      "id": "Q22137024"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "05a232afc913b73afb6f0001df13444fe15a290e",
+                  "datavalue": {
+                    "value": "https://www.marc-cortez.com/",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "0399a754b29511df31d9b2c5309e5cddfec8f8f0",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2022-07-24T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P407": [
+                {
+                  "snaktype": "value",
+                  "property": "P407",
+                  "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 1860,
+                      "id": "Q1860"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P3865", "P854", "P813", "P407"]
+          }
+        ]
+      }
+    ],
+    "P973": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P973",
+          "hash": "c9ca25b7d288fa37dd77396dbf0ae16a34b8e876",
+          "datavalue": {
+            "value": "https://resumes.actorsaccess.com/marccortez",
+            "type": "string"
+          },
+          "datatype": "url"
+        },
+        "type": "statement",
+        "id": "Q113240581$dbbba7ec-44e8-6035-006f-2682f13ca521",
+        "rank": "normal"
+      }
+    ],
+    "P345": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P345",
+          "hash": "fe4ba6fabc2633c4d2a595b1672e84b649bf86b0",
+          "datavalue": {
+            "value": "nm12438434",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q113240581$0bdfe584-40e0-552e-1639-81491839951f",
+        "rank": "normal"
+      }
+    ],
+    "P2671": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2671",
+          "hash": "752f3358a3c5482bf80f06f6268128fa92cf9c40",
+          "datavalue": {
+            "value": "/g/11t2vg_n4g",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q113240581$7A657573-0C56-46C6-A49C-9A1F72E2A591",
+        "rank": "normal"
+      }
+    ],
+    "P14750": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P14750",
+          "hash": "48121a5753c3346231c5f185f17436e0962e17e9",
+          "datavalue": {
+            "value": "D6C1-9BF5-B4B7-114B-B35D",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q113240581$7B789AB6-9DE3-4799-9562-1D68E4B5FAE2",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

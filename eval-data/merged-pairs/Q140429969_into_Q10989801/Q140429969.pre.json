@@ -1,0 +1,103 @@
+{
+  "pageid": 133870113,
+  "ns": 0,
+  "title": "Q140429969",
+  "lastrevid": 2534289244,
+  "modified": "2026-08-21T16:18:03Z",
+  "type": "item",
+  "id": "Q140429969",
+  "labels": {
+    "en": {
+      "language": "en",
+      "value": "James Bryant"
+    }
+  },
+  "descriptions": {
+    "en": {
+      "language": "en",
+      "value": "English cricketer (18th century)"
+    },
+    "bn": {
+      "language": "bn",
+      "value": "অষ্টাদশ শতাব্দীর ইংরেজ ক্রিকেটার ()"
+    },
+    "as": {
+      "language": "as",
+      "value": "অষ্টাদশ শতিকাৰ ইংৰাজ ক্ৰিকেটাৰ ()"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "ad7d38a03cdd40cdc373de0dc4e7b7fcbccb31d9",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 5,
+              "id": "Q5"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q140429969$d657ae23-1eb6-42e8-a26f-9f31f18b0a4a",
+        "rank": "normal"
+      }
+    ],
+    "P21": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P21",
+          "hash": "85ad4b1c7348f7a5aac521135040d74e91fb5939",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 6581097,
+              "id": "Q6581097"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q140429969$8a0f4320-5be5-476d-a23f-45fc87152ad9",
+        "rank": "normal"
+      }
+    ],
+    "P106": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P106",
+          "hash": "0d066fe8181958b9523091d4b51084aacf845b37",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 12299841,
+              "id": "Q12299841"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q140429969$4f0c555c-e97e-44f3-b3df-871623999116",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "enwiki": {
+      "site": "enwiki",
+      "title": "James Bryant (Kent cricketer)",
+      "badges": [],
+      "url": "https://en.wikipedia.org/wiki/James_Bryant_(Kent_cricketer)"
+    }
+  }
+}

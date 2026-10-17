@@ -59,6 +59,7 @@ const REASON_TONES: [RegExp, ReasonTone["polarity"], ReasonTone["strength"]][] =
   [/^same date of (birth|death)/, "positive", 2],
   [/^nearby coordinate locations/, "positive", 2],
   [/^sitelink redirects to the other item's page/, "positive", 2],
+  [/^a page redirects to a section of the other item's page/, "negative", 2],
   [/^shares /, "positive", 1], // account/social, aggregator, page-section ids
   [/^loosely similar names/, "positive", 1],
   [/^same instance of/, "positive", 1],

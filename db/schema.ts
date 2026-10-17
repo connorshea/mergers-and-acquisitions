@@ -131,6 +131,27 @@ export const externalIds = mysqlTable(
   ],
 );
 
+// The item values (QIDs) of the statements the weekly syncs look up
+// (ITEM_VALUE_PROPS in src/lib/wikidata.ts: instance of, subclass of, and the
+// place properties), written by the dump import beside `external_ids`. Lets
+// jobs/sync-properties.ts and jobs/sync-place-ancestors.ts collect their
+// distinct values from an index instead of pulling them out of every item's
+// `data` (a JSON_TABLE scan that took ~12 min at 5.3M items).
+export const itemValues = mysqlTable(
+  "item_values",
+  {
+    qid: varchar("qid", { length: 32 })
+      .notNull()
+      .references(() => items.qid, { onDelete: "cascade" }),
+    property: varchar("property", { length: 16 }).notNull(), // e.g. "P159" (headquarters location)
+    value: varchar("value", { length: 32 }).notNull(), // e.g. "Q1490" (Tokyo)
+  },
+  (t) => [
+    primaryKey({ columns: [t.qid, t.property, t.value] }),
+    index("idx_item_values_property_value").on(t.property, t.value),
+  ],
+);
+
 // The `(property, value)` keys of `external_ids` held by two or more qids, so
 // the hunt's shared-id blocking reads only these instead of grouping every
 // external id. Kept by the hunt itself (`refreshDupeKeys` in server/hunt.ts):

@@ -588,19 +588,29 @@ describe("isLockConflict", () => {
 describe("itemHash", () => {
   const item = { id: "Q1", labels: { en: "A" }, statements: {} } as unknown as Item;
   const ids = [{ property: "P1733", value: "1" }];
+  const values = [{ property: "P31", value: "Q7889" }];
 
   it("ignores the order the item's keys were built in", () => {
     const reordered = { statements: {}, labels: { en: "A" }, id: "Q1" } as unknown as Item;
-    expect(itemHash("A", "Q7889", reordered, ids)).toBe(itemHash("A", "Q7889", item, ids));
+    expect(itemHash("A", "Q7889", reordered, ids, values)).toBe(
+      itemHash("A", "Q7889", item, ids, values),
+    );
   });
 
-  it("changes with the item, its columns, or the external ids kept for it", () => {
-    const base = itemHash("A", "Q7889", item, ids);
+  it("changes with the item, its columns, or the external ids and item values kept for it", () => {
+    const base = itemHash("A", "Q7889", item, ids, values);
     const relabelled = { ...item, labels: { en: "B" } } as unknown as Item;
-    expect(itemHash("A", "Q7889", relabelled, ids)).not.toBe(base);
-    expect(itemHash("B", "Q7889", item, ids)).not.toBe(base);
-    expect(itemHash("A", null, item, ids)).not.toBe(base);
-    expect(itemHash("A", "Q7889", item, [{ property: "P1733", value: "2" }])).not.toBe(base);
-    expect(itemHash("A", "Q7889", item, [])).not.toBe(base);
+    expect(itemHash("A", "Q7889", relabelled, ids, values)).not.toBe(base);
+    expect(itemHash("B", "Q7889", item, ids, values)).not.toBe(base);
+    expect(itemHash("A", null, item, ids, values)).not.toBe(base);
+    expect(itemHash("A", "Q7889", item, [{ property: "P1733", value: "2" }], values)).not.toBe(
+      base,
+    );
+    expect(itemHash("A", "Q7889", item, [], values)).not.toBe(base);
+    expect(itemHash("A", "Q7889", item, ids, [])).not.toBe(base);
+    // An external id and an item value with the same key are told apart.
+    expect(itemHash("A", "Q7889", item, [], [...ids, ...values])).not.toBe(
+      itemHash("A", "Q7889", item, [...ids, ...values], []),
+    );
   });
 });

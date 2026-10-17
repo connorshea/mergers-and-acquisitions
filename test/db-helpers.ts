@@ -3,12 +3,12 @@
 import { sql } from "drizzle-orm";
 import { db } from "../server/db.ts";
 import { clearCandidateCounts } from "../server/candidate-count-cache.ts";
-import { externalIds, itemSync, items, sessions, users } from "../db/schema.ts";
+import { externalIds, itemSync, itemValues, items, sessions, users } from "../db/schema.ts";
 import { SESSION_COOKIE, SESSION_TTL_SECONDS } from "../server/auth/session.ts";
 import { randomToken, sha256Hex } from "../server/auth/crypto.ts";
 import { addSeconds, toSqlDatetime } from "../server/auth/time.ts";
 import type { Item, Value } from "../src/lib/compare.ts";
-import { externalIdRows, primaryLabel, primaryType } from "../src/lib/wikidata.ts";
+import { externalIdRows, itemValueRows, primaryLabel, primaryType } from "../src/lib/wikidata.ts";
 
 /** True when the DB tests should run; use with `describe.skipIf(!DB_TEST)`. */
 export const DB_TEST = process.env.DB_TEST === "1";
@@ -29,9 +29,17 @@ const TABLES = [
   "llm_reviews",
 ];
 
-// The auth tables and items/item_sync are linked by foreign keys, which
-// MariaDB refuses to TRUNCATE through; DELETE them children-first instead.
-const FK_TABLES = ["item_sync", "items", "wikidata_edits", "sessions", "oauth_tokens", "users"];
+// The auth tables and items/item_sync/item_values are linked by foreign keys,
+// which MariaDB refuses to TRUNCATE through; DELETE them children-first instead.
+const FK_TABLES = [
+  "item_sync",
+  "item_values",
+  "items",
+  "wikidata_edits",
+  "sessions",
+  "oauth_tokens",
+  "users",
+];
 
 /** Empty every application table (not the migrations journal). */
 export async function truncateAll(): Promise<void> {
@@ -99,7 +107,7 @@ export function makeItem(
 /**
  * Insert an item the way the import does: the `items` row with its
  * denormalized label/type, its `item_sync` row (not yet seen in any dump), plus
- * one `external_ids` row per external-id value.
+ * one `external_ids` row per external-id value and its `item_values` rows.
  */
 export async function insertItem(item: Item): Promise<void> {
   await db.insert(items).values({
@@ -111,4 +119,11 @@ export async function insertItem(item: Item): Promise<void> {
   await db.insert(itemSync).values({ qid: item.id });
   const rows = externalIdRows(item).map((r) => ({ qid: item.id, ...r }));
   if (rows.length > 0) await db.insert(externalIds).values(rows);
+  await insertItemValues([item]);
+}
+
+/** The `item_values` rows the import would write for `list`. */
+export async function insertItemValues(list: readonly Item[]): Promise<void> {
+  const rows = list.flatMap((item) => itemValueRows(item).map((r) => ({ qid: item.id, ...r })));
+  if (rows.length > 0) await db.insert(itemValues).values(rows);
 }

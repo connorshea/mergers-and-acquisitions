@@ -51,10 +51,11 @@
 # values the new dump brought in: after the import's 3 h timeout (09:00), so
 # it reads the whole new mirror, and before the 10:00 hunt and
 # sync-entity-labels, so the hunt scores with the fresh rows and the two
-# QLever-heavy syncs don't run at once. 09:15 rather than later because
-# collecting the places alone took 12.5 min on the first run (~190k from 5.3M
-# items), with ~190 QLever chunks still to go; it may overlap sync-properties'
-# class-ancestor lookups, which are far fewer. If it
+# QLever-heavy syncs don't run at once. 09:15 rather than later to leave the
+# ~190 QLever chunks (~190k places at 5.3M items) time before 10:00; it may
+# overlap sync-properties' class-ancestor lookups, which are far fewer. The
+# places come from `item_values`, which the import keeps (collecting them from
+# every item's data took 12.5 min). If it
 # ever runs past 10:00, the hunt reads each place's rows as they stand
 # (rewritten a chunk at a time, so this week's for some places and last week's
 # for the rest); places rarely move, so that costs little.

@@ -20,6 +20,9 @@ export const CONVERTER_OUTPUTS = [
   "67bcc726f2deb6e0003a1252433338bba960aa96",
   // Musical notation (P6670) stored as a `musical-notation` value instead of a string.
   "c3f167c9205618016c2efd6eaff84e7b2be7dccc",
+  // Class and place values stored in `item_values` (and covered by the item
+  // hash, so the next import writes every item's rows: the backfill).
+  "bb9105c9d05436375a1532596f0e3de73acecf1a",
 ] as const;
 
 export const CONVERTER_VERSION = CONVERTER_OUTPUTS.length;

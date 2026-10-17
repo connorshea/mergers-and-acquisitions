@@ -7,7 +7,7 @@ import { classAncestors, items } from "../db/schema.ts";
 import { collectItemClasses, syncClassAncestors } from "./class-ancestors.ts";
 import type { Item, Value } from "../src/lib/compare.ts";
 import { fetchClassAncestors } from "../src/lib/sparql.ts";
-import { DB_TEST, truncateAll } from "../test/db-helpers.ts";
+import { DB_TEST, insertItemValues, truncateAll } from "../test/db-helpers.ts";
 import { quietLogs } from "../test/console.ts";
 
 vi.mock("../src/lib/sparql.ts", () => ({
@@ -26,6 +26,12 @@ function item(qid: string, statements: Record<string, Value[]>): typeof items.$i
   return { qid, primaryLabel: qid, data };
 }
 
+/** Insert items with the `item_values` rows the import would write for them. */
+async function insert(rows: (typeof items.$inferInsert)[]): Promise<void> {
+  await db.insert(items).values(rows);
+  await insertItemValues(rows.map((r) => r.data));
+}
+
 const ref = (value: string): Value => ({ type: "item", value });
 
 const rows = async () =>
@@ -36,18 +42,23 @@ afterAll(() => (DB_TEST ? pool.end() : undefined));
 describe.skipIf(!DB_TEST)("collectItemClasses", () => {
   beforeEach(truncateAll);
 
-  it("collects distinct instance of and subclass of values across every page", async () => {
-    await db
-      .insert(items)
-      .values([
-        item("Q1", { P31: [ref("Q7889")], P136: [ref("Q100")] }),
-        item("Q2", { P31: [ref("Q7889"), ref("Q7725634")] }),
-        item("Q3", { P279: [ref("Q386724")], P31: [{ type: "somevalue", value: "" }] }),
-        item("Q4", {}),
-      ]);
-    for (const pageSize of [1, 3, 5000]) {
-      expect((await collectItemClasses(pageSize)).sort()).toEqual(["Q386724", "Q7725634", "Q7889"]);
-    }
+  it("collects distinct instance of and subclass of values", async () => {
+    await insert([
+      item("Q1", { P31: [ref("Q7889")], P136: [ref("Q100")] }),
+      item("Q2", { P31: [ref("Q7889"), ref("Q7725634")] }),
+      item("Q3", { P279: [ref("Q386724")], P31: [{ type: "somevalue", value: "" }] }),
+      item("Q4", {}),
+    ]);
+    expect((await collectItemClasses()).sort()).toEqual(["Q386724", "Q7725634", "Q7889"]);
+  });
+
+  it("refuses to collect from an empty item_values beside a non-empty mirror", async () => {
+    await db.insert(items).values([item("Q1", { P31: [ref("Q7889")] })]);
+    await expect(collectItemClasses()).rejects.toThrow(/item_values is empty/);
+  });
+
+  it("collects nothing from an empty mirror", async () => {
+    expect(await collectItemClasses()).toEqual([]);
   });
 });
 
@@ -56,9 +67,7 @@ describe.skipIf(!DB_TEST)("syncClassAncestors", () => {
   quietLogs();
 
   it("replaces looked-up classes, drops gone ones, and keeps failed ones", async () => {
-    await db
-      .insert(items)
-      .values([item("Q1", { P31: [ref("Q7889")] }), item("Q2", { P31: [ref("Q7725634")] })]);
+    await insert([item("Q1", { P31: [ref("Q7889")] }), item("Q2", { P31: [ref("Q7725634")] })]);
     await db.insert(classAncestors).values([
       { class: "Q7889", ancestor: "Q7889" },
       { class: "Q7889", ancestor: "Q1" }, // stale
@@ -80,7 +89,7 @@ describe.skipIf(!DB_TEST)("syncClassAncestors", () => {
   });
 
   it("throws, writing nothing, when every lookup fails", async () => {
-    await db.insert(items).values([item("Q1", { P31: [ref("Q7889")] })]);
+    await insert([item("Q1", { P31: [ref("Q7889")] })]);
     await db.insert(classAncestors).values([{ class: "Q7889", ancestor: "Q7889" }]);
     vi.mocked(fetchClassAncestors).mockResolvedValueOnce({
       ancestors: new Map(),

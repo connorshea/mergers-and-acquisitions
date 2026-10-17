@@ -17,8 +17,8 @@ const ROWS_PER_STMT = 1000;
 const LOG_EVERY_CHUNKS = 20;
 
 /** The distinct place values (PLACE_PROPS) across every synced item. */
-export function collectItemPlaces(pageSize?: number): Promise<string[]> {
-  return collectItemValues([...PLACE_PROPS], "place ancestors", pageSize);
+export function collectItemPlaces(): Promise<string[]> {
+  return collectItemValues([...PLACE_PROPS]);
 }
 
 export interface PlaceAncestorsSyncResult {

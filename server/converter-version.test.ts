@@ -19,10 +19,10 @@ function outputHash(): string {
   const hash = createHash("sha1");
   for (const entity of entities) {
     const item = entityToItem(entity);
-    // The hash covers label, type, data, and external-id rows; the rows
-    // themselves are included too, in case itemHash ever stops covering them.
-    const { dataHash, ids } = prepareRow(item);
-    hash.update(`${entity.id}\t${dataHash}\t${JSON.stringify(ids)}\n`);
+    // The hash covers label, type, data, external-id and item-value rows; the
+    // rows themselves are included too, in case itemHash ever stops covering them.
+    const { dataHash, ids, values } = prepareRow(item);
+    hash.update(`${entity.id}\t${dataHash}\t${JSON.stringify(ids)}\t${JSON.stringify(values)}\n`);
   }
   return hash.digest("hex");
 }

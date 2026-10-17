@@ -14,6 +14,7 @@ import {
   dumpImportSegments,
   externalIds,
   itemSync,
+  itemValues,
   items,
   mergeCandidates,
   properties,
@@ -36,6 +37,10 @@ const p31 = (qid: string): Statement => ({
     datatype: "wikibase-item",
     datavalue: itemRef(qid),
   },
+  rank: "normal",
+});
+const itemClaim = (property: string, qid: string): Statement => ({
+  mainsnak: { snaktype: "value", property, datatype: "wikibase-item", datavalue: itemRef(qid) },
   rank: "normal",
 });
 const steam = (value: string): Statement => ({
@@ -91,6 +96,16 @@ const idsOf = (qid: string) =>
     .select({ property: externalIds.property, value: externalIds.value })
     .from(externalIds)
     .where(eq(externalIds.qid, qid));
+
+const valuesOf = async (qid: string) =>
+  (
+    await db
+      .select({ property: itemValues.property, value: itemValues.value })
+      .from(itemValues)
+      .where(eq(itemValues.qid, qid))
+  )
+    .map((r) => `${r.property}=${r.value}`)
+    .sort();
 
 describe.skipIf(!DB_TEST)("runDumpImport", () => {
   beforeEach(truncateAll);
@@ -157,6 +172,26 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
     expect(await rowId("1")).toBe(kept);
     expect(await rowId("2")).toBeUndefined();
     expect((await idsOf("Q100")).map((r) => r.value).sort()).toEqual(["1", "3"]);
+  });
+
+  it("keeps an item's class and place values in step with the dump", async () => {
+    const withClaims = (claims: Entity["claims"]): Entity => ({
+      ...game("Q100", "Alpha"),
+      claims: { P31: [p31("Q7889")], ...claims },
+    });
+    await run([
+      withClaims({
+        P159: [itemClaim("P159", "Q416131"), itemClaim("P159", "Q416131")],
+        P136: [itemClaim("P136", "Q744038")], // not a property item_values keeps
+      }),
+    ]);
+    expect(await valuesOf("Q100")).toEqual(["P159=Q416131", "P31=Q7889"]);
+
+    await run([withClaims({ P159: [itemClaim("P159", "Q1490")] })]);
+    expect(await valuesOf("Q100")).toEqual(["P159=Q1490", "P31=Q7889"]);
+
+    await run([withClaims({})]);
+    expect(await valuesOf("Q100")).toEqual(["P31=Q7889"]);
   });
 
   it("only restamps an item whose converted data is unchanged", async () => {
@@ -279,6 +314,7 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
     const stats = await run([game("Q100", "Alpha"), game("Q200", "Beta")], { forcePrune: true });
     expect(stats).toMatchObject({ upserted: 2, pruned: 1, settled: 1 });
     expect((await allItems()).map((r) => r.qid)).toEqual(["Q100", "Q200"]);
+    expect(await valuesOf("Q300")).toEqual([]);
 
     const cands = await db.select().from(mergeCandidates).orderBy(asc(mergeCandidates.id));
     expect(cands.map((c) => [c.fromQid, c.intoQid, c.status])).toEqual([

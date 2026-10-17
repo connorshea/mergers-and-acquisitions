@@ -1,7 +1,13 @@
 import { describe, expect, it } from "vite-plus/test";
 import type { Item } from "./compare.ts";
 import { coordinateValue } from "./coordinates.ts";
-import { externalIdRows, MAX_LABEL_CHARS, primaryLabel, primaryType } from "./wikidata.ts";
+import {
+  externalIdRows,
+  itemValueRows,
+  MAX_LABEL_CHARS,
+  primaryLabel,
+  primaryType,
+} from "./wikidata.ts";
 
 const item: Item = {
   id: "Q100000040",
@@ -49,6 +55,26 @@ describe("derived DB fields", () => {
       { property: "P1733", value: "1385730" },
       { property: "P10248", value: "pikmin-3-deluxe" },
       { property: "P436", value: "8f1c2a9e-mbrg" },
+    ]);
+  });
+
+  it("collects the distinct class and place item values and nothing else", () => {
+    const withPlaces: Item = {
+      ...item,
+      statements: {
+        ...item.statements,
+        P31: [
+          { type: "item", value: "Q7889" },
+          { type: "item", value: "Q7889" },
+          { type: "somevalue", value: "" },
+        ],
+        P159: [{ type: "item", value: "Q1490" }],
+        P136: [{ type: "item", value: "Q744038" }], // genre: not kept
+      },
+    };
+    expect(itemValueRows(withPlaces)).toEqual([
+      { property: "P31", value: "Q7889" },
+      { property: "P159", value: "Q1490" },
     ]);
   });
 });

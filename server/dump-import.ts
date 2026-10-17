@@ -1,5 +1,6 @@
 // Import the in-scope items from a Wikidata *entity JSON dump* into `items` +
-// `external_ids` (+ `properties`) — the way the mirror is (re)built.
+// `external_ids` + `item_values` (+ `properties`) — the way the mirror is
+// (re)built.
 //
 // On Toolforge the weekly dump is on the read-only NFS mount at
 //   /public/dumps/public/wikidatawiki/entities/latest-all.json.gz
@@ -27,7 +28,7 @@
 //      class QID in any other statement is discarded here).
 //   4. Items are upserted in batches; each changed item's external ids are
 //      made to match the dump, deleting and inserting only the rows that
-//      differ.
+//      differ, and so are its item values (a whole item's at a time).
 //      Property entities become `properties` rows via the existing sync path.
 //   5. After a complete pass, items that were not in the dump any more (merged
 //      away, deleted, retyped) are pruned and their open candidates settled.
@@ -72,6 +73,7 @@ import {
   dumpImportLinked,
   dumpImportSegments,
   externalIds,
+  itemValues,
   itemSync,
   items,
   mergeCandidates,
@@ -84,7 +86,7 @@ import { toSqlDatetime } from "./auth/time.ts";
 import { STALE_CLAIM_SECONDS } from "./import-claims.ts";
 import { storedBlockingKey, type Item } from "../src/lib/compare.ts";
 import type { PropertyRow } from "../src/lib/sparql.ts";
-import { externalIdRows, primaryLabel, primaryType } from "../src/lib/wikidata.ts";
+import { externalIdRows, itemValueRows, primaryLabel, primaryType } from "../src/lib/wikidata.ts";
 import {
   type Entity,
   entityToItem,
@@ -740,17 +742,25 @@ function canonical(value: unknown): unknown {
 
 /**
  * SHA-1 (hex) of everything upsertItems stores for an item: its denormalized
- * columns, its data, and the external-id rows it keeps. Hashing the converted
- * output rather than using the entity's revision id means a change to the
- * adapter (entityToItem, externalIdRows) also counts as a change.
+ * columns, its data, and the external-id and item-value rows it keeps. Hashing
+ * the converted output rather than using the entity's revision id means a
+ * change to the adapter (entityToItem, externalIdRows, itemValueRows) also
+ * counts as a change.
  */
 export function itemHash(
   label: string | null,
   type: string | null,
   item: Item,
   ids: readonly { property: string; value: string }[],
+  values: readonly { property: string; value: string }[],
 ): string {
-  const ordered = [label, type, item, ids.map((r) => [r.property, r.value])];
+  const ordered = [
+    label,
+    type,
+    item,
+    ids.map((r) => [r.property, r.value]),
+    values.map((r) => [r.property, r.value]),
+  ];
   return createHash("sha1")
     .update(JSON.stringify(canonical(ordered)))
     .digest("hex");
@@ -762,12 +772,14 @@ export interface PreparedRow {
   type: string | null;
   /** External-id rows, deduped on the (qid, property, value) key, over-long values dropped. */
   ids: { qid: string; property: string; value: string }[];
+  /** Item-value rows (ITEM_VALUE_PROPS), deduped on the same key. */
+  values: { qid: string; property: string; value: string }[];
   /** `itemHash` of the above and the item. */
   dataHash: string;
 }
 
 /**
- * The denormalized columns, external-id rows, and hash upsertItems stores for
+ * The denormalized columns, external-id and item-value rows, and hash upsertItems stores for
  * an item. Pure, so the converter-version test hashes exactly what is stored
  * (see server/converter-version.ts).
  */
@@ -783,7 +795,8 @@ export function prepareRow(item: Item): PreparedRow {
     seen.add(key);
     ids.push({ qid: item.id, property: r.property, value: r.value });
   }
-  return { label, type, ids, dataHash: itemHash(label, type, item, ids) };
+  const values = itemValueRows(item).map((r) => ({ qid: item.id, ...r }));
+  return { label, type, ids, values, dataHash: itemHash(label, type, item, ids, values) };
 }
 
 /**
@@ -980,7 +993,7 @@ export interface UpsertResult {
 }
 
 /**
- * Upsert items and rebuild their external ids — the one write path shared by
+ * Upsert items and rebuild their external ids and item values — the one write path shared by
  * the dump import and the single-item importer, so both store the same shape.
  * An item whose hash (see `itemHash`) matches the stored one is only
  * restamped: rewriting its JSON and deleting and re-inserting its external
@@ -1001,7 +1014,7 @@ export async function upsertItems(
 ): Promise<UpsertResult> {
   if (batch.length === 0) return { written: 0, unchanged: 0, externalIds: 0 };
   const prepared = batch.map((item) => {
-    const { label, type, ids, dataHash } = prepareRow(item);
+    const { label, type, ids, values, dataHash } = prepareRow(item);
     const row = {
       qid: item.id,
       primaryLabel: label,
@@ -1018,7 +1031,7 @@ export async function upsertItems(
       converterVersion: CONVERTER_VERSION,
       primaryType: type,
     };
-    return { row, sync, ids };
+    return { row, sync, ids, values };
   });
 
   // One transaction, so a batch that fails leaves every item as it was (not,
@@ -1157,6 +1170,40 @@ export async function upsertItems(
         .sort((a, b) => compareKeys(idKey(a), idKey(b)));
       for (let i = 0; i < added.length; i += ID_BATCH) {
         await tx.insert(externalIds).values(added.slice(i, i + ID_BATCH));
+      }
+
+      // Item values the same way, but a whole item at a time: an item whose
+      // values differ at all has its rows deleted and re-inserted (they're few,
+      // and the primary key leads with qid, so that touches only its own rows).
+      const valueKey = (r: { property: string; value: string }) => `${r.property}\t${r.value}`;
+      const storedValues = new Map<string, string[]>();
+      for (const r of await tx
+        .select({ qid: itemValues.qid, property: itemValues.property, value: itemValues.value })
+        .from(itemValues)
+        .where(
+          inArray(
+            itemValues.qid,
+            rows.map((r) => r.qid),
+          ),
+        )) {
+        const list = storedValues.get(r.qid) ?? [];
+        list.push(valueKey(r));
+        storedValues.set(r.qid, list);
+      }
+      const rewrite = changed.filter((p) => {
+        const had = storedValues.get(p.row.qid) ?? [];
+        const has = new Set(p.values.map(valueKey));
+        return had.length !== has.size || had.some((k) => !has.has(k));
+      });
+      const rewriteQids = rewrite.map((p) => p.row.qid);
+      for (let i = 0; i < rewriteQids.length; i += ITEM_BATCH) {
+        await tx
+          .delete(itemValues)
+          .where(inArray(itemValues.qid, rewriteQids.slice(i, i + ITEM_BATCH)));
+      }
+      const valueRows = rewrite.flatMap((p) => p.values);
+      for (let i = 0; i < valueRows.length; i += ID_BATCH) {
+        await tx.insert(itemValues).values(valueRows.slice(i, i + ID_BATCH));
       }
       return { written: changed.length, unchanged: unchanged.length, externalIds: idRows.length };
     },
@@ -1514,7 +1561,8 @@ async function finishSegment(
  * Delete every item not stamped as seen in `dump`, with its external ids, and
  * settle the open candidates that referenced it. Returns [items, candidates].
  * Read from `item_sync`, which is small enough to scan whole; deleting the
- * items deletes their rows there too (through its foreign key).
+ * items deletes their rows there and in `item_values` too (through their
+ * foreign keys).
  */
 async function pruneMissing(
   dump: string,

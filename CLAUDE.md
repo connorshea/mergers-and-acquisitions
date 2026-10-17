@@ -65,7 +65,9 @@ Layout:
   the dump import (`dump-import.ts`: streams the Wikidata entity JSON dump from
   Toolforge's `/public/dumps` NFS mount, pre-filters on the import classes'
   `"numeric-id":` values,
-  upserts items + external ids + properties, prunes what left the dump);
+  upserts items + external ids + item values (`item_values`: the P31/P279 and
+  place-property QIDs the class/place-ancestor syncs collect) + properties,
+  prunes what left the dump);
   `class-ancestors.ts` rebuilds `class_ancestors` (our items' classes →
   ancestors named by subject type constraints) after the weekly property sync.
   `place-ancestors.ts` rebuilds `place_ancestors` (our items' place values →

@@ -366,6 +366,16 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
       );
   });
 
+  it("logs progress on time as well as on bytes inflated", async () => {
+    const lines: string[] = [];
+    await run([game("Q100", "Alpha"), game("Q200", "Beta")], {
+      progressEveryBytes: 1e12,
+      progressEverySeconds: 0,
+      log: (m) => void lines.push(m),
+    });
+    expect(lines.filter((l) => l.includes(" MB/s now (")).length).toBeGreaterThan(0);
+  });
+
   it("adds percent done and an ETA when reading from a file on disk", async () => {
     const dir = await mkdtemp(join(tmpdir(), "dump-import-db-"));
     const path = join(dir, "dump.json.gz");
@@ -385,7 +395,7 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
     const progress = lines.filter((l) => l.includes(" MB/s now ("));
     expect(progress.length).toBeGreaterThan(0);
     for (const line of progress) {
-      expect(line).toMatch(/^import-dump: \[\d+\.\d%\] \d+ GB inflated, /);
+      expect(line).toMatch(/^import-dump: \[\d+\.\d%\] \d+\.\d GB inflated, /);
       expect(line).toMatch(
         / avg\), ETA (\d+h \d\dm|\d+m|<1m|\?), write wait \d+s \((\d+%|\?)\), rss \d+ MB$/,
       );

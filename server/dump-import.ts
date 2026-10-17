@@ -175,9 +175,14 @@ export interface ScanOptions {
   onSkip?: (what: string, err: unknown) => void;
   /** Stop after this many matching items (a quick validation run). */
   limit?: number;
-  /** Progress callback, invoked every `progressEveryBytes` inflated bytes. */
+  /**
+   * Progress callback, invoked every `progressEveryBytes` inflated bytes or
+   * `progressEverySeconds`, whichever comes first: a dense stretch, slow with
+   * writes, can take minutes to inflate 5 GB.
+   */
   onProgress?: (stats: ScanStats) => void;
   progressEveryBytes?: number;
+  progressEverySeconds?: number;
 }
 
 /**
@@ -590,6 +595,7 @@ export async function scanDump(source: Readable, opts: ScanOptions): Promise<Sca
   const selective = opts.selective;
   const inSelective = selective && selectiveMatcher(selective);
   const progressEvery = opts.progressEveryBytes ?? 5e9;
+  const progressEverySeconds = opts.progressEverySeconds ?? 30;
   const started = Date.now();
   const stats: ScanStats = {
     bytes: 0,
@@ -603,6 +609,7 @@ export async function scanDump(source: Readable, opts: ScanOptions): Promise<Sca
     seconds: 0,
   };
   let nextProgress = progressEvery;
+  let nextProgressAt = progressEverySeconds;
   let carry: Buffer = Buffer.alloc(0);
   const hits = new Map<number, number>();
 
@@ -688,8 +695,9 @@ export async function scanDump(source: Readable, opts: ScanOptions): Promise<Sca
       source.destroy();
       break;
     }
-    if (stats.bytes >= nextProgress) {
-      nextProgress += progressEvery;
+    if (stats.bytes >= nextProgress || stats.seconds >= nextProgressAt) {
+      nextProgress = stats.bytes + progressEvery;
+      nextProgressAt = stats.seconds + progressEverySeconds;
       opts.onProgress?.(stats);
     }
   }
@@ -1298,6 +1306,7 @@ export interface ImportOptions {
   full?: boolean;
   log?: (message: string) => void;
   progressEveryBytes?: number;
+  progressEverySeconds?: number;
 }
 
 export interface ImportStats extends ScanStats {
@@ -1997,6 +2006,7 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
         selective,
         limit: opts.limit,
         progressEveryBytes: opts.progressEveryBytes,
+        progressEverySeconds: opts.progressEverySeconds,
         onSkip,
         isUnedited: revisions ? (qid, revid) => revisions.has(qid, revid) : undefined,
         onUnedited: async (qid) => {
@@ -2027,7 +2037,7 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
           const waitPct = interval > 0 ? `${Math.round((100 * waited) / interval)}%` : "?";
           last = { bytes: s.bytes, seconds: s.seconds, read, writeWaitMs };
           log(
-            `${segTag} ${pct}${(s.bytes / 1e9).toFixed(0)} GB inflated, ${s.lines} lines, ` +
+            `${segTag} ${pct}${(s.bytes / 1e9).toFixed(1)} GB inflated, ${s.lines} lines, ` +
               `${s.parsed} parsed, ${s.matched} matched (${s.unedited} unedited, ${unchanged} unchanged), ` +
               `${s.properties} properties, ` +
               `${now} MB/s now (${mbps(s.bytes, s.seconds)} avg), ${eta}` +

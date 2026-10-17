@@ -3,73 +3,55 @@
 // Together with `properties.subject_types` it lets the scorer tell
 // whether a subject type constraint on a superclass covers an item's class
 // (see src/lib/subject-types.ts).
-import { inArray, sql } from "drizzle-orm";
+import { inArray, isNull, lt, or, sql } from "drizzle-orm";
 import { db } from "./db.ts";
-import { classAncestors, items } from "../db/schema.ts";
+import { classAncestors, itemSync, itemValues } from "../db/schema.ts";
+import { ITEM_VALUES_VERSION } from "./converter-version.ts";
 import { chunk } from "../src/lib/chunk.ts";
 import { fetchClassAncestors } from "../src/lib/sparql.ts";
+import { ITEM_VALUE_PROPS } from "../src/lib/wikidata.ts";
 import { elapsed, progress } from "./progress.ts";
 
-/** Items scanned per DB page when collecting their classes (keyset-paged). */
-const READ_PAGE = 5000;
 const ROWS_PER_STMT = 1000;
-/** Log scan progress every this many pages. */
-const LOG_EVERY_PAGES = 20;
 /** Log QLever lookup progress every this many chunks. */
 const LOG_EVERY_CHUNKS = 10;
 
 /**
- * The distinct item values of the given properties across every synced item.
- * MariaDB pulls them out of `data` itself (JSON_TABLE), so only each page's
- * distinct values cross the wire. Keyset pagination over the `qid` primary
- * key keeps this O(n). `what` names the values in the progress log.
+ * The distinct item values of the given properties across every synced item,
+ * from `item_values` (written by the dump import for ITEM_VALUE_PROPS, which
+ * must include `pids`). Throws while any item was last written by a converter
+ * older than ITEM_VALUES_VERSION, as every item is between the migration that
+ * adds the table and the first import pass that rewrites them all, and as
+ * the items an interrupted pass didn't reach are: their values may be missing,
+ * and a short list would have the syncs drop the rows of every value left out.
  */
-export async function collectItemValues(
-  pids: readonly string[],
-  what: string,
-  pageSize = READ_PAGE,
-): Promise<string[]> {
-  const started = Date.now();
-  const [[{ total }]] = (await db.execute(
-    sql`select count(*) as total from ${items}`,
-  )) as unknown as [[{ total: number }]];
-  const set = new Set<string>();
-  let after = "";
-  for (let page = 1; ; page++) {
-    // The page's last qid, or none when fewer than `pageSize` rows remain.
-    const [bounds] = (await db.execute(sql`
-      select qid from ${items} where qid > ${after}
-      order by qid limit 1 offset ${pageSize - 1}`)) as unknown as [{ qid: string }[]];
-    const bound = bounds[0]?.qid;
-    const range = sql`i.qid > ${after} ${bound === undefined ? sql`` : sql`and i.qid <= ${bound}`}`;
-    const values = (pid: string) => sql`
-      select jt.qid from ${items} i,
-        json_table(i.data, ${`$.statements.${pid}[*]`} columns (
-          type varchar(16) path '$.type',
-          qid varchar(32) path '$.value'
-        )) jt
-      where ${range} and jt.type = 'item'`;
-    const [rows] = (await db.execute(
-      sql.join(
-        pids.map((pid) => values(pid)),
-        sql` union `,
-      ),
-    )) as unknown as [{ qid: string }[]];
-    for (const row of rows) set.add(row.qid);
-    if (bound === undefined) break;
-    after = bound;
-    if (page % LOG_EVERY_PAGES === 0) {
-      console.log(
-        `${what}: scanned ${progress(page * pageSize, total)} items, ${set.size} values, ${elapsed(started)} elapsed`,
-      );
-    }
+export async function collectItemValues(pids: readonly string[]): Promise<string[]> {
+  const missing = pids.filter((pid) => !ITEM_VALUE_PROPS.has(pid));
+  if (missing.length > 0) throw new Error(`Not in ITEM_VALUE_PROPS: ${missing.join(", ")}`);
+  // A range on idx_item_sync_revision, which leads with converter_version.
+  const [counted] = await db
+    .select({ stale: sql<number>`count(*)` })
+    .from(itemSync)
+    .where(
+      or(isNull(itemSync.converterVersion), lt(itemSync.converterVersion, ITEM_VALUES_VERSION)),
+    );
+  const stale = Number(counted?.stale ?? 0);
+  if (stale > 0) {
+    throw new Error(
+      `${stale} items predate item_values (converter version < ${ITEM_VALUES_VERSION}); ` +
+        "a complete dump import pass writes them",
+    );
   }
-  return [...set];
+  const rows = await db
+    .selectDistinct({ value: itemValues.value })
+    .from(itemValues)
+    .where(inArray(itemValues.property, [...pids]));
+  return rows.map((r) => r.value);
 }
 
 /** The distinct instance of (P31) and subclass of (P279) values across every synced item. */
-export function collectItemClasses(pageSize = READ_PAGE): Promise<string[]> {
-  return collectItemValues(["P31", "P279"], "class ancestors", pageSize);
+export function collectItemClasses(): Promise<string[]> {
+  return collectItemValues(["P31", "P279"]);
 }
 
 export interface ClassAncestorsSyncResult {

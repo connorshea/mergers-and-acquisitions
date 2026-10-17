@@ -1,8 +1,9 @@
-// Derived `items` / `external_ids` columns (primary type, display label,
-// external-id rows) from the simplified `Item` model. DOM-free so the server,
+// Derived `items` / `external_ids` / `item_values` columns (primary type,
+// display label, external-id and item-value rows) from the simplified `Item` model. DOM-free so the server,
 // jobs, scripts, and the SPA can all import it.
 
 import type { Item } from "./compare.ts";
+import { PLACE_PROPS } from "./places.ts";
 
 // ---------- derived rows for the DB ----------
 
@@ -42,6 +43,30 @@ export function primaryLabel(item: Item): string | undefined {
   return chars.length <= MAX_LABEL_CHARS
     ? text
     : `${chars.slice(0, MAX_LABEL_CHARS - 1).join("")}…`;
+}
+
+/**
+ * Properties whose item values go to the `item_values` table, for the weekly
+ * syncs to collect without reading every item's data: instance of and
+ * subclass of (class ancestors) and the place properties (place ancestors).
+ */
+export const ITEM_VALUE_PROPS: ReadonlySet<string> = new Set(["P31", "P279", ...PLACE_PROPS]);
+
+/** Distinct item-valued `(property, value)` rows of ITEM_VALUE_PROPS for the `item_values` table. */
+export function itemValueRows(item: Item): { property: string; value: string }[] {
+  const rows: { property: string; value: string }[] = [];
+  const seen = new Set<string>();
+  for (const [property, values] of Object.entries(item.statements)) {
+    if (!ITEM_VALUE_PROPS.has(property)) continue;
+    for (const v of values) {
+      if (v.type !== "item") continue;
+      const key = `${property} ${v.value}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      rows.push({ property, value: v.value });
+    }
+  }
+  return rows;
 }
 
 /** External-id `(property, value)` rows for the `external_ids` blocking table. */

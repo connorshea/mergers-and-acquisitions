@@ -7,7 +7,7 @@ import { items, placeAncestors } from "../db/schema.ts";
 import { collectItemPlaces, loadPlaceAncestors, syncPlaceAncestors } from "./place-ancestors.ts";
 import type { Item, Value } from "../src/lib/compare.ts";
 import { fetchPlaceAncestors } from "../src/lib/sparql.ts";
-import { DB_TEST, truncateAll } from "../test/db-helpers.ts";
+import { DB_TEST, insertItemRows as insert, truncateAll } from "../test/db-helpers.ts";
 import { quietLogs } from "../test/console.ts";
 
 vi.mock("../src/lib/sparql.ts", () => ({
@@ -38,18 +38,14 @@ afterAll(() => (DB_TEST ? pool.end() : undefined));
 describe.skipIf(!DB_TEST)("collectItemPlaces", () => {
   beforeEach(truncateAll);
 
-  it("collects distinct place values across every page", async () => {
-    await db
-      .insert(items)
-      .values([
-        item("Q1", { P159: [ref("Q416131")], P136: [ref("Q100")] }),
-        item("Q2", { P19: [ref("Q1490")], P20: [ref("Q1490")] }),
-        item("Q3", { P276: [ref("Q16554")], P19: [{ type: "somevalue", value: "" }] }),
-        item("Q4", {}),
-      ]);
-    for (const pageSize of [1, 3, 5000]) {
-      expect((await collectItemPlaces(pageSize)).sort()).toEqual(["Q1490", "Q16554", "Q416131"]);
-    }
+  it("collects distinct place values", async () => {
+    await insert([
+      item("Q1", { P159: [ref("Q416131")], P136: [ref("Q100")] }),
+      item("Q2", { P19: [ref("Q1490")], P20: [ref("Q1490")] }),
+      item("Q3", { P276: [ref("Q16554")], P19: [{ type: "somevalue", value: "" }] }),
+      item("Q4", {}),
+    ]);
+    expect((await collectItemPlaces()).sort()).toEqual(["Q1490", "Q16554", "Q416131"]);
   });
 });
 
@@ -58,9 +54,7 @@ describe.skipIf(!DB_TEST)("syncPlaceAncestors", () => {
   quietLogs();
 
   it("replaces looked-up places, drops gone ones, and keeps failed ones", async () => {
-    await db
-      .insert(items)
-      .values([item("Q1", { P159: [ref("Q416131")] }), item("Q2", { P19: [ref("Q16554")] })]);
+    await insert([item("Q1", { P159: [ref("Q416131")] }), item("Q2", { P19: [ref("Q16554")] })]);
     await db.insert(placeAncestors).values([
       { qid: "Q416131", ancestor: "Q999" }, // stale
       { qid: "Q16554", ancestor: "Q1261" },
@@ -88,7 +82,7 @@ describe.skipIf(!DB_TEST)("syncPlaceAncestors", () => {
   });
 
   it("throws, writing nothing, when every lookup fails", async () => {
-    await db.insert(items).values([item("Q1", { P159: [ref("Q416131")] })]);
+    await insert([item("Q1", { P159: [ref("Q416131")] })]);
     await db.insert(placeAncestors).values([{ qid: "Q416131", ancestor: "Q1490" }]);
     vi.mocked(fetchPlaceAncestors).mockResolvedValueOnce({
       ancestors: new Map(),

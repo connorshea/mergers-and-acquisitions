@@ -20,6 +20,17 @@ export const CONVERTER_OUTPUTS = [
   "67bcc726f2deb6e0003a1252433338bba960aa96",
   // Musical notation (P6670) stored as a `musical-notation` value instead of a string.
   "c3f167c9205618016c2efd6eaff84e7b2be7dccc",
+  // Class and place values stored in `item_values` (and covered by the item
+  // hash, so the next import writes every item's rows: the backfill).
+  "bb9105c9d05436375a1532596f0e3de73acecf1a",
 ] as const;
 
 export const CONVERTER_VERSION = CONVERTER_OUTPUTS.length;
+
+// The converter version since which every write of an item also writes its
+// `item_values` rows, as they stand now (ITEM_VALUE_PROPS in
+// src/lib/wikidata.ts). An item synced at an older version may have none, so
+// the syncs that read `item_values` refuse to run while any such item is left
+// (server/class-ancestors.ts `collectItemValues`). Move it to the new
+// CONVERTER_VERSION whenever ITEM_VALUE_PROPS changes what the table holds.
+export const ITEM_VALUES_VERSION = 5;

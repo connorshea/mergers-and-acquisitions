@@ -18,6 +18,7 @@ import {
   SUBJECT_TYPE_CONSTRAINT,
   type SubjectTypeConstraint,
 } from "./subject-types.ts";
+import { YEAR_PRECISION } from "./time.ts";
 
 // ---------- entity JSON wire types (the subset we read) ----------
 
@@ -88,8 +89,13 @@ export function snakValue(snak: Snak): Value | null {
     case "wikibase-entityid":
       return { type: "item", value: (value as { id: string }).id };
     case "time": {
+      // Coarser than a year (a decade, a century), the zeroed value alone would
+      // read as its stored year, so the precision is kept alongside it.
       const t = value as { time: string; precision?: number };
-      return { type: "time", value: timeAtPrecision(t.time, t.precision) };
+      const v: Value = { type: "time", value: timeAtPrecision(t.time, t.precision) };
+      return t.precision !== undefined && t.precision < YEAR_PRECISION
+        ? { ...v, timePrecision: t.precision }
+        : v;
     }
     case "quantity": {
       // Amounts are signed decimal strings ("+1"); drop the redundant "+" so

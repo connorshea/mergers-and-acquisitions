@@ -14,6 +14,7 @@ import {
 } from "./lib/compare.ts";
 import { coordinateTooltip, formatCoordinate, geohackUrl } from "./lib/coordinates.ts";
 import { describeDifference } from "./lib/text-difference.ts";
+import { coarseTimeText } from "./lib/time.ts";
 import { sitelinkUrl, wikiPageUrl } from "./lib/wiki.ts";
 import { displayLabel } from "./lib/wikidata.ts";
 import { type PlaceAncestorRow, placeContainmentFromRows } from "./lib/places.ts";
@@ -53,6 +54,9 @@ function displayValue(v: AnnotatedValue): string {
   if (special) return special;
   if (v.type === "item") return v.label ?? v.value;
   if (v.type === "time") {
+    // A decade or century ("20th century", stored as +1901-00-00).
+    const coarse = coarseTimeText(v);
+    if (coarse) return coarse;
     const m = /^([+-]?\d{4}-\d{2}-\d{2})T00:00:00Z$/.exec(v.value);
     // Year/month precision arrives as "00" parts (+1987-00-00 → 1987).
     if (m) return m[1]!.replace(/^\+/, "").replace(/-00$/, "").replace(/-00$/, "");

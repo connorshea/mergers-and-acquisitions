@@ -133,6 +133,18 @@ describe("timeAtPrecision", () => {
     }).mainsnak;
     expect(snakValue(snak)).toEqual({ type: "time", value: "+1977-00-00T00:00:00Z" });
   });
+
+  it("keeps a precision coarser than a year (Q107708368's 20th-century birth)", () => {
+    const snak = claim("P569", "time", {
+      type: "time",
+      value: { time: "+1901-00-00T00:00:00Z", precision: 7 },
+    }).mainsnak;
+    expect(snakValue(snak)).toEqual({
+      type: "time",
+      value: "+1901-00-00T00:00:00Z",
+      timePrecision: 7,
+    });
+  });
 });
 
 describe("bestRank", () => {

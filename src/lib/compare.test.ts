@@ -337,6 +337,29 @@ describe("compareValues", () => {
     ).toEqual(["similar", "same year, different precision"]);
   });
 
+  it("compares a decade or century as the years it covers, not the year it's stored as", () => {
+    // Q107708368's "20th century" date of birth is stored as 1901.
+    const century = { type: "time" as const, value: "+1901-00-00T00:00:00Z", timePrecision: 7 };
+    const year = (y: string) => ({ type: "time" as const, value: `+${y}-00-00T00:00:00Z` });
+    expect(compareValues(century, year("1901"))).toEqual([
+      "similar",
+      "1901 is in the 20th century",
+    ]);
+    expect(compareValues(year("1978"), century)).toEqual([
+      "similar",
+      "1978 is in the 20th century",
+    ]);
+    expect(compareValues(century, year("2001"))).toEqual(["distinct"]);
+    expect(
+      compareValues(century, { type: "time", value: "+1970-00-00T00:00:00Z", timePrecision: 8 }),
+    ).toEqual(["similar", "1970s is in the 20th century"]);
+    // The same century, stored the other usual way (+2000).
+    expect(
+      compareValues(century, { type: "time", value: "+2000-00-00T00:00:00Z", timePrecision: 7 }),
+    ).toEqual(["identical"]);
+    expect(compareValues(century, century)).toEqual(["identical"]);
+  });
+
   it("reports two same-precision days that differ by a day as a day apart, not a precision mismatch", () => {
     // Regression: 2022-11-11 vs 2022-11-12 are both day precision — the note must
     // not claim "different precision".
@@ -1619,6 +1642,20 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       );
     });
 
+    it("doesn't read a century-precision birth date as its stored year", () => {
+      const result = scoreCandidate(
+        {
+          ...person("Q1", {}),
+          statements: stmt({
+            P31: [{ type: "item" as const, value: "Q5" }],
+            P569: [{ type: "time" as const, value: "+1901-00-00T00:00:00Z", timePrecision: 7 }],
+          }),
+        },
+        person("Q2", { P569: "+1978-05-03T00:00:00Z" }),
+      );
+      expect(result.reasons.some((r) => r.includes("years differ"))).toBe(false);
+    });
+
     it("doesn't compare a date of death with a date of birth", () => {
       const result = scoreCandidate(
         person("Q1", { P569: "+1930-04-09T00:00:00Z" }),
@@ -1732,6 +1769,20 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
           }),
           human("Q2", { dates: { P569: "+1990-01-01T00:00:00Z" } }),
         ),
+      ).toEqual([]);
+    });
+
+    it("doesn't take a century-precision birth date as the year it's stored as", () => {
+      const other: Item = {
+        ...human("Q2"),
+        statements: stmt({
+          P31: [{ type: "item" as const, value: "Q5", label: "human" }],
+          // "20th century", stored as 1901: no conflict with activity in 1890.
+          P569: [{ type: "time" as const, value: "+1901-00-00T00:00:00Z", timePrecision: 7 }],
+        }),
+      };
+      expect(
+        activityConflicts(human("Q1", { dates: { P2031: "+1890-00-00T00:00:00Z" } }), other),
       ).toEqual([]);
     });
 

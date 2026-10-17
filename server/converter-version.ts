@@ -23,6 +23,9 @@ export const CONVERTER_OUTPUTS = [
   // Class and place values stored in `item_values` (and covered by the item
   // hash, so the next import writes every item's rows: the backfill).
   "bb9105c9d05436375a1532596f0e3de73acecf1a",
+  // Decade/century/millennium dates keep their precision (`timePrecision`), so
+  // "20th century" no longer reads as 1901.
+  "f4313f240d70f67fd83e00b65d9bb1686f362858",
 ] as const;
 
 export const CONVERTER_VERSION = CONVERTER_OUTPUTS.length;

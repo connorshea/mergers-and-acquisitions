@@ -52,6 +52,7 @@ import {
   yearDisambiguatedWikis,
   mergeConflicts,
   redirectSitelinkFixes,
+  redirectsToPartnerSection,
   plannedSitelinkFixes,
   isMergeBlocker,
   rowDisplayRank,
@@ -572,6 +573,30 @@ describe("buildRows (behavior-preserving extraction)", () => {
       );
       const both = { ...article, sitelinkRedirects: { enwiki: "Loud (album)" } };
       expect(row(both, elsewhere).note).toMatch(/^Both pages redirect to “Loud \(album\)”/);
+    });
+
+    it("calls a redirect to a section of the other page a separate subject", () => {
+      const section = {
+        ...redirect,
+        sitelinkRedirects: { enwiki: withFragment(article.sitelinks.enwiki, "Encore") },
+      };
+      expect(redirectsToPartnerSection(section, article, "enwiki")).toBe("Encore");
+      expect(redirectsToPartnerSection(article, section, "enwiki")).toBeUndefined();
+      for (const [a, b] of [
+        [article, section],
+        [section, article],
+      ] as const) {
+        const r = row(a, b);
+        expect(r.blocker).toBe(true);
+        expect(isMergeBlocker(r, a, b)).toBe(true);
+        expect(r.note).toBe(
+          "Q1145650's page redirects to the “Encore” section of Q65117434's page. The wiki covers it as part of that article, which usually means a separate subject (a part, predecessor or version).",
+        );
+      }
+      // A section of some third page is just a redirect elsewhere.
+      const thirdPage = { ...redirect, sitelinkRedirects: { enwiki: "Loud (album)#Encore" } };
+      expect(redirectsToPartnerSection(thirdPage, article, "enwiki")).toBeUndefined();
+      expect(row(article, thirdPage).note).toMatch(/^Q1145650's page redirects to “Loud/);
     });
 
     it("counts a resolved redirect with an unknown target as a redirect", () => {
@@ -1271,6 +1296,32 @@ describe("scoreCandidate — sequel and weak-id handling", () => {
       expect(score(a, elsewhere).reasons.some((r) => r.startsWith("sitelink redirects"))).toBe(
         false,
       );
+    });
+
+    it("caps a pair whose page redirects to a section of the other's page", () => {
+      // The Pontiac Transportation Center shape: the 1983 building's article
+      // became a section of the station's.
+      const station = mk("Q1", { enwiki: "Harvest Moon" });
+      const strong = score(station, mk("Q2", { enwiki: "Harvest Moon (1997)" })).confidence;
+      expect(strong).toBeGreaterThan(0.5);
+      const section = {
+        ...mk("Q2", { enwiki: "Harvest Moon (1997)" }),
+        sitelinkRedirects: { enwiki: "Harvest Moon#Original game" },
+      };
+      for (const [a, b] of [
+        [station, section],
+        [section, station],
+      ] as const) {
+        const result = score(a, b);
+        expect(result.confidence).toBeLessThanOrEqual(0.5);
+        expect(result.reasons[0]).toBe(
+          "a page redirects to a section of the other item's page on enwiki, likely a part or version of it",
+        );
+        expect(reasonTone(result.reasons[0]!).polarity).toBe("negative");
+      }
+      // A section of a third page doesn't say how the two relate.
+      const elsewhere = { ...section, sitelinkRedirects: { enwiki: "Farming games#Harvest Moon" } };
+      expect(score(station, elsewhere).confidence).toBe(strong);
     });
 
     it("keeps the clash penalty unless a redirect could explain the clash", () => {

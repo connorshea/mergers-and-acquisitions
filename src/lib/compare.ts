@@ -148,6 +148,24 @@ export function redirectsToPartner(item: Item, other: Item, wiki: string): boole
   );
 }
 
+/**
+ * The section of `other`'s page on `wiki` that `item`'s page redirects to, when
+ * it redirects to one. The wiki is covering the item as part of the other's
+ * article (a building in its station's history, an enhanced edition in the
+ * original game's): a separate subject, much like an intentional redirect, not
+ * the same one.
+ */
+export function redirectsToPartnerSection(
+  item: Item,
+  other: Item,
+  wiki: string,
+): string | undefined {
+  const target = sitelinkRedirectTarget(item, wiki);
+  const page = other.sitelinks[wiki];
+  if (target === undefined || page === undefined || !target.startsWith(`${page}#`)) return;
+  return target.slice(page.length + 1);
+}
+
 /** The redirect target with its section, MediaWiki-style ("Title#Section"). */
 export function withFragment(target: string, fragment: string | null | undefined): string {
   return fragment ? `${target}#${fragment}` : target;
@@ -803,11 +821,18 @@ export function buildRows(
     // the explanation changes, and it's definite when the target is known.
     // An intentional redirect is the opposite: editors saying the item is its
     // own subject, even when the page it points at is the other item's.
+    // A redirect to a section of the other item's page says the same without
+    // the badge: the wiki covers the item as part of that article.
     const intentional = [a, b].find((it) => isIntentionalRedirect(it, wiki));
+    const sectionA = redirectsToPartnerSection(a, b, wiki);
+    const sectionB = redirectsToPartnerSection(b, a, wiki);
     let note: string | undefined;
     if (clash && intentional)
       note = `${intentional.id}'s sitelink is badged as an intentional redirect. Editors keep it as a separate subject from the page it points at.`;
-    else if (clash && redirectsToPartner(a, b, wiki))
+    else if (clash && (sectionA !== undefined || sectionB !== undefined)) {
+      const [from, to, section] = sectionA !== undefined ? [a, b, sectionA] : [b, a, sectionB];
+      note = `${from.id}'s page redirects to the “${section}” section of ${to.id}'s page. The wiki covers it as part of that article, which usually means a separate subject (a part, predecessor or version).`;
+    } else if (clash && redirectsToPartner(a, b, wiki))
       note = `${a.id}'s page redirects to ${b.id}'s page. Merging will remove ${a.id}'s sitelink for you.`;
     else if (clash && redirectsToPartner(b, a, wiki))
       note = `${b.id}'s page redirects to ${a.id}'s page. Merging will remove ${b.id}'s sitelink for you.`;
@@ -3469,6 +3494,25 @@ export function scoreCandidate(a: Item, b: Item, opts: ScoreOptions = {}): Candi
       );
       cap("wikisource-clash", 0.1);
     }
+  }
+
+  // A page that redirects to a section of the other item's page: the wiki
+  // treats the item as part of the other's subject (Cave Story+ in Cave
+  // Story's article, a station's original building in the station's). Every
+  // such pair in the eval set is distinct, but it's one wiki's editorial
+  // choice, so it caps at a judgement call rather than ruling the pair out.
+  const sectionRedirectWikis = rows.filter(
+    (r) =>
+      r.kind === "sitelink" &&
+      r.blocker &&
+      (redirectsToPartnerSection(a, b, r.label) !== undefined ||
+        redirectsToPartnerSection(b, a, r.label) !== undefined),
+  );
+  if (sectionRedirectWikis.length > 0) {
+    reasons.unshift(
+      `a page redirects to a section of the other item's page on ${sectionRedirectWikis.map((r) => r.label).join(", ")}, likely a part or version of it`,
+    );
+    cap("section-redirect", 0.5);
   }
 
   // Two or more *per-subject* identifiers (Steam, MobyGames, Discogs, IMDb, …; see

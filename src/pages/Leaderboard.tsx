@@ -7,6 +7,7 @@ import { wikiPageUrl } from "../lib/wiki.ts";
 import type { LeaderboardPeriod, LeaderboardResponse } from "../lib/api-types.ts";
 import AuthBar from "../AuthBar.tsx";
 import { LogoMark } from "../Logo.tsx";
+import ZipperLoader from "../ZipperLoader.tsx";
 
 const PERIODS: { value: LeaderboardPeriod; label: string }[] = [
   { value: "all", label: "All time" },
@@ -91,7 +92,9 @@ export default function Leaderboard() {
             {current.error}
           </p>
         ) : !entries ? (
-          <p className="list-msg">Loading…</p>
+          <p className="list-msg is-loading">
+            <ZipperLoader label="Loading…" />
+          </p>
         ) : entries.length === 0 ? (
           <p className="list-msg">
             {period === "30d" ? "No reviews in the last 30 days." : "No reviews yet."}

@@ -15,6 +15,7 @@ import { LogoMark } from "../Logo.tsx";
 import ReasonText from "../ReasonText.tsx";
 import ZipperLoader from "../ZipperLoader.tsx";
 import { IMPORT_CLASS_GROUPS, IMPORT_CLASS_OPTIONS } from "../lib/import-classes.ts";
+import { mainHeading, restoreFocus } from "../lib/focus.ts";
 import { rememberListSearch } from "../lib/list-state.ts";
 import { useDismissableMenu } from "../lib/use-dismissable-menu.ts";
 import {
@@ -296,10 +297,14 @@ export default function CandidatesList() {
     setParams(merged, { replace: true });
   }
 
-  // Pager buttons sit below the table, so jump back to the top of the new page.
+  // Pager buttons sit below the table, so jump back to the top of the new page,
+  // taking focus along: to the result count, where the rows start, rather than
+  // a pager button that may now be disabled (Prev onto page 1).
+  const resultsRef = useRef<HTMLSpanElement>(null);
   function goToPage(target: number) {
     update({ page: String(target) });
     window.scrollTo({ top: 0 });
+    resultsRef.current?.focus({ preventScroll: true });
   }
 
   const visible = (data?.candidates ?? []).filter((c) => !dismissedIds.has(c.id));
@@ -324,7 +329,7 @@ export default function CandidatesList() {
       <title>{pageTitle}</title>
       <header className="list-head">
         <div className="list-head-row">
-          <h1 className="list-title">
+          <h1 className="list-title" tabIndex={-1}>
             <LogoMark />
             <span className="list-title-text">
               Mergers &amp; Acquisitions
@@ -358,6 +363,7 @@ export default function CandidatesList() {
       </header>
 
       <form
+        role="search"
         className={filtersOpen ? "list-controls filters-open" : "list-controls"}
         onSubmit={(e) => {
           e.preventDefault();
@@ -477,7 +483,8 @@ export default function CandidatesList() {
         <>
           {/* Ordering sits with the results it orders, apart from the filters. */}
           <div className="results-bar">
-            <span className="results-count">
+            {/* The skip link's target, and where the pager sends focus. */}
+            <span id="main-content" className="results-count" ref={resultsRef} tabIndex={-1}>
               {total.toLocaleString()} {total === 1 ? "candidate" : "candidates"}
             </span>
             <label className="results-sort">
@@ -498,7 +505,9 @@ export default function CandidatesList() {
                   <th className="col-pair">Candidate</th>
                   <th className="col-conf">Confidence</th>
                   <th className="col-flags">Flags</th>
-                  <th className="col-actions" />
+                  <th className="col-actions">
+                    <span className="visually-hidden">Actions</span>
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -706,21 +715,42 @@ function CandidateRowView({
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(false);
   const [confirming, setConfirming] = useState(false);
+  const rowRef = useRef<HTMLTableRowElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   async function dismiss() {
     setConfirming(false);
     setBusy(true);
     setFailed(false);
+    // The busy button can't hold focus, and on success the row hides itself,
+    // so hand focus to the next row (or the previous one, at the end of the
+    // page) for a keyboard user to carry on from. The row after this one is
+    // picked now, while this one is still in the table.
+    const row = rowRef.current;
+    const neighbor = row?.nextElementSibling ?? row?.previousElementSibling;
     try {
       await onDismiss(c.id);
     } catch {
       setFailed(true);
       setBusy(false);
+      return;
     }
+    // A neighbor dismissed meanwhile, or none left (the page refetches): the heading.
+    restoreFocus(
+      neighbor?.isConnected
+        ? (neighbor.querySelector<HTMLElement>(".btn-row-dismiss:enabled") ??
+            neighbor.querySelector<HTMLElement>(".pair-link"))
+        : mainHeading(),
+    );
   }
 
+  // Back on the Retry button once it's enabled again.
+  useEffect(() => {
+    if (failed) restoreFocus(buttonRef.current);
+  }, [failed]);
+
   return (
-    <tr>
+    <tr ref={rowRef}>
       <td className="col-pair">
         {c.sharedType && (
           <span
@@ -737,6 +767,8 @@ function CandidateRowView({
           <span className="pair-arrow" aria-hidden="true">
             →
           </span>
+          {/* The arrow says which way the merge goes; say it in words too. */}
+          <span className="visually-hidden"> merges into </span>
           <span className="pair-side">
             {c.intoLabel ?? c.intoQid} <span className="pair-qid">{c.intoQid}</span>
           </span>
@@ -771,6 +803,7 @@ function CandidateRowView({
       <td className="col-actions">
         {c.status === "open" && (
           <button
+            ref={buttonRef}
             type="button"
             className="btn-row-dismiss"
             onClick={() => setConfirming(true)}

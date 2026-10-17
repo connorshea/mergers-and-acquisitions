@@ -73,7 +73,7 @@ export default function Settings() {
         </nav>
       </div>
       <main className="mc settings">
-        <h1>Settings</h1>
+        <h1 tabIndex={-1}>Settings</h1>
         {loading ? (
           <p className="list-msg is-loading">
             <ZipperLoader label="Loading…" />

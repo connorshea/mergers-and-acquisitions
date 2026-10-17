@@ -1185,6 +1185,11 @@ a.chip-id:hover {
 .list-msg.is-error {
   color: var(--distinct);
 }
+.list-msg.is-loading {
+  display: flex;
+  justify-content: center;
+  padding: 3rem 0;
+}
 
 /* Candidate table specifics (extends .ledger) */
 .ledger.candidates {

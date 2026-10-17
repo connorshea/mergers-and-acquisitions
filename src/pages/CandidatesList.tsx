@@ -461,7 +461,7 @@ export default function CandidatesList() {
         </p>
       )}
       {loading && (!data || allDismissed) && (
-        <p className="list-msg">
+        <p className="list-msg is-loading">
           <ZipperLoader label="Loading…" />
         </p>
       )}

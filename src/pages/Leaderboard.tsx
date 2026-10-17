@@ -92,7 +92,7 @@ export default function Leaderboard() {
             {current.error}
           </p>
         ) : !entries ? (
-          <p className="list-msg">
+          <p className="list-msg is-loading">
             <ZipperLoader label="Loading…" />
           </p>
         ) : entries.length === 0 ? (

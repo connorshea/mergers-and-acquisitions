@@ -231,7 +231,7 @@ function CandidateDetailPage({ id }: { id: string | undefined }) {
             {candidate ? `Merge candidate: ${titleLead}` : titleLead}
           </h1>
           {loading && (
-            <p className="list-msg">
+            <p className="list-msg is-loading">
               <ZipperLoader label="Loading…" />
             </p>
           )}

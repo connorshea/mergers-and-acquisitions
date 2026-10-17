@@ -75,7 +75,7 @@ export default function Settings() {
       <main className="mc settings">
         <h1>Settings</h1>
         {loading ? (
-          <p className="list-msg">
+          <p className="list-msg is-loading">
             <ZipperLoader label="Loading…" />
           </p>
         ) : user ? (

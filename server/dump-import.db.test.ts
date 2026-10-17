@@ -19,7 +19,13 @@ import {
   mergeCandidates,
   properties,
 } from "../db/schema.ts";
-import { MAX_PRUNE_FRACTION, runDumpImport, sharedLinkedQids, upsertItems } from "./dump-import.ts";
+import {
+  claimNextSegment,
+  MAX_PRUNE_FRACTION,
+  runDumpImport,
+  sharedLinkedQids,
+  upsertItems,
+} from "./dump-import.ts";
 import { SELECTIVE_IMPORT_CLASSES } from "../src/lib/import-classes.ts";
 import { CONVERTER_VERSION } from "./converter-version.ts";
 import type { Entity, Statement } from "../src/lib/wikibase.ts";
@@ -598,6 +604,36 @@ describe.skipIf(!DB_TEST)("runDumpImport", () => {
       expect(lines.some((l) => l.includes("taken over from busy"))).toBe(true);
       expect((await segmentRows()).every((r) => r.done && r.claimedBy === "w")).toBe(true);
       expect((await allItems()).map((r) => r.qid)).toEqual(GAMES);
+    });
+
+    it("retries a claim that only found the set locked, rather than give up", async () => {
+      await seedSet([{ segment: 0, matched: 1 }]);
+      // Hold every row of the set as another worker's finishSegment does.
+      let release!: () => void;
+      let locked!: () => void;
+      const isLocked = new Promise<void>((r) => (locked = r));
+      const holder = db.transaction(async (tx) => {
+        await tx.select().from(dumpImportSegments).for("update");
+        locked();
+        await new Promise<void>((r) => (release = r));
+      });
+      await isLocked;
+      let settled = false;
+      const claiming = claimNextSegment(DUMP, SEGMENTS, "w", 600, 20).finally(() => {
+        settled = true;
+      });
+      await new Promise((r) => setTimeout(r, 200));
+      expect(settled).toBe(false);
+      release();
+      await holder;
+      expect(await claiming).toMatchObject({ segment: 1, from: null });
+
+      // With every other segment done or claimed, it gives up at once.
+      await db
+        .update(dumpImportSegments)
+        .set({ claimedBy: "other", claim: "0000000000000000", claimedAt: sql`current_timestamp` })
+        .where(sql`${dumpImportSegments.segment} > 1`);
+      expect(await claimNextSegment(DUMP, SEGMENTS, "x", 600, 20)).toBeNull();
     });
 
     it("prunes only once every segment is done, by the worker that finishes the last", async () => {

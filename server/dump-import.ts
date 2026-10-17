@@ -1353,6 +1353,12 @@ export const DEFAULT_SEGMENTS = 256;
 const HEARTBEAT_MS = 60_000;
 /** How often a worker with nothing to claim checks on the segments still being scanned. */
 const WAIT_POLL_MS = 30_000;
+/**
+ * How soon a worker tries again when its claim found unclaimed segments but
+ * all of them locked: another worker's finishSegment locks the whole set for a
+ * moment, and the claim skips locked rows rather than wait on them.
+ */
+const LOCKED_RETRY_MS = 1_000;
 
 /** The rows of one segment set: `dump` split into `segments`. */
 const inSet = (dump: string, segments: number) =>
@@ -1467,6 +1473,29 @@ async function claimSegment(
           : null,
     };
   });
+}
+
+/**
+ * claimSegment, tried again every `retryMs` while it finds nothing although
+ * some segments are unclaimed: another worker's finishSegment locks every row
+ * of the set for a moment, and the claim skips locked rows rather than wait on
+ * them. Null only once every segment is done or claimed, so a worker never
+ * mistakes that moment for having nothing left and sleeps a whole poll.
+ */
+export async function claimNextSegment(
+  dump: string,
+  segments: number,
+  worker: string,
+  staleSeconds: number,
+  retryMs = LOCKED_RETRY_MS,
+): Promise<SegmentClaim | null> {
+  for (;;) {
+    const claim = await claimSegment(dump, segments, worker, staleSeconds);
+    if (claim) return claim;
+    const progress = await setProgress(dump, segments);
+    if (progress.done + progress.claimed >= segments) return null;
+    await new Promise((r) => setTimeout(r, retryMs));
+  }
 }
 
 /** Refresh a claim's heartbeat, unless it has since been taken over or finished. */
@@ -1910,11 +1939,12 @@ export async function runDumpImport(opts: ImportOptions = {}): Promise<ImportSta
     let claim: SegmentClaim | null = null;
     let segment = shard.index;
     if (worker !== undefined) {
-      claim = await claimSegment(
+      claim = await claimNextSegment(
         dump,
         segments,
         worker,
         opts.staleClaimSeconds ?? STALE_CLAIM_SECONDS,
+        Math.min(opts.waitPollMs ?? WAIT_POLL_MS, LOCKED_RETRY_MS),
       );
       if (!claim) {
         const progress = await setProgress(dump, segments);

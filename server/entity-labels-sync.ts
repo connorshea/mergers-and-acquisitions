@@ -196,7 +196,8 @@ export async function labelsFromMirror(qids: string[]): Promise<MirrorLabels> {
  * each chunk as it arrives —
  * so a run that dies partway keeps what it fetched, and QIDs QLever keeps
  * failing on are skipped (reported in `failed`) instead of sinking the run.
- * Throws only when nothing could be fetched at all, or on a DB error.
+ * Throws when nothing could be fetched at all, when QLever looks down
+ * (SparqlOutageError: several chunks in a row given up on), or on a DB error.
  * `lookupOpts` tunes the QLever lookup (tests turn its retry backoff off).
  */
 export async function runEntityLabelsSync(

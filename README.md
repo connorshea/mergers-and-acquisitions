@@ -430,13 +430,14 @@ read its output to the end. GitHub's raw file can lag a merge by a few minutes.
 On Wednesdays, after the dump lands on Tuesday, the jobs run in this order
 (UTC):
 
-| Time  | Job                                                  | Notes                                           |
-| ----- | ---------------------------------------------------- | ----------------------------------------------- |
-| 06:00 | `import-dump-1..6`                                   | usually done in 30-40 min; 3 h timeout          |
-| 09:00 | `sync-properties`                                    | properties + `class_ancestors` for the new dump |
-| 10:00 | `hunt`, `sync-entity-labels`, `sync-place-ancestors` | the hunt only runs weekly; its input is weekly  |
-| 12:00 | `resolve-sitelinks`                                  | daily; 12:00 so it follows the hunt             |
-| 12:30 | `resolve-creations`                                  | daily; likewise                                 |
+| Time  | Job                          | Notes                                           |
+| ----- | ---------------------------- | ----------------------------------------------- |
+| 06:00 | `import-dump-1..6`           | usually done in 30-40 min; 3 h timeout          |
+| 09:00 | `sync-properties`            | properties + `class_ancestors` for the new dump |
+| 09:30 | `sync-place-ancestors`       | `place_ancestors`, so the hunt scores with them |
+| 10:00 | `hunt`, `sync-entity-labels` | the hunt only runs weekly; its input is weekly  |
+| 12:00 | `resolve-sitelinks`          | daily; 12:00 so it follows the hunt             |
+| 12:30 | `resolve-creations`          | daily; likewise                                 |
 
 `resolve-merges` (02:30) and `prune-sessions` (02:45) run nightly. The hunt
 used to run nightly too, but it only rescored an almost unchanged mirror on

@@ -7,8 +7,10 @@ import {
   fetchEntityLabels,
   fetchMirroredProps,
   fetchSubjectTypes,
+  MAX_CONSECUTIVE_GIVE_UPS,
   parseSparqlResults,
   SparqlError,
+  SparqlOutageError,
   sparqlSelectWithRetry,
 } from "./sparql.ts";
 
@@ -145,6 +147,21 @@ describe("fetchEntityLabels", () => {
     expect(written).toHaveLength(2500 - 125);
     expect(written).not.toContain("Q7");
     expect(written).toContain("Q2500");
+  });
+
+  it(`stops with SparqlOutageError after ${MAX_CONSECUTIVE_GIVE_UPS} give-ups in a row`, async () => {
+    vi.spyOn(console, "warn").mockImplementation(() => {});
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    const fetch = vi.fn<typeof globalThis.fetch>(async () => {
+      throw new TypeError("fetch failed");
+    });
+    vi.stubGlobal("fetch", fetch);
+    await expect(
+      fetchEntityLabels(qids(4500), async () => {}, { ...FAST, tries: 1 }),
+    ).rejects.toBeInstanceOf(SparqlOutageError);
+    // Splits aren't give-ups: 2000 → 1000 → 500 → 250 → 125 gives up on Q1–Q125
+    // (5 requests), then Q126–Q250 (1), then 250 → 125 for Q251–Q375 (2).
+    expect(fetch).toHaveBeenCalledTimes(8);
   });
 
   it("propagates a non-transient error instead of skipping", async () => {
@@ -373,5 +390,40 @@ describe("fetchPlaceAncestors", () => {
     ]);
     expect(ancestors.size).toBe(0);
     expect(failed).toEqual([]);
+  });
+
+  // Chunks 1-based: which of a run's 1000-place chunks fail.
+  const failingChunks = (failing: number[]) =>
+    vi.fn<typeof globalThis.fetch>(async (_url, init) => {
+      const [first = ""] = requestedQids(init);
+      const n = Math.ceil(Number(first.slice(1)) / 1000);
+      if (failing.includes(n)) throw new TypeError("fetch failed");
+      return results([{ p: uri(first), anc: uri("Q17") }]);
+    });
+
+  it("skips failed chunks that a success separates", async () => {
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    vi.stubGlobal("fetch", failingChunks([2, 3, 5, 6]));
+    const { failed } = await fetchPlaceAncestors(qids(7000), { ...FAST, tries: 1 });
+    expect(failed).toEqual([...qids(2000, 1001), ...qids(2000, 4001)]);
+  });
+
+  it(`stops with SparqlOutageError after ${MAX_CONSECUTIVE_GIVE_UPS} failed chunks in a row`, async () => {
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    const fetch = failingChunks([2, 3, 4]);
+    vi.stubGlobal("fetch", fetch);
+    const written: string[] = [];
+    await expect(
+      fetchPlaceAncestors(qids(6000), {
+        ...FAST,
+        tries: 1,
+        onChunk: async (places) => {
+          written.push(places[0]!);
+        },
+      }),
+    ).rejects.toBeInstanceOf(SparqlOutageError);
+    // The first chunk was written; the ones after the outage never asked for.
+    expect(written).toEqual(["Q1"]);
+    expect(fetch).toHaveBeenCalledTimes(4);
   });
 });

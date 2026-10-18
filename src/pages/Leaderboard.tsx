@@ -12,6 +12,7 @@ import ZipperLoader from "../ZipperLoader.tsx";
 const PERIODS: { value: LeaderboardPeriod; label: string }[] = [
   { value: "all", label: "All time" },
   { value: "30d", label: "Last 30 days" },
+  { value: "7d", label: "Last 7 days" },
 ];
 
 // Who has resolved the most pairs through the app: merges, pairs marked
@@ -20,7 +21,8 @@ const PERIODS: { value: LeaderboardPeriod; label: string }[] = [
 export default function Leaderboard() {
   const { user } = useAuth();
   const [params] = useSearchParams();
-  const period: LeaderboardPeriod = params.get("period") === "30d" ? "30d" : "all";
+  const period: LeaderboardPeriod =
+    PERIODS.find((p) => p.value === params.get("period"))?.value ?? "all";
   // The last response or failure, with the period it was for, so switching
   // periods shows "Loading…" rather than the other period's table.
   const [loaded, setLoaded] = useState<{
@@ -97,7 +99,9 @@ export default function Leaderboard() {
           </p>
         ) : entries.length === 0 ? (
           <p className="list-msg">
-            {period === "30d" ? "No reviews in the last 30 days." : "No reviews yet."}
+            {period === "all"
+              ? "No reviews yet."
+              : `No reviews in the ${PERIODS.find((p) => p.value === period)!.label.toLowerCase()}.`}
           </p>
         ) : (
           <div className="ledger-wrap">

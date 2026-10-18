@@ -237,6 +237,9 @@ export const mergeCandidates = mysqlTable(
     // answers it with an index-merge union of these two ranges.
     index("idx_merge_candidates_status_from_type").on(t.status, t.fromType, t.confidence),
     index("idx_merge_candidates_status_into_type").on(t.status, t.intoType, t.confidence),
+    // The list's "Resolved by me" filter (`resolved_by = ? and status = ?`),
+    // which otherwise scans every dismissed or merged pair.
+    index("idx_merge_candidates_resolver").on(t.resolvedBy, t.status, t.confidence),
   ],
 );
 

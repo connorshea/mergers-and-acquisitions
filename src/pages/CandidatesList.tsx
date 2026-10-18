@@ -155,6 +155,8 @@ export default function CandidatesList() {
   const creator = params.get("creator") ?? "";
   // Hide pairs flagged with a merge-blocking conflict; off by default.
   const noBlockers = params.get("noBlockers") === "1";
+  // Only pairs the logged-in user dismissed, marked different, or merged.
+  const mine = params.get("mine") === "1";
   // Set by the OAuth callback when the login didn't complete (?auth=denied|failed|blocked).
   // Read once into state and then stripped from the URL, so the alert doesn't
   // survive every filter change and a retried login doesn't return to it.
@@ -182,7 +184,8 @@ export default function CandidatesList() {
     status !== "open" ||
     types.length > 0 ||
     anyLanguage ||
-    noBlockers;
+    noBlockers ||
+    mine;
   // Phones only: the filter fields fold behind a toggle (CSS hides it on wider screens).
   const [filtersOpen, setFiltersOpen] = useState(false);
   const filterSummary = [
@@ -190,6 +193,7 @@ export default function CandidatesList() {
     typeSummary(types),
     creator && `by ${creator}`,
     noBlockers && "No blockers",
+    mine && "Resolved by me",
     userLangs.length > 0 && (anyLanguage ? "Any language" : userLangs.join(", ")),
   ]
     .filter(Boolean)
@@ -230,6 +234,7 @@ export default function CandidatesList() {
       if (typeParam) query.type = typeParam;
       if (creator) query.creator = creator;
       if (noBlockers) query.noBlockers = "1";
+      if (mine) query.mine = "1";
       if (langFilter) query.lang = langFilter;
       try {
         const res = await fetch("/api/candidates", { query });
@@ -254,7 +259,19 @@ export default function CandidatesList() {
     return () => {
       cancelled = true;
     };
-  }, [q, creator, noBlockers, status, sort, typeParam, page, langFilter, authLoading, reload]);
+  }, [
+    q,
+    creator,
+    noBlockers,
+    mine,
+    status,
+    sort,
+    typeParam,
+    page,
+    langFilter,
+    authLoading,
+    reload,
+  ]);
 
   // A page past the end (its rows all dismissed, here or elsewhere, or an old
   // link): go to the last page that has rows rather than show an empty one.
@@ -416,7 +433,9 @@ export default function CandidatesList() {
 
         {/* Counts only filters changed from their defaults; the saved
             languages are the default, so only `lang=any` counts. */}
-        <MoreFilters active={[creator !== "", noBlockers, anyLanguage].filter(Boolean).length}>
+        <MoreFilters
+          active={[creator !== "", noBlockers, mine, anyLanguage].filter(Boolean).length}
+        >
           <CreatorFilter
             creator={creator}
             onClear={() => {
@@ -431,6 +450,26 @@ export default function CandidatesList() {
             />
             <span>Exclude pairs with blockers</span>
           </label>
+          {/* Kept while set, logged out too, so the filter can be turned off. */}
+          {(user || mine) && (
+            <label className="field field-check">
+              <input
+                type="checkbox"
+                checked={mine}
+                onChange={(e) =>
+                  // Open pairs have no resolver, so ticking it there moves to Dismissed.
+                  update(
+                    e.target.checked
+                      ? { mine: "1", ...(status === "open" && { status: "dismissed" }) }
+                      : { mine: undefined },
+                  )
+                }
+              />
+              <span title="Pairs you dismissed, marked as different, or merged">
+                Only pairs I resolved
+              </span>
+            </label>
+          )}
           {user && <LanguageFilter languages={userLangs} any={anyLanguage} update={update} />}
         </MoreFilters>
 
@@ -438,7 +477,7 @@ export default function CandidatesList() {
           {/* Shown while a refetch is in flight; the stale rows stay visible
               (dimmed) underneath instead of blanking the table. */}
           {loading && data && <ZipperLoader label="Updating…" />}
-          {/* Clears the filters (search, creator, blockers, status, type, language) but keeps the sort. */}
+          {/* Clears the filters (search, creator, blockers, resolver, status, type, language) but keeps the sort. */}
           {hasFilters && (
             <button
               type="button"
@@ -448,6 +487,7 @@ export default function CandidatesList() {
                   q: undefined,
                   creator: undefined,
                   noBlockers: undefined,
+                  mine: undefined,
                   status: undefined,
                   type: undefined,
                   lang: undefined,
@@ -626,7 +666,7 @@ function ClearableInput({
 }
 
 /**
- * The less-used filters (creator, blockers, languages) in a dropdown panel, so the main
+ * The less-used filters (creator, blockers, resolver, languages) in a dropdown panel, so the main
  * row stays on one line. The button shows how many of them are set. It sits inside the list's form: the creator box
  * submits with it, on Enter or the panel's Apply button.
  */

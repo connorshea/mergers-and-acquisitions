@@ -19,14 +19,19 @@ export const leaderboard = new Hono<AuthEnv>();
 /** Most users listed. */
 const LIMIT = 100;
 
-// GET /api/leaderboard?period=all|30d — users by pairs resolved: successful
+/** Days counted back from now, per limited period. */
+const PERIOD_DAYS: Record<Exclude<LeaderboardPeriod, "all">, number> = { "30d": 30, "7d": 7 };
+
+// GET /api/leaderboard?period=all|30d|7d — users by pairs resolved: successful
 // merges, pairs marked "different from", and pairs dismissed, weighted
 // equally (one "different from" pair may take two edits, so those count
 // distinct candidates). Ties go to more merges.
 leaderboard.get("/", async (c) => {
-  const period: LeaderboardPeriod = c.req.query("period") === "30d" ? "30d" : "all";
+  const query = c.req.query("period");
+  const period: LeaderboardPeriod = query === "30d" || query === "7d" ? query : "all";
+  const days = period === "all" ? undefined : PERIOD_DAYS[period];
   const since = (column: typeof wikidataEdits.createdAt | typeof mergeCandidates.resolvedAt) =>
-    period === "30d" ? gte(column, sql`now() - interval 30 day`) : undefined;
+    days === undefined ? undefined : gte(column, sql`now() - interval ${days} day`);
 
   // Per-user counts from each source, then summed per user.
   const fromEdits = db

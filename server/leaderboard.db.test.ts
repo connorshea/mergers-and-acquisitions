@@ -98,6 +98,25 @@ describe.skipIf(!DB_TEST)("GET /api/leaderboard", () => {
     expect(all.totals).toEqual({ users: 2, merges: 3, differentFrom: 0, dismissals: 0, total: 3 });
   });
 
+  it("limits to the last 7 days when asked", async () => {
+    const daysAgo = (n: number) => toSqlDatetime(new Date(Date.now() - n * 24 * 60 * 60 * 1000));
+    await db
+      .insert(wikidataEdits)
+      .values([edit(1, 1, { createdAt: daysAgo(10) }), edit(2, 2, { createdAt: daysAgo(2) })]);
+    await db
+      .insert(mergeCandidates)
+      .values([
+        dismissed(3, 1, { resolvedAt: daysAgo(10) }),
+        dismissed(4, 2, { resolvedAt: daysAgo(2) }),
+      ]);
+    const week = await leaderboard("?period=7d");
+    expect(week.period).toBe("7d");
+    expect(week.entries).toEqual([
+      { userId: 2, username: "Bob", merges: 1, differentFrom: 0, dismissals: 1, total: 2 },
+    ]);
+    expect((await leaderboard("?period=30d")).totals.total).toBe(4);
+  });
+
   it("counts plain dismissals, weighted equally, but not dismissals written by anything else", async () => {
     await db.insert(wikidataEdits).values([edit(1, 1), edit(2, 2, { action: "different-from" })]);
     await db.insert(mergeCandidates).values([

@@ -277,8 +277,8 @@ export interface LogoutResponse {
   ok: true;
 }
 
-/** The leaderboard's time window: every edit, or the last 30 days. */
-export type LeaderboardPeriod = "all" | "30d";
+/** The leaderboard's time window: every edit, or the last 30 or 7 days. */
+export type LeaderboardPeriod = "all" | "30d" | "7d";
 
 export interface LeaderboardEntry {
   userId: number;

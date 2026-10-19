@@ -1,0 +1,1 @@
+CREATE INDEX `idx_merge_candidates_resolver` ON `merge_candidates` (`resolved_by`,`status`,`confidence`);

@@ -140,6 +140,15 @@ candidates.get("/", async (c) => {
     conditions.push(eq(mergeCandidates.hasBlocker, false));
   }
 
+  // Pairs the logged-in user resolved themselves (dismissed, marked "different
+  // from", or merged): `mine=1`. Logged out there is no one to match, so the
+  // list is empty rather than unfiltered.
+  const mine = req.query("mine") === "1";
+  const viewerId = c.get("user")?.id ?? null;
+  if (mine) {
+    conditions.push(viewerId === null ? sql`false` : eq(mergeCandidates.resolvedBy, viewerId));
+  }
+
   // Item-side filters, matching pairs where *either* item matches (the hunt's
   // label+type path pairs items of the same type, but the shared-id path can
   // pair across types). Both read the pair's own copies of the items'
@@ -215,6 +224,8 @@ candidates.get("/", async (c) => {
     status,
     minConfidenceRaw ?? "",
     req.query("noBlockers") === "1",
+    // Logged out, `mine` matches nothing: keep it apart from no filter at all.
+    mine ? (viewerId ?? "nobody") : null,
     q?.toLowerCase() ?? "",
     [...types].sort(),
     creatorParam ? normalizeUserName(creatorParam) : "",

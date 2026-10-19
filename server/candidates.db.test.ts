@@ -7,7 +7,7 @@ import { app } from "./app.ts";
 import { db, pool } from "./db.ts";
 import { refreshCandidateItemInfo } from "./candidate-item-info.ts";
 import { addSeconds, toSqlDatetime } from "./auth/time.ts";
-import { MERGING_STALE_SECONDS } from "./edits.ts";
+import { DIFFERENT_FROM_RESOLUTION, MERGING_STALE_SECONDS } from "./edits.ts";
 import { reviewLimiter } from "./rate-limit.ts";
 import {
   classAncestors,
@@ -259,6 +259,50 @@ describe.skipIf(!DB_TEST)("candidates API", () => {
       expect((await list()).candidates.map((c) => c.id)).toEqual([alpha, beta]);
       expect((await list("?noBlockers=1")).candidates.map((c) => c.id)).toEqual([alpha]);
       expect((await list("?noBlockers=0")).total).toBe(2);
+    });
+
+    it("filters to pairs the viewer resolved when mine=1", async () => {
+      const different = await insertCandidate({
+        fromQid: "Q80",
+        intoQid: "Q70",
+        confidence: 0.6,
+        reasons: [],
+        status: "dismissed",
+        resolution: DIFFERENT_FROM_RESOLUTION,
+        resolvedBy: EDITOR_ID,
+      });
+      const merged = await insertCandidate({
+        fromQid: "Q100",
+        intoQid: "Q90",
+        confidence: 0.8,
+        reasons: [],
+        status: "merged",
+        resolvedBy: EDITOR_ID,
+      });
+      await insertCandidate({
+        fromQid: "Q120",
+        intoQid: "Q110",
+        confidence: 0.9,
+        reasons: [],
+        status: "dismissed",
+        resolvedBy: EDITOR_ID + 1,
+      });
+      const mine = async (query: string) => {
+        const res = await request<CandidateListResponse>(`/api/candidates${query}`, {
+          headers: editor,
+        });
+        expect(res.status).toBe(200);
+        return res.body;
+      };
+
+      expect((await mine("?status=dismissed&mine=1")).candidates.map((c) => c.id)).toEqual([
+        different,
+      ]);
+      expect((await mine("?status=merged&mine=1")).candidates.map((c) => c.id)).toEqual([merged]);
+      // Without the flag, everyone's dismissals (orphan's has no resolver).
+      expect((await mine("?status=dismissed")).total).toBe(3);
+      // Logged out, mine=1 matches nothing rather than everything.
+      expect((await list("?status=dismissed&mine=1")).total).toBe(0);
     });
 
     it("paginates and clamps pageSize and page", async () => {

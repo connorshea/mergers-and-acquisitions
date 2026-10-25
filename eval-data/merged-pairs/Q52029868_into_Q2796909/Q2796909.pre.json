@@ -1,0 +1,710 @@
+{
+  "pageid": 2680470,
+  "ns": 0,
+  "title": "Q2796909",
+  "lastrevid": 2481076127,
+  "modified": "2026-04-13T16:36:32Z",
+  "type": "item",
+  "id": "Q2796909",
+  "labels": {
+    "nl": {
+      "language": "nl",
+      "value": "Mad as Rabbits"
+    },
+    "en": {
+      "language": "en",
+      "value": "Mad as Rabbits"
+    },
+    "es": {
+      "language": "es",
+      "value": "Mad as rabbits"
+    },
+    "pl": {
+      "language": "pl",
+      "value": "Mad as Rabbits"
+    },
+    "pt": {
+      "language": "pt",
+      "value": "Mad as Rabbits"
+    },
+    "de": {
+      "language": "de",
+      "value": "Mad as Rabbits"
+    },
+    "fr": {
+      "language": "fr",
+      "value": "Mad as rabbits"
+    },
+    "id": {
+      "language": "id",
+      "value": "Mad as Rabbits"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "Mad as Rabbits"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "マッド・アズ・ラビッツ"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "Mad as Rabbits"
+    }
+  },
+  "descriptions": {
+    "nl": {
+      "language": "nl",
+      "value": "nummer van Panic at the Disco"
+    },
+    "en": {
+      "language": "en",
+      "value": "2008 single by Panic! at the Disco"
+    },
+    "ast": {
+      "language": "ast",
+      "value": "cantar de Panic! at the Disco"
+    },
+    "ja": {
+      "language": "ja",
+      "value": "2008年に発売されたパニック・アット・ザ・ディスコのシングル曲"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "fd441adf324b31091556bb0b07ffbf024b12fabd",
+          "datavalue": {
+            "value": "/m/03x_n3w",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q2796909$48EF8931-5AB2-444F-93DB-A35446CDE147",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2b00cb481cddcac7623114367489b5c194901c4a",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "a94b740202b097dd33355e0e6c00e54b9395e5e0",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 15241312,
+                      "id": "Q15241312"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P577": [
+                {
+                  "snaktype": "value",
+                  "property": "P577",
+                  "hash": "fde79ecb015112d2f29229ccc1ec514ed3e71fa2",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2013-10-28T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P577"]
+          }
+        ]
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "33d81754a79b2dab75d17c156313b0f8f0f4f086",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 134556,
+              "id": "Q134556"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2796909$E2A0B740-D54F-455E-B5FA-8A43B1FCD3B4",
+        "rank": "normal"
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "7f985e15819b74ed189d022e004890e66d2ae42e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 30,
+              "id": "Q30"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2796909$2B346BB6-74FC-4660-B2ED-D61792E8B61D",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P2624": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2624",
+          "hash": "f33245e239e0d04ad98076d6fd3fc33b22ba98be",
+          "datavalue": {
+            "value": "mad-as-rabbits-lyrics-panic-at-the-disco",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q2796909$D6F02972-F55D-4B01-AEDB-A6FE8B968E7B",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P136": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P136",
+          "hash": "e28f44e7d181382d4c2635cfb6691c5082cc989a",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 7749,
+              "id": "Q7749"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2796909$44C97972-1355-40AB-A4C3-F933BAEBE9C5",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "87d4e7cdca9c521e6087cd9cf9dc4e25fcd0bb48",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "7c3320ee11826d26a065fff9e9a5dc06a4635eb4",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 200183,
+                      "id": "Q200183"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P676": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P676",
+          "hash": "e81b71f7e1ddd63709782496fd3a9ab076cf6df2",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 841247,
+              "id": "Q841247"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2796909$6E9A5393-3742-4C8D-B0FF-C1D5694538DE",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "87d4e7cdca9c521e6087cd9cf9dc4e25fcd0bb48",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "7c3320ee11826d26a065fff9e9a5dc06a4635eb4",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 200183,
+                      "id": "Q200183"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P264",
+          "hash": "e6bb94a23974783d8901c452392431564c8b079b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1046066,
+              "id": "Q1046066"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2796909$B649B486-50EA-4DC7-8866-91B8831C1753",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "87d4e7cdca9c521e6087cd9cf9dc4e25fcd0bb48",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "7c3320ee11826d26a065fff9e9a5dc06a4635eb4",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 200183,
+                      "id": "Q200183"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "4e9fd319a14ae7901914e5236a9792ddeca86a44",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 277551,
+              "id": "Q277551"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2796909$C8EBB71B-317A-4E03-B09C-D31CD34294D6",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "2abceaa493fb2ef38ef93de8398881985d36716d",
+          "datavalue": {
+            "value": {
+              "time": "+2008-03-25T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q2796909$853F8098-40F5-4686-8CBC-5EEA874DB117",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "fa278ebfc458360e5aed63d5058cca83c46134f1",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": ["P143"]
+          }
+        ]
+      }
+    ],
+    "P155": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P155",
+          "hash": "74ab63f71cea453a9dcff7401d0489cb68fb6200",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2721953,
+              "id": "Q2721953"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2796909$9A9A7467-3001-4967-AF3C-0CCD4C77A73C",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "1c90fe927f80a643ffba00e6c581803208ae331d",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "1bef6cf47ad8b7b95299fa55448ed9baa56622d0",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Mad_as_Rabbits&oldid=854162692",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P156": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P156",
+          "hash": "f19b9879e2022b6e48caba69b80815eaf40f9b22",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 578944,
+              "id": "Q578944"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2796909$E90AFA5B-C87A-4AB4-99EC-85463FFE1A60",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "1c90fe927f80a643ffba00e6c581803208ae331d",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "1bef6cf47ad8b7b95299fa55448ed9baa56622d0",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Mad_as_Rabbits&oldid=854162692",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": ["P143", "P4656"]
+          }
+        ]
+      }
+    ],
+    "P436": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P436",
+          "hash": "7d6a1ae5c2ae648aa1b0e057814fb1b1c0c73b24",
+          "datavalue": {
+            "value": "316a2256-3c56-4568-a2b2-fc996984885b",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q2796909$1cc87ce1-a4c1-4f7c-9105-f9251bb6ee65",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "57932f803dbc99e4ef1ce5fdf4ca3e6728fc3bde",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "623cc8f0e2f65afe4d66b91962d354a2f3aa9a27",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 14005,
+                      "id": "Q14005"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "ccf526fddfe26e89678b2dfa773fa45d977118f8",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-02-16T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": ["P248", "P813"]
+          }
+        ]
+      }
+    ],
+    "P13602": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P13602",
+          "hash": "a7c4c25b1bbe629e8298c43f77e5f2fa7859ed6d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 770185,
+              "id": "Q770185"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q2796909$A2CA8D75-50E5-4068-BF66-517E086E9E15",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {
+    "nlwiki": {
+      "site": "nlwiki",
+      "title": "Mad as Rabbits",
+      "badges": [],
+      "url": "https://nl.wikipedia.org/wiki/Mad_as_Rabbits"
+    },
+    "enwiki": {
+      "site": "enwiki",
+      "title": "Mad as Rabbits",
+      "badges": ["Q70893996"],
+      "url": "https://en.wikipedia.org/wiki/Mad_as_Rabbits"
+    },
+    "plwiki": {
+      "site": "plwiki",
+      "title": "Mad as Rabbits",
+      "badges": [],
+      "url": "https://pl.wikipedia.org/wiki/Mad_as_Rabbits"
+    },
+    "ptwiki": {
+      "site": "ptwiki",
+      "title": "Mad as Rabbits",
+      "badges": ["Q70893996"],
+      "url": "https://pt.wikipedia.org/wiki/Mad_as_Rabbits"
+    },
+    "simplewiki": {
+      "site": "simplewiki",
+      "title": "Mad as Rabbits",
+      "badges": [],
+      "url": "https://simple.wikipedia.org/wiki/Mad_as_Rabbits"
+    },
+    "idwiki": {
+      "site": "idwiki",
+      "title": "Mad as Rabbits",
+      "badges": [],
+      "url": "https://id.wikipedia.org/wiki/Mad_as_Rabbits"
+    },
+    "jawiki": {
+      "site": "jawiki",
+      "title": "マッド・アズ・ラビッツ",
+      "badges": [],
+      "url": "https://ja.wikipedia.org/wiki/%E3%83%9E%E3%83%83%E3%83%89%E3%83%BB%E3%82%A2%E3%82%BA%E3%83%BB%E3%83%A9%E3%83%93%E3%83%83%E3%83%84"
+    }
+  }
+}

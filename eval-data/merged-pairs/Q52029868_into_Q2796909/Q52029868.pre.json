@@ -1,0 +1,183 @@
+{
+  "pageid": 52922919,
+  "ns": 0,
+  "title": "Q52029868",
+  "lastrevid": 2482367395,
+  "modified": "2026-04-17T07:29:36Z",
+  "type": "item",
+  "id": "Q52029868",
+  "labels": {
+    "es": {
+      "language": "es",
+      "value": "Mad As Rabbits"
+    },
+    "en": {
+      "language": "en",
+      "value": "Mad As Rabbits"
+    },
+    "ga": {
+      "language": "ga",
+      "value": "Mad As Rabbits"
+    }
+  },
+  "descriptions": {
+    "nl": {
+      "language": "nl",
+      "value": "Panic! at the Disco"
+    }
+  },
+  "aliases": {},
+  "claims": {
+    "P264": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P264",
+          "hash": "e6bb94a23974783d8901c452392431564c8b079b",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 1046066,
+              "id": "Q1046066"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q52029868$d68d4b0e-42f7-842a-3b03-69f86b89f8b2",
+        "rank": "normal"
+      }
+    ],
+    "P175": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P175",
+          "hash": "4e9fd319a14ae7901914e5236a9792ddeca86a44",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 277551,
+              "id": "Q277551"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q52029868$3d8fcc91-4238-451e-10ec-6010eef056f1",
+        "rank": "normal"
+      }
+    ],
+    "P495": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P495",
+          "hash": "7f985e15819b74ed189d022e004890e66d2ae42e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 30,
+              "id": "Q30"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q52029868$259948c5-4629-50d2-89a2-58ac6651521d",
+        "rank": "normal"
+      }
+    ],
+    "P577": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P577",
+          "hash": "2abceaa493fb2ef38ef93de8398881985d36716d",
+          "datavalue": {
+            "value": {
+              "time": "+2008-03-25T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 11,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q52029868$41cda898-491a-5536-92e8-ed398f737b18",
+        "rank": "normal"
+      }
+    ],
+    "P155": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P155",
+          "hash": "74ab63f71cea453a9dcff7401d0489cb68fb6200",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2721953,
+              "id": "Q2721953"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q52029868$6f6502aa-4892-a44f-0a76-dd1f15306d06",
+        "rank": "normal"
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "33d81754a79b2dab75d17c156313b0f8f0f4f086",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 134556,
+              "id": "Q134556"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q52029868$A79FE460-76ED-46A2-915B-A582127C37D8",
+        "rank": "normal"
+      }
+    ],
+    "P13602": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P13602",
+          "hash": "a7c4c25b1bbe629e8298c43f77e5f2fa7859ed6d",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 770185,
+              "id": "Q770185"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q52029868$44A8079C-B81D-4774-9AAC-E55FBE679FB9",
+        "rank": "normal"
+      }
+    ]
+  },
+  "sitelinks": {}
+}

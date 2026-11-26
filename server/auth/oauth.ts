@@ -3,6 +3,7 @@
 //
 //   GET  /api/auth/login?returnTo=/path  → redirect to www.wikidata.org
 //   GET  /api/auth/callback?code&state   → exchange, upsert user, start session
+//                                          (blocked and non-autoconfirmed accounts are refused)
 //   POST /api/auth/logout
 //   GET  /api/auth/me
 //
@@ -18,6 +19,7 @@ import { sessions, users } from "../../db/schema.ts";
 import type { AuthMeResponse, LogoutResponse } from "../../src/lib/api-types.ts";
 import { authConfig, authConfigured, callbackUrl, cookiesSecure, wikiOrigin } from "./config.ts";
 import { pkceChallenge, randomToken, safeEqual } from "./crypto.ts";
+import { isCaptchaExempt } from "./eligibility.ts";
 import {
   type AuthEnv,
   createSession,
@@ -180,6 +182,19 @@ authRoutes.get("/callback", async (c) => {
     await endAllSessions(profile.sub);
     deleteCookie(c, SESSION_COOKIE, sessionCookieOptions());
     return c.redirect("/?auth=blocked", 303);
+  }
+
+  // An account that would be shown an hCaptcha on its edits can't use the
+  // app: the API edits it makes have no way to present one. Same treatment as
+  // a block (no session, no tokens), but the account isn't flagged, so it can
+  // log in as soon as Wikidata autoconfirms it.
+  if (!isCaptchaExempt(userValues.groups)) {
+    console.warn(
+      `oauth: refused login for non-autoconfirmed account ${profile.sub} (${profile.username})`,
+    );
+    await endAllSessions(profile.sub);
+    deleteCookie(c, SESSION_COOKIE, sessionCookieOptions());
+    return c.redirect("/?auth=not-autoconfirmed", 303);
   }
   await storeTokens(profile.sub, tokens, now);
 

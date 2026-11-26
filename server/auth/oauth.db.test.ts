@@ -371,12 +371,14 @@ describe.skipIf(!DB_TEST)("auth", () => {
       const first = await startLogin();
       await callback(`code=abc&state=${first.state}`, first.loginCookie);
 
-      stubProvider({ profile: { sub: 7, username: "Alicia", groups: ["user"], blocked: false } });
+      stubProvider({
+        profile: { sub: 7, username: "Alicia", groups: ["user", "confirmed"], blocked: false },
+      });
       const second = await startLogin();
       const res = await callback(`code=def&state=${second.state}`, second.loginCookie);
       const rows = await db.select().from(users);
       expect(rows).toHaveLength(1);
-      expect(rows[0]).toMatchObject({ id: 7, username: "Alicia", groups: ["user"] });
+      expect(rows[0]).toMatchObject({ id: 7, username: "Alicia", groups: ["user", "confirmed"] });
       expect((await me(cookieValue(res, SESSION_COOKIE))).user).toMatchObject({
         username: "Alicia",
       });
@@ -407,6 +409,35 @@ describe.skipIf(!DB_TEST)("auth", () => {
       const rows = await db.select().from(users);
       expect(rows).toHaveLength(1);
       expect(rows[0]).toMatchObject({ id: 7, username: "Alicia", blocked: true });
+    });
+
+    it("refuses an account that isn't autoconfirmed, without marking it blocked", async () => {
+      stubProvider();
+      const first = await startLogin();
+      const earlier = cookieValue(
+        await callback(`code=abc&state=${first.state}`, first.loginCookie),
+        SESSION_COOKIE,
+      )!;
+      expect((await me(earlier)).user?.id).toBe(7);
+
+      stubProvider({
+        profile: { sub: 7, username: "Alicia", groups: ["*", "user"], blocked: false },
+      });
+      const second = await startLogin();
+      const warn = expectConsole("warn");
+      const res = await callback(`code=def&state=${second.state}`, second.loginCookie);
+      expect(warn).toHaveBeenCalledWith(
+        "oauth: refused login for non-autoconfirmed account 7 (Alicia)",
+      );
+      expect(res.status).toBe(303);
+      expect(res.headers.get("location")).toBe("/?auth=not-autoconfirmed");
+      expect(cookieLine(res, SESSION_COOKIE)).toMatch(/Max-Age=0/);
+      expect(await db.select().from(sessions)).toHaveLength(0);
+      expect(await db.select().from(oauthTokens)).toHaveLength(0);
+      expect((await me(earlier)).user).toBeNull();
+      // The user row is kept with its groups, and isn't flagged as blocked.
+      const rows = await db.select().from(users);
+      expect(rows[0]).toMatchObject({ id: 7, groups: ["*", "user"], blocked: false });
     });
 
     it("replaces an existing session in the same browser", async () => {

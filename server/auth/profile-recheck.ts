@@ -42,7 +42,9 @@ export async function recheckLoggedInUsers(
     try {
       const profile = await fetchProfile(cfg, await getAccessToken(row.id));
       blocked = Boolean(profile.blocked);
-      // Keep the rest of the snapshot current while we have it.
+      // Keep the rest of the snapshot current while we have it. The session
+      // middleware reads `groups`, so an account that lost autoconfirmed (or a
+      // captcha-exempt group) is logged out on its next request.
       await db
         .update(users)
         .set({ username: profile.username, groups: profile.groups ?? [] })

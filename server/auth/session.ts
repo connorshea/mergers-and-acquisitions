@@ -9,6 +9,7 @@ import { db } from "../db.ts";
 import { oauthTokens, sessions, users } from "../../db/schema.ts";
 import { cookiesSecure, parseAdminIds } from "./config.ts";
 import { randomToken, sha256Hex } from "./crypto.ts";
+import { isCaptchaExempt } from "./eligibility.ts";
 import { addSeconds, fromSqlDatetime, toSqlDatetime } from "./time.ts";
 
 export const SESSION_COOKIE = "mna_session";
@@ -142,6 +143,7 @@ export const sessionMiddleware: MiddlewareHandler<AuthEnv> = async (c, next) => 
         userId: users.id,
         username: users.username,
         blocked: users.blocked,
+        groups: users.groups,
         languages: users.languages,
       })
       .from(sessions)
@@ -167,6 +169,13 @@ export const sessionMiddleware: MiddlewareHandler<AuthEnv> = async (c, next) => 
       // Blocked since this session began (markBlocked may have raced with a
       // request, or the flag was set by hand): the session ends here, along
       // with any other the account holds, and the request runs logged out.
+      await endAllSessions(row.userId);
+      deleteCookie(c, SESSION_COOKIE, sessionCookieOptions());
+    } else if (!isCaptchaExempt(row.groups)) {
+      // Not (or no longer) autoconfirmed per the stored groups: a session from
+      // before login checked this, or groups the nightly re-check refreshed.
+      // Its edits would hit hCaptcha, which the app can't show, so it ends the
+      // same way; the account can log in again once Wikidata autoconfirms it.
       await endAllSessions(row.userId);
       deleteCookie(c, SESSION_COOKIE, sessionCookieOptions());
     } else {

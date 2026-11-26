@@ -374,10 +374,7 @@ export default function CandidatesList() {
         )}
         {authOutcome === "not-autoconfirmed" && (
           <p className="list-msg is-error" role="alert">
-            Your Wikidata account isn't autoconfirmed yet, so it can't use this tool: Wikidata now
-            asks newer accounts to solve a captcha when they edit, and this tool can't show one. On
-            Wikidata an account is autoconfirmed once it is at least 4 days old and has made at
-            least 50 edits. Log in again after that.
+            Your Wikidata account isn't autoconfirmed yet, so it can't use this tool.
           </p>
         )}
         {authOutcome === "failed" && (

@@ -66,7 +66,7 @@ export async function loginAs(
   const now = new Date();
   await db
     .insert(users)
-    .values({ id: userId, username, groups: ["user"] })
+    .values({ id: userId, username, groups: ["*", "user", "autoconfirmed"] })
     .onDuplicateKeyUpdate({ set: { username } });
   const token = randomToken(32);
   await db.insert(sessions).values({

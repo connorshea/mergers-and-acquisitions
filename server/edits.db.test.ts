@@ -252,6 +252,19 @@ describe.skipIf(!DB_TEST)("Wikidata edit routes", () => {
       expect((await candidateRow(alpha)).status).toBe("open");
     });
 
+    it("treats an account that isn't autoconfirmed as logged out before touching Wikidata", async () => {
+      await db
+        .update(users)
+        .set({ groups: ["*", "user"] })
+        .where(eq(users.id, EDITOR_ID));
+      const calls = stubWikidata(() => mergeOk());
+      const { status } = await post<EditErrorResponse>(`/api/candidates/${alpha}/merge`, editor);
+      expect(status).toBe(401);
+      expect(calls).toHaveLength(0);
+      expect(await db.select().from(sessions)).toHaveLength(0);
+      expect((await candidateRow(alpha)).status).toBe("open");
+    });
+
     it("logs the account out everywhere when Wikidata rejects the edit as blocked", async () => {
       stubWikidata(() => apiError("blocked", "You have been blocked from editing"));
       const { status, body } = await post<EditErrorResponse>(

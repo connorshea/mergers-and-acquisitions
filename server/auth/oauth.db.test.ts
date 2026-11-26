@@ -465,7 +465,7 @@ describe.skipIf(!DB_TEST)("auth", () => {
 
     it("ignores and deletes an expired session", async () => {
       const token = randomToken(32);
-      await db.insert(users).values({ id: 7, username: "Alice", groups: [] });
+      await db.insert(users).values({ id: 7, username: "Alice", groups: ["autoconfirmed"] });
       await db.insert(sessions).values({
         id: sha256Hex(token),
         userId: 7,
@@ -489,9 +489,29 @@ describe.skipIf(!DB_TEST)("auth", () => {
       expect(await db.select().from(oauthTokens)).toHaveLength(0);
     });
 
+    it("ends the sessions of an account whose stored groups aren't captcha-exempt", async () => {
+      // A session from before login checked autoconfirmed, or groups the
+      // nightly re-check refreshed without the group.
+      const first = await loginAs(7, "Alice");
+      const second = await loginAs(7, "Alice");
+      await storeTokens(7, { access_token: "a", refresh_token: "r", expires_in: 3600 });
+      await db
+        .update(users)
+        .set({ groups: ["*", "user"] })
+        .where(eq(users.id, 7));
+      const res = await app.request("/api/auth/me", { headers: { Cookie: first.Cookie } });
+      expect(((await res.json()) as AuthMeResponse).user).toBeNull();
+      expect(cookieLine(res, SESSION_COOKIE)).toMatch(/Max-Age=0/);
+      expect((await me(second.Cookie.split("=")[1])).user).toBeNull();
+      expect(await db.select().from(sessions)).toHaveLength(0);
+      expect(await db.select().from(oauthTokens)).toHaveLength(0);
+      // Not a block: the account can come back once it qualifies.
+      expect((await db.select().from(users))[0]?.blocked).toBe(false);
+    });
+
     it("ignores a session idle for too long", async () => {
       const token = randomToken(32);
-      await db.insert(users).values({ id: 7, username: "Alice", groups: [] });
+      await db.insert(users).values({ id: 7, username: "Alice", groups: ["autoconfirmed"] });
       await db.insert(sessions).values({
         id: sha256Hex(token),
         userId: 7,
@@ -502,7 +522,7 @@ describe.skipIf(!DB_TEST)("auth", () => {
     });
 
     it("touches last_seen_at only once the touch interval has passed", async () => {
-      await db.insert(users).values({ id: 7, username: "Alice", groups: [] });
+      await db.insert(users).values({ id: 7, username: "Alice", groups: ["autoconfirmed"] });
       const expiresAt = toSqlDatetime(addSeconds(new Date(), SESSION_TTL_SECONDS));
       const insert = async (ageSeconds: number) => {
         const token = randomToken(32);
@@ -537,7 +557,7 @@ describe.skipIf(!DB_TEST)("auth", () => {
     });
 
     it("prunes the tokens of anyone left with no session, keeping everyone else's", async () => {
-      await db.insert(users).values({ id: 7, username: "Alice", groups: [] });
+      await db.insert(users).values({ id: 7, username: "Alice", groups: ["autoconfirmed"] });
       await db.insert(sessions).values({
         id: sha256Hex(randomToken(32)),
         userId: 7,
@@ -548,7 +568,7 @@ describe.skipIf(!DB_TEST)("auth", () => {
       await loginAs(8, "Bob");
       await storeTokens(8, { access_token: "b", refresh_token: "s", expires_in: 3600 });
       // A user whose session already idled out (and was never pruned) is caught too.
-      await db.insert(users).values({ id: 9, username: "Carol", groups: [] });
+      await db.insert(users).values({ id: 9, username: "Carol", groups: ["autoconfirmed"] });
       await storeTokens(9, { access_token: "c", refresh_token: "t", expires_in: 3600 });
 
       expect(await pruneExpiredSessions()).toEqual({ sessions: 1, tokens: 2 });
@@ -558,7 +578,7 @@ describe.skipIf(!DB_TEST)("auth", () => {
 
     it("drops the tokens along with an expired session when its cookie shows up", async () => {
       const token = randomToken(32);
-      await db.insert(users).values({ id: 7, username: "Alice", groups: [] });
+      await db.insert(users).values({ id: 7, username: "Alice", groups: ["autoconfirmed"] });
       await db.insert(sessions).values({
         id: sha256Hex(token),
         userId: 7,
@@ -695,7 +715,7 @@ describe.skipIf(!DB_TEST)("auth", () => {
 
   describe("getAccessToken", () => {
     beforeEach(async () => {
-      await db.insert(users).values({ id: 7, username: "Alice", groups: [] });
+      await db.insert(users).values({ id: 7, username: "Alice", groups: ["autoconfirmed"] });
     });
 
     it("returns the stored token while it is fresh", async () => {
@@ -763,7 +783,7 @@ describe.skipIf(!DB_TEST)("auth", () => {
       await storeTokens(7, { access_token: "alice", refresh_token: "r-alice", expires_in: 3600 });
       const [alice] = await db.select().from(oauthTokens).where(eq(oauthTokens.userId, 7));
       if (!alice) throw new Error("no oauth_tokens row for user 7");
-      await db.insert(users).values({ id: 8, username: "Mallory", groups: [] });
+      await db.insert(users).values({ id: 8, username: "Mallory", groups: ["autoconfirmed"] });
       await db.insert(oauthTokens).values({ ...alice, userId: 8 });
       await expect(getAccessToken(8)).rejects.toThrow(/auth/i);
       expect(await getAccessToken(7)).toBe("alice");
